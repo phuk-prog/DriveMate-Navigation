@@ -12,7 +12,6 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-import socket
 from statistics import median
 from time import monotonic, perf_counter_ns, sleep
 from typing import Callable
@@ -77,8 +76,8 @@ def valhalla_local_request(body: bytes) -> dict:
         if 400 <= exc.code < 500:
             return {"route_unavailable": True}
         raise RuntimeError("Local Valhalla server returned an error") from exc
-    except URLError as exc:
-        raise RuntimeError("Unable to reach local Valhalla server") from exc
+    except (URLError, ConnectionResetError, BrokenPipeError) as exc:
+        raise RuntimeError("Local Valhalla connection failed after health readiness") from exc
     if len(data) > 100_000:
         raise ValueError("Valhalla response exceeds aggregate-only bound")
     parsed = json.loads(data)
@@ -87,15 +86,21 @@ def valhalla_local_request(body: bytes) -> dict:
     return parsed
 
 
-def wait_for_local_router(timeout_s: float = 130.0) -> None:
+def wait_for_local_router(timeout_s: float = 150.0) -> None:
+    """Require a completed HTTP health response, not a prematurely opened TCP port."""
     deadline = monotonic() + timeout_s
+    url = "http://127.0.0.1:8002/status"
     while monotonic() < deadline:
         try:
-            with socket.create_connection((HOST, PORT), timeout=1):
-                return
-        except OSError:
-            sleep(0.75)
-    raise TimeoutError("Local Valhalla server did not start within the timeout")
+            with _OPENER.open(url, timeout=3) as response:
+                if response.status == 200:
+                    response.read(16_384)
+                    sleep(1.0)
+                    return
+        except (OSError, HTTPError, URLError, ValueError):
+            pass
+        sleep(0.75)
+    raise TimeoutError("Valhalla /status never became responsive within the timeout")
 
 
 def benchmark_valhalla_local(

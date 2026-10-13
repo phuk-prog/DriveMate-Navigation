@@ -117,8 +117,15 @@ jobs:
             -e build_elevation=False -e use_default_speeds_config=False \
             -e build_tar=False -e server_threads=2 \
             "$IMAGE"
-          python -m benchmarks.valhalla_live_reference --input results/public-road-subset.osm \
-            --snapshot geofabrik-260901 --samples 8 --repeats 5
+          if ! python -m benchmarks.valhalla_live_reference --input results/public-road-subset.osm \
+            --snapshot geofabrik-260901 --samples 8 --repeats 5; then
+            echo "Valhalla live request failed; sanitized startup diagnostics:"
+            docker inspect --format 'State={{.State.Status}} ExitCode={{.State.ExitCode}} OOM={{.State.OOMKilled}}' drivemate-nav-valhalla-reference || true
+            docker logs --tail 35 drivemate-nav-valhalla-reference 2>&1 |
+              sed -E 's/(-?[0-9]{1,3}\.[0-9]{4,})/[public-coordinate-redacted]/g' |
+              tail -n 35 || true
+            exit 1
+          fi
       - name: Remove Valhalla reference container and ephemeral public maps
         if: always()
         shell: bash

@@ -63,3 +63,7 @@ The commit marker `[valhalla-reference-smoke]` enables a one-time, capped experi
 Its output contains only aggregate request latency and success counts. The local API request latency includes Valhalla network/JSON overhead, and the DriveMate prototypes measure internal Python routing; profile rules and snapping also differ. Therefore **head_to_head_valid=false** regardless of which median appears numerically lower. The real provider run can fail when Valhalla declines short or incomplete extracts; this must remain a reported limitation, never be converted into a false success.
 
 Sources: https://github.com/valhalla/valhalla/blob/master/docker/README.md and https://valhalla.github.io/valhalla/building/
+
+### Health-check correction
+
+An initial live Valhalla run failed with a connection reset immediately after the host socket became reachable. The live adapter now requires a **completed HTTP 200 from /status** before issuing routes, and adds bounded diagnostics on failure. Do not present unsuccessful runs as provider benchmark results.
