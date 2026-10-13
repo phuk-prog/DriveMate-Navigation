@@ -33,3 +33,9 @@ Local public-road preparation scripts are opt-in; no real road extract, user coo
 All external engines listed in `benchmarks/reference-engines.json` are initially `not-integrated` or `access-and-terms-not-verified`; **do not report hypothetical scores as measured**. Providers using proprietary datasets or incompatible map snapshots may still be qualitative references but must not be presented as identical-data head-to-head results.
 
 Do not query commercial services or download datasets without checking API terms, billing and redistribution rights. Never infer a legal junction movement from a competitor's suggested route alone.
+
+## Public UK road smoke protocol (on-demand)
+
+The project includes an opt-in GitHub Actions step guarded by a `[uk-road-smoke]` commit-message marker. This one run downloads the fixed historical `greater-manchester-260901.osm.pbf` public Geofabrik extract, then uses Osmium to clip an **independently selected public road area**, strip contributor metadata and remove downloaded files after the job. It performs only aggregate Dijkstra/A* experiments based on generated test scenarios. It never reads user journeys.
+
+A successful job demonstrates **import of one small partial public UK road sample and shortest-time consistency**, not legally verified navigation. A failure to import due to unsupported turn restrictions is meaningful: the importer intentionally fails closed. This is not an OSRM/Valhalla/GraphHopper measurement. Those require their real engines and harmonised motorcar profiles.

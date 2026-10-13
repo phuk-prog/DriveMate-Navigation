@@ -12,6 +12,7 @@
 - [ ] Measure an independently chosen, public-data-only UK graph on test Android hardware, with no user's route history, device IDs or private journeys.
 - [ ] Implement offline graph/region updates and crash-safe rollback.
 - [x] Add turn-aware A* with checked geometry; compare its shortest-time output against Dijkstra on synthetic graphs.
+- [x] Add opt-in one-time pinned Geofabrik UK road smoke: ephemeral public extraction and Dijkstra/A* parity test; execute only on a commit explicitly marked `[uk-road-smoke]`.
 - [ ] Prove A* latency/memory benefits on independently licensed public-road graphs and Android hardware.
 - [ ] Add GPS matching, map uncertainty, tunnels and rapid off-route recalculation.
 - [ ] Add instruction and junction/lane legality validation, including multi-exit UK roundabouts.

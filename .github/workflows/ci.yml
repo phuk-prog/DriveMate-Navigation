@@ -37,5 +37,30 @@ jobs:
         run: |
           python -m benchmarks.run --repeat 30
           python -m benchmarks.search_comparison --size 14 --repeat 5
+      - name: Public UK road import and dual-engine smoke (explicit marker only)
+        if: contains(github.event.head_commit.message, '[uk-road-smoke]')
+        timeout-minutes: 9
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output "${RUNNER_TEMP}/greater-manchester-260901.osm.pbf" \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          python -m tools.public_osm_extract \
+            --input "${RUNNER_TEMP}/greater-manchester-260901.osm.pbf" \
+            --bbox=-2.270000,53.350000,-2.260000,53.360000 \
+            --snapshot "geofabrik-260901" \
+            --region "independent public UK test area" --execute
+          python -m benchmarks.public_uk_probe --input results/public-road-subset.osm \
+            --snapshot "geofabrik-260901" --samples 8
+      - name: Remove downloaded public road extract and temporary road graph
+        if: always()
+        shell: bash
+        run: |
+          rm -f "${RUNNER_TEMP}/greater-manchester-260901.osm.pbf"
+          rm -f results/public-road-subset.osm
       - name: Verify opt-in public-road extraction CLI without using a real map
         run: python -m tools.public_osm_extract --help >/dev/null
