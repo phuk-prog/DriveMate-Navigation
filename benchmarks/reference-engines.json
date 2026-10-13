@@ -1,0 +1,15 @@
+{
+  "policy": "No engine is scored until independent access, licensing, snapshot parity and run artifacts exist.",
+  "data_requirement": "Identical road snapshot and motorcar restrictions where supported; otherwise comparisons must state limitations.",
+  "candidate_engines": [
+    {"name":"Valhalla","category":"open-source","status":"not-integrated"},
+    {"name":"OSRM MLD","category":"open-source","status":"not-integrated"},
+    {"name":"GraphHopper","category":"open-source","status":"not-integrated"},
+    {"name":"OsmAnd","category":"open-source","status":"not-integrated"},
+    {"name":"Organic Maps","category":"open-source","status":"not-integrated"},
+    {"name":"BRouter","category":"open-source","status":"not-integrated"},
+    {"name":"HERE","category":"commercial-reference","status":"access-and-terms-not-verified"},
+    {"name":"Mapbox","category":"commercial-reference","status":"access-and-terms-not-verified"},
+    {"name":"TomTom","category":"commercial-reference","status":"access-and-terms-not-verified"}
+  ]
+}

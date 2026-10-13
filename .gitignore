@@ -1,0 +1,40 @@
+# Generated data/results and caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+results/
+dist/
+build/
+.gradle/
+.idea/
+*.iml
+
+# OSM extracts, prepared maps, routing graph binaries and Android builds
+*.osm
+*.osm.pbf
+*.mwm
+*.gh
+*.osrm*
+*.gph
+*.tiles
+*.mbtiles
+*.apk
+*.aab
+
+# Never version live driving recordings or any personal-location data
+private/
+recordings/
+drives/private/
+traces/
+*.gpx
+*.fit
+
+# Local secrets
+.env
+.env.*
+!.env.example
+*.keystore
+*.jks
+*.pem
+*.key
