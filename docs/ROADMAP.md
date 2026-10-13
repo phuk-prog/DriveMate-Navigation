@@ -7,7 +7,8 @@
 - [x] Add opt-in local public PBF subset conversion with contributor-metadata stripping (no CI downloads, files remain untracked).
 - [ ] Implement production-capable OSM PBF importer, conditional/time-dependent rules, vehicle exceptions, complex via-way restrictions, barrier and regional graph verification before any real-world routing.
 - [x] Add offline aggregate-only response parsers for OSRM, Valhalla and GraphHopper using synthetic examples (not yet live benchmark adapters).
-- [ ] Add same-map measured benchmark adapters for those engines and Android-native references, after verifying licences and acquiring public datasets unrelated to a user.
+- [x] Add guarded, public-road-only OSRM MLD runtime smoke: real image, same input extract, no paid API, benchmark clearly marked non-comparable until vehicle policies and timing interfaces are harmonised.
+- [ ] Add comparable, independently validated OSRM/Valhalla/GraphHopper benchmarks with audited equivalent motorcar profiles and real road restriction ground truth.
 - [ ] Record constraints for commercial reference providers; do not invoke billable or restricted APIs without approval.
 - [ ] Measure an independently chosen, public-data-only UK graph on test Android hardware, with no user's route history, device IDs or private journeys.
 - [ ] Implement offline graph/region updates and crash-safe rollback.

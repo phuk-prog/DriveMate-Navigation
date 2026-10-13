@@ -16,7 +16,7 @@ jobs:
   checks:
     name: Unit tests and synthetic benchmark only
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
@@ -56,6 +56,44 @@ jobs:
             --region "independent public UK test area" --execute
           python -m benchmarks.public_uk_probe --input results/public-road-subset.osm \
             --snapshot "geofabrik-260901" --samples 8
+      - name: OSRM MLD public reference smoke (single explicit run only)
+        if: contains(github.event.head_commit.message, '[osrm-reference-smoke]')
+        timeout-minutes: 12
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output "${RUNNER_TEMP}/public-greater-manchester.osm.pbf" \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          osmium extract --strategy complete_ways --bbox=-2.270000,53.350000,-2.260000,53.360000 \
+            "${RUNNER_TEMP}/public-greater-manchester.osm.pbf" -o results/osrm-public-subset.osm.pbf
+          osmium cat results/osrm-public-subset.osm.pbf -o results/public-road-subset.osm \
+            -f osm,add_metadata=false
+          python -m map_data --input results/public-road-subset.osm \
+            --region "independent public UK test area" --snapshot "geofabrik-260901"
+          IMAGE="ghcr.io/project-osrm/osrm-backend:v5.27.1@sha256:855614a38f464b0558a2ad6eaa7cb8c139f39887da9b38b485ce453c6e6e6124"
+          docker pull "$IMAGE"
+          docker run --rm -v "$PWD/results:/data" "$IMAGE" osrm-extract \
+            -p /opt/car.lua /data/osrm-public-subset.osm.pbf
+          docker run --rm -v "$PWD/results:/data" "$IMAGE" osrm-partition \
+            /data/osrm-public-subset.osrm
+          docker run --rm -v "$PWD/results:/data" "$IMAGE" osrm-customize \
+            /data/osrm-public-subset.osrm
+          docker run -d --rm --name drivemate-nav-osrm-reference \
+            -p 127.0.0.1:5000:5000 -v "$PWD/results:/data" "$IMAGE" \
+            osrm-routed --algorithm mld /data/osrm-public-subset.osrm
+          python -m benchmarks.osrm_live_reference --input results/public-road-subset.osm \
+            --snapshot "geofabrik-260901" --samples 8 --repeats 5
+      - name: Clean up local OSRM and ephemeral public datasets
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f drivemate-nav-osrm-reference 2>/dev/null || true
+          rm -f "${RUNNER_TEMP}/public-greater-manchester.osm.pbf"
+          find results -maxdepth 1 -type f \( -name 'osrm-public-*' -o -name 'public-road-subset.osm' \) -delete 2>/dev/null || true
       - name: Remove downloaded public road extract and temporary road graph
         if: always()
         shell: bash

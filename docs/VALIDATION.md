@@ -45,3 +45,13 @@ A successful job demonstrates **import of one small partial public UK road sampl
 The first actual public-road smoke test imported a partial 2,023-node / 1,202-edge road graph and generated eight algorithm-agreement scenarios, but A* was around two orders of magnitude slower than Dijkstra because each route performed a fresh O(E) geometry check. A follow-up adds `prepare_astar()` to validate geometry once per immutable road-graph snapshot and reuse that preparation on each reroute. The experiment now reports one-time preparation cost separately from warmed routing cost, and measures unprepared A* as a regression reference.
 
 The results remain too small and topologically unverified to select a production engine. The sample had zero imported prohibited-turn pairs. We must test much longer and legally verified junction routes.
+
+## OSRM MLD live reference smoke
+
+Commit marker `[osrm-reference-smoke]` activates one **ephemeral**, public-data-only GitHub Actions experiment. It downloads the pinned standard Geofabrik Greater Manchester historical extract into runner temporary storage, creates one **shared** complete-ways public OSM subset, uses its stripped XML in the DriveMate prototype, and passes the **same subset PBF** into pinned OSRM v5.27.1 MLD (`osrm-extract` with `/opt/car.lua`, `osrm-partition`, `osrm-customize`, then `osrm-routed`).
+
+The generated start/end graph nodes are deterministic **public-road sample points unrelated to any person's journeys**. Queries go only to localhost. Raw route geometry/waypoints are not logged or committed. The CI cleans up all downloaded maps and temporary routing artifacts.
+
+The report deliberately states `valid_head_to_head_comparison=false` because OSRM and DriveMate have **different car access and costing policies, graph splitting, destination snapping, and timed code paths** (HTTP+JSON vs local Python). An OSRM MLD request latency must not be presented as directly equivalent to DriveMate algorithm runtime. This establishes a repeatable integration baseline, **not** a validated ranking or safe turn legality result. The benchmark has no paid API dependencies.
+
+See [official OSRM backend documentation](https://github.com/Project-OSRM/osrm-backend), [OSRM Route API](https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md) and [v5.27.1 image](https://github.com/orgs/Project-OSRM/packages/container/osrm-backend).
