@@ -67,3 +67,11 @@ Sources: https://github.com/valhalla/valhalla/blob/master/docker/README.md and h
 ### Health-check correction
 
 An initial live Valhalla run failed with a connection reset immediately after the host socket became reachable. The live adapter now requires a **completed HTTP 200 from /status** before issuing routes, and adds bounded diagnostics on failure. Do not present unsuccessful runs as provider benchmark results.
+
+## GraphHopper runtime reference smoke
+
+One explicit commit marker `[graphhopper-reference-smoke]` activates the official **GraphHopper 11.1 web-service JAR** (Apache 2.0) on **Java 25**. Its published Maven Central artifact and checksum are fetched ephemerally during that one run. GraphHopper has no official Docker support, so this reference uses the published standalone executable instead of an unofficial image.
+
+The experiment uses the same pinned Geofabrik public Greater Manchester PBF and independent small public-road bbox as the prior OSRM and Valhalla tests, converted with Osmium. GraphHopper's car profile enables motorcar/motor_vehicle turn restrictions and CH pre-processing. No personal journeys or routes are supplied: source and destinations are generated from the public graph and sent only to the loopback address. The adapter reports **aggregate counts and timings only**, not geometry or requested point coordinates.
+
+**Comparison is exploratory only.** GraphHopper's car profile, snapping and contraction-hierarchy implementation are not the same as DriveMate's incomplete Python prototype; GraphHopper latency includes the HTTP stack while internal prototype timings do not. No independent evidence of real-junction legality was checked. The 11.1 artifact is never committed or published in Git.

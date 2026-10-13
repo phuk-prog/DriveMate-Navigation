@@ -9,6 +9,7 @@
 - [x] Add offline aggregate-only response parsers for OSRM, Valhalla and GraphHopper using synthetic examples (not yet live benchmark adapters).
 - [x] Add guarded, public-road-only OSRM MLD runtime smoke: real image, same input extract, no paid API, benchmark clearly marked non-comparable until vehicle policies and timing interfaces are harmonised.
 - [x] Prepare Valhalla official-container public-only integration smoke using the same pinned UK extract and privacy/accuracy caveats.
+- [x] Add guarded GraphHopper 11.1 standalone Java web-service reference to the shared public-road test framework (exploratory, not directly comparable).
 - [ ] Add comparable, independently validated OSRM/Valhalla/GraphHopper benchmarks with audited equivalent motorcar profiles and real road restriction ground truth.
 - [ ] Record constraints for commercial reference providers; do not invoke billable or restricted APIs without approval.
 - [ ] Measure an independently chosen, public-data-only UK graph on test Android hardware, with no user's route history, device IDs or private journeys.

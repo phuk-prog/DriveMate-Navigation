@@ -126,6 +126,54 @@ jobs:
               tail -n 35 || true
             exit 1
           fi
+      - name: Java 25 for official GraphHopper JAR (explicit once only)
+        if: contains(github.event.head_commit.message, '[graphhopper-reference-smoke]')
+        uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # v5.0.0
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: GraphHopper 11.1 public UK engine smoke (explicit once only)
+        if: contains(github.event.head_commit.message, '[graphhopper-reference-smoke]')
+        timeout-minutes: 12
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output "${RUNNER_TEMP}/public-uk-geofabrik.osm.pbf" \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          osmium extract --strategy complete_ways --bbox=-2.270000,53.350000,-2.260000,53.360000 \
+            "${RUNNER_TEMP}/public-uk-geofabrik.osm.pbf" -o results/public-graphhopper-subset.osm.pbf
+          osmium cat results/public-graphhopper-subset.osm.pbf -o results/public-road-subset.osm \
+            -f osm,add_metadata=false
+          python -m map_data --input results/public-road-subset.osm \
+            --region "independent public UK test area" --snapshot geofabrik-260901
+          BASE="https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/11.1/graphhopper-web-11.1.jar"
+          curl -fsSL --retry 2 --max-time 180 "$BASE" -o "${RUNNER_TEMP}/graphhopper-web-11.1.jar"
+          curl -fsSL --retry 2 --max-time 30 "$BASE.sha1" -o "${RUNNER_TEMP}/graphhopper-web-11.1.jar.sha1"
+          printf '%s  %s\n' "$(cat "${RUNNER_TEMP}/graphhopper-web-11.1.jar.sha1")" "${RUNNER_TEMP}/graphhopper-web-11.1.jar" | sha1sum --check --status
+          java -Xms128m -Xmx1536m -jar "${RUNNER_TEMP}/graphhopper-web-11.1.jar" \
+            server config/graphhopper-public-smoke.yml > "${RUNNER_TEMP}/graphhopper-run.log" 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" >/dev/null 2>&1 || true' EXIT
+          if ! python -m benchmarks.graphhopper_live_reference --input results/public-road-subset.osm \
+              --snapshot geofabrik-260901 --samples 8 --repeats 5; then
+            echo "GraphHopper failed: redacted setup diagnostics follow."
+            sed -E 's/(-?[0-9]{1,3}\.[0-9]{4,})/[public-coordinate-redacted]/g' \
+              "${RUNNER_TEMP}/graphhopper-run.log" | tail -n 45 || true
+            exit 1
+          fi
+      - name: Cleanup temporary public GraphHopper data
+        if: always()
+        shell: bash
+        run: |
+          rm -f "${RUNNER_TEMP}/public-uk-geofabrik.osm.pbf"
+          rm -f "${RUNNER_TEMP}/graphhopper-web-11.1.jar" "${RUNNER_TEMP}/graphhopper-web-11.1.jar.sha1"
+          rm -f "${RUNNER_TEMP}/graphhopper-run.log"
+          rm -f results/public-graphhopper-subset.osm.pbf
+          sudo rm -rf -- results/graphhopper-cache
       - name: Remove Valhalla reference container and ephemeral public maps
         if: always()
         shell: bash
