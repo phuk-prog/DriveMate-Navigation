@@ -55,3 +55,11 @@ The generated start/end graph nodes are deterministic **public-road sample point
 The report deliberately states `valid_head_to_head_comparison=false` because OSRM and DriveMate have **different car access and costing policies, graph splitting, destination snapping, and timed code paths** (HTTP+JSON vs local Python). An OSRM MLD request latency must not be presented as directly equivalent to DriveMate algorithm runtime. This establishes a repeatable integration baseline, **not** a validated ranking or safe turn legality result. The benchmark has no paid API dependencies.
 
 See [official OSRM backend documentation](https://github.com/Project-OSRM/osrm-backend), [OSRM Route API](https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md) and [v5.27.1 image](https://github.com/orgs/Project-OSRM/packages/container/osrm-backend).
+
+## Valhalla runtime integration (exploratory)
+
+The commit marker `[valhalla-reference-smoke]` enables a one-time, capped experiment using Valhalla's **official** scripted Docker image version **3.9.1**, pinned to a published manifest SHA-256. The workflow uses the same historical Geofabrik Greater Manchester PBF as the OSRM smoke; it clips the same independently selected public test bounding box, strips contributor metadata in a temporary local XML conversion, starts Valhalla on loopback, and sends deterministic public graph endpoints from the synthetic walk generator.
+
+Its output contains only aggregate request latency and success counts. The local API request latency includes Valhalla network/JSON overhead, and the DriveMate prototypes measure internal Python routing; profile rules and snapping also differ. Therefore **head_to_head_valid=false** regardless of which median appears numerically lower. The real provider run can fail when Valhalla declines short or incomplete extracts; this must remain a reported limitation, never be converted into a false success.
+
+Sources: https://github.com/valhalla/valhalla/blob/master/docker/README.md and https://valhalla.github.io/valhalla/building/
