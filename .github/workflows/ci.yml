@@ -133,7 +133,7 @@ jobs:
           docker rm -f drivemate-nav-valhalla-reference >/dev/null 2>&1 || true
           rm -f "${RUNNER_TEMP}/public-uk-source.osm.pbf"
           rm -f results/public-valhalla-subset.osm.pbf
-          rm -rf results/valhalla-volume
+          sudo rm -rf -- results/valhalla-volume
       - name: Clean up local OSRM and ephemeral public datasets
         if: always()
         shell: bash
