@@ -2,7 +2,7 @@ import math
 import unittest
 
 from engine import RoadEdge, RoadGraph, RouteNotFound, shortest_route
-from engine.astar import astar_route
+from engine.astar import astar_route, prepare_astar
 from benchmarks.fixture import load_fixture
 from benchmarks.synthetic_grid import grid
 from benchmarks.search_comparison import run
@@ -70,6 +70,49 @@ class AStarCorrectnessTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             astar_route(graph, start, finish, coordinates=points,
                         time_penalties_s={next(iter(graph.edges)): -10})
+
+    def test_prepared_is_mathematically_equivalent_and_reused(self):
+        graph, points, start, finish = grid(6)
+        prepared = prepare_astar(graph, points)
+        self.assertTrue(prepared.geographic_heuristic_valid)
+        gold = shortest_route(graph, start, finish)
+        for _ in range(5):
+            cached = astar_route(graph, start, finish, prepared=prepared)
+            self.assertAlmostEqual(gold.estimated_seconds, cached.route.estimated_seconds)
+            self.assertTrue(cached.geographic_heuristic_used)
+
+    def test_prepared_rejects_other_graph_even_if_equal(self):
+        graph, points, start, finish = grid(3)
+        other_graph, _, _, _ = grid(3)
+        prepared = prepare_astar(graph, points)
+        with self.assertRaises(ValueError):
+            astar_route(other_graph, start, finish, prepared=prepared)
+        with self.assertRaises(ValueError):
+            astar_route(graph, start, finish, prepared=prepared, coordinates=points)
+
+    def test_prepared_uses_defensive_copy_and_bad_geometry_falls_back(self):
+        graph, points, start, finish = grid(5)
+        prepared = prepare_astar(graph, points)
+        points[start] = (60.0, 70.0)
+        result = astar_route(graph, start, finish, prepared=prepared)
+        self.assertTrue(result.geographic_heuristic_used)
+        self.assertAlmostEqual(result.route.estimated_seconds,
+                               shortest_route(graph, start, finish).estimated_seconds)
+        bad_prepared = prepare_astar(graph, points)
+        self.assertFalse(bad_prepared.geographic_heuristic_valid)
+        self.assertAlmostEqual(astar_route(graph, start, finish, prepared=bad_prepared)
+                               .route.estimated_seconds,
+                               shortest_route(graph, start, finish).estimated_seconds)
+
+    def test_graph_edges_and_adjacency_not_mutable_after_preparation(self):
+        graph, points, start, finish = grid(3)
+        with self.assertRaises(TypeError):
+            graph.edges["fake"] = graph.edges[next(iter(graph.edges))]
+        with self.assertRaises(TypeError):
+            graph.adjacency[start] = ()
+        self.assertEqual(astar_route(graph, start, finish,
+                                    prepared=prepare_astar(graph, points)).route.estimated_seconds,
+                         shortest_route(graph, start, finish).estimated_seconds)
 
     def test_synthetic_comparison_labels_are_honest(self):
         summary = run(size=4, repeats=2)

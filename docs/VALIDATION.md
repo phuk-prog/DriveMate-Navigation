@@ -39,3 +39,9 @@ Do not query commercial services or download datasets without checking API terms
 The project includes an opt-in GitHub Actions step guarded by a `[uk-road-smoke]` commit-message marker. This one run downloads the fixed historical `greater-manchester-260901.osm.pbf` public Geofabrik extract, then uses Osmium to clip an **independently selected public road area**, strip contributor metadata and remove downloaded files after the job. It performs only aggregate Dijkstra/A* experiments based on generated test scenarios. It never reads user journeys.
 
 A successful job demonstrates **import of one small partial public UK road sample and shortest-time consistency**, not legally verified navigation. A failure to import due to unsupported turn restrictions is meaningful: the importer intentionally fails closed. This is not an OSRM/Valhalla/GraphHopper measurement. Those require their real engines and harmonised motorcar profiles.
+
+## Routing performance follow-up
+
+The first actual public-road smoke test imported a partial 2,023-node / 1,202-edge road graph and generated eight algorithm-agreement scenarios, but A* was around two orders of magnitude slower than Dijkstra because each route performed a fresh O(E) geometry check. A follow-up adds `prepare_astar()` to validate geometry once per immutable road-graph snapshot and reuse that preparation on each reroute. The experiment now reports one-time preparation cost separately from warmed routing cost, and measures unprepared A* as a regression reference.
+
+The results remain too small and topologically unverified to select a production engine. The sample had zero imported prohibited-turn pairs. We must test much longer and legally verified junction routes.

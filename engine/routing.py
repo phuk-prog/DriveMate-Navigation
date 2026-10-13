@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from heapq import heappop, heappush
 from itertools import count
 from math import isfinite
+from types import MappingProxyType
 from typing import Iterable, Mapping
 
 
@@ -69,10 +70,11 @@ class RoadGraph:
                 raise ValueError("An edge references an unknown vertex")
             self.edges[edge.edge_id] = edge
             adjacency[edge.source].append(edge)
-        self.adjacency = {
+        self.edges = MappingProxyType(self.edges)
+        self.adjacency = MappingProxyType({
             vertex: tuple(sorted(items, key=lambda e: e.edge_id))
             for vertex, items in adjacency.items()
-        }
+        })
         self.prohibited_turns = frozenset(tuple(t) for t in prohibited_turns)
         for entering, leaving in self.prohibited_turns:
             if entering not in self.edges or leaving not in self.edges:

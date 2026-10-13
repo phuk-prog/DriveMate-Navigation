@@ -14,7 +14,7 @@ from statistics import median
 from time import perf_counter_ns
 
 from engine import RouteNotFound, shortest_route
-from engine.astar import astar_route
+from engine.astar import astar_route, prepare_astar
 from map_data import Provenance, import_osm_xml
 from map_data.osm_xml import MAX_INPUT_BYTES
 
@@ -68,8 +68,11 @@ def check_public_graph(raw: bytes, *, snapshot: str, region: str, samples: int =
                               attribution="© OpenStreetMap contributors"),
     )
     graph = imported.graph
+    setup_start = perf_counter_ns()
+    prepared = prepare_astar(graph, imported.coordinates)
+    prepare_ms = (perf_counter_ns() - setup_start) / 1e6
     tested = 0
-    d_ms, a_ms = [], []
+    d_ms, a_ms, cold_ms = [], [], []
     heuristic_count = 0
     for source, target in _scenarios(graph, limit=samples):
         if tested >= samples:
@@ -79,10 +82,15 @@ def check_public_graph(raw: bytes, *, snapshot: str, region: str, samples: int =
             baseline = shortest_route(graph, source, target)
             d_ms.append((perf_counter_ns() - start)/1e6)
             start = perf_counter_ns()
-            candidate = astar_route(graph, source, target, coordinates=imported.coordinates)
+            candidate = astar_route(graph, source, target, prepared=prepared)
             a_ms.append((perf_counter_ns() - start)/1e6)
+            start = perf_counter_ns()
+            cold = astar_route(graph, source, target, coordinates=imported.coordinates)
+            cold_ms.append((perf_counter_ns() - start)/1e6)
         except RouteNotFound:
             continue
+        if abs(cold.route.estimated_seconds - candidate.route.estimated_seconds) > 1e-7:
+            raise AssertionError("Prepared and unprepared A* disagree")
         if abs(baseline.estimated_seconds - candidate.route.estimated_seconds) > 1e-7:
             raise AssertionError("A* and Dijkstra disagreed on shortest-time cost")
         if not candidate.route.edge_ids:
@@ -108,7 +116,9 @@ def check_public_graph(raw: bytes, *, snapshot: str, region: str, samples: int =
         "astar_matches_dijkstra_estimated_cost": True,
         "astar_geographic_heuristic_used_count": heuristic_count,
         "median_ms_dijkstra": round(median(d_ms), 5),
-        "median_ms_astar": round(median(a_ms), 5),
+        "median_ms_astar_prepared": round(median(a_ms), 5),
+        "median_ms_astar_unprepared": round(median(cold_ms), 5),
+        "one_time_astar_prepare_ms": round(prepare_ms, 5),
         "external_engines_executed": 0,
         "source_road_data_public": True,
         "user_location_information_used": False,

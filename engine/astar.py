@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from heapq import heappop, heappush
 from itertools import count
 from math import asin, cos, isfinite, radians, sin, sqrt
+from types import MappingProxyType
 from typing import Iterable, Mapping
 
 from .routing import RoadGraph, Route, RouteNotFound
@@ -35,6 +36,27 @@ class AStarResult:
     geographic_heuristic_used: bool
 
 
+@dataclass(frozen=True)
+class PreparedAStar:
+    """One-time geometry and speed validation for repeated route calculations.
+
+    Prepared state is strictly tied to one immutable RoadGraph instance, and
+    contains an immutable COPY of coordinates. Never reuse across map updates.
+    """
+    graph: RoadGraph
+    coordinates: Mapping[str, tuple[float, float]]
+    geographic_heuristic_valid: bool
+    maximum_mps: float
+
+
+def prepare_astar(graph: RoadGraph, coordinates: Mapping[str, tuple[float, float]]) -> PreparedAStar:
+    """Validate a graph snapshot once; thereafter A* can reroute without O(E) scans."""
+    positions = MappingProxyType({key: tuple(value) for key, value in coordinates.items()})
+    valid = _safe_geometry(graph, positions)
+    maximum_mps = max((edge.estimated_kph for edge in graph.edges.values()), default=1.0) / 3.6
+    return PreparedAStar(graph, positions, valid, maximum_mps)
+
+
 def _safe_geometry(graph: RoadGraph, points: Mapping[str, tuple[float, float]]) -> bool:
     if any(v not in points for v in graph.vertices):
         return False
@@ -56,6 +78,7 @@ def astar_route(
     destination: str,
     *,
     coordinates: Mapping[str, tuple[float, float]] | None = None,
+    prepared: PreparedAStar | None = None,
     incoming_edge_id: str | None = None,
     blocked_edges: Iterable[str] = (),
     time_penalties_s: Mapping[str, float] | None = None,
@@ -78,16 +101,25 @@ def astar_route(
     for name, delay in penalties.items():
         if name not in graph.edges or not isfinite(delay) or delay < 0:
             raise ValueError("Invalid penalty")
-    can_heuristic = coordinates is not None and _safe_geometry(graph, coordinates)
+    if prepared is not None:
+        if coordinates is not None:
+            raise ValueError("Supply prepared state OR raw coordinates, not both")
+        if prepared.graph is not graph:
+            raise ValueError("Prepared geometry belongs to a different map graph")
+        coordinates = prepared.coordinates
+        can_heuristic = prepared.geographic_heuristic_valid
+        maximum_mps = prepared.maximum_mps
+    else:
+        can_heuristic = coordinates is not None and _safe_geometry(graph, coordinates)
+        maximum_mps = max((e.estimated_kph for e in graph.edges.values()), default=1.0) / 3.6
     if source == destination:
         return AStarResult(Route((), 0.0, 0.0), 0, bool(can_heuristic))
-    maximum_kph = max(edge.estimated_kph for edge in graph.edges.values()) if graph.edges else 1.0
     def heuristic(vertex: str) -> float:
         if not can_heuristic:
             return 0.0
         assert coordinates is not None
         # Subtract tolerance: avoid slight rounding making h larger than truth.
-        return max(0.0, metres(coordinates[vertex], coordinates[destination]) - 0.02) / (maximum_kph / 3.6)
+        return max(0.0, metres(coordinates[vertex], coordinates[destination]) - 0.02) / maximum_mps
 
     start = (source, incoming_edge_id)
     distances = {start: 0.0}
