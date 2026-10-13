@@ -2,7 +2,8 @@
 
 - [x] Create independent repository and synthetic Dijkstra routing/reference test harness.
 - [ ] Document and approve a project-wide licence before distributing derivative components.
-- [ ] Implement an OSM importer with licence/provenance manifest, conditional access rules and independently tested topology.
+- [x] Introduce bounded OSM XML importing with provenance hash, basic node-via restrictions, one-way/access checks and synthetic topology tests.
+- [ ] Implement production-capable OSM PBF importer, conditional/time-dependent rules, vehicle exceptions, complex via-way restrictions, barrier and regional graph verification before any real-world routing.
 - [ ] Add same-map benchmark adapters for Valhalla, OSRM MLD, GraphHopper and suitable Android-native references, after verifying their licences.
 - [ ] Record constraints for commercial reference providers; do not invoke billable or restricted APIs without approval.
 - [ ] Measure a Greater Manchester graph on actual Android device hardware.

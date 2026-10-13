@@ -14,6 +14,8 @@ Create the best practical **offline-first, Android-efficient, adaptable** naviga
 
 - A small **original, deterministic Python routing core** with directed edges, explicit road-access states, forbidden turns, an incoming-edge-aware rerouting entry point and deterministic shortest-time searches.
 - A **synthetic road-network fixture**, automated routing regression tests and a lightweight benchmark reporter.
+- A **bounded OpenStreetMap XML importer** for small extracts, with provenance checksum, one-way travel, restricted turns and conservative uncertain access handling; unsupported conditional rules or via-way relations cause import to fail. This importer is **not yet suitable for real-world navigation**.
+- A benchmark comparison contract that **refuses to rank runs** from nonmatching map/profile/device/scenario configurations.
 - A reference-engine registry identifying engines to evaluate; **no reference adapters or competitor performance results exist yet**.
 - A low-cost GitHub Actions workflow that runs source checks, unit tests and a synthetic benchmark. **No APK, device tests, maps, services or paid APIs**.
 
@@ -26,6 +28,7 @@ Requires Python 3.11+ with no third-party packages.
 ~~~sh
 python -m unittest discover -s tests -v
 python -m benchmarks.run --repeat 30
+python -m map_data --input benchmarks/fixtures/synthetic-osm-junction.xml --region synthetic --snapshot fabricated-v1
 ~~~
 
 The benchmark prints experimental latency figures for a tiny **fabricated** network. Those are not evidence of real-world navigation speed, route safety or accuracy.
@@ -33,7 +36,8 @@ The benchmark prints experimental latency figures for a tiny **fabricated** netw
 ## Project layout
 
 - `engine/`: original, licence-independent routing prototype.
-- `map-data/`: planned road imports, versioned graph preparation, regional maps.
+- `map-data/`: road-data policy and format documentation.
+- `map_data/`: bounded OSM XML importer prototype (6 MB maximum; not a UK regional import).
 - `gps/`: planned positioning and map matching.
 - `guidance/`: planned UK turn, roundabout and lane instruction verification.
 - `learning/`: planned privacy-respecting learning and evidence gates.

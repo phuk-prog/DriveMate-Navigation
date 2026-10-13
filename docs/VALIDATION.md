@@ -7,6 +7,12 @@
 3. **Performance:** same hardware, repeatable warm/cold runs, route distance, p50/p95/p99 latency, memory, storage, battery, and reroute detection vs calculation time measured separately.
 4. **Robustness:** GPS dropouts, parallel road ambiguity, tunnels, wrong turns, nested roundabouts, disconnected maps, offline transitions and version migrations.
 
+## Initial comparison contract
+
+`benchmarks/comparison.py` now rejects direct timing comparisons when graph SHA-256, profile SHA-256, scenario, device, environment, run temperature or evidence classification differ. It prints timings only, never safety or correctness results. Tests use **fabricated sample latency values** that are not observed speeds of any competitor.
+
+For real benchmarks, first build a shared import pipeline and independently check the road topology. External providers with proprietary or different map versions must be explicitly marked **not directly comparable**. No external routing engines have been executed in this repository yet.
+
 ## Acceptance gates
 
 - Never accept a known illegal turn, wrong-way route or unsupported lane/roundabout claim in a validated case.

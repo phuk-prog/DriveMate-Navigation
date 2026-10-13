@@ -39,10 +39,13 @@ class OSMImporterTests(unittest.TestCase):
 
     def test_oncoming_wrong_way_is_not_allowed(self):
         m = imported()
-        with self.assertRaises(ValueError):
-            shortest_route(m.graph, "osm:2", "osm:1", incoming_edge_id="w:100:0:f")
-        # Incoming lane at B is valid, but no reverse edge on the primary.
+        # A different road gives a legal route back to A, but not the wrong
+        # way down the one-way edge from A to B.
+        result = shortest_route(m.graph, "osm:2", "osm:1", incoming_edge_id="w:100:0:f")
         self.assertNotIn("w:100:0:r", m.graph.edges)
+        self.assertNotIn("w:100:0:r", result.edge_ids)
+        self.assertFalse(any(e.target == "osm:1" and e.edge_id.startswith("w:100:")
+                             for e in m.graph.adjacency["osm:2"]))
 
     def test_only_restriction_blocks_all_other_exits(self):
         raw = FIXTURE.read_text()
