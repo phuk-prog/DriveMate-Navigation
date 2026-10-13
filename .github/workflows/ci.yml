@@ -34,4 +34,8 @@ jobs:
       - name: Run independent routing tests
         run: python -m unittest discover -s tests -v
       - name: Measure synthetic routing latency (informational only)
-        run: python -m benchmarks.run --repeat 30
+        run: |
+          python -m benchmarks.run --repeat 30
+          python -m benchmarks.search_comparison --size 14 --repeat 5
+      - name: Verify opt-in public-road extraction CLI without using a real map
+        run: python -m tools.public_osm_extract --help >/dev/null

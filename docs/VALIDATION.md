@@ -13,6 +13,12 @@
 
 For real benchmarks, first build a shared import pipeline and independently check the road topology. External providers with proprietary or different map versions must be explicitly marked **not directly comparable**. No external routing engines have been executed in this repository yet. Offline parsers in `benchmarks/provider_summaries.py` discard all coordinates, trip details and geometry, and report aggregate length and estimated duration only.
 
+## Prototype search comparison
+
+A* and Dijkstra now run against the **same synthetic directed graph and turn restriction rules**, including tests for blocked roads, unknown access and nonnegative learned penalties. A* first validates its coordinate-based heuristic, falling back to zero (Dijkstra-style) if the geometry is incomplete or inconsistent. See `benchmarks/search_comparison.py`. The timings are Python-only, include different preprocessing work, and do not establish whether A* is faster on real UK maps or Android.
+
+Local public-road preparation scripts are opt-in; no real road extract, user coordinates or GPS tracks are committed or fetched in CI.
+
 ## Acceptance gates
 
 - Never accept a known illegal turn, wrong-way route or unsupported lane/roundabout claim in a validated case.

@@ -14,14 +14,16 @@ Create the best practical **offline-first, Android-efficient, adaptable** naviga
 
 - A small **original, deterministic Python routing core** with directed edges, explicit road-access states, forbidden turns, an incoming-edge-aware rerouting entry point and deterministic shortest-time searches.
 - A **synthetic road-network fixture**, automated routing regression tests and a lightweight benchmark reporter.
+- An independent **turn-aware A*** candidate that uses geographic heuristics only with validated geometry and falls back safely otherwise. It is compared against the deterministic Dijkstra baseline on fabricated networks.
+- An opt-in **public OSM PBF-to-XML subset preparation tool** that runs locally using Osmium, strips contributor metadata and only writes to ignored `results/`; large map files are never committed or downloaded by GitHub CI.
 - A **bounded OpenStreetMap XML importer** for small extracts, with provenance checksum, one-way travel, restricted turns and conservative uncertain access handling; unsupported conditional rules or via-way relations cause import to fail. This importer is **not yet suitable for real-world navigation**.
 - A benchmark comparison contract that **refuses to rank runs** from nonmatching map/profile/device/scenario configurations.
 - Local, offline output adapters for OSRM, Valhalla and GraphHopper that retain **only aggregate time and distance**; these do not run external engines or imply any real provider benchmark has taken place.
 - A repository-wide **privacy preflight**, executed automatically in CI, that rejects suspicious files and likely credential/location-data exposures. Manual review is still mandatory.
-- A reference-engine registry identifying engines to evaluate; **no reference adapters or competitor performance results exist yet**.
+- A reference-engine registry identifying engines to evaluate; **no actual competing engines have been executed or measured yet**.
 - A low-cost GitHub Actions workflow that runs source checks, unit tests and a synthetic benchmark. **No APK, device tests, maps, services or paid APIs**.
 
-**Not implemented yet:** actual OpenStreetMap import, mobile-native execution, map matching, UI, directions, voice, lane guidance, traffic, incremental regional map updates, adaptive model deployment, or live navigation.
+**Not implemented yet:** any independently validated real-road routing result, large/production OpenStreetMap PBF ingestion, mobile-native execution, map matching, UI, directions, voice, lane guidance, traffic, incremental regional map updates, adaptive model deployment, or live navigation.
 
 ## Run locally
 
@@ -30,16 +32,18 @@ Requires Python 3.11+ with no third-party packages.
 ~~~sh
 python -m unittest discover -s tests -v
 python -m benchmarks.run --repeat 30
+python -m benchmarks.search_comparison --size 14 --repeat 8
 python -m map_data --input benchmarks/fixtures/synthetic-osm-junction.xml --region synthetic --snapshot fabricated-v1
 ~~~
 
-The benchmark prints experimental latency figures for a tiny **fabricated** network. Those are not evidence of real-world navigation speed, route safety or accuracy.
+The benchmarks print experimental latency figures for **fabricated** networks. Those are not evidence of real-world navigation speed, route safety or accuracy.
 
 ## Project layout
 
 - `engine/`: original, licence-independent routing prototype.
 - `map-data/`: road-data policy and format documentation.
 - `map_data/`: bounded OSM XML importer prototype (6 MB maximum; not a UK regional import).
+- `tools/public_osm_extract.py`: manual, local preparation of very small, contributor-anonymised public-road samples (needs Osmium Tool and a public PBF obtained separately).
 - `gps/`: planned positioning and map matching.
 - `guidance/`: planned UK turn, roundabout and lane instruction verification.
 - `learning/`: planned privacy-respecting learning and evidence gates.

@@ -26,7 +26,7 @@ class PublicMapPreparationTests(unittest.TestCase):
             self.assertEqual(len(plan), 2)
             self.assertIn("complete_ways", plan[0])
             self.assertIn("osm,add_metadata=false", plan[1])
-            self.assertNotIn("curl", " ".join(plan))
+            self.assertNotIn("curl", " ".join(arg for command in plan for arg in command))
 
     def test_output_outside_ignored_directory_is_rejected(self):
         source = Path("open-data.osm.pbf")

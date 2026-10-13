@@ -6,7 +6,25 @@
 python -m map_data --input benchmarks/fixtures/synthetic-osm-junction.xml --region synthetic --snapshot fabricated-v1
 ~~~
 
-The CLI prints a SHA-256 of the input and attribution; it does not download, publish or copy the original file. Do not commit real map extracts, private GPS traces or the imported graph.
+The CLI prints a SHA-256 of the input and attribution; it does not download, publish or copy the original file.
+
+## Local, public-data-only PBF preparation (optional)
+
+For repeatable tests, the publicly documented [Geofabrik Greater Manchester road-data extract](https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester.html) is one possible source. Its standard public extracts omit contributor usernames, user IDs and changeset IDs. Download the **public current .osm.pbf** manually onto your own development machine, never the internal/history extract. Do not add the downloaded file to Git.
+
+Install [Osmium Tool](https://osmcode.org/osmium-tool/). Then run the commands below using **only a public test-area bounding box selected independently of any real journey or person**:
+
+~~~sh
+python -m tools.public_osm_extract --input /path/to/public-region.osm.pbf --bbox "MIN_LONGITUDE,MIN_LATITUDE,MAX_LONGITUDE,MAX_LATITUDE" --snapshot public-snapshot-date
+# The first command validates the argument structure only.
+# Add --execute to process a small subset locally after verifying the source.
+~~~
+
+The tool asks Osmium to use `complete_ways` and strip OSM contributor metadata; checks the output again and processes no more than 6 MB of XML. It records aggregate node, edge and turn statistics without saving journeys. Generated files stay in the git-ignored `results/` directory. A small bound is necessary because the importer rejects large files. Because `complete_ways` does not ensure relations are complete, a complex road subset may be **rejected**, not treated as valid navigation data.
+
+**This step has not yet been executed on real UK road data in CI.** Real OSM input may contain road rules the current importer cannot handle. A failed import does not prove roads are inaccessible.
+
+ Do not commit real map extracts, private GPS traces or the imported graph.
 
 ## What this initial importer handles
 
@@ -21,7 +39,7 @@ The CLI prints a SHA-256 of the input and attribution; it does not download, pub
 
 - Conditional vehicle/turn restrictions (clock dependent) and via-way restrictions
 - Production road legality, route quality, lanes, surface, vehicle dimensions, height/weight and temporal closures
-- Osmium/PBF ingestion, streaming, complex relation shapes, intricate physical barriers and area routing
+- Direct PBF ingestion without local Osmium conversion, streaming, complex relation shapes, intricate physical barriers and area routing
 - Realistic junction exit enumeration, scalable map tiles, graph overlays and crash-safe regional updates
 
 If a known conditional rule or unhandled turn relation is found, import raises an error rather than silently allowing a questionable manoeuvre. **Other OSM complexities are not fully recognised, so this is not road-ready.** The project requires a separate independent legality oracle and full vehicle-rule importer before live navigation.
