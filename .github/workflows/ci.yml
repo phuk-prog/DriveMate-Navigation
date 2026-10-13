@@ -27,8 +27,10 @@ jobs:
         with:
           python-version: '3.11'
           cache: ''
+      - name: Reject personal data and credentials in public repository
+        run: python -m tools.privacy_guard
       - name: Compile source
-        run: python -m compileall -q engine map_data benchmarks tests
+        run: python -m compileall -q engine map_data benchmarks tools tests
       - name: Run independent routing tests
         run: python -m unittest discover -s tests -v
       - name: Measure synthetic routing latency (informational only)

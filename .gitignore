@@ -22,7 +22,22 @@ build/
 *.apk
 *.aab
 
-# Never version live driving recordings or any personal-location data
+# Never version location traces, private recordings, personal data or exports
+*.gpx
+*.kml
+*.kmz
+*.geojson
+*.fit
+*.mp4
+*.mov
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.pdf
+private/
+personal/
+user-data/
 private/
 recordings/
 drives/private/

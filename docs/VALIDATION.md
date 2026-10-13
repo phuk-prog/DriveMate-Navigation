@@ -11,7 +11,7 @@
 
 `benchmarks/comparison.py` now rejects direct timing comparisons when graph SHA-256, profile SHA-256, scenario, device, environment, run temperature or evidence classification differ. It prints timings only, never safety or correctness results. Tests use **fabricated sample latency values** that are not observed speeds of any competitor.
 
-For real benchmarks, first build a shared import pipeline and independently check the road topology. External providers with proprietary or different map versions must be explicitly marked **not directly comparable**. No external routing engines have been executed in this repository yet.
+For real benchmarks, first build a shared import pipeline and independently check the road topology. External providers with proprietary or different map versions must be explicitly marked **not directly comparable**. No external routing engines have been executed in this repository yet. Offline parsers in `benchmarks/provider_summaries.py` discard all coordinates, trip details and geometry, and report aggregate length and estimated duration only.
 
 ## Acceptance gates
 
@@ -20,7 +20,7 @@ For real benchmarks, first build a shared import pipeline and independently chec
 - Each candidate change must pass fixture, property-style, integration, replay and regression gates appropriate to its risk.
 - Report unresolved evidence as **unknown**, including unverified exits.
 - Retain a clean rollback target, map version and evidence provenance for every accepted change.
-- Real drives require consent, private storage, short retention and anonymised derived tests.
+- This **public** repository cannot receive real drives, consented or otherwise. Any such work must be explicitly approved for a separate private environment; only safely synthetic or independently public non-personal fixtures are accepted here.
 
 ## Comparing the reference engines
 

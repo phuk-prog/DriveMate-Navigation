@@ -12,10 +12,10 @@ OpenStreetMap is supplied under ODbL obligations (including attribution and pote
 
 ## Personal data, location history and API credentials
 
-No real GPS track, home/work location, vehicle identifier, licence plate, user profile, phone logs, server token, paid API credential, private street imagery or proprietary maps in this **public** repository. Synthetic fixtures are safe. Real recordings must be consented, held separately and access-controlled; derived regression fixtures need privacy review.
+No personal data of any kind, including GPS tracks, actual journeys, home/work positions, vehicle identifiers, licence plates, user profiles, device logs, tokens, private imagery or proprietary maps, is permitted in this **public** repository. Synthetic fixtures are safe. Real recordings must be consented, held separately and access-controlled; derived regression fixtures need privacy review.
 
 Treat pull requests and provider responses as untrusted input. GitHub Actions should never expose secrets to untrusted fork code. Do not enable expensive external APIs, APK builds or deployments by default.
 
 ## Deployment safeguard
 
-Changes to the existing private `phuk-prog/DriveMate` Android app are out of scope until the owner expressly approves integration and the necessary independent tests pass.
+No existing Android application, its private repositories, records or APKs are modified by this public research project. Any future integration requires explicit approval and independent tests.

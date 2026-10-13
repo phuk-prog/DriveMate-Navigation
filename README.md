@@ -2,7 +2,7 @@
 
 **Status: independent research prototype — not an Android navigation app or approved production routing engine.**
 
-This project is an independently developed navigation architecture and validation laboratory. It is deliberately separate from `phuk-prog/DriveMate`: nothing here updates the existing Android application or generates an APK.
+This project is an independently developed navigation architecture and validation laboratory. It is separate from any existing Android application: nothing here updates another app or generates an APK.
 
 ## Goal
 
@@ -16,6 +16,8 @@ Create the best practical **offline-first, Android-efficient, adaptable** naviga
 - A **synthetic road-network fixture**, automated routing regression tests and a lightweight benchmark reporter.
 - A **bounded OpenStreetMap XML importer** for small extracts, with provenance checksum, one-way travel, restricted turns and conservative uncertain access handling; unsupported conditional rules or via-way relations cause import to fail. This importer is **not yet suitable for real-world navigation**.
 - A benchmark comparison contract that **refuses to rank runs** from nonmatching map/profile/device/scenario configurations.
+- Local, offline output adapters for OSRM, Valhalla and GraphHopper that retain **only aggregate time and distance**; these do not run external engines or imply any real provider benchmark has taken place.
+- A repository-wide **privacy preflight**, executed automatically in CI, that rejects suspicious files and likely credential/location-data exposures. Manual review is still mandatory.
 - A reference-engine registry identifying engines to evaluate; **no reference adapters or competitor performance results exist yet**.
 - A low-cost GitHub Actions workflow that runs source checks, unit tests and a synthetic benchmark. **No APK, device tests, maps, services or paid APIs**.
 
@@ -47,14 +49,14 @@ The benchmark prints experimental latency figures for a tiny **fabricated** netw
 - `android/`: future native on-device proof-of-concept.
 - `docs/`: architecture, safety, privacy, licences and milestones.
 
-Read [architecture](docs/ARCHITECTURE.md), [validation](docs/VALIDATION.md), [licensing and privacy](docs/LICENSING_AND_PRIVACY.md), and [roadmap](docs/ROADMAP.md) before adding components.
+Read [public-data policy](docs/PUBLIC_DATA_POLICY.md), [architecture](docs/ARCHITECTURE.md), [validation](docs/VALIDATION.md), [licensing and privacy](docs/LICENSING_AND_PRIVACY.md), and [roadmap](docs/ROADMAP.md) before adding components.
 
 ## Rules for this public repository
 
-Never commit real driving traces, home/work positions, vehicle identifiers, secrets, proprietary maps, API responses without redistribution rights or copyrighted third-party source unless its licence and provenance have been reviewed. Use anonymised and synthetic fixtures for public tests.
+Never commit any personal data, actual driving traces, home/work positions, vehicle identifiers, secrets, private application details or proprietary maps. Use synthetic fixtures and publicly licensed non-personal road data only. Passing automated privacy scans does not replace human review.
 
 Public repository visibility **does not** mean this code has an open-source licence. There is currently **no project-wide code licence**: licensing must be decided explicitly before third-party code is imported or this project is distributed to others.
 
 No automatic dependency downloads or builds of other engines. Compare them only with permitted data and APIs; use the same map snapshot when possible and disclose when not.
 
-This repository does not replace the established `DriveMate` app until an explicit integration decision and complete on-device/regression validation.
+This research repository does not modify any existing Android app; integration would require a separate decision and complete on-device/regression validation.
