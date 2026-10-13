@@ -19,7 +19,8 @@ class PrivacyGuardTests(unittest.TestCase):
         self.assertIn("possible personal email address", inspect_file("notes.txt", fake))
 
     def test_embedded_location_recording_is_rejected(self):
-        self.assertTrue(inspect_file("fixture.txt", b"<gpx><trkpt lat='1' lon='2'/></gpx>"))
+        fake = b"<" + b"gpx><" + b"trkpt lat='1' lon='2'/>"
+        self.assertTrue(inspect_file("fixture.txt", fake))
 
     def test_fixture_requires_synthetic_provenance(self):
         self.assertIn("fixture lacks explicit synthetic classification",

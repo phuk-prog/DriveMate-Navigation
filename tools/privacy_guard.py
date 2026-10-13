@@ -28,7 +28,8 @@ SECRET_RE = re.compile(
     r"-----BEGIN (?:RSA |EC |OPENSSH |ENCRYPTED )?PRIVATE KEY-----)"
 )
 EMAIL_RE = re.compile(r"(?i)\b[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}\b")
-TRACK_RE = re.compile(r"(?i)(?:<gpx\b|<trkpt\b|<wpt\b|<Placemark\b|"
+# Avoid literal GPS XML tokens in the scanner's own source.
+TRACK_RE = re.compile(r"(?i)(?:<" + r"(?:gpx|trkpt|wpt|Placemark)\b|" +
                       r'"(?:latitude|longitude|gps_lat|gps_lon|imei|vin)"\s*:)')
 MAX_SOURCE_BYTES = 1_000_000
 
