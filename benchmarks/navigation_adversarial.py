@@ -10,7 +10,7 @@ def xy(x,y,lat=51.5,lon=-.12):
     return lat+degrees(y/EARTH),lon+degrees(x/(EARTH*cos(radians(lat))))
 
 def error(rows,case,message):
-    if len(rows)<50:rows.append({'case':case,'failure':str(message)})
+    rows.append({'case':case,'failure':str(message)})
 
 def ring(n,radius,extra=False):
     pts={'origin':xy(radius+120,0)}

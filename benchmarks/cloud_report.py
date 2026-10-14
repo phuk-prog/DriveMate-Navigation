@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 from benchmarks.head_to_head import generate as generate_head_to_head, BACKENDS
 from benchmarks.benchmark_ranking import judge as judge_ranking, markdown as ranking_markdown, save as save_ranking
+from benchmarks.category_audit import build as build_categories, save as save_categories, markdown as category_markdown
 
 MEASURED_CATEGORIES = (
     ("Routing/legality", "routing_legality"),
@@ -159,7 +160,9 @@ def main():
             matched[label]=[row["status"] for row in data.get("batch_matches",())]
     ranking=judge_ranking(comparisons)
     save_ranking(ranking,out)
-    (out/"SCORECARD.md").write_text(ranking_markdown(ranking)+"\n"+scorecard_markdown(records,comparisons,matched))
+    audit=build_categories(root,comparisons)
+    save_categories(audit,out)
+    (out/"SCORECARD.md").write_text(ranking_markdown(ranking)+"\n"+category_markdown(audit))
     (out/"results.json").write_text(json.dumps(records,indent=2))
 
 if __name__=="__main__":

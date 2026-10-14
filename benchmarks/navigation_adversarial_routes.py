@@ -43,7 +43,7 @@ def route_oracle():
             if cursor!=f'n{count-1}' or cost!=optimum or abs(actual.estimated_seconds*1000000-optimum)>.01:
                 errors.append({'case':case,'mode':mode,'cost':cost,'expected':optimum})
             runs+=1
-    return {'category':'independent_routing_oracle','graphs':100,'route_executions':runs,'failures':errors[:50]}
+    return {'category':'independent_routing_oracle','graphs':100,'route_executions':runs,'failures':errors}
 
 def recovery_oracle():
     failures=[];journeys=0;bad_fixes=0
@@ -91,4 +91,4 @@ def recovery_oracle():
                             failures.append({'case':key,'reason':'could not confirm same-road recovery: '+result.status})
                     journeys+=1
     return {'category':'compound_gps_recovery','journey_cases':journeys,
-            'poor_signal_observations':bad_fixes,'failures':failures[:50]}
+            'poor_signal_observations':bad_fixes,'failures':failures}

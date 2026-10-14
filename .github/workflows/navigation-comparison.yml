@@ -207,7 +207,11 @@ jobs:
         with:
           path: collected
       - run: python3 -m benchmarks.cloud_report --input collected
-      - run: cat results/ci-report/SCORECARD.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Publish complete category and failure scorecard
+        run: |
+          cat results/ci-report/SCORECARD.md >> "$GITHUB_STEP_SUMMARY"
+          test -s results/ci-report/category_results.json
+          test -s results/ci-report/CATEGORY_SCORECARD.md
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: category-scorecard
