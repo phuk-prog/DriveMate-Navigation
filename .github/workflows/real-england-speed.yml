@@ -7,7 +7,7 @@ permissions:
   contents: read
 concurrency:
   group: real-england-speed-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   real-road-speed:
     runs-on: ubuntu-24.04
@@ -24,6 +24,7 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Review source, run regression and compile real-speed harness
+        timeout-minutes: 6
         run: |
           python -m tools.privacy_guard
           bash navigation_core/native/build.sh
