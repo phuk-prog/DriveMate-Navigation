@@ -26,6 +26,14 @@ class MeasuredScorecardTests(unittest.TestCase):
         self.assertNotIn("| Organic Maps |",text)
         self.assertIn("excluded",text.lower())
 
+    def test_route_only_engine_not_falsely_credited_roundabout_or_gps(self):
+        from benchmarks.cloud_report import scorecard_markdown
+        summary={"RoutingKit CH":{"passed":4,"failed":0,"unknown":0,"not_tested":0,"test_cases":4}}
+        rows=[{"case":"ring_exit_"+str(i),"results":{"RoutingKit CH":"pass"}} for i in range(1,5)]
+        text=scorecard_markdown({"RoutingKit CH":{"scores":{"routing_legality":10}}},{"summaries":summary,"cases":rows})
+        self.assertNotIn("| RoutingKit CH | 4/4",text.split("## Roundabout exit numbers")[1])
+        self.assertNotIn("| RoutingKit CH | 4/4",text.split("## Identical four clean synthetic GPS traces")[-1] if "## Identical" in text else "")
+
     def test_no_reference_scorecard_is_still_explicitly_unavailable(self):
         text=scorecard_markdown({},{"summaries":{},"cases":[]})
         self.assertIn("No fully executed paired comparison",text)

@@ -7,6 +7,7 @@ import argparse
 import json
 from pathlib import Path
 from benchmarks.head_to_head import generate as generate_head_to_head, BACKENDS
+from benchmarks.benchmark_ranking import judge as judge_ranking, markdown as ranking_markdown, save as save_ranking
 
 MEASURED_CATEGORIES = (
     ("Routing/legality", "routing_legality"),
@@ -33,17 +34,21 @@ def load_records(root):
     for path in Path(root).rglob("comparison.json"):
         entry=json.loads(path.read_text())
         engine=entry.get("engine")
-        if engine not in ("osrm","osrm-ch","valhalla"):
+        if engine not in ("osrm","osrm-ch","valhalla","routingkit","pgrouting"):
             continue
         if entry.get("fresh_execution") is not True:
             raise ValueError("Cannot score an unverified reference: "+engine)
-        label={"osrm":"OSRM MLD","osrm-ch":"OSRM CH","valhalla":"Valhalla"}[engine]
+        label={"osrm":"OSRM MLD","osrm-ch":"OSRM CH","valhalla":"Valhalla",
+               "routingkit":"RoutingKit CH","pgrouting":"pgRouting"}[engine]
         row=records.setdefault(label,{"system":label,"scores":{},"overall":None})
-        row["status"]="executed local service reference"
-        row["scores"]["routing_legality"]=entry.get("score_out_of_10")
+        row["status"]="executed verified reference"
+        cases=entry["cases"]
+        row["scores"]["routing_legality"]=(round(10*sum(c["status"]=="pass" for c in cases)/len(cases),2)
+            if cases and all(c["status"]!="unknown" for c in cases) else None)
         ring=[case for case in entry["cases"] if case["case"].startswith("ring_exit_")]
         row["scores"]["junction_roundabout"]=(round(10*sum(c["status"]=="pass" for c in ring)/4,2)
-            if len(ring)==4 and all(c["status"]!="unknown" for c in ring) else None)
+            if engine in ("osrm","osrm-ch","valhalla") and len(ring)==4
+            and all(c["status"]!="unknown" for c in ring) else None)
     return records
 
 def scorecard_markdown(records, comparison, gps_traces=None):
@@ -77,6 +82,11 @@ def scorecard_markdown(records, comparison, gps_traces=None):
         "|---|---:|---:|---:|",
     ])
     for name in active:
+        # Routing-only CH/Dijkstra libraries return a path, not a numbered
+        # roundabout guidance instruction. Never promote path correctness
+        # to an exit-numbering score.
+        if name not in ("DriveMate","GraphHopper","OSRM MLD","OSRM CH","Valhalla"):
+            continue
         subset=[case["results"][name] for case in comparison["cases"] if case["case"].startswith("ring_exit_")]
         if len(subset)!=4:continue
         lines.append(f"| {name} | {subset.count('pass')}/4 | {subset.count('fail')} | {subset.count('unknown')} |")
@@ -147,7 +157,9 @@ def main():
         elif data.get("engine") in ("osrm","osrm-ch","valhalla") and data.get("fresh_execution") is True:
             label={"osrm":"OSRM MLD","osrm-ch":"OSRM CH","valhalla":"Valhalla"}[data["engine"]]
             matched[label]=[row["status"] for row in data.get("batch_matches",())]
-    (out/"SCORECARD.md").write_text(scorecard_markdown(records,comparisons,matched))
+    ranking=judge_ranking(comparisons)
+    save_ranking(ranking,out)
+    (out/"SCORECARD.md").write_text(ranking_markdown(ranking)+"\n"+scorecard_markdown(records,comparisons,matched))
     (out/"results.json").write_text(json.dumps(records,indent=2))
 
 if __name__=="__main__":

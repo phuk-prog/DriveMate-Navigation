@@ -37,6 +37,14 @@ class HeadToHeadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "not verified"):
             build((g, o, ch))
 
+    def test_additional_real_routing_algorithms_pair_only_when_executed(self):
+        g, o = self.sources()
+        r=build((g,{**o,"engine":"routingkit"},{**o,"engine":"pgrouting"}))
+        self.assertEqual(r["summaries"]["RoutingKit CH"]["passed"],1)
+        self.assertEqual(r["summaries"]["pgRouting"]["unknown"],1)
+        self.assertEqual(r["summaries"]["RoutingKit CH"]["not_tested"],0)
+        self.assertEqual(r["summaries"]["Valhalla"]["not_tested"],2)
+
     def test_different_dataset_disallowed(self):
         g, o = self.sources()
         o["dataset_sha256"] = "b" * 64
