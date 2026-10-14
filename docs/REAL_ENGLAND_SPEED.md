@@ -74,3 +74,29 @@ limited warm HTTP speed benchmark. The rejected-area records are retained in
 `area-preflight.log`; no inference of UK-wide speed, route correctness or legal
 coverage is permitted from a selected region. Extending DriveMate's conditional
 motor-vehicle access model remains an independent correctness task.
+
+
+## Additional independent speed references
+
+Add Valhalla 3.9.1 (`auto` costing) and openrouteservice 9.7.1
+(`driving-car`) as genuine engine services loading the **same Wigan
+OSM PBF extract** on the **same runner**. Each gets the same case IDs,
+cold graph preparation is outside the timed warm HTTP window, and response
+endpoints are validated before a valid response is counted.
+
+If a reference service fails its startup/readiness gate, its outcome is
+`not_tested`, with the actual Docker log retained; it is **never**
+awarded a zero time, a passing route, or a failed navigation correctness mark.
+Invalid route responses are distinct from setup failures and cannot earn
+complete-cohort speed ranks.
+
+BRouter needs its **own original .rd5 data built from this pinned map**.
+Public weekly BRouter tile downloads are NOT a same-map comparison.
+RoutingKit CH and pgRouting are algorithm-only adapters currently fed by
+DriveMate-imported transitions. They are not ranked against independent
+HTTP road importers, and no fake service result is inserted.
+
+This remains a **warm HTTP response latency** comparison for a small
+real-road extract, not an Android navigation quality, full-English-network
+routing, or verified legal-road-performance ranking. Preserve total and
+per-case timing records, all unresolved cases and source provenance.

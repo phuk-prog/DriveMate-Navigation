@@ -11,7 +11,7 @@ concurrency:
 jobs:
   real-road-speed:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -113,20 +113,73 @@ jobs:
             done
             test "$ready" -eq 1 || { echo "OSRM port $port failed readiness"; exit 2; }
           done
-      - name: Measure real-English-road routes on same runner
+      - name: Start pinned Valhalla on identical English OSM snapshot
+        shell: bash
+        continue-on-error: true
         run: |
+          set -euo pipefail
+          mkdir -p results/real/valhalla
+          cp results/real/roads.osm.pbf results/real/valhalla/roads.osm.pbf
+          IMAGE='ghcr.io/valhalla/valhalla-scripted:3.9.1@sha256:6238809f9dc3057743d70a20efd3911ec38e458bfa13a0601909b58f68dfd956'
+          docker pull "$IMAGE"
+          docker run -d --rm --name english-valhalla -p 127.0.0.1:8002:8002 \
+            -v "$PWD/results/real/valhalla:/custom_files" \
+            -e build_admins=False -e build_time_zones=False \
+            -e build_elevation=False -e build_tar=False \
+            -e server_threads=2 "$IMAGE"
+          ready=0
+          for attempt in $(seq 1 100); do
+            if curl -fsS --max-time 2 http://127.0.0.1:8002/status > /dev/null; then ready=1; break; fi
+            sleep 1
+          done
+          test "$ready" -eq 1 || { echo 'Valhalla unavailable on this run; unranked'; exit 2; }
+          echo 'VALHALLA_READY=1' >> "$GITHUB_ENV"
+      - name: Start openrouteservice on identical English OSM snapshot
+        shell: bash
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          mkdir -p results/real/ors/{files,graphs,config,logs,elevation_cache}
+          cp results/real/roads.osm.pbf results/real/ors/files/roads.osm.pbf
+          IMAGE='openrouteservice/openrouteservice:v9.7.1'
+          docker pull "$IMAGE"
+          docker run -d --rm --name english-ors -p 127.0.0.1:8080:8082 \
+            -v "$PWD/results/real/ors/files:/home/ors/files" \
+            -v "$PWD/results/real/ors/graphs:/home/ors/graphs" \
+            -v "$PWD/results/real/ors/config:/home/ors/config" \
+            -v "$PWD/results/real/ors/logs:/home/ors/logs" \
+            -v "$PWD/results/real/ors/elevation_cache:/home/ors/elevation_cache" \
+            -e 'ors.engine.profile_default.build.source_file=/home/ors/files/roads.osm.pbf' \
+            -e 'ors.engine.profiles.car.enabled=true' \
+            -e BUILD_GRAPHS=True -e XMS=256m -e XMX=1300m "$IMAGE"
+          ready=0
+          for attempt in $(seq 1 105); do
+            if curl -fsS --max-time 2 http://127.0.0.1:8080/ors/v2/health > /dev/null; then ready=1; break; fi
+            sleep 1
+          done
+          test "$ready" -eq 1 || { echo 'openrouteservice unavailable on this run; unranked'; exit 2; }
+          echo 'ORS_READY=1' >> "$GITHUB_ENV"
+      - name: Measure real-English-road routes on same runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          additional=()
+          if [[ "${VALHALLA_READY:-}" == '1' ]]; then additional+=(--valhalla); fi
+          if [[ "${ORS_READY:-}" == '1' ]]; then additional+=(--openrouteservice); fi
           python -m benchmarks.real_english_speed \
             --input results/real/roads.osm \
             --snapshot 2026-10-13 \
             --graphhopper-jar "$RUNNER_TEMP/graphhopper.jar" \
-            --cases 16 --repeat 20 --osrm
+            --cases 16 --repeat 20 --osrm "${additional[@]}"
       - name: Clean up reference services
         if: always()
         run: |
           mkdir -p results/real-england
           docker logs --tail 40 english-osrm-mld > results/real-england/osrm-mld.log 2>&1 || true
           docker logs --tail 40 english-osrm-ch > results/real-england/osrm-ch.log 2>&1 || true
-          docker rm -f english-osrm-mld english-osrm-ch || true
+          docker logs --tail 80 english-valhalla > results/real-england/valhalla.log 2>&1 || true
+          docker logs --tail 80 english-ors > results/real-england/openrouteservice.log 2>&1 || true
+          docker rm -f english-osrm-mld english-osrm-ch english-valhalla english-ors || true
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:

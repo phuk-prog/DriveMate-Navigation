@@ -11,13 +11,21 @@ from statistics import median
 from threading import Thread
 from time import perf_counter_ns
 from urllib.parse import parse_qs, urlencode, urlparse
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
+
+from benchmarks.cloud_reference import polyline6
 
 from benchmarks.expanded_comparison import graphhopper
 from engine.reconciled import prepare_navigation
 from map_data import Provenance, import_osm_xml
 
-LABELS = ("drivemate-python", "graphhopper", "osrm-mld", "osrm-ch")
+LABELS = ("drivemate-python", "graphhopper", "osrm-mld", "osrm-ch", "valhalla", "openrouteservice")
+NOT_YET_COMPARABLE = {
+    "brouter": "Requires .rd5 routing data built from the exact pinned Geofabrik extract; weekly published tiles are a different snapshot.",
+    "routingkit-ch": "Algorithm adapter currently consumes candidate-imported transition graphs rather than an independently imported same-map service.",
+    "pgrouting": "Algorithm adapter currently consumes candidate-imported transitions and lacks a comparable persistent HTTP route service.",
+}
+
 
 
 def percentile(values, fraction):
@@ -112,11 +120,24 @@ def query(engine, case, coordinates, candidate_port, gh_port):
         url = "http://127.0.0.1:%d/route?" % gh_port + urlencode([
             ("point", "%s,%s" % a), ("point", "%s,%s" % b),
             ("profile", "car"), ("points_encoded", "false"), ("instructions", "false")])
-    else:
+    elif engine in ("osrm-mld", "osrm-ch"):
         port = 5000 if engine == "osrm-mld" else 5001
         url = ("http://127.0.0.1:%d/route/v1/driving/" % port +
                "%s,%s;%s,%s?overview=full&geometries=geojson" %
                (a[1], a[0], b[1], b[0]))
+    elif engine == "valhalla":
+        url = Request("http://127.0.0.1:8002/route",
+            data=json.dumps({"locations":[{"lat":a[0],"lon":a[1]},
+                {"lat":b[0],"lon":b[1]}],"costing":"auto",
+                "shape_format":"polyline6"}, separators=(",", ":")).encode(),
+            headers={"Content-Type":"application/json"}, method="POST")
+    elif engine == "openrouteservice":
+        url = Request("http://127.0.0.1:8080/ors/v2/directions/driving-car/geojson",
+            data=json.dumps({"coordinates":[[a[1],a[0]], [b[1],b[0]]]},
+                separators=(",", ":")).encode(),
+            headers={"Content-Type":"application/json"}, method="POST")
+    else:
+        raise ValueError("Unsupported speed engine")
     with urlopen(url, timeout=12) as response:
         raw = json.load(response)
     if engine == "drivemate-python":
@@ -126,6 +147,13 @@ def query(engine, case, coordinates, candidate_port, gh_port):
     elif engine == "graphhopper":
         paths = raw.get("paths") or []
         points = paths[0].get("points", {}).get("coordinates") if paths else None
+    elif engine == "valhalla":
+        legs = raw.get("trip", {}).get("legs") or []
+        points = [[lon, lat] for leg in legs
+                  for lat, lon in polyline6(leg.get("shape", ""))] if legs else None
+    elif engine == "openrouteservice":
+        features = raw.get("features") or []
+        points = features[0].get("geometry", {}).get("coordinates") if features else None
     else:
         routes = raw.get("routes") or []
         points = routes[0].get("geometry", {}).get("coordinates") if routes else None
@@ -144,7 +172,7 @@ def query(engine, case, coordinates, candidate_port, gh_port):
     # Complete legality and orientation need an independent OSM reference judge.
 
 
-def run(raw, jar, repeat, maximum, snapshot, use_osrm):
+def run(raw, jar, repeat, maximum, snapshot, use_osrm, use_valhalla=False, use_openrouteservice=False):
     imported = import_osm_xml(raw, provenance=Provenance(
         "Greater Manchester, England", snapshot,
         "Geofabrik historic public OSM PBF", "© OpenStreetMap contributors (ODbL 1.0)"))
@@ -155,6 +183,10 @@ def run(raw, jar, repeat, maximum, snapshot, use_osrm):
     engines = ["drivemate-python", "graphhopper"]
     if use_osrm:
         engines += ["osrm-mld", "osrm-ch"]
+    if use_valhalla:
+        engines.append("valhalla")
+    if use_openrouteservice:
+        engines.append("openrouteservice")
     samples = {e: [] for e in engines}
     failures = {e: [] for e in engines}
     with ExitStack() as stack:
@@ -207,6 +239,19 @@ def run(raw, jar, repeat, maximum, snapshot, use_osrm):
             {"rank": i + 1, "engine": e} for i, e in enumerate(ranked)],
         "overall_navigation_rank": None,
         "external_route_legality_verified": False,
+        "not_tested": {
+            **{engine: "Service not provisioned or readiness check failed on same-host runner"
+               for engine in ("valhalla", "openrouteservice") if engine not in engines},
+            **NOT_YET_COMPARABLE,
+        },
+        "engine_version_scope": {
+            "drivemate-python": "research prepared Python implementation",
+            "graphhopper": "11.1, CH/LM disabled",
+            "osrm-mld": "5.27.1 pinned Docker image, MLD",
+            "osrm-ch": "5.27.1 pinned Docker image, CH",
+            "valhalla": "3.9.1 pinned Docker image, auto costing",
+            "openrouteservice": "9.7.1 Docker image, driving-car",
+        },
         "limitations": [
             "Public OSM road topology, not independent current legal-access verification.",
             "DriveMate is the prepared Python research router, not Android native routing.",
@@ -250,6 +295,8 @@ def main():
     ap.add_argument("--repeat", type=int, default=20)
     ap.add_argument("--cases", type=int, default=16)
     ap.add_argument("--osrm", action="store_true")
+    ap.add_argument("--valhalla", action="store_true")
+    ap.add_argument("--openrouteservice", action="store_true")
     args = ap.parse_args()
     if not 3 <= args.repeat <= 100 or not 5 <= args.cases <= 80:
         ap.error("Invalid bounded workload")
@@ -267,7 +314,8 @@ def main():
         ap.error("--graphhopper-jar required for full run")
     preflight(raw, args.snapshot, args.cases)
     result = run(raw, args.graphhopper_jar,
-                 args.repeat, args.cases, args.snapshot, args.osrm)
+                 args.repeat, args.cases, args.snapshot, args.osrm,
+                 args.valhalla, args.openrouteservice)
     (out / "speed.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({"implementations": result["implementations"],
                       "ranks": result["speed_ranks_complete_only"],
