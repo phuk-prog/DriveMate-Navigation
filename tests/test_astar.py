@@ -36,7 +36,8 @@ class AStarCorrectnessTests(unittest.TestCase):
         self.assertFalse(result.geographic_heuristic_used)
         self.assertEqual(result.route.edge_ids, expected)
         arrived = astar_route(graph, "B", end, incoming_edge_id="approach")
-        self.assertEqual(arrived.route.edge_ids, ("legal", "merge", "finish"))
+        self.assertEqual(arrived.route.edge_ids, ("unknown-service", "shortcut", "finish"))
+        self.assertEqual(arrived.route.unverified_access_edges,("unknown-service",))
 
     def test_bad_geometry_falls_back_to_dijkstra_not_unsafe_heuristic(self):
         graph, points, start, finish = grid(4)
@@ -56,7 +57,7 @@ class AStarCorrectnessTests(unittest.TestCase):
     def test_prohibited_access_and_oneway_still_apply(self):
         vertices = ("A", "B", "C")
         edges = [RoadEdge("ab", "A", "B", 112, 30, "allowed"),
-                 RoadEdge("bc", "B", "C", 112, 30, "unknown"),
+                 RoadEdge("bc", "B", "C", 112, 30, "prohibited"),
                  RoadEdge("ac", "A", "C", 500, 30, "allowed")]
         graph = RoadGraph(vertices, edges)
         p = {"A": (0., 0.), "B": (0., .001), "C": (0., .002)}

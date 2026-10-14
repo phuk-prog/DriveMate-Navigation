@@ -2,14 +2,59 @@
   "policy": "No engine is scored until independent access, licensing, snapshot parity and run artifacts exist.",
   "data_requirement": "Identical road snapshot and motorcar restrictions where supported; otherwise comparisons must state limitations.",
   "candidate_engines": [
-    {"name":"Valhalla","category":"open-source","status":"not-integrated"},
-    {"name":"OSRM MLD","category":"open-source","status":"not-integrated"},
-    {"name":"GraphHopper","category":"open-source","status":"not-integrated"},
-    {"name":"OsmAnd","category":"open-source","status":"not-integrated"},
-    {"name":"Organic Maps","category":"open-source","status":"not-integrated"},
-    {"name":"BRouter","category":"open-source","status":"not-integrated"},
-    {"name":"HERE","category":"commercial-reference","status":"access-and-terms-not-verified"},
-    {"name":"Mapbox","category":"commercial-reference","status":"access-and-terms-not-verified"},
-    {"name":"TomTom","category":"commercial-reference","status":"access-and-terms-not-verified"}
-  ]
+    {
+      "name": "Valhalla",
+      "category": "open-source",
+      "status": "not-integrated"
+    },
+    {
+      "name": "OSRM MLD",
+      "category": "open-source",
+      "status": "not-integrated"
+    },
+    {
+      "name": "GraphHopper",
+      "category": "open-source",
+      "status": "actual-isolated-reference-executed",
+      "version": "11.1",
+      "scope": "Same-map route semantics and clean batch path matching; no live/audio/controller ranking"
+    },
+    {
+      "name": "OsmAnd",
+      "category": "open-source",
+      "status": "not-integrated"
+    },
+    {
+      "name": "Organic Maps",
+      "category": "open-source",
+      "status": "not-integrated"
+    },
+    {
+      "name": "BRouter",
+      "category": "open-source",
+      "status": "not-integrated"
+    },
+    {
+      "name": "HERE",
+      "category": "commercial-reference",
+      "status": "access-and-terms-not-verified"
+    },
+    {
+      "name": "Mapbox",
+      "category": "commercial-reference",
+      "status": "access-and-terms-not-verified"
+    },
+    {
+      "name": "TomTom",
+      "category": "commercial-reference",
+      "status": "access-and-terms-not-verified"
+    },
+    {
+      "name": "openrouteservice",
+      "category": "open-source",
+      "status": "not-provisioned",
+      "provisional_tenth": true
+    }
+  ],
+  "coverage_report": "docs/WHOLE_DRIVE_TEN_SYSTEMS.md"
 }

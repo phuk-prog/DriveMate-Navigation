@@ -88,6 +88,8 @@ def astar_route(
     With no fully validated geometry, reverts automatically to a zero heuristic.
     The caller is responsible for separately verifying road-data completeness.
     """
+    if graph.extended_restrictions or graph.validity_window:
+        raise ValueError("Use reconciled navigation for multi-road or conditional graphs")
     if source not in graph.vertices or destination not in graph.vertices:
         raise ValueError("Unknown source or destination")
     if incoming_edge_id is not None:
@@ -138,7 +140,7 @@ def astar_route(
             goal = state
             break
         for edge in graph.adjacency[vertex]:
-            if edge.access != "allowed" or edge.edge_id in blocked:
+            if edge.access == "prohibited" or edge.edge_id in blocked:
                 continue
             if previous is not None and (previous, edge.edge_id) in graph.prohibited_turns:
                 continue
@@ -156,5 +158,6 @@ def astar_route(
         state, edge_id = predecessor[state]
         ids.append(edge_id)
     ids.reverse()
-    result = Route(tuple(ids), sum(graph.edges[k].length_m for k in ids), distances[goal])
+    result = Route(tuple(ids), sum(graph.edges[k].length_m for k in ids), distances[goal],
+                   tuple(k for k in ids if graph.edges[k].access == "unknown"))
     return AStarResult(result, expanded, bool(can_heuristic))

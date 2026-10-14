@@ -22,6 +22,9 @@ class RoadEdge:
     length_m: float
     estimated_kph: float
     access: str = "unknown"  # allowed | prohibited | unknown
+    junction: str = ""
+    exit_group: str | None = None
+    lane_evidence: object = None
 
     def __post_init__(self) -> None:
         if not self.edge_id or not self.source or not self.target:
@@ -32,6 +35,8 @@ class RoadEdge:
             raise ValueError("Edge length must be finite and positive")
         if not isfinite(self.estimated_kph) or self.estimated_kph <= 0:
             raise ValueError("Estimated speed must be finite and positive")
+        if not isinstance(self.junction,str):raise ValueError("Junction evidence must be a string")
+        if self.exit_group is not None and (not isinstance(self.exit_group,str) or not self.exit_group):raise ValueError("Invalid exit group evidence")
         if self.access not in ("allowed", "prohibited", "unknown"):
             raise ValueError("Unknown road-access status")
 
@@ -45,6 +50,7 @@ class Route:
     edge_ids: tuple[str, ...]
     length_m: float
     estimated_seconds: float
+    unverified_access_edges: tuple[str, ...] = ()
 
 
 class RouteNotFound(ValueError):
@@ -57,7 +63,12 @@ class RoadGraph:
         vertices: Iterable[str],
         edges: Iterable[RoadEdge],
         prohibited_turns: Iterable[tuple[str, str]] = (),
+        *, multi_restrictions=(), validity_window=None, extended_restrictions=(), lane_connections=(),
     ) -> None:
+        self.extended_restrictions = tuple(multi_restrictions)+tuple(extended_restrictions)
+        self.multi_restrictions = tuple(r for r in self.extended_restrictions if not getattr(r,"condition",None))
+        self.validity_window = validity_window
+        self.lane_connections = tuple(lane_connections)
         self.vertices = frozenset(vertices)
         if not self.vertices or any(not v for v in self.vertices):
             raise ValueError("At least one valid vertex is required")
@@ -94,10 +105,13 @@ def shortest_route(
 ) -> Route:
     """Dijkstra over (vertex, incoming-edge) states, respecting turn restrictions.
 
-    Only edges explicitly tagged 'allowed' can be traversed; 'unknown' is not
-    assumed legal. Penalties must be nonnegative; they never override access.
+    Unknown access alone does not exclude a road; it remains marked unverified
+    in the result. Confirmed prohibitions remain blocked. Penalties must be
+    nonnegative; they never override a prohibition.
     Rerouting can pass the incoming edge so a prohibited turn stays prohibited.
     """
+    if graph.extended_restrictions or graph.validity_window:
+        raise ValueError("Use reconciled navigation for multi-road or conditional graphs")
     if source not in graph.vertices or destination not in graph.vertices:
         raise ValueError("Unknown origin or destination")
     if incoming_edge_id is not None:
@@ -130,7 +144,7 @@ def shortest_route(
             goal = state
             break
         for edge in graph.adjacency[vertex]:
-            if edge.access != "allowed" or edge.edge_id in blocked:
+            if edge.access == "prohibited" or edge.edge_id in blocked:
                 continue
             if entering is not None and (entering, edge.edge_id) in graph.prohibited_turns:
                 continue
@@ -153,4 +167,5 @@ def shortest_route(
         edge_ids=tuple(ids),
         length_m=sum(graph.edges[edge_id].length_m for edge_id in ids),
         estimated_seconds=best[goal],
+        unverified_access_edges=tuple(e for e in ids if graph.edges[e].access == "unknown"),
     )

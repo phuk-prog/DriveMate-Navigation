@@ -1,6 +1,8 @@
+GitHub-hosted comparison setup is documented in [GITHUB_CATEGORY_COMPARISON.md](docs/GITHUB_CATEGORY_COMPARISON.md).
+
 # DriveMate Navigation
 
-**Status: independent research prototype — not an Android navigation app or approved production routing engine.**
+**Status: reconciled independent research prototype — not an Android navigation app or approved production routing engine.**
 
 This project is an independently developed navigation architecture and validation laboratory. It is separate from any existing Android application: nothing here updates another app or generates an APK.
 
@@ -12,18 +14,43 @@ Create the best practical **offline-first, Android-efficient, adaptable** naviga
 
 ## What works now
 
-- A small **original, deterministic Python routing core** with directed edges, explicit road-access states, forbidden turns, an incoming-edge-aware rerouting entry point and deterministic shortest-time searches.
-- A **synthetic road-network fixture**, automated routing regression tests and a lightweight benchmark reporter.
-- An independent **turn-aware A*** candidate that uses geographic heuristics only with validated geometry and falls back safely otherwise. It is compared against the deterministic Dijkstra baseline on fabricated networks.
-- An opt-in **public OSM PBF-to-XML subset preparation tool** that runs locally using Osmium, strips contributor metadata and only writes to ignored `results/`; large map files are never committed or downloaded by GitHub CI.
-- A **bounded OpenStreetMap XML importer** for small extracts, with provenance checksum, one-way travel, restricted turns and conservative uncertain access handling; unsupported conditional rules or via-way relations cause import to fail. This importer is **not yet suitable for real-world navigation**.
-- A benchmark comparison contract that **refuses to rank runs** from nonmatching map/profile/device/scenario configurations.
-- Local, offline output adapters for OSRM, Valhalla and GraphHopper that retain **only aggregate time and distance**; these do not run external engines or imply any real provider benchmark has taken place.
-- A repository-wide **privacy preflight**, executed automatically in CI, that rejects suspicious files and likely credential/location-data exposures. Manual review is still mandatory.
-- A reference-engine registry identifying engines to evaluate; **no actual competing engines have been executed or measured yet**.
-- A low-cost GitHub Actions workflow that runs source checks, unit tests and a synthetic benchmark. **No APK, device tests, maps, services or paid APIs**.
+- Original directed routing with no/only/via-road legality, partial-road positions, bounded weekly/time-aware routing and explicit unknown-access flags.
+- Static lane evidence, junction directions and bounded roundabout exit context.
+- Bounded geographic GPS matching, signal-loss recovery with possible-history consensus, and clocked instruction events.
+- Whole-drive synthetic replays, original independent path oracles, and a category-scoring contract that keeps untested categories unscored.
+- Actual isolated GraphHopper same-map routing and clean batch-path comparisons. These are limited results, not a general navigation ranking.
+- GitHub-hosted pinned OSRM, Valhalla and GraphHopper benchmark setup on an isolated research branch. Results and runtime failures are retained as artifacts.
+- Public source privacy checks. Only independently authored synthetic fixtures are used by the new benchmark.
 
-**Not implemented yet:** any independently validated real-road routing result, large/production OpenStreetMap PBF ingestion, mobile-native execution, map matching, UI, directions, voice, lane guidance, traffic, incremental regional map updates, adaptive model deployment, or live navigation.
+**Still pending:** calibrated sensors, realistic named-place/device/road validation, production-size maps, Android/audio/Bluetooth integration, complex lane/junction coverage, traffic/updates/learning, and comparable results across all ten external systems. No APK is built or released here.
+
+## Reconciled navigation core
+
+The navigation-only reconciliation connects this repository’s bounded importer to the original multi-road routing and trusted-road journey components in `navigation_core/`. See [reconciliation details](docs/RECONCILIATION.md). Build the portable host core once before running the complete suite:
+
+~~~sh
+bash navigation_core/native/build.sh
+~~~
+
+This remains a host research prototype. Raw GPS matching, junction guidance and Android navigation are still pending.
+
+Whole-drive simulations and the ten-reference execution matrix are documented in [WHOLE_DRIVE_TEN_SYSTEMS.md](docs/WHOLE_DRIVE_TEN_SYSTEMS.md).
+
+Instruction generation/timing and adversarial event tests are documented in [INSTRUCTION_TIMING_STAGE.md](docs/INSTRUCTION_TIMING_STAGE.md).
+
+Bounded GPS loss/recovery and harder synthetic tests are documented in [GPS_RECOVERY_STAGE.md](docs/GPS_RECOVERY_STAGE.md).
+
+Bounded GPS matching and integrated synthetic journeys are documented in [GPS_MATCHING_STAGE.md](docs/GPS_MATCHING_STAGE.md).
+
+Static lane evidence and junction guidance are documented in [LANE_JUNCTION_STAGE.md](docs/LANE_JUNCTION_STAGE.md).
+
+Live roundabout context and the unknown-data routing policy are documented in [LIVE_ROUNDABOUT_STAGE.md](docs/LIVE_ROUNDABOUT_STAGE.md).
+
+Roundabout exit identification is documented in [ROUNDABOUT_STAGE.md](docs/ROUNDABOUT_STAGE.md).
+
+Clock-aware trusted-road journey rerouting is documented in [TIMED_JOURNEY_STAGE.md](docs/TIMED_JOURNEY_STAGE.md).
+
+The current local reconciliation and conditional-restriction evidence is in [CONDITIONAL_RESTRICTIONS.md](docs/CONDITIONAL_RESTRICTIONS.md). This workspace is not uploaded to GitHub.
 
 ## Run locally
 
@@ -44,8 +71,8 @@ The benchmarks print experimental latency figures for **fabricated** networks. T
 - `map-data/`: road-data policy and format documentation.
 - `map_data/`: bounded OSM XML importer prototype (6 MB maximum; not a UK regional import).
 - `tools/public_osm_extract.py`: manual, local preparation of very small, contributor-anonymised public-road samples (needs Osmium Tool and a public PBF obtained separately).
-- `gps/`: planned positioning and map matching.
-- `guidance/`: planned UK turn, roundabout and lane instruction verification.
+- `gps/`: bounded GPS quality checks, directed segment matching and trusted-journey integration.
+- `guidance/`: bounded UK instruction formatting, timing, freshness and delivery events.
 - `learning/`: planned privacy-respecting learning and evidence gates.
 - `benchmarks/`: reproducible fixtures, reference-engine registry and measurements.
 - `references/`: references, integration and licence decisions (no copied vendor code).
@@ -61,6 +88,6 @@ Never commit any personal data, actual driving traces, home/work positions, vehi
 
 Public repository visibility **does not** mean this code has an open-source licence. There is currently **no project-wide code licence**: licensing must be decided explicitly before third-party code is imported or this project is distributed to others.
 
-No automatic dependency downloads or builds of other engines. Compare them only with permitted data and APIs; use the same map snapshot when possible and disclose when not.
+Reference downloads/builds are limited to explicitly authorised benchmark jobs with recorded versions and checksums. Compare only with permitted data and APIs, using the same map snapshot where possible and declaring differences. Reference source/binaries are not included in the candidate.
 
 This research repository does not modify any existing Android app; integration would require a separate decision and complete on-device/regression validation.

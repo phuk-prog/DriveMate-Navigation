@@ -2,9 +2,9 @@
 
 Supported: public-driving highway classes, one-way (+/-), roundabout direction,
 explicit motorcar access, source geometry, maxspeed-based *cost estimate*,
-node-via turn restrictions ('no_' and 'only_') and simple blocking barriers.
+node/via-way restrictions and bounded weekly conditional turn evaluation.
 
-Unsupported conditions fail CLOSED (reject entire extract); see README.
+Unsupported conditions reject the extract; see docs/CONDITIONAL_RESTRICTIONS.md.
 Never treat this importer as road-legal navigation without independent checks.
 """
 from __future__ import annotations
@@ -16,6 +16,9 @@ import re
 import xml.etree.ElementTree as ET
 
 from engine import RoadEdge, RoadGraph
+from .conditions import validate_window, restriction_values, RULES
+from .restrictions import resolve
+from engine.lanes import parse_lane_evidence,parse_connectivity,LaneConnection,LaneEvidence
 
 MAX_INPUT_BYTES = 6_000_000
 # Purposefully small enough for auditable prototype examples, NOT UK extracts.
@@ -33,6 +36,7 @@ BLOCKED_VALUES = {"no", "private", "agricultural", "forestry", "delivery",
 BLOCKING_BARRIERS = {"bollard", "block", "cycle_barrier", "bus_trap"}
 UNCERTAIN_BARRIERS = {"gate", "lift_gate", "swing_gate", "cattle_grid"}
 CONDITIONAL = re.compile(r"(?:^|:)conditional$")
+OPTIONAL_LANE_CONDITIONAL = re.compile(r"^(?:turn:lanes|destination(?::(?:ref|street))?:lanes)(?::(?:forward|backward))?:conditional$")
 MAXSPEED = re.compile(r"^([0-9]+(?:\.[0-9]+)?)\s*(mph|km/h|kph)?$", re.I)
 
 
@@ -68,7 +72,7 @@ def _tags(element: ET.Element) -> dict[str, str]:
 
 def _check_conditions(tags: dict[str, str], label: str) -> None:
     """Fail closed: no time-dependent legality without a clock + evaluator."""
-    if any(CONDITIONAL.search(k) for k in tags):
+    if any(CONDITIONAL.search(k) and not OPTIONAL_LANE_CONDITIONAL.fullmatch(k) for k in tags):
         raise OSMImportError(f"{label}: conditional tags are unsupported")
 
 
@@ -134,7 +138,7 @@ def _combine_access(a: str, b: str) -> str:
     return "allowed"
 
 
-def import_osm_xml(raw: bytes, *, provenance: Provenance) -> ImportedMap:
+def import_osm_xml(raw: bytes, *, provenance: Provenance, window=None, timezone_name=None) -> ImportedMap:
     if not isinstance(raw, bytes) or not raw or len(raw) > MAX_INPUT_BYTES:
         raise OSMImportError("Expected nonempty OSM XML bytes within 6 MB prototype limit")
     if b"<!DOCTYPE" in raw.upper() or b"<!ENTITY" in raw.upper():
@@ -197,6 +201,8 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance) -> ImportedMap:
             raise OSMImportError(f"way {way_id}: unsupported oneway value {oneway}")
         direction = -1 if oneway in ("-1", "reverse") else 1
         speed = _estimated_speed(tags.get("highway", ""), tags.get("maxspeed"))
+        lane_info={d:parse_lane_evidence(tags,d,oneway not in ("", "no", "0", "false")) for d in ('f','r')}
+        interior_info={d:LaneEvidence(e.count,(),'count_only','Interior way segment; turn markings apply at directional endpoint') if e.status=='supported' else e for d,e in lane_info.items()}
         for i, (src, dst) in enumerate(zip(refs, refs[1:])):
             if src not in coordinates or dst not in coordinates:
                 raise OSMImportError(f"way {way_id}: missing node coordinate")
@@ -205,9 +211,9 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance) -> ImportedMap:
                 raise OSMImportError(f"way {way_id}: degenerate road segment")
             actual = _combine_access(access, _combine_access(barriers[src], barriers[dst]))
             if direction == 1:
-                edges.append(RoadEdge(f"w:{way_id}:{i}:f", src, dst, length, speed, actual))
+                edges.append(RoadEdge(f"w:{way_id}:{i}:f", src, dst, length, speed, actual, junction=tags.get("junction", ""), lane_evidence=(lane_info["f"] if i==len(refs)-2 else interior_info["f"])))
             if direction == -1 or oneway in ("", "no", "0", "false"):
-                edges.append(RoadEdge(f"w:{way_id}:{i}:r", dst, src, length, speed, actual))
+                edges.append(RoadEdge(f"w:{way_id}:{i}:r", dst, src, length, speed, actual, junction=tags.get("junction", ""), lane_evidence=(lane_info["r"] if i==0 else interior_info["r"])))
     if not edges:
         raise OSMImportError("No motorcar graph edges extracted")
     # Directed manoeuvres at each via node, mapping way IDs to concrete edges.
@@ -220,41 +226,85 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance) -> ImportedMap:
         way_id = edge.edge_id.split(":")[1]
         incoming.setdefault((way_id, edge.target), []).append(edge)
         leaving.setdefault((way_id, edge.source), []).append(edge)
+    complex_rules = []
+    timed_rules = []
+    edge_lookup={e.edge_id:e for e in edges}
+    clock_window = None
     for relation in relations:
         tags = _tags(relation)
+        if tags.get("type", "").startswith("restriction:"):
+            raise OSMImportError("Deprecated mode-specific relation types need review")
         if tags.get("type") != "restriction":
             continue
-        _check_conditions(tags, f"relation {relation.get('id')}")
         if "motorcar" in {v.strip() for v in tags.get("except", "").replace(",", ";").split(";")}:
             continue
-        # Alternative mode-specific restriction tags are not assumed to apply to cars.
-        rule = tags.get("restriction:motorcar", tags.get("restriction:motor_vehicle",
-                    tags.get("restriction", "")))
-        if not rule:
+        keys=("restriction:motorcar", "restriction:motor_vehicle", "restriction")
+        key=next((k for k in keys if k in tags or k+":conditional" in tags), None)
+        if key is None:
             raise OSMImportError("Unrecognised restriction relation requires review")
-        if not (rule.startswith("no_") or rule.startswith("only_")):
-            raise OSMImportError(f"Unsupported turn restriction: {rule}")
-        members = relation.findall("member")
-        frm = [m.get("ref") for m in members if m.get("role") == "from" and m.get("type") == "way"]
-        to = [m.get("ref") for m in members if m.get("role") == "to" and m.get("type") == "way"]
-        via = [m.get("ref") for m in members if m.get("role") == "via" and m.get("type") == "node"]
-        if len(frm) != 1 or len(to) != 1 or len(via) != 1 or len(members) != 3:
-            raise OSMImportError("Only single via-node turn restrictions are supported")
-        node = f"osm:{via[0]}"
-        arrivals = incoming.get((frm[0], node), [])
-        departures = leaving.get((to[0], node), [])
-        if not arrivals or not departures:
-            raise OSMImportError("Restriction references a missing/non-drivable manoeuvre")
-        for arrival in arrivals:
-            if rule.startswith("no_"):
-                for departure in departures:
-                    turns.add((arrival.edge_id, departure.edge_id))
+        # Reject unsupported condition tags even when a supported key exists.
+        if any(CONDITIONAL.search(k) and k not in {x+":conditional" for x in keys} for k in tags):
+            raise OSMImportError("Unsupported restriction condition key")
+        rule=next((tags[k] for k in keys[keys.index(key):] if k in tags), "")
+        conditional=tags.get(key+":conditional")
+        try:
+            if conditional is not None:
+                if window is None:
+                    # Exact arrival-time evaluation supports a single weekly ban.
+                    if rule:raise ValueError('Static plus conditional overrides need an explicit compiled window')
+                    from engine.restrictions import parse_conditional, Restriction
+                    condition=parse_conditional(conditional)
+                    for r in resolve(relation.findall("member"),condition.value,ways,edge_lookup,incoming,leaving):
+                        timed_rules.append(Restriction(r.kind,r.roads,condition))
+                    continue
+                clock_window,zone=validate_window(window, timezone_name)
+                values=restriction_values(rule,conditional,clock_window,zone)
+                # Validate structural and rule semantics even if currently inactive.
+                declared={part.split('@')[0].strip() for part in conditional.split(';')}
             else:
-                permitted = {departure.edge_id for departure in departures}
-                for other in outgoing.get(node, []):
-                    if other.edge_id not in permitted:
-                        turns.add((arrival.edge_id, other.edge_id))
-    graph = RoadGraph(coordinates.keys(), edges, turns)
+                if rule not in RULES:raise ValueError("Unsupported restriction value")
+                values={rule};declared=values
+            resolved={v:resolve(relation.findall("member"),v,ways,
+                              edge_lookup,incoming,leaving) for v in declared | values}
+            for value in sorted(values):
+                for r in resolved[value]:
+                    if len(r.roads)==2:
+                        a,b=r.roads
+                        if r.kind=='no':turns.add((a,b))
+                        else:
+                            for other in outgoing.get(edge_lookup[a].target,[]):
+                                if other.edge_id!=b:turns.add((a,other.edge_id))
+                    else:complex_rules.append(r)
+        except (ValueError, KeyError) as exc:
+            raise OSMImportError(f"relation {relation.get('id')}: {exc}") from exc
+    lane_connections=[];unverified_connectivity=0
+    for relation in relations:
+        tags=_tags(relation)
+        if tags.get('type')!='connectivity':continue
+        members=relation.findall('member')
+        frm=[m.get('ref') for m in members if m.get('role')=='from' and m.get('type')=='way']
+        to=[m.get('ref') for m in members if m.get('role')=='to' and m.get('type')=='way']
+        via=[m.get('ref') for m in members if m.get('role')=='via' and m.get('type')=='node']
+        if len(frm)!=1 or len(to)!=1 or len(via)!=1 or len(members)!=3:
+            unverified_connectivity+=1;continue
+        arrivals=incoming.get((frm[0],'osm:'+via[0]),[])
+        departures=leaving.get((to[0],'osm:'+via[0]),[])
+        if len(arrivals)!=1 or len(departures)!=1:
+            unverified_connectivity+=1
+            for a in arrivals:
+                for b in departures:lane_connections.append(LaneConnection(a.edge_id,b.edge_id,(),'unverified','Ambiguous directional topology'))
+            continue
+        a,b=arrivals[0],departures[0]
+        try:
+            if any(CONDITIONAL.search(k) for k in tags):raise ValueError('Conditional connectivity unsupported')
+            if a.lane_evidence.status=='unverified' or b.lane_evidence.status=='unverified':raise ValueError('Lane bounds/vehicle semantics unverified')
+            links=parse_connectivity(tags.get('connectivity',''),a.lane_evidence.count,b.lane_evidence.count)
+            lane_connections.append(LaneConnection(a.edge_id,b.edge_id,links,'supported'))
+        except ValueError as exc:
+            unverified_connectivity+=1
+            lane_connections.append(LaneConnection(a.edge_id,b.edge_id,(),'unverified',str(exc)))
+    graph = RoadGraph(coordinates.keys(), edges, turns,
+                      multi_restrictions=complex_rules, validity_window=clock_window, extended_restrictions=timed_rules,lane_connections=lane_connections)
     return ImportedMap(
         graph=graph,
         coordinates=coordinates,
@@ -267,6 +317,14 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance) -> ImportedMap:
             "vertices": len(graph.vertices),
             "directed_edges": len(graph.edges),
             "prohibited_turn_pairs": len(graph.prohibited_turns),
-            "limitations": "prototype-no-conditional-via-way-or-real-world-legality-claims",
+            "roundabout_roads": sum(e.junction=="roundabout" for e in graph.edges.values()),
+            "unverified_lane_ways": sum(any(k=="lanes" or k.startswith("lanes:") or ":lanes" in k for k in tags) for _,tags in ways.values()),
+            "multi_road_rules": len(complex_rules),
+            "timed_turn_bans": len(timed_rules),
+            "lane_connections": len(lane_connections),
+            "unverified_connectivity_relations": unverified_connectivity,
+            "validity_window": tuple(t.isoformat() for t in clock_window) if clock_window else None,
+            "conditional_timezone": timezone_name if clock_window else None,
+            "limitations": "prototype-conservative-weekly-turn-window-no-real-world-legality-claims",
         },
     )

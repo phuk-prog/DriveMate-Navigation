@@ -29,13 +29,17 @@ class OSMImporterTests(unittest.TestCase):
         self.assertNotIn("w:109:0:f", m.graph.edges)
         self.assertEqual(m.graph.edges["w:110:0:f"].access, "prohibited")
 
-    def test_restriction_enforced_and_no_unknown_service_shortcut(self):
+    def test_restriction_enforced_and_unknown_service_not_banned(self):
         m = imported()
         r = shortest_route(m.graph, "osm:1", "osm:5")
         self.assertEqual(r.edge_ids, ("w:100:0:f", "w:102:0:f", "w:103:0:f", "w:104:0:f"))
         self.assertNotIn(("w:100:0:f", "w:102:0:f"), m.graph.prohibited_turns)
         self.assertIn(("w:100:0:f", "w:101:0:f"), m.graph.prohibited_turns)
-        self.assertNotIn("w:105:0:f", r.edge_ids)
+        # This service road is slower, but its unknown access is not a closure.
+        via_service=shortest_route(m.graph,'osm:2','osm:3',incoming_edge_id='w:100:0:f',
+                                  blocked_edges=('w:102:0:f',))
+        self.assertEqual(via_service.edge_ids,('w:105:0:f','w:106:0:f'))
+        self.assertEqual(via_service.unverified_access_edges,('w:105:0:f',))
 
     def test_oncoming_wrong_way_is_not_allowed(self):
         m = imported()

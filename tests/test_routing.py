@@ -12,25 +12,27 @@ class RoutingSafetyTests(unittest.TestCase):
         for _ in range(10):
             route = shortest_route(self.graph, self.origin, self.end)
             self.assertEqual(route.edge_ids, self.expected)
-            self.assertAlmostEqual(route.estimated_seconds, 46.0)
-            self.assertAlmostEqual(route.length_m, 460.0)
+            self.assertAlmostEqual(route.estimated_seconds, 27.0)
+            self.assertAlmostEqual(route.length_m, 270.0)
+            self.assertNotIn(("approach","direct"),tuple(zip(route.edge_ids,route.edge_ids[1:])))
 
-    def test_unknown_access_service_road_is_never_taken(self):
+    def test_unknown_access_service_road_is_routable_and_flagged(self):
         route = shortest_route(self.graph, "B", "E")
-        self.assertNotIn("unknown-service", route.edge_ids)
+        self.assertIn("unknown-service", route.edge_ids)
+        self.assertEqual(route.unverified_access_edges,("unknown-service",))
 
     def test_incoming_turn_is_preserved_when_rerouting(self):
         route = shortest_route(self.graph, "B", "E", incoming_edge_id="approach")
-        self.assertEqual(route.edge_ids, ("legal", "merge", "finish"))
+        self.assertEqual(route.edge_ids, ("unknown-service", "shortcut", "finish"))
         without_context = shortest_route(self.graph, "B", "E")
-        self.assertEqual(without_context.edge_ids, ("direct", "finish"))
+        self.assertEqual(without_context.edge_ids, ("unknown-service", "shortcut", "finish"))
 
     def test_blockage_causes_legal_alternative(self):
-        route = shortest_route(self.graph, "A", "E", blocked_edges=("legal",))
+        route = shortest_route(self.graph, "A", "E", blocked_edges=("legal","unknown-service"))
         self.assertEqual(route.edge_ids, ("alternate", "finish"))
 
     def test_nonnegative_penalty_does_not_override_illegal_turn(self):
-        route = shortest_route(self.graph, "A", "E", time_penalties_s={"legal": 500})
+        route = shortest_route(self.graph, "A", "E", time_penalties_s={"legal": 500,"unknown-service":500})
         self.assertEqual(route.edge_ids, ("alternate", "finish"))
         self.assertNotEqual(route.edge_ids, ("approach", "direct", "finish"))
 

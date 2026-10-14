@@ -1,19 +1,92 @@
 {
   "classification": "synthetic",
   "name": "Fabricated turn restriction and unknown-access shortcut; not a real UK junction",
-  "vertices": ["A", "B", "C", "D", "E", "X"],
+  "vertices": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "X"
+  ],
   "start": "A",
   "end": "E",
-  "prohibited_turns": [["approach", "direct"]],
-  "edges": [
-    {"edge_id":"approach","source":"A","target":"B","length_m":100,"estimated_kph":36,"access":"allowed"},
-    {"edge_id":"direct","source":"B","target":"C","length_m":120,"estimated_kph":36,"access":"allowed"},
-    {"edge_id":"legal","source":"B","target":"D","length_m":140,"estimated_kph":36,"access":"allowed"},
-    {"edge_id":"merge","source":"D","target":"C","length_m":120,"estimated_kph":36,"access":"allowed"},
-    {"edge_id":"finish","source":"C","target":"E","length_m":100,"estimated_kph":36,"access":"allowed"},
-    {"edge_id":"unknown-service","source":"B","target":"X","length_m":50,"estimated_kph":36,"access":"unknown"},
-    {"edge_id":"shortcut","source":"X","target":"C","length_m":20,"estimated_kph":36,"access":"allowed"},
-    {"edge_id":"alternate","source":"A","target":"C","length_m":300,"estimated_kph":20,"access":"allowed"}
+  "prohibited_turns": [
+    [
+      "approach",
+      "direct"
+    ]
   ],
-  "expected_edge_ids": ["approach","legal","merge","finish"]
+  "edges": [
+    {
+      "edge_id": "approach",
+      "source": "A",
+      "target": "B",
+      "length_m": 100,
+      "estimated_kph": 36,
+      "access": "allowed"
+    },
+    {
+      "edge_id": "direct",
+      "source": "B",
+      "target": "C",
+      "length_m": 120,
+      "estimated_kph": 36,
+      "access": "allowed"
+    },
+    {
+      "edge_id": "legal",
+      "source": "B",
+      "target": "D",
+      "length_m": 140,
+      "estimated_kph": 36,
+      "access": "allowed"
+    },
+    {
+      "edge_id": "merge",
+      "source": "D",
+      "target": "C",
+      "length_m": 120,
+      "estimated_kph": 36,
+      "access": "allowed"
+    },
+    {
+      "edge_id": "finish",
+      "source": "C",
+      "target": "E",
+      "length_m": 100,
+      "estimated_kph": 36,
+      "access": "allowed"
+    },
+    {
+      "edge_id": "unknown-service",
+      "source": "B",
+      "target": "X",
+      "length_m": 50,
+      "estimated_kph": 36,
+      "access": "unknown"
+    },
+    {
+      "edge_id": "shortcut",
+      "source": "X",
+      "target": "C",
+      "length_m": 20,
+      "estimated_kph": 36,
+      "access": "allowed"
+    },
+    {
+      "edge_id": "alternate",
+      "source": "A",
+      "target": "C",
+      "length_m": 300,
+      "estimated_kph": 20,
+      "access": "allowed"
+    }
+  ],
+  "expected_edge_ids": [
+    "approach",
+    "unknown-service",
+    "shortcut",
+    "finish"
+  ]
 }
