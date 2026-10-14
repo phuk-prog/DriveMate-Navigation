@@ -191,6 +191,39 @@ class GpsRecoveryTests(unittest.TestCase):
     def test_uncertain_destination_fixes_cannot_confirm_arrival(self):
         g=RecoveringGpsJourney(network(),'bc',800000);start(g);g.poll(20)
         s=recover(g,x=179);self.assertEqual(s.status,'destination_uncertain');self.assertFalse(s.guidance_available)
+    def test_uncertain_destination_fix_preserves_plan_until_confirmed_crossing(self):
+        # Independent synthetic fixture proves the formerly broken transition.
+        # Never declare arrival merely from the fix at the target itself.
+        g=RecoveringGpsJourney(network(),'bc',500000)
+        start(g,x=20)
+        for x,t in ((85,4),(105,5),(135,6),(145,7)):
+            observation=g.observe(fix(x,0,t),t)
+            self.assertEqual(observation.status,'tracking')
+        previous=g.snapshot
+        uncertain=g.observe(fix(150,0,8),8)
+        self.assertEqual(uncertain.status,'destination_uncertain')
+        self.assertFalse(uncertain.guidance_available)
+        self.assertEqual(g.snapshot,previous)
+        self.assertEqual(g.mode,'tracking')
+        self.assertEqual(g.matcher.last.timestamp,7)
+        # A later reliable directed position beyond the target may confirm
+        # arrival without searching for an impossible route back in time.
+        crossed=g.observe(fix(154,0,9),9)
+        self.assertEqual(crossed.trusted_snapshot.status,'arrived')
+        self.assertFalse(crossed.guidance_available)
+        self.assertEqual(g.poll(12).status,'journey_complete')
+
+    def test_uncertain_destination_does_not_override_gps_timeout(self):
+        g=RecoveringGpsJourney(network(),'bc',500000)
+        start(g,x=20)
+        for x,t in ((85,4),(105,5),(135,6),(145,7)):
+            g.observe(fix(x,0,t),t)
+        previous=g.snapshot
+        self.assertEqual(g.observe(fix(150,0,8),8).status,'destination_uncertain')
+        self.assertEqual(g.poll(12).status,'gps_lost')
+        self.assertEqual(g.snapshot,previous)
+        self.assertFalse(g.guidance_available(12))
+
     def test_timed_recovery_preserves_future_ban_and_clock(self):
         r=TimedRestriction('no',('ab','bn'),parse_conditional('no_left_turn @ (Mo-Fr 07:00-10:00)'))
         g=RecoveringGpsJourney(network(timed=(r,)),'bn',800000,timezone_name='UTC')

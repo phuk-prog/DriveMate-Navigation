@@ -157,6 +157,14 @@ class RecoveringGpsJourney:
             match=self._destination_uncertain(matches[0],fix)
             if any(m.status!='matched' for m in matches):
                 match=next(m for m in matches if m.status!='matched')
+            if match.status == 'destination_uncertain':
+                # A good fix inside the destination accuracy interval is NOT
+                # proof of arrival. Keep the previous trusted road/route and
+                # matching history intact, withhold guidance for this frame,
+                # and allow the next fresh fix to establish a directed
+                # crossing. Switching to recovery here used to discard the
+                # route and could strand a driver beyond a one-way destination.
+                return self._out('destination_uncertain',match)
             if match.status!='matched':
                 self.mode='recovering';self._reset_probe();return self._out(match.status,match)
             # Deep-copy only bounded journey state. Prepared immutable graph and

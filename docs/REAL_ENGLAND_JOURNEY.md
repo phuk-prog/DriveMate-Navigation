@@ -78,3 +78,23 @@ all external benchmark services. The existing real-road **speed**
 workflow is now manual-only. The journey workflow deliberately goes
 red when genuine journey cases fail or are unresolved, while its
 artifacts upload on failure for root-cause analysis.
+
+
+## Verified root cause and guarded correction
+
+The focused run 38656569621 exposed a genuine state-machine defect:
+on the final road, a fix at the exact destination fraction triggered the
+correct `destination_uncertain` quality guard. But the controller wrongly
+treated that guard as a GPS loss, discarded the active tracking session,
+and on later good fixes attempted recovery *past* the destination.
+On a one-way road this could yield `no_route` or never-arriving output.
+
+The correction **does not declare an uncertain fix as arrival**. It
+withholds guidance for the uncertain frame while preserving the last
+trusted matched fix and the existing native-routed journey. A subsequent
+fresh directional fix beyond the target can now confirm arrival through
+the original session's route and legality checks. An actual GPS timeout
+still enters normal loss/recovery. Regression tests separately check
+rejected premature arrival, trusted-state preservation, confirmed
+forward crossing and timeout behavior. Only the actual next CI journey
+replay can confirm whether remaining Wigan failures are resolved.
