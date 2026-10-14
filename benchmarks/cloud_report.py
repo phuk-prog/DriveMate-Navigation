@@ -82,6 +82,11 @@ def scorecard_markdown(records, comparison, gps_traces=None):
         "|---|---:|---:|---:|",
     ])
     for name in active:
+        # Routing-only CH/Dijkstra libraries return a path, not a numbered
+        # roundabout guidance instruction. Never promote path correctness
+        # to an exit-numbering score.
+        if name not in ("DriveMate","GraphHopper","OSRM MLD","OSRM CH","Valhalla"):
+            continue
         subset=[case["results"][name] for case in comparison["cases"] if case["case"].startswith("ring_exit_")]
         if len(subset)!=4:continue
         lines.append(f"| {name} | {subset.count('pass')}/4 | {subset.count('fail')} | {subset.count('unknown')} |")
