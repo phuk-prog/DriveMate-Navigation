@@ -77,3 +77,27 @@ case IDs, underlying/returned roads and issue classification. Batch ranks requir
 complete resolved coverage of the four matching interfaces. The 92-route ledger
 and its critical legal failures remain separate and take precedence over GPS or
 speed conclusions. No overall navigation winner is inferred.
+
+## First execution findings
+
+The first [fault run](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38644168874)
+at revision `d05368baeb810117ed699a81a0d2bb946d05b2e9` recorded passing clean
+controls for all four batch configurations. Fault outcomes were 80/80 for each
+OSRM configuration, 70/80 for Valhalla and 64/80 for GraphHopper. These results
+describe this controlled reconstruction task, not safe navigation rankings.
+
+GraphHopper's sixteen failures were explicit broken-sequence errors after the
+large outlier. Valhalla's ten responses contained a primary partial path and
+remaining paths under alternates. That is its documented discontinuity format,
+not evidence that it silently discarded all remaining points. The requirement
+here is one continuous reconstruction; joining disconnected fragments would
+invent missing evidence. The parser now explicitly rejects this split format,
+including a tested case where the first fragment alone contains the expected
+road IDs. Counts in the captured response replay are unchanged; exact issue
+classification becomes split/rejected rather than mismatched primary sequence.
+
+The simple candidate matcher recovered 79/80 sequences, missing the last exit
+road in layout419/asymmetric_ring_exit_5/compound. All eight paired native
+recovery-controller probes passed, including that case, with no trusted-snapshot
+advances on rejected fixes. No production GPS thresholds or permissions were
+relaxed. Those eight controller probes remain candidate-only evidence.

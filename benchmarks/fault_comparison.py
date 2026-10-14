@@ -171,6 +171,23 @@ def parse_batch(engine,data,raw):
         if not isinstance(raw.get('trip'),dict): return None,'unresolved'
         legs=raw['trip'].get('legs')
         if not isinstance(legs,list) or not legs: return None,'unresolved'
+        alternates=raw.get('alternates',[])
+        if not isinstance(alternates,list): return None,'unresolved'
+        if alternates:
+            # This protocol requests one map_snap path, not k-best routes.
+            # Valhalla serializes discontinuous later parts as alternates.
+            # Treat them exactly like OSRM's multiple matchings: split, not
+            # one continuous reconstruction, even if the first IDs look right.
+            if any(not isinstance(a,dict) or not isinstance(a.get('trip'),dict) or
+                   not isinstance(a['trip'].get('legs'),list) or not a['trip']['legs'] for a in alternates):
+                return None,'unresolved'
+            for alternate in alternates:
+                for leg in alternate['trip']['legs']:
+                    if not isinstance(leg,dict) or not isinstance(leg.get('shape'),str): return None,'unresolved'
+                    try: decoded=polyline6(leg['shape'])
+                    except ValueError: return None,'unresolved'
+                    if len(decoded)<2 or any(abs(p[0])>90 or abs(p[1])>180 for p in decoded): return None,'unresolved'
+            return None,'fail'
         if any(not isinstance(leg,dict) or not isinstance(leg.get('shape'),str) for leg in legs): return None,'unresolved'
         try: points=[p for leg in legs for p in polyline6(leg['shape'])]
         except ValueError: return None,'unresolved'

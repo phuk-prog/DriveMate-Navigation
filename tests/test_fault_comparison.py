@@ -49,3 +49,18 @@ class FaultComparisonTests(unittest.TestCase):
             self.assertEqual(parse_batch('osrm',data,raw)[1],'unresolved')
         self.assertEqual(parse_batch('valhalla',data,{'trip':None})[1],'unresolved')
         self.assertEqual(parse_batch('graphhopper',data,{'paths':[None]})[1],'unresolved')
+
+    def test_valhalla_split_cannot_pass_even_when_first_part_has_expected_roads(self):
+        from unittest.mock import patch
+        import copy
+        data=suite()
+        raw={'trip':{'legs':[{'shape':'test-decoder-placeholder'}]}}
+        points=[data['nodes'][10001],data['nodes'][10002]]
+        with patch('benchmarks.fault_comparison.polyline6',return_value=points):
+            self.assertEqual(parse_batch('valhalla',data,raw),([10010],'pass'))
+            raw['alternates']=[copy.deepcopy(raw)]
+            self.assertEqual(parse_batch('valhalla',data,raw)[1],'fail')
+            raw['alternates'][0]['trip']['legs']=[None]
+            self.assertEqual(parse_batch('valhalla',data,raw)[1],'unresolved')
+            raw['alternates'][0]['trip']['legs']=[{'shape':None}]
+            self.assertEqual(parse_batch('valhalla',data,raw)[1],'unresolved')
