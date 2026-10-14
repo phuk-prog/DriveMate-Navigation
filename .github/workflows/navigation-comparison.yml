@@ -127,9 +127,76 @@ jobs:
           retention-days: 14
 
 
+  routingkit-reference:
+    needs: candidate-and-graphhopper
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Compile external pinned RoutingKit CH
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --filter=blob:none https://github.com/RoutingKit/RoutingKit.git "$RUNNER_TEMP/RoutingKit"
+          git -C "$RUNNER_TEMP/RoutingKit" checkout 54d49bb0cdea56dde182357522e4e86a03c57852
+          test "$(git -C "$RUNNER_TEMP/RoutingKit" rev-parse HEAD)" = 54d49bb0cdea56dde182357522e4e86a03c57852
+          make -C "$RUNNER_TEMP/RoutingKit" -j2 lib/libroutingkit.a
+          g++ -std=c++17 -O2 -I"$RUNNER_TEMP/RoutingKit/include" benchmarks/routingkit_ch_adapter.cpp "$RUNNER_TEMP/RoutingKit/lib/libroutingkit.a" -fopenmp -pthread -o "$RUNNER_TEMP/routingkit_fixture"
+      - name: Actual reference routing computations
+        run: |
+          python -m unittest tests.test_routingkit_reference -v
+          python -m benchmarks.routingkit_reference --binary "$RUNNER_TEMP/routingkit_fixture" --revision 54d49bb0cdea56dde182357522e4e86a03c57852
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: routingkit-evidence
+          path: results/routingkit/comparison.json
+          retention-days: 14
+  pgrouting-reference:
+    needs: candidate-and-graphhopper
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Start isolated pgRouting
+        shell: bash
+        run: |
+          set -euo pipefail
+          IMAGE='pgrouting/pgrouting:16-3.5-3.7.3'
+          docker pull "$IMAGE"
+          docker run -d --rm --name dm-pgrouting-reference -e POSTGRES_PASSWORD=synthetic-test-local-only "$IMAGE"
+          for i in $(seq 1 60); do
+            if docker exec dm-pgrouting-reference pg_isready -U postgres -d postgres | grep -q 'accepting connections'; then break; fi
+            sleep 1
+          done
+          docker exec dm-pgrouting-reference pg_isready -U postgres -d postgres
+      - name: Actual independent PostgreSQL route computation
+        run: |
+          python -m unittest tests.test_pgrouting_reference -v
+          python -m benchmarks.pgrouting_reference --image 'pgrouting/pgrouting:16-3.5-3.7.3'
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: pgrouting-evidence
+          path: results/pgrouting/comparison.json
+          retention-days: 14
+      - name: Stop isolated PostgreSQL
+        if: always()
+        run: docker rm -f dm-pgrouting-reference || true
+
   category-report:
     if: always()
-    needs: [candidate-and-graphhopper, isolated-references]
+    needs: [candidate-and-graphhopper, isolated-references, routingkit-reference, pgrouting-reference]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
