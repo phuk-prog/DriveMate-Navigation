@@ -15,18 +15,18 @@ LAYOUTS = (173, 419, 887, 1213)
 
 
 def suite():
-    data = {'nodes': {}, 'ways': {}, 'rules': [], 'cases': []}
+    data = {'nodes': {}, 'ways': {}, 'rules': [], 'cases': [], 'driving_side':'right'}
     for layout, seed in enumerate(LAYOUTS):
         base = (layout + 1) * 10000
         split = 'discovery' if layout < 2 else 'holdout'
         # Affine skew/scale changes geometry, branch spacing and approach angles.
         scale = 1 + layout * .17
         def node(i, x, y):
-            data['nodes'][base+i] = (.025*layout + y*.001*scale,
-                                     .025*layout + x*.001*scale + y*.00011*(layout+1))
+            data['nodes'][base+i] = (round(.025*layout + y*.001*scale,7),
+                                     round(.025*layout + x*.001*scale + y*.00011*(layout+1),7))
         def way(i, ns, **tags):
             data['ways'][base+i] = {'nodes': [base+n for n in ns],
-                'tags': {'highway': 'residential', 'oneway': 'yes', 'maxspeed': '36',
+                'tags': {'highway': 'residential', 'oneway': 'yes', 'maxspeed': '36', 'driving_side':'right',
                          'name': 'authored-'+str(base+i), **tags}}
         def rule(kind, roads, via=None):
             data['rules'].append({'kind': kind, 'ways': [base+w for w in roads],

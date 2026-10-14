@@ -27,6 +27,8 @@ def build(root, *, expected_commit=None):
             raise ValueError('Expanded evidence has stale or mismatched map/protocol')
         if r.get('commit_sha')!=expected_commit:
             raise ValueError('Expanded evidence revision differs from current report checkout')
+        if r.get('driving_side')!=data['driving_side']:
+            raise ValueError('Expanded evidence has different driving-side policy')
         if len(r['route_cases'])!=len(expected) or {c['id'] for c in r['route_cases']}!=expected:
             raise ValueError('Expanded route case coverage mismatch')
         if not all(c['baseline_passed'] and c['detected'] for c in r['mutation_controls']):

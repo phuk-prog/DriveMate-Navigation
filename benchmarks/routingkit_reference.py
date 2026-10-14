@@ -19,8 +19,12 @@ def legal(through,next_name,rules):
     path=through+(next_name,)
     for kind,roads in rules:
         if kind=='no' and len(path)>=len(roads) and path[-len(roads):]==roads:return False
-        if kind=='only' and len(path)>=len(roads):
-            if path[-len(roads):-1]==roads[:-1] and path[-1]!=roads[-1]:return False
+        if kind=='only':
+            # The obligation begins on entering the from-road. Waiting for
+            # the complete via sequence incorrectly permits early escape.
+            for prefix in range(1,len(roads)):
+                if len(through)>=prefix and through[-prefix:]==roads[:prefix] and next_name!=roads[prefix]:
+                    return False
     return True
 
 def compile_query(p,start,end):

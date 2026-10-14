@@ -20,6 +20,7 @@ def evidence():
             if c['id'].split('/')[-1] in ('no_chained_turn','only_chained_turn',
                                          'no_inside_via_reset','asymmetric_ring_exit_5','compound_no_only_detour')]
     return {'engine':'drivemate','fresh_execution':True,'dataset_sha256':data['dataset_sha256'],
+            'driving_side':data['driving_side'],
             'protocol':data['protocol'],'commit_sha':'test-revision',
             'route_cases':rows,'clean_traces':traces,'mutation_controls':mutation_controls(data)}
 
@@ -37,11 +38,12 @@ class ExpandedReportTests(unittest.TestCase):
             self.assertIsNone(report['overall_rank'])
 
     def test_map_mismatch_and_missing_mutants_fail_closed(self):
-        for mutate in ('map','mutations','coverage'):
+        for mutate in ('map','mutations','coverage','driving_side'):
             with self.subTest(mutate=mutate),tempfile.TemporaryDirectory(dir=Path.cwd()) as temp:
                 row=evidence()
                 if mutate=='map': row['dataset_sha256']='different'
                 elif mutate=='mutations': row['mutation_controls']=[]
+                elif mutate=='driving_side': row['driving_side']='left'
                 else: row['route_cases'].pop()
                 Path(temp,'expanded.json').write_text(json.dumps(row))
                 with self.assertRaises(ValueError): build(temp,expected_commit='test-revision')

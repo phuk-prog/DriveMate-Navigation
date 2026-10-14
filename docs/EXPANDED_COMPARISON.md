@@ -34,6 +34,12 @@ The four layouts vary road lengths, skew, approach angles, ring node counts and
 asymmetry. They retain the same scenario families: held-out geometry is tested,
 but wholly unseen restriction types and production-size road networks are not.
 Planar crossings that do not share a node are not connected junctions.
+All author coordinates are rounded to seven-decimal OSM precision before export
+and queries. Counter-clockwise rings explicitly declare driving_side=right.
+Valhalla uses these way tags with use_admin_db=false; an absent real-country
+administrative database must not silently substitute an incompatible driving side.
+
+Discovery failures and corrections are recorded in [EXPANDED_COMPARISON_FINDINGS.md](EXPANDED_COMPARISON_FINDINGS.md).
 
 GraphHopper, OSRM MLD/CH and Valhalla independently import the authored OSM map.
 DriveMate's research importer/router executes the same inputs. RoutingKit CH and

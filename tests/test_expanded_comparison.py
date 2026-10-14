@@ -53,6 +53,16 @@ class ExpandedComparisonTests(unittest.TestCase):
         self.assertEqual(shape_roads(data,shape)[1],'pass')
         self.assertEqual(shape_roads(data,list(reversed(shape)))[1],'fail')
 
+    def test_export_and_queries_use_common_osm_precision(self):
+        for lat,lon in suite()['nodes'].values():
+            self.assertEqual(lat,round(lat,7))
+            self.assertEqual(lon,round(lon,7))
+
+    def test_driving_side_is_explicit_in_every_author_way(self):
+        data=suite()
+        self.assertEqual(data['driving_side'],'right')
+        self.assertTrue(all(w['tags']['driving_side']==data['driving_side'] for w in data['ways'].values()))
+
 
 if __name__ == '__main__':
     unittest.main()

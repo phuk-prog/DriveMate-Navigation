@@ -277,6 +277,7 @@ def execute(engine, data, out, *, http=None, binary=None, version=None):
             'expected_ways':expected,'actual_ways':actual,'rejected_clean_samples':rejected,
             'scope':'Complete observed sequence only; per-fix rejection diagnostics separate; coordinate-only candidate streaming vs external batch; no controller/recovery ranking'})
     result={'engine':engine,'label':LABELS[engine],'version':version,'fresh_execution':True,
+        'driving_side':data['driving_side'],
         'dataset_sha256':data['dataset_sha256'],'protocol':data['protocol'],
         'commit_sha':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
         'cohort':'supplied-transition-algorithm' if engine in ('routingkit','pgrouting') else 'native-road-import',

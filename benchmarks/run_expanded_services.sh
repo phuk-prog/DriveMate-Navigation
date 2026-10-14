@@ -7,7 +7,9 @@ osmium cat results/expanded/map/expanded.osm -o results/expanded/map/expanded.os
 docker rm -f reference reference-ch >/dev/null 2>&1 || true
 if [[ "$engine" == osrm ]]; then
   IMAGE='ghcr.io/project-osrm/osrm-backend:v5.27.1@sha256:855614a38f464b0558a2ad6eaa7cb8c139f39887da9b38b485ce453c6e6e6124'
-  docker run --rm -v "$PWD/results/expanded/map:/data" "$IMAGE" osrm-extract -p /opt/car.lua /data/expanded.osm.pbf
+  # OSRM's fileIndex has mode 0600: create it as the runner, so the host can
+  # copy the extracted graph for CH without broad permission changes.
+  docker run --rm --user "$(id -u):$(id -g)" -v "$PWD/results/expanded/map:/data" "$IMAGE" osrm-extract -p /opt/car.lua /data/expanded.osm.pbf
   mkdir -p results/expanded/ch-map
   cp results/expanded/map/expanded.osrm* results/expanded/ch-map/
   docker run --rm -v "$PWD/results/expanded/map:/data" "$IMAGE" osrm-partition /data/expanded.osrm
@@ -19,6 +21,11 @@ if [[ "$engine" == osrm ]]; then
   python -m benchmarks.expanded_comparison --engine osrm-ch --version "5.27.1/pinned-855614a"
 elif [[ "$engine" == valhalla ]]; then
   IMAGE='ghcr.io/valhalla/valhalla-scripted:3.9.1@sha256:6238809f9dc3057743d70a20efd3911ec38e458bfa13a0601909b58f68dfd956'
+  # An authored map has no real administrative polygons. Use its explicit
+  # driving_side tags instead of consulting an absent admin DB (which would
+  # silently set drive_on_right=false and corrupt CCW exit counting).
+  docker run --rm --entrypoint valhalla_build_config "$IMAGE" --mjolnir-data-processing-use-admin-db false > results/expanded/map/valhalla.json
+  python -c 'import json; d=json.load(open("results/expanded/map/valhalla.json")); assert d["mjolnir"]["data_processing"]["use_admin_db"] is False'
   docker run -d --rm --name reference -p 127.0.0.1:8002:8002 -v "$PWD/results/expanded/map:/custom_files" -e build_admins=False -e build_time_zones=False -e build_elevation=False -e use_default_speeds_config=False -e build_tar=False -e server_threads=2 "$IMAGE"
   # Wait for completed HTTP route response, not merely an open socket.
   python -c 'import time; from benchmarks.expanded_fixture import suite; from benchmarks.whole_drive import prepared; from benchmarks.cloud_reference import call; d=suite(); p=prepared(d["osm"]); c=d["cases"][0]; deadline=time.monotonic()+240
