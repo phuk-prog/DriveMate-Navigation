@@ -1,7 +1,7 @@
 """A first executable contract for the native+GPS real-road journey scorecard."""
 import unittest
 from pathlib import Path
-from benchmarks.real_english_journey import replay_case
+from benchmarks.real_english_journey import replay_case, sample_fractions
 from benchmarks.whole_drive import prepared
 
 
@@ -14,6 +14,14 @@ class RealEnglishJourneyContractTests(unittest.TestCase):
         self.assertIn(r["status"], ("pass", "fail", "unresolved"))
         self.assertIn("arrival", r["components"])
         self.assertIn("native_routing", r["components"])
+
+    def test_simulated_positions_are_continuous_on_real_length_scale(self):
+        for length in (2.5, 17.0, 140.0, 500.0):
+            fs = sample_fractions(length)
+            self.assertGreaterEqual(len(fs), 11)
+            self.assertEqual(tuple(sorted(fs)), fs)
+            self.assertLessEqual(max((v-u)*length for u, v in
+                   zip((0.0,)+fs, fs+(1.0,))), 6.001)
 
     def test_real_road_workflow_writes_inspectable_journey_result(self):
         wf = (Path(__file__).resolve().parents[1] /

@@ -37,3 +37,24 @@ truth for real roads, physical lane placement, complex roundabout exit signs,
 spoken instruction quality/timing, full offline map updates, regional map scale
 and Android on-device performance. This initial journey cohort measures
 native-plus-research integration only.
+
+
+## First Wigan integration replay: faults and fixture repair
+
+The initial fresh run 38655911826 executed eight native-powered simulated
+journeys on the pinned OSM Wigan extract. It returned zero full passes:
+five failed and three unresolved. Two of those reached the destination
+but also observed directed-road mismatches; three failed to confirm arrival;
+three were interrupted by a >20 m gap **in the generated test samples**.
+Those three interruptions are benchmark setup errors, not GPS failures.
+
+The generator now inserts continuous route samples at **no more than 6 m**
+along each real segment, even when an OSM way segment is long. It records
+a matched alternate directed road near the approached junction as
+`unverified`, not a proved matcher defect or a pass. A convincing mismatch
+at least 8 m away from either segment endpoint remains a mismatch failure.
+Both outcomes remain counted; there is no algorithm permission change or
+silent exclusion of offending routes.
+
+Run the same eight cases again and use the emitted per-case evidence to
+identify actual native/GPS/guidance failures before implementing any fix.
