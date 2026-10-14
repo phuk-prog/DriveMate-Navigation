@@ -42,7 +42,13 @@ jobs:
           (cd results/real && md5sum -c greater-manchester-261013.osm.pbf.md5)
           sha256sum results/real/greater-manchester-261013.osm.pbf > results/real/source.sha256
           osmium extract --strategy complete_ways --bbox=-2.252,53.477,-2.234,53.488 \
-            results/real/greater-manchester-261013.osm.pbf -o results/real/roads.osm.pbf
+            results/real/greater-manchester-261013.osm.pbf -o results/real/area.osm.pbf
+          # Keep all highway ways, all referenced geometry, barriers and all
+          # restriction/connectivity relations; remove unrelated shop/building
+          # objects only. NEVER omit turn-restriction relations.
+          osmium tags-filter results/real/area.osm.pbf \
+            w/highway n/barrier r/type=restriction r/type=connectivity \
+            -o results/real/roads.osm.pbf
           osmium cat results/real/roads.osm.pbf -o results/real/roads.osm -f osm,add_metadata=false
           test "$(stat -c%s results/real/roads.osm)" -lt 6000000
           python -m benchmarks.real_english_speed --input results/real/roads.osm --snapshot 2026-10-13 --cases 16 --preflight

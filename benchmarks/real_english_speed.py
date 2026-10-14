@@ -27,7 +27,8 @@ def percentile(values, fraction):
 def road_cases(prepared, graph, *, maximum=18):
     """Deterministic graph walks; never any user origin or recorded journey."""
     chosen = []
-    vertices = sorted(graph.vertices)
+    vertices = sorted(v for v, edges in graph.adjacency.items()
+                      if any(e.access == "allowed" for e in edges))
     step = max(1, len(vertices) // (maximum * 10))
     seen = set()
     for origin in vertices[::step]:

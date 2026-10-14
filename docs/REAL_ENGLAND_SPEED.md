@@ -34,3 +34,18 @@ with synthetic ones to manufacture passing results.
 
 The source snapshot is not itself verified against current physical signage.
 Real-world legality requires a separate independently established reference.
+
+
+## Real-road import preparation
+
+The first run found that unfiltered Greater Manchester urban XML exceeds the
+prototype's 6 MB input cap. The preparation now uses Osmium's standard tag
+filter with *automatic referenced-object inclusion*: every highway way,
+barrier node, turn-restriction relation and lane-connectivity relation is
+retained with its referenced nodes and ways. Unrelated buildings and shops
+are excluded. This is extraction for a motorcar graph, not fabricated map data.
+The filter intentionally preserves restrictions even when they cause the
+prototype importer to reject the dataset. Failure is labelled an importer
+coverage blocker, never an engine route-speed failure.
+
+See https://docs.osmcode.org/osmium/latest/osmium-tags-filter.html.
