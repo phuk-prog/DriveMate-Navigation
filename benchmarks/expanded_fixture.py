@@ -93,6 +93,8 @@ def suite():
             way(390+ordinal,(300+index,380+ordinal))
             case('asymmetric_ring_exit_'+str(ordinal),350,380+ordinal,
                  'asymmetric_roundabout_paths',exit_number=ordinal)
+    from benchmarks.route_quality_fixture import extend
+    extend(data)
     raw = export_osm(data)
     data['dataset_sha256'] = hashlib.sha256(raw).hexdigest()
     data['protocol'] = PROTOCOL

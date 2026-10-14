@@ -169,10 +169,12 @@ def main():
     from benchmarks.expanded_report import markdown as expanded_markdown
     baseline=(out/"SCORECARD.md").read_text()
     (out/"SCORECARD.md").write_text(expanded_markdown(expanded)+"\n# Original nine-case baseline retained\n\n"+baseline)
+    from benchmarks.route_quality_report import save as save_quality, markdown as quality_markdown
+    quality=save_quality(root,out)
     from benchmarks.fault_report import save as save_faults, markdown as fault_markdown
     faults=save_faults(root,out)
     existing=(out/"SCORECARD.md").read_text()
-    (out/"SCORECARD.md").write_text(fault_markdown(faults)+"\n"+existing)
+    (out/"SCORECARD.md").write_text(quality_markdown(quality)+"\n"+fault_markdown(faults)+"\n"+existing)
 
 if __name__=="__main__":
     main()

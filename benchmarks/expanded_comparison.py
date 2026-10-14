@@ -92,12 +92,16 @@ def shape_roads(data,points):
     anchor=next(iter(data['nodes'].values()))
     east=111195.0802*math.cos(math.radians(anchor[0]))
     def xy(p): return ((p[1]-anchor[1])*east,(p[0]-anchor[0])*111195.0802)
-    segments=[]
+    segments=[];buckets={}
     for wid,way in data['ways'].items():
         for a,b in zip(way['nodes'],way['nodes'][1:]):
             left,right=xy(data['nodes'][a]),xy(data['nodes'][b])
             dx,dy=right[0]-left[0],right[1]-left[1]
-            segments.append((wid,left,dx,dy,dx*dx+dy*dy,way['tags'].get('access')=='no'))
+            segment=(wid,left,dx,dy,dx*dx+dy*dy,way['tags'].get('access')=='no')
+            segments.append(segment)
+            for ix in range(math.floor((min(left[0],right[0])-2)/100),math.floor((max(left[0],right[0])+2)/100)+1):
+                for iy in range(math.floor((min(left[1],right[1])-2)/100),math.floor((max(left[1],right[1])+2)/100)+1):
+                    buckets.setdefault((ix,iy),[]).append(segment)
     selected=[]
     for l,r in zip(points,points[1:]):
         a,b=xy(l),xy(r);dx,dy=b[0]-a[0],b[1]-a[1]
@@ -107,7 +111,7 @@ def shape_roads(data,points):
         for i in range(count):
             q=(i+.5)/count;mx,my=a[0]+q*dx,a[1]+q*dy
             candidates=[]
-            for wid,origin,sx,sy,sq,blocked in segments:
+            for wid,origin,sx,sy,sq,blocked in buckets.get((math.floor(mx/100),math.floor(my/100)),()):
                 t=((mx-origin[0])*sx+(my-origin[1])*sy)/sq
                 if not -.002<=t<=1.002: continue
                 dist=math.hypot(mx-origin[0]-t*sx,my-origin[1]-t*sy)
@@ -155,9 +159,9 @@ def endpoint_check(engine, response, data, case):
     return {'within_2m':max(errors)<=2,'errors_m':errors}
 
 
-def gh_route(http, data, case):
+def gh_route(http, data, case, *, instructions=True):
     params=[('point',','.join(map(str,data['nodes'][n]))) for n in (case['start'],case['end'])]
-    params += [('profile','car'),('details','osm_way_id'),('instructions','true'),('points_encoded','false')]
+    params += [('profile','car'),('details','osm_way_id'),('instructions',str(instructions).lower()),('points_encoded','false')]
     raw=request(http,'/route?'+urlencode(params))
     path,unreachable=decode_response(raw)
     # Failure to locate an endpoint is not proved network disconnection.
@@ -293,6 +297,8 @@ def execute(engine, data, out, *, http=None, binary=None, version=None):
         'unresolved':sum(x['status']=='unresolved' for x in rows),'traces':len(traces)}))
     from benchmarks.fault_comparison import run as run_faults
     run_faults(engine,data,out,p,http=http)
+    from benchmarks.route_quality import run as run_quality
+    run_quality(engine,data,out,p,http=http,binary=binary)
     return result
 
 
