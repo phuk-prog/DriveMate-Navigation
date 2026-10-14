@@ -63,10 +63,11 @@ def build(source_documents):
             references[name] = rows
     pairings = []
     for ident, row in primary.items():
-        outcomes = {"DriveMate": row["drivemate_status"],
-                    "GraphHopper": row["graphhopper_status"]}
+        outcomes = {"DriveMate": row.get("drivemate_route_status",row["drivemate_status"]),
+                    "GraphHopper": row.get("graphhopper_route_status",row["graphhopper_status"])}
         for name in ("OSRM MLD", "OSRM CH", "Valhalla", "RoutingKit CH", "pgRouting"):
-            outcomes[name] = references.get(name, {}).get(ident, {}).get("status", "not tested")
+            refrow=references.get(name, {}).get(ident, {})
+            outcomes[name] = refrow.get("route_status",refrow.get("status","not tested"))
         pairings.append({"case": ident, "expected_ways": row["expected_ways"],
                          "results": outcomes})
     summaries = {}

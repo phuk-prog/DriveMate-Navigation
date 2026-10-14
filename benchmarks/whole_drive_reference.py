@@ -102,11 +102,23 @@ server:
                 exits=[i.get('exit_number') for i in instructions if i.get('sign')==6]
                 expected=case['ways'];drivepass=ours==expected;ghpass=(rejected if expected is None else other==expected)
                 driveexit=p.roundabouts(route)[0].exit_number if route and case.get('exit_number') else None
-                if case.get('exit_number'):drivepass&=driveexit==case['exit_number'];ghpass&=exits==[case['exit_number']]
-                if 'directions' in case:ghpass&=signs==case['directions']
+                drive_route_pass=ours==expected
+                gh_route_pass=(rejected if expected is None else other==expected)
+                drive_exit_pass=(driveexit==case['exit_number']) if 'exit_number' in case else None
+                gh_exit_pass=(exits==[case['exit_number']]) if 'exit_number' in case else None
+                gh_turn_pass=(signs==case['directions']) if 'directions' in case else None
+                if drive_exit_pass is not None:drivepass&=drive_exit_pass
+                if gh_exit_pass is not None:ghpass&=gh_exit_pass
+                if gh_turn_pass is not None:ghpass&=gh_turn_pass
                 routes.append({'case':case['id'],'expected_ways':expected,'drivemate_ways':ours,'graphhopper_ways':other,
                                'drivemate_status':'pass' if drivepass else 'fail','graphhopper_status':'pass' if ghpass else 'fail',
                                'graphhopper_turn_signs':signs,'graphhopper_exit_numbers':exits,'drivemate_exit_number':driveexit,
+                               'expected_exit_number':case.get('exit_number'),'expected_directions':case.get('directions'),
+                               'drivemate_route_status':'pass' if drive_route_pass else 'fail',
+                               'graphhopper_route_status':'pass' if gh_route_pass else 'fail',
+                               'drivemate_exit_status':('pass' if drive_exit_pass else 'fail') if drive_exit_pass is not None else None,
+                               'graphhopper_exit_status':('pass' if gh_exit_pass else 'fail') if gh_exit_pass is not None else None,
+                               'graphhopper_turn_status':('pass' if gh_turn_pass else 'fail') if gh_turn_pass is not None else None,
                                'scope':'Full node-to-node route semantics; replan has no historical incoming-road parameter'})
             selected=('urban_clean','legal_wrong_turn_reroute','via_way_ban_detour','ring_exit_4')
             for ident in selected:

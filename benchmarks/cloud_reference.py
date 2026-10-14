@@ -192,10 +192,15 @@ def main():
     for c in reference_requests():
         r=call(a.engine,p,*c['nodes']);(out/(c['id']+'.json')).write_text(json.dumps(r,indent=2))
         route,exits,no_route=parse(a.engine,p,r)
-        if c['ways'] is None:status='pass' if no_route else 'unknown' if route is None else 'fail'
-        elif route is None:status='unknown'
-        else:status='pass' if route==c['ways'] and ('exit_number' not in c or exits==(c['exit_number'],)) else 'fail'
-        rows.append({'case':c['id'],'expected_ways':c['ways'],'actual_ways':route,'roundabout_exits':exits,'status':status})
+        if c['ways'] is None:
+            route_status='pass' if no_route else 'unknown' if route is None else 'fail'
+        elif route is None:route_status='unknown'
+        else:route_status='pass' if route==c['ways'] else 'fail'
+        exit_status=('pass' if exits==(c['exit_number'],) else 'fail') if 'exit_number' in c else None
+        status=route_status if exit_status in (None,'pass') else 'fail'
+        rows.append({'case':c['id'],'expected_ways':c['ways'],'actual_ways':route,
+                     'expected_exit_number':c.get('exit_number'),'roundabout_exits':exits,
+                     'route_status':route_status,'exit_status':exit_status,'status':status})
     matches=[]
     for ident,samples in shared_clean_samples():
         raw=call_match(a.engine,p,samples)
