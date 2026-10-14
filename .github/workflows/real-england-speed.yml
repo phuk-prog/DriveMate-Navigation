@@ -26,6 +26,7 @@ jobs:
       - name: Review source, run regression and compile real-speed harness
         run: |
           python -m tools.privacy_guard
+          bash navigation_core/native/build.sh
           python -m compileall -q benchmarks/real_english_speed.py
           python -m tools.unittest_evidence
       - name: Fetch dated public Greater Manchester road snapshot (never commit or publish PBF)
@@ -44,6 +45,7 @@ jobs:
             results/real/greater-manchester-261013.osm.pbf -o results/real/roads.osm.pbf
           osmium cat results/real/roads.osm.pbf -o results/real/roads.osm -f osm,add_metadata=false
           test "$(stat -c%s results/real/roads.osm)" -lt 6000000
+          python -m benchmarks.real_english_speed --input results/real/roads.osm --snapshot 2026-10-13 --cases 16 --preflight
       - name: Fetch pinned GraphHopper and verify digest
         shell: bash
         run: |
@@ -68,6 +70,14 @@ jobs:
             -v "$PWD/results/real:/data" "$IMAGE" osrm-routed --algorithm mld /data/roads.osrm
           docker run -d --rm --name english-osrm-ch -p 127.0.0.1:5001:5000 \
             -v "$PWD/results/real/ch:/data" "$IMAGE" osrm-routed --algorithm ch /data/roads.osrm
+          for port in 5000 5001; do
+            ready=0
+            for attempt in $(seq 1 40); do
+              if curl -fsS --max-time 2 "http://127.0.0.1:$port/nearest/v1/driving/-2.242,53.482" >/dev/null; then ready=1; break; fi
+              sleep 1
+            done
+            test "$ready" -eq 1 || { echo "OSRM port $port failed readiness"; exit 2; }
+          done
       - name: Measure real-English-road routes on same runner
         run: |
           python -m benchmarks.real_english_speed \
@@ -78,6 +88,7 @@ jobs:
       - name: Clean up reference services
         if: always()
         run: |
+          mkdir -p results/real-england
           docker logs --tail 40 english-osrm-mld > results/real-england/osrm-mld.log 2>&1 || true
           docker logs --tail 40 english-osrm-ch > results/real-england/osrm-ch.log 2>&1 || true
           docker rm -f english-osrm-mld english-osrm-ch || true
@@ -86,6 +97,7 @@ jobs:
         with:
           name: real-england-speed-evidence
           path: |
+            results/real-england/preflight.json
             results/real-england/speed.json
             results/real-england/*.log
             results/real/source.sha256

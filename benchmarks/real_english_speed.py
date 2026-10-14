@@ -73,7 +73,17 @@ def start_candidate(prepared):
                 query = parse_qs(urlparse(self.path).query)
                 start, end = query["from"][0], query["to"][0]
                 route = prepared.route(start, end)
-                payload = json.dumps({"ok": True, "edges": len(route.edge_ids)}).encode()
+                position = start
+                points = [[prepared.coordinates[position][1], prepared.coordinates[position][0]]]
+                for edge_id in route.edge_ids:
+                    edge = prepared.source_edges[edge_id]
+                    if edge.source != position:
+                        raise ValueError("Discontinuous candidate route")
+                    position = edge.target
+                    points.append([prepared.coordinates[position][1], prepared.coordinates[position][0]])
+                if position != end:
+                    raise ValueError("Candidate returned wrong destination")
+                payload = json.dumps({"ok": True, "coordinates": points}, separators=(",", ":")).encode()
                 code = 200
             except (ValueError, KeyError, TypeError):
                 payload = b'{"ok":false}'
@@ -108,10 +118,10 @@ def query(engine, case, coordinates, candidate_port, gh_port):
     with urlopen(url, timeout=12) as response:
         raw = json.load(response)
     if engine == "drivemate-python":
-        if not raw.get("ok") or raw.get("edges", 0) < 1:
+        if not raw.get("ok"):
             raise ValueError("No candidate route")
-        return
-    if engine == "graphhopper":
+        points = raw.get("coordinates")
+    elif engine == "graphhopper":
         paths = raw.get("paths") or []
         points = paths[0].get("points", {}).get("coordinates") if paths else None
     else:
@@ -124,7 +134,12 @@ def query(engine, case, coordinates, candidate_port, gh_port):
                           (u[1] - v[0]) * 111195 * math.cos(math.radians(v[0])))
     if metres(points[0], a) > 12 or metres(points[-1], b) > 12:
         raise ValueError("Endpoint snapping exceeds 12m; incomparable")
-    # A valid endpoint is necessary but does not prove route legality.
+    if any(len(pt) != 2 or not all(math.isfinite(x) for x in pt) for pt in points):
+        raise ValueError("Invalid route geometry")
+    if sum(math.hypot((v[0] - u[0]) * 66000, (v[1] - u[1]) * 111195)
+           for u, v in zip(points, points[1:])) < 100:
+        raise ValueError("Unexpectedly short or incomplete route geometry")
+    # Complete legality and orientation need an independent OSM reference judge.
 
 
 def run(raw, jar, repeat, maximum, snapshot, use_osrm):
@@ -188,21 +203,46 @@ def run(raw, jar, repeat, maximum, snapshot, use_osrm):
         "speed_ranks_complete_only": [
             {"rank": i + 1, "engine": e} for i, e in enumerate(ranked)],
         "overall_navigation_rank": None,
+        "external_route_legality_verified": False,
         "limitations": [
             "Public OSM road topology, not independent current legal-access verification.",
             "DriveMate is the prepared Python research router, not Android native routing.",
             "All measured services use warm local HTTP; distinct algorithms and costing.",
-            "Endpoint equivalence is checked for references; full external legality is unverified.",
+            "Endpoints, finite polyline and minimum returned distance are checked; full external route legality remains unverified.",
+            "Only endpoint/shape-validated response-time ranks; not independently proved legal-route-speed ranks.",
             "No device battery, regional UK map, traffic or mobile benchmark claim.",
             "No personal routes or GPS logs; scenario endpoints are derived solely from public map.",
         ],
     }
 
 
+def preflight(raw, snapshot, maximum):
+    imported = import_osm_xml(raw, provenance=Provenance(
+        "Greater Manchester, England", snapshot,
+        "Geofabrik historic public OSM PBF", "© OpenStreetMap contributors (ODbL 1.0)"))
+    prepared = prepare_navigation(imported.graph, imported.coordinates)
+    cases = road_cases(prepared, imported.graph, maximum=maximum)
+    if len(cases) < 5:
+        raise ValueError("Not enough routable public-English-road cases; stop without benchmarks")
+    distances = []
+    for case in cases:
+        route = prepared.route(case["source"], case["target"])
+        distances.append(round(sum(prepared.source_edges[e].length_m for e in route.edge_ids), 1))
+    info = {"status": "preflight_passed", "real_road_cases": len(cases),
+            "vertices": len(imported.graph.vertices), "edges": len(imported.graph.edges),
+            "route_lengths_m": distances, "source_xml_sha256": sha256(raw).hexdigest(),
+            "warning": "Public topology; real-world legal permission not independently verified"}
+    out = Path("results/real-england")
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "preflight.json").write_text(json.dumps(info, indent=2) + "\n")
+    return info
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--input", type=Path, required=True)
-    ap.add_argument("--graphhopper-jar", type=Path, required=True)
+    ap.add_argument("--graphhopper-jar", type=Path)
+    ap.add_argument("--preflight", action="store_true")
     ap.add_argument("--snapshot", required=True)
     ap.add_argument("--repeat", type=int, default=20)
     ap.add_argument("--cases", type=int, default=16)
@@ -216,7 +256,14 @@ def main():
         ap.error("Map exceeds bounded prototype importer limit")
     out = Path("results/real-england")
     out.mkdir(parents=True, exist_ok=True)
-    result = run(args.input.read_bytes(), args.graphhopper_jar,
+    raw = args.input.read_bytes()
+    if args.preflight:
+        print(json.dumps(preflight(raw, args.snapshot, args.cases)))
+        return
+    if args.graphhopper_jar is None:
+        ap.error("--graphhopper-jar required for full run")
+    preflight(raw, args.snapshot, args.cases)
+    result = run(raw, args.graphhopper_jar,
                  args.repeat, args.cases, args.snapshot, args.osrm)
     (out / "speed.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({"implementations": result["implementations"],
