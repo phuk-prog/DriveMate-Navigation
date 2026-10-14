@@ -72,6 +72,8 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq osmium-tool
           mkdir -p results/shared
+          bash navigation_core/native/build.sh
+          python -m benchmarks.whole_drive
           python -c "from pathlib import Path; from benchmarks.whole_drive import fixture; Path('results/shared/synthetic.osm').write_bytes(fixture())"
           osmium cat results/shared/synthetic.osm -o results/shared/synthetic.osm.pbf
       - name: OSRM pinned MLD reference

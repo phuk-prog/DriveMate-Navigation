@@ -72,6 +72,55 @@ def parse(engine,p,response):
         exits=tuple(exits)
     return geometry_ways(p,points),exits,False
 
+def call_match(engine,p,samples):
+    """Submit identical authored clean coordinate streams; never send real GPS."""
+    if not isinstance(samples,list) or not 3<=len(samples)<=100:
+        raise ValueError('Bounded synthetic GPS trace required')
+    if any(row.get('injected_fault') for row in samples):
+        raise ValueError('This cross-engine subset requires exact clean traces')
+    if engine in ('osrm','osrm-ch'):
+        coords=';'.join(f"{row['lon']},{row['lat']}" for row in samples)
+        url='http://127.0.0.1:'+('5001' if engine=='osrm-ch' else '5000')
+        url+='/match/v1/driving/'+coords+'?'+urlencode({'geometries':'geojson','overview':'full','steps':'false',
+                                                           'tidy':'false'})
+    else:
+        payload={'shape':[{'lat':s['lat'],'lon':s['lon']} for s in samples],
+                 'costing':'auto','shape_match':'map_snap','shape_format':'polyline6'}
+        url=urllib.request.Request('http://127.0.0.1:8002/trace_route',
+            data=json.dumps(payload,separators=(',',':')).encode('utf-8'),
+            headers={'Content-Type':'application/json'},method='POST')
+    try:
+        with urllib.request.urlopen(url,timeout=20) as response:return json.load(response)
+    except urllib.error.HTTPError as error:
+        return json.loads(error.read())
+
+def parse_match(engine,p,response):
+    """Only unambiguous decoded whole-trace paths can earn a passing result."""
+    if engine in ('osrm','osrm-ch'):
+        if response.get('code')!='Ok' or len(response.get('matchings',()))!=1:
+            return None
+        shape=response['matchings'][0].get('geometry',{}).get('coordinates')
+        if not isinstance(shape,list):return None
+        points=[(point[1],point[0]) for point in shape]
+        return geometry_ways(p,points)
+    if not response.get('trip',{}).get('legs'):return None
+    points=[]
+    for leg in response['trip']['legs']:
+        if not isinstance(leg.get('shape'),str):return None
+        points.extend(polyline6(leg['shape']))
+    return geometry_ways(p,points)
+
+def shared_clean_samples():
+    """Use exact DriveMate synthetic traces also sent to GraphHopper in first job."""
+    path=Path('results/whole_drive/drivemate.json')
+    result=json.loads(path.read_text())
+    if result.get('dataset_sha256')!=__import__('hashlib').sha256(fixture()).hexdigest():
+        raise ValueError('GPS traces have mismatched authored map')
+    ids=('urban_clean','legal_wrong_turn_reroute','via_way_ban_detour','ring_exit_4')
+    cases={row['case']:row for row in result['cases']}
+    return [(name,cases[name]['synthetic_samples']) for name in ids]
+
+
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--engine',choices=['osrm','osrm-ch','valhalla'],required=True);ap.add_argument('--version',required=True);a=ap.parse_args()
     p=prepared();out=Path('results/cloud_'+a.engine);out.mkdir(parents=True,exist_ok=True)
@@ -91,7 +140,18 @@ def main():
         elif route is None:status='unknown'
         else:status='pass' if route==c['ways'] and ('exit_number' not in c or exits==(c['exit_number'],)) else 'fail'
         rows.append({'case':c['id'],'expected_ways':c['ways'],'actual_ways':route,'roundabout_exits':exits,'status':status})
-    result={'engine':a.engine,'version':a.version,'fresh_execution':True,'dataset_sha256':__import__('hashlib').sha256(fixture()).hexdigest(),'cases':rows,
+    matches=[]
+    for ident,samples in shared_clean_samples():
+        raw=call_match(a.engine,p,samples)
+        (out/(ident+'_match.json')).write_text(json.dumps(raw,indent=2))
+        route=parse_match(a.engine,p,raw)
+        from benchmarks.whole_drive_reference import ways
+        expected=ways(row['road'] for row in samples)
+        matches.append({'case':ident,'sample_count':len(samples),
+                        'expected_observed_ways':expected,'matched_ways':route,
+                        'status':'unknown' if route is None else 'pass' if route==expected else 'fail',
+                        'scope':'Same complete clean synthetic trace; offline/batch reconstruction, not GPS-controller recovery'})
+    result={'engine':a.engine,'version':a.version,'fresh_execution':True,'dataset_sha256':__import__('hashlib').sha256(fixture()).hexdigest(),'cases':rows,'batch_matches':matches,
             'scope':'Synthetic static route/exit semantics only; geometry adapter gaps are unknown, not scored as passes','score_out_of_10':round(10*sum(r['status']=='pass' for r in rows)/len(rows),2) if not any(r['status']=='unknown' for r in rows) else None}
     (out/'comparison.json').write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))
 if __name__=='__main__':main()

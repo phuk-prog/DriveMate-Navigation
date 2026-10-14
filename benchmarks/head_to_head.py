@@ -110,13 +110,15 @@ def generate(artifact_root, output):
         "",
     ]
     if report["cases"]:
+        active=tuple(name for name in BACKENDS
+                     if report["summaries"][name]["not_tested"]==0)
         lines += [
-            "| Same route case | " + " | ".join(BACKENDS) + " |",
-            "|" + "---|" * (len(BACKENDS)+1),
+            "| Same route case | " + " | ".join(active) + " |",
+            "|" + "---|" * (len(active)+1),
         ]
         for row in report["cases"]:
             lines.append("| " + row["case"] + " | " +
-                         " | ".join(row["results"][name] for name in BACKENDS) + " |")
+                         " | ".join(row["results"][name] for name in active) + " |")
         lines += ["", "All other navigator/product results: **not tested**.",
                   "No overall winner or full-navigation ranking is supported."]
     else:

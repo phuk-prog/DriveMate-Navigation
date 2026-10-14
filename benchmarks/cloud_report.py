@@ -46,7 +46,7 @@ def load_records(root):
             if len(ring)==4 and all(c["status"]!="unknown" for c in ring) else None)
     return records
 
-def scorecard_markdown(records, comparison):
+def scorecard_markdown(records, comparison, gps_traces=None):
     """One table per category: only competitors actually measured in that category."""
     lines=[
         "# Measured navigation scorecard",
@@ -99,6 +99,22 @@ def scorecard_markdown(records, comparison):
             count+=1
     if not count:
         lines.append("| No comparable subset available | — | — | Unavailable |")
+    if gps_traces:
+        lines.extend(["",
+            "## Identical four clean synthetic GPS traces",
+            "",
+            "| Engine/configuration | Correct observed road sequence | Incorrect | Unresolved |",
+            "|---|---:|---:|---:|",
+        ])
+        for name in BACKENDS:
+            outcomes=gps_traces.get(name)
+            if outcomes is None or len(outcomes)!=4:continue
+            lines.append(f"| {name} | {outcomes.count('pass')}/4 | {outcomes.count('fail')} | "
+                         f"{outcomes.count('unknown')} |")
+        lines.extend(["",
+            "These are comparable clean coordinate-input path outcomes, **not** a ranking "
+            "of live GPS controllers, recovery delay, accuracy in metres or real sensor quality.",
+        ])
     lines.extend(["",
         "## Coverage excluded from overall ranking",
         "",
@@ -122,7 +138,16 @@ def main():
     out=Path("results/ci-report")
     out.mkdir(parents=True,exist_ok=True)
     comparisons=generate_head_to_head(root,out)
-    (out/"SCORECARD.md").write_text(scorecard_markdown(records,comparisons))
+    matched={}
+    for path in root.rglob("comparison.json"):
+        data=json.loads(path.read_text())
+        if data.get("reference")=="GraphHopper 11.1":
+            matched["DriveMate"]=[row["drivemate_online_status"] for row in data.get("batch_matches",())]
+            matched["GraphHopper"]=[row["graphhopper_batch_status"] for row in data.get("batch_matches",())]
+        elif data.get("engine") in ("osrm","osrm-ch","valhalla") and data.get("fresh_execution") is True:
+            label={"osrm":"OSRM MLD","osrm-ch":"OSRM CH","valhalla":"Valhalla"}[data["engine"]]
+            matched[label]=[row["status"] for row in data.get("batch_matches",())]
+    (out/"SCORECARD.md").write_text(scorecard_markdown(records,comparisons,matched))
     (out/"results.json").write_text(json.dumps(records,indent=2))
 
 if __name__=="__main__":
