@@ -16,7 +16,7 @@ MEASURED_CATEGORIES = (
 )
 EXCLUDED_SCOPE = (
     "Unrun navigator apps, SDKs and backends are excluded from scored tables rather "
-    "than displayed as N/T or assigned fabricated results. Google Maps, Waze, "
+    "than displayed as untested placeholder rows or assigned fabricated results. Google Maps, Waze, "
     "Apple Maps, HERE WeGo, TomTom, Sygic, OsmAnd, Organic Maps, Magic Earth, "
     "MapFactor Navigator, BRouter, Mapbox and openrouteservice have no equivalent "
     "fresh whole-product comparison in this workflow."
