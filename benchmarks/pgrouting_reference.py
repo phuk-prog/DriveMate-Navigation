@@ -40,7 +40,7 @@ def main():
     parser.add_argument('--image',required=True)
     args=parser.parse_args()
     probe=subprocess.run(['docker','exec',CONTAINER,'psql','-U','postgres','-d','postgres',
-                          '-At','-c','CREATE EXTENSION IF NOT EXISTS pgrouting; SELECT pgr_version();'],
+                          '-At','-c','CREATE EXTENSION IF NOT EXISTS postgis; CREATE EXTENSION IF NOT EXISTS pgrouting; SELECT pgr_version();'],
                          text=True,capture_output=True,check=True,timeout=30)
     version=probe.stdout.strip().splitlines()[-1]
     image_id=subprocess.run(['docker','inspect','-f','{{.Image}}',CONTAINER],text=True,
