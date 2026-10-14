@@ -16,6 +16,94 @@ from benchmarks.roundabout_reference import fixture
 
 LATEST_RESULTS={}
 
+def judge_history_case(row):
+    expected=row['expected_status']
+    recovered=expected in ('recovered','history_uncertain')
+    return (row['status']==expected and row['guidance_available']==(expected=='recovered')
+            and row['rejected_snapshot_advances']==0
+            and (not recovered or (row['history_count']==row['expected_histories']
+                                  and sorted(row['histories'])==sorted(row['expected_suffixes'])
+                                  and row['history_inferred'] is True)))
+
+
+def history_controls():
+    baseline={'expected_status':'history_uncertain','expected_histories':2,
+              'status':'history_uncertain','history_count':2,'guidance_available':False,
+              'rejected_snapshot_advances':0,'history_inferred':True,
+              'histories':[['up','uk'],['down','dk']],
+              'expected_suffixes':[['up','uk'],['down','dk']]}
+    return [{'fault':key,'baseline_passed':judge_history_case(baseline),
+             'detected':not judge_history_case(baseline|{key:value}),
+             'scope':'Corrupt-result judge control, not a mutated engine'}
+            for key,value in (('guidance_available',True),('history_count',1),
+                              ('rejected_snapshot_advances',1),('history_inferred',False),
+                              ('histories',[['up','uk'],['invented','dk']]))]
+
+
+def history_matrix():
+    """Candidate-only fork recovery, with acyclic author truth for two paths.
+
+    Both branches physically exist even if a past turn was banned. Therefore
+    neither assumed legality nor a partial search may remove a future obligation.
+    Held-out coordinates vary geometry, not the topological reasoning oracle.
+    """
+    rows=[]
+    for layout,(latitude,angle) in enumerate(((0,0),(51.5,45),(-20,135),(40,270))):
+        def coord(x,y):
+            u=x*cos(radians(angle))-y*sin(radians(angle))
+            v=x*sin(radians(angle))+y*cos(radians(angle))
+            return latitude+degrees(v/EARTH),10+degrees(u/(EARTH*cos(radians(latitude))))
+        pts={n:coord(x,y) for n,x,y in [('a',0,0),('j',100,0),('u',150,30),
+              ('d',150,-30),('k',200,0),('l',300,0),('z',400,0)]}
+        edges=[RoadEdge(n,a,b,length,36,'allowed')
+               for n,a,b,length in [('a','a','j',100),('up','j','u',hypot(50,30)),
+                   ('down','j','d',hypot(50,30)),('uk','u','k',hypot(50,30)),
+                   ('dk','d','k',hypot(50,30)),('merge','k','l',100),('goal','l','z',100)]]
+        for mode in ('consensus','future_ban','past_and_future_ban','history_budget'):
+            rules=() if mode in ('consensus','history_budget') else (Restriction('no',('uk','merge','goal')),)
+            if mode=='past_and_future_ban': rules+=(Restriction('no',('a','up')),)
+            p=prepare_navigation(RoadGraph(pts,edges,multi_restrictions=rules),pts)
+            for gap in (4,30,298,299):
+                journey=RecoveringGpsJourney(p,'goal',800000,max_histories=1 if mode=='history_budget' else 16)
+                def fix(x,t):
+                    lat,lon=coord(x,0)
+                    return Fix(lat,lon,t,2,10,(90-angle)%360,5)
+                for t in (1,2,3): journey.observe(fix(50+t,t),t)
+                frames=[];advances=0;previous=journey.snapshot
+                update=journey.poll(3+gap)
+                if journey.snapshot!=previous: advances+=1
+                frames.append({'phase':'silence','status':update.status,'guidance_available':update.guidance_available})
+                if update.guidance_available: advances+=1
+                for i in range(3):
+                    t=3+gap+i;previous=journey.snapshot
+                    update=journey.observe(fix(240+i,t),t)
+                    if (not update.match or update.match.status!='matched') and journey.snapshot!=previous: advances+=1
+                    if i<2 and update.guidance_available: advances+=1
+                    frames.append({'phase':'reacquisition','status':update.status,
+                                   'match_status':None if update.match is None else update.match.status,
+                                   'guidance_available':update.guidance_available})
+                expected=('recovery_gap_outside_bounds' if gap+2>300 else
+                          'recovery_history_incomplete' if mode=='history_budget' else
+                          'recovered' if mode=='consensus' else 'history_uncertain')
+                row={'case':f'fork{layout}/{mode}/elapsed{gap+2}',
+                     'split':'discovery' if layout<2 else 'holdout','mode':mode,
+                     'elapsed_since_trusted_fix':gap+2,'expected_status':expected,'expected_histories':2,
+                     'expected_suffixes':([['uk'],['dk']] if mode in ('consensus','history_budget')
+                                          else [['up','uk'],['down','dk']]),
+                     'status':update.status,'history_count':len(journey.sessions),
+                     'histories':[list(h) for h in journey.histories],
+                     'history_inferred':update.history_inferred,'guidance_available':update.guidance_available,
+                     'rejected_snapshot_advances':advances,'frames':frames}
+                row['passed']=judge_history_case(row);rows.append(row)
+    result={'classification':'Candidate-only synthetic acyclic forks; unknown physical past is not assumed legal',
+            'cases':len(rows),'results':rows,'failures':[r for r in rows if not r['passed']],
+            'judge_controls':history_controls(),
+            'limits':['No external controller comparison','Held-out geometry shares fork topology',
+                      'No recorded sensor or road-device evidence']}
+    LATEST_RESULTS['history_matrix']=result
+    return result
+
+
 def hard_sweep():
     """1536 cases: independent outcome oracle from linear fixture connectivity."""
     failures=[];cases=0;recovered=0;withheld=0;observations=0
@@ -137,7 +225,7 @@ def write_latest_results():
     print(json.dumps({'hard_cases':result['hard_sweep']['cases'],'failures':len(result['hard_sweep']['failures']),
                       'recovered':result['hard_sweep']['recovered'],'withheld':result['hard_sweep']['withheld'],
                       'observations':result['hard_sweep']['observations'],'ring_passed':result['ring_recovery']['passed']}))
-    if result['hard_sweep']['failures'] or result['reachability_oracle']['failures'] or not result['ring_recovery']['passed']:raise SystemExit(1)
+    if result['hard_sweep']['failures'] or result['reachability_oracle']['failures'] or not result['ring_recovery']['passed'] or result['history_matrix']['failures']:raise SystemExit(1)
 def main():
-    hard_sweep();ring_recovery();reachability_oracle_sweep();write_latest_results()
+    hard_sweep();ring_recovery();reachability_oracle_sweep();history_matrix();write_latest_results()
 if __name__=='__main__':main()
