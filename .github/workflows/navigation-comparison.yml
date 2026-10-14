@@ -40,6 +40,11 @@ jobs:
           python -m benchmarks.whole_drive_reference --jar "$RUNNER_TEMP/graphhopper.jar"
           python -m benchmarks.category_scorecard --jar "$RUNNER_TEMP/graphhopper.jar" --repeats 30
           python -m benchmarks.ten_system_matrix
+      - name: Expanded independent truth and held-out competitor routes
+        run: |
+          python -m unittest tests.test_expanded_comparison tests.test_expanded_report -v
+          python -m benchmarks.expanded_comparison --engine drivemate --version "$GITHUB_SHA"
+          python -m benchmarks.expanded_comparison --engine graphhopper --jar "$RUNNER_TEMP/graphhopper.jar" --version 11.1
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
@@ -110,6 +115,8 @@ jobs:
           docker pull "$IMAGE"
           docker run -d --rm --name reference -p 127.0.0.1:8002:8002 -v "$PWD/results/shared:/custom_files" -e build_admins=False -e build_time_zones=False -e build_elevation=False -e use_default_speeds_config=False -e build_tar=False -e server_threads=2 "$IMAGE"
           python -m benchmarks.cloud_reference --engine valhalla --version 3.9.1
+      - name: Expanded held-out map comparison with existing pinned runtimes
+        run: bash benchmarks/run_expanded_services.sh "${{ matrix.engine }}"
       - name: Capture diagnostics and remove isolated runtime
         if: always()
         run: |
@@ -125,6 +132,8 @@ jobs:
             results/cloud_*/*.json
             results/reference-startup.log
             results/reference-ch-startup.log
+            results/expanded/**/*.json
+            results/expanded/**/*.log
           retention-days: 14
 
 
@@ -152,11 +161,14 @@ jobs:
         run: |
           python -m unittest tests.test_routingkit_reference -v
           python -m benchmarks.routingkit_reference --binary "$RUNNER_TEMP/routingkit_fixture" --revision 54d49bb0cdea56dde182357522e4e86a03c57852
+          python -m benchmarks.expanded_comparison --engine routingkit --binary "$RUNNER_TEMP/routingkit_fixture" --version 54d49bb0cdea56dde182357522e4e86a03c57852
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
           name: routingkit-evidence
-          path: results/routingkit/comparison.json
+          path: |
+            results/routingkit/comparison.json
+            results/expanded/routingkit/*.json
           retention-days: 14
   pgrouting-reference:
     needs: candidate-and-graphhopper
@@ -185,11 +197,14 @@ jobs:
         run: |
           python -m unittest tests.test_pgrouting_reference -v
           python -m benchmarks.pgrouting_reference --image 'pgrouting/pgrouting:16-3.5-3.7.3'
+          python -m benchmarks.expanded_comparison --engine pgrouting --version 3.7.3
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
           name: pgrouting-evidence
-          path: results/pgrouting/comparison.json
+          path: |
+            results/pgrouting/comparison.json
+            results/expanded/pgrouting/*.json
           retention-days: 14
       - name: Stop isolated PostgreSQL
         if: always()

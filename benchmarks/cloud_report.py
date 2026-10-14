@@ -164,6 +164,11 @@ def main():
     save_categories(audit,out)
     (out/"SCORECARD.md").write_text(ranking_markdown(ranking)+"\n"+category_markdown(audit))
     (out/"results.json").write_text(json.dumps(records,indent=2))
+    from benchmarks.expanded_report import save as save_expanded
+    expanded=save_expanded(root,out)
+    from benchmarks.expanded_report import markdown as expanded_markdown
+    baseline=(out/"SCORECARD.md").read_text()
+    (out/"SCORECARD.md").write_text(expanded_markdown(expanded)+"\n# Original nine-case baseline retained\n\n"+baseline)
 
 if __name__=="__main__":
     main()

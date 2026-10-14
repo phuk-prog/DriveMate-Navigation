@@ -1,5 +1,7 @@
 GitHub-hosted comparison setup is documented in [GITHUB_CATEGORY_COMPARISON.md](docs/GITHUB_CATEGORY_COMPARISON.md).
 
+The expanded 92-route, 20-exit and 20-trace shared protocol and its category evidence are documented in [EXPANDED_COMPARISON.md](docs/EXPANDED_COMPARISON.md). Results are measured by the research-branch workflow; the protocol itself is not a passing-result claim.
+
 # DriveMate Navigation
 
 **Status: reconciled independent research prototype — not an Android navigation app or approved production routing engine.**
