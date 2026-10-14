@@ -28,7 +28,7 @@ jobs:
           python -m tools.privacy_guard
           bash navigation_core/native/build.sh
           python -m compileall -q engine gps guidance navigation_core map_data benchmarks tools tests
-          python -m unittest discover -s tests -v
+          python -m tools.unittest_evidence
           python -m tools.run_navigation_categories
       - name: Isolated pinned GraphHopper reference
         shell: bash
