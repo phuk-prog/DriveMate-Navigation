@@ -1,0 +1,35 @@
+name: Navigation adversarial research validation
+on:
+  push:
+    branches: ['tests/navigation-adversarial-20261014']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: adversarial-navigation-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  adversarial:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Build own native routing helper
+        run: bash navigation_core/native/build.sh
+      - name: Full regression plus adversarial execution
+        run: |
+          mkdir -p results
+          python -m compileall -q engine gps guidance navigation_core benchmarks tools tests
+          python -m unittest discover -s tests -v
+          python -m tools.privacy_guard
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: adversarial-results
+          path: results/navigation_adversarial/report.json
+          retention-days: 14

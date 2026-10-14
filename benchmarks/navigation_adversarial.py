@@ -118,7 +118,8 @@ def gps_sweep():
     return dict(category='gps_corruption',fault_cases=faults,valid_fix_controls=controls,failures=failures)
 
 def run():
-    checks=[roundabout_sweep(),junction_sweep(),gps_sweep()]
+    from benchmarks.navigation_adversarial_routes import route_oracle, recovery_oracle
+    checks=[roundabout_sweep(),junction_sweep(),gps_sweep(),route_oracle(),recovery_oracle()]
     result={'classification':'Executed synthetic candidate checks only; no physical GPS or consumer apps',
             'categories_executed':len(checks),'checks':checks,
             'failure_count':sum(len(c['failures']) for c in checks)}
