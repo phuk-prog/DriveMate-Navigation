@@ -40,7 +40,7 @@ def route_oracle():
                 if edge.source!=cursor:
                     errors.append({'case':case,'mode':mode,'problem':'disconnected route'})
                 cursor=edge.target;cost+=micro(edge)
-            if cursor!=f'n{count-1}' or cost!=optimum or abs(actual.seconds*1000000-optimum)>.01:
+            if cursor!=f'n{count-1}' or cost!=optimum or abs(actual.estimated_seconds*1000000-optimum)>.01:
                 errors.append({'case':case,'mode':mode,'cost':cost,'expected':optimum})
             runs+=1
     return {'category':'independent_routing_oracle','graphs':100,'route_executions':runs,'failures':errors[:50]}
