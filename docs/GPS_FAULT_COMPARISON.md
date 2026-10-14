@@ -110,3 +110,19 @@ author paths, plus one paired clean control per path: 100 cases, 50 discovery an
 hash. This expands verification; it does not relax matcher checks or establish
 competitor controller comparability. Earlier eight-probe results above are
 historical evidence, not proof of the expanded suite.
+
+The first expanded execution at `f52f52c48757128969e95745bb0638d9cb931450`
+([run](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38646303673))
+produced 97/100 complete controller sequences and zero trusted-snapshot advances
+on rejected fixes. The three incomplete sequences were
+`layout173/no_inside_via_reset/compound`,
+`layout419/no_inside_via_reset/compound`, and
+`layout887/no_inside_via_reset/compound`. After the outlier, the three-fix gap
+resets confirmation again, and the traces end with fewer than three consecutive
+fresh fixes. Guidance remains suppressed. A focused regression verifies that a
+third post-gap fix recovers while the earlier fixes cannot advance trusted state.
+This is a reconstruction failure within the submitted trace, not proof that
+confirmation safeguards should be weakened. The pgRouting job in that execution
+failed during database startup, so that run is not a complete seven-engine result.
+The readiness check now waits for TCP rather than the temporary initialization
+server's Unix socket.

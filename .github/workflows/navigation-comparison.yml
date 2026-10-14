@@ -189,10 +189,12 @@ jobs:
           docker pull "$IMAGE"
           docker run -d --rm --name dm-pgrouting-reference -e POSTGRES_PASSWORD=synthetic-test-local-only "$IMAGE"
           for i in $(seq 1 60); do
-            if docker exec dm-pgrouting-reference pg_isready -U postgres -d postgres | grep -q 'accepting connections'; then break; fi
+            # The image's temporary initialization server accepts Unix sockets
+            # before restarting. Wait for the final TCP server used below.
+            if docker exec dm-pgrouting-reference pg_isready -h 127.0.0.1 -U postgres -d postgres; then break; fi
             sleep 1
           done
-          docker exec dm-pgrouting-reference pg_isready -U postgres -d postgres
+          docker exec dm-pgrouting-reference pg_isready -h 127.0.0.1 -U postgres -d postgres
       - name: Actual independent PostgreSQL route computation
         run: |
           python -m unittest tests.test_pgrouting_reference -v

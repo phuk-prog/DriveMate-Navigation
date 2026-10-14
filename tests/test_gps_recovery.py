@@ -24,6 +24,19 @@ def diamond(rules=()):
     return prepare_navigation(RoadGraph(pts,edges,multi_restrictions=rules),pts)
 
 class GpsRecoveryTests(unittest.TestCase):
+    def test_outlier_then_second_gap_requires_a_new_three_fix_streak(self):
+        g=RecoveringGpsJourney(network(),'bc',800000);first=start(g)
+        bad=g.observe(fix(40,40,4,accuracy=2),4)
+        self.assertFalse(bad.guidance_available)
+        for x,t in ((40,5),(41,6),(45,10),(46,11)):
+            update=g.observe(fix(x,0,t),t)
+            self.assertEqual(update.status,'confirming')
+            self.assertFalse(update.guidance_available)
+            self.assertEqual(g.snapshot,first.trusted_snapshot)
+        update=g.observe(fix(47,0,12),12)
+        self.assertEqual(update.status,'recovered')
+        self.assertTrue(update.guidance_available)
+
     def test_startup_requires_three_fresh_fixes(self):
         g=RecoveringGpsJourney(network(),'bc',800000)
         for t in (1,2):
