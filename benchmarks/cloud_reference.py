@@ -49,7 +49,9 @@ def call(engine,p,start,end):
         url='http://127.0.0.1:5000'+path
     else:
         payload={'locations':[{'lat':v[0],'lon':v[1],'type':'break'} for v in (a,b)],'costing':'auto','units':'kilometers','shape_format':'polyline6'}
-        url='http://127.0.0.1:8002/route?'+urlencode({'json':json.dumps(payload)})
+        url=urllib.request.Request('http://127.0.0.1:8002/route',
+            data=json.dumps(payload,separators=(',',':')).encode('utf-8'),
+            headers={'Content-Type':'application/json'},method='POST')
     try:
         with urllib.request.urlopen(url,timeout=10) as r:return json.load(r)
     except urllib.error.HTTPError as e:return json.loads(e.read())
