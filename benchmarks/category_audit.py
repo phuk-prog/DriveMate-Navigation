@@ -170,6 +170,19 @@ def candidate(root):
     if journey:
         add('whole_journeys','Complete journeys and reroutes',len(journey['cases']),
             [x['case'] for x in journey['cases'] if x['status']!='pass'])
+    mutation=one(root,'navigation_mutation/report.json')
+    if mutation:
+        hard=mutation['hard_holdout']
+        add('hard_holdout','Larger holdout graph / junction route decisions',
+            hard['executed'],
+            [r['case'] for r in hard['results'] if r['status']!='pass'],
+            'Independent graph-route oracle on eight 64-node asymmetric graphs; routing algorithms tested separately')
+        muts=mutation['mutations']
+        add('mutation_sensitivity','Deliberately injected safety faults detected',
+            muts['injected'],
+            [r['case'] for r in muts['cases']
+             if not r['injected_fault_detected'] or not r['baseline_correct']],
+            'Benchmark self-test only: detection of intentionally sabotaged graph or routing inputs')
     unit=one(root,'unittest/per_test.json')
     if unit:
         tests=unit['tests']
@@ -231,8 +244,12 @@ def build(root,head):
                                   'note':'Inspect actual response and verify legality/map equivalence before modifying engine'})
     for row in own:
         for case in row['failures']:
-            issue.append({'category':row['name'],'engine':'DriveMate','case':case,'outcome':'fail',
-                          'note':'Reproduce and repair the specific failing algorithmic behaviour; rerun category and regressions'})
+            is_test_harness=row['id']=='mutation_sensitivity'
+            issue.append({'category':row['name'],
+                          'engine':'Benchmark validator' if is_test_harness else 'DriveMate',
+                          'case':case,'outcome':'fail',
+                          'note':('Fix mutation detector/coverage and rerun gate' if is_test_harness
+                                  else 'Reproduce and repair the specific failing algorithmic behaviour; rerun category and regressions')})
     return {'classification':'Executed synthetic evidence only, not an overall real-road ranking',
             'shared_categories':shared,'category_ranks':{x['id']:rank_per_category(x) for x in shared},
             'drivemate_only_categories':own,'issues':issue,'routing_ranking':judge(head),

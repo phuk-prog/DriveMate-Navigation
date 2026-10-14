@@ -29,6 +29,7 @@ jobs:
           bash navigation_core/native/build.sh
           python -m compileall -q engine gps guidance navigation_core map_data benchmarks tools tests
           python -m tools.unittest_evidence
+          python -m benchmarks.navigation_mutation
           python -m tools.run_navigation_categories
       - name: Isolated pinned GraphHopper reference
         shell: bash
