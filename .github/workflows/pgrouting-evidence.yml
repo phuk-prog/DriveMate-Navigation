@@ -1,0 +1,47 @@
+name: Independent pgRouting algorithm benchmark
+on:
+  push:
+    branches: ['benchmarks/more-engines-ranking-20261014']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: new-pgrouting-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  independent-pgrouting:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Start pinned-version independent pgRouting runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          IMAGE='pgrouting/pgrouting:16-3.5-3.7.3'
+          docker pull "$IMAGE"
+          docker run --detach --rm --name dm-pgrouting-reference -e POSTGRES_PASSWORD=synthetic-test-local-only "$IMAGE"
+          for i in $(seq 1 60); do
+            if docker exec dm-pgrouting-reference pg_isready -U postgres -d postgres | grep -q 'accepting connections'; then break; fi
+            sleep 1
+          done
+          docker exec dm-pgrouting-reference pg_isready -U postgres -d postgres
+      - name: Execute real pgRouting and save failures
+        run: |
+          python -m unittest tests.test_pgrouting_reference -v
+          python -m benchmarks.pgrouting_reference --image 'pgrouting/pgrouting:16-3.5-3.7.3'
+          python -m tools.privacy_guard
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: pgrouting-real-evidence
+          path: results/pgrouting/comparison.json
+          retention-days: 14
+      - name: Remove isolated pgRouting runtime
+        if: always()
+        run: docker rm -f dm-pgrouting-reference || true
