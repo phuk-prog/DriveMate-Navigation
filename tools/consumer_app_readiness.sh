@@ -6,6 +6,12 @@ out="$PWD/results/consumer-app-readiness"
 mkdir -p "$out"
 test -e /dev/kvm || { echo 'UNAVAILABLE: KVM absent' > "$out/status.txt"; exit 2; }
 sudo chmod a+rw /dev/kvm
+# The hosted Ubuntu 24.04 image does not guarantee all Android QEMU runtime libraries.
+# Install only the missing pulse client dependency; no GUI/audio session is needed.
+if ! ldconfig -p | grep -q 'libpulse.so.0'; then
+  sudo apt-get update -qq >/dev/null
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq libpulse0 >/dev/null
+fi
 sdkmanager_bin="$sdk_root/cmdline-tools/latest/bin/sdkmanager"
 avdmanager_bin="$sdk_root/cmdline-tools/latest/bin/avdmanager"
 set +o pipefail
