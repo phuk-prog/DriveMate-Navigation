@@ -26,6 +26,17 @@ class HeadToHeadTests(unittest.TestCase):
         self.assertEqual(len(CONSUMER_NAVIGATORS), 10)
         self.assertEqual(report["consumer_results"], "not tested; no direct product navigation evidence")
 
+    def test_osrm_ch_is_only_present_with_independent_fresh_execution(self):
+        g, o = self.sources()
+        ch = dict(o, engine="osrm-ch")
+        report = build((g, o, ch))
+        self.assertEqual(report["summaries"]["OSRM CH"]["passed"], 1)
+        self.assertEqual(report["summaries"]["OSRM CH"]["unknown"], 1)
+        self.assertEqual(len(report["cases"]), 2)
+        ch["fresh_execution"] = False
+        with self.assertRaisesRegex(ValueError, "not verified"):
+            build((g, o, ch))
+
     def test_different_dataset_disallowed(self):
         g, o = self.sources()
         o["dataset_sha256"] = "b" * 64

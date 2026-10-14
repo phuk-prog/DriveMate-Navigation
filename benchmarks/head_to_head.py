@@ -10,7 +10,7 @@ CONSUMER_NAVIGATORS = (
     "Google Maps", "Waze", "Apple Maps", "HERE WeGo", "TomTom",
     "Sygic", "OsmAnd", "Organic Maps", "Magic Earth", "MapFactor Navigator",
 )
-BACKENDS = ("DriveMate", "GraphHopper", "OSRM MLD", "Valhalla")
+BACKENDS = ("DriveMate", "GraphHopper", "OSRM MLD", "OSRM CH", "Valhalla")
 STATUSES = {"pass", "fail", "unknown"}
 
 
@@ -49,7 +49,7 @@ def build(source_documents):
                      "drivemate_status", "expected_ways")
     _cases(gh.get("routes"), "GraphHopper", "graphhopper_status", "expected_ways")
     references = {}
-    for engine, name in (("osrm", "OSRM MLD"), ("valhalla", "Valhalla")):
+    for engine, name in (("osrm", "OSRM MLD"), ("osrm-ch", "OSRM CH"), ("valhalla", "Valhalla")):
         doc = next((d for d in source_documents if d.get("engine") == engine), None)
         if doc is not None:
             if doc.get("fresh_execution") is not True:
@@ -65,7 +65,7 @@ def build(source_documents):
     for ident, row in primary.items():
         outcomes = {"DriveMate": row["drivemate_status"],
                     "GraphHopper": row["graphhopper_status"]}
-        for name in ("OSRM MLD", "Valhalla"):
+        for name in ("OSRM MLD", "OSRM CH", "Valhalla"):
             outcomes[name] = references.get(name, {}).get(ident, {}).get("status", "not tested")
         pairings.append({"case": ident, "expected_ways": row["expected_ways"],
                          "results": outcomes})
@@ -96,7 +96,7 @@ def generate(artifact_root, output):
     documents = []
     for path in sorted(Path(artifact_root).rglob("comparison.json")):
         doc = json.loads(path.read_text(encoding="utf-8"))
-        if doc.get("reference") == "GraphHopper 11.1" or doc.get("engine") in ("osrm", "valhalla"):
+        if doc.get("reference") == "GraphHopper 11.1" or doc.get("engine") in ("osrm", "osrm-ch", "valhalla"):
             documents.append(doc)
     report = build(documents)
     output = Path(output)
@@ -111,8 +111,8 @@ def generate(artifact_root, output):
     ]
     if report["cases"]:
         lines += [
-            "| Same route case | DriveMate | GraphHopper | OSRM MLD | Valhalla |",
-            "|---|---|---|---|---|",
+            "| Same route case | " + " | ".join(BACKENDS) + " |",
+            "|" + "---|" * (len(BACKENDS)+1),
         ]
         for row in report["cases"]:
             lines.append("| " + row["case"] + " | " +

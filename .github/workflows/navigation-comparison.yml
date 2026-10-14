@@ -86,6 +86,18 @@ jobs:
           docker run --rm -v "$PWD/results/shared:/data" "$IMAGE" osrm-customize /data/synthetic.osrm
           docker run -d --rm --name reference -p 127.0.0.1:5000:5000 -v "$PWD/results/shared:/data" "$IMAGE" osrm-routed --algorithm mld /data/synthetic.osrm
           python -m benchmarks.cloud_reference --engine osrm --version 5.27.1
+      - name: OSRM CH alternative reference on identical authored map
+        if: matrix.engine == 'osrm'
+        shell: bash
+        run: |
+          set -euo pipefail
+          IMAGE="ghcr.io/project-osrm/osrm-backend:v5.27.1@sha256:855614a38f464b0558a2ad6eaa7cb8c139f39887da9b38b485ce453c6e6e6124"
+          mkdir -p results/shared/ch
+          cp results/shared/synthetic.osm.pbf results/shared/ch/synthetic.osm.pbf
+          docker run --rm -v "$PWD/results/shared:/data" "$IMAGE" osrm-extract -p /opt/car.lua /data/ch/synthetic.osm.pbf
+          docker run --rm -v "$PWD/results/shared:/data" "$IMAGE" osrm-contract /data/ch/synthetic.osrm
+          docker run -d --rm --name reference-ch -p 127.0.0.1:5001:5000 -v "$PWD/results/shared:/data" "$IMAGE" osrm-routed --algorithm ch /data/ch/synthetic.osrm
+          python -m benchmarks.cloud_reference --engine osrm-ch --version 5.27.1
       - name: Valhalla pinned reference
         if: matrix.engine == 'valhalla'
         shell: bash
@@ -99,7 +111,9 @@ jobs:
         if: always()
         run: |
           docker logs --tail 60 reference > results/reference-startup.log 2>&1 || true
+          docker logs --tail 60 reference-ch > results/reference-ch-startup.log 2>&1 || true
           docker rm -f reference || true
+          docker rm -f reference-ch || true
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
@@ -107,6 +121,7 @@ jobs:
           path: |
             results/cloud_*/*.json
             results/reference-startup.log
+            results/reference-ch-startup.log
           retention-days: 14
 
 

@@ -44,9 +44,9 @@ def geometry_ways(p,points):
 
 def call(engine,p,start,end):
     a,b=p.coordinates['osm:'+str(start)],p.coordinates['osm:'+str(end)]
-    if engine=='osrm':
+    if engine in ('osrm','osrm-ch'):
         path='/route/v1/driving/'+f'{a[1]},{a[0]};{b[1]},{b[0]}?'+urlencode({'steps':'true','geometries':'geojson','overview':'full','annotations':'nodes'})
-        url='http://127.0.0.1:5000'+path
+        url='http://127.0.0.1:'+('5001' if engine=='osrm-ch' else '5000')+path
     else:
         payload={'locations':[{'lat':v[0],'lon':v[1],'type':'break'} for v in (a,b)],'costing':'auto','units':'kilometers','shape_format':'polyline6'}
         url=urllib.request.Request('http://127.0.0.1:8002/route',
@@ -57,7 +57,7 @@ def call(engine,p,start,end):
     except urllib.error.HTTPError as e:return json.loads(e.read())
 
 def parse(engine,p,response):
-    if engine=='osrm':
+    if engine in ('osrm','osrm-ch'):
         if response.get('code')=='NoRoute':return None,(),True
         if response.get('code')!='Ok' or not response.get('routes'):return None,(),False
         r=response['routes'][0];points=[(v[1],v[0]) for v in r['geometry']['coordinates']]
@@ -73,7 +73,7 @@ def parse(engine,p,response):
     return geometry_ways(p,points),exits,False
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--engine',choices=['osrm','valhalla'],required=True);ap.add_argument('--version',required=True);a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--engine',choices=['osrm','osrm-ch','valhalla'],required=True);ap.add_argument('--version',required=True);a=ap.parse_args()
     p=prepared();out=Path('results/cloud_'+a.engine);out.mkdir(parents=True,exist_ok=True)
     deadline=time.monotonic()+240
     while True:
