@@ -6,6 +6,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import math
 import os
+import subprocess
+from threading import Lock
 from pathlib import Path
 from statistics import median
 from threading import Thread
@@ -16,10 +18,13 @@ from urllib.request import Request, urlopen
 from benchmarks.cloud_reference import polyline6
 
 from benchmarks.expanded_comparison import graphhopper
+from navigation_core.core import Vehicle
+from navigation_core.native_adapter import encode, NativeResult
+from navigation_core.validation.oracle import validate_route
 from engine.reconciled import prepare_navigation
 from map_data import Provenance, import_osm_xml
 
-LABELS = ("drivemate-python", "graphhopper", "osrm-mld", "osrm-ch", "valhalla", "openrouteservice")
+LABELS = ("drivemate-native-cpp", "graphhopper", "osrm-mld", "osrm-ch", "valhalla", "openrouteservice")
 NOT_YET_COMPARABLE = {
     "brouter": "Requires .rd5 routing data built from the exact pinned Geofabrik extract; weekly published tiles are a different snapshot.",
     "routingkit-ch": "Algorithm adapter currently consumes candidate-imported transition graphs rather than an independently imported same-map service.",
@@ -73,7 +78,89 @@ def road_cases(prepared, graph, *, maximum=18):
     return chosen
 
 
-def start_candidate(prepared):
+class NativeRouterSession:
+    """Persistent compiled C++ routing build, map loaded once per benchmark.
+
+    This class never computes a route in Python; Python only marshals input,
+    calls the native binary, and checks that its returned path is continuous.
+    The compiled native core reports its own algorithm-only nanoseconds.
+    """
+    def __init__(self, prepared, binary):
+        path = Path(binary)
+        if not path.is_file():
+            raise ValueError("Compiled native navigation router missing")
+        self.prepared = prepared
+        self._lock = Lock()
+        self._process = subprocess.Popen([str(path.resolve()), "--stream"],
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            text=True, bufsize=1)
+        try:
+            initial = encode(prepared.graph, [], tuple(
+                list(prepared.node_ids.values())[:1] +
+                list(prepared.node_ids.values())[-1:]))
+            self._process.stdin.write(initial)
+            self._process.stdin.flush()
+            ready = self._process.stdout.readline().strip()
+            if not ready.startswith("READY "):
+                raise ValueError("Compiled router failed map-ready protocol: " + ready[:120])
+            self.native_map_prepare_ms = int(ready.split()[1]) / 1e6
+        except (OSError, ValueError, BrokenPipeError):
+            self.close()
+            raise
+
+    def route(self, start, end):
+        p = self.prepared
+        if start not in p.node_ids or end not in p.node_ids:
+            raise ValueError("Unknown public-road endpoint")
+        a, b = p.node_ids[start], p.node_ids[end]
+        with self._lock:
+            if self._process.poll() is not None:
+                raise ValueError("Compiled native router exited")
+            self._process.stdin.write(f"alt {a} {b} 0 -1 -1 0\n")
+            self._process.stdin.flush()
+            line = self._process.stdout.readline().strip()
+        parts = line.split()
+        if not parts or parts[0] != "FOUND" or len(parts) < 5:
+            raise ValueError("Native route was absent or malformed")
+        cost, expanded, elapsed_ns, count = map(int, parts[1:5])
+        ids = tuple(map(int, parts[5:]))
+        if count <= 0 or len(ids) != count or elapsed_ns < 0:
+            raise ValueError("Native route result count/time invalid")
+        result = NativeResult(ids, cost, expanded, elapsed_ns)
+        # Independently verify graph connectivity, restrictions and cost.
+        validate_route(p.graph, a, b, Vehicle("car"), (), result)
+        names = p.road_names(ids)
+        location = start
+        points = [[p.coordinates[location][1], p.coordinates[location][0]]]
+        for name in names:
+            edge = p.source_edges[name]
+            if edge.source != location or edge.access == "prohibited":
+                raise ValueError("Native path traverses a disconnected/prohibited road")
+            location = edge.target
+            points.append([p.coordinates[location][1], p.coordinates[location][0]])
+        if location != end:
+            raise ValueError("Native path ends at wrong node")
+        return {"ok": True, "coordinates": points,
+                "native_core_ns": elapsed_ns, "native_expanded_states": expanded,
+                "implementation": "compiled-cpp"}
+
+    def close(self):
+        proc = self._process
+        if proc.poll() is None:
+            try:
+                proc.stdin.close()
+                proc.wait(timeout=5)
+            except (OSError, subprocess.TimeoutExpired):
+                proc.kill()
+                proc.wait(timeout=5)
+        for stream in (proc.stdout, proc.stderr):
+            if stream is not None:
+                stream.close()
+
+
+def start_candidate(prepared, native_binary):
+    native = NativeRouterSession(prepared, native_binary)
+
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *_args):
             pass
@@ -82,18 +169,8 @@ def start_candidate(prepared):
             try:
                 query = parse_qs(urlparse(self.path).query)
                 start, end = query["from"][0], query["to"][0]
-                route = prepared.route(start, end)
-                position = start
-                points = [[prepared.coordinates[position][1], prepared.coordinates[position][0]]]
-                for edge_id in route.edge_ids:
-                    edge = prepared.source_edges[edge_id]
-                    if edge.source != position:
-                        raise ValueError("Discontinuous candidate route")
-                    position = edge.target
-                    points.append([prepared.coordinates[position][1], prepared.coordinates[position][0]])
-                if position != end:
-                    raise ValueError("Candidate returned wrong destination")
-                payload = json.dumps({"ok": True, "coordinates": points}, separators=(",", ":")).encode()
+                result = native.route(start, end)
+                payload = json.dumps(result, separators=(",", ":")).encode()
                 code = 200
             except (ValueError, KeyError, TypeError):
                 payload = b'{"ok":false}'
@@ -106,12 +183,12 @@ def start_candidate(prepared):
     server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
     thread = Thread(target=server.serve_forever, daemon=True)
     thread.start()
-    return server, thread
+    return server, thread, native
 
 
 def query(engine, case, coordinates, candidate_port, gh_port):
     a, b = coordinates[case["source"]], coordinates[case["target"]]
-    if engine == "drivemate-python":
+    if engine == "drivemate-native-cpp":
         url = "http://127.0.0.1:%d/route?" % candidate_port + urlencode(
             {"from": case["source"], "to": case["target"]})
     elif engine == "graphhopper":
@@ -140,7 +217,7 @@ def query(engine, case, coordinates, candidate_port, gh_port):
         raise ValueError("Unsupported speed engine")
     with urlopen(url, timeout=12) as response:
         raw = json.load(response)
-    if engine == "drivemate-python":
+    if engine == "drivemate-native-cpp":
         if not raw.get("ok"):
             raise ValueError("No candidate route")
         points = raw.get("coordinates")
@@ -170,9 +247,15 @@ def query(engine, case, coordinates, candidate_port, gh_port):
            for u, v in zip(points, points[1:])) < 100:
         raise ValueError("Unexpectedly short or incomplete route geometry")
     # Complete legality and orientation need an independent OSM reference judge.
+    if engine == "drivemate-native-cpp":
+        if raw.get("implementation") != "compiled-cpp":
+            raise ValueError("Only compiled-native DriveMate results can be ranked")
+        return raw["native_core_ns"] / 1e6
+    return None
 
 
-def run(raw, jar, repeat, maximum, snapshot, use_osrm, use_valhalla=False, use_openrouteservice=False):
+def run(raw, jar, repeat, maximum, snapshot, use_osrm, use_valhalla=False, use_openrouteservice=False,
+        native_binary=Path("navigation_core/native/router")):
     imported = import_osm_xml(raw, provenance=Provenance(
         "Greater Manchester, England", snapshot,
         "Geofabrik historic public OSM PBF", "© OpenStreetMap contributors (ODbL 1.0)"))
@@ -180,7 +263,7 @@ def run(raw, jar, repeat, maximum, snapshot, use_osrm, use_valhalla=False, use_o
     cases = road_cases(prepared, imported.graph, maximum=maximum)
     if len(cases) < 5:
         raise ValueError("Insufficient routable real-road cases; do not substitute synthetic roads")
-    engines = ["drivemate-python", "graphhopper"]
+    engines = ["drivemate-native-cpp", "graphhopper"]
     if use_osrm:
         engines += ["osrm-mld", "osrm-ch"]
     if use_valhalla:
@@ -191,8 +274,8 @@ def run(raw, jar, repeat, maximum, snapshot, use_osrm, use_valhalla=False, use_o
     failures = {e: [] for e in engines}
     with ExitStack() as stack:
         gh_port = stack.enter_context(graphhopper(jar, {"osm": raw}, Path("results/real-england/graphhopper")))
-        server, thread = start_candidate(prepared)
-        stack.callback(lambda: (server.shutdown(), server.server_close(), thread.join(timeout=3)))
+        server, thread, native = start_candidate(prepared, native_binary)
+        stack.callback(lambda: (server.shutdown(), server.server_close(), thread.join(timeout=3), native.close()))
         for repetition in range(-3, repeat):
             for case in cases:
                 ordered = engines if repetition % 2 else list(reversed(engines))
@@ -201,11 +284,14 @@ def run(raw, jar, repeat, maximum, snapshot, use_osrm, use_valhalla=False, use_o
                         continue
                     try:
                         start = perf_counter_ns()
-                        query(engine, case, imported.coordinates, server.server_port, gh_port)
+                        native_core_ms = query(engine, case, imported.coordinates, server.server_port, gh_port)
                         elapsed = (perf_counter_ns() - start) / 1_000_000
                         if repetition >= 0:
-                            samples[engine].append({"case": case["id"], "repeat": repetition,
-                                                    "milliseconds": elapsed})
+                            entry = {"case": case["id"], "repeat": repetition,
+                                     "milliseconds": elapsed}
+                            if engine == "drivemate-native-cpp":
+                                entry["native_calculation_ms"] = native_core_ms
+                            samples[engine].append(entry)
                     except (OSError, KeyError, ValueError, TypeError, IndexError) as exc:
                         if repetition >= 0:
                             failures[engine].append({"case": case["id"], "reason": str(exc)[:160]})
@@ -213,7 +299,11 @@ def run(raw, jar, repeat, maximum, snapshot, use_osrm, use_valhalla=False, use_o
     summary = {}
     for engine in engines:
         values = [x["milliseconds"] for x in samples[engine]]
+        native_times = [x["native_calculation_ms"] for x in samples[engine]
+                        if "native_calculation_ms" in x]
         summary[engine] = {
+            "native_median_calculation_ms": median(native_times) if native_times else None,
+            "native_p95_calculation_ms": percentile(native_times, .95) if native_times else None,
             "passed_requests": len(values), "total_requests": expected,
             "failures": len(failures[engine]),
             "complete": len(values) == expected and not failures[engine],
@@ -245,7 +335,7 @@ def run(raw, jar, repeat, maximum, snapshot, use_osrm, use_valhalla=False, use_o
             **NOT_YET_COMPARABLE,
         },
         "engine_version_scope": {
-            "drivemate-python": "research prepared Python implementation",
+            "drivemate-native-cpp": "compiled C++ navigation_core/native/router using persistent --stream protocol; prepared map",
             "graphhopper": "11.1, CH/LM disabled",
             "osrm-mld": "5.27.1 pinned Docker image, MLD",
             "osrm-ch": "5.27.1 pinned Docker image, CH",
@@ -254,7 +344,9 @@ def run(raw, jar, repeat, maximum, snapshot, use_osrm, use_valhalla=False, use_o
         },
         "limitations": [
             "Public OSM road topology, not independent current legal-access verification.",
-            "DriveMate is the prepared Python research router, not Android native routing.",
+            "DriveMate here is the compiled C++ navigation-core research build, not the Android app APK or device performance.",
+            "The Python server marshals validated requests to one persistent compiled native process, not Python route search.",
+            "Native in-core calculation times are separately recorded and exclude HTTP serialization/IPC.",
             "All measured services use warm local HTTP; distinct algorithms and costing.",
             "Endpoints, finite polyline and minimum returned distance are checked; full external route legality remains unverified.",
             "Only endpoint/shape-validated response-time ranks; not independently proved legal-route-speed ranks.",
@@ -289,6 +381,7 @@ def preflight(raw, snapshot, maximum):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--input", type=Path, required=True)
+    ap.add_argument("--native-binary", type=Path, default=Path("navigation_core/native/router"))
     ap.add_argument("--graphhopper-jar", type=Path)
     ap.add_argument("--preflight", action="store_true")
     ap.add_argument("--snapshot", required=True)
@@ -315,7 +408,7 @@ def main():
     preflight(raw, args.snapshot, args.cases)
     result = run(raw, args.graphhopper_jar,
                  args.repeat, args.cases, args.snapshot, args.osrm,
-                 args.valhalla, args.openrouteservice)
+                 args.valhalla, args.openrouteservice, args.native_binary)
     (out / "speed.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({"implementations": result["implementations"],
                       "ranks": result["speed_ranks_complete_only"],

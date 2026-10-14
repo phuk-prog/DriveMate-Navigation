@@ -123,3 +123,30 @@ The retained container log identified the exact startup failure:
 `ors.engine.profiles.driving-car.enabled=true` (documented default
 profile name). This changes only the isolated reference engine
 configuration; it does not alter DriveMate routing or road permissions.
+
+
+## Compiled DriveMate build is now the primary benchmark candidate
+
+The previous speed category mistakenly ranked a Python research service as
+"DriveMate". This was not the compiled routing build. The real-road benchmark
+now calls the **compiled C++ navigation_core/native/router** through a
+single persistent `--stream` session with the map prepared once.
+Every result is independently checked against the navigation-core route
+validator (legal transitions, path continuity and integer route cost).
+The wrapper must mark results `implementation=compiled-cpp`; an impostor,
+missing/malformed or non-native response never earns a speed measurement.
+
+The C++ binary retains its original bounded batch-mode protocol unchanged
+for existing regression tests. `--stream` adds an optional benchmark-only
+read-query/write-response loop, using exactly the existing C++ routing search
+functions; it never falls back to Python shortest-path search.
+
+Two distinct timing measurements are preserved: (1) native C++ internal
+calculation nanoseconds, excluding request marshalling, and (2) end-to-end
+warm local HTTP response milliseconds, including the Python HTTP wrapper,
+cross-process communication and validation. The latter can be compared
+methodologically against other local HTTP services, subject to different
+costings and interfaces. Do not claim these are on-device Android/APK figures.
+
+Python remains an oracle/reference for preflight and independent correctness;
+it is no longer the primary scored DriveMate candidate in the engine rankings.

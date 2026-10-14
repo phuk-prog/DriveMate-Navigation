@@ -71,6 +71,34 @@ class NativeTests(unittest.TestCase):
                     journeys.extend((a,b,h,Vehicle()) for h in inbound)
             self.compare(g,journeys,(0,4))
 
+    def test_persistent_native_stream_uses_built_cpp_router_not_python(self):
+        graph = fixture(3, 111)
+        expected = oracle(graph, 0, 8, Vehicle(), ())
+        proc = subprocess.Popen([str(BIN), "--stream"], stdin=subprocess.PIPE,
+                                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                text=True, bufsize=1)
+        try:
+            proc.stdin.write(encode(graph, [], (0, 8)))
+            proc.stdin.flush()
+            ready = proc.stdout.readline()
+            self.assertTrue(ready.startswith("READY "), ready)
+            for mode in ("dijkstra", "astar", "alt", "alt"):
+                proc.stdin.write(f"{mode} 0 8 0 -1 -1 0\\n".replace("\\\\n", "\\n"))
+                proc.stdin.flush()
+                line = proc.stdout.readline().split()
+                self.assertEqual(line[0], "FOUND")
+                self.assertEqual(int(line[1]), expected)
+                count = int(line[4])
+                self.assertEqual(len(line[5:]), count)
+            proc.stdin.close()
+            self.assertEqual(proc.wait(timeout=5), 0)
+        finally:
+            if proc.poll() is None:
+                proc.kill()
+                proc.wait(timeout=5)
+            proc.stdout.close()
+            proc.stderr.close()
+
     def test_invalid_protocol_fails(self):
         g=fixture(3,111)
         text=encode(g,[("alt",0,8,Vehicle(),())],(0,8))
