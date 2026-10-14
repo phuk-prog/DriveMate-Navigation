@@ -72,8 +72,34 @@ def _tags(element: ET.Element) -> dict[str, str]:
 
 def _check_conditions(tags: dict[str, str], label: str) -> None:
     """Fail closed: no time-dependent legality without a clock + evaluator."""
-    if any(CONDITIONAL.search(k) and not OPTIONAL_LANE_CONDITIONAL.fullmatch(k) for k in tags):
-        raise OSMImportError(f"{label}: conditional tags are unsupported")
+    unsupported = sorted(k for k in tags if CONDITIONAL.search(k)
+                         and not OPTIONAL_LANE_CONDITIONAL.fullmatch(k))
+    if unsupported:
+        raise OSMImportError(f"{label}: conditional tags are unsupported ({', '.join(unsupported)})")
+
+
+NODE_MOTORCAR_SAFETY_KEYS = frozenset((
+    "access", "vehicle", "motor_vehicle", "motorcar", "barrier",
+    "restriction", "oneway", "maxspeed", "maxweight", "maxheight",
+    "maxwidth", "maxlength", "junction", "toll", "hazmat"
+))
+
+
+def _check_node_conditions(tags: dict[str, str], label: str) -> int:
+    """Ignore *only* unrelated node condition metadata.
+
+    Every access/vehicle/physical-barrier node condition remains unsupported
+    and blocks import. A bicycle/parking condition at an ordinary map node
+    must not prevent construction of an independent motorcar road graph.
+    Returns the number of unrelated conditional node tags omitted from route
+    semantics, so the loss of coverage is visible in importer metadata.
+    """
+    condition_keys = [key for key in tags if CONDITIONAL.search(key)]
+    affected = (key for key in condition_keys
+                if key.split(":", 1)[0] in NODE_MOTORCAR_SAFETY_KEYS)
+    if "barrier" in tags or any(affected):
+        _check_conditions(tags, label)
+    return len(condition_keys)
 
 
 def _haversine(p: tuple[float, float], q: tuple[float, float]) -> float:
@@ -153,6 +179,7 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance, window=None, timezone_
     if len(objects) > MAX_OBJECTS:
         raise OSMImportError("Prototype extract has too many OSM objects")
 
+    unrelated_node_conditions = 0
     coordinates: dict[str, tuple[float, float]] = {}
     barriers: dict[str, str] = {}
     ways: dict[str, tuple[list[str], dict[str, str]]] = {}
@@ -172,7 +199,7 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance, window=None, timezone_
             if not isfinite(lat) or not isfinite(lon) or abs(lat) > 90 or abs(lon) > 180:
                 raise OSMImportError("Coordinates outside Earth bounds")
             tags = _tags(element)
-            _check_conditions(tags, f"node {ident}")
+            unrelated_node_conditions += _check_node_conditions(tags, f"node {ident}")
             coordinates[node] = (lat, lon)
             barriers[node] = _barrier_access(tags)
         elif element.tag == "way":
@@ -323,6 +350,7 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance, window=None, timezone_
             "timed_turn_bans": len(timed_rules),
             "lane_connections": len(lane_connections),
             "unverified_connectivity_relations": unverified_connectivity,
+            "non_car_node_conditional_tags_not_modelled": unrelated_node_conditions,
             "validity_window": tuple(t.isoformat() for t in clock_window) if clock_window else None,
             "conditional_timezone": timezone_name if clock_window else None,
             "limitations": "prototype-conservative-weekly-turn-window-no-real-world-legality-claims",

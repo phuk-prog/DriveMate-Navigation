@@ -49,3 +49,15 @@ prototype importer to reject the dataset. Failure is labelled an importer
 coverage blocker, never an engine route-speed failure.
 
 See https://docs.osmcode.org/osmium/latest/osmium-tags-filter.html.
+
+
+## Conditional node metadata safety gate
+
+The Manchester preflight found a conditional tag on a public map node. The
+prototype importer previously rejected *every* node `:conditional` tag,
+even those unrelated to motorcar routing. It now distinguishes generic,
+unmodelled bicycle/parking node metadata from conditional motorcar access,
+barriers, speed and other road-safety keys. Safety-relevant unsupported
+conditions remain hard import failures; irrelevant conditions are counted
+in importer metadata and are never used to infer legal permission.
+Regression tests exercise both acceptance and fail-closed cases.
