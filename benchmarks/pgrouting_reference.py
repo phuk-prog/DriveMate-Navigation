@@ -27,7 +27,7 @@ def sql_for_query(p,start,end):
 def execute(p,start,end):
     sql,labels=sql_for_query(p,start,end)
     proc=subprocess.run(['docker','exec','-i',CONTAINER,'psql','-v','ON_ERROR_STOP=1',
-                        '-U','postgres','-d','postgres','-At','-c',sql],
+                        '-U','postgres','-d','postgres','-qAt','-c',sql],
                         text=True,capture_output=True,timeout=40,check=True)
     vals=[int(s.strip()) for s in proc.stdout.splitlines() if s.strip()]
     if not vals:return None
