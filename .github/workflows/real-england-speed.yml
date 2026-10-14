@@ -1,7 +1,5 @@
 name: Real England road speed benchmark
 on:
-  push:
-    branches: ['benchmarks/real-england-speed-20261014']
   workflow_dispatch:
 permissions:
   contents: read

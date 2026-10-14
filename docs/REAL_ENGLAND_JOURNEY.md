@@ -58,3 +58,23 @@ silent exclusion of offending routes.
 
 Run the same eight cases again and use the emitted per-case evidence to
 identify actual native/GPS/guidance failures before implementing any fix.
+
+
+## Focus the follow-up: actual journey faults rather than speed setup
+
+The revised run (38656252832) recorded seven non-arrivals and one arrival
+with junction ambiguity, with **zero mismatches far from road junctions**.
+These outcomes demand investigation; they are not proof that real road
+navigation works, and do not justify disabling lane/turn safety checks.
+
+New diagnostic fields disclose only the candidate's **final relative
+segment fraction, match/recovery status, final-road flag, and instruction
+state**. They do not store raw GPS fixes or latitude/longitude.
+
+To conserve CI time, subsequent journey changes run under the isolated
+`real-england-journey.yml` workflow, which builds the same compiled
+C++ router and verifies the same dated real-road map, but no longer starts
+all external benchmark services. The existing real-road **speed**
+workflow is now manual-only. The journey workflow deliberately goes
+red when genuine journey cases fail or are unresolved, while its
+artifacts upload on failure for root-cause analysis.

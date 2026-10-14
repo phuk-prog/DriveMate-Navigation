@@ -1,0 +1,99 @@
+name: DriveMate real-English-road complete journey checks
+on:
+  push:
+    branches: ['benchmarks/real-england-speed-20261014']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: real-england-journey-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  native-gps-journey:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Build native C++ router and run full regression suite
+        timeout-minutes: 6
+        run: |
+          set -euo pipefail
+          python -m tools.privacy_guard
+          bash navigation_core/native/build.sh
+          python -m compileall -q benchmarks/real_english_journey.py
+          python -m tools.unittest_evidence
+      - name: Fetch dated public Greater Manchester road snapshot (never commit or publish PBF)
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq osmium-tool
+          mkdir -p results/real results/real-england/graphhopper
+          BASE='https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-261013.osm.pbf'
+          curl -fsSL --retry 2 --max-time 180 "$BASE" -o results/real/greater-manchester-261013.osm.pbf
+          curl -fsSL --retry 2 --max-time 30 "$BASE.md5" -o results/real/greater-manchester-261013.osm.pbf.md5
+          (cd results/real && md5sum -c greater-manchester-261013.osm.pbf.md5)
+          sha256sum results/real/greater-manchester-261013.osm.pbf > results/real/source.sha256
+          # Predeclare all real-road areas; retain *all* rejected area outcomes.
+          : > results/real-england/area-preflight.log
+          selected=''
+          while IFS='|' read -r place bbox; do
+            test -n "$place" || continue
+            echo "Trying real English roads: $place ($bbox)" | tee -a results/real-england/area-preflight.log
+            if osmium extract --strategy complete_ways --bbox="$bbox" \
+                   results/real/greater-manchester-261013.osm.pbf -o "results/real/$place-area.osm.pbf" &&
+               osmium tags-filter "results/real/$place-area.osm.pbf" \
+                   w/highway n/barrier r/type=restriction r/type=connectivity \
+                   -o "results/real/$place-roads.osm.pbf" &&
+               osmium cat "results/real/$place-roads.osm.pbf" \
+                   -o "results/real/$place-roads.osm" -f osm,add_metadata=false &&
+               test "$(stat -c%s "results/real/$place-roads.osm")" -lt 6000000 &&
+               python -m benchmarks.real_english_speed \
+                   --input "results/real/$place-roads.osm" \
+                   --snapshot 2026-10-13 --cases 16 --preflight \
+                   >> results/real-england/area-preflight.log 2>&1; then
+              echo "$place: PASS" | tee -a results/real-england/area-preflight.log
+              cp "results/real/$place-roads.osm.pbf" results/real/roads.osm.pbf
+              cp "results/real/$place-roads.osm" results/real/roads.osm
+              selected="$place"
+              echo "ENGLAND_BBOX_NAME=$place" >> "$GITHUB_ENV"
+              break
+            else
+              echo "$place: UNSUPPORTED (details in area-preflight.log)" | tee -a results/real-england/area-preflight.log
+            fi
+          done <<'AREAS'
+          manchester-city|-2.252,53.477,-2.234,53.488
+          stockport|-2.165,53.395,-2.149,53.409
+          wigan|-2.641,53.522,-2.625,53.536
+          rochdale|-2.169,53.612,-2.151,53.626
+          ashton-under-lyne|-2.112,53.480,-2.096,53.493
+          AREAS
+          if [ -z "$selected" ]; then
+            echo 'No English road area passed strict map-import preflight'
+            tail -100 results/real-england/area-preflight.log
+            exit 2
+          fi
+          echo "Selected real-road area: $selected"
+      - name: Replay native-powered GPS acquisition and arrival on real Wigan roads
+        shell: bash
+        timeout-minutes: 5
+        run: |
+          set -euo pipefail
+          python -m benchmarks.real_english_journey \
+            --input results/real/roads.osm \
+            --snapshot 2026-10-13 --cases 8
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: drivemate-real-journey-evidence
+          path: |
+            results/real-england/preflight.json
+            results/real-england/area-preflight.log
+            results/real-england/journeys.json
+            results/real/source.sha256
+          retention-days: 14

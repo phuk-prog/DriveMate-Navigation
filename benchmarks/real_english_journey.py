@@ -49,6 +49,7 @@ def replay_case(prepared, name, source, target):
            "guidance_frames": 0, "instruction_events": 0,
            "wrong_road_matches": 0,
            "near_junction_other_road_matches": 0,
+           "destination_diagnostics": [],
            "issues": [], "status": "unresolved"}
     # This executes the compiled router (not Python research search).
     route = prepared.route(source, target, backend="portable")
@@ -64,6 +65,12 @@ def replay_case(prepared, name, source, target):
     row["route_metres"] = round(route.length_m, 1)
     row["unverified_access_segments"] = len(route.unverified_access_edges)
     last_edge = edges[-1]
+    row["destination_segment_length_m"] = round(
+        math.hypot((prepared.coordinates[prepared.source_edges[last_edge].target][0] -
+                    prepared.coordinates[prepared.source_edges[last_edge].source][0]) * 111195,
+                   (prepared.coordinates[prepared.source_edges[last_edge].target][1] -
+                    prepared.coordinates[prepared.source_edges[last_edge].source][1]) * 111195 *
+                   math.cos(math.radians(prepared.coordinates[prepared.source_edges[last_edge].source][0]))), 2)
     # A destination is an observed position along the final original road.
     tracker = RecoveringGpsJourney(prepared, last_edge, ROUTE_FRACTION)
     guide = InstructionScheduler(tracker, "public_"+name.replace("-", "_"))
@@ -103,6 +110,20 @@ def replay_case(prepared, name, source, target):
                 break
             row["observations"] += 1
             last_status = update.status
+            if edge_index == len(edges)-1:
+                snap = tracker.snapshot
+                row["destination_diagnostics"].append({
+                    "sample_fraction": round(q, 4),
+                    "match_status": update.match.status if update.match else None,
+                    "recovery_status": update.status,
+                    "match_on_expected_road": bool(update.match and update.match.road == road),
+                    "trusted_position_on_final_road": bool(snap and snap.position.edge ==
+                                                         prepared.edge_ids[last_edge]),
+                    "trusted_fraction": snap.position.fraction if snap else None,
+                    "journey_status": snap.status if snap else None,
+                    "instruction_status": frame.status,
+                })
+                row["destination_diagnostics"] = row["destination_diagnostics"][-16:]
             if update.match and update.match.status == "matched":
                 row["recognized_matches"] += 1
                 if update.match.road != road:
