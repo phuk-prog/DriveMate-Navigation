@@ -18,12 +18,15 @@ int main(){
     auto ch=ContractionHierarchy::build(n,tail,head,weight);
     ContractionHierarchyQuery query(ch);
     query.reset().add_source(s).add_target(t).run();
-    if(query.get_distance()==std::numeric_limits<unsigned>::max()){
+    // RoutingKit can report an empty arc path for an unreachable query,
+    // regardless of the particular infinity sentinel used by its CH build.
+    // Source and target are distinct artificial nodes in this benchmark.
+    const auto arc_path=query.get_arc_path();
+    if(arc_path.empty() || query.get_distance()==std::numeric_limits<unsigned>::max()){
         std::cout<<"UNREACHABLE\n";
     }else{
-        auto arcs=query.get_arc_path();
         std::cout<<"PATH";
-        for(auto arc:arcs)std::cout<<" "<<arc;
+        for(auto arc:arc_path)std::cout<<" "<<arc;
         std::cout<<"\n";
     }
     return 0;
