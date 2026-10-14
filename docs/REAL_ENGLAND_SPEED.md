@@ -112,3 +112,14 @@ the final cleanup, prints the bounded startup log on failure, and
 assigns ephemeral writable directories to image UID 1000 before launch.
 A response-time result is accepted only if an ORS service genuinely
 starts and passes all per-route response checks.
+
+
+## Corrected ORS profile configuration
+
+The retained container log identified the exact startup failure:
+`Expected single profile in config`. We had created an unintended custom
+`car` profile while the image already enabled the normal
+`driving-car` profile. The test workflow now sets
+`ors.engine.profiles.driving-car.enabled=true` (documented default
+profile name). This changes only the isolated reference engine
+configuration; it does not alter DriveMate routing or road permissions.

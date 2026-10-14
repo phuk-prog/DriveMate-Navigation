@@ -153,7 +153,7 @@ jobs:
             -v "$PWD/results/real/ors/logs:/home/ors/logs" \
             -v "$PWD/results/real/ors/elevation_cache:/home/ors/elevation_cache" \
             -e 'ors.engine.profile_default.build.source_file=/home/ors/files/roads.osm.pbf' \
-            -e 'ors.engine.profiles.car.enabled=true' \
+            -e 'ors.engine.profiles.driving-car.enabled=true' \
             -e BUILD_GRAPHS=True -e XMS=256m -e XMX=1300m "$IMAGE"
           ready=0
           for attempt in $(seq 1 105); do
