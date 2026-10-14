@@ -171,8 +171,22 @@ class Matcher:
             oldname=self.last.road;oldpos=self.last.position
             if name==oldname:
                 backwards=(oldpos.fraction-position.fraction)*self.segments[name].length/1000000
-                if backwards>max(3,fix.accuracy_m):return result('backwards_progress',count=count)
-                if backwards>0:position=Position(position.edge,oldpos.fraction)
+                # With a near-zero measured speed, an apparent small movement
+                # entirely inside both fixes' uncertainty must not move the
+                # trusted progress marker. Otherwise repeatable along-road
+                # GPS jitter can trigger early instructions while stopped.
+                # Apply only to the *same* road; this never grants a turn or
+                # attaches to a different physical road. Genuine nonzero
+                # speed continues through the normal progress path.
+                shift=abs(backwards)
+                stopped_within_uncertainty=(stationary and fix.speed_mps is not None
+                    and fix.speed_mps<=0.5
+                    and shift<=fix.accuracy_m+self.last.accuracy_m)
+                if stopped_within_uncertainty:
+                    position=oldpos
+                else:
+                    if backwards>max(3,fix.accuracy_m):return result('backwards_progress',count=count)
+                    if backwards>0:position=Position(position.edge,oldpos.fraction)
                 path=abs(position.fraction-oldpos.fraction)*self.segments[name].length/1000000
             else:
                 if self.p.source_edges[oldname].target!=self.p.source_edges[name].source:
