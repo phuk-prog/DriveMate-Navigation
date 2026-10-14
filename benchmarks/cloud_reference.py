@@ -72,6 +72,62 @@ def parse(engine,p,response):
         exits=tuple(exits)
     return geometry_ways(p,points),exits,False
 
+def geometry_ways_dense(p,points):
+    """Independently attribute dense provider geometry to directed map segments.
+
+    Handles interpolated points, unlike the node-only route decoder. Each
+    consecutive displacement must lie on one directed physical segment within
+    1m; disconnected, reversed or ambiguous evidence remains unknown. No
+    planned-route bias, shortest-path search or DriveMate GPS matching is used.
+    """
+    if not isinstance(points,list) or not 2<=len(points)<=1000:return None
+    anchor=next(iter(p.coordinates.values()))
+    east=111195.0802*math.cos(math.radians(anchor[0]))
+    north=111195.0802
+    def project_geo(point):
+        if not isinstance(point,(tuple,list)) or len(point)!=2:return None
+        lat,lon=point
+        if not all(isinstance(v,(int,float)) and not isinstance(v,bool) and math.isfinite(v) for v in (lat,lon)):
+            return None
+        return ((lon-anchor[1])*east,(lat-anchor[0])*north)
+    xy={n:project_geo(v) for n,v in p.coordinates.items()}
+    segments=[]
+    for name,e in p.source_edges.items():
+        a,b=xy[e.source],xy[e.target]
+        dx,dy=b[0]-a[0],b[1]-a[1]
+        sq=dx*dx+dy*dy
+        if sq<=.01:return None
+        segments.append((name,a,dx,dy,sq))
+    def foot(point,segment):
+        _,origin,dx,dy,sq=segment
+        x,y=point[0]-origin[0],point[1]-origin[1]
+        fraction=max(0.,min(1.,(x*dx+y*dy)/sq))
+        return fraction,math.hypot(x-fraction*dx,y-fraction*dy)
+    selected=[];seen=0
+    for left,right in zip(points,points[1:]):
+        a,b=project_geo(left),project_geo(right)
+        if a is None or b is None:return None
+        if math.hypot(a[0]-b[0],a[1]-b[1])<.2:continue
+        candidates=[]
+        for seg in segments:
+            t0,d0=foot(a,seg);t1,d1=foot(b,seg)
+            if d0<=1 and d1<=1 and t1>t0+1e-7:
+                candidates.append((d0+d1,seg[0]))
+        if not candidates:return None
+        candidates.sort()
+        best=candidates[0]
+        if len(candidates)>1 and candidates[1][0]-best[0]<.25:
+            if candidates[1][1].split(':')[1]!=best[1].split(':')[1]:return None
+        if not selected or selected[-1]!=best[1]:selected.append(best[1])
+        seen+=1
+    if not seen:return None
+    result=[]
+    for name in selected:
+        ident=int(name.split(':')[1])
+        if not result or result[-1]!=ident:result.append(ident)
+    return result
+
+
 def call_match(engine,p,samples):
     """Submit identical authored clean coordinate streams; never send real GPS."""
     if not isinstance(samples,list) or not 3<=len(samples)<=100:
@@ -79,7 +135,7 @@ def call_match(engine,p,samples):
     if any(row.get('injected_fault') for row in samples):
         raise ValueError('This cross-engine subset requires exact clean traces')
     if engine in ('osrm','osrm-ch'):
-        coords=';'.join(f"{row['lon']},{row['lat']}" for row in samples)
+        coords=';'.join(f"{row['lon']:.8f},{row['lat']:.8f}" for row in samples)
         url='http://127.0.0.1:'+('5001' if engine=='osrm-ch' else '5000')
         url+='/match/v1/driving/'+coords+'?'+urlencode({'geometries':'geojson','overview':'full','steps':'false',
                                                            'tidy':'false'})
@@ -102,13 +158,13 @@ def parse_match(engine,p,response):
         shape=response['matchings'][0].get('geometry',{}).get('coordinates')
         if not isinstance(shape,list):return None
         points=[(point[1],point[0]) for point in shape]
-        return geometry_ways(p,points)
+        return geometry_ways_dense(p,points)
     if not response.get('trip',{}).get('legs'):return None
     points=[]
     for leg in response['trip']['legs']:
         if not isinstance(leg.get('shape'),str):return None
         points.extend(polyline6(leg['shape']))
-    return geometry_ways(p,points)
+    return geometry_ways_dense(p,points)
 
 def shared_clean_samples():
     """Use exact DriveMate synthetic traces also sent to GraphHopper in first job."""

@@ -123,7 +123,7 @@ server:
 def build_scorecard(latency):
     reference=json.loads(Path('results/whole_drive/reference/comparison.json').read_text())
     speed=speed_scores({n:v['p95_ms'] for n,v in latency['summary'].items()});systems=[]
-    for name in ('DriveMate',)+tuple(n for n,_,_ in SYSTEMS):
+    for name in ('DriveMate','GraphHopper'):
         scores={key:None for key,_ in CATEGORIES};evidence={}
         if name in ('DriveMate','GraphHopper'):
             field='drivemate_status' if name=='DriveMate' else 'graphhopper_status'

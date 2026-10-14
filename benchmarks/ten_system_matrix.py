@@ -30,16 +30,19 @@ def build():
         rows.append({'system':name,'execution':'fresh actual reference' if name=='GraphHopper' else 'not executed',
                      'version':'11.1' if name=='GraphHopper' else None,'targets':scopes,'blocker':blocker,
                      'official_source':url,'score':None,'provisional_target':name=='openrouteservice'})
-    result={'external_targets':10,'executed_external_systems':1,'unexecuted_external_systems':9,
+    excluded=[r for r in rows if r['execution']!='fresh actual reference']
+    executed=[r for r in rows if r['execution']=='fresh actual reference']
+    result={'external_targets':len(rows),'executed_external_systems':len(executed),'unexecuted_external_systems':len(excluded),
             'tenth_provenance':'Saved registry named nine external systems; openrouteservice added provisionally, not asserted to be the original tenth',
-            'dataset_sha256':report['dataset_sha256'],'systems':rows,
+            'dataset_sha256':report['dataset_sha256'],'systems':executed,
+            'excluded_unexecuted_systems':[{'name':r['system'],'reason':r['blocker']} for r in excluded],
             'runtime_inventory':{n:shutil.which(n) for n in ('java','docker','podman','osrm-routed','valhalla_service','brouter','adb','mvn','gradle')},
             'valhalla_python_binding':importlib.util.find_spec('valhalla') is not None,
             'policy':'No unexecuted system is failed or ranked. Different datasets/costs/interfaces and offline vs live matching cannot be turned into a fair speed or whole-app ranking.'}
     out=Path('results/whole_drive');(out/'ten_system_matrix.json').write_text(json.dumps(result,indent=2))
     with (out/'ten_system_matrix.csv').open('w') as f:
         writer=csv.writer(f);writer.writerow(['system','execution','version',*TARGETS,'blocker','official_source'])
-        for r in rows:writer.writerow([r['system'],r['execution'],r['version'],*[r['targets'][t] for t in TARGETS],r['blocker'],r['official_source']])
+        for r in executed:writer.writerow([r['system'],r['execution'],r['version'],*[r['targets'][t] for t in TARGETS],r['blocker'],r['official_source']])
     return result
 if __name__=='__main__':
     result=build();print(json.dumps({'external_targets':result['external_targets'],'fresh_external_executions':1,'pending_external_executions':9}))
