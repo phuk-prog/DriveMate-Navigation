@@ -83,7 +83,7 @@ class NativeTests(unittest.TestCase):
             ready = proc.stdout.readline()
             self.assertTrue(ready.startswith("READY "), ready)
             for mode in ("dijkstra", "astar", "alt", "alt"):
-                proc.stdin.write(f"{mode} 0 8 0 -1 -1 0\\n".replace("\\\\n", "\\n"))
+                proc.stdin.write(f"{mode} 0 8 0 -1 -1 0" + chr(10))
                 proc.stdin.flush()
                 line = proc.stdout.readline().split()
                 self.assertEqual(line[0], "FOUND")
