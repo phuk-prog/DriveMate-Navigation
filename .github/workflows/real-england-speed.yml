@@ -28,7 +28,7 @@ jobs:
         run: |
           python -m tools.privacy_guard
           bash navigation_core/native/build.sh
-          python -m compileall -q benchmarks/real_english_speed.py
+          python -m compileall -q benchmarks/real_english_speed.py benchmarks/real_english_journey.py
           python -m tools.unittest_evidence
       - name: Fetch dated public Greater Manchester road snapshot (never commit or publish PBF)
         shell: bash
@@ -184,6 +184,15 @@ jobs:
             --snapshot 2026-10-13 \
             --graphhopper-jar "$RUNNER_TEMP/graphhopper.jar" \
             --cases 16 --repeat 20 --osrm "${additional[@]}"
+      - name: DriveMate native routing and GPS-to-arrival journey on real Wigan roads
+        shell: bash
+        continue-on-error: true
+        timeout-minutes: 6
+        run: |
+          set -euo pipefail
+          python -m benchmarks.real_english_journey \
+            --input results/real/roads.osm \
+            --snapshot 2026-10-13 --cases 8
       - name: Clean up reference services
         if: always()
         run: |
@@ -201,6 +210,7 @@ jobs:
             results/real-england/preflight.json
             results/real-england/area-preflight.log
             results/real-england/speed.json
+            results/real-england/journeys.json
             results/real-england/*.log
             results/real/source.sha256
           retention-days: 14
