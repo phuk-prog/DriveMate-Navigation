@@ -100,3 +100,15 @@ This remains a **warm HTTP response latency** comparison for a small
 real-road extract, not an Android navigation quality, full-English-network
 routing, or verified legal-road-performance ranking. Preserve total and
 per-case timing records, all unresolved cases and source provenance.
+
+
+## openrouteservice startup diagnosis
+
+The first ORS 9.7.1 setup downloaded its official image but did not
+reach /health and was excluded, not scored as a routing failure.
+Because it previously launched with Docker --rm, its failure
+logs were lost on exit. The next run retains stopped containers until
+the final cleanup, prints the bounded startup log on failure, and
+assigns ephemeral writable directories to image UID 1000 before launch.
+A response-time result is accepted only if an ORS service genuinely
+starts and passes all per-route response checks.

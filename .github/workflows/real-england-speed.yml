@@ -141,9 +141,12 @@ jobs:
           set -euo pipefail
           mkdir -p results/real/ors/{files,graphs,config,logs,elevation_cache}
           cp results/real/roads.osm.pbf results/real/ors/files/roads.osm.pbf
+          # The official image normally writes as UID 1000; on a GitHub runner
+          # all data dirs belong to another UID unless explicitly assigned.
+          sudo chown -R 1000:1000 results/real/ors
           IMAGE='openrouteservice/openrouteservice:v9.7.1'
           docker pull "$IMAGE"
-          docker run -d --rm --name english-ors -p 127.0.0.1:8080:8082 \
+          docker run -d --name english-ors -p 127.0.0.1:8080:8082 \
             -v "$PWD/results/real/ors/files:/home/ors/files" \
             -v "$PWD/results/real/ors/graphs:/home/ors/graphs" \
             -v "$PWD/results/real/ors/config:/home/ors/config" \
@@ -155,9 +158,18 @@ jobs:
           ready=0
           for attempt in $(seq 1 105); do
             if curl -fsS --max-time 2 http://127.0.0.1:8080/ors/v2/health > /dev/null; then ready=1; break; fi
+            if ! docker inspect -f '{{.State.Running}}' english-ors 2>/dev/null | grep -qx true; then
+              echo 'openrouteservice container stopped before readiness'
+              break
+            fi
             sleep 1
           done
-          test "$ready" -eq 1 || { echo 'openrouteservice unavailable on this run; unranked'; exit 2; }
+          if [[ "$ready" != 1 ]]; then
+            echo 'openrouteservice unavailable on this run; unranked'
+            docker inspect -f 'Container exit code: {{.State.ExitCode}}' english-ors || true
+            docker logs --tail 110 english-ors || true
+            exit 2
+          fi
           echo 'ORS_READY=1' >> "$GITHUB_ENV"
       - name: Measure real-English-road routes on same runner
         shell: bash
