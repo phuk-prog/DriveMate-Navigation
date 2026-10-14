@@ -33,6 +33,13 @@ def sample_fractions(segment_length_m):
     return tuple(i / steps for i in range(1, steps))
 
 
+def short_destination_ambiguity(length_m, diagnostics, reached):
+    """Do not score an unresolvable short goal as a navigation failure."""
+    return (not reached and length_m <= 8.0 and len(diagnostics) >= 3
+            and all(item["match_status"] == "ambiguous"
+                    for item in diagnostics[-3:]))
+
+
 def replay_case(prepared, name, source, target):
     row = {"case": name, "source_type": "public_map_node",
            "fix_source": "simulated_from_public_OSM_geometry",
@@ -148,11 +155,17 @@ def replay_case(prepared, name, source, target):
                 break
         if errors or reached:
             break
+    goal_ambiguous = short_destination_ambiguity(
+        row["destination_segment_length_m"],
+        row["destination_diagnostics"], reached)
     row["components"]["gps_matching"] = (
         "fail" if row["wrong_road_matches"] else
         "unresolved" if row["near_junction_other_road_matches"]
         else "pass" if row["recognized_matches"] >= 3 else "unresolved")
-    row["components"]["arrival"] = "pass" if reached else "fail" if acquired and not errors else "unresolved"
+    row["components"]["arrival"] = (
+        "pass" if reached else
+        "unresolved" if goal_ambiguous else
+        "fail" if acquired and not errors else "unresolved")
     row["components"]["junctions"] = "exercised_unverified" if row["guidance_frames"] else "not_exercised"
     row["components"]["instruction_events"] = (
         "exercised_unverified" if row["instruction_events"] else "not_exercised")
@@ -165,10 +178,12 @@ def replay_case(prepared, name, source, target):
         row["issues"].append("gps_never_acquired_trusted_route")
     if not reached:
         row["issues"].append("destination_not_confirmed")
+    if goal_ambiguous:
+        row["issues"].append("short_destination_spur_gps_indistinguishable")
     row["final_recovery_status"] = last_status
     # Explicit route topology can have no junction or roundabout. Never
     # score an unexercised subsystem as a success.
-    row["status"] = "fail" if errors or row["wrong_road_matches"] or (acquired and not reached) else (
+    row["status"] = "fail" if errors or row["wrong_road_matches"] or (acquired and not reached and not goal_ambiguous) else (
         "pass" if reached and acquired and row["recognized_matches"] >= 3
         and not row["near_junction_other_road_matches"]
         else "unresolved")
@@ -196,14 +211,24 @@ def execute(raw, snapshot, maximum):
                                  ": "+str(exc)[:120]], "components": {}}
         rows.append(result)
     count = lambda value: sum(r["status"] == value for r in rows)
-    return {"category": "DriveMate-native-full-GPS-journey-replay-on-real-English-roads",
+    components = {name: {status: sum(r.get("components", {}).get(name) == status for r in rows)
+                          for status in ("pass", "fail", "unresolved", "not_exercised",
+                                         "exercised_unverified")}
+                  for name in ("native_routing", "gps_matching", "rerouting", "junctions",
+                               "roundabouts", "instruction_events", "arrival")}
+    return {"component_scorecard": components,
+            "category": "DriveMate-native-full-GPS-journey-replay-on-real-English-roads",
             "source_snapshot": snapshot,
             "region": os.environ.get("ENGLAND_BBOX_NAME", "unlabelled"),
             "geometry": "real public English OSM road network",
             "gps_data": "deterministic simulated observations, NOT actual device GPS",
             "real_sensor_validation": False, "voice_delivery_validation": False,
             "external_full_journey_comparison": False,
-            "scenario_count": len(rows), "pass": count("pass"),
+            "scenario_count": len(rows),
+            "arrivals_confirmed": components["arrival"]["pass"],
+            "verified_native_routes": components["native_routing"]["pass"],
+            "far_from_junction_wrong_matches": sum(r.get("wrong_road_matches", 0) for r in rows),
+            "pass": count("pass"),
             "fail": count("fail"), "unresolved": count("unresolved"),
             "cases": rows,
             "limitations": [
@@ -234,6 +259,8 @@ def main():
     output.mkdir(exist_ok=True, parents=True)
     (output / "journeys.json").write_text(json.dumps(report, indent=2)+"\n")
     print(json.dumps({k: report[k] for k in ("category", "scenario_count",
+          "verified_native_routes", "arrivals_confirmed",
+          "far_from_junction_wrong_matches",
           "pass", "fail", "unresolved", "region")}))
     if report["fail"] or report["unresolved"]:
         raise SystemExit(2)

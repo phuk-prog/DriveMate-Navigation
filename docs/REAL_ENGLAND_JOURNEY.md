@@ -98,3 +98,30 @@ still enters normal loss/recovery. Regression tests separately check
 rejected premature arrival, trusted-state preservation, confirmed
 forward crossing and timeout behavior. Only the actual next CI journey
 replay can confirm whether remaining Wigan failures are resolved.
+
+
+## Interpreting the revised Wigan result
+
+The accepted guarded destination-state fix was measured in run
+38656837610: **six of eight real-geometry simulated journeys
+confirmed arrival**, versus one before the fix. The full regression
+suite recorded 473 test methods, with no failures and one skip.
+The two non-arrivals ended on independently sourced 5.39 m and 5.40 m
+OSM road segments: every available target-edge fix remained
+`ambiguous` in the local GPS matcher. No unexpected far-from-junction
+directed-road match was recorded across eight drives. Junction-adjacent
+matching uncertainty remained in all eight and is **not** a passing
+GPS quality score.
+
+A short goal entirely covered by conflicting geometric candidates is
+now explicitly marked `unresolved` instead of a proven routing
+failure, provided its final GPS evidence is consistently ambiguous.
+It still does **not** count as arrival, a full-journey pass or an
+acceptable spoken lane/turn. A true non-arrival without that precise
+ambiguity remains a failure. The result JSON now includes a
+component-by-component attempted/passed/failed/unresolved/not-exercised
+scorecard so that a native route pass can never hide a GPS defect.
+
+Next engineering focus after this milestone is junction-topology-aware
+GPS matching, real device calibration and complex British roundabout
+guidance, with independent holdouts before any safety claims.

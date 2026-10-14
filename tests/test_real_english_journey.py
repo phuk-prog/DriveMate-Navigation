@@ -1,7 +1,7 @@
 """A first executable contract for the native+GPS real-road journey scorecard."""
 import unittest
 from pathlib import Path
-from benchmarks.real_english_journey import replay_case, sample_fractions
+from benchmarks.real_english_journey import replay_case, sample_fractions, short_destination_ambiguity
 from benchmarks.whole_drive import prepared
 
 
@@ -23,9 +23,16 @@ class RealEnglishJourneyContractTests(unittest.TestCase):
             self.assertLessEqual(max((v-u)*length for u, v in
                    zip((0.0,)+fs, fs+(1.0,))), 6.001)
 
+    def test_short_ambiguous_destination_is_unresolved_not_false_navigation_failure(self):
+        evidence = [{"match_status": "ambiguous"} for _ in range(3)]
+        self.assertTrue(short_destination_ambiguity(5.4, evidence, False))
+        self.assertFalse(short_destination_ambiguity(5.4, evidence, True))
+        self.assertFalse(short_destination_ambiguity(30.0, evidence, False))
+        self.assertFalse(short_destination_ambiguity(5.4, evidence[:1], False))
+
     def test_real_road_workflow_writes_inspectable_journey_result(self):
         wf = (Path(__file__).resolve().parents[1] /
-              ".github/workflows/real-england-speed.yml").read_text()
+              ".github/workflows/real-england-journey.yml").read_text()
         self.assertIn("python -m benchmarks.real_english_journey", wf)
         self.assertIn("results/real-england/journeys.json", wf)
 
