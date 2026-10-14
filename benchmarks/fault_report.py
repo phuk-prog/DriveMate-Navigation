@@ -5,7 +5,7 @@ from pathlib import Path
 from benchmarks.expanded_fixture import suite
 from benchmarks.expanded_comparison import LABELS
 from benchmarks.expanded_report import tally
-from benchmarks.fault_comparison import BATCH, FAULTS, PROTOCOL, scenarios, controls, clocked_input_hash
+from benchmarks.fault_comparison import BATCH, FAULTS, PROTOCOL, scenarios, controls, clocked_input_hash, recovery_cases
 
 
 def build(root,*,expected_commit=None):
@@ -57,11 +57,7 @@ def build(root,*,expected_commit=None):
                 indices=[x['sample'] for x in r['rejected_samples']]
                 if any(not isinstance(i,int) or isinstance(i,bool) or not 0<=i<r['sample_count'] for i in indices) or len(set(indices))!=len(indices):
                     raise ValueError('Invalid streaming rejected-fix index')
-            expected_recovery={}
-            for source in truth.values():
-                if source['fault']!='compound' or not source['base_case'].endswith('asymmetric_ring_exit_5'): continue
-                expected_recovery[source['base_case']+'/clean_control']=(source,source['baseline_samples'])
-                expected_recovery[source['id']]=(source,source['samples'])
+            expected_recovery={case:(source,samples) for case,source,samples in recovery_cases(data)}
             if len(recovery)!=len(expected_recovery) or {r['case'] for r in recovery}!=set(expected_recovery):
                 raise ValueError('Recovery diagnostic coverage mismatch')
             for r in recovery:
@@ -151,7 +147,7 @@ def markdown(report):
     for r in report['recovery_diagnostics']:
         lines.append(f"| {r['case']} | {r['status']} | {r['expected_ways']} | {r['actual_ways']} |")
     if not report['recovery_diagnostics']: lines.append('| Unavailable | Unresolved | - | - |')
-    lines+=['','Four ring layouts each have a clean control and a combined-fault controller probe. '
+    lines+=['','Twenty author paths across four layouts each have one clean control and four spatial-fault controller probes. '
             'Rejected fixes must not advance the trusted snapshot. This is candidate-only evidence, '
             'not an external whole-navigation or sensor-calibration comparison.','',
             f"Judge controls detected: {sum(r['baseline_passed'] and r['detected'] for r in report['judge_controls'])}/{len(report['judge_controls'])}. "

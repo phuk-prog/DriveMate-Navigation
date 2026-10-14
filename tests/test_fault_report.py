@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 from benchmarks.expanded_fixture import suite
-from benchmarks.fault_comparison import scenarios, controls, PROTOCOL, clocked_input_hash
+from benchmarks.fault_comparison import scenarios, controls, PROTOCOL, clocked_input_hash, recovery_cases
 from benchmarks.fault_report import build, markdown
 
 
@@ -36,13 +36,11 @@ class FaultReportTests(unittest.TestCase):
             'actual_ways':r['expected_ways'],'sequence_equal':True,'sample_count':len(r['samples']),
             'rejected_samples':[]} for r in rows]
         candidate['recovery_diagnostics']=[]
-        for r in rows:
-            if r['fault']!='compound' or not r['base_case'].endswith('asymmetric_ring_exit_5'): continue
-            for variant,samples in (('clean_control',r['baseline_samples']),('compound',r['samples'])):
-                candidate['recovery_diagnostics'].append({'case':r['base_case']+'/'+variant,
-                    'input_sha256':clocked_input_hash(samples),'expected_ways':r['expected_ways'],
-                    'actual_ways':r['expected_ways'],'status':'pass','snapshot_advances_on_rejection':0,
-                    'sample_count':len(samples),'frames':[{'sample':i,'match_status':'matched','guidance_available':True} for i in range(len(samples))]})
+        for case,r,samples in recovery_cases(data):
+            candidate['recovery_diagnostics'].append({'case':case,
+                'input_sha256':clocked_input_hash(samples),'expected_ways':r['expected_ways'],
+                'actual_ways':r['expected_ways'],'status':'pass','snapshot_advances_on_rejection':0,
+                'sample_count':len(samples),'frames':[{'sample':i,'match_status':'matched','guidance_available':True} for i in range(len(samples))]})
         for change in ('stream_success','stream_input','recovery_success','recovery_frames'):
             with self.subTest(change=change),tempfile.TemporaryDirectory(dir=Path.cwd()) as temp:
                 changed=copy.deepcopy(candidate)

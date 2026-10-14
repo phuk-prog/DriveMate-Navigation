@@ -4,6 +4,16 @@ from benchmarks.fault_comparison import scenarios, canonical_input, judge_sequen
 
 
 class FaultComparisonTests(unittest.TestCase):
+    def test_controller_coverage_includes_every_fault_and_paired_clean_control(self):
+        from benchmarks.fault_comparison import recovery_cases
+        rows=list(recovery_cases(suite()))
+        self.assertEqual(len(rows),100)
+        self.assertEqual(len({case for case,source,samples in rows}),100)
+        self.assertEqual(sum(case.endswith('/clean_control') for case,source,samples in rows),20)
+        for fault in ('jitter_2m','spike_40m','gap_3fix','compound'):
+            self.assertEqual(sum(case.endswith('/'+fault) for case,source,samples in rows),20)
+        self.assertEqual(sum(source['split']=='holdout' for case,source,samples in rows),50)
+
     def test_fixed_fault_coverage_and_preserved_truth(self):
         rows=scenarios(suite())
         self.assertEqual(len(rows),80)

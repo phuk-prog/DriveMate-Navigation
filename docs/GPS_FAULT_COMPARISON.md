@@ -59,8 +59,8 @@ The simple matcher processes all 80 fault inputs with its existing clocked
 RoutingKit and pgRouting have no equivalent trace interface and are marked not
 supported for these categories.
 
-The native recovery controller additionally runs paired clean/combined-fault
-probes on four ring layouts. These eight candidate-only probes record accepted
+The native recovery controller additionally runs all 80 fault traces and 20
+paired clean controls across four layouts. These 100 candidate-only probes record accepted
 roads, guidance availability and whether a rejected fix changed the trusted
 snapshot. They are unresolved when the native runtime is unavailable. They do
 not create competitor recovery-controller results or physically realistic lane
@@ -101,3 +101,12 @@ road in layout419/asymmetric_ring_exit_5/compound. All eight paired native
 recovery-controller probes passed, including that case, with no trusted-snapshot
 advances on rejected fixes. No production GPS thresholds or permissions were
 relaxed. Those eight controller probes remain candidate-only evidence.
+
+## Broader controller verification
+
+The controller coverage now includes all four spatial fault families on all 20
+author paths, plus one paired clean control per path: 100 cases, 50 discovery and
+50 held out. Report validation requires every case and its exact clocked input
+hash. This expands verification; it does not relax matcher checks or establish
+competitor controller comparability. Earlier eight-probe results above are
+historical evidence, not proof of the expanded suite.

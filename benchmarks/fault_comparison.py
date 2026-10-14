@@ -198,36 +198,44 @@ def parse_batch(engine,data,raw):
     return shape_roads(data,points)
 
 
+def recovery_cases(data):
+    """All spatial fault inputs plus one paired clean control per author path."""
+    seen=set()
+    for row in scenarios(data):
+        if row['base_case'] not in seen:
+            seen.add(row['base_case'])
+            yield row['base_case']+'/clean_control',row,row['baseline_samples']
+        yield row['id'],row,row['samples']
+
+
 def recovery_diagnostics(data,p):
     """Paired candidate-only controller probe; never mixed with batch ranks."""
     from gps.recovery import RecoveringGpsJourney
     from gps.matching import Fix
     from benchmarks.whole_drive_reference import ways
     records=[]
-    for row in scenarios(data):
-        if row['fault']!='compound' or not row['base_case'].endswith('asymmetric_ring_exit_5'): continue
-        for variant,samples in (('clean_control',row['baseline_samples']),('compound',row['samples'])):
-            seen=[];frames=[];advanced=0
-            try:
-                target='w:'+str(row['expected_ways'][-1])+':0:f'
-                journey=RecoveringGpsJourney(p,target,990000)
-                for i,s in enumerate(samples):
-                    previous=journey.snapshot
-                    u=journey.observe(Fix(s['lat'],s['lon'],s['t'],3),s['t'])
-                    m=u.match
-                    if m and m.status=='matched' and u.status in ('tracking','recovered','history_uncertain'):
-                        seen.append(m.road)
-                    if m and m.status!='matched' and journey.snapshot!=previous: advanced+=1
-                    frames.append({'sample':i,'status':u.status,'match_status':None if m is None else m.status,
-                                   'guidance_available':u.guidance_available})
-                path=ways(seen);status='pass' if path==row['expected_ways'] and advanced==0 else 'fail'
-                issue=None if status=='pass' else 'Missing expected accepted-road sequence or snapshot advanced on rejected fix'
-            except (OSError,ValueError,KeyError) as exc:
-                path=None;status='unresolved';issue=f'{type(exc).__name__}: {str(exc)[:160]}'
-            records.append({'case':row['base_case']+'/'+variant,'status':status,'issue':issue,
-                'input_sha256':clocked_input_hash(samples),'sample_count':len(samples),
-                'expected_ways':row['expected_ways'],'actual_ways':path,'snapshot_advances_on_rejection':advanced,
-                'frames':frames,'scope':'Candidate-only recovery controller; no competitor equivalent'})
+    for case,row,samples in recovery_cases(data):
+        seen=[];frames=[];advanced=0
+        try:
+            target='w:'+str(row['expected_ways'][-1])+':0:f'
+            journey=RecoveringGpsJourney(p,target,990000)
+            for i,s in enumerate(samples):
+                previous=journey.snapshot
+                u=journey.observe(Fix(s['lat'],s['lon'],s['t'],3),s['t'])
+                m=u.match
+                if m and m.status=='matched' and u.status in ('tracking','recovered','history_uncertain'):
+                    seen.append(m.road)
+                if m and m.status!='matched' and journey.snapshot!=previous: advanced+=1
+                frames.append({'sample':i,'status':u.status,'match_status':None if m is None else m.status,
+                               'guidance_available':u.guidance_available})
+            path=ways(seen);status='pass' if path==row['expected_ways'] and advanced==0 else 'fail'
+            issue=None if status=='pass' else 'Missing expected accepted-road sequence or snapshot advanced on rejected fix'
+        except (OSError,ValueError,KeyError) as exc:
+            path=None;status='unresolved';issue=f'{type(exc).__name__}: {str(exc)[:160]}'
+        records.append({'case':case,'status':status,'issue':issue,
+            'input_sha256':clocked_input_hash(samples),'sample_count':len(samples),
+            'expected_ways':row['expected_ways'],'actual_ways':path,'snapshot_advances_on_rejection':advanced,
+            'frames':frames,'scope':'Candidate-only recovery controller; no competitor equivalent'})
     return records
 
 
