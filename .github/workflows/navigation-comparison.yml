@@ -129,20 +129,3 @@ jobs:
           name: category-scorecard
           path: results/ci-report
           retention-days: 14
-
-  consumer-app-readiness:
-    needs: candidate-and-graphhopper
-    runs-on: ubuntu-24.04
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-        with:
-          persist-credentials: false
-      - name: Accelerated Organic Maps startup and public UK input smoke
-        run: bash tools/consumer_app_readiness.sh
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        if: always()
-        with:
-          name: consumer-app-readiness
-          path: results/consumer-app-readiness
-          retention-days: 14

@@ -27,3 +27,27 @@ live GPS, and small-map limitations are disclosed.
 
 The existing main workflow and its original public-road smoke markers remain
 unchanged. This benchmark is confined to its research branch and has no schedule.
+
+## Direct comparison instead of testing complete apps
+
+The user confirmed on 2026-10-14 that the goal is comparing **other navigators'
+actual navigation results against DriveMate**, not installing their complete apps.
+Therefore the Organic Maps Android emulator/startup smoke has been removed from
+this comparison workflow. The previously failed emulator dependency job is NOT
+a navigation accuracy defect and must not affect a navigator's score.
+
+The category aggregator now creates `HEAD_TO_HEAD.md` and
+`head_to_head.json` from **actual executed** DriveMate, GraphHopper, OSRM and
+Valhalla artifacts, paired by matching scenario ID, dataset SHA-256 and authored
+expected route. It reports which passed the *same synthetic scenario* rather
+than implying whole-app performance or choosing a general winner.
+
+The agreed ten consumer navigator targets are Google Maps, Waze, Apple Maps,
+HERE WeGo, TomTom, Sygic, OsmAnd, Organic Maps, Magic Earth, and MapFactor
+Navigator. These are **not** equivalent to the three engine baselines. Results
+for these complete navigators require an authorised direct routing interface
+or an actual recorded/tested navigation trace; backend similarity, marketing
+claims and synthetic substitutes are not acceptable. Unknown access remains
+**not tested** rather than zero or a fabricated score. No app copies/APKs,
+UI comparisons or Android installations are required for this head-to-head
+research phase.

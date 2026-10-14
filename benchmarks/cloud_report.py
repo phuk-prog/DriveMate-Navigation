@@ -2,6 +2,7 @@
 import argparse,json
 from pathlib import Path
 from benchmarks.ten_system_matrix import SYSTEMS
+from benchmarks.head_to_head import generate as generate_head_to_head
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--input',type=Path,required=True);a=ap.parse_args()
@@ -26,4 +27,5 @@ def main():
         lines.append('| '+name+' | '+' | '.join('N/T' if values.get(k) is None else str(values[k])+'/10' for k in keys)+' |')
     lines+=['','Unavailable references are not ranked last. Commercial SDK/device access and remaining open-source adapters still need provisioning.']
     (out/'SCORECARD.md').write_text('\n'.join(lines)+'\n');(out/'results.json').write_text(json.dumps(records,indent=2))
+    generate_head_to_head(a.input,out)
 if __name__=='__main__':main()
