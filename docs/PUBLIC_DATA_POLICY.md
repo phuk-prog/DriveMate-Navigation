@@ -20,7 +20,7 @@
 1. `.gitignore` blocks common sensitive file extensions and folder names.
 2. `tools/privacy_guard.py` scans all **tracked** repository files for suspicious paths, tokens, emails and location-recording formats. The GitHub workflow runs it on each push/PR.
 3. Benchmark adapters deliberately return aggregate distance and duration **only**. They do not expose route geometry or GPS coordinates.
-4. Large real OSM datasets are kept outside Git and are never downloaded or uploaded by automatic CI.
+4. Real OSM data stays outside Git. Only explicitly approved, tightly scoped research workflows may fetch a dated public, contributor-anonymised Geofabrik extract into an ephemeral CI workspace, with checksum verification, source attribution, strict resource bounds and no road-data artifact upload. Large national/regional bulk downloads remain prohibited.
 5. A human must review any new external data and any code that transmits data.
 
 **Limits:** scanning is heuristic and cannot find every identifier, private dataset or unusual secret. Never rely on a passing scan as permission to share sensitive data.
