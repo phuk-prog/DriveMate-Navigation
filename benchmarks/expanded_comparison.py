@@ -291,6 +291,8 @@ def execute(engine, data, out, *, http=None, binary=None, version=None):
     print(json.dumps({'engine':LABELS[engine],'routes':len(rows),
         'passed':sum(x['status']=='pass' for x in rows),'failed':sum(x['status']=='fail' for x in rows),
         'unresolved':sum(x['status']=='unresolved' for x in rows),'traces':len(traces)}))
+    from benchmarks.fault_comparison import run as run_faults
+    run_faults(engine,data,out,p,http=http)
     return result
 
 
