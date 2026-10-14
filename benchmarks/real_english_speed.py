@@ -5,6 +5,7 @@ from hashlib import sha256
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import math
+import os
 from pathlib import Path
 from statistics import median
 from threading import Thread
@@ -195,6 +196,7 @@ def run(raw, jar, repeat, maximum, snapshot, use_osrm):
         "category": "real-English-roads-warm-http-speed",
         "source": "Geofabrik Greater Manchester historic public PBF",
         "source_snapshot": snapshot, "source_xml_sha256": sha256(raw).hexdigest(),
+        "selected_public_road_area": os.environ.get("ENGLAND_BBOX_NAME", "unspecified"),
         "attribution": "© OpenStreetMap contributors, ODbL 1.0",
         "road_graph_vertices": len(imported.graph.vertices),
         "road_graph_edges": len(imported.graph.edges),

@@ -61,3 +61,16 @@ barriers, speed and other road-safety keys. Safety-relevant unsupported
 conditions remain hard import failures; irrelevant conditions are counted
 in importer metadata and are never used to infer legal permission.
 Regression tests exercise both acceptance and fail-closed cases.
+
+
+## Fixed-area coverage gate (do not cherry-pick failures)
+
+The central Manchester tile has an actual unsupported `motor_vehicle:conditional`
+tag on a node, which **must not be silently dropped**. We therefore retain an
+explicit `UNSUPPORTED` area-preflight result and independently try four other
+predeclared public English-road tiles: Stockport, Wigan, Rochdale and
+Ashton-under-Lyne. Only the first successfully imported region enters the
+limited warm HTTP speed benchmark. The rejected-area records are retained in
+`area-preflight.log`; no inference of UK-wide speed, route correctness or legal
+coverage is permitted from a selected region. Extending DriveMate's conditional
+motor-vehicle access model remains an independent correctness task.
