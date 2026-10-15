@@ -18,6 +18,9 @@ class PublicUKValidationTests(unittest.TestCase):
         self.assertEqual(result["external_engines_executed"], 0)
         self.assertEqual(result["scenario_count"], 1)
         self.assertEqual(result["route_preference_profiles_checked"],1)
+        self.assertIn(result["route_preference_discriminating_coverage"],
+                      ("MAP_DIVERGENCE_OBSERVED","INSUFFICIENT"))
+        self.assertFalse(result["independently_verified_traffic_legality_or_lane_truth"])
         self.assertTrue(result["route_preference_graph_rules_consistent"])
         self.assertFalse(result["driver_route_legality_independently_verified"])
 

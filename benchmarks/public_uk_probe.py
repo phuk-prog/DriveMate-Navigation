@@ -15,6 +15,7 @@ from time import perf_counter_ns
 
 from engine import RouteNotFound, shortest_route
 from engine.route_alternatives import generate_route_candidates
+from benchmarks.public_route_preferences import probe_preference_diversity
 from engine.astar import astar_route, prepare_astar
 from map_data import Provenance, import_osm_xml
 from map_data.osm_xml import MAX_INPUT_BYTES
@@ -127,7 +128,10 @@ def check_public_graph(raw: bytes, *, snapshot: str, region: str, samples: int =
         heuristic_count += int(candidate.geographic_heuristic_used)
     if tested < min(3, samples):
         raise AssertionError("Not enough independently generated routable public-road scenarios")
+    discovery = probe_preference_diversity(
+        graph, snapshot_id=imported.metadata["source_sha256"], maximum_pairs=96)
     return {
+        **discovery,
         "classification": "public-road-experimental-not-legality-verified",
         "source_sha256": imported.metadata["source_sha256"],
         "source_snapshot": snapshot,

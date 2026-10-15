@@ -44,3 +44,9 @@ New `tests/test_route_alternatives.py` covers genuine fastest/shortest/balanced 
 ## Opt-in public UK road experiment
 
 A single GitHub Actions `[uk-road-smoke]` opt-in will execute the public UK Geofabrik road subset test with `generate_route_candidates` enabled for each identical existing DMN route pair. It verifies route-profile computation, cost consistency with the existing independent Dijkstra baseline, and no bypass of imported mapped restrictions. This same-source experiment **does not** independently verify road signs, lanes, lawful route validity or live traffic, and cannot rank external apps. The existing historical public map snapshot is used solely for reproducibility; current physical road layout still requires dated official/corroborated evidence.
+
+## Hard-case discovery follow-up
+
+The first [real Greater Manchester eight-route smoke](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38781548543) was green: eight route pairs agreed with the established fastest-route cost, mapped rules were preserved, but **zero of eight simple road pairs produced distinct routes**. This is *coverage insufficiency*, not evidence that preferences are equivalent. Its bounded extract contained **zero mapped prohibited-turn pairs**, so it did NOT test difficult real turn restrictions or prove legality.
+
+The new `benchmarks/public_route_preferences.py` walks bounded non-personal road-graph-connected public nodes and probes up to 96 longer origin/destination pairs for actual fastest-vs-shortest path diversity, while preserving the existing eight-route baseline. It reports distinct path counts and `INSUFFICIENT` if no useful contrast is found. It does not auto-select an unverified route, claim field legality or score consumer navigation apps. Any next heavy opt-in is one at a time.
