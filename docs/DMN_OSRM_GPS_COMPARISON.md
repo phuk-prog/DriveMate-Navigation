@@ -11,3 +11,7 @@ Record OSRM endpoint `Ok` / `NoMatch`, returned tracepoints, snapped position pr
 The single explicit opt-in `[osrm-reference-smoke]` workflow builds the OSRM Docker container, checks its existing routing endpoint and then calls the Match endpoint. An unavailable binary, invalid response, incomplete API protocol or failed run means **NOT_EXECUTED/FAILED**, not success. The artifact contains aggregates only and deletes the downloaded PBF/XML on exit. Version, SHA and source geometry remain pinned. The stage does not touch `phuk-prog/DriveMate` production, release APKs or use personal histories.
 
 Further provider adapters: Valhalla trace matching and GraphHopper map matching, then each of the other ten reference families only if its exposed interface, terms and identical scenario inputs permit a real comparison. Routing-only provider tests remain routing-only.
+
+## Initial gate checks
+
+[GitHub Actions run 38752700333](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38752700333) **passed the research unit and contract suite** including locally mocked OSRM Match adapter protocol tests. Fake responses explicitly report **zero actual external reference engines executed**. A separate opt-in run is required to start the **actual** local OSRM 5.27.1 container and send the same map-generated GPS sequence to the real Match API. An HTTP error or no matching data must be reported as such, not replaced with unit results.
