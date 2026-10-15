@@ -196,7 +196,8 @@ def query(engine, case, coordinates, candidate_port, gh_port, *, return_geometry
             raise ValueError("GraphHopper unavailable")
         url = "http://127.0.0.1:%d/route?" % gh_port + urlencode([
             ("point", "%s,%s" % a), ("point", "%s,%s" % b),
-            ("profile", "car"), ("points_encoded", "false"), ("instructions", "false")])
+            ("profile", "car"), ("points_encoded", "false"), ("instructions", "false")] +
+            ([("way_point_max_distance", "0")] if return_geometry else []))
     elif engine in ("osrm-mld", "osrm-ch"):
         port = 5000 if engine == "osrm-mld" else 5001
         url = ("http://127.0.0.1:%d/route/v1/driving/" % port +

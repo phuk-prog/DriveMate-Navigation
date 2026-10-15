@@ -129,4 +129,26 @@ class ScorecardTest(unittest.TestCase):
         with patch('benchmarks.real_english_speed.urlopen',return_value=io.BytesIO(b'{"paths":[null]}')):
             with self.assertRaises(ValueError): query('graphhopper',{'source':'a','target':'b'},{'a':(53.53,-2.64),'b':(53.531,-2.64)},1234,1235,return_geometry=True)
 
+    def test_geometry_mode_disables_graphhopper_response_simplification(self):
+        import io,json
+        from unittest.mock import patch
+        from urllib.parse import parse_qs,urlparse
+        from benchmarks.real_english_speed import query
+        points=[[-2.64,53.53],[-2.64,53.531]]
+        with patch('benchmarks.real_english_speed.urlopen',return_value=io.BytesIO(json.dumps({'paths':[{'points':{'coordinates':points}}]}).encode())) as opened:
+            query('graphhopper',{'source':'a','target':'b'},{'a':(53.53,-2.64),'b':(53.531,-2.64)},1234,1235,return_geometry=True)
+            self.assertEqual(parse_qs(urlparse(opened.call_args.args[0]).query).get('way_point_max_distance'),['0'])
+
+    def test_geometry_mode_preserves_graphhopper_import_nodes(self):
+        import hashlib,tempfile
+        from pathlib import Path
+        from unittest.mock import patch,MagicMock
+        from benchmarks.expanded_comparison import graphhopper
+        with tempfile.TemporaryDirectory() as tmp:
+            folder=Path(tmp);jar=folder/'control.jar';jar.write_bytes(b'authored test control')
+            proc=MagicMock();proc.poll.return_value=None
+            with patch('benchmarks.expanded_comparison.PIN',hashlib.sha512(jar.read_bytes()).hexdigest()), patch('benchmarks.expanded_comparison.subprocess.Popen',return_value=proc), patch('benchmarks.expanded_comparison.request',return_value={'version':'11.1'}):
+                with graphhopper(jar,{'osm':b'<osm/>'},folder,preserve_geometry=True):
+                    self.assertIn('routing.way_point_max_distance: 0',(folder/'config.yml').read_text())
+
 if __name__=='__main__': unittest.main()

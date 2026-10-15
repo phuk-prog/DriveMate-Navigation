@@ -6,6 +6,7 @@ on:
       - '.github/workflows/real-road-legality.yml'
       - 'benchmarks/real_road_legality.py'
       - 'benchmarks/real_english_speed.py'
+      - 'benchmarks/expanded_comparison.py'
       - 'tests/test_real_road_legality.py'
 permissions:
   contents: read

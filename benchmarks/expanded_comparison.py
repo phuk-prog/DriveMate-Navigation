@@ -25,16 +25,17 @@ LABELS = {'drivemate':'DriveMate', 'graphhopper':'GraphHopper', 'osrm':'OSRM MLD
 
 
 @contextmanager
-def graphhopper(jar, data, out):
+def graphhopper(jar, data, out, *, preserve_geometry=False):
     if hashlib.sha512(jar.read_bytes()).hexdigest()!=PIN:
         raise ValueError('GraphHopper runtime checksum mismatch')
     http,admin=port(),port()
     osm=out/'expanded.osm';osm.write_bytes(data['osm'])
     config=out/'config.yml'
+    geometry_setting='  routing.way_point_max_distance: 0\n' if preserve_geometry else ''
     config.write_text(f'''graphhopper:
   datareader.file: "{osm.as_posix()}"
   graph.location: "{(out/'cache').as_posix()}"
-  graph.encoded_values: car_access,car_average_speed,road_access,osm_way_id
+{geometry_setting}  graph.encoded_values: car_access,car_average_speed,road_access,osm_way_id
   import.osm.ignored_highways: footway,construction,cycleway,path,steps
   prepare.min_network_size: 0
   profiles:

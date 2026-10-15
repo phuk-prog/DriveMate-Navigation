@@ -171,7 +171,7 @@ def main():
     engines=['drivemate-native-cpp','graphhopper','osrm-mld','osrm-ch','valhalla']
     rows=[];out=Path('results/legality');out.mkdir(parents=True,exist_ok=True)
     with ExitStack() as stack:
-        gh=stack.enter_context(graphhopper(args.graphhopper_jar,{'osm':raw},Path('results/real-england/graphhopper')))
+        gh=stack.enter_context(graphhopper(args.graphhopper_jar,{'osm':raw},Path('results/real-england/graphhopper'),preserve_geometry=True))
         server,thread,native=start_candidate(prepared,Path('navigation_core/native/router'))
         stack.callback(lambda:(server.shutdown(),server.server_close(),thread.join(timeout=3),native.close()))
         for i,case in enumerate(cases):
