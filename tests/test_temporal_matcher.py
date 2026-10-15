@@ -28,7 +28,7 @@ class TemporalRoadMatcherTests(unittest.TestCase):
         self.assertEqual(self.m.update(self.fix(t=1000,lon=-2.0013)).edge_id,"feeder")
 
     def test_standalone_parallel_remains_ambiguous(self):
-        r=self.m.update(self.fix(t=1000))
+        r=self.m.update(self.fix(t=1000,lon=-1.9995))
         self.assertEqual(r.status,"AMBIGUOUS")
     def test_connected_road_can_be_selected_after_anchor(self):
         self.anchor()
