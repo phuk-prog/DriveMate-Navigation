@@ -141,6 +141,29 @@
       "policy": "retain_not_tested_references_and_allow_separate_legal_observations",
       "comparable_score_for_untested": false,
       "observation_used_in_head_to_head_rank": false
+    },
+    "4": {
+      "date": "2026-10-15",
+      "selection": "C",
+      "policy": "geography_agnostic_prioritize_complex_real_uk_junctions",
+      "region_priority": "none",
+      "scenario_basis": "independently_selected_difficult_junction_and_roundabout_types_with_control_roads",
+      "preserve_historical_manchester_wigan_cases": true
     }
+  },
+  "scenario_selection": {
+    "priority": "complexity_over_location",
+    "country_scope": "UK",
+    "initial_conditions": [
+      "difficult_roundabouts",
+      "multi_lane_and_combined_turn_junctions",
+      "turn_access_restrictions",
+      "motorway_slips_and_diverges",
+      "grade_separated_junctions",
+      "parallel_road_gps_ambiguity"
+    ],
+    "representative_simple_controls": true,
+    "source": "real_public_road_geometry_and_independent_rules_when_available",
+    "geographic_quota": "not_required_by_owner"
   }
 }
