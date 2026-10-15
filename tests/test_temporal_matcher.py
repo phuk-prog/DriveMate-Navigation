@@ -74,9 +74,9 @@ class TemporalRoadMatcherTests(unittest.TestCase):
 
     def test_unrealistic_connected_road_jump_is_rejected(self):
         self.anchor()
-        # The northern road really connects, but crossing ~100 m in one
-        # second at a reported 10 m/s must NOT produce a MATCHED road.
-        r=self.m.update(self.fix(t=2000,lon=-1.9998,speed=10))
+        # ~70 m in one second is beneath the generic 90 m/s GNSS jump
+        # threshold but implausible with reported 10 m/s movement.
+        r=self.m.update(self.fix(t=2000,lon=-2.00028,speed=10))
         self.assertEqual((r.status,r.reason),
                          ("REJECTED","distance_speed_disagreement"))
         self.assertEqual(self.m.anchor_edge_id,"feeder")
