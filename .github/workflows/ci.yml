@@ -283,7 +283,7 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
       - name: Valhalla 3.9.1 public UK routing smoke (explicit once only)
-        if: contains(github.event.head_commit.message, '[valhalla-reference-smoke]')
+        if: contains(github.event.head_commit.message, '[valhalla-reference-smoke]') || contains(github.event.pull_request.title, '[valhalla-reference-smoke]')
         timeout-minutes: 12
         shell: bash
         run: |
@@ -321,6 +321,16 @@ jobs:
               tail -n 35 || true
             exit 1
           fi
+          python -m benchmarks.valhalla_match_reference --input results/public-road-subset.osm \
+            --snapshot geofabrik-260901 --samples 12 | tee results/dmn-valhalla-match-public-uk.json
+      - name: Upload live Valhalla GPS matching diagnostic
+        if: always() && (contains(github.event.head_commit.message, '[valhalla-reference-smoke]') || contains(github.event.pull_request.title, '[valhalla-reference-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-vs-valhalla-map-match-uk
+          path: results/dmn-valhalla-match-public-uk.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: Java 25 for official GraphHopper JAR (explicit once only)
         if: contains(github.event.head_commit.message, '[graphhopper-reference-smoke]')
         uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # v5.0.0
