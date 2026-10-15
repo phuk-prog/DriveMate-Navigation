@@ -1,4 +1,4 @@
-name: DriveMate real-English-road complete journey checks
+name: DMN real-English-road GPS journey research
 on:
   push:
     branches: ['benchmarks/real-england-speed-20261014']
@@ -87,6 +87,10 @@ jobs:
           python -m benchmarks.real_english_journey \
             --input results/real/roads.osm \
             --snapshot 2026-10-13 --cases 8
+      - name: DMN measured phone-selection decision (research only)
+        if: always()
+        run: |
+          python -m benchmarks.dmn_phone_decision --journey results/real-england/journeys.json --output results/real-england/dmn-phone-decision.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
@@ -95,5 +99,6 @@ jobs:
             results/real-england/preflight.json
             results/real-england/area-preflight.log
             results/real-england/journeys.json
+            results/real-england/dmn-phone-decision.json
             results/real/source.sha256
           retention-days: 14

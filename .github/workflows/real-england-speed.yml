@@ -1,4 +1,4 @@
-name: Real England road speed benchmark
+name: DMN real England routing latency comparison
 on:
   workflow_dispatch:
 permissions:
@@ -200,6 +200,10 @@ jobs:
           docker logs --tail 80 english-valhalla > results/real-england/valhalla.log 2>&1 || true
           docker logs --tail 80 english-ors > results/real-england/openrouteservice.log 2>&1 || true
           docker rm -f english-osrm-mld english-osrm-ch english-valhalla english-ors || true
+      - name: DMN measured phone-selection decision (research only)
+        if: always()
+        run: |
+          python -m benchmarks.dmn_phone_decision --journey results/real-england/journeys.json --speed results/real-england/speed.json --output results/real-england/dmn-phone-decision.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
@@ -209,6 +213,7 @@ jobs:
             results/real-england/area-preflight.log
             results/real-england/speed.json
             results/real-england/journeys.json
+            results/real-england/dmn-phone-decision.json
             results/real-england/*.log
             results/real/source.sha256
           retention-days: 14

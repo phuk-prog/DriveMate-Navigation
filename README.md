@@ -1,3 +1,13 @@
+# DMN — DriveMate Navigation
+
+**DMN is our navigation research and testing programme for the existing DriveMate Android phone app. We are NOT building a separate standalone DMN app.**
+
+DMN is where we evaluate our original compiled C++ navigation candidate and Python research GPS/guidance components, compare against independent engines, improve faults and select the best technically and legally suitable implementation for the phone. No host benchmark automatically qualifies a candidate for Android.
+
+See [DMN scope and decisions](docs/DMN_SCOPE.md) and [phone selection evidence](docs/DMN_PHONE_DECISIONS.md).
+
+---
+
 GitHub-hosted comparison setup is documented in [GITHUB_CATEGORY_COMPARISON.md](docs/GITHUB_CATEGORY_COMPARISON.md).
 
 The expanded 92-route, 20-exit and 20-trace shared protocol and its category evidence are documented in [EXPANDED_COMPARISON.md](docs/EXPANDED_COMPARISON.md). Results are measured by the research-branch workflow; the protocol itself is not a passing-result claim.

@@ -1,3 +1,20 @@
+# DMN priority: determine best navigation for existing DriveMate Android app
+
+This is a **research and comparison plan**, not a standalone phone-app build plan. The [DMN scope](DMN_SCOPE.md) supersedes outdated standalone wording.
+
+1. [x] Inventory and retain actual DMN routing/GPS/guidance research implementations and test data.
+2. [x] Store measured passes, failures and unresolved outcomes per check without manufacturing competitor results.
+3. [x] Provide evidence-only component selection report for the phone.
+4. [ ] Fix/judge Wigan GPS junction and short-link ambiguity without weakening road legality.
+5. [ ] Run repeatable hard GPS tests: side-by-side roads, tunnels, errors, corners, recovery, false reroutes.
+6. [ ] Test UK restrictions, roundabouts, complex lanes, correct junctions and instruction timing against independent truth.
+7. [ ] Compare actual external engines per equivalent navigation category, including held-out routes and complete journeys.
+8. [ ] Evaluate mobile offline maps, memory, battery, rerouting, audio/Bluetooth and licensing.
+9. [ ] Recommend proven components with evidence, uncertainties, ownership and integration cost.
+10. [ ] Obtain approval before integrating components into the **existing** DriveMate Android app.
+
+## Historical detailed engineering checklist
+
 # Development roadmap — evidence before claims
 
 - [x] Create independent repository and synthetic Dijkstra routing/reference test harness.
