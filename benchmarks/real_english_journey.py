@@ -218,11 +218,11 @@ def select_case_cohorts(prepared, graph, maximum, discover=road_cases):
         raise ValueError("Original eight public road cases are unavailable")
     if maximum == 8:
         return tuple(dict(c, cohort="original") for c in baseline)
-    if not 8 < maximum <= 20:
-        raise ValueError("Case cohort must be 8..20")
+    if not 8 < maximum <= 100:
+        raise ValueError("Case cohort must be 8..100")
     used = {(c["source"], c["target"]) for c in baseline}
     selected = [dict(c, cohort="original") for c in baseline]
-    pool = discover(prepared, graph, maximum=min(80, maximum*3))
+    pool = discover(prepared, graph, maximum=min(300, maximum*3))
     for c in pool:
         key = (c["source"], c["target"])
         if key in used:
@@ -309,8 +309,8 @@ def main():
     parser.add_argument("--snapshot", required=True)
     parser.add_argument("--cases", type=int, default=8)
     args = parser.parse_args()
-    if not 8 <= args.cases <= 20:
-        parser.error("Case count must be between 8 and 20")
+    if not 8 <= args.cases <= 100:
+        parser.error("Case count must be between 8 and 100")
     if not args.input.resolve().is_relative_to(Path("results").resolve()):
         parser.error("Map must remain inside ignored results/ directory")
     raw = args.input.read_bytes()

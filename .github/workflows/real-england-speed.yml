@@ -58,7 +58,7 @@ jobs:
                test "$(stat -c%s "results/real/$place-roads.osm")" -lt 6000000 &&
                python -m benchmarks.real_english_speed \
                    --input "results/real/$place-roads.osm" \
-                   --snapshot 2026-10-13 --cases 16 --preflight \
+                   --snapshot 2026-10-13 --cases 100 --preflight \
                    >> results/real-england/area-preflight.log 2>&1; then
               echo "$place: PASS" | tee -a results/real-england/area-preflight.log
               cp "results/real/$place-roads.osm.pbf" results/real/roads.osm.pbf
@@ -183,7 +183,7 @@ jobs:
             --input results/real/roads.osm \
             --snapshot 2026-10-13 \
             --graphhopper-jar "$RUNNER_TEMP/graphhopper.jar" \
-            --cases 16 --repeat 20 --osrm "${additional[@]}"
+            --cases 100 --repeat 10 --osrm "${additional[@]}"
       - name: DriveMate native routing and GPS-to-arrival journey on real Wigan roads
         shell: bash
         continue-on-error: true
@@ -192,7 +192,7 @@ jobs:
           set -euo pipefail
           python -m benchmarks.real_english_journey \
             --input results/real/roads.osm \
-            --snapshot 2026-10-13 --cases 16
+            --snapshot 2026-10-13 --cases 100
       - name: Report same-road engine ranks without guessing a full-navigation winner
         if: always()
         shell: bash

@@ -46,3 +46,28 @@ The full real-road speed workflow is the comparison job on this branch; the
 smaller DMN GPS-only workflow is manual for now to prevent duplicate heavy
 GitHub runs. All outputs are saved under ignored results/ and uploaded
 as GitHub Actions artifacts.
+
+
+## Count of remaining tests and issues
+
+A live workstream register is now generated on every real UK routing comparison
+run and embedded in `DMN_REAL_ROAD_SCORECARD.md` and
+`dmn-real-road-comparison.json`. It counts **12 specific research, safety,
+phone and licensing workstreams** by priority. A 100-route same-snapshot
+benchmark with at least 10 measured HTTP responses per case on DMN,
+GraphHopper and both OSRM configurations closes only the measurement
+workstream DMN-12; it does not close legal-turn, GPS, lane, phone or audio work.
+
+Route-testing goal: **100 real UK routes**, with **10 measured requests per
+route per engine**, on identical real public-road map data. The original 8
+cases and the remaining held-out routes are all retained. The same chosen
+100 route endpoints also undergo DMN simulated-GPS replay so candidate and
+routing benchmarks share an exact cohort hash. No comparator gets a
+fictitious full-journey GPS score. The report shows route scenarios
+completed/target/remaining, engine request pass/total, GPS journey
+unresolved cases separately from workstream backlog and a real
+p95 latency rank for complete engine cohorts only.
+
+The distinct open workstreams are **not** the same number as individual
+GPS junction holds or unverified full journeys, and never collapse to
+zero merely because all regression methods passed.

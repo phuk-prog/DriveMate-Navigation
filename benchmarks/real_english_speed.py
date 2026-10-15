@@ -369,9 +369,10 @@ def preflight(raw, snapshot, maximum):
         "Greater Manchester, England", snapshot,
         "Geofabrik historic public OSM PBF", "© OpenStreetMap contributors (ODbL 1.0)"))
     prepared = prepare_navigation(imported.graph, imported.coordinates)
-    cases = road_cases(prepared, imported.graph, maximum=maximum)
-    if len(cases) < 5:
-        raise ValueError("Not enough routable public-English-road cases; stop without benchmarks")
+    from benchmarks.real_english_journey import select_case_cohorts
+    cases = select_case_cohorts(prepared, imported.graph, maximum)
+    if len(cases) != maximum:
+        raise ValueError("Insufficient public-UK-road cases; never substitute synthetic geometry")
     distances = []
     for case in cases:
         route = prepared.route(case["source"], case["target"])
@@ -399,7 +400,7 @@ def main():
     ap.add_argument("--valhalla", action="store_true")
     ap.add_argument("--openrouteservice", action="store_true")
     args = ap.parse_args()
-    if not 3 <= args.repeat <= 100 or not 5 <= args.cases <= 80:
+    if not 3 <= args.repeat <= 100 or not 8 <= args.cases <= 100:
         ap.error("Invalid bounded workload")
     if not args.input.resolve().is_relative_to(Path("results").resolve()):
         ap.error("Real maps must stay inside ignored results/")

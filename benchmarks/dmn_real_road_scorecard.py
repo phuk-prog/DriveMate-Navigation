@@ -10,6 +10,51 @@ import json
 import math
 from pathlib import Path
 
+# DMN open work and test target
+
+ROUTE_TARGET = 100
+WORK = (
+    ("DMN-01", "critical", "observed blocker", "Support UK conditional and complex turn restrictions; expand rejected map areas"),
+    ("DMN-02", "critical", "unverified legality", "Check actual UK legal road movements against independent ground truth"),
+    ("DMN-03", "high", "observed GPS", "Resolve GPS ambiguity at junctions without guessing turns"),
+    ("DMN-04", "high", "observed arrival", "Confirm destinations on very short adjacent road segments"),
+    ("DMN-05", "high", "comparison gap", "Run equivalent real-road GPS traces on DMN and comparator matching interfaces"),
+    ("DMN-06", "high", "comparison gap", "Verify real roundabout exits, junction decisions and lane restrictions"),
+    ("DMN-07", "high", "comparison gap", "Measure same-route wrong-turn, rerouting and signal recovery outcomes"),
+    ("DMN-08", "high", "phone validation", "Test offline map updates, Android speed, RAM, battery and reliability"),
+    ("DMN-09", "medium", "phone validation", "Test spoken instruction timing and Bluetooth ducking"),
+    ("DMN-10", "medium", "legal review", "Validate licences, map-data attribution and commercial redistribution"),
+    ("DMN-11", "medium", "integration", "Select verified components, then approve integration into existing phone app"),
+    ("DMN-12", "medium", "test expansion", "Run 100 same-map UK routes on all four mandatory runnable engines"),
+)
+PRIORITY = {"critical":0, "high":1, "medium":2}
+MANDATORY_ROUTING = ("drivemate-native-cpp", "graphhopper", "osrm-mld", "osrm-ch")
+
+
+def work_progress(route_count, repeats, engines, gps):
+    """Count engineering workstreams separately from failed GPS fix samples.
+
+    The expanded 100-route response benchmark is complete only when DMN,
+    GraphHopper and both OSRM variants fully respond to exactly the same
+    per-case endpoint workload. No other phone, safety or legality gate is
+    marked resolved merely because route speed samples were collected.
+    """
+    benchmark_done = (route_count == ROUTE_TARGET and repeats >= 10
+                      and all(name in engines and engines[name]["complete"]
+                              and engines[name]["valid_routes"] == ROUTE_TARGET
+                              for name in MANDATORY_ROUTING))
+    items = [{"id":item_id, "priority":priority, "kind":kind, "task":task,
+              "status":"completed" if item_id=="DMN-12" and benchmark_done else "open"}
+             for item_id,priority,kind,task in WORK]
+    items.sort(key=lambda r:(r["status"]!="open",PRIORITY[r["priority"]],r["id"]))
+    return {"total":len(items),
+            "remaining":sum(r["status"]=="open" for r in items),
+            "completed":sum(r["status"]=="completed" for r in items),
+            "open_by_priority":{p:sum(r["status"]=="open" and r["priority"]==p for r in items)
+                                for p in PRIORITY},
+            "items":items, "counting_rule":"distinct workstreams, not unresolved journeys or per-fix GPS events"}
+
+
 ROUTE_CATEGORY = "real-English-roads-warm-http-speed"
 JOURNEY_CATEGORY = "DriveMate-native-full-GPS-journey-replay-on-real-English-roads"
 
@@ -78,8 +123,14 @@ def analyse(speed, journey):
     if (set(jcounts)-{"pass","fail","unresolved"} or
             any(journey.get(s)!=jcounts[s] for s in ("pass","fail","unresolved"))):
         raise ValueError("Contradictory full GPS journey case ledger")
+    work = work_progress(count,repeats,engines,jcounts)
     return {
         "project": "DMN",
+        "real_road_route_target": ROUTE_TARGET,
+        "real_road_routes_checked": count,
+        "real_road_routes_remaining": max(0,ROUTE_TARGET-count),
+        "outstanding_work": work,
+        "outstanding_gps_journeys": jcounts["unresolved"]+jcounts["fail"],
         "scope": "same-real-English-public-OSM-routing-response-comparison",
         "source_snapshot": speed["source_snapshot"],
         "map_sha256": speed["source_xml_sha256"],
@@ -136,6 +187,21 @@ def markdown(report):
         ms=("--" if r["p95_warm_local_http_ms"] is None else f"{r['p95_warm_local_http_ms']:.3f} ms")
         lines.append(f"| {pos} | {e} | {r['valid_requests']}/{r['expected_requests']} | "
                      f"{r['valid_routes']}/{r['route_cases']} | {ms} |")
+    work=report["outstanding_work"]
+    lines.extend(["",
+        "## Tests and issues still left", "",
+        f"- Real UK route scenarios checked: **{report['real_road_routes_checked']}/{report['real_road_route_target']}**; "
+        f"**{report['real_road_routes_remaining']} remaining** toward the 100-route expansion.",
+        f"- Engineering / validation workstreams: **{work['remaining']}/{work['total']} open** "
+        f"(critical {work['open_by_priority']['critical']}, high {work['open_by_priority']['high']}, "
+        f"medium {work['open_by_priority']['medium']}).",
+        f"- DMN complete GPS journeys still requiring resolution: **{report['outstanding_gps_journeys']}/{report['cases']}**. "
+        "Counted separately from the workstream backlog.",
+        "", "### Outstanding work, sorted by priority", "",
+        "| Priority | ID | Issue / remaining validation | Status |",
+        "|---|---|---|---|"])
+    for item in work["items"]:
+        lines.append(f"| {item['priority']} | {item['id']} | {item['task']} | {item['status']} |")
     j=report["dmn_simulated_gps_on_same_real_roads"]
     lines.extend(["","## DMN simulated GPS replay on these same public-road routes","",
                   "| Measurement | Value |","|---|---:|",

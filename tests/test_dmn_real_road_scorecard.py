@@ -37,6 +37,24 @@ class DMNRealRoadScorecardTests(unittest.TestCase):
         self.assertIsNone(result["actual_legal_routing_ranking"])
         self.assertEqual(result["dmn_simulated_gps_on_same_real_roads"]["unresolved"],16)
 
+    def test_original_real_road_test_count_and_open_issue_register(self):
+        result=analyse(*fixtures())
+        self.assertEqual(result["real_road_routes_checked"],16)
+        self.assertEqual(result["real_road_routes_remaining"],84)
+        self.assertEqual(result["outstanding_work"]["remaining"],12)
+        self.assertEqual(result["outstanding_work"]["open_by_priority"]["critical"],2)
+        self.assertEqual(result["outstanding_gps_journeys"],16)
+
+    def test_100_routes_does_not_mark_navigation_as_phone_ready(self):
+        from benchmarks.dmn_real_road_scorecard import work_progress
+        engines={name:{"complete":True,"valid_routes":100}
+                 for name in ("drivemate-native-cpp","graphhopper","osrm-mld","osrm-ch")}
+        work=work_progress(100,10,engines,{})
+        self.assertEqual(work["remaining"],11)
+        self.assertEqual([r["id"] for r in work["items"] if r["status"]=="completed"],["DMN-12"])
+        engines["osrm-ch"]["complete"]=False
+        self.assertEqual(work_progress(100,10,engines,{})["remaining"],12)
+
     def test_no_ranking_different_routes_or_maps(self):
         for k in ("source_snapshot","source_xml_sha256","cohort_sha256"):
             a,b=fixtures();b[k]="different"
