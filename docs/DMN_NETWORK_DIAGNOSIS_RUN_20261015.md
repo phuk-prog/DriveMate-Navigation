@@ -26,3 +26,6 @@ CI run [38789145034](https://github.com/phuk-prog/DriveMate-Navigation/actions/r
 ## Next opted-in data investigation
 
 An isolated workflow marker `[uk-network-coverage-smoke]` can run `benchmarks.public_network_sweep` on independently chosen bounded South Manchester, Wigan, and central Manchester public-map areas, reusing one pinned Geofabrik source. Each area will either yield a comparable topology report or be marked **UNSUPPORTED** due to importer limits/complex relations (never a fictitious pass). The runner securely removes temporary XML/PBF map inputs and saves only aggregate diagnostics. Keep the original 96 pairs as the historical control. Require at least one connected, loop-bearing allowed graph with meaningful candidate differences before external route-preference rankings. Even then, corroborated legal restrictions and same-route external-engine tests remain separate work.
+
+### Explicit multi-region validation invocation
+The temporary draft-PR marker is enabled for one synchronization run to measure the candidate regions with the 2026-09-01 pinned public extract. A green CI status alone is not a successful route-comparison verdict; inspect the JSON `result` and per-area supported/unsupported counters, then remove the title marker.
