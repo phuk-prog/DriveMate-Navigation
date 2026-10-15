@@ -22,6 +22,9 @@ import xml.etree.ElementTree as ET
 from benchmarks.osrm_match_reference import _metres, generate_cases
 from benchmarks.graphhopper_live_reference import _OPENER, wait_for_graphhopper
 from benchmarks.public_uk_probe import _public_file
+from benchmarks.match_geometry_truth import (
+    report_geometry_last_fix, projected_dmn_result,
+    ensure_geometry_denominators, geometry_summary)
 from gps.matcher import DirectedRoadMatcher
 from gps.temporal_matcher import TemporalRoadMatcher
 from map_data import Provenance, import_osm_xml
@@ -160,6 +163,9 @@ def evaluate(raw: bytes, *, snapshot: str, limit: int=12,
         for fix in fixes:
             decision=temporal.update(fix)
         for key,result in (("dmn_single",simple),("dmn_temporal",decision)):
+            report_geometry_last_fix(
+                totals,"geometry_"+key,imported.graph,imported.coordinates,expected_outgoing,
+                projected_dmn_result(result,fixes[-1],imported.graph,imported.coordinates))
             totals[key+"_correct"]+=int(result.status=="MATCHED"
                                           and result.edge_id==expected_outgoing)
             totals[key+"_wrong"]+=int(result.status=="MATCHED"
@@ -169,21 +175,29 @@ def evaluate(raw: bytes, *, snapshot: str, limit: int=12,
         answer=request(research_gpx(fixes))
         latencies.append((perf_counter_ns()-began)/1e6)
         if answer.get("no_match") is True:
+            report_geometry_last_fix(totals,"geometry_external",imported.graph,
+                                      imported.coordinates,expected_outgoing,None)
             totals["graphhopper_no_match_cases"]+=1
             totals["graphhopper_unmatched_or_unaligned_fixes"]+=len(fixes)
             continue
         positions=flattened_matched_points(answer)
         if len(positions)!=len(fixes):
+            report_geometry_last_fix(totals,"geometry_external",imported.graph,
+                                      imported.coordinates,expected_outgoing,None)
             totals["graphhopper_unaligned_cases"]+=1
             totals["graphhopper_unmatched_or_unaligned_fixes"]+=len(fixes)
             continue
         totals["graphhopper_matched_cases"]+=1
+        report_geometry_last_fix(totals,"geometry_external",imported.graph,
+                                  imported.coordinates,expected_outgoing,positions[-1])
         for fix,location in zip(fixes,positions):
             distance=_metres((fix.latitude,fix.longitude),location)
             totals["graphhopper_matched_fixes"]+=1
             totals["graphhopper_snapped_within_20m"]+=int(distance<=20)
             totals["graphhopper_snapped_farther_than_20m"]+=int(distance>20)
     n=len(cases)
+    ensure_geometry_denominators(totals,("geometry_dmn_single","geometry_dmn_temporal",
+                                          "geometry_external"),n)
     assert totals["dmn_single_correct"]+totals["dmn_single_wrong"]+totals["dmn_single_withheld"]==n
     assert totals["dmn_temporal_correct"]+totals["dmn_temporal_wrong"]+totals["dmn_temporal_withheld"]==n
     assert totals["graphhopper_matched_fixes"]+totals["graphhopper_unmatched_or_unaligned_fixes"]==4*n
@@ -216,6 +230,13 @@ def evaluate(raw: bytes, *, snapshot: str, limit: int=12,
         "independently_surveyed_position_ground_truth":False,
         "live_phone_GPS_measurements":0,
         "external_navigation_superiority_verified":False,
+        "common_last_fix_source_geometry_proxy":{
+            "dmn_single":geometry_summary(totals,"geometry_dmn_single"),
+            "dmn_temporal":geometry_summary(totals,"geometry_dmn_temporal"),
+            "graphhopper_match":geometry_summary(totals,"geometry_external"),
+        },
+        "common_proxy_is_independent_truth":False,
+        "common_proxy_proves_correct_road_direction":False,
         "navigation_score":None,
         "do_not_rank":True,
         "limitations":[

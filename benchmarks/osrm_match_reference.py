@@ -24,6 +24,9 @@ from gps.matcher import DirectedRoadMatcher
 from gps.temporal_matcher import TemporalRoadMatcher
 from map_data import Provenance, import_osm_xml
 from benchmarks.public_uk_probe import _public_file
+from benchmarks.match_geometry_truth import (
+    report_geometry_last_fix, projected_dmn_result,
+    ensure_geometry_denominators, geometry_summary)
 
 MATCH_PREFIX = BASE_URL + "/match/v1/driving/"
 MAX_REPLY_BYTES = 100_000
@@ -132,6 +135,10 @@ def evaluate(raw: bytes, *, snapshot: str, limit: int=12,
             counts[prefix+"_correct_edge"]+=int(r.status=="MATCHED" and r.edge_id==outgoing)
             counts[prefix+"_wrong_confident_edge"]+=int(r.status=="MATCHED" and r.edge_id!=outgoing)
             counts[prefix+"_withheld"]+=int(r.status!="MATCHED")
+        for prefix,r in (("dmn_single",single),("dmn_temporal",latest)):
+            report_geometry_last_fix(
+                counts,"geometry_"+prefix,graph,imported.coordinates,outgoing,
+                projected_dmn_result(r,target,graph,imported.coordinates))
         # Exactly the same four generated GNSS coordinates are fed to OSRM.
         url=local_match_url(fixes)
         begin=perf_counter_ns()
@@ -148,6 +155,13 @@ def evaluate(raw: bytes, *, snapshot: str, limit: int=12,
             if not isinstance(matchings,list) or not matchings:
                 raise ValueError("OSRM returned Ok without matched road candidates")
             counts["osrm_ok"]+=1
+            final=trace[-1]
+            location=None if final is None else final.get("location") if isinstance(final,dict) else None
+            if location is not None and (not isinstance(location,list) or len(location)!=2):
+                raise ValueError("Malformed last OSRM snapped point")
+            report_geometry_last_fix(
+                counts,"geometry_external",graph,imported.coordinates,outgoing,
+                (location[1],location[0]) if location is not None else None)
             for original,snapped in zip(fixes,trace):
                 counts["osrm_fix_points"]+=1
                 if snapped is None:
@@ -166,9 +180,13 @@ def evaluate(raw: bytes, *, snapshot: str, limit: int=12,
                 counts["osrm_snap_more_than_20m_from_input"]+=int(distance>20)
         elif code in ("NoMatch","NoSegment"):
             counts["osrm_no_match"]+=1
+            report_geometry_last_fix(counts,"geometry_external",graph,
+                                      imported.coordinates,outgoing,None)
         else:
             raise ValueError("OSRM reference endpoint or version was not available")
     n=len(cases)
+    ensure_geometry_denominators(counts,("geometry_dmn_single","geometry_dmn_temporal",
+                                          "geometry_external"),n)
     return {
         "classification":"public-UK-OSM-generated-GPS-local-OSRM-Match-vs-DMN-diagnostic",
         "source_snapshot":snapshot,
@@ -197,6 +215,13 @@ def evaluate(raw: bytes, *, snapshot: str, limit: int=12,
         "equivalent_position_accuracy_measure":False,
         "independent_position_ground_truth":False,
         "real_device_GPS_measurements":0,
+        "common_last_fix_source_geometry_proxy":{
+            "dmn_single":geometry_summary(counts,"geometry_dmn_single"),
+            "dmn_temporal":geometry_summary(counts,"geometry_dmn_temporal"),
+            "osrm_match":geometry_summary(counts,"geometry_external"),
+        },
+        "common_proxy_is_independent_truth":False,
+        "common_proxy_proves_correct_road_direction":False,
         "navigation_score":None,
         "do_not_rank":True,
         "limitations":[

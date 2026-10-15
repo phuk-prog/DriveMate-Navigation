@@ -18,6 +18,9 @@ from urllib.request import Request
 
 from benchmarks.osrm_match_reference import _metres, generate_cases
 from benchmarks.public_uk_probe import _public_file
+from benchmarks.match_geometry_truth import (
+    report_geometry_last_fix, projected_dmn_result,
+    ensure_geometry_denominators, geometry_summary)
 from benchmarks.valhalla_live_reference import _OPENER,wait_for_local_router
 from gps.matcher import DirectedRoadMatcher
 from gps.temporal_matcher import TemporalRoadMatcher
@@ -88,6 +91,9 @@ def evaluate(raw: bytes, *, snapshot:str,limit:int=12,
         for fix in fixes:
             latest=temporal.update(fix)
         for prefix,decision in (("dmn_single",simple),("dmn_temporal",latest)):
+            report_geometry_last_fix(
+                totals,"geometry_"+prefix,imported.graph,imported.coordinates,edge,
+                projected_dmn_result(decision,fixes[-1],imported.graph,imported.coordinates))
             totals[prefix+"_correct"]+=int(decision.status=="MATCHED" and decision.edge_id==edge)
             totals[prefix+"_wrong"]+=int(decision.status=="MATCHED" and decision.edge_id!=edge)
             totals[prefix+"_withheld"]+=int(decision.status!="MATCHED")
@@ -98,11 +104,22 @@ def evaluate(raw: bytes, *, snapshot:str,limit:int=12,
             raise ValueError("Invalid Valhalla trace response")
         if response.get("unroutable"):
             totals["valhalla_no_trace"]+=1
+            report_geometry_last_fix(totals,"geometry_external",imported.graph,
+                                      imported.coordinates,edge,None)
             continue
         matched=response.get("matched_points")
         if not isinstance(matched,list) or len(matched)!=len(fixes):
             raise ValueError("Valhalla response lacks one point per input")
         totals["valhalla_trace_ok"]+=1
+        last=matched[-1]
+        if last is None or (isinstance(last,dict) and last.get("type")=="unmatched"):
+            position=None
+        elif isinstance(last,dict) and last.get("type") in ("matched","interpolated"):
+            position=(last.get("lat"),last.get("lon"))
+        else:
+            raise ValueError("Unexpected Valhalla last-fix classification")
+        report_geometry_last_fix(totals,"geometry_external",imported.graph,
+                                  imported.coordinates,edge,position)
         for fix,point in zip(fixes,matched):
             totals["valhalla_point_total"]+=1
             if point is None or (isinstance(point,dict) and point.get("type")=="unmatched"):
@@ -120,6 +137,8 @@ def evaluate(raw: bytes, *, snapshot:str,limit:int=12,
             totals["valhalla_farther_than_20m"]+=int(distance>20)
     from hashlib import sha256
     n=len(cases)
+    ensure_geometry_denominators(totals,("geometry_dmn_single","geometry_dmn_temporal",
+                                          "geometry_external"),n)
     return {
         "classification":"public-UK-OSM-generated-GPS-Valhalla-trace_attributes-vs-DMN-diagnostic",
         "source_snapshot":snapshot,
@@ -145,6 +164,13 @@ def evaluate(raw: bytes, *, snapshot:str,limit:int=12,
         "same_engine_car_profiles":False,
         "equivalent_correct_road_metric":False,
         "actual_surveyed_position_ground_truth":False,
+        "common_last_fix_source_geometry_proxy":{
+            "dmn_single":geometry_summary(totals,"geometry_dmn_single"),
+            "dmn_temporal":geometry_summary(totals,"geometry_dmn_temporal"),
+            "valhalla_trace":geometry_summary(totals,"geometry_external"),
+        },
+        "common_proxy_is_independent_truth":False,
+        "common_proxy_proves_correct_road_direction":False,
         "navigation_score":None,
         "do_not_rank":True,
         "note":"Valhalla point proximity, not directed-edge accuracy; version/profile and runner differences prevent a fair ranked accuracy or speed result.",
