@@ -1,6 +1,6 @@
 # DMN engine-first programme — review draft (15 October 2026)
 
-> **Status: PROPOSED FOR OWNER DECISIONS.** This is the preferred development process based on the 15 October conversation, not a claim that all detailed thresholds, competitor choices or trade-offs have been approved. [Questions](DMN_DECISION_QUESTIONS.md) settle those details. This document is the planning focal point; preserve old evidence and history.
+> **Status: PROPOSED FOR REMAINING OWNER DECISIONS.** The owner has confirmed **at least ten** external navigation reference families, with **more permitted**. The registry currently proposes **12** (original ten plus Google Maps and Waze); they are not all executed or automatically comparable. Other thresholds, rights and exact provider selection remain open in [Questions](DMN_DECISION_QUESTIONS.md). This document is the planning focal point; preserve history and prior measured evidence.
 
 ## Confirmed objective and boundaries
 
@@ -35,7 +35,7 @@ Direct navigation work: route computation and costs, legal turns/access and rest
 ## Actual evidence and status (not a projection)
 
 The 15 October register in the DriveMate integration test branch documents:
-- 100 Wigan routes in a real-map research cohort with **DMN + four reference configurations** (GraphHopper, OSRM MLD, OSRM CH, Valhalla). CH and MLD are **two OSRM configurations, not two independent providers**. Route response/connectivity/one-way/access each had 100/100 per configuration on this cohort. Unsupported turn-restriction and independent UK legal truth categories remained unjudged. Do not call this a comprehensive ten-engine result.
+- 100 Wigan routes in a real-map research cohort with **DMN + four reference configurations** (GraphHopper, OSRM MLD, OSRM CH, Valhalla). CH and MLD are **two OSRM configurations, not two independent providers**. Route response/connectivity/one-way/access each had 100/100 per configuration on this cohort. Unsupported turn-restriction and independent UK legal truth categories remained unjudged. Do not call this a comprehensive twelve-engine (or ten-engine) result.
 - Research simulated-GPS journeys on real road geometry: **16/100 fully passed, 4 failed and 80 unresolved**. The four historical failed arrivals were heldout-044, -050, -052, -073, and remain part of the evidence register.
 - Android isolated-branch comparison: existing Valhalla Mobile and candidate DMN C++ **48/48 common short-component checks each**, plus 8/8 DMN native-host parity. It does **not** establish complete turn, lane, speech or full-session equivalence.
 - Latest evidenced Android returned-path map-rule run [38717929614](https://github.com/phuk-prog/DriveMate/actions/runs/38717929614): **68 judged correct of 112 planned checks, 44 unresolved** (combined engines), no detected failures in judged cells. It does not prove independent road legality. The wider 176 Android category checks are still unresolved.
@@ -50,7 +50,7 @@ These numbers are a dated baseline, not fresh evidence for the proposed programm
 
 **B. Establish the reusable comparison spine.** Canonical public road scenarios, immutable map provenance, objective expected results and supported/unsupported capabilities. Make each run report raw counts, per-case diagnosis, execution metadata, map/profile hashes, route geometry correctness and outcome class. Reuse historical tests unchanged.
 
-**C. Compare DMN against the ten *reference targets* [listed here](DMN_TEN_REFERENCE_PROTOCOL.md)**, adding references if available and suitably licensed. Benchmark real executables where feasible. A named reference is not automatically provisioned or benchmarked; isolate black-box comparisons. Treat reference disagreements as diagnostic leads, not majority-vote truth.
+**C. Compare DMN against **at least ten external reference families** [listed here](DMN_TEN_REFERENCE_PROTOCOL.md); **12 are currently proposed** including Google Maps and Waze as conditional, potentially observation-only references. Add other suitable families when justified; never substitute engine variants for distinct families. Benchmark real executables where feasible. A named reference is not automatically provisioned or benchmarked; isolate black-box comparisons. Treat reference disagreements as diagnostic leads, not majority-vote truth.
 
 **D. Improve navigation core and dependent technology.** Rank safety/correctness failures first, then performance; fix and repeat affected cohort, full regression, held-out tests. If a map/data/graph or renderer gap blocks correctness, work on it as a DMN dependency, rather than accepting a lower-quality engine.
 
@@ -64,7 +64,7 @@ Every comparison row MUST record `system + exact version/config + map snapshot/h
 
 **Stop perpetuating unsourced assumptions in active planning documents.** In particular:
 - Do not say we are building another DMN app or that current DriveMate architecture fixes the final design.
-- Do not imply ten competitors have all been run: the old ten-system matrix lists targets, many unexecuted.
+- Do not imply **twelve** proposed references (or the old ten) have all been run: the historical ten-system matrix listed targets, many unexecuted. Google Maps and Waze are conditional additions, not permission to access or automate proprietary services.
 - Do not treat OSM-only checks as independently witnessed UK legality.
 - Do not treat 100% on exercised checks as 100% of planned navigation quality.
 - Do not infer a single global speed or quality winner from divergent provider APIs, profiles and data.
@@ -74,7 +74,7 @@ Preserve legacy docs, branches, source and measured artifacts for auditability. 
 
 ## Links
 
-- [Ten-reference comparison design](DMN_TEN_REFERENCE_PROTOCOL.md)
+- [Minimum-ten, currently-twelve reference comparison design](DMN_TEN_REFERENCE_PROTOCOL.md)
 - [Owner decisions — questions and proposed defaults](DMN_DECISION_QUESTIONS.md)
 - [Existing research scope](DMN_SCOPE.md)
 - [Current DriveMate integration register](https://github.com/phuk-prog/DriveMate/blob/codex/dmn-integration-tests-20261015/docs/dmn-integration-register.md)
