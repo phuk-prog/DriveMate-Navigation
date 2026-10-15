@@ -149,8 +149,15 @@ def run_external(system):
                 (p['lat'], p['lon']) if p and p.get('type') in ('matched', 'interpolated')
                 else None for p in response['matched_points']]
         elif system == 'openrouteservice':
-            from benchmarks.ors_snap_reference import snap_body, request_snap, aligned_points
-            response = request_snap(snap_body(fixes))
+            from benchmarks.ors_snap_reference import snap_body, request_snap, aligned_points, OrsUnsupported
+            try:
+                response = request_snap(snap_body(fixes))
+            except OrsUnsupported as exc:
+                rows.append({'case_id': case['id'], 'split': case['split'],
+                             'outcome': 'UNSUPPORTED', 'reason': str(exc),
+                             'checks': {}, 'failures': [], 'matched_observations': 0,
+                             'position_errors_m': [None] * 4})
+                continue
             points = aligned_points(response)
         else:
             response = request_local_graphhopper_match(research_gpx(fixes))
@@ -181,15 +188,24 @@ def scoreboard(reports):
                 raise ValueError('Nonmatching cases, map or oracle')
             rankable = report.get('execution') == (
                 'actual_local_python' if name == 'DMN' else 'actual_live_loopback')
-        passed = sum(c['outcome'] == 'PASS' for c in report['cases']) if rankable else 0
-        failed = len(ids) - passed if rankable else 0
+        executed = rankable
+        cases = report['cases'] if executed else [
+            {'case_id': cid, 'outcome': 'NOT_RUN',
+             'reason': BLOCKERS.get(name, 'No actual GPS-001 execution record')} for cid in ids]
+        passed = sum(c['outcome'] == 'PASS' for c in cases)
+        failed = sum(c['outcome'] == 'FAIL' for c in cases)
+        unsupported = sum(c['outcome'] == 'UNSUPPORTED' for c in cases)
+        unresolved = sum(c['outcome'] == 'UNRESOLVED' for c in cases)
+        rankable = executed and passed + failed == len(ids)
         rows.append({'system': name, 'rank': None,
                      'score_out_of_ten': round(10 * passed / len(ids), 3) if rankable else None,
                      'passed': passed, 'failed': failed, 'planned': len(ids),
-                     'unresolved': 0, 'not_run': 0 if rankable else len(ids),
+                     'unresolved': unresolved, 'unsupported': unsupported,
+                     'not_run': 0 if executed else len(ids),
                      'reason': 'Synthetic closed-world output contract only' if rankable else
-                     BLOCKERS.get(name, 'No actual GPS-001 execution record'),
-                     'cases': report['cases'] if rankable else []})
+                     ('Incomplete comparable cohort: unsupported or unresolved cases remain' if executed else
+                      BLOCKERS.get(name, 'No actual GPS-001 execution record')),
+                     'cases': cases})
     rows.sort(key=lambda r: (r['score_out_of_ten'] is None,
                             -(r['score_out_of_ten'] or 0), r['system']))
     previous = None

@@ -32,6 +32,20 @@ class NavigationTrialTests(unittest.TestCase):
         self.assertTrue(all(r['failed'] == 0 for r in rows))
         self.assertTrue(all(r['not_run'] == 6 for r in rows))
 
+    def test_unsupported_cases_are_visible_but_do_not_receive_full_score(self):
+        report = run_dmn()
+        report['system'] = 'openrouteservice'
+        report['execution'] = 'actual_live_loopback'
+        report['cases'][2]['outcome'] = 'UNSUPPORTED'
+        report['cases'][2]['reason'] = 'outside graph bounding box'
+        row = next(r for r in scoreboard([report]) if r['system'] == 'openrouteservice')
+        self.assertIsNone(row['rank'])
+        self.assertIsNone(row['score_out_of_ten'])
+        self.assertEqual(row['passed'], 5)
+        self.assertEqual(row['failed'], 0)
+        self.assertEqual(row['unsupported'], 1)
+        self.assertEqual(len(row['cases']), 6)
+
     def test_duplicate_engine_results_are_rejected(self):
         report = run_dmn()
         with self.assertRaises(ValueError):

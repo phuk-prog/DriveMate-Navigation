@@ -11,6 +11,10 @@ URL = 'http://127.0.0.1:8080/ors/v2/snap/driving-car/json'
 OPENER = build_opener(ProxyHandler({}), NoRedirect())
 
 
+class OrsUnsupported(ValueError):
+    """Explicit ORS input-domain rejection, not an aligned match result."""
+
+
 def snap_body(fixes):
     if len(fixes) != 4:
         raise ValueError('GPS-001 requires exactly four synthetic observations')
@@ -51,6 +55,12 @@ def request_snap(body):
             raw = response.read(100001)
     except HTTPError as exc:
         detail = exc.read(2048).decode('utf-8', errors='replace')
+        try:
+            error = json.loads(detail).get('error', {})
+        except ValueError:
+            error = {}
+        if exc.code == 404 and error.get('code') == 8010:
+            raise OrsUnsupported('ORS 8010: observation outside imported graph bounding box') from exc
         raise RuntimeError(f'ORS execution unavailable: HTTP {exc.code}: {detail}') from exc
     if len(raw) > 100000:
         raise ValueError('ORS response exceeds bound')
