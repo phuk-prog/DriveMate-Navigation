@@ -9,6 +9,10 @@ from tools.public_osm_extract import DATA_AREA
 
 
 class PublicRoadAreaStudyTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        DATA_AREA.mkdir(parents=True, exist_ok=True)
+
     def test_two_independent_bounded_areas_and_ephemeral_cleanup(self):
         with tempfile.TemporaryDirectory() as place:
             source = Path(place) / "test-public.osm.pbf"
