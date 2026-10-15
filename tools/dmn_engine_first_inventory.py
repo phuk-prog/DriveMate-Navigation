@@ -17,7 +17,9 @@ def inventory(config: dict) -> dict:
         raise ValueError("Only approved-as-proposal configuration can be summarized")
     refs = config.get("reference_families")
     cats = config.get("categories")
-    if not isinstance(refs, list) or len(refs) < 10:
+    if config.get("minimum_reference_families") != 10:
+        raise ValueError("Confirmed programme minimum must remain ten")
+    if not isinstance(refs, list) or len(refs) < config["minimum_reference_families"]:
         raise ValueError("Need at least ten reference families")
     if not isinstance(cats, list) or not cats or not all(isinstance(c, str) and c for c in cats):
         raise ValueError("Invalid or empty category list")
@@ -43,6 +45,8 @@ def inventory(config: dict) -> dict:
             "unknown_is_pass": False,
             "full_ranking_requires_comparable_complete_results": True,
             "provider_consensus_is_legal_truth": False,
+            "no_unapproved_billable_requests": True,
+            "no_unauthorized_automated_provider_collection": True,
         }.items()
     ):
         raise ValueError("Unsafe or missing evidence policy")
@@ -51,6 +55,7 @@ def inventory(config: dict) -> dict:
         "programme": "DMN engine-first",
         "status": "proposal_no_new_reference_executions",
         "candidate": config.get("primary_candidate"),
+        "external_reference_families_minimum": config["minimum_reference_families"],
         "external_reference_families_proposed": len(refs),
         "categories_proposed": len(cats),
         "family_category_slots_proposed_not_test_cases": len(refs) * len(cats),
