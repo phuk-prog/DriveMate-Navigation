@@ -196,6 +196,69 @@ jobs:
             results/dmn-uk-route-case-replay.json
           if-no-files-found: warn
           retention-days: 30
+      - name: Same pinned UK map cases versus local OSRM MLD (one opt-in)
+        if: contains(github.event.head_commit.message, '[uk-case-osrm-smoke]') || contains(github.event.pull_request.title, '[uk-case-osrm-smoke]')
+        timeout-minutes: 14
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output results/dmn-pinned-manchester.osm.pbf \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          osmium tags-filter results/dmn-pinned-manchester.osm.pbf \
+            r/type=restriction -o results/dmn-case-relations.osm.pbf
+          osmium cat results/dmn-case-relations.osm.pbf \
+            -o results/dmn-case-relations.osm -f osm,add_metadata=false
+          IMAGE="ghcr.io/project-osrm/osrm-backend:v5.27.1@sha256:855614a38f464b0558a2ad6eaa7cb8c139f39887da9b38b485ce453c6e6e6124"
+          docker pull "$IMAGE"
+          docker run --rm -v "$PWD/results:/data" "$IMAGE" osrm-extract \
+            -p /opt/car.lua /data/dmn-pinned-manchester.osm.pbf
+          docker run --rm -v "$PWD/results:/data" "$IMAGE" osrm-partition \
+            /data/dmn-pinned-manchester.osrm
+          docker run --rm -v "$PWD/results:/data" "$IMAGE" osrm-customize \
+            /data/dmn-pinned-manchester.osrm
+          docker run -d --rm --name drivemate-nav-uk-cases-osrm \
+            --network host -v "$PWD/results:/data" "$IMAGE" \
+            osrm-routed --algorithm mld /data/dmn-pinned-manchester.osrm
+          python -m benchmarks.uk_neighborhood_detours \
+            --pbf results/dmn-pinned-manchester.osm.pbf \
+            --restriction-source results/dmn-case-relations.osm \
+            --snapshot geofabrik-260901 --limit 4 --compare-osrm \
+            | tee results/dmn-uk-osrm-same-cases.json
+          python -m benchmarks.uk_archive_replay \
+            --actual results/dmn-uk-osrm-same-cases.json \
+            --archive references/uk-route-preference-map-cases-20261015.json \
+            | tee results/dmn-uk-osrm-replay.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("results/dmn-uk-osrm-same-cases.json").read_text())
+          compared = report["osrm_case_comparison"]
+          if (report["external_engines_executed"] != 1 or
+                  compared["case_count"] != 25 or
+                  not compared["complete_same_case_execution"] or
+                  compared["route_quality_ranking_valid"]):
+              raise SystemExit("Missing 25 matched-case OSRM evidence or false quality ranking")
+          PY
+      - name: Upload bounded same-case OSRM comparisons
+        if: always() && (contains(github.event.head_commit.message, '[uk-case-osrm-smoke]') || contains(github.event.pull_request.title, '[uk-case-osrm-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-uk-25-mapcase-osrm-paired-evidence
+          path: |
+            results/dmn-uk-osrm-same-cases.json
+            results/dmn-uk-osrm-replay.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Delete ephemeral UK OSRM case-map source and router
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f drivemate-nav-uk-cases-osrm >/dev/null 2>&1 || true
+          find results -maxdepth 1 -type f \( -name 'dmn-pinned-manchester*' -o -name 'dmn-case-relations*' \) -delete 2>/dev/null || true
       - name: Remove temporary buffered road source and contributor-anonymized extracts
         if: always()
         shell: bash

@@ -47,7 +47,7 @@ def verify_archived_replay(actual: dict, archive: dict) -> dict[str, object]:
             actual.get("case_register_all_cases_have_unknown_legality") is not True):
         raise AssertionError("Fresh study did not validate its unverified map cases")
     if (actual.get("independent_road_legality_verified") is not False or
-            actual.get("external_engines_executed") != 0 or
+            actual.get("external_engines_executed") not in (0, 1) or
             archive.get("independently_verified_current_road_law") is not False or
             archive.get("competitor_routes_executed") != 0 or
             archive.get("live_traffic_observed") is not False):
@@ -73,6 +73,18 @@ def verify_archived_replay(actual: dict, archive: dict) -> dict[str, object]:
         raise AssertionError("Pinned-map route fingerprints or estimated costs drifted")
     if actual["neighborhood_fastest_shortest_divergences"] != len(live_cases):
         raise AssertionError("Unaccounted preference divergences")
+    engines = actual["external_engines_executed"]
+    comparison = actual.get("osrm_case_comparison")
+    if engines == 1:
+        from benchmarks.uk_osrm_case_comparison import validate_osrm_case_results
+        if not isinstance(comparison, dict):
+            raise AssertionError("OSRM execution needs complete paired evidence")
+        checked = validate_osrm_case_results(
+            live_cases, comparison.get("case_results"), snapshot=archive["source_snapshot"])
+        if checked != comparison:
+            raise AssertionError("OSRM report contains inconsistent aggregate counts")
+    elif comparison is not None:
+        raise AssertionError("Unexecuted OSRM cannot claim paired observations")
     return {
         "classification": "reproduced-map-only-evidence-not-road-legality",
         "replay_matches_pinned_archive": True,
@@ -82,7 +94,8 @@ def verify_archived_replay(actual: dict, archive: dict) -> dict[str, object]:
         "matched_distinct_fastest_shortest": actual["neighborhood_fastest_shortest_divergences"],
         "case_register_sha256": live["case_register_sha256"],
         "independent_uk_road_legality_verified": False,
-        "external_competitors_executed": 0,
+        "external_competitors_executed": engines,
+        "paired_osrm_cases": len(live_cases) if engines else 0,
         "navigation_quality_score": None,
     }
 

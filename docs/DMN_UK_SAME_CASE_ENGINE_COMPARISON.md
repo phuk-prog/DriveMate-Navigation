@@ -1,0 +1,9 @@
+# DMN pinned UK route-case comparison, 15 October 2026
+
+The [25 audited map-only route-choice records](../references/uk-route-preference-map-cases-20261015.json) represent 25 distinct fastest/shortest paths from 144 sampled journey pairs in three supported real Greater Manchester OSM-neighborhood road graphs, not independently verified UK lawful journeys.
+
+A new opt-in `[uk-case-osrm-smoke]` Actions step loads the **same pinned Geofabrik 2026-09-01 Greater Manchester OSM PBF** into local OSRM MLD 5.27.1 (pinned car.lua) and into DMN's strict bounded importer. It then deterministically regenerates all 25 cases and queries OSRM once per pair at exactly the DMN map vertices. A 15-metre endpoint snap threshold tracks gross map-match differences. The exact archived 25 DMN paths, costs, IDs, and study denominators must still match the previously audited record, and the external results must contain exactly 25 corresponding case IDs.
+
+**All comparator outcomes are provisional.** Matching endpoint snaps do not establish identical first/last vehicle edges, equal access/turn rules, equivalent routing cost models, independent UK road law, correct arrival side, real traffic or driver-visible superiority. The recorded rows contain only hashed case IDs and aggregate distances/times/snap distances; no coordinates, source OSM object IDs, personal journeys or GPS traces. Missing/unroutable, endpoint-mismatched and noncomparable cases must be counted, never turned into wins. Only the opt-in smoke uses the external container; research/production branches remain independent.
+
+Following a successful full-job run, remove the PR-title opt-in marker and retain the Actions report as evidence. Next external engines should use the exact same pinned map-era cases with explicit `NOT_COMPARABLE` when data/profile/access differ; do not award /10 scores before independent legality and maneuver truth.

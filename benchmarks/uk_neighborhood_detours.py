@@ -160,7 +160,8 @@ def _compile_neighborhood(neighborhood_raw: bytes, restriction_raw: bytes,
 
 
 def evaluate_neighborhood(neighborhood_raw: bytes, restriction_raw: bytes,
-                          *, relation_id: str, snapshot: str) -> dict:
+                          *, relation_id: str, snapshot: str,
+                          case_comparator=None) -> dict:
     """Classify graph-limited detours, with all unproved conditions UNKNOWN."""
     outcome,reason=_compile_neighborhood(neighborhood_raw,restriction_raw,
                               target_relation_id=relation_id,snapshot=snapshot)
@@ -233,12 +234,20 @@ def evaluate_neighborhood(neighborhood_raw: bytes, restriction_raw: bytes,
     # map-graph-origin/destination pairs across this same source-complete
     # neighborhood. Do not mistake OSM semantics for independent road truth.
     captured_cases=[]
+    comparison_rows=[]
     def capture_case(pair_index, source, destination, fastest, shortest,
                      balanced, options):
         from benchmarks.uk_preference_case_register import summarise_discriminating_case
-        captured_cases.append(summarise_discriminating_case(
+        case = summarise_discriminating_case(
             snapshot, imported.metadata["source_sha256"], pair_index,
-            source, destination, fastest, shortest, balanced, options))
+            source, destination, fastest, shortest, balanced, options)
+        captured_cases.append(case)
+        if case_comparator is not None:
+            # Exact same map vertices; positions are held only in memory and
+            # never serialized with the sanitized reference observations.
+            comparison_rows.append(case_comparator(
+                case, imported.coordinates[source],
+                imported.coordinates[destination]))
 
     diversity=probe_preference_diversity(
         graph,snapshot_id=imported.metadata["source_sha256"],
@@ -247,6 +256,7 @@ def evaluate_neighborhood(neighborhood_raw: bytes, restriction_raw: bytes,
     register_validation=validate_case_register(
         captured_cases, expected_count=diversity["fastest_and_shortest_different_path_pairs"])
     return {"status":"map_rule_checked",
+            "osrm_compared_case_rows": comparison_rows if case_comparator is not None else [],
             "discriminating_case_register":captured_cases,
             "case_register_sha256":register_validation["case_register_sha256"],
             "case_register_count":register_validation["case_count"],
@@ -295,7 +305,8 @@ def expanded_bbox(bbox: str) -> str | None:
 def execute_public_neighborhoods(source_pbf: Path, restriction_xml: Path,
                                  *, snapshot: str, limit: int=4,
                                  radius_deg: float=0.007,
-                                 runner=subprocess.run) -> dict:
+                                 runner=subprocess.run,
+                                 case_comparator=None) -> dict:
     """Offline, ephemeral Osmium subgraphs with cautious fail-closed classification."""
     if not source_pbf.name.endswith(".osm.pbf") or not source_pbf.is_file():
         raise ValueError("Expected public OSM PBF")
@@ -332,7 +343,8 @@ def execute_public_neighborhoods(source_pbf: Path, restriction_xml: Path,
                                 "independent_legality":False}
                     else:
                         record=evaluate_neighborhood(local_xml.read_bytes(),restriction_raw,
-                                   relation_id=candidate["relation_id"],snapshot=snapshot)
+                                   relation_id=candidate["relation_id"],snapshot=snapshot,
+                                   case_comparator=case_comparator)
                 except (subprocess.CalledProcessError,subprocess.TimeoutExpired,OSError):
                     record={"status":"unsupported","reason":"osmium_extraction_failed",
                             "rule_pairs":0,"detours_found":0,"no_route_within_buffer":0,
@@ -352,6 +364,13 @@ def execute_public_neighborhoods(source_pbf: Path, restriction_xml: Path,
     # job must not silently omit a route case or duplicate it between areas.
     from benchmarks.uk_preference_case_register import validate_neighborhood_case_registers
     combined_register = validate_neighborhood_case_registers(records)
+    osrm_summary = None
+    if case_comparator is not None:
+        from benchmarks.uk_osrm_case_comparison import validate_osrm_case_results
+        osrm_rows = [row for r in records for row in r.get("osrm_compared_case_rows", [])]
+        osrm_summary = validate_osrm_case_results(
+            combined_register["discriminating_case_register"], osrm_rows,
+            snapshot=snapshot)
     return {
         "classification":"real-public-UK-buffered-graph-OSM-rule-only",
         "case_register_count": combined_register["case_count"],
@@ -401,7 +420,8 @@ def execute_public_neighborhoods(source_pbf: Path, restriction_xml: Path,
         "independent_road_legality_verified":False,
         "full_road_network_completeness_verified":False,
         "real_phone_GPS_tested":False,
-        "external_engines_executed":0,
+        "external_engines_executed":int(case_comparator is not None),
+        "osrm_case_comparison":osrm_summary,
         "navigation_score":None,
         "caveat":"OSM-mapped motorcar rule adherence and found detours in bounded graphs, not verified real UK legal routing or global no-route truth."
     }
@@ -414,9 +434,18 @@ def main():
     p.add_argument("--snapshot",required=True)
     p.add_argument("--limit",type=int,default=4)
     p.add_argument("--radius-deg",type=float,default=0.007)
+    p.add_argument("--compare-osrm",action="store_true",
+                   help="Opt-in LOCAL OSRM against same pinned map cases only")
     args=p.parse_args()
+    comparator=None
+    if args.compare_osrm:
+        from benchmarks.osrm_live_reference import wait_for_local_router
+        from benchmarks.uk_osrm_case_comparison import compare_osrm_case
+        wait_for_local_router()
+        comparator=compare_osrm_case
     print(json.dumps(execute_public_neighborhoods(args.pbf,args.restriction_source,
-              snapshot=args.snapshot,limit=args.limit,radius_deg=args.radius_deg),indent=2))
+              snapshot=args.snapshot,limit=args.limit,radius_deg=args.radius_deg,
+              case_comparator=comparator),indent=2))
 
 
 if __name__=="__main__":
