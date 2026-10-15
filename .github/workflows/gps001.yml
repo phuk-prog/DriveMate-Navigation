@@ -1,0 +1,92 @@
+name: GPS-001 controlled navigation trial
+on:
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: gps001-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  trial:
+    if: contains(github.event.pull_request.title, '[gps-001]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        engine: [OSRM, Valhalla, GraphHopper]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Verify sources and oracle contracts
+        run: |
+          python -m tools.privacy_guard
+          python -m unittest discover -s tests -q
+          python -m benchmarks.navigation_trial --engine DMN --output results/gps001-DMN.json
+      - name: Prepare identical invented road topology
+        run: |
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          cp benchmarks/fixtures/synthetic-gps-001.xml results/gps001.osm
+          osmium cat results/gps001.osm -o results/gps001.osm.pbf
+      - name: OSRM 5.27.1
+        if: matrix.engine == 'OSRM'
+        run: |
+          set -euo pipefail
+          IMAGE='ghcr.io/project-osrm/osrm-backend:v5.27.1@sha256:855614a38f464b0558a2ad6eaa7cb8c139f39887da9b38b485ce453c6e6e6124'
+          docker pull "$IMAGE"
+          docker run --rm -v "$PWD/results:/data" "$IMAGE" osrm-extract -p /opt/car.lua /data/gps001.osm.pbf
+          docker run --rm -v "$PWD/results:/data" "$IMAGE" osrm-partition /data/gps001.osrm
+          docker run --rm -v "$PWD/results:/data" "$IMAGE" osrm-customize /data/gps001.osrm
+          docker run -d --rm --name gps001-reference -p 127.0.0.1:5000:5000 -v "$PWD/results:/data" "$IMAGE" osrm-routed --algorithm mld /data/gps001.osrm
+      - name: Valhalla 3.9.1
+        if: matrix.engine == 'Valhalla'
+        run: |
+          set -euo pipefail
+          IMAGE='ghcr.io/valhalla/valhalla-scripted:3.9.1@sha256:6238809f9dc3057743d70a20efd3911ec38e458bfa13a0601909b58f68dfd956'
+          mkdir -p results/valhalla
+          cp results/gps001.osm.pbf results/valhalla/
+          docker pull "$IMAGE"
+          docker run -d --rm --name gps001-reference -p 127.0.0.1:8002:8002 -v "$PWD/results/valhalla:/custom_files" -e build_admins=False -e build_time_zones=False -e build_elevation=False -e use_default_speeds_config=False -e build_tar=False -e server_threads=2 "$IMAGE"
+      - uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165
+        if: matrix.engine == 'GraphHopper'
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: GraphHopper 11.1
+        if: matrix.engine == 'GraphHopper'
+        run: |
+          set -euo pipefail
+          BASE='https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/11.1/graphhopper-web-11.1.jar'
+          curl -fsSL --retry 2 --max-time 180 "$BASE" -o "${RUNNER_TEMP}/graphhopper.jar"
+          curl -fsSL --retry 2 --max-time 30 "$BASE.sha1" -o "${RUNNER_TEMP}/graphhopper.sha1"
+          printf '%s  %s\n' "$(cat "${RUNNER_TEMP}/graphhopper.sha1")" "${RUNNER_TEMP}/graphhopper.jar" | sha1sum --check --status
+          sed -e 's@results/public-graphhopper-subset.osm.pbf@results/gps001.osm.pbf@' -e 's/prepare.min_network_size: 10/prepare.min_network_size: 0/' config/graphhopper-public-smoke.yml > results/graphhopper.yml
+          java -Xms128m -Xmx1024m -jar "${RUNNER_TEMP}/graphhopper.jar" server results/graphhopper.yml > "${RUNNER_TEMP}/gps001-graphhopper.log" 2>&1 &
+          echo "$!" > "${RUNNER_TEMP}/gps001-pid"
+      - name: Execute real engine against fixed observations
+        env:
+          TRIAL_ENGINE: ${{ matrix.engine }}
+        run: python -m benchmarks.navigation_trial --engine "$TRIAL_ENGINE" --output "results/gps001-${TRIAL_ENGINE}.json"
+      - name: Diagnostic scorecard including all twelve references
+        env:
+          TRIAL_ENGINE: ${{ matrix.engine }}
+        run: python -m benchmarks.navigation_trial --reports results/gps001-DMN.json "results/gps001-${TRIAL_ENGINE}.json" --output "results/gps001-scorecard-${TRIAL_ENGINE}.json"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: gps001-${{ matrix.engine }}
+          path: results/gps001-*.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Cleanup
+        if: always()
+        run: |
+          docker rm -f gps001-reference >/dev/null 2>&1 || true
+          if [ -f "${RUNNER_TEMP}/gps001-pid" ]; then kill "$(cat "${RUNNER_TEMP}/gps001-pid")" 2>/dev/null || true; fi
+          sudo rm -rf results/valhalla results/graphhopper-cache
