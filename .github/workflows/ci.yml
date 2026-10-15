@@ -37,6 +37,41 @@ jobs:
         run: |
           python -m benchmarks.run --repeat 30
           python -m benchmarks.search_comparison --size 14 --repeat 5
+      - name: Pinned public UK single-vs-temporal GPS replay (opt-in once)
+        if: contains(github.event.head_commit.message, '[temporal-gps-smoke]') || contains(github.event.pull_request.title, '[temporal-gps-smoke]')
+        timeout-minutes: 9
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output "${RUNNER_TEMP}/dmn-temporal-uk.osm.pbf" \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          osmium extract --strategy complete_ways \
+            --bbox=-2.270000,53.350000,-2.260000,53.360000 \
+            "${RUNNER_TEMP}/dmn-temporal-uk.osm.pbf" \
+            -o results/dmn-temporal-public.osm.pbf
+          osmium cat results/dmn-temporal-public.osm.pbf \
+            -o results/dmn-temporal-public.osm -f osm,add_metadata=false
+          python -m benchmarks.public_temporal_gps \
+            --input results/dmn-temporal-public.osm \
+            --snapshot geofabrik-260901 --limit 40 \
+            | tee results/dmn-temporal-gps-results.json
+      - name: Upload aggregate temporal matching results
+        if: always() && (contains(github.event.head_commit.message, '[temporal-gps-smoke]') || contains(github.event.pull_request.title, '[temporal-gps-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-public-uk-temporal-gps-comparison
+          path: results/dmn-temporal-gps-results.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Delete ephemeral public UK temporal GPS data
+        if: always()
+        run: |
+          rm -f "${RUNNER_TEMP}/dmn-temporal-uk.osm.pbf"
+          rm -f results/dmn-temporal-public.osm.pbf results/dmn-temporal-public.osm
       - name: Public UK road geometry GPS matching replay (single opt-in)
         if: contains(github.event.head_commit.message, '[gps-match-smoke]') || contains(github.event.pull_request.title, '[gps-match-smoke]')
         timeout-minutes: 9
