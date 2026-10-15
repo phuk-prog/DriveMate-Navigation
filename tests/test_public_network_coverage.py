@@ -52,6 +52,8 @@ class PublicNetworkCoverageTests(unittest.TestCase):
         self.assertEqual(report["network_active_drivable_vertices"], 4)
         self.assertEqual(report["network_weak_components_with_roads"], 2)
         self.assertEqual(report["network_largest_weak_component_vertices"], 2)
+        self.assertEqual(report["network_edges_by_access"],
+                         {"allowed": 2, "unknown": 0, "prohibited": 0})
         self.assertEqual(report["network_undirected_cycle_rank_upper_bound"], 0)
 
     def test_no_usable_edges_is_coverage_not_a_pass(self):

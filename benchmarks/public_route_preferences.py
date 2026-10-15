@@ -50,7 +50,10 @@ def inspect_network(graph: RoadGraph) -> dict[str, int]:
     branching = sum(
         len({edge.target for edge in graph.adjacency[node]
              if edge.access == "allowed"}) >= 2 for node in active)
+    access_counts = {status: sum(edge.access == status for edge in graph.edges.values())
+                     for status in ("allowed", "unknown", "prohibited")}
     return {
+        "network_edges_by_access": access_counts,
         "network_declared_vertices": len(graph.vertices),
         "network_active_drivable_vertices": len(active),
         "network_allowed_directed_edges": len(allowed),

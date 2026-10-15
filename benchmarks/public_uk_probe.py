@@ -10,7 +10,9 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+from collections import Counter
 from statistics import median
+import xml.etree.ElementTree as ET
 from time import perf_counter_ns
 
 from engine import RouteNotFound, shortest_route
@@ -59,6 +61,25 @@ def _scenarios(graph, *, limit: int) -> list[tuple[str, str]]:
         if len(scenarios) >= limit * 3:
             break
     return scenarios
+
+
+def _source_access_breakdown(raw: bytes, graph) -> dict[str, dict[str, int]]:
+    """Explain routed vs unknown/prohibited edges by actual OSM road class.
+
+    Graph access tags are map-source semantics; no classes certify legal truth.
+    """
+    root = ET.fromstring(raw)
+    roads = {}
+    for way in root.findall("way"):
+        tags = {tag.get("k"): tag.get("v") for tag in way.findall("tag")}
+        if "highway" in tags:
+            roads[way.get("id")] = tags["highway"]
+    counts = {"allowed": Counter(), "unknown": Counter(), "prohibited": Counter()}
+    for edge in graph.edges.values():
+        way_id = edge.edge_id.split(":")[1]
+        counts[edge.access][roads.get(way_id, "unknown_road_class")] += 1
+    return {status: dict(sorted(group.items(), key=lambda pair: (-pair[1], pair[0])))
+            for status, group in counts.items()}
 
 
 def check_public_graph(raw: bytes, *, snapshot: str, region: str, samples: int = 8) -> dict[str, object]:
@@ -132,6 +153,7 @@ def check_public_graph(raw: bytes, *, snapshot: str, region: str, samples: int =
         graph, snapshot_id=imported.metadata["source_sha256"], maximum_pairs=96)
     return {
         **discovery,
+        "source_road_access_by_class": _source_access_breakdown(raw, graph),
         "classification": "public-road-experimental-not-legality-verified",
         "source_sha256": imported.metadata["source_sha256"],
         "source_snapshot": snapshot,

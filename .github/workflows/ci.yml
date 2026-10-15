@@ -471,5 +471,34 @@ jobs:
         run: |
           rm -f "${RUNNER_TEMP}/dmn-network-public-source.osm.pbf"
           rm -f results/dmn-network-*.osm
+      - name: Expanded public UK area preference and access coverage (one opt-in)
+        if: contains(github.event.head_commit.message, '[uk-route-diversity-smoke]') || contains(github.event.pull_request.title, '[uk-route-diversity-smoke]')
+        timeout-minutes: 11
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output "${RUNNER_TEMP}/public-route-diversity.osm.pbf" \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          python -m benchmarks.public_diversity_study \
+            --pbf "${RUNNER_TEMP}/public-route-diversity.osm.pbf" \
+            --snapshot geofabrik-260901 --samples 8 | tee results/dmn-uk-route-diversity.json
+      - name: Upload expanded UK route preference evidence
+        if: always() && (contains(github.event.head_commit.message, '[uk-route-diversity-smoke]') || contains(github.event.pull_request.title, '[uk-route-diversity-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-uk-route-diversity
+          path: results/dmn-uk-route-diversity.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Cleanup ephemeral UK route-area map input
+        if: always()
+        shell: bash
+        run: |
+          rm -f "${RUNNER_TEMP}/public-route-diversity.osm.pbf"
+          rm -f results/dmn-public-diversity-*.osm
       - name: Verify opt-in public-road extraction CLI without using a real map
         run: python -m tools.public_osm_extract --help >/dev/null
