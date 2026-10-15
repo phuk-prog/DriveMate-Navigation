@@ -93,3 +93,28 @@ response must be compatible with the physical endpoints. The baseline
 The report now distinguishes routes **attempted** from routes
 **fully validated across required comparator engines**, and lists both
 numbers next to the remaining open workstream count.
+
+
+## 15 October 2026: algorithm/compiler internal speed experiment
+
+The existing 100-route real-map head-to-head ranked DMN native HTTP
+endpoint response at p95 0.818 ms, while **native C++ computation alone**
+recorded p95 0.0393 ms. These independent percentiles are not additive:
+HTTP+IPC/validation/JSON overhead is the likely next significant speed
+opportunity, but it must be measured and cannot be credited as if the
+C++ algorithm were slower.
+
+Before any source/legality optimisation, the *original authored C++ router*
+is now benchmarked unchanged under -O2 and -O3 for Dijkstra, A* and ALT
+search, each with exactly **100 same real UK routes x 10 repeats**.
+The six variants must return the same route cost, and their selected
+paths are independently checked for continuous legal graph movements.
+Results are separated from cross-engine HTTP latency, Android performance
+and real-world UK legal-turn ground truth.
+
+Future phone design should evaluate a **single in-process C++/JNI routing
+interface with low marshalling overhead** rather than carry over the Python
+HTTP/subprocess research adapter. This is an architectural performance
+candidate, not approval to integrate into the actual Android app. Test
+JNI call/memory/power effects on real Android hardware with exact legal
+route parity before changing production code.

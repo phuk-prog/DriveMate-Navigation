@@ -184,6 +184,19 @@ jobs:
             --snapshot 2026-10-13 \
             --graphhopper-jar "$RUNNER_TEMP/graphhopper.jar" \
             --cases 100 --repeat 10 --osrm "${additional[@]}"
+      - name: Compare DMN legal C++ search modes and portable optimisation flags
+        shell: bash
+        timeout-minutes: 5
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O3 -Wall -Wextra -Wpedantic -Wconversion -Werror \
+            navigation_core/native/main.cpp -o results/real-england/router-o3
+          python -m benchmarks.dmn_native_search_ab \
+            --input results/real/roads.osm --snapshot 2026-10-13 \
+            --o2 navigation_core/native/router \
+            --o3 results/real-england/router-o3 \
+            --cases 100 --repeats 10
+          cat results/real-england/DMN_NATIVE_SEARCH_AB.md >> "$GITHUB_STEP_SUMMARY"
       - name: DriveMate native routing and GPS-to-arrival journey on real Wigan roads
         shell: bash
         continue-on-error: true
@@ -231,6 +244,8 @@ jobs:
             results/real-england/dmn-real-road-comparison.json
             results/real-england/DMN_REAL_ROAD_SCORECARD.md
             results/real-england/dmn-phone-decision.json
+            results/real-england/dmn-native-search-ab.json
+            results/real-england/DMN_NATIVE_SEARCH_AB.md
             results/real-england/*.log
             results/real/source.sha256
           retention-days: 14
