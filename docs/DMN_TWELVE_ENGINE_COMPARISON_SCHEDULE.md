@@ -33,3 +33,7 @@ The list of twelve families and provider limitations is [DMN_TEN_REFERENCE_PROTO
 ## New reference-stage implementation
 
 The GraphHopper GPS comparison uses a *real local `/match`* endpoint instead of assuming that a GraphHopper `/route` HTTP result counts as GPS positioning. The official 11.x map matching service accepts transient GPX input and can return snapped fixes with `type=extended_json`. The [GraphHopper GPS study](DMN_GRAPHHOPPER_GPS_BATCH.md) tracks outcome counts independently from OSRM and Valhalla; no execution is claimed until CI is green and logged.
+
+## Measured third external GPS family
+
+[GraphHopper local Java 11.1 match run 38759091711](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38759091711) is verified **SUCCESS**: third of twelve reference families exercised for GPS, 12 identical pinned UK-map-generated four-fix samples submitted; 3/12 complete aligned matches, 5/12 no-match, 4/12 partial/unaligned, 12 of 12 properly aligned snaps within 20 m (only **12 of 48** total submitted points assessable). DMN single 6/12 and temporal 8/12 correctly selected their source generating directed edges on the same scenarios, 0 confident wrong and remaining withheld. These are not the same scoring metric, nor independently surveyed truth. Next comparative priority: diagnose GH incomplete alignment, establish source OSM way/direction ground truth, then expand to other executable open-source families.
