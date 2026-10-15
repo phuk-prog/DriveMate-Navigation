@@ -26,6 +26,48 @@ class CommonGeometryOracleTests(unittest.TestCase):
         p=expected_road_geometry_probe(self.graph,self.coords,"target",(53.000040,-2.0005))
         self.assertTrue(p["near_expected_geometry"])
         self.assertGreater(p["nearby_other_directed_edges"],0)
+    def test_reverse_direction_is_not_a_distinct_physical_segment(self):
+        coords={"a":(53.,-2.001),"b":(53.,-2.),
+                "c":(53.00004,-2.001),"d":(53.00004,-2.)}
+        graph=RoadGraph(coords,[
+            RoadEdge("w:100:0:f","a","b",70,30,"allowed"),
+            RoadEdge("w:100:0:r","b","a",70,30,"allowed")])
+        observation=expected_road_geometry_probe(graph,coords,"w:100:0:f",(53.,-2.0005))
+        self.assertEqual(observation["nearby_other_directed_edges"],1)
+        self.assertEqual(observation["nearby_reversed_same_segment_edges"],1)
+        self.assertEqual(observation["nearby_distinct_osm_way_edges"],0)
+        self.assertFalse(observation["direction_verified"])
+        counts=Counter()
+        report_geometry_last_fix(counts,"provider",graph,coords,"w:100:0:f",(53.,-2.0005))
+        summary=geometry_summary(counts,"provider")
+        self.assertEqual(summary["near_and_reverse_same_segment_only"],1)
+        self.assertEqual(summary["near_and_distinct_osm_way_present"],0)
+
+    def test_separate_osm_way_close_to_target_is_still_a_risk(self):
+        coords={"a":(53.,-2.001),"b":(53.,-2.),
+                "c":(53.00004,-2.001),"d":(53.00004,-2.)}
+        graph=RoadGraph(coords,[
+            RoadEdge("w:100:0:f","a","b",70,30,"allowed"),
+            RoadEdge("w:100:0:r","b","a",70,30,"allowed"),
+            RoadEdge("w:200:0:f","c","d",70,30,"allowed")])
+        observation=expected_road_geometry_probe(graph,coords,"w:100:0:f",(53.,-2.0005))
+        self.assertEqual(observation["nearby_reversed_same_segment_edges"],1)
+        self.assertEqual(observation["nearby_distinct_osm_way_edges"],1)
+        counts=Counter()
+        report_geometry_last_fix(counts,"test",graph,coords,"w:100:0:f",(53.,-2.0005))
+        summary=geometry_summary(counts,"test")
+        self.assertEqual(summary["near_and_reverse_same_segment_only"],0)
+        self.assertEqual(summary["near_and_distinct_osm_way_present"],1)
+
+    def test_same_way_adjacent_segment_is_not_a_distinct_way(self):
+        coords={"a":(53.,-2.001),"b":(53.,-2.),"c":(53.,-1.999)}
+        graph=RoadGraph(coords,[
+            RoadEdge("w:100:0:f","a","b",70,30,"allowed"),
+            RoadEdge("w:100:1:f","b","c",70,30,"allowed")])
+        p=expected_road_geometry_probe(graph,coords,"w:100:0:f",(53.,-2.00001))
+        self.assertEqual(p["nearby_other_segments_same_osm_way"],1)
+        self.assertEqual(p["nearby_distinct_osm_way_edges"],0)
+
     def test_far_point_is_not_source_geometry_match(self):
         p=expected_road_geometry_probe(self.graph,self.coords,"target",(53.0005,-2.0005))
         self.assertEqual(p["state"],"off_generated_geometry")

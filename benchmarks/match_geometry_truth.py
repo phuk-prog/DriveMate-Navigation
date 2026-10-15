@@ -41,6 +41,16 @@ def closest_point_on_road(point: tuple[float, float],
     return ((lat+dy/M_PER_LAT,lon+dx/m_lon),hypot(dx,dy))
 
 
+def _source_way_id(edge_id: str) -> str | None:
+    # Our bounded OSM importer emits w:<way_id>:<segment_index>:f|r.
+    # Do not pretend arbitrary/third-party edge labels are OSM identities.
+    bits=edge_id.split(":")
+    if (len(bits)==4 and bits[0]=="w" and bits[1].isdigit()
+            and bits[2].isdigit() and bits[3] in ("f","r")):
+        return bits[1]
+    return None
+
+
 def expected_road_geometry_probe(
     graph: RoadGraph, coords: Mapping[str,tuple[float,float]],
     expected_edge_id: str, point: tuple[float,float] | None
@@ -62,17 +72,36 @@ def expected_road_geometry_probe(
         raise ValueError("Degenerate expected road segment")
     distance=projected[1]
     competing=0
+    reversed_same_segment=0
+    same_way_other_segment=0
+    distinct_osm_way=0
+    unidentified_other_segment=0
+    expected_way=_source_way_id(expected.edge_id)
     for road in graph.edges.values():
         if road.edge_id==expected_edge_id or road.access!="allowed":
             continue
         other=closest_point_on_road(point,coords[road.source],coords[road.target])
         if other is not None and other[1]<=COMPETING_LINK_RADIUS_M:
             competing+=1
+            if road.source==expected.target and road.target==expected.source:
+                reversed_same_segment+=1
+            elif (expected_way is not None
+                  and _source_way_id(road.edge_id)==expected_way):
+                same_way_other_segment+=1
+            elif (expected_way is not None
+                  and _source_way_id(road.edge_id) is not None):
+                distinct_osm_way+=1
+            else:
+                unidentified_other_segment+=1
     near=distance<=TARGET_TOLERANCE_M
     return {
         "state":"near_generated_geometry" if near else "off_generated_geometry",
         "near_expected_geometry":near,
         "nearby_other_directed_edges":competing,
+        "nearby_reversed_same_segment_edges":reversed_same_segment,
+        "nearby_other_segments_same_osm_way":same_way_other_segment,
+        "nearby_distinct_osm_way_edges":distinct_osm_way,
+        "nearby_unidentified_other_segment_edges":unidentified_other_segment,
         "direction_verified":False,
     }
 
@@ -89,6 +118,18 @@ def report_geometry_last_fix(acc: Counter, prefix: str, graph: RoadGraph,
         acc[prefix+"_near_geometry"]+=1
         if evidence["nearby_other_directed_edges"]:
             acc[prefix+"_near_but_other_roads_plausible"]+=1
+        if evidence["nearby_reversed_same_segment_edges"]:
+            acc[prefix+"_near_with_reverse_same_segment"]+=1
+        if evidence["nearby_other_segments_same_osm_way"]:
+            acc[prefix+"_near_with_other_same_way_segment"]+=1
+        if evidence["nearby_distinct_osm_way_edges"]:
+            acc[prefix+"_near_with_distinct_osm_way"]+=1
+        if evidence["nearby_unidentified_other_segment_edges"]:
+            acc[prefix+"_near_with_unidentified_other_segment"]+=1
+        if (evidence["nearby_reversed_same_segment_edges"]
+                ==evidence["nearby_other_directed_edges"]
+                and evidence["nearby_other_directed_edges"]>0):
+            acc[prefix+"_near_reverse_only"]+=1
     else:
         acc[prefix+"_off_geometry"]+=1
 
@@ -110,6 +151,15 @@ def geometry_summary(acc: Counter, prefix: str) -> dict[str,int]:
         "not_alignable_or_withheld":acc[prefix+"_withheld"],
         "near_but_alternative_directed_roads_within_10m":
             acc[prefix+"_near_but_other_roads_plausible"],
+        "near_and_reverse_same_segment_present":
+            acc[prefix+"_near_with_reverse_same_segment"],
+        "near_and_reverse_same_segment_only":acc[prefix+"_near_reverse_only"],
+        "near_and_other_segment_same_osm_way_present":
+            acc[prefix+"_near_with_other_same_way_segment"],
+        "near_and_distinct_osm_way_present":
+            acc[prefix+"_near_with_distinct_osm_way"],
+        "near_and_unidentified_other_segment_present":
+            acc[prefix+"_near_with_unidentified_other_segment"],
     }
 
 
