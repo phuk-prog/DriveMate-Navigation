@@ -2,7 +2,7 @@
 import json
 from math import isfinite
 from time import monotonic, sleep
-from urllib.error import URLError
+from urllib.error import HTTPError, URLError
 from urllib.request import Request, ProxyHandler, build_opener
 
 from benchmarks.osrm_live_reference import NoRedirect
@@ -46,8 +46,12 @@ def aligned_points(response):
 
 def request_snap(body):
     request = Request(URL, body, {'Content-Type': 'application/json'}, method='POST')
-    with OPENER.open(request, timeout=20) as response:
-        raw = response.read(100001)
+    try:
+        with OPENER.open(request, timeout=20) as response:
+            raw = response.read(100001)
+    except HTTPError as exc:
+        detail = exc.read(2048).decode('utf-8', errors='replace')
+        raise RuntimeError(f'ORS execution unavailable: HTTP {exc.code}: {detail}') from exc
     if len(raw) > 100000:
         raise ValueError('ORS response exceeds bound')
     return json.loads(raw)

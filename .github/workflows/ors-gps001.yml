@@ -39,6 +39,7 @@ jobs:
           echo "$!" > "${RUNNER_TEMP}/ors-gps001.pid"
       - name: Execute actual pointwise snapping against six frozen cases
         run: |
+          curl -sS --max-time 5 http://127.0.0.1:8080/ors/v2/status || true
           python -m benchmarks.navigation_trial --engine openrouteservice --output results/gps001-openrouteservice.json
           python -m benchmarks.navigation_trial --reports results/gps001-DMN.json results/gps001-openrouteservice.json --output results/gps001-ors-scorecard.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
