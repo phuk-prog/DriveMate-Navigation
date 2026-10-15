@@ -109,3 +109,50 @@ def validate_case_register(cases: Sequence[dict[str, object]], *,
         "independent_legality_established": False,
         "comparator_execution_complete": False,
     }
+
+
+
+def validate_neighborhood_case_registers(records: Sequence[dict[str, object]]
+                                         ) -> dict[str, object]:
+    """Fail closed if a multi-area test loses, duplicates or overstates cases.
+
+    Unsupported areas must not emit fake route victories. Every supported
+    neighborhood's claimed divergent count must equal its stable case records.
+    The aggregate checksum is order-sensitive so a future run can detect drift.
+    """
+    if not isinstance(records, (list, tuple)) or len(records) > 12:
+        raise ValueError("Expected up to twelve bounded public neighborhoods")
+    combined = []
+    count_by_area = []
+    expected = 0
+    for item in records:
+        if not isinstance(item, dict):
+            raise ValueError("Invalid neighborhood record")
+        status = item.get("status")
+        cases = item.get("discriminating_case_register", [])
+        if not isinstance(cases, list):
+            raise ValueError("Expected a list of map-only research cases")
+        claimed = item.get("case_register_count", 0)
+        divergences = item.get("neighborhood_fastest_shortest_divergences", 0)
+        if type(claimed) is not int or type(divergences) is not int:
+            raise ValueError("Invalid neighborhood case counters")
+        if status == "map_rule_checked":
+            verified = validate_case_register(cases, expected_count=divergences)
+            if claimed != divergences:
+                raise AssertionError("Neighborhood case count does not match actual divergence")
+            if item.get("case_register_sha256") != verified["case_register_sha256"]:
+                raise AssertionError("Neighborhood case checksum mismatch")
+        elif status == "unsupported":
+            if cases or claimed != 0 or divergences != 0:
+                raise AssertionError("Unsupported neighborhood cannot assert route cases")
+        else:
+            raise ValueError("Unknown map neighborhood evidence classification")
+        count_by_area.append(len(cases))
+        expected += divergences
+        combined.extend(cases)
+    summary = validate_case_register(combined, expected_count=expected)
+    return {
+        **summary,
+        "case_register_counts_by_neighborhood": count_by_area,
+        "discriminating_case_register": combined,
+    }

@@ -5,7 +5,8 @@ from hashlib import sha256
 
 from benchmarks.public_route_preferences import probe_preference_diversity
 from benchmarks.uk_preference_case_register import (
-    summarise_discriminating_case, validate_case_register)
+    summarise_discriminating_case, validate_case_register,
+    validate_neighborhood_case_registers)
 from engine import RoadEdge, RoadGraph
 from engine.route_alternatives import generate_route_candidates
 
@@ -81,6 +82,44 @@ class PreferenceCaseRegisterTests(unittest.TestCase):
             validate_case_register(broken)
         with self.assertRaises(AssertionError):
             validate_case_register(cases,expected_count=len(cases)+1)
+
+    def test_multi_neighborhood_register_preserves_all_cases(self):
+        cases,_=self._cases()
+        summary=validate_case_register(cases,expected_count=len(cases))
+        area={"status":"map_rule_checked",
+              "discriminating_case_register":cases,
+              "case_register_count":len(cases),
+              "neighborhood_fastest_shortest_divergences":len(cases),
+              "case_register_sha256":summary["case_register_sha256"]}
+        assembled=validate_neighborhood_case_registers([
+            area,{"status":"unsupported","reason":"incomplete_neighbor_restriction"}])
+        self.assertEqual(assembled["case_count"],len(cases))
+        self.assertEqual(assembled["case_register_counts_by_neighborhood"],
+                         [len(cases),0])
+        self.assertEqual(assembled["discriminating_case_register"],cases)
+        self.assertFalse(assembled["independent_legality_established"])
+
+    def test_multi_neighborhood_lost_duplicate_and_fake_cases_refused(self):
+        cases,_=self._cases()
+        digest=validate_case_register(cases)["case_register_sha256"]
+        good={"status":"map_rule_checked",
+              "discriminating_case_register":cases,
+              "case_register_count":len(cases),
+              "neighborhood_fastest_shortest_divergences":len(cases),
+              "case_register_sha256":digest}
+        corrupted=[
+            dict(good,case_register_count=len(cases)+1),
+            dict(good,neighborhood_fastest_shortest_divergences=len(cases)+1),
+            dict(good,case_register_sha256="0"*64),
+            {"status":"unsupported","discriminating_case_register":cases},
+        ]
+        for item in corrupted:
+            with self.subTest(item=item),self.assertRaises(AssertionError):
+                validate_neighborhood_case_registers([item])
+        with self.assertRaises(AssertionError):
+            validate_neighborhood_case_registers([good,good])
+        with self.assertRaises(ValueError):
+            validate_neighborhood_case_registers([{"status":"unknown"}])
 
     def test_single_mode_optimum_refused(self):
         candidates=generate_route_candidates(

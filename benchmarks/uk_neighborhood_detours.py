@@ -347,8 +347,16 @@ def execute_public_neighborhoods(source_pbf: Path, restriction_xml: Path,
             record["recovered_by_wider_public_buffer"]=(
                 first_status=="unsupported" and record["status"]=="map_rule_checked")
             records.append(record)
+    # Validate every recorded diverging journey against the independently
+    # counted neighborhood totals before publishing any CI evidence. A green
+    # job must not silently omit a route case or duplicate it between areas.
+    from benchmarks.uk_preference_case_register import validate_neighborhood_case_registers
+    combined_register = validate_neighborhood_case_registers(records)
     return {
         "classification":"real-public-UK-buffered-graph-OSM-rule-only",
+        "case_register_count": combined_register["case_count"],
+        "case_register_sha256": combined_register["case_register_sha256"],
+        "case_register_integrity_validated": combined_register["case_register_valid"],
         "source_snapshot":snapshot,
         "restriction_source_sha256":sha256(restriction_raw).hexdigest(),
         "proposed_neighborhoods":limit,
@@ -372,10 +380,9 @@ def execute_public_neighborhoods(source_pbf: Path, restriction_xml: Path,
             x.get("neighborhood_pairs_with_multiple_routes",0) for x in records),
         "neighborhood_fastest_shortest_divergences":sum(
             x.get("neighborhood_fastest_shortest_divergences",0) for x in records),
-        "discriminating_case_register": [
-            c for x in records for c in x.get("discriminating_case_register",[])],
-        "case_register_counts_by_neighborhood": [
-            x.get("case_register_count",0) for x in records],
+        "discriminating_case_register": combined_register["discriminating_case_register"],
+        "case_register_counts_by_neighborhood": combined_register[
+            "case_register_counts_by_neighborhood"],
         "case_register_all_cases_have_unknown_legality":all(
             c.get("independent_current_uk_road_legality")=="UNKNOWN"
             for x in records for c in x.get("discriminating_case_register",[])),
