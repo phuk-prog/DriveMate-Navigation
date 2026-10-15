@@ -50,3 +50,7 @@ The first real UK buffered-neighborhood study found two map-rule detours in the 
 ## New real map import capacity gap (15 October)
 
 [Run 38737339329](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38737339329) found that expanding two incomplete public UK junction neighborhoods made their raw extracts exceed the conservative prototype **6 MB importer cap**. That is an **import-capacity limitation, not a verified routing failure**. Prioritize safe prefiltering of irrelevant buildings/footways while retaining drivable roads, barrier nodes and all applicable restrictions; test that conditional motorcar rules still fail closed and rerun the pinned real-data benchmark.
+
+## Confirmed research improvement and remaining source-data issue
+
+[Run 38737832538](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38737832538) demonstrated **3/4** supportable UK OSM restriction neighborhoods versus **2/4** before safely discarding irrelevant non-car map features. All **146** Python unit/contract tests passed. **One** real selected neighborhood remains incomplete (`incomplete_neighbor_restriction`); its source relation must not be silently ignored. Add an independent road-completeness/turn-legality oracle and extra challenging UK junction scenarios. This successful narrow benchmark does not establish actual UK legal navigation safety, traffic-aware rerouting, real device GPS accuracy, any competitor win, or Android arrival correctness.

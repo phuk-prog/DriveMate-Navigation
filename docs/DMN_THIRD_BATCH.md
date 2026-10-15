@@ -28,3 +28,24 @@ This next run is intentionally **one bounded public map study** with at most fou
 [Run 38737339329](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38737339329) passed **144 Python tests** and retried two incomplete neighborhoods with larger geographical buffers. **Zero additional neighborhoods were recovered**: both became too large for the prototype **6 MB all-objects OSM importer**. The original two cases still exercised **two mapped restricted turns with two graph-permitted detours**, and two remained unsupported, not navigation failures. This is a **map-import capacity** gap.
 
 **Next candidate improvement:** Filter out independently non-drivable OSM objects and unused nodes *before* running the existing strict importer. Retain all motorcar-class roads, access tags, barriers, and all applicable turn restrictions; any missing way, conditional legal rule or remaining resource overrun must still fail closed. The external temporarily extracted XML has a separate bound. Rerun real UK tests to measure whether this actually recovers the two cases.
+
+## Verified import-filter improvement — final run
+
+The strict nonmotorcar-feature filter and extra tests ran successfully on [GitHub Actions run 38737832538](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38737832538): **146 Python tests passed, zero failures**. The experiment again used the independently chosen, publicly sourced Greater Manchester 2026-09-01 map with SHA-256 source restrictions `b9b5ed253ef99d126b5e3f8d87074a945f3ce059fc213d5cb946158d1f0e2818`.
+
+Measured before/after on the **same four deterministic test neighborhoods**:
+
+| Measurement | Before feature prefilter | After prefilter |
+|---|---:|---:|
+| Tested neighborhoods with supported OSM restriction | 2 / 4 | **3 / 4** |
+| Mapped prohibited movement pairs checked | 2 | **3** |
+| Alternative paths found on bounded imported graph | 2 | **3** |
+| Neighborhoods unsupported/incomplete | 2 | **1** |
+| Wider-boundary retries | 2 | 1 |
+| Recovered specifically after bigger-buffer retry | 0 | 0 |
+| Real independent legal traffic-order truth | Not tested | **Not tested** |
+| Rival engines directly compared | 0 | **0** |
+
+The extra supported case comes from **safe removal of map objects unrelated to driving**, not a claim that widening a buffer alone recovered it. The remaining neighborhood is flagged `incomplete_neighbor_restriction` because a relevant road/restriction is still outside the sample. This MUST remain an **UNKNOWN** case, not a failed journey nor a reason to weaken fail-closed turn restrictions. Neither 3/3 nor 146/146 is an out-of-ten navigation score. Physical GNSS/speed/lane/arrival/full offline remain to be measured.
+
+**Follow-up regression:** Find a properly bounded complete neighboring graph for the remaining source restriction, or mark it unsupported and move to a different difficult real UK junction; add a source completeness check and independently verified legal rule evidence. Continue GPS heading/speed/position and wrong-turn full-session tests next. Re-run old cases after every importer change.
