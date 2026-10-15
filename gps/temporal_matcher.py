@@ -2,18 +2,20 @@
 
 Uses a prior *unambiguously anchored* directed link to resolve a later
 ambiguous fix only when exactly one locally plausible next link is topologically
-reachable without crossing an OSM-prohibited mapped maneuver.
+reachable without crossing an OSM-prohibited mapped maneuver and its minimum
+travel distance through the connecting junction fits the observed time budget.
+Same-edge history must also support forward progress within reported uncertainty.
 
 NOT dead reckoning, sensor fusion, lane positioning, a navigation controller,
 or independently verified legality. Never assumes map completeness.
 """
 from __future__ import annotations
 
-from math import isfinite
+from math import hypot, isfinite
 
-from .fix_quality import GPSFix, assess_fix
+from .fix_quality import GPSFix, assess_fix, _distance_m
 from .matcher import (DirectedRoadMatcher, MatchResult,
-                      _closest_distance_and_bearing, angular_difference)
+                      _closest_distance_and_bearing, _local, angular_difference)
 
 
 class TemporalRoadMatcher:
@@ -47,6 +49,55 @@ class TemporalRoadMatcher:
             return True
         old, new = graph.edges[old_id], graph.edges[new_id]
         return old.target == new.source and (old_id, new_id) not in graph.prohibited_turns
+
+    def _transition_fits_time(self, old_id: str, new_id: str, fix: GPSFix) -> bool:
+        """Bound travel via the shared junction, not just between GPS fixes.
+
+        Great-circle distances to/from that junction are lower bounds even
+        when the actual roads curve. Subtract both uncertainty radii and use
+        the anchor's time/speed: intervening unresolved fixes cannot shorten
+        the required trip or refresh the trusted position. This is a bounded
+        one-junction screen, not proof of a vehicle's route or legal movement.
+        """
+        if old_id == new_id:
+            return self._same_edge_direction_fits(old_id, fix)
+        assert self.anchor_fix is not None
+        junction = self.matcher.coords[self.matcher.graph.edges[old_id].target]
+        vertex_fix = GPSFix(0, junction[0], junction[1], 0.0)
+        minimum_distance = max(
+            0.0, _distance_m(self.anchor_fix, vertex_fix)
+            + _distance_m(vertex_fix, fix)
+            - self.anchor_fix.horizontal_accuracy_m - fix.horizontal_accuracy_m)
+        seconds = (fix.timestamp_ms - self.anchor_fix.timestamp_ms) / 1000.0
+        # Match the existing displacement screen's generous reported-speed
+        # tolerance, capped by assess_fix's generic physical plausibility gate.
+        limit = 90.0
+        if self.anchor_fix.speed_mps is not None and fix.speed_mps is not None:
+            limit = min(limit, max(20.0, 3.0 * max(
+                self.anchor_fix.speed_mps, fix.speed_mps)))
+        return minimum_distance <= limit * seconds
+
+    def _same_edge_direction_fits(self, edge_id: str, fix: GPSFix) -> bool:
+        """Withhold reverse progress beyond both reported uncertainty radii.
+
+        Use one fixed local frame for the road and both observations. This
+        checks the prototype's straight directed segment, not a curved-road
+        polyline or proof that the vehicle made an illegal manoeuvre.
+        """
+        assert self.anchor_fix is not None
+        edge = self.matcher.graph.edges[edge_id]
+        origin = self.matcher.coords[edge.source]
+        target = self.matcher.coords[edge.target]
+        dx, dy = _local(*target, *origin)
+        length = hypot(dx, dy)
+        if length < 1e-4:
+            return False
+        before_x, before_y = _local(
+            self.anchor_fix.latitude, self.anchor_fix.longitude, *origin)
+        after_x, after_y = _local(fix.latitude, fix.longitude, *origin)
+        progress = ((after_x - before_x) * dx + (after_y - before_y) * dy) / length
+        uncertainty = self.anchor_fix.horizontal_accuracy_m + fix.horizontal_accuracy_m
+        return progress >= -uncertainty
 
     def _plausible_edges(self, fix: GPSFix) -> set[str]:
         """Mirror stateless candidate gate, excluding prohibited/unknown roads."""
@@ -148,21 +199,28 @@ class TemporalRoadMatcher:
         plausible = self._plausible_edges(fix)
         connected = {candidate for candidate in plausible
                      if self._connected(old, candidate)}
+        reachable = {candidate for candidate in connected
+                     if self._transition_fits_time(old, candidate, fix)}
         moving = (fix.speed_mps is not None and fix.speed_mps >= 2.0
                   and fix.bearing_deg is not None)
 
         if base.status == "MATCHED":
             # Never trust a disconnected jump just because it happens to be
             # close to the noisy position. Keep the previous anchor briefly.
-            if base.edge_id not in connected:
+            if base.edge_id not in reachable:
                 self.unresolved += 1
-                return MatchResult("AMBIGUOUS", None, "disconnected_road_jump",
+                if base.edge_id == old:
+                    reason = "backward_directed_progress"
+                else:
+                    reason = ("implausible_road_transition" if base.edge_id in connected
+                              else "disconnected_road_jump")
+                return MatchResult("AMBIGUOUS", None, reason,
                                    base.distance_m, len(plausible))
             self._remember(fix, base.edge_id)
             return base
 
-        if base.status == "AMBIGUOUS" and moving and len(connected) == 1:
-            chosen = next(iter(connected))
+        if base.status == "AMBIGUOUS" and moving and len(reachable) == 1:
+            chosen = next(iter(reachable))
             # Historical topological connection is corroboration, not a
             # license to use a link the current heading/position disallows.
             self._remember(fix, chosen)
