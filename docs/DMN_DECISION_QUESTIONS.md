@@ -1,6 +1,6 @@
 # Owner decisions — DMN comparison and improvement programme
 
-> **22 questions, intentionally open.** This is not a form and nothing here is recorded as the owner's answer. Existing agreements appear below, so we don't ask them again. Ask these *one at a time in conversation* if that is easier; the numbered list remains reviewable in GitHub. Suggested defaults are **recommendations only**, not commitments.
+> **22 decision topics; question 1 partly settled.** On 15 October the owner approved **more than ten references**, so ten is the floor and Google Maps/Waze may be added as conditional comparisons without forcing a replacement. The exact long-term roster and provider rights remain open. Other questions have no recorded owner answer. Existing agreements appear below, so we don't ask them again. Ask these *one at a time in conversation* if that is easier; the numbered list remains reviewable in GitHub. Suggested defaults are **recommendations only**, not commitments.
 
 ## Already agreed (do not re-ask)
 
@@ -12,7 +12,7 @@
 
 ## Questions (the recommendation follows the question, not vice versa)
 
-**1. Which ten external navigation references?** Historical provisional names are Valhalla, OSRM, GraphHopper, OsmAnd, Organic Maps, BRouter, HERE, Mapbox, TomTom and openrouteservice. Would you keep these ten, swap any with Google Maps/Waze, pgRouting, RoutingKit or another reference, or allow more than ten? *Recommended: ten clearly identified families initially; extras as optional comparisons rather than double-counting OSRM variants.*
+**1. Minimum number of external references — OWNER DECISION PARTLY RECORDED (15 October 2026).** **At least ten; more than ten permitted.** Current review portfolio: 12 proposed families (the original ten, plus Google Maps and Waze). They are **proposed**, not all verified or runnable. Specific replacements/additions may still change after accessibility, rights and cost checks. OSRM CH/MLD remain one family. *No further question is needed about allowing over ten.*
 
 **2. What should we do with commercial reference products?** A. Use only permitted free outputs; B. ask before any paid usage; C. exclude them entirely and replace with runnable open engines. *Recommended: B with no spend or account/keys assumed.*
 
@@ -34,7 +34,7 @@
 
 **11. How many repeated measurements for performance?** A. 10; B. 30; C. 100 warm requests per case, plus cold-start and p95/p99. *Recommended: B as default, scale up for close results; record host identity.*
 
-**12. Should all ten references face identical category checklists even if they cannot expose a feature?** A. yes, explicitly unsupported/not-tested; B. test only common functions and omit others. *Recommended: A for transparency; rank on matched judged coverage only.*
+**12. Should all available references (ten or more) face identical category checklists even if they cannot expose a feature?** A. yes, explicitly unsupported/not-tested; B. test only common functions and omit others. *Recommended: A for transparency; rank on matched judged coverage only.*
 
 **13. How should competing navigation outputs be judged?** A. independently checked map/legal evidence first; B. most competitors agreeing; C. a manually signed reference answer. *Recommended: A with C where independently verified; disagreement is an investigation target, not truth.*
 
@@ -58,4 +58,4 @@
 
 ## How to record decisions
 
-Answer each with its number, option or wording. Mixed options are valid. The decision log should record: question number, answer, confirmation date, impacted benchmark schema/stage, and unresolved follow-up. **Until answered, don't turn recommendations into mandatory thresholds or represent a question as a settled owner requirement.** The first question to resolve is #1 — the ten-reference portfolio. No payable provider may be contacted simply because it is listed.
+Answer each with its number, option or wording. Mixed options are valid. The decision log should record: question number, answer, confirmation date, impacted benchmark schema/stage, and unresolved follow-up. **Until answered, don't turn recommendations into mandatory thresholds or represent a question as a settled owner requirement.** The minimum-count part of #1 is resolved (ten is a floor; twelve are proposed). The next substantive decision is **#2: commercial-provider access and whether any paid usage is ever permitted**. No payable provider may be contacted simply because it is listed; Waze consumer content must not be programmatically collected without explicit legal permission.
