@@ -1,6 +1,6 @@
 # Owner decisions — DMN comparison and improvement programme
 
-> **22 decision topics; questions 1, 2 and 3 recorded.** On 15 October the owner approved **more than ten references** and chose **option B for commercial providers: permitted free comparisons first; ask for approval before any paid test**. Listing a provider never authorises paid API usage, new accounts, data extraction, or otherwise prohibited access. The exact reference roster and remaining choices are open. Existing agreements appear below, so we don't ask them again. Ask these *one at a time in conversation* if that is easier; the numbered list remains reviewable in GitHub. Suggested defaults are **recommendations only**, not commitments.
+> **22 decision topics; questions 1–4 recorded.** On 15 October the owner approved **more than ten references** and chose **option B for commercial providers: permitted free comparisons first; ask for approval before any paid test**. Listing a provider never authorises paid API usage, new accounts, data extraction, or otherwise prohibited access. The exact reference roster and remaining choices are open. Existing agreements appear below, so we don't ask them again. Ask these *one at a time in conversation* if that is easier; the numbered list remains reviewable in GitHub. Suggested defaults are **recommendations only**, not commitments.
 
 ## Already agreed (do not re-ask)
 
@@ -18,7 +18,7 @@
 
 **3. Non-equivalent or unavailable engines — OWNER DECISION RECORDED (15 October 2026): A + C.** Keep unavailable or non-equivalently executable engines in the comparison inventory as **Not Tested** for the affected categories. When legally permitted, record their outputs separately as **observational / not directly comparable**, with source, date, limits and provenance. Do not give either class a numeric score or head-to-head rank, and do not automatically replace a reference.
 
-**4. Which UK regions first?** A. Greater Manchester/Wigan and named difficult roundabouts first; B. balanced England/Scotland/Wales/Northern Ireland from day one; C. other order. *Recommended: A followed by structured nationwide held-out samples.*
+**4. UK test-area selection — OWNER DECISION RECORDED (15 October 2026): C, complexity-first nationwide.** The specific region does **not** matter: choose **wherever the more complex real-road junctions and roundabouts are**, rather than Manchester-first or an equal-by-country quota. Include diverse difficult UK junction types, lane arrangements, legal restrictions, grade separation and GPS ambiguity, without claiming complexity alone establishes legal ground truth. Keep simpler representative roads as controls. Existing Wigan/Manchester benchmarks are retained as historical baseline and may be reused where relevant; do not confine future tests to them.
 
 **5. What vehicle profile must be correct first?** A. ordinary UK passenger car; B. car + van/caravan dimension and weight constraints immediately; C. all vehicle classes. *Recommended: A with explicit exceptions untested, then add vehicle variants.*
 
@@ -58,4 +58,4 @@
 
 ## How to record decisions
 
-Answer each with its number, option or wording. Mixed options are valid. The decision log should record: question number, answer, confirmation date, impacted benchmark schema/stage, and unresolved follow-up. **Until answered, don't turn recommendations into mandatory thresholds or represent a question as a settled owner requirement.** The minimum-count part of #1 is resolved (ten is a floor; twelve are proposed). The next substantive decision is **#4: which UK regions to test first**. No payable provider may be contacted simply because it is listed; Waze consumer content must not be programmatically collected without explicit legal permission.
+Answer each with its number, option or wording. Mixed options are valid. The decision log should record: question number, answer, confirmation date, impacted benchmark schema/stage, and unresolved follow-up. **Until answered, don't turn recommendations into mandatory thresholds or represent a question as a settled owner requirement.** The minimum-count part of #1 is resolved (ten is a floor; twelve are proposed). The next substantive decision is **#5: which vehicle classes to support initially**. No payable provider may be contacted simply because it is listed; Waze consumer content must not be programmatically collected without explicit legal permission.
