@@ -142,6 +142,42 @@ class TemporalRoadMatcher:
         """Mirror stateless candidate gate, excluding prohibited/unknown roads."""
         return {candidate.edge_id for candidate in self.matcher._candidates(fix)}
 
+    def _direct_fragment_before_bend(self, old_id: str, reachable: set[str],
+                                     fix: GPSFix) -> str | None:
+        """Do not advance to a future fragment merely because it is reachable.
+
+        Only a unique direct continuation may be retained, and it must already
+        be the current best position/heading candidate within reported accuracy.
+        All other reachable candidates must be its immediate forward successor
+        on the very same mapped way. A different way, branch, reversed edge or
+        prohibited continuation keeps the ambiguity. No multi-road ambiguity
+        is resolved by nearest-distance guessing.
+        """
+        graph = self.matcher.graph
+        prior = graph.edges[old_id]
+        direct = [eid for eid in reachable if eid == old_id or (
+            prior.target == graph.edges[eid].source
+            and (old_id, eid) not in graph.prohibited_turns)]
+        if len(direct) != 1:
+            return None
+        chosen = direct[0]
+        candidates = self.matcher._candidates(fix)
+        if (not candidates or candidates[0].edge_id != chosen
+                or candidates[0].distance_m > fix.horizontal_accuracy_m):
+            return None
+        bits = chosen.split(':')
+        if not (len(bits) == 4 and bits[0] == 'w' and bits[1].isdigit()):
+            return None
+        edge = graph.edges[chosen]
+        for eid in reachable - {chosen}:
+            other = graph.edges[eid]
+            other_bits = eid.split(':')
+            if not (len(other_bits) == 4 and other_bits[:2] == bits[:2]
+                    and edge.target == other.source and other.target != edge.source
+                    and (chosen, eid) not in graph.prohibited_turns):
+                return None
+        return chosen
+
     def _live_anchor(self, fix: GPSFix) -> bool:
         if self.anchor_fix is None or self.anchor_edge_id is None:
             return False
@@ -251,6 +287,13 @@ class TemporalRoadMatcher:
             self._remember(fix, chosen)
             return MatchResult("MATCHED", chosen, "unique_legal_temporal_connection",
                                base.distance_m, len(plausible))
+
+        if base.status == 'AMBIGUOUS' and moving and len(reachable) > 1:
+            chosen = self._direct_fragment_before_bend(old, reachable, fix)
+            if chosen is not None:
+                self._remember(fix, chosen)
+                return MatchResult('MATCHED', chosen, 'direct_way_before_future_fragment',
+                                   base.distance_m, len(plausible))
 
         self.unresolved += 1
         return base

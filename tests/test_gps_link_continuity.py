@@ -71,6 +71,22 @@ class LinkContinuityTests(unittest.TestCase):
         result = matcher.update(GPSFix(5000, 0, .00022, 3, 10, 90))
         self.assertEqual((result.status, result.edge_id), ('MATCHED', 'w:1:1:f'))
 
+    def test_future_bend_fragment_does_not_displace_directly_supported_way(self):
+        coords = {'p': (0, -.0005), 'a': (0, 0), 'b': (0, .00012),
+                  'c': (.0002, .00032)}
+        for way, expected in (('1', 'MATCHED'), ('2', 'AMBIGUOUS')):
+            with self.subTest(future_way=way):
+                graph = RoadGraph(coords, [
+                    RoadEdge('feeder', 'p', 'a', 56, 40, 'allowed'),
+                    RoadEdge('w:1:0:f', 'a', 'b', 14, 40, 'allowed'),
+                    RoadEdge(f'w:{way}:1:f', 'b', 'c', 32, 40, 'allowed')])
+                matcher = TemporalRoadMatcher(DirectedRoadMatcher(graph, coords))
+                matcher.update(GPSFix(1000, 0, -.0004, 3, 10, 90))
+                result = matcher.update(GPSFix(5000, 0, .00008, 3, 10, 90))
+                self.assertEqual(result.status, expected)
+                if expected == 'MATCHED':
+                    self.assertEqual(result.edge_id, 'w:1:0:f')
+
 
 if __name__ == '__main__':
     unittest.main()
