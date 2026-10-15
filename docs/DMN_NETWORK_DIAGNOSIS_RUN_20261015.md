@@ -11,3 +11,7 @@ Prior experiment [38782273948](https://github.com/phuk-prog/DriveMate-Navigation
 Report active drivable nodes, weak components, largest weak component, branch nodes and physical cycle-rank upper bound. Report routable pairs, pairs with multiple paths, fastest-shortest disagreement and balanced distinction with explicit denominators. A successful CI run with zero divergence is still insufficient map coverage; never infer independently verified UK legality from OSM topology.
 
 If scanner finds no useful alternatives, next isolate graph sparsity causes and expand the public area or extraction strategy under source/license/privacy, restriction completeness, import-size and execution limits; preserve this historical control. Compare against OSRM, Valhalla and GraphHopper only when on identical valid source cohorts. No personal routes, paid services, production DriveMate changes, or APK.
+
+## Opt-in trigger diagnosis
+
+CI run [38789145034](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38789145034) passed research unit checks but **SKIPPED** the UK smoke: on the `pull_request` event the workflow did not receive `github.event.head_commit.message`; the expensive opt-in is gated by the **pull-request title**. The draft PR title is temporarily marked `[uk-road-smoke]` for ONE controlled synchronization run, then will be unmarked. Do not mistake the skipped run for new UK route evidence.
