@@ -169,7 +169,10 @@ class SameCaseLocalOSRMTests(unittest.TestCase):
         row = compare_osrm_case(self.case, self.origin, self.dest,
                                 request=local, graph=road)
         self.assertEqual(row["route_node_audit"]["interior_mapped_allowed_pairs"], 2)
-        self.assertNotIn("nodes", str(row))
+        # Only aggregated node counts may be recorded, not raw node IDs.
+        self.assertNotIn("nodes", row["route_node_audit"])
+        self.assertNotIn("coordinates", row)
+        self.assertNotIn("node_ids", row["route_node_audit"])
         summary = validate_osrm_case_results(
             [self.case], [row], snapshot="geofabrik-test")
         self.assertEqual(summary["osrm_interior_map_audit"]["annotated_comparison_cases"], 1)
