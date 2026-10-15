@@ -15,16 +15,38 @@ class EngineFirstInventoryTests(unittest.TestCase):
     def setUpClass(cls):
         cls.config = json.loads(DEFAULT_CONFIG.read_text(encoding="utf-8"))
 
-    def test_ten_distinct_external_families_proposed_not_measured(self):
+    def test_twelve_distinct_external_families_proposed_not_measured(self):
         result = inventory(self.config)
-        self.assertEqual(result["external_reference_families_proposed"], 10)
+        self.assertEqual(result["external_reference_families_minimum"], 10)
+        self.assertEqual(result["external_reference_families_proposed"], 12)
         self.assertEqual(result["categories_proposed"], 14)
-        self.assertEqual(result["family_category_slots_proposed_not_test_cases"], 140)
+        self.assertEqual(result["family_category_slots_proposed_not_test_cases"], 168)
         self.assertEqual(result["reference_families_executed_under_this_new_programme"], 0)
         self.assertIsNone(result["overall_ranking"])
         for engine in result["reference_families"]:
             self.assertEqual(engine["status"], "not_run")
             self.assertTrue(all(x is None for x in engine["category_scores"].values()))
+
+    def test_more_than_twelve_allowed_and_minimum_enforced(self):
+        data = deepcopy(self.config)
+        data["reference_families"].append({"name": "Other permitted independent engine", "selection": "proposed", "execution": "not_run_under_new_programme"})
+        self.assertEqual(inventory(data)["external_reference_families_proposed"], 13)
+        data["reference_families"] = data["reference_families"][:9]
+        with self.assertRaisesRegex(ValueError, "Need at least ten"):
+            inventory(data)
+
+    def test_google_and_waze_remain_unexecuted_and_unscored(self):
+        result = inventory(self.config)
+        refs = {r["name"]: r for r in result["reference_families"]}
+        for name in ("Google Maps", "Waze"):
+            self.assertEqual(refs[name]["status"], "not_run")
+            self.assertTrue(all(score is None for score in refs[name]["category_scores"].values()))
+
+    def test_provider_access_safeguards_required(self):
+        data = deepcopy(self.config)
+        data["evidence_policy"]["no_unauthorized_automated_provider_collection"] = False
+        with self.assertRaisesRegex(ValueError, "Unsafe"):
+            inventory(data)
 
     def test_osrm_variants_do_not_count_twice(self):
         names = [r["name"] for r in self.config["reference_families"]]
