@@ -13,11 +13,11 @@ from engine.route_alternatives import generate_route_candidates
 class PreferenceCaseRegisterTests(unittest.TestCase):
     def setUp(self):
         self.graph = RoadGraph(["A","B","C","D","E"], [
-            RoadEdge("AB","A","B",50,10,"allowed"),
-            RoadEdge("BD","B","D",50,10,"allowed"),
-            RoadEdge("AC","A","C",150,80,"allowed"),
-            RoadEdge("CE","C","E",150,80,"allowed"),
-            RoadEdge("ED","E","D",150,80,"allowed"),
+            RoadEdge("AB","A","B",50,70,"allowed"),
+            RoadEdge("BD","B","D",50,70,"allowed"),
+            RoadEdge("AC","A","C",150,15,"allowed"),
+            RoadEdge("CE","C","E",150,15,"allowed"),
+            RoadEdge("ED","E","D",150,15,"allowed"),
         ])
         self.sha=sha256(b"synthetic map only").hexdigest()
 
