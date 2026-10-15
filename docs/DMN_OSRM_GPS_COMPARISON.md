@@ -1,0 +1,13 @@
+# First external live GPS comparison: DMN vs OSRM Match
+
+This is an **execution harness**, not a claim of measured external accuracy until an opt-in GitHub Actions run completes. It reuses the existing pinned, local OSRM 5.27.1 Docker/MLD routing reference workflow and precisely the same public Greater Manchester OSM extract, without paid APIs or consumer-app automation.
+
+For up to 12 deterministic neighboring road pairs from public OSM, generate four artificial GNSS fixes per case. Feed the identical four lat/lon/timestamp observations to the DMN single-fix matcher, temporal matcher and OSRM's official `/match/v1/driving/` endpoint on `127.0.0.1:5000`.
+
+Record OSRM endpoint `Ok` / `NoMatch`, returned tracepoints, snapped position proximity to the *generating GPS geometry* and request latency **separately** from DMN exact generating-edge confidence and withholding. These are **not equivalent correctness metrics**: OSRM may snap 5 m from the input on a parallel carriageway or an illegal/incorrect road, whereas DMN returns its own edge ID. Their access profiles, graph segmentation, matching algorithms, API overhead, and heading handling differ. Do NOT produce an out-of-ten comparative GPS ranking from these results. The OSM source is not independently surveyed GPS or signed legal truth.
+
+## Actual execution gates
+
+The single explicit opt-in `[osrm-reference-smoke]` workflow builds the OSRM Docker container, checks its existing routing endpoint and then calls the Match endpoint. An unavailable binary, invalid response, incomplete API protocol or failed run means **NOT_EXECUTED/FAILED**, not success. The artifact contains aggregates only and deletes the downloaded PBF/XML on exit. Version, SHA and source geometry remain pinned. The stage does not touch `phuk-prog/DriveMate` production, release APKs or use personal histories.
+
+Further provider adapters: Valhalla trace matching and GraphHopper map matching, then each of the other ten reference families only if its exposed interface, terms and identical scenario inputs permit a real comparison. Routing-only provider tests remain routing-only.
