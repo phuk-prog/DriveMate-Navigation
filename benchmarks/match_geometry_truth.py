@@ -72,6 +72,9 @@ def expected_road_geometry_probe(
         raise ValueError("Degenerate expected road segment")
     distance=projected[1]
     competing=0
+    reverse_same_segment_count=0
+    adjacent_graph_segments=0
+    disjoint_graph_segments=0
     reversed_same_segment=0
     same_way_other_segment=0
     distinct_osm_way=0
@@ -83,6 +86,12 @@ def expected_road_geometry_probe(
         other=closest_point_on_road(point,coords[road.source],coords[road.target])
         if other is not None and other[1]<=COMPETING_LINK_RADIUS_M:
             competing+=1
+            if road.source==expected.target and road.target==expected.source:
+                reverse_same_segment_count+=1
+            elif ({road.source,road.target} & {expected.source,expected.target}):
+                adjacent_graph_segments+=1
+            else:
+                disjoint_graph_segments+=1
             if road.source==expected.target and road.target==expected.source:
                 reversed_same_segment+=1
             elif (expected_way is not None
@@ -98,6 +107,9 @@ def expected_road_geometry_probe(
         "state":"near_generated_geometry" if near else "off_generated_geometry",
         "near_expected_geometry":near,
         "nearby_other_directed_edges":competing,
+        "reverse_same_segment_directed_edges":reverse_same_segment_count,
+        "nearby_adjacent_graph_segments":adjacent_graph_segments,
+        "nearby_disjoint_graph_segments":disjoint_graph_segments,
         "nearby_reversed_same_segment_edges":reversed_same_segment,
         "nearby_other_segments_same_osm_way":same_way_other_segment,
         "nearby_distinct_osm_way_edges":distinct_osm_way,
