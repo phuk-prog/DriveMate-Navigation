@@ -33,6 +33,16 @@ class OSRMMatchAdapterTests(unittest.TestCase):
         self.assertEqual(report["osrm_snapped_farther_than_20m_from_generated_input"],0)
         self.assertEqual(report["external_reference_families_executed"],0)
         self.assertFalse(report["independent_position_ground_truth"])
+        n=report["public_road_cases_sent_to_both"]
+        self.assertEqual(
+            report["dmn_hypothesis_experiment_correct_directed_edge"]+
+            report["dmn_hypothesis_experiment_wrong_confident_edge"]+
+            report["dmn_hypothesis_experiment_withheld"],n)
+        self.assertEqual(report["legacy_initial_confident_anchors"]+
+                         report["legacy_initially_unanchored"],n)
+        self.assertEqual(report["common_last_fix_source_geometry_proxy"]
+                         ["dmn_hypothesis_experiment"]["total"],n)
+        self.assertEqual(report["external_reference_families_executed"],0)
         self.assertTrue(report["do_not_rank"])
         self.assertIsNone(report["navigation_score"])
     def test_no_match_has_explicit_denominator(self):

@@ -22,6 +22,7 @@ from benchmarks.osrm_live_reference import NoRedirect, BASE_URL, wait_for_local_
 from gps.fix_quality import GPSFix
 from gps.matcher import DirectedRoadMatcher
 from gps.temporal_matcher import TemporalRoadMatcher
+from gps.temporal import TemporalState, advance
 from map_data import Provenance, import_osm_xml
 from benchmarks.public_uk_probe import _public_file
 from benchmarks.match_geometry_truth import (
@@ -129,13 +130,35 @@ def evaluate(raw: bytes, *, snapshot: str, limit: int=12,
         target=fixes[-1]
         single=matcher.match(target)
         temporal=TemporalRoadMatcher(matcher)
-        for fix in fixes:
+        hypotheses=TemporalState()
+        initial_anchor=None
+        for i,fix in enumerate(fixes):
             latest=temporal.update(fix)
-        for prefix,r in (("dmn_single",single),("dmn_temporal",latest)):
+            candidate=advance(matcher,hypotheses,fix)
+            hypotheses=candidate.state
+            if i==0:
+                initial_anchor=(latest.status=="MATCHED")
+        alternative=candidate.match
+        counts["legacy_initial_anchor"]+=int(initial_anchor)
+        counts["legacy_initially_unanchored"]+=int(not initial_anchor)
+        counts["hypothesis_rescued_legacy_withheld"]+=int(
+            latest.status!="MATCHED" and alternative.status=="MATCHED"
+            and alternative.edge_id==outgoing)
+        counts["hypothesis_new_wrong_confident"]+=int(
+            alternative.status=="MATCHED" and alternative.edge_id!=outgoing
+            and latest.status!="MATCHED")
+        counts["hypothesis_lost_legacy_correct"]+=int(
+            latest.status=="MATCHED" and latest.edge_id==outgoing
+            and not(alternative.status=="MATCHED" and alternative.edge_id==outgoing))
+        counts["legacy_reason_"+latest.reason]+=1
+        counts["hypothesis_reason_"+alternative.reason]+=1
+        for prefix,r in (("dmn_single",single),("dmn_temporal",latest),
+                         ("dmn_hypothesis_experiment",alternative)):
             counts[prefix+"_correct_edge"]+=int(r.status=="MATCHED" and r.edge_id==outgoing)
             counts[prefix+"_wrong_confident_edge"]+=int(r.status=="MATCHED" and r.edge_id!=outgoing)
             counts[prefix+"_withheld"]+=int(r.status!="MATCHED")
-        for prefix,r in (("dmn_single",single),("dmn_temporal",latest)):
+        for prefix,r in (("dmn_single",single),("dmn_temporal",latest),
+                         ("dmn_hypothesis_experiment",alternative)):
             report_geometry_last_fix(
                 counts,"geometry_"+prefix,graph,imported.coordinates,outgoing,
                 projected_dmn_result(r,target,graph,imported.coordinates))
@@ -186,7 +209,12 @@ def evaluate(raw: bytes, *, snapshot: str, limit: int=12,
             raise ValueError("OSRM reference endpoint or version was not available")
     n=len(cases)
     ensure_geometry_denominators(counts,("geometry_dmn_single","geometry_dmn_temporal",
+                                          "geometry_dmn_hypothesis_experiment",
                                           "geometry_external"),n)
+    for name in ("dmn_single","dmn_temporal","dmn_hypothesis_experiment"):
+        if (counts[name+"_correct_edge"]+counts[name+"_wrong_confident_edge"]
+                +counts[name+"_withheld"]!=n):
+            raise AssertionError("Missing or duplicate directed-edge classifications")
     return {
         "classification":"public-UK-OSM-generated-GPS-local-OSRM-Match-vs-DMN-diagnostic",
         "source_snapshot":snapshot,
@@ -199,6 +227,20 @@ def evaluate(raw: bytes, *, snapshot: str, limit: int=12,
         "dmn_temporal_correct_directed_edge":counts["dmn_temporal_correct_edge"],
         "dmn_temporal_wrong_confident_edge":counts["dmn_temporal_wrong_confident_edge"],
         "dmn_temporal_withheld":counts["dmn_temporal_withheld"],
+        "dmn_hypothesis_experiment_correct_directed_edge":counts["dmn_hypothesis_experiment_correct_edge"],
+        "dmn_hypothesis_experiment_wrong_confident_edge":counts["dmn_hypothesis_experiment_wrong_confident_edge"],
+        "dmn_hypothesis_experiment_withheld":counts["dmn_hypothesis_experiment_withheld"],
+        "hypothesis_rescued_legacy_withheld":counts["hypothesis_rescued_legacy_withheld"],
+        "hypothesis_new_wrong_confident":counts["hypothesis_new_wrong_confident"],
+        "hypothesis_lost_legacy_correct":counts["hypothesis_lost_legacy_correct"],
+        "legacy_initial_confident_anchors":counts["legacy_initial_anchor"],
+        "legacy_initially_unanchored":counts["legacy_initially_unanchored"],
+        "legacy_final_outcome_reasons":{
+            key[len("legacy_reason_"):]:value for key,value in sorted(counts.items())
+            if key.startswith("legacy_reason_")},
+        "hypothesis_final_outcome_reasons":{
+            key[len("hypothesis_reason_"):]:value for key,value in sorted(counts.items())
+            if key.startswith("hypothesis_reason_")},
         "osrm_match_ok_cases":counts["osrm_ok"],
         "osrm_no_match_cases":counts["osrm_no_match"],
         "osrm_tracepoints_total":counts["osrm_fix_points"],
@@ -218,6 +260,7 @@ def evaluate(raw: bytes, *, snapshot: str, limit: int=12,
         "common_last_fix_source_geometry_proxy":{
             "dmn_single":geometry_summary(counts,"geometry_dmn_single"),
             "dmn_temporal":geometry_summary(counts,"geometry_dmn_temporal"),
+            "dmn_hypothesis_experiment":geometry_summary(counts,"geometry_dmn_hypothesis_experiment"),
             "osrm_match":geometry_summary(counts,"geometry_external"),
         },
         "common_proxy_is_independent_truth":False,
@@ -229,6 +272,7 @@ def evaluate(raw: bytes, *, snapshot: str, limit: int=12,
             "OSRM Match snaps to independently profiled OSRM roads and does not return DMN edge IDs",
             "OSRM snapped point proximity does not demonstrate correct direction, road, lane or legal movement",
             "OSRM Match uses 4-point trace and HTTP; DMN candidate metrics evaluate the final fix",
+            "DMN four-fix hypothesis tracker is experimental, separately scored, and not promoted as the navigation engine",
             "OSRM HTTP latency is not comparable to in-process Python matching latency",
         ],
     }
