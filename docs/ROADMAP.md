@@ -1,3 +1,5 @@
+> **Historical R&D checklist — not the active agreed programme (15 October 2026).** The [engine-first development programme](DMN_ENGINE_FIRST_PROGRAMME.md) and [22 open decision questions](DMN_DECISION_QUESTIONS.md) supersede unapproved stage-order, standalone/mobile milestone and optional machine-learning feature assumptions below. Keep checked items and older evidence for auditability. This file is not a current pass/fail or completion scorecard.
+
 # DMN research purpose
 
 This historical checklist covers test-harness and navigation-component research.
