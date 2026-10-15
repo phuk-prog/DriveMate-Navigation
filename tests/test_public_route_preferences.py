@@ -23,6 +23,8 @@ class PreferenceCaseDiscoveryTests(unittest.TestCase):
         r=probe_preference_diversity(graph,snapshot_id="synthetic-fixture",maximum_pairs=40)
         self.assertGreater(r["map_derived_preference_pairs_checked"],0)
         self.assertGreater(r["fastest_and_shortest_different_path_pairs"],0)
+        self.assertGreaterEqual(r["map_derived_pairs_with_multiple_routes"],
+                                r["fastest_and_shortest_different_path_pairs"])
         self.assertEqual(r["route_preference_discriminating_coverage"],
                          "MAP_DIVERGENCE_OBSERVED")
         self.assertFalse(r["independently_verified_traffic_legality_or_lane_truth"])

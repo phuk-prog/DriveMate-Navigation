@@ -28,7 +28,7 @@ def _road_pairs(graph: RoadGraph, *, maximum_pairs: int):
         while frontier and traversed < 250:
             node, incoming, depth = frontier.popleft()
             traversed += 1
-            if 5 <= depth <= 20 and (depth == 5 or depth % 3 == 0):
+            if 4 <= depth <= 20 and (depth == 4 or depth % 3 == 0):
                 item = (origin, node)
                 if item not in sent and origin != node:
                     sent.add(item)
