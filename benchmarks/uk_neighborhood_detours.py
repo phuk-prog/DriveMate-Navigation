@@ -183,6 +183,26 @@ def evaluate_neighborhood(neighborhood_raw: bytes, restriction_raw: bytes,
             "full_network_completeness_established":False}
 
 
+def expanded_bbox(bbox: str) -> str | None:
+    """At most one bounded retry. Never broaden a test to a whole city."""
+    parts=[float(v) for v in bbox.split(",")]
+    if len(parts)!=4 or not all(map(isfinite,parts)):
+        raise ValueError("Invalid bbox")
+    west,south,east,north=parts
+    if not (west<east and south<north):
+        raise ValueError("Invalid bbox dimensions")
+    lat=(south+north)/2
+    lon=(west+east)/2
+    radius=max((east-west)/2,(north-south)/2)
+    new_radius=min(0.014,round(radius*2,6))
+    if new_radius <= radius:
+        return None
+    vals=(lon-new_radius,lat-new_radius,lon+new_radius,lat+new_radius)
+    if not (-180<vals[0]<vals[2]<180 and -90<vals[1]<vals[3]<90):
+        return None
+    return ",".join(f"{v:.6f}" for v in vals)
+
+
 def execute_public_neighborhoods(source_pbf: Path, restriction_xml: Path,
                                  *, snapshot: str, limit: int=4,
                                  radius_deg: float=0.007,
@@ -196,27 +216,47 @@ def execute_public_neighborhoods(source_pbf: Path, restriction_xml: Path,
     with tempfile.TemporaryDirectory(prefix="public-uk-neighborhood-",dir=RESULTS) as directory:
         temp=Path(directory)
         for i,candidate in enumerate(candidates):
-            local_pbf=temp/f"area-{i}.osm.pbf"
-            local_xml=temp/f"area-{i}.osm"
-            try:
-                runner(("osmium","extract","--strategy","complete_ways",
-                        "--bbox",candidate["bbox"],
-                        str(source_pbf),"-o",str(local_pbf)),
-                       check=True,timeout=90,stdout=subprocess.DEVNULL)
-                runner(("osmium","cat",str(local_pbf),"-o",str(local_xml),
-                        "-f","osm,add_metadata=false"),
-                       check=True,timeout=60,stdout=subprocess.DEVNULL)
-                if local_xml.stat().st_size>MAX_NEIGHBORHOOD_BYTES:
-                    record={"status":"unsupported","reason":"prototype_graph_too_large",
+            boxes=[candidate["bbox"]]
+            bigger=expanded_bbox(candidate["bbox"])
+            if bigger is not None:
+                boxes.append(bigger)
+            # Retry only when a missing referenced road or neighboring turn
+            # relation could be completed by a slightly larger public extract.
+            # No exceptions are converted into a passing route.
+            record=None
+            first_status=None
+            attempts=0
+            for attempt,bbox in enumerate(boxes):
+                attempts+=1
+                local_pbf=temp/f"area-{i}-{attempt}.osm.pbf"
+                local_xml=temp/f"area-{i}-{attempt}.osm"
+                try:
+                    runner(("osmium","extract","--strategy","complete_ways",
+                            "--bbox",bbox,str(source_pbf),"-o",str(local_pbf)),
+                           check=True,timeout=90,stdout=subprocess.DEVNULL)
+                    runner(("osmium","cat",str(local_pbf),"-o",str(local_xml),
+                            "-f","osm,add_metadata=false"),
+                           check=True,timeout=60,stdout=subprocess.DEVNULL)
+                    if local_xml.stat().st_size>MAX_NEIGHBORHOOD_BYTES:
+                        record={"status":"unsupported","reason":"prototype_graph_too_large",
+                                "rule_pairs":0,"detours_found":0,"no_route_within_buffer":0,
+                                "independent_legality":False}
+                    else:
+                        record=evaluate_neighborhood(local_xml.read_bytes(),restriction_raw,
+                                   relation_id=candidate["relation_id"],snapshot=snapshot)
+                except (subprocess.CalledProcessError,subprocess.TimeoutExpired,OSError):
+                    record={"status":"unsupported","reason":"osmium_extraction_failed",
                             "rule_pairs":0,"detours_found":0,"no_route_within_buffer":0,
                             "independent_legality":False}
-                else:
-                    record=evaluate_neighborhood(local_xml.read_bytes(),restriction_raw,
-                               relation_id=candidate["relation_id"],snapshot=snapshot)
-            except (subprocess.CalledProcessError,subprocess.TimeoutExpired,OSError):
-                record={"status":"unsupported","reason":"osmium_extraction_failed",
-                        "rule_pairs":0,"detours_found":0,"no_route_within_buffer":0,
-                        "independent_legality":False}
+                if first_status is None:
+                    first_status=record["status"]
+                if (record.get("reason") not in
+                        {"incomplete_neighbor_restriction","missing_target_way_or_via"}):
+                    break
+            assert record is not None
+            record["extraction_attempts"]=attempts
+            record["recovered_by_wider_public_buffer"]=(
+                first_status=="unsupported" and record["status"]=="map_rule_checked")
             records.append(record)
     return {
         "classification":"real-public-UK-buffered-graph-OSM-rule-only",
@@ -225,6 +265,8 @@ def execute_public_neighborhoods(source_pbf: Path, restriction_xml: Path,
         "proposed_neighborhoods":limit,
         "neighborhoods_prepared":len(records),
         "neighborhoods_with_checked_rules":sum(x["status"]=="map_rule_checked" for x in records),
+        "buffer_expansion_retries":sum(x["extraction_attempts"]-1 for x in records),
+        "neighborhoods_recovered_with_wider_buffer":sum(x["recovered_by_wider_public_buffer"] for x in records),
         "map_rule_pairs_checked":sum(x["rule_pairs"] for x in records),
         "detours_found_in_bounded_real_road_graph":sum(x["detours_found"] for x in records),
         "no_route_in_bounded_graph_unknown":sum(x["no_route_within_buffer"] for x in records),

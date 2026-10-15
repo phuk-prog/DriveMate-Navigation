@@ -2,7 +2,7 @@
 import unittest
 from pathlib import Path
 from benchmarks.uk_neighborhood_detours import (find_candidates, evaluate_neighborhood,
-                                               _parse_public)
+                                               _parse_public, expanded_bbox)
 
 ROOT=Path(__file__).resolve().parents[1]
 RAW=(ROOT/"benchmarks/fixtures/synthetic-osm-junction.xml").read_bytes()
@@ -55,6 +55,16 @@ class BufferedDetourTests(unittest.TestCase):
     def test_bounds_of_proposed_areas(self):
         with self.assertRaises(ValueError):find_candidates(RAW,limit=100)
         with self.assertRaises(ValueError):find_candidates(RAW,radius_deg=0.2)
+
+
+    def test_wider_buffer_is_bounded(self):
+        wider=expanded_bbox("-2.007000,53.000000,-1.993000,53.014000")
+        self.assertEqual(wider,"-2.014000,52.993000,-1.986000,53.021000")
+        self.assertIsNone(expanded_bbox("-2.014000,53.000000,-1.986000,53.028000"))
+
+    def test_invalid_bbox_is_rejected(self):
+        with self.assertRaises(ValueError):
+            expanded_bbox("-2.1,53.1,-2.2,53.2")
 
 if __name__=="__main__":
     unittest.main()
