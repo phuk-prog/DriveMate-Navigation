@@ -27,3 +27,17 @@ The first unit run exposed a **stationary dual-carriageway overconfidence** erro
 [GitHub Actions run 38738954488](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38738954488) succeeded: **159 Python unit/contract tests**, public source `geofabrik-260901` SHA-256 `b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5`, 2,023 vertices and 1,202 directed edges. It examined **30 distinct mapped edges × 3 simulated good readings = 90/90 correctly assigned directed edges**, zero confident wrong matches, plus **90/90 weak, stale or spike readings withheld**. There were no ambiguous results among those first deliberately straightforward moving fix cases. **No true phone GPS measurement, independent position oracle, sensor fusion or external competitors**. The high pass fraction is not a real-field accuracy score.
 
 The next committed extension adds explicit bidirectional road overlap, stopped/heading-less ambiguity, two closely parallel same-direction roads, and a clean fix after a rejected speed-spike, all with separate counts. It specifically avoids confident assertions when equally credible close directed roads share the same heading. The public UK rerun should establish the new denominators; previous clean results remain a separate benchmark.
+
+## Verified challenging second UK GPS replay (15 October 2026)
+
+The [second opt-in GPS Actions run 38739434272](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38739434272) **passed 163/163 Python unit and contract tests** and executed the wider deterministic replay on exactly the **same 2026-09-01 Geofabrik bounded Greater Manchester map snapshot** (SHA-256 `b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5`, 2,023 vertices, 1,202 directed graph edges). It used *synthetically injected GPS observations tied to public map geometry*, not independently measured physical vehicle positions.
+
+| Scenario cohort | Confirmed right edge | Confident wrong edge | Withheld (ambiguous/unknown) | Test total |
+|---|---:|---:|---:|---:|
+| Normal mapped-edge midpoint + controlled offsets | **74** | **0** | **16 ambiguous** | **90** |
+| Bidirectional road overlap with movement heading | **10** | **0** | **20 withheld** | **30** |
+| Stopped/headingless on bidirectional overlap | Not applicable | **0 confident** | **15 withheld** | **15** |
+| Clean fix after rejected speed spike | **28** | **0** | **2 withheld** | **30** |
+| Low-accuracy, stale and speed-spike adversarial samples | Not applicable | **0 confident** | **90 safely withheld** | **90** |
+
+The 74/90 rather than the previous 90/90 is intentional: the matcher no longer confidently chooses one of two close plausible *same-direction* road links from a single location point. The old 90/90 result used a less cautious matcher; it **is not** evidence that version was better or safer. The **20 withheld moving overlap directions and 2 withheld recovery events** remain missing capability/coverage under the user's goal to beat competing navigation engines: investigate temporal sequence matching, directional topology, heading uncertainty and route continuity without promoting false matches. Where physical sensor data is unavailable, don't label simulated ground truth as field accuracy or award category scores. No independent legal/oracle, Google/Waze, Android device, real vehicle speed limit or full turn/arrival replay ran. Raw synthetic fixes and public road geometry were not attached as driving histories. The CI artifact contains aggregate counts only.
