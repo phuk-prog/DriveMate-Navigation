@@ -232,10 +232,24 @@ def evaluate_neighborhood(neighborhood_raw: bytes, restriction_raw: bytes,
     # A second, disjoint sample objective: search a bounded number of other
     # map-graph-origin/destination pairs across this same source-complete
     # neighborhood. Do not mistake OSM semantics for independent road truth.
+    captured_cases=[]
+    def capture_case(pair_index, source, destination, fastest, shortest,
+                     balanced, options):
+        from benchmarks.uk_preference_case_register import summarise_discriminating_case
+        captured_cases.append(summarise_discriminating_case(
+            snapshot, imported.metadata["source_sha256"], pair_index,
+            source, destination, fastest, shortest, balanced, options))
+
     diversity=probe_preference_diversity(
         graph,snapshot_id=imported.metadata["source_sha256"],
-        maximum_pairs=48)
+        maximum_pairs=48, on_discriminating_case=capture_case)
+    from benchmarks.uk_preference_case_register import validate_case_register
+    register_validation=validate_case_register(
+        captured_cases, expected_count=diversity["fastest_and_shortest_different_path_pairs"])
     return {"status":"map_rule_checked",
+            "discriminating_case_register":captured_cases,
+            "case_register_sha256":register_validation["case_register_sha256"],
+            "case_register_count":register_validation["case_count"],
             "rule_pairs":len(pairs),
             "detours_found":found,
             "no_route_within_buffer":missing,
@@ -358,6 +372,13 @@ def execute_public_neighborhoods(source_pbf: Path, restriction_xml: Path,
             x.get("neighborhood_pairs_with_multiple_routes",0) for x in records),
         "neighborhood_fastest_shortest_divergences":sum(
             x.get("neighborhood_fastest_shortest_divergences",0) for x in records),
+        "discriminating_case_register": [
+            c for x in records for c in x.get("discriminating_case_register",[])],
+        "case_register_counts_by_neighborhood": [
+            x.get("case_register_count",0) for x in records],
+        "case_register_all_cases_have_unknown_legality":all(
+            c.get("independent_current_uk_road_legality")=="UNKNOWN"
+            for x in records for c in x.get("discriminating_case_register",[])),
         "neighborhood_distinct_balanced_cases":sum(
             x.get("neighborhood_distinct_balanced_cases",0) for x in records),
         "neighborhoods_with_physical_cycles":sum(

@@ -175,7 +175,8 @@ def _road_pairs(graph: RoadGraph, *, maximum_pairs: int):
 
 
 def probe_preference_diversity(graph: RoadGraph, *,
-                               snapshot_id: str, maximum_pairs: int = 96
+                               snapshot_id: str, maximum_pairs: int = 96,
+                               on_discriminating_case=None
                                ) -> dict[str, object]:
     """Only aggregate source-map path diversity, not road legality or quality."""
     considered = 0
@@ -184,6 +185,7 @@ def probe_preference_diversity(graph: RoadGraph, *,
     with_distinct_balanced = 0
     no_route = 0
     for source, dest in _road_pairs(graph, maximum_pairs=maximum_pairs):
+        pair_index = considered
         considered += 1
         try:
             routes = generate_route_candidates(graph, source, dest,
@@ -196,7 +198,10 @@ def probe_preference_diversity(graph: RoadGraph, *,
         f = next(x for x in routes if "fastest" in x.generated_by)
         s = next(x for x in routes if "shortest" in x.generated_by)
         b = next(x for x in routes if "balanced" in x.generated_by)
-        different_shortest_fastest += int(f.route.edge_ids != s.route.edge_ids)
+        is_different = f.route.edge_ids != s.route.edge_ids
+        different_shortest_fastest += int(is_different)
+        if is_different and on_discriminating_case is not None:
+            on_discriminating_case(pair_index, source, dest, f, s, b, routes)
         with_distinct_balanced += int(
             b.route.edge_ids != f.route.edge_ids and
             b.route.edge_ids != s.route.edge_ids)
