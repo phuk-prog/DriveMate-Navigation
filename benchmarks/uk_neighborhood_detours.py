@@ -195,7 +195,7 @@ def expanded_bbox(bbox: str) -> str | None:
     lon=(west+east)/2
     radius=max((east-west)/2,(north-south)/2)
     new_radius=min(0.014,round(radius*2,6))
-    if new_radius <= radius:
+    if new_radius <= round(radius, 6):
         return None
     vals=(lon-new_radius,lat-new_radius,lon+new_radius,lat+new_radius)
     if not (-180<vals[0]<vals[2]<180 and -90<vals[1]<vals[3]<90):
