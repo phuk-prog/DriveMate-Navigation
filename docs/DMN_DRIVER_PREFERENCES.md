@@ -54,3 +54,21 @@ The new `benchmarks/public_route_preferences.py` walks bounded non-personal road
 ### Targeted second opt-in
 
 After the initial eight easy cases lacked path diversity, a revised scanner now explores up to 96 bounded, map-derived longer public-road route pairs and reports whether shortest and fastest actually differ. Run the official pinned Greater Manchester opt-in once. A green GitHub Actions job only establishes that the study executed; its `route_preference_discriminating_coverage` field determines whether it supplies useful diversity evidence, and the study remains NOT a legal truth oracle.
+
+## Executed preference generator validation — 15 October 2026
+
+**[Research GitHub Actions 38781316076](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38781316076) GREEN:** 258/258 Python tests for the research branch after a test-fixture correction. The new route candidate generator computes fastest, shortest, balanced and bounded alternative paths on a directed mapped graph, but never certifies real UK driving legality without independent verification.
+
+**[Pinned UK smoke 38781548543](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38781548543) GREEN:** eight of eight easy Greater Manchester OSM source-generated journeys checked under route preference generation; **zero of eight** had distinct candidate paths and the partial subset imported **zero** prohibited-turn pairs. This is a coverage deficiency, not evidence that route preference has no effect.
+
+**[Hard-case scanner test 38782136860](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38782136860) GREEN:** 262/262 Python tests, including a regression ensuring the scanner detects contrasting fast and short routes in a synthetic unit-only fixture (which is NOT a UK road accuracy test).
+
+**[Expanded public UK study 38782273948](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38782273948) GREEN:** **96** additional real OSM graph-derived pairs scanned; **0/96** yielded multiple candidate paths, **0/96** fastest vs shortest path divergence, **0/96** a distinct balanced route. No user-provided journeys were used. The machine report correctly classifies `route_preference_discriminating_coverage=INSUFFICIENT`. Same pinned Geofabrik `geofabrik-260901`, source XML SHA256 `b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5`; partial imported graph 2,023 vertices and 1,202 directed edges; **zero** imported prohibited-turn pairs. No real current UK road-rule truth, lane truth, live traffic, consumer-application winner or independently judged score was established.
+
+### Required next source/data improvement, not a scoring shortcut
+
+1. Diagnose the extracted graph's usable connected/cyclic road components and restriction completeness; current historical 0/96 cohort is *not representative* of route-choice competition. Retain it as a reproducible control.
+2. Expand or relocate the public UK data area carefully to include actually connected alternative corridors. Preserve bounded import limits, require complete road/node and all relevant restriction data; where an unsupported conditional, via-way restriction, incomplete road or oversized region prevents safe import, mark **UNSUPPORTED** instead of silently omitting its restriction.
+3. Choose challenging start/destination pairs near legally corroborated complex junctions, but include held-out ordinary controls. Collect dated highway authority/National Highways plans, traffic orders, confirmed installed signs and lawful corroborating imagery; only award a legality or lane judgment where independently established.
+4. Rerun each driver mode and the independent fastest-route Dijkstra/A* baselines on identical public OSM source versions, then compare legally executable reference engines on exactly comparable features. Don't award `/10` scores for an OSM-self-consistency probe.
+5. Keep the existing research branch isolated, one heavy test at a time, production DriveMate unchanged, APK release blocked until mandatory navigation robot and safety/regression tests pass.
