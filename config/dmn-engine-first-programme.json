@@ -117,7 +117,9 @@
     "full_ranking_requires_comparable_complete_results": true,
     "provider_consensus_is_legal_truth": false,
     "no_unapproved_billable_requests": true,
-    "no_unauthorized_automated_provider_collection": true
+    "no_unauthorized_automated_provider_collection": true,
+    "non_equivalent_references_remain_not_tested": true,
+    "permitted_provider_observations_labelled_not_directly_comparable": true
   },
   "historical_evidence_not_modified": true,
   "minimum_reference_families": 10,
@@ -132,6 +134,13 @@
       "selection": "B",
       "policy": "permitted_free_comparisons_first_request_owner_approval_before_any_paid_test",
       "paid_usage_authorized": false
+    },
+    "3": {
+      "date": "2026-10-15",
+      "selection": "A+C",
+      "policy": "retain_not_tested_references_and_allow_separate_legal_observations",
+      "comparable_score_for_untested": false,
+      "observation_used_in_head_to_head_rank": false
     }
   }
 }
