@@ -17,3 +17,7 @@ Run these sequentially to limit CI usage; preserve their historical baseline art
 ## OSRM geometry proxy after DMN speed gate
 
 [Actual post-improvement run 38765331956](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38765331956) passed all 221 Python tests and completed the external OSRM local map matching on pinned Geofabrik UK map. The **same 12 final GPS observations** gave DMN single-fix **6/12 within 5 m, 6 withheld**, DMN temporal **8/12 within 5 m, 4 withheld**, OSRM Match **12/12 within 5 m, 0 withheld**, with **all near cases** having another mapped allowed directed road within 10 m (often simply the reverse edge on the same two-way geometry). No road-direction truth or independent surveyed position. This test is only a geometry-proximity comparison; **do not rank providers** from it. Valhalla comparison is the next single opt-in.
+
+## Valhalla geometry proxy after DMN speed gate
+
+[Actual post-improvement run 38765532707](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38765532707) GREEN, **221/221 Python tests** and real local Valhalla trace matching on the same pinned UK map. Common last-fix geometry proxy on identical 12 cases: DMN single 6/12 near, 6 withheld; DMN temporal 8/12 near, 4 withheld; Valhalla 9/12 within 5 m of the generating OSM link, 1/12 farther than 5 m, and 2/12 withheld. All nine near Valhalla cases had another plausible directed OSM link within 10 m, so this still **cannot verify road/direction**, lane or safe real GPS. GraphHopper is next sequential opt-in.
