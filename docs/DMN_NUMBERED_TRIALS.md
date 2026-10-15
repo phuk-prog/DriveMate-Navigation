@@ -100,3 +100,31 @@ unsupported cases cannot receive a full score. Next additional original-roster
 reference work is a separately frozen routing contract for self-hosted BRouter,
 which may also enable ORS routing comparisons. Do not substitute snapping for
 ambiguity, fault, temporal-recovery or legal-driving checks.
+
+## ROUTE-001 frozen acceptance: BRouter integration stage
+
+Four explicitly declared synthetic routes use a translated invented one-way
+rectangular cycle. Bottom runs east, right north, top west, left south. Two
+requests travel directly east/west; two request the opposite direction and must
+follow the full permitted detour. Each simple directed path is unique. Expectations
+are in `benchmarks/fixtures/synthetic-route-001.json`, fixed before BRouter
+execution or matcher tuning. This is an analytical synthetic oracle, not
+independent surveyed road or legal truth. GPS-001 rankings stay separate.
+
+Require both endpoints within 2 m, all returned vertices and quarter/mid/three-quarter
+segment samples within 2 m of the declared path, monotonically forward path
+progress (0.5 m numerical tolerance) and path length within 5 m of expectation.
+No ETA or performance ranking. Synthetic score: `10 * passed / 4`, ties share
+rank. All twelve external families plus DMN retain per-case execution status.
+Only BRouter and DMN are scheduled in this bounded integration stage; existing
+OSRM/Valhalla/GraphHopper/ORS route adapters still need integration with this new
+contract, so no cross-category GPS score is substituted for routing execution.
+
+BRouter uses the official 1.7.10 release ZIP (SHA-256
+`023fec3ba997758e8cd7ab9e1bae52e962af3f00b57683e3de86b84ffad01532`), Java 17,
+car-vario defaults. Map builder stages follow upstream MapcreatorTest/OsmFastCutter,
+PosUnifier and WayLinker using our invented PBF, no elevation data or downloads.
+Missing filter profiles come from source commit
+`4d2639af77ea5ed9c30d3e400764eb6f9e8522da`. Record JAR, profile, lookup and generated
+segment hashes, exact run SHA and CI URL. Startup/import/HTTP errors remain
+unavailable execution; no mocked or inferred route may count as a pass.
