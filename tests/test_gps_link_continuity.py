@@ -8,6 +8,11 @@ from benchmarks.navigation_trial import run_dmn
 
 
 class LinkContinuityTests(unittest.TestCase):
+    def test_all_six_frozen_trial_cases_keep_passing(self):
+        report = run_dmn()
+        self.assertEqual(len(report['cases']), 6)
+        self.assertTrue(all(c['outcome'] == 'PASS' for c in report['cases']))
+
     def test_straight_same_way_segmentation_does_not_create_competing_roads(self):
         report = run_dmn()
         for case in report['cases'][:4]:

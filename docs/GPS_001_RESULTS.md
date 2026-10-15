@@ -86,12 +86,41 @@ all six cases. This demonstrates an adapter-configuration cause for this trial,
 not a general OSRM navigation defect. Historical UK benchmark options remain
 unchanged. Both configurations' actual reports are retained.
 
-**Regression checks:** 349 local tests pass, including false parallel-road
+**Regression checks:** the final 352 local tests pass, including false parallel-road
 confidence, prohibited intermediate turns, connector search limits, wrong-way
 progress and impossible road-transition travel. All three retest jobs and the
-ordinary research CI passed. Real-map regression still needs the separate
-pinned UK replay after these new matcher changes; its result must not be
-inferred from this synthetic score.
+ordinary research CI passed. This does not mean all map-regression acceptance
+checks passed: the distinct real-map outcome below remains unresolved.
+
+## Additional UK regression — an open coverage cost, not concealed
+
+The first UK replay after these changes reduced generating-edge positives from
+24/40 to 17/40, with zero confident wrong assignments and 23 withheld. The
+12-case cohort initially fell from 8 correct to 6. This was detected despite
+successful CI because the pre-existing workflow did not gate historical coverage.
+[Original regression](../references/gps001-uk-regression-20261015.json).
+
+Sharing the candidate policy fixed an independently reproduced duplicate-road
+case but did not restore those aggregate counts. The subsequent
+[per-case diagnostic run](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38808750926)
+identified exactly seven additional ambiguous cases, TGP-006, -008, -013, -015,
+-016, -019 and -039. Each has one direct candidate but two time-reachable
+candidates on the same OSM way. No other-way candidate was added in those seven.
+[Full diagnostic evidence](../references/gps001-uk-diagnostics-20261015.json).
+
+A further bounded guard retains an already best-supported direct fragment only
+when alternatives are its immediate forward continuation on the same way;
+different ways, reversed fragments and prohibited moves remain ambiguous. The
+[latest executed run 38809228324](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38809228324)
+restored the 12-case result to **8 correct / 0 wrong / 4 withheld**, but the
+40-case result remains **17 correct / 0 wrong / 23 withheld**.
+[Actual final UK reports](../references/gps001-uk-final-20261015.json).
+
+The seven remaining cases require more topology/trajectory evidence. The old
+24 positives are not independently surveyed truth, and the new abstentions are
+not proof of better safety. Do not force confident matches just to recover a
+historical number. **GPS-001 synthetic improvement is demonstrated; general
+UK-map coverage improvement is not. This open tradeoff blocks promotion.**
 
 ## Next tests
 
