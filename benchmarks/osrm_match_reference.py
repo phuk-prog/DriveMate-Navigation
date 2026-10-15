@@ -110,7 +110,8 @@ def generate_cases(imported, limit: int):
 
 
 def evaluate(raw: bytes, *, snapshot: str, limit: int=12,
-             request: Callable[[str],dict]=request_local_osrm_match) -> dict:
+             request: Callable[[str],dict]=request_local_osrm_match,
+             live_osrm: bool=False) -> dict:
     if not 1<=limit<=24:
         raise ValueError("Bounded sample count must be in 1..24")
     imported=import_osm_xml(raw,provenance=Provenance(
@@ -188,7 +189,8 @@ def evaluate(raw: bytes, *, snapshot: str, limit: int=12,
         "osrm_snapped_farther_than_20m_from_generated_input":counts["osrm_snap_more_than_20m_from_input"],
         "osrm_match_requests_executed":len(osrm_latencies),
         "osrm_match_http_request_median_ms":round(sorted(osrm_latencies)[n//2],4),
-        "external_reference_families_executed":1,
+        "external_reference_families_executed":int(live_osrm),
+        "execution_evidence":"live_local_http" if live_osrm else "injected_test_double",
         "external_reference_version":"OSRM 5.27.1 (locally containerized)",
         "identical_public_osm_extract_supplied":True,
         "identical_routing_profiles":False,
@@ -215,7 +217,8 @@ def main():
     args=p.parse_args()
     raw=_public_file(args.input).read_bytes()
     wait_for_local_router()
-    print(json.dumps(evaluate(raw,snapshot=args.snapshot,limit=args.samples),indent=2))
+    print(json.dumps(evaluate(raw,snapshot=args.snapshot,limit=args.samples,
+                              live_osrm=True),indent=2))
 
 
 if __name__=="__main__":
