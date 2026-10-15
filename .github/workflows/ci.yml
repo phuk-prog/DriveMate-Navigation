@@ -38,7 +38,7 @@ jobs:
           python -m benchmarks.run --repeat 30
           python -m benchmarks.search_comparison --size 14 --repeat 5
       - name: Public UK road import and dual-engine smoke (explicit marker only)
-        if: contains(github.event.head_commit.message, '[uk-road-smoke]')
+        if: contains(github.event.head_commit.message, '[uk-road-smoke]') || contains(github.event.pull_request.title, '[uk-road-smoke]')
         timeout-minutes: 9
         shell: bash
         run: |
@@ -55,7 +55,39 @@ jobs:
             --snapshot "geofabrik-260901" \
             --region "independent public UK test area" --execute
           python -m benchmarks.public_uk_probe --input results/public-road-subset.osm \
-            --snapshot "geofabrik-260901" --samples 8
+            --snapshot "geofabrik-260901" --samples 8 | tee results/public-road-smoke.json
+      - name: Publish honest real-road smoke counts
+        if: always() && (contains(github.event.head_commit.message, '[uk-road-smoke]') || contains(github.event.pull_request.title, '[uk-road-smoke]'))
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          p = Path('results/public-road-smoke.json')
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as out:
+              if not p.exists():
+                  out.write('### Public road smoke: NO EXECUTION EVIDENCE\\nNo navigation score can be assigned.\\n')
+              else:
+                  d = json.loads(p.read_text())
+                  out.write(
+                      '### Public road smoke (algorithm agreement, not independent legality)\\n'
+                      f'- Road source: {d["source_snapshot"]}\\n'
+                      f'- Routable road scenarios run: {d["scenario_count"]}\\n'
+                      f'- Directed graph edges: {d["road_graph_directed_edges"]}\\n'
+                      f'- Imported prohibited turn pairs: {d["node_via_forbidden_turn_pairs"]}\\n'
+                      f'- External reference engines in this step: {d["external_engines_executed"]}\\n'
+                      '- GPS, speed-limit correctness, sensor fusion, lane guidance, voice and arrival: NOT TESTED by this smoke.\\n'
+                  )
+          PY
+      - name: Upload first public-road test evidence
+        if: always() && (contains(github.event.head_commit.message, '[uk-road-smoke]') || contains(github.event.pull_request.title, '[uk-road-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: first-dmn-road-smoke
+          path: results/public-road-smoke.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: OSRM MLD public reference smoke (single explicit run only)
         if: contains(github.event.head_commit.message, '[osrm-reference-smoke]')
         timeout-minutes: 12
