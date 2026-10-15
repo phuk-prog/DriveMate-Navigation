@@ -25,3 +25,9 @@ The actual source-matched cases show five sizable DMN-fastest-map-distance vs OS
 - `dmn-mapcase-295d57396b784f578e59e668`: OSRM approximately 85.226 m shorter.
 
 These gaps **do not identify a winner or a DMN failure**: DMN's prototype model may forbid/avoid a movement that OSRM's broader/different car profile permits, and the bounded buffer or geometry cost may account for another difference. Reconstruct their exact directed approaches privately from the pinned public data; independently check signed restrictions/official TROs, road geometry, sources and arrival movement. Do not widen access or remove turn restrictions simply to shrink the gap. The comparator now triages materially divergent routes in priority order, without asserting legal superiority.
+
+## Exact directed interior path investigation
+
+A follow-up local OSRM option requests `annotations=nodes` for the same 25 UK cases, keeping original OSM node IDs ephemeral inside the research process. These OSRM node sequences are compared to the *same exact directed node pairs* in DMN's conservatively imported graph. The diagnostic separates: interior fully mapped and turn-compatible; mapped prohibited turn conflict; incomplete/non-drivable graph segments; or unsupported annotations. Parallel directed ways are handled as alternatives, not silently merged.
+
+The persisted JSON contains only sanitized counters and case hashes, never original OSM IDs or route geometry. Even if an interior node chain matches, it does **not** certify the entrance/exit approach, roundabout lanes, current UK signage/TROs, vehicle arrival-side, live traffic, or general engine superiority. The priority remains investigating the five observed large distance gaps before any routing modifications.

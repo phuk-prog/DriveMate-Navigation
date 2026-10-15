@@ -12,6 +12,7 @@ from math import isfinite
 from typing import Callable, Sequence
 
 from benchmarks.osrm_live_reference import local_osrm_request, local_route_url
+from benchmarks.uk_osrm_interior_audit import audit_osrm_interior_nodes, summarized_interior_audits
 
 SNAP_MAX_METRES = 15.0
 RESULT_STATUSES = frozenset((
@@ -30,7 +31,8 @@ def _metres(value: object, label: str) -> float:
 
 def compare_osrm_case(case: dict, origin: tuple[float, float],
                       destination: tuple[float, float], *,
-                      request: Callable[[str], dict] = local_osrm_request) -> dict:
+                      request: Callable[[str], dict] = local_osrm_request,
+                      graph=None) -> dict:
     """Query local OSRM once using precisely the DMN public-map endpoints.
 
     Return only a hashed case identifier, numerical distances/durations,
@@ -43,7 +45,10 @@ def compare_osrm_case(case: dict, origin: tuple[float, float],
     case_id = case.get("case_id")
     if not isinstance(case_id, str) or not case_id.startswith("dmn-mapcase-"):
         raise ValueError("Invalid deterministic case identifier")
-    response = request(local_route_url(origin, destination))
+    url = local_route_url(origin, destination)
+    # OSRM's original internal OSM node references are ephemeral and never
+    # included in the written comparison report or GitHub Actions artifacts.
+    response = request(url + "&annotations=nodes" if graph is not None else url)
     if not isinstance(response, dict):
         raise ValueError("Invalid local OSRM response")
     code = response.get("code")
@@ -70,6 +75,14 @@ def compare_osrm_case(case: dict, origin: tuple[float, float],
         raise ValueError("Incomplete OSRM route or waypoint response")
     origin_snap = _metres(waypoints[0].get("distance"), "origin snap")
     destination_snap = _metres(waypoints[1].get("distance"), "destination snap")
+    if graph is not None:
+        legs = routes[0].get("legs")
+        nodes = None
+        if isinstance(legs, list) and len(legs) == 1 and isinstance(legs[0], dict):
+            annotation = legs[0].get("annotation")
+            if isinstance(annotation, dict):
+                nodes = annotation.get("nodes")
+        result["route_node_audit"] = audit_osrm_interior_nodes(graph, nodes)
     result.update({
         "osrm_distance_m": round(_metres(routes[0].get("distance"), "route distance"), 3),
         "osrm_estimated_seconds": round(_metres(routes[0].get("duration"), "route duration"), 3),
@@ -104,6 +117,8 @@ def distance_discrepancy_triage(rows: Sequence[dict]) -> dict:
                 "absolute_distance_gap_m": round(absolute_gap, 3),
                 "relative_distance_gap_pct": round(gap_pct, 2),
                 "review_classification": "HIGH_GAP_VERIFY_TURN_AND_MAP_TRUTH",
+                "interior_audit_status": row.get("route_node_audit", {}).get(
+                    "audit_status", "NOT_EXECUTED"),
             })
         elif absolute_gap >= 15 and gap_pct >= 2:
             secondary += 1
@@ -170,6 +185,7 @@ def validate_osrm_case_results(cases: Sequence[dict], rows: Sequence[dict],
         "travel_time_truth_established": False,
         "route_quality_ranking_valid": False,
         "distance_discrepancy_review": distance_discrepancy_triage(rows),
+        "osrm_interior_map_audit": summarized_interior_audits(rows),
         "profile_equivalence_established": False,
         "physical_approach_or_departure_edge_equivalence_established": False,
         "note": ("DMN and OSRM used identical OSM snapshot era and actual map-point "

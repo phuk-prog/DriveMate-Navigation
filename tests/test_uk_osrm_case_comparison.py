@@ -153,6 +153,36 @@ class SameCaseLocalOSRMTests(unittest.TestCase):
         self.assertEqual(report["review_cases_in_priority_order"][0]["case_id"],
                          b["case_id"])
 
+    def test_ephemeral_node_audit_requested_without_leaking_node_ids(self):
+        from engine import RoadEdge, RoadGraph
+        road = RoadGraph(["osm:1", "osm:2", "osm:3"], [
+            RoadEdge("a", "osm:1", "osm:2", 25, 30, "allowed"),
+            RoadEdge("b", "osm:2", "osm:3", 25, 30, "allowed"),
+        ])
+        def local(url):
+            self.assertIn("&annotations=nodes", url)
+            r = response()
+            r["routes"][0]["legs"] = [{
+                "annotation": {"nodes": [1, 2, 3]}
+            }]
+            return r
+        row = compare_osrm_case(self.case, self.origin, self.dest,
+                                request=local, graph=road)
+        self.assertEqual(row["route_node_audit"]["interior_mapped_allowed_pairs"], 2)
+        self.assertNotIn("nodes", str(row))
+        summary = validate_osrm_case_results(
+            [self.case], [row], snapshot="geofabrik-test")
+        self.assertEqual(summary["osrm_interior_map_audit"]["annotated_comparison_cases"], 1)
+
+    def test_missing_node_annotation_remains_unverified(self):
+        from engine import RoadEdge, RoadGraph
+        road = RoadGraph(["osm:1", "osm:2"], [
+            RoadEdge("a", "osm:1", "osm:2", 30, 30, "allowed")])
+        row = compare_osrm_case(self.case, self.origin, self.dest,
+                                request=lambda url: response(), graph=road)
+        self.assertEqual(row["route_node_audit"]["audit_status"],
+                         "ANNOTATIONS_UNAVAILABLE")
+
     def test_original_case_identity_required(self):
         self.case["competitor_outcomes"] = "PASS"
         with self.assertRaises(ValueError):

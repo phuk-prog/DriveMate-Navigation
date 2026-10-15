@@ -247,7 +247,7 @@ def evaluate_neighborhood(neighborhood_raw: bytes, restriction_raw: bytes,
             # never serialized with the sanitized reference observations.
             comparison_rows.append(case_comparator(
                 case, imported.coordinates[source],
-                imported.coordinates[destination]))
+                imported.coordinates[destination], graph=graph))
 
     diversity=probe_preference_diversity(
         graph,snapshot_id=imported.metadata["source_sha256"],
