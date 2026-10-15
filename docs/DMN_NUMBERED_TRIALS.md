@@ -128,3 +128,11 @@ Missing filter profiles come from source commit
 `4d2639af77ea5ed9c30d3e400764eb6f9e8522da`. Record JAR, profile, lookup and generated
 segment hashes, exact run SHA and CI URL. Startup/import/HTTP errors remain
 unavailable execution; no mocked or inferred route may count as a pass.
+
+ROUTE-001 executed successfully in run 38815930888 at
+`f8e7cc3d4e5bb07b82ca9a7cbbba88ee7eac420d`: DMN 4/4, BRouter 4/4, tied
+10/10 on the frozen synthetic one-way cohort only. See ROUTE_001_RESULTS.md and
+references/route001-brouter-20261015.json. Do not repeat this unchanged integration
+run automatically. Complete remaining applicable reference adapters and harder
+legal/access cases in bounded stages; preserve the independent GPS ambiguity and
+UK coverage work rather than treating this small tie as road readiness.
