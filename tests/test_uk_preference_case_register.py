@@ -13,11 +13,13 @@ from engine.route_alternatives import generate_route_candidates
 class PreferenceCaseRegisterTests(unittest.TestCase):
     def setUp(self):
         self.graph = RoadGraph(["A","B","C","D","E"], [
-            RoadEdge("AB","A","B",50,70,"allowed"),
-            RoadEdge("BD","B","D",50,70,"allowed"),
-            RoadEdge("AC","A","C",150,15,"allowed"),
-            RoadEdge("CE","C","E",150,15,"allowed"),
-            RoadEdge("ED","E","D",150,15,"allowed"),
+            # RoadEdge's fifth field is speed (km/h), NOT traversal seconds.
+            # Short link at 10 km/h versus longer route at 80 km/h.
+            RoadEdge("AB","A","B",50,10,"allowed"),
+            RoadEdge("BD","B","D",50,10,"allowed"),
+            RoadEdge("AC","A","C",150,80,"allowed"),
+            RoadEdge("CE","C","E",150,80,"allowed"),
+            RoadEdge("ED","E","D",150,80,"allowed"),
         ])
         self.sha=sha256(b"synthetic map only").hexdigest()
 
