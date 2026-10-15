@@ -29,3 +29,16 @@ An isolated workflow marker `[uk-network-coverage-smoke]` can run `benchmarks.pu
 
 ### Explicit multi-region validation invocation
 The temporary draft-PR marker is enabled for one synchronization run to measure the candidate regions with the 2026-09-01 pinned public extract. A green CI status alone is not a successful route-comparison verdict; inspect the JSON `result` and per-area supported/unsupported counters, then remove the title marker.
+
+
+## Second experiment — useful alternative-route topology found
+
+**[GitHub Actions run 38789915043](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38789915043) SUCCESS**, 270/270 Python unit and contract tests. Opt-in UK coverage step actually executed; reusable aggregate evidence artifact: `dmn-public-uk-network-coverage` (artifact 11998804996). The trigger was removed from the draft PR immediately after completion.
+
+The **South Manchester** public, pinned (`geofabrik-260901`) sample imported successfully: source SHA256 `bd91e62db908ceaad39438b0122b04c6efcaa73383bc6de85824dc5b05b30329`; 17,518 declared vertices, **944 permitted-road active vertices**, 1,749 allowed directed edges, 1,100 uncertain directed edges and 238 prohibited directed edges. Seven weak permitted-road components (largest 775 vertices), a physical-cycle-rank upper bound of 19, and 699 branching vertices. **71/96** map-derived origin/destination pairs had multiple paths; **10/96** used different Fastest vs Shortest mapped routes; **0/96** had Balanced distinct from both. Eight initial A*/Dijkstra public-map scenarios completed; no imported prohibited turn pairs.
+
+**Wigan and central Manchester**: both marked `UNSUPPORTED` by the conservative importer, *not* 0/96 performance and not navigation failures. Unsupported reason classes should be diagnosed safely (bounds/object count, missing complete relation, conditional/via-way tags, etc.) without relaxing the closure/turn safety guard.
+
+**What this proves:** a more representative bounded public road network can exercise genuinely different route preferences in the research engine. **What this does not prove:** correct real-world UK turn legality, driver journey quality, lane advice, current traffic or superiority over OSRM/Valhalla/GraphHopper. All 10 divergent cases need independent legal/geometry checks and matched-source competitor execution before any scored ranking.
+
+**Next priorities:** classify the two importer rejections; preserve and export sanitized, reproducible source/map-scoped 10-case route test identifiers; add independently verified turn/access truth; compare the exact same public road graph cases to locally executed accessible external engines, with transparent non-comparable/missing judgments; rerun after improvements. Do not lift uncertain edge restrictions to artificially improve coverage.
