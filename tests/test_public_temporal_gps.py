@@ -2,7 +2,7 @@
 from pathlib import Path
 import unittest
 
-from benchmarks.public_temporal_gps import evaluate
+from benchmarks.public_temporal_gps import evaluate, verify_nonregression
 
 RAW=(Path(__file__).resolve().parents[1]/
      "benchmarks/fixtures/synthetic-osm-junction.xml").read_bytes()
@@ -21,6 +21,22 @@ class TemporalBenchmarkTests(unittest.TestCase):
     def test_bad_limit(self):
         with self.assertRaises(ValueError):
             evaluate(RAW,snapshot="synthetic",limit=0)
+
+
+    def test_confidently_wrong_regression_blocks_comparison(self):
+        fake={"same_candidate_journeys":4,"single_correct":2,
+              "single_confident_wrong":0,"single_withheld":2,
+              "temporal_correct":3,"temporal_confident_wrong":1,
+              "temporal_withheld":0}
+        with self.assertRaisesRegex(AssertionError,"wrong-road"):
+            verify_nonregression(fake)
+    def test_wrong_denominator_is_not_reported_as_success(self):
+        fake={"same_candidate_journeys":4,"single_correct":2,
+              "single_confident_wrong":0,"single_withheld":2,
+              "temporal_correct":4,"temporal_confident_wrong":0,
+              "temporal_withheld":1}
+        with self.assertRaisesRegex(AssertionError,"denominators"):
+            verify_nonregression(fake)
 
 if __name__=="__main__":
     unittest.main()

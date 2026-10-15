@@ -30,6 +30,21 @@ def _bearing(p,q):
 def _point(p,q,ratio):
     return (p[0]+(q[0]-p[0])*ratio,p[1]+(q[1]-p[1])*ratio)
 
+def verify_nonregression(report: dict) -> None:
+    """Prevent a higher apparent match rate from hiding new wrong-road claims."""
+    n=report["same_candidate_journeys"]
+    for prefix in ("single","temporal"):
+        correct=report[f"{prefix}_correct"]
+        wrong=report[f"{prefix}_confident_wrong"]
+        withheld=report[f"{prefix}_withheld"]
+        if not all(type(v) is int and v>=0 for v in (correct,wrong,withheld)):
+            raise AssertionError("Invalid match result count")
+        if correct+wrong+withheld!=n:
+            raise AssertionError("Mismatched scenario denominators")
+    if report["temporal_confident_wrong"]>report["single_confident_wrong"]:
+        raise AssertionError("New temporal matcher increased confident wrong-road matches")
+
+
 def evaluate(raw:bytes, *, snapshot:str,limit:int=40)->dict:
     if not 1<=limit<=100:
         raise ValueError("Limit must be between 1 and 100")
@@ -85,7 +100,7 @@ def evaluate(raw:bytes, *, snapshot:str,limit:int=40)->dict:
         faded=weak.update(GPSFix(9000,lat2,lon2,90.0,0.0,None))
         summary["spike_rejected"]+=int(bad.status=="REJECTED")
         summary["weak_not_matched"]+=int(faded.status!="MATCHED")
-    return {
+    report = {
         "classification":"temporal-vs-single-OSM-geometry-derived-simulated-uk",
         "source_snapshot":snapshot,"source_sha256":sha256(raw).hexdigest(),
         "road_graph_vertices":len(graph.vertices),
@@ -109,6 +124,8 @@ def evaluate(raw:bytes, *, snapshot:str,limit:int=40)->dict:
         "score_out_of_ten":None,
         "warning":"Both matchers judged against SAME OSM-derived paths; this is not surveyed position truth or independent UK road legality."
     }
+    verify_nonregression(report)
+    return report
 
 def main():
     parser=argparse.ArgumentParser()
