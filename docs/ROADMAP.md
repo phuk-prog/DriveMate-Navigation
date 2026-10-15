@@ -1,3 +1,8 @@
+# DMN research purpose
+
+This historical checklist covers test-harness and navigation-component research.
+The goal is **choosing the best navigation components for the existing DriveMate Android app**, not shipping a separate standalone phone application. See [DMN scope](DMN_SCOPE.md) for the current agreed process and distinction between host research and phone integration.
+
 # Development roadmap — evidence before claims
 
 - [x] Create independent repository and synthetic Dijkstra routing/reference test harness.

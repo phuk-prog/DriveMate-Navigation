@@ -1,3 +1,13 @@
+# DMN — DriveMate Navigation
+
+**This repository is the DMN navigation research and comparison programme for the existing DriveMate Android phone app; it is not a standalone DMN app project.**
+
+We compare our independent candidate routing/GPS/guidance implementations against other real engines, diagnose errors, rerun tests and select the best technically and legally suitable approach for the existing app. Android integration is a later approval-based stage, not implied by a host benchmark.
+
+See [DMN working agreement](docs/DMN_SCOPE.md). The current development and measured evidence is on the isolated research branches, not yet consolidated into this default branch.
+
+---
+
 # DriveMate Navigation
 
 **Status: independent research prototype — not an Android navigation app or approved production routing engine.**
