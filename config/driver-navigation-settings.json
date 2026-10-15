@@ -31,7 +31,7 @@
         "blocked_only",
         "intelligent"
       ],
-      "description": "Always faster means any reliably beneficial alternative; blocked only means verified closure; intelligent is default."
+      "description": "Always faster means any reliably faster travel-time alternative, even when Shortest is the preferred search mode; blocked only means verified closure; intelligent is default."
     },
     {
       "id": "threshold_mode",

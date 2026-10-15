@@ -193,9 +193,15 @@ def consider_reroute(current: RouteOption, proposed: RouteOption,
             return _no_offer("rerouting_disabled_until_blocked")
         if proposed.eta_confidence < MIN_ETA_CONFIDENCE:
             return _no_offer("unreliable_predicted_improvement")
-    benefit = _objective(current, settings) - _objective(proposed, settings)
     time_saved = current.estimated_seconds - proposed.estimated_seconds
+    # The "always_faster" reroute control means *faster in time*, even when
+    # route generation prefers short distance. Do not mislabel a shorter but
+    # slower road as an always-faster reroute.
+    benefit = (time_saved if settings.reroute_mode == "always_faster"
+               else _objective(current, settings) - _objective(proposed, settings))
     if not verified_current_route_blocked:
+        if settings.reroute_mode == "always_faster" and time_saved <= 0.0:
+            return _no_offer("no_predicted_time_saving")
         if benefit <= 0.0:
             return _no_offer("no_objective_improvement")
         if settings.reroute_mode == "always_faster" or settings.threshold_mode == "any_saving":

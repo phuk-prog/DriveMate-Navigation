@@ -107,6 +107,18 @@ class DriverPolicyTests(unittest.TestCase):
         self.assertTrue(decision.offered)
         self.assertLess(decision.estimated_time_saving_seconds,0)  # longer ETA
 
+    def test_always_faster_is_time_based_even_if_shortest_route_selected(self):
+        policy=DriverNavigationSettings(route_mode="shortest",
+                    reroute_mode="always_faster")
+        shorter_but_slower=option("shorter-but-slower",1600,9000)
+        not_faster=consider_reroute(self.current,shorter_but_slower,policy)
+        self.assertEqual((not_faster.offered,not_faster.reason),
+                         (False,"no_predicted_time_saving"))
+        faster_but_longer=option("faster-but-longer",1300,19000)
+        offered=consider_reroute(self.current,faster_but_longer,policy)
+        self.assertTrue(offered.offered)
+        self.assertEqual(offered.estimated_time_saving_seconds,200)
+
     def test_blocked_only_never_offers_nonclosure(self):
         s=DriverNavigationSettings(reroute_mode="blocked_only")
         self.assertEqual(consider_reroute(self.current,self.better,s).reason,

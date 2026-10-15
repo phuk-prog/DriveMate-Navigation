@@ -10,7 +10,7 @@
 
 **Recommended defaults:**
 - Route: **balanced** (driver can choose fastest or shortest).
-- Reroute offer: **intelligent** (driver can choose always faster or closure only).
+- Reroute offer: **intelligent** (driver can choose always faster or closure only). **Always faster** strictly means predicted travel-time improvement even if the driver separately prefers shortest routes; a shorter but slower alternative must never be called faster.
 - Threshold: **adaptive** (driver can select any saving or fixed improvement, default fixed threshold 180 seconds).
 - Countdown: **adaptive 3–7 seconds** (normally 5; fixed interval option). Offer the best verified alternate, let the driver accept or reject, switch automatically on timeout **only if still safe and verified**.
 - Reduce needless complex maneuvers: **on** (driver may prefer speed instead).
