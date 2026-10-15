@@ -46,3 +46,14 @@ DMN's intended standard is **better than every legitimately comparable reference
 Exact scoring formula and severity weights; precise repeat-counts; all traffic/school-street/conditional rule oracles; route-policy preference ordering; per-category national coverage quotas; concrete allowed licence implementations and paid providers; exact performance/battery thresholds. These are **open technical policy details**, not additional answered questions. Resolve them with evidence and request owner approval if they involve cost, distribution/licensing, safety or major irreversible architecture changes.
 
 **State:** 12 proposed external reference families plus DMN; 14 planned test categories. No new 12-engine comparison or Android tests are claimed by this documentation change. Preserve all historical branches, results, tests and failures. Next engineering action: implement an evidence-backed scorecard, choose diverse complex real UK cases, check runnable engine interfaces, run and rerun fair comparisons, and improve navigation/dependencies without modifying production.
+
+## Follow-up owner decisions on driver route preferences (15 October 2026)
+
+These decisions were taken **after** the separate 22-question programme above. They do not renumber or replace the earlier record.
+
+- Use **adaptive best-route** default: consider reliable journey time, distance, traffic, reliability, maneuver complexity and driver preferences; select from *independently verified legal* options rather than inferring legality by comparing competitors.
+- Intelligent rerouting: offer a better option, allow explicit accept/reject, automatically switch after a short countdown when no response **only if safe**. Respect rejection and do not repeatedly oscillate. Verified road closures override time-saving preferences but never legal/safety gates.
+- Adaptive countdown default **5 seconds**, bounded **3–7 seconds**, and defer any unsafe near-turn switch.
+- Improvement threshold: **adaptive** default; alternatives `any_saving` and `fixed` are driver-selectable.
+- On future Android integration, driver-selectable options must include fastest, shortest and balanced, reroute intensity, sensitivity, countdown mode/duration, auto-switch and maneuver-complexity preference. Correctness, verified legality, road evidence freshness and safe maneuver rules are never defeatable through settings.
+- Policy code and UI contract: [DMN driver preferences](DMN_DRIVER_PREFERENCES.md). No assertion that the existing Android app supports these controls today.
