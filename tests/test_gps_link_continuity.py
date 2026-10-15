@@ -58,6 +58,19 @@ class LinkContinuityTests(unittest.TestCase):
         result = matcher.update(GPSFix(9000, 0, .0023, 1, 30, 90))
         self.assertNotEqual(result.status, 'MATCHED')
 
+    def test_temporal_candidates_do_not_double_count_same_straight_road(self):
+        coords = {'p': (0, -.0005), 'a': (0, 0), 'b': (0, .0002),
+                  'c': (0, .0004), 'd': (-.00004, .0002), 'e': (-.00004, .0004)}
+        graph = RoadGraph(coords, [
+            RoadEdge('feeder', 'p', 'a', 56, 40, 'allowed'),
+            RoadEdge('w:1:0:f', 'a', 'b', 23, 40, 'allowed'),
+            RoadEdge('w:1:1:f', 'b', 'c', 23, 40, 'allowed'),
+            RoadEdge('w:2:0:f', 'd', 'e', 23, 40, 'allowed')])
+        matcher = TemporalRoadMatcher(DirectedRoadMatcher(graph, coords))
+        self.assertEqual(matcher.update(GPSFix(1000, 0, -.0004, 3, 10, 90)).edge_id, 'feeder')
+        result = matcher.update(GPSFix(5000, 0, .00022, 3, 10, 90))
+        self.assertEqual((result.status, result.edge_id), ('MATCHED', 'w:1:1:f'))
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -99,15 +99,8 @@ class DirectedRoadMatcher:
         contiguous = left.target == right.source or right.target == left.source
         return contiguous and angular_difference(first.heading, other.heading) < 1e-6
 
-    def match(self, fix: GPSFix, *, previous_fix: GPSFix | None = None,
-              prior_edge_id: str | None = None, now_ms: int | None = None) -> MatchResult:
-        check=assess_fix(fix,previous=previous_fix,now_ms=now_ms)
-        if check.status=="REJECTED":
-            return MatchResult("REJECTED",None,check.reason,None,0)
-        if check.status=="UNCERTAIN" and check.reason=="weak_position_accuracy":
-            return MatchResult("UNKNOWN",None,"weak_position_accuracy",None,0)
-        if prior_edge_id is not None and prior_edge_id not in self.graph.edges:
-            raise ValueError("Unrecognized prior edge")
+    def _candidates(self, fix: GPSFix, prior_edge_id: str | None = None) -> list[_Candidate]:
+        """One shared candidate policy for stateless and temporal matching."""
         moving=(fix.speed_mps is not None and fix.speed_mps >= 2.0 and
                 fix.bearing_deg is not None)
         # A stationary or heading-less fix cannot disambiguate opposing links.
@@ -143,11 +136,27 @@ class DirectedRoadMatcher:
             contenders.append(_Candidate(edge.edge_id,distance,
                                           lateral+heading_penalty+continuity,heading))
         if not contenders:
+            return []
+        contenders.sort(key=lambda c: (c.score, c.distance_m, c.edge_id))
+        first = contenders[0]
+        return [first] + [c for c in contenders[1:]
+                          if not self._straight_same_way(first, c)]
+
+    def match(self, fix: GPSFix, *, previous_fix: GPSFix | None = None,
+              prior_edge_id: str | None = None, now_ms: int | None = None) -> MatchResult:
+        check=assess_fix(fix,previous=previous_fix,now_ms=now_ms)
+        if check.status=="REJECTED":
+            return MatchResult("REJECTED",None,check.reason,None,0)
+        if check.status=="UNCERTAIN" and check.reason=="weak_position_accuracy":
+            return MatchResult("UNKNOWN",None,"weak_position_accuracy",None,0)
+        if prior_edge_id is not None and prior_edge_id not in self.graph.edges:
+            raise ValueError("Unrecognized prior edge")
+        contenders = self._candidates(fix, prior_edge_id)
+        moving = (fix.speed_mps is not None and fix.speed_mps >= 2.0
+                  and fix.bearing_deg is not None)
+        if not contenders:
             return MatchResult("UNKNOWN",None,"no_supported_road_near_fix",None,0)
-        contenders.sort(key=lambda c:(c.score,c.distance_m,c.edge_id))
         first=contenders[0]
-        contenders = [first] + [c for c in contenders[1:]
-                                if not self._straight_same_way(first, c)]
         # Do not turn a location coordinate into false road-level precision.
         # Heading can disambiguate opposing traffic directions, but NOT two
         # nearby *same-direction* roads that equally fit that heading. For

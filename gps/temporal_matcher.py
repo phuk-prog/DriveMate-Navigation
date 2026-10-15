@@ -17,7 +17,7 @@ from itertools import count
 
 from .fix_quality import GPSFix, assess_fix, _distance_m
 from .matcher import (DirectedRoadMatcher, MatchResult,
-                      _closest_distance_and_bearing, _local, angular_difference)
+                      _local)
 
 
 class TemporalRoadMatcher:
@@ -90,7 +90,7 @@ class TemporalRoadMatcher:
         when the actual roads curve. Subtract both uncertainty radii and use
         the anchor's time/speed: intervening unresolved fixes cannot shorten
         the required trip or refresh the trusted position. This is a bounded
-        one-junction screen, not proof of a vehicle's route or legal movement.
+        bounded-connector screen, not proof of a vehicle's route or legal movement.
         """
         if old_id == new_id:
             return self._same_edge_direction_fits(old_id, fix)
@@ -140,23 +140,7 @@ class TemporalRoadMatcher:
 
     def _plausible_edges(self, fix: GPSFix) -> set[str]:
         """Mirror stateless candidate gate, excluding prohibited/unknown roads."""
-        result = set()
-        moving = (fix.speed_mps is not None and fix.speed_mps >= 2.0
-                  and fix.bearing_deg is not None)
-        radius = min(self.matcher.maximum_snap_m, max(8.0, 2*fix.horizontal_accuracy_m))
-        for edge in self.matcher._allowed:
-            projection = _closest_distance_and_bearing(
-                fix, self.matcher.coords[edge.source],
-                self.matcher.coords[edge.target])
-            if projection is None:
-                continue
-            distance, heading = projection
-            if distance > radius:
-                continue
-            if moving and angular_difference(fix.bearing_deg, heading) > 75.0:
-                continue
-            result.add(edge.edge_id)
-        return result
+        return {candidate.edge_id for candidate in self.matcher._candidates(fix)}
 
     def _live_anchor(self, fix: GPSFix) -> bool:
         if self.anchor_fix is None or self.anchor_edge_id is None:
