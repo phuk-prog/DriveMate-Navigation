@@ -95,14 +95,18 @@ class RouteAlternativesTests(unittest.TestCase):
         self.assertTrue(all("AD-direct" not in o.route.edge_ids for o in options))
 
     def test_reroute_preserves_incoming_turn_context(self):
-        g=RoadGraph(["A","B","C","D","E"],self.edges,
+        # B->D is prohibited when arriving from A, but the genuine mapped
+        # detour B->E->D remains allowed. Never claim a detour if none exists.
+        g=RoadGraph(["A","B","C","D","E"],
+                    self.edges+[RoadEdge("BE","B","E",45,30,"allowed")],
                     prohibited_turns={("AB","BD")})
         options=generate_route_candidates(g,"B","D",snapshot_id="test",
                                           incoming_edge_id="AB")
-        self.assertFalse(any("BD" in o.route.edge_ids for o in options))
+        self.assertTrue(options)
+        self.assertTrue(all(o.route.edge_ids==("BE","ED") for o in options))
         with self.assertRaises(RouteNotFound):
             generate_route_candidates(g,"B","D",snapshot_id="test",
-                                      incoming_edge_id="AB",blocked_edges=("AC","AE"))
+                                      incoming_edge_id="AB",blocked_edges=("BE",))
 
     def test_unreachable_keeps_actual_no_route_error(self):
         with self.assertRaises(RouteNotFound):
