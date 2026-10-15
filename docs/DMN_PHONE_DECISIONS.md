@@ -42,3 +42,24 @@ uncertainty was labelled `guidance_unavailable`, hiding the existing
 `junction_position_uncertain` instruction result. `Planner.targets` now
 preserves the **specific** uncertainty status while still suppressing speech.
 The existing independent instruction-timing regression is not changed.
+
+
+## Separate original and held-out real-road Wigan journeys
+
+After establishing the junction-position guidance gate (483 regression methods
+passing; 226 identified real-geometry junction holds; **zero instruction
+events during those holds**), the routine now runs **8 original cases** plus
+**8 additional held-out routes** from the same dated Wigan road extract.
+The original eight endpoint pairs and case identifiers remain fixed, even
+though the sampler normally changes its stride as the requested total grows.
+
+The report preserves a separate `cohort_scorecard` for the original and
+held-out subsets and reports each component's pass/fail/unresolved status.
+No route is omitted because it is short, ambiguous, legally challenging,
+or contains an unexpected GPS behaviour. If eight distinct additional
+public-road cases cannot be selected, the test is **unresolved/error**,
+not a substitute for synthetic geometry.
+
+This does not provide independent *real-life* GPS truth or phone validation.
+Neither a native response pass nor merely withholding speech constitutes
+a verified lane, roundabout or turn-instruction pass.

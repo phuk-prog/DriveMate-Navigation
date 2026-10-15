@@ -1,7 +1,7 @@
 """A first executable contract for the native+GPS real-road journey scorecard."""
 import unittest
 from pathlib import Path
-from benchmarks.real_english_journey import replay_case, sample_fractions, short_destination_ambiguity
+from benchmarks.real_english_journey import replay_case, sample_fractions, short_destination_ambiguity, select_case_cohorts
 from benchmarks.whole_drive import prepared
 
 
@@ -29,6 +29,29 @@ class RealEnglishJourneyContractTests(unittest.TestCase):
         self.assertFalse(short_destination_ambiguity(5.4, evidence, True))
         self.assertFalse(short_destination_ambiguity(30.0, evidence, False))
         self.assertFalse(short_destination_ambiguity(5.4, evidence[:1], False))
+
+    def test_original_eight_remain_pinned_while_holdout_expands(self):
+        original = [{"id": "england-%03d" % i, "source": i,
+                     "target": i+1} for i in range(8)]
+        extended = original + [{"id": "england-%03d" % i,
+                                "source": i+10, "target": i+11}
+                               for i in range(8, 40)]
+        def discover(_p, _g, *, maximum):
+            return original if maximum == 8 else extended[:maximum]
+        initial = select_case_cohorts(None, None, 8, discover)
+        expanded = select_case_cohorts(None, None, 16, discover)
+        self.assertEqual(expanded[:8], initial)
+        self.assertEqual(len(expanded), 16)
+        self.assertEqual([x["cohort"] for x in expanded].count("heldout"), 8)
+        self.assertEqual(len({(x["source"], x["target"]) for x in expanded}), 16)
+
+    def test_holdout_shortfall_is_exposed_as_incomplete(self):
+        original = [{"id": "england-%03d" % i, "source": i, "target": i+1}
+                    for i in range(8)]
+        def discover(_p, _g, *, maximum):
+            return original
+        with self.assertRaisesRegex(ValueError, "distinct held-out"):
+            select_case_cohorts(None, None, 16, discover)
 
     def test_real_road_workflow_writes_inspectable_journey_result(self):
         wf = (Path(__file__).resolve().parents[1] /

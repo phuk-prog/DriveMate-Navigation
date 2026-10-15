@@ -200,6 +200,37 @@ def replay_case(prepared, name, source, target):
     return row
 
 
+def select_case_cohorts(prepared, graph, maximum, discover=road_cases):
+    """Keep the original eight case IDs, then draw distinct held-out roads.
+
+    The original reproducible eight must never be shifted by changing the
+    maximum argument to road_cases; its sampling stride depends on maximum.
+    Held-outs are only an additional, independently generated cohort.
+    """
+    baseline = discover(prepared, graph, maximum=8)
+    if len(baseline) != 8:
+        raise ValueError("Original eight public road cases are unavailable")
+    if maximum == 8:
+        return tuple(dict(c, cohort="original") for c in baseline)
+    if not 8 < maximum <= 20:
+        raise ValueError("Case cohort must be 8..20")
+    used = {(c["source"], c["target"]) for c in baseline}
+    selected = [dict(c, cohort="original") for c in baseline]
+    pool = discover(prepared, graph, maximum=min(80, maximum*3))
+    for c in pool:
+        key = (c["source"], c["target"])
+        if key in used:
+            continue
+        used.add(key)
+        selected.append(dict(c, id="heldout-%03d" % (len(selected)-8),
+                             cohort="heldout", original_id=c["id"]))
+        if len(selected) >= maximum:
+            break
+    if len(selected) != maximum:
+        raise ValueError("Not enough distinct held-out real-road cases")
+    return tuple(selected)
+
+
 def execute(raw, snapshot, maximum):
     imported = import_osm_xml(raw, provenance=Provenance(
         "Greater Manchester, England", snapshot,
@@ -208,15 +239,15 @@ def execute(raw, snapshot, maximum):
     prepared = prepare_navigation(imported.graph, imported.coordinates)
     if prepared.timed_restrictions:
         raise ValueError("Native timed routing not supported: real-road journey test cannot ignore restrictions")
-    cases = road_cases(prepared, imported.graph, maximum=maximum)
-    if len(cases) < 5:
-        raise ValueError("No eligible real-road route corpus; never substitute synthetic geometry")
+    cases = select_case_cohorts(prepared, imported.graph, maximum)
     rows = []
     for c in cases:
         try:
             result = replay_case(prepared, c["id"], c["source"], c["target"])
+            result["cohort"] = c["cohort"]
         except (AssertionError, KeyError, ValueError, OSError, OverflowError) as exc:
             result = {"case": c["id"], "status": "unresolved",
+                      "cohort": c["cohort"],
                       "issues": ["scenario_setup_or_engine_error: "+type(exc).__name__+
                                  ": "+str(exc)[:120]], "components": {}}
         rows.append(result)
@@ -226,7 +257,11 @@ def execute(raw, snapshot, maximum):
                                          "exercised_unverified")}
                   for name in ("native_routing", "gps_matching", "rerouting", "junctions",
                                "roundabouts", "instruction_events", "arrival")}
-    return {"component_scorecard": components,
+    cohort_counts = {cohort: {status: sum(r.get("cohort")==cohort and r["status"]==status
+                                         for r in rows)
+                              for status in ("pass", "fail", "unresolved")}
+                     for cohort in ("original", "heldout")}
+    return {"component_scorecard": components, "cohort_scorecard": cohort_counts,
             "category": "DriveMate-native-full-GPS-journey-replay-on-real-English-roads",
             "source_snapshot": snapshot,
             "region": os.environ.get("ENGLAND_BBOX_NAME", "unlabelled"),
@@ -261,8 +296,8 @@ def main():
     parser.add_argument("--snapshot", required=True)
     parser.add_argument("--cases", type=int, default=8)
     args = parser.parse_args()
-    if not 5 <= args.cases <= 20:
-        parser.error("Case count must be between 5 and 20")
+    if not 8 <= args.cases <= 20:
+        parser.error("Case count must be between 8 and 20")
     if not args.input.resolve().is_relative_to(Path("results").resolve()):
         parser.error("Map must remain inside ignored results/ directory")
     raw = args.input.read_bytes()

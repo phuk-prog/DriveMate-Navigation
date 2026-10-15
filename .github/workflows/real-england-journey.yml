@@ -79,14 +79,14 @@ jobs:
             exit 2
           fi
           echo "Selected real-road area: $selected"
-      - name: Replay native-powered GPS acquisition and arrival on real Wigan roads
+      - name: Replay DMN GPS on eight original and eight held-out Wigan journeys
         shell: bash
         timeout-minutes: 5
         run: |
           set -euo pipefail
           python -m benchmarks.real_english_journey \
             --input results/real/roads.osm \
-            --snapshot 2026-10-13 --cases 8
+            --snapshot 2026-10-13 --cases 16
       - name: DMN measured phone-selection decision (research only)
         if: always()
         run: |
