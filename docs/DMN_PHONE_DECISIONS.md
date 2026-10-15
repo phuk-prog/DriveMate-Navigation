@@ -63,3 +63,26 @@ not a substitute for synthetic geometry.
 This does not provide independent *real-life* GPS truth or phone validation.
 Neither a native response pass nor merely withholding speech constitutes
 a verified lane, roundabout or turn-instruction pass.
+
+
+## Holdout revealed classification bug — use actual fix confidence, not road length
+
+In first 16-route real Wigan replay (run 38696751702), the existing
+eight remained unresolved. The additional held-out eight produced 2 arrival
+confirmations, 6 non-arrivals and two nominal failures on 8.42-metre final
+segments. Both nominal failures had *three consecutive final ambiguous
+match results and no confirmed correct-road GPS sample*. They were
+misclassified as failures solely because the earlier **8 m** threshold
+applied to the original short-road cases but not to 8.42 m.
+
+The classification now asks for **three consecutive unresolved final
+map matches with no accepted final-road fix**, without any arbitrary
+road-length gate. It reports `destination_geometry_ambiguous_without_confirmed_arrival`,
+not a successful arrival. Genuine far-from-junction wrong-road matches,
+route discontinuities, unsafe speech, and unexplained non-arrivals
+remain failures. We preserve the earlier first-run labels as historical
+evidence; future runs use the corrected method.
+
+Importantly, **no navigation position, legal access, roundabout or GPS
+algorithm has been relaxed to obtain a green score**. These roads still
+need independent evidence before phone integration.

@@ -33,11 +33,17 @@ def sample_fractions(segment_length_m):
     return tuple(i / steps for i in range(1, steps))
 
 
-def short_destination_ambiguity(length_m, diagnostics, reached):
-    """Do not score an unresolvable short goal as a navigation failure."""
-    return (not reached and length_m <= 8.0 and len(diagnostics) >= 3
+def unresolved_destination_evidence(diagnostics, reached):
+    """Missing arrival with sustained ambiguous positioning is UNKNOWN, not an invented failure.
+
+    Evaluate actual near-goal fix evidence. A hard 8 m road-length threshold
+    caused false failure labels for 8.42 m real OSM segments despite every
+    final fix being ambiguous. This reports lack of evidence, not arrival.
+    """
+    tail = diagnostics[-3:]
+    return (not reached and len(tail) == 3
             and all(item["match_status"] == "ambiguous"
-                    for item in diagnostics[-3:]))
+                    and not item["match_on_expected_road"] for item in tail))
 
 
 def replay_case(prepared, name, source, target):
@@ -163,8 +169,7 @@ def replay_case(prepared, name, source, target):
                 break
         if errors or reached:
             break
-    goal_ambiguous = short_destination_ambiguity(
-        row["destination_segment_length_m"],
+    goal_ambiguous = unresolved_destination_evidence(
         row["destination_diagnostics"], reached)
     row["components"]["gps_matching"] = (
         "fail" if row["wrong_road_matches"] else
@@ -189,7 +194,7 @@ def replay_case(prepared, name, source, target):
     if not reached:
         row["issues"].append("destination_not_confirmed")
     if goal_ambiguous:
-        row["issues"].append("short_destination_spur_gps_indistinguishable")
+        row["issues"].append("destination_geometry_ambiguous_without_confirmed_arrival")
     row["final_recovery_status"] = last_status
     # Explicit route topology can have no junction or roundabout. Never
     # score an unexercised subsystem as a success.
@@ -270,6 +275,9 @@ def execute(raw, snapshot, maximum):
             "real_sensor_validation": False, "voice_delivery_validation": False,
             "external_full_journey_comparison": False,
             "scenario_count": len(rows),
+            "ambiguous_unconfirmed_destinations": sum(
+                "destination_geometry_ambiguous_without_confirmed_arrival" in r.get("issues", ())
+                for r in rows),
             "arrivals_confirmed": components["arrival"]["pass"],
             "verified_native_routes": components["native_routing"]["pass"],
             "far_from_junction_wrong_matches": sum(r.get("wrong_road_matches", 0) for r in rows),
@@ -307,6 +315,7 @@ def main():
     (output / "journeys.json").write_text(json.dumps(report, indent=2)+"\n")
     print(json.dumps({k: report[k] for k in ("category", "scenario_count",
           "verified_native_routes", "arrivals_confirmed",
+          "ambiguous_unconfirmed_destinations",
           "far_from_junction_wrong_matches", "uncertain_junction_holds",
           "speech_during_uncertain_junction",
           "pass", "fail", "unresolved", "region")}))

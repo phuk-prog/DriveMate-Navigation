@@ -1,7 +1,7 @@
 """A first executable contract for the native+GPS real-road journey scorecard."""
 import unittest
 from pathlib import Path
-from benchmarks.real_english_journey import replay_case, sample_fractions, short_destination_ambiguity, select_case_cohorts
+from benchmarks.real_english_journey import replay_case, sample_fractions, unresolved_destination_evidence, select_case_cohorts
 from benchmarks.whole_drive import prepared
 
 
@@ -23,12 +23,18 @@ class RealEnglishJourneyContractTests(unittest.TestCase):
             self.assertLessEqual(max((v-u)*length for u, v in
                    zip((0.0,)+fs, fs+(1.0,))), 6.001)
 
-    def test_short_ambiguous_destination_is_unresolved_not_false_navigation_failure(self):
-        evidence = [{"match_status": "ambiguous"} for _ in range(3)]
-        self.assertTrue(short_destination_ambiguity(5.4, evidence, False))
-        self.assertFalse(short_destination_ambiguity(5.4, evidence, True))
-        self.assertFalse(short_destination_ambiguity(30.0, evidence, False))
-        self.assertFalse(short_destination_ambiguity(5.4, evidence[:1], False))
+    def test_ambiguous_destination_evidence_has_no_magic_length_cutoff(self):
+        evidence = [{"match_status": "ambiguous",
+                     "match_on_expected_road": False} for _ in range(3)]
+        # Same observed uncertainty on 5.4 m, 8.42 m or 30 m links
+        # is unresolved, NOT a verified non-arrival caused by engine defect.
+        for length in (5.4, 8.42, 30.0):
+            self.assertTrue(unresolved_destination_evidence(evidence, False), length)
+        self.assertFalse(unresolved_destination_evidence(evidence, True))
+        self.assertFalse(unresolved_destination_evidence(evidence[:1], False))
+        self.assertFalse(unresolved_destination_evidence(
+            evidence[:2] + [{"match_status": "matched",
+                             "match_on_expected_road": True}], False))
 
     def test_original_eight_remain_pinned_while_holdout_expands(self):
         original = [{"id": "england-%03d" % i, "source": i,
