@@ -47,3 +47,25 @@ Investigation: the GraphHopper adapter retained ordinary import/response geometr
 Remaining after first run: 1,704 unresolved cells in this host stage, including all 500 turn-restriction and all 500 independent UK-law cells. Prior 176 broader Android checks, 11 research workstreams, four failed/80 unresolved historical journeys remain unchanged. Next mandatory gap is a genuine real-road turn-restriction cohort with independent truth, not synthetic controls substituted into this scorecard.
 
 Retest preflight at parent `f3f43c1904719086b37e6ba2832dc82f533bcac0`: 27/27 new legality controls and 6/6 adapter controls passed; full suite 524 methods, zero failures/errors, one unchanged skip. Python/YAML/Bash, full staged privacy scan, scope/diff checks passed. Reference engines remain unavailable locally; next exact-SHA GitHub run required.
+
+## Verified repeat: full same-cohort map-rule comparison
+
+Run [38714110676](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38714110676), exact tested source `34df452349a0425e6419fe29b9d843c3c121da79`, completed **success**. Full suite: 524 methods, zero failures/errors, one existing skip. All 500 engine/route attempts completed; raw map and 100-case cohort hashes match the first comparison. Full permanent rows: `legality-run-38714110676.json` (artifact 11961801932).
+
+**Rank: joint first on every commonly judged category**, DMN, GraphHopper, OSRM MLD, OSRM CH and Valhalla. No complete-navigation, independently verified legal-road or speed winner.
+
+| Category | Correct / judged, each of five configurations | Unresolved, each / planned |
+|---|---:|---:|
+| Route response | 100/100 | 0/100 |
+| Connectivity | 100/100 | 0/100 |
+| One-way direction | 100/100 | 0/100 |
+| Supported access checks | 100/100 | 0/100 |
+| Supported turn restrictions | 0/0 | 100/100 |
+| Roundabout direction | 12/12 | 88/100 |
+| Independent UK legal truth | 0/0 | 100/100 |
+
+No map-rule failures detected. GraphHopper attribution improved from 16/100 to 100/100 with full geometry; 264 previously unresolved category cells are now judged passing. This corrects measurement compatibility, not GraphHopper navigation behavior. The exact-map judge remains conservative and does not infer legal exits, lanes, turn prohibitions or current permissions from absent evidence.
+
+**Permanent remaining counts:** 1,440 unresolved host category cells out of 3,500: 500 turn-restriction cells, 440 unexercised roundabout-direction cells and 500 independent UK-legality cells. All 500 requested route attempts executed, zero route attempts remaining in this cohort. Separately, 11 research workstreams remain open, historical journeys remain 16 passed / 4 failed / 80 unresolved, and 176 broader Android checks remain unresolved. No research workstream or app issue is closed by this host-only evidence.
+
+**Next priority:** build a held-out real-UK-road restriction cohort that genuinely exercises prohibited turns/U-turns, one-way violations and restricted entry, with provenance and independently checked permitted movements. The current Wigan cohort and all historical results must remain intact. Conditional/via-way support, source independence, GPS/arrival faults and full Android integration remain separately tracked above. Production/app code is unchanged; no APK is generated or published. This later documentation commit does not change the exact source revision tested by Actions.
