@@ -18,6 +18,8 @@ class TemporalBenchmarkTests(unittest.TestCase):
         self.assertEqual(report["weak_fix_safely_withheld"],n)
         self.assertIsNone(report["score_out_of_ten"])
         self.assertEqual(report["actual_phone_GPS_measurements"],0)
+        self.assertEqual(len(report['case_diagnostics']), n)
+        self.assertEqual(len({c['case_id'] for c in report['case_diagnostics']}), n)
     def test_bad_limit(self):
         with self.assertRaises(ValueError):
             evaluate(RAW,snapshot="synthetic",limit=0)

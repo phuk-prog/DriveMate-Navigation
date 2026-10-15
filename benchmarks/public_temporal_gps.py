@@ -66,6 +66,7 @@ def evaluate(raw:bytes, *, snapshot:str,limit:int=40)->dict:
     # Stable stratified scan, no user-specified origin/destination.
     chosen=candidates[::max(1,len(candidates)//limit)][:limit]
     summary=Counter()
+    diagnostics=[]
     for incoming,outgoing in chosen:
         a,b=coords[incoming.source],coords[incoming.target]
         c,d=coords[outgoing.source],coords[outgoing.target]
@@ -80,7 +81,41 @@ def evaluate(raw:bytes, *, snapshot:str,limit:int=40)->dict:
         baseline=single.match(second)
         temporal=TemporalRoadMatcher(single)
         anchor=temporal.update(first)
+        old_id=temporal.anchor_edge_id
+        plausible=temporal._plausible_edges(second)
+        direct=set()
+        bounded=set()
+        reachable=set()
+        if old_id is not None:
+            old_edge=graph.edges[old_id]
+            for candidate in plausible:
+                road=graph.edges[candidate]
+                if candidate==old_id or (old_edge.target==road.source and
+                        (old_id,candidate) not in graph.prohibited_turns):
+                    direct.add(candidate)
+                distance=temporal._connection_length(old_id,candidate)
+                if distance is not None:
+                    bounded.add(candidate)
+                    if temporal._transition_fits_time(old_id,candidate,second,distance):
+                        reachable.add(candidate)
         improved=temporal.update(second)
+        expected_way=outgoing.edge_id.split(':')[1]
+        diagnostics.append({
+            'case_id':f'TGP-{len(diagnostics)+1:03d}',
+            'initial_anchor_status':anchor.status,
+            'single_status':baseline.status,
+            'temporal_status':improved.status,
+            'temporal_reason':improved.reason,
+            'generating_edge_correct':improved.edge_id==outgoing.edge_id,
+            'plausible_candidates':len(plausible),
+            'direct_candidates':len(direct),
+            'bounded_candidates':len(bounded),
+            'time_reachable_candidates':len(reachable),
+            'direct_includes_expected':outgoing.edge_id in direct,
+            'time_reachable_includes_expected':outgoing.edge_id in reachable,
+            'reachable_same_expected_way':sum(e.split(':')[1]==expected_way for e in reachable),
+            'reachable_other_way':sum(e.split(':')[1]!=expected_way for e in reachable),
+        })
         summary["selected_pairs"]+=1
         summary["initial_confident_anchor"]+=int(anchor.status=="MATCHED" and anchor.edge_id==incoming.edge_id)
         summary["baseline_correct"]+=int(baseline.status=="MATCHED" and baseline.edge_id==outgoing.edge_id)
@@ -106,6 +141,7 @@ def evaluate(raw:bytes, *, snapshot:str,limit:int=40)->dict:
         "road_graph_vertices":len(graph.vertices),
         "road_graph_edges":len(graph.edges),
         "same_candidate_journeys":summary["selected_pairs"],
+        "case_diagnostics":diagnostics,
         "initial_confident_anchors":summary["initial_confident_anchor"],
         "single_correct":summary["baseline_correct"],
         "single_confident_wrong":summary["baseline_wrong"],
