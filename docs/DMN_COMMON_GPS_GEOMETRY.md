@@ -19,3 +19,7 @@ An observed location within 5 m of the generating graph segment can still repres
 One opt-in local external reference run **at a time** using the existing version-pinned GraphHopper, OSRM and Valhalla GitHub CI fixtures. All three benchmark adapters now emit `common_last_fix_source_geometry_proxy` with exactly the same field schema and denominator for DMN and their own matching output. Only count a reference as actually re-measured after a successful live run and artifact. Keep old historical outputs intact. The next step is a source OSM-way/graph ID correspondence and multi-fix movement-direction validator with independent signs/road evidence, then harder UK roads and additional reference families.
 
 **Privacy and licensing:** only ephemeral, public map-generated observations, no private GPS; no personal data, no app production modification or APK release; use each engine only as independent comparator.
+
+## First CI failure (fixture boundary)
+
+The initial geometry-proxy unit run [38764903859](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38764903859) failed 1/218 tests: a synthetic nearby road at 0.000045 degrees latitude was **slightly more than 5 m** from the expected road according to the meter conversion; the test incorrectly expected the 5 m proximity condition to be true. The fixture was adjusted to 0.000040 degrees (about 4.45 m). **The algorithm threshold stays at 5 m**. This was a test truth-boundary mistake, not evidence that a real external engine failed. Updated matcher tests and real UK comparisons still need to run.

@@ -12,7 +12,7 @@ from benchmarks.match_geometry_truth import (
 class CommonGeometryOracleTests(unittest.TestCase):
     def setUp(self):
         self.coords={"a":(53.0,-2.001),"b":(53.0,-2.0),
-                     "c":(53.000045,-2.001),"d":(53.000045,-2.0)}
+                     "c":(53.000040,-2.001),"d":(53.000040,-2.0)}
         self.graph=RoadGraph(self.coords,[
             RoadEdge("target","a","b",65,35,"allowed"),
             RoadEdge("parallel","c","d",65,35,"allowed"),
@@ -23,7 +23,7 @@ class CommonGeometryOracleTests(unittest.TestCase):
         self.assertGreaterEqual(p["nearby_other_directed_edges"],2)
         self.assertFalse(p["direction_verified"])
     def test_wrong_parallel_link_can_still_be_geometrically_near(self):
-        p=expected_road_geometry_probe(self.graph,self.coords,"target",(53.000045,-2.0005))
+        p=expected_road_geometry_probe(self.graph,self.coords,"target",(53.000040,-2.0005))
         self.assertTrue(p["near_expected_geometry"])
         self.assertGreater(p["nearby_other_directed_edges"],0)
     def test_far_point_is_not_source_geometry_match(self):

@@ -71,6 +71,25 @@ class TemporalRoadMatcherTests(unittest.TestCase):
         self.m.reset()
         r=self.m.update(self.fix(t=7000,lon=-1.9998))
         self.assertEqual(r.status,"AMBIGUOUS")
+
+    def test_unrealistic_connected_road_jump_is_rejected(self):
+        self.anchor()
+        # The northern road really connects, but crossing ~100 m in one
+        # second at a reported 10 m/s must NOT produce a MATCHED road.
+        r=self.m.update(self.fix(t=2000,lon=-1.9998,speed=10))
+        self.assertEqual((r.status,r.reason),
+                         ("REJECTED","distance_speed_disagreement"))
+        self.assertEqual(self.m.anchor_edge_id,"feeder")
+    def test_plausible_connected_road_crossing_still_matches(self):
+        self.anchor()
+        r=self.m.update(self.fix(t=9000,lon=-1.9998,speed=10))
+        self.assertEqual((r.status,r.edge_id),("MATCHED","north"))
+    def test_distance_speed_gate_is_not_a_speed_limit_check(self):
+        self.anchor()
+        # A 20 m/s minimum tolerance must not reject ordinary jitter.
+        r=self.m.update(self.fix(t=7000,lon=-1.9998,speed=10))
+        self.assertEqual(r.status,"MATCHED")
+
     def test_invalid_new_config_is_rejected(self):
         with self.assertRaises(ValueError):
             TemporalRoadMatcher(DirectedRoadMatcher(self.g,self.pts),

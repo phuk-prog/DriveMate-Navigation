@@ -106,6 +106,29 @@ class TemporalRoadMatcher:
             self.previous_valid_fix = fix
             return MatchResult("UNKNOWN", None, "weak_position_accuracy", None, 0)
 
+        # A topologically connected road is NOT proof that the vehicle could
+        # traverse the displacement in the observed time. Existing fix-quality
+        # tests reject >90 m/s; this second, deliberately conservative guard
+        # detects large disagreements against the vehicle's OWN reported speed.
+        # 20 m/s minimum tolerates urban GPS jitter; speed is never a UK speed
+        # limit or independent evidence that the vehicle followed a legal road.
+        if (self.previous_valid_fix is not None
+                and self.previous_valid_fix.speed_mps is not None
+                and fix.speed_mps is not None):
+            from .fix_quality import _distance_m
+            seconds=(fix.timestamp_ms-self.previous_valid_fix.timestamp_ms)/1000
+            minimum_distance=max(
+                0.0,_distance_m(self.previous_valid_fix,fix)
+                -self.previous_valid_fix.horizontal_accuracy_m
+                -fix.horizontal_accuracy_m)
+            limit=max(20.0,3.0*max(self.previous_valid_fix.speed_mps,fix.speed_mps))
+            if minimum_distance/seconds>limit:
+                self.unresolved+=1
+                if self.unresolved>self.max_unresolved_fixes:
+                    self.anchor_edge_id=None
+                    self.anchor_fix=None
+                return MatchResult("REJECTED",None,"distance_speed_disagreement",
+                                   None,0)
         base = self.matcher.match(fix, previous_fix=self.previous_valid_fix, now_ms=now_ms)
         self.previous_valid_fix = fix
 
