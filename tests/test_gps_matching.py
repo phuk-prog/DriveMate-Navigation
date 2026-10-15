@@ -131,6 +131,49 @@ class GpsMatchingTests(unittest.TestCase):
         p=network(extra=(RoadEdge('service','s','t',100,36,'allowed'),),
                   coords_extra={'s':(4*UNIT,0),'t':(4*UNIT,100*UNIT)})
         self.assertEqual(Matcher(p).observe(fix(30,2),1).status,'ambiguous')
+    def test_junction_hold_is_uncertain_not_spoken_or_assumed_turn(self):
+        p=network()
+        m=Matcher(p)
+        self.assertEqual(m.observe(fix(90,0,1),1).status,'matched')
+        held=m.observe(fix(100,0,2),2)
+        self.assertEqual(held.status,'matched')
+        self.assertEqual(held.road,'ab')
+        self.assertTrue(held.junction_held)
+        self.assertEqual(m.last.road,'ab')
+        crossed=m.observe(fix(106,0,3),3)
+        self.assertEqual((crossed.status,crossed.road,crossed.junction_held),
+                         ('matched','bc',False))
+
+    def test_junction_hold_does_not_authorise_forbidden_successor(self):
+        p=network(turns=(('ab','bc'),))
+        m=Matcher(p)
+        m.observe(fix(90,0,1),1)
+        held=m.observe(fix(100,0,2),2)
+        self.assertTrue(held.junction_held)
+        prohibited=m.observe(fix(106,0,3),3)
+        self.assertEqual(prohibited.status,'prohibited_turn')
+        self.assertIs(m.last,held)
+
+    def test_parallel_road_ambiguity_is_not_treated_as_safe_junction_hold(self):
+        p=network(extra=(RoadEdge('service','s','t',100,36,'allowed'),),
+                  coords_extra={'s':(4*UNIT,0),'t':(4*UNIT,100*UNIT)})
+        m=Matcher(p)
+        # No physical connection between the parallel service road and ab.
+        self.assertEqual(m.observe(fix(20,2),1).status,'ambiguous')
+
+    def test_normal_adapter_withholds_guidance_during_junction_hold(self):
+        g=GpsJourney(network(),'bc',800000)
+        g.observe(fix(90,0,1),1)
+        s=g.observe(fix(100,0,2),2)
+        self.assertTrue(s.match.junction_held)
+        self.assertFalse(s.guidance_available)
+        self.assertFalse(g.guidance_available(2))
+        self.assertEqual(g.junctions(2),())
+        self.assertEqual(g.roundabouts(2),())
+        advanced=g.observe(fix(106,0,3),3)
+        self.assertFalse(advanced.match.junction_held)
+        self.assertTrue(advanced.guidance_available)
+
     def test_gap_requires_explicit_later_reacquisition_component(self):
         m=Matcher(network());first=m.observe(fix(20,0),1)
         self.assertEqual(m.observe(fix(30,0,12),12).status,'reacquisition_required');self.assertIs(m.last,first)

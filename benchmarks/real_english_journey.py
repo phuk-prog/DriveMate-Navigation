@@ -56,6 +56,8 @@ def replay_case(prepared, name, source, target):
            "guidance_frames": 0, "instruction_events": 0,
            "wrong_road_matches": 0,
            "near_junction_other_road_matches": 0,
+           "uncertain_junction_holds": 0,
+           "speech_during_uncertain_junction": 0,
            "destination_diagnostics": [],
            "issues": [], "status": "unresolved"}
     # This executes the compiled router (not Python research search).
@@ -117,6 +119,12 @@ def replay_case(prepared, name, source, target):
                 break
             row["observations"] += 1
             last_status = update.status
+            if update.match and update.match.junction_held:
+                row["uncertain_junction_holds"] += 1
+                # The navigation engine can retain history and its route,
+                # but this uncertain positioning must not trigger speech.
+                if update.guidance_available or frame.pending:
+                    row["speech_during_uncertain_junction"] += 1
             if edge_index == len(edges)-1:
                 snap = tracker.snapshot
                 row["destination_diagnostics"].append({
@@ -170,6 +178,8 @@ def replay_case(prepared, name, source, target):
     row["components"]["instruction_events"] = (
         "exercised_unverified" if row["instruction_events"] else "not_exercised")
     row["issues"].extend(errors)
+    if row["speech_during_uncertain_junction"]:
+        row["issues"].append("unsafe_instruction_available_during_junction_hold")
     if row["wrong_road_matches"]:
         row["issues"].append("gps_matched_different_directed_road_far_from_junction")
     if row["near_junction_other_road_matches"]:
@@ -183,7 +193,7 @@ def replay_case(prepared, name, source, target):
     row["final_recovery_status"] = last_status
     # Explicit route topology can have no junction or roundabout. Never
     # score an unexercised subsystem as a success.
-    row["status"] = "fail" if errors or row["wrong_road_matches"] or (acquired and not reached and not goal_ambiguous) else (
+    row["status"] = "fail" if errors or row["wrong_road_matches"] or row["speech_during_uncertain_junction"] or (acquired and not reached and not goal_ambiguous) else (
         "pass" if reached and acquired and row["recognized_matches"] >= 3
         and not row["near_junction_other_road_matches"]
         else "unresolved")
@@ -228,6 +238,8 @@ def execute(raw, snapshot, maximum):
             "arrivals_confirmed": components["arrival"]["pass"],
             "verified_native_routes": components["native_routing"]["pass"],
             "far_from_junction_wrong_matches": sum(r.get("wrong_road_matches", 0) for r in rows),
+            "uncertain_junction_holds": sum(r.get("uncertain_junction_holds", 0) for r in rows),
+            "speech_during_uncertain_junction": sum(r.get("speech_during_uncertain_junction", 0) for r in rows),
             "pass": count("pass"),
             "fail": count("fail"), "unresolved": count("unresolved"),
             "cases": rows,
@@ -260,7 +272,8 @@ def main():
     (output / "journeys.json").write_text(json.dumps(report, indent=2)+"\n")
     print(json.dumps({k: report[k] for k in ("category", "scenario_count",
           "verified_native_routes", "arrivals_confirmed",
-          "far_from_junction_wrong_matches",
+          "far_from_junction_wrong_matches", "uncertain_junction_holds",
+          "speech_during_uncertain_junction",
           "pass", "fail", "unresolved", "region")}))
     if report["fail"] or report["unresolved"]:
         raise SystemExit(2)

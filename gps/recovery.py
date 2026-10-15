@@ -108,7 +108,8 @@ class RecoveringGpsJourney:
 
     def _out(self,status,match=None):
         available=(status in ('tracking','recovered') and self.mode=='tracking'
-                   and self.snapshot is not None and self.snapshot.status=='navigating')
+                   and self.snapshot is not None and self.snapshot.status=='navigating'
+                   and not (match is not None and match.junction_held))
         self.update=RecoveryUpdate(status,match,self.snapshot,available,self.confirmations,len(self.sessions),self.inferred)
         return self.update
 

@@ -49,6 +49,22 @@ class GpsRecoveryTests(unittest.TestCase):
         g=RecoveringGpsJourney(network(),'bc',800000)
         for t in (1,1.1,1.2):self.assertEqual(g.observe(fix(20,0,t),t).status,'confirming')
         self.assertEqual(g.observe(fix(22,0,3),3).status,'tracking')
+    def test_recovery_junction_hold_withholds_guidance_without_losing_track(self):
+        g=RecoveringGpsJourney(network(),'bc',800000)
+        start(g,x=80)
+        self.assertTrue(g.guidance_available(3))
+        held=g.observe(fix(100,0,4),4)
+        self.assertTrue(held.match.junction_held)
+        self.assertEqual(held.status,'tracking')
+        self.assertFalse(held.guidance_available)
+        self.assertFalse(g.guidance_available(4))
+        self.assertEqual(g.junctions(4),())
+        self.assertEqual(g.roundabouts(4),())
+        s=g.observe(fix(106,0,5),5)
+        self.assertFalse(s.match.junction_held)
+        self.assertEqual(s.status,'tracking')
+        self.assertTrue(s.guidance_available)
+
     def test_sensor_silence_never_advances_snapshot(self):
         g=RecoveringGpsJourney(network(),'bc',800000);first=start(g)
         s=g.poll(7);self.assertEqual(s.status,'gps_lost');self.assertEqual(s.trusted_snapshot,first.trusted_snapshot)

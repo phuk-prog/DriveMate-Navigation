@@ -54,6 +54,7 @@ class Match:
     distance_m: float | None = None
     unverified_access: bool = False
     candidates_examined: int = 0
+    junction_held: bool = False  # last verified road temporarily retained near its successor
 
 @dataclass(frozen=True)
 class Segment:
@@ -107,10 +108,11 @@ class Matcher:
         """Pure preview. Rejected fixes do not consume time or change trusted state."""
         if not isinstance(fix,Fix) or not number(now):raise ValueError('Fix and finite UTC receipt time required')
         age=now-fix.timestamp
-        def result(status,position=None,road=None,distance=None,count=0):
+        def result(status,position=None,road=None,distance=None,count=0,junction_held=False):
             return Match(status,position,road,fix.timestamp,fix.accuracy_m,age,fix.speed_mps,
                          fix.bearing_accuracy_degrees,distance,
-                         bool(road and self.p.source_edges[road].access=='unknown'),count)
+                         bool(road and self.p.source_edges[road].access=='unknown'),count,
+                         junction_held)
         if age<0:return result('future_fix')
         if age>3:return result('stale_fix')
         if fix.accuracy_m>35:return result('poor_accuracy')
@@ -150,6 +152,7 @@ class Matcher:
         count=len(names)
         if not candidates:return result('direction_mismatch' if near_geometry else 'off_map',count=count)
         candidates.sort();best=candidates[0];margin=max(3,fix.accuracy_m*.5)
+        junction_held=False
         # Include inaccessible/disconnected physical roads in ambiguity assessment.
         # Otherwise legality filtering could snap an illegal observation elsewhere.
         if len(candidates)>1 and candidates[1][0]-best[0]<margin:
@@ -162,7 +165,13 @@ class Matcher:
                     edge=self.p.source_edges[c[1]]
                     if previous_edge.target==edge.source and c[2]*self.segments[c[1]].length<=margin:return True
                     return stationary and previous_edge.source==edge.target and previous_edge.target==edge.source
-                if incumbent and incumbent[0]-best[0]<margin and all(shared_endpoint_or_stationary_reverse(c) for c in rivals):best=incumbent
+                if incumbent and incumbent[0]-best[0]<margin and all(shared_endpoint_or_stationary_reverse(c) for c in rivals):
+                    # A nearby successor is physically plausible but its
+                    # entry is not yet measured with enough separation.
+                    # Keep the trusted last road without pretending that an
+                    # exact junction crossing or lane position was observed.
+                    junction_held=any(c[1]!=self.last.road for c in rivals)
+                    best=incumbent
                 else:return result('ambiguous',count=count)
             else:return result('ambiguous',count=count)
         d,name,q=best;position=self.p.position(name,round(q*1000000))
@@ -201,7 +210,7 @@ class Matcher:
                 path=((1000000-oldpos.fraction)*self.segments[oldname].length+
                       position.fraction*self.segments[name].length)/1000000
             if path>80*dt+fix.accuracy_m+self.last.accuracy_m+3:return result('impossible_path',count=count)
-        return result('matched',position,name,d,count)
+        return result('matched',position,name,d,count,junction_held)
 
     def _commit(self,fix,match):
         if match.status!='matched':return
@@ -243,7 +252,8 @@ class GpsJourney:
             else:s=self.journey.observe(m.position,clock)
             self.matcher._commit(fix,m)
         else:s=self.journey.snapshot
-        self.update=GpsUpdate(m,s,m.status=='matched' and s is not None and s.status=='navigating')
+        self.update=GpsUpdate(m,s,m.status=='matched' and not m.junction_held
+                             and s is not None and s.status=='navigating')
         return self.update
 
     def guidance_available(self,now):
