@@ -68,3 +68,26 @@ The next unblocked stage is GPS ambiguity/fault/recovery: freeze explicit
 analytical cases and required abstention/recovery expectations before tuning,
 then execute applicable permitted references sequentially and preserve interface
 limitations per case. No surveyed UK truth has been obtained.
+
+## Additional runnable reference: openrouteservice
+
+The owner requested execution of previously unrun references or alternatives.
+GPS-001 now has a self-hosted openrouteservice 10.1.0 **pointwise snapping**
+adapter. Acceptance and fixture hashes remain frozen; no engine tuning or DMN
+policy change is authorised by a missing result. This endpoint returns positions
+in input order, with explicit null slots; a partial response is never aligned by
+guessing. The same six position/output/progression checks apply. Observed
+coordinate progression is not proof that ORS inferred legal driving direction;
+this endpoint has no temporal inference. Do not extrapolate its score to that.
+
+The bounded `[ors-gps001]` CI job uses the official v10.1.0 JAR, SHA-256
+`46b83b353eaf8830a1b53cad91d027e00547cd9a00e86efddd64a45335bfb8e1`, Java 25,
+the same invented map, driving-car, radius 20 m, no elevation, disabled tiny-network
+pruning and no CH/LM/core preparation. No hosted API calls or keys. Startup or HTTP
+errors are unavailable execution, never case failures or passes. Source contract:
+https://github.com/GIScience/openrouteservice/blob/v10.1.0/ors-api/src/main/java/org/heigit/ors/api/controllers/SnappingAPI.java
+
+BRouter can be self-hosted for routing, which needs its own frozen route contract;
+OsmAnd and Organic Maps need executable app/native harnesses. Their GPS-001
+adapter gaps remain work, not evidence of poor navigation. Commercial/Waze access
+restrictions remain unchanged. The original twelve-family roster is preserved.

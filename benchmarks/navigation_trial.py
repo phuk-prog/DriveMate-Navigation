@@ -21,12 +21,13 @@ ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / 'benchmarks/fixtures/synthetic-gps-001.xml'
 ORACLE = ROOT / 'benchmarks/fixtures/synthetic-gps-001.json'
 VERSIONS = {'DMN': 'repository temporal matcher', 'OSRM': '5.27.1',
-            'Valhalla': '3.9.1', 'GraphHopper': '11.1 / Java 25'}
+            'Valhalla': '3.9.1', 'GraphHopper': '11.1 / Java 25',
+            'openrouteservice': '10.1.0; pointwise snapping endpoint'}
 BLOCKERS = {
     'OsmAnd': 'No executable GPS-replay adapter integrated; app behaviour is not a batch matching API.',
     'Organic Maps': 'No executable GPS-replay adapter integrated; app behaviour is not a batch matching API.',
     'BRouter': 'Routing reference has no integrated observation-matching interface for GPS-001.',
-    'openrouteservice': 'No integrated supported GPS-matching adapter for GPS-001.',
+    'openrouteservice': 'No actual GPS-001 snapping execution supplied; adapter now available.',
     'HERE': 'No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised.',
     'Mapbox': 'No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised.',
     'TomTom': 'No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised.',
@@ -82,6 +83,7 @@ def _report(system, rows, execution):
             'independent_real_road_truth': False, 'real_device_tests': 0,
             'configuration': {
                 'DMN': 'streaming directed temporal matcher; no location lookahead',
+                'openrouteservice': 'driving-car; /v2/snap; radius=20m; independent point snaps; no temporal/direction inference',
                 'OSRM': 'car.lua MLD; radiuses=6m; tidy=false; four original tracepoint slots',
                 'Valhalla': 'auto; map_snap; search_radius=20m; matched_points alignment',
                 'GraphHopper': 'car; gps_accuracy=10m; extended_json; exact four-point alignment',
@@ -124,6 +126,9 @@ def run_external(system):
     elif system == 'GraphHopper':
         from benchmarks.graphhopper_live_reference import wait_for_graphhopper
         wait_for_graphhopper()
+    elif system == 'openrouteservice':
+        from benchmarks.ors_snap_reference import wait_for_ors
+        wait_for_ors()
     else:
         raise ValueError('Unsupported live reference')
     rows = []
@@ -143,6 +148,10 @@ def run_external(system):
             points = [None] * 4 if response.get('unroutable') else [
                 (p['lat'], p['lon']) if p and p.get('type') in ('matched', 'interpolated')
                 else None for p in response['matched_points']]
+        elif system == 'openrouteservice':
+            from benchmarks.ors_snap_reference import snap_body, request_snap, aligned_points
+            response = request_snap(snap_body(fixes))
+            points = aligned_points(response)
         else:
             response = request_local_graphhopper_match(research_gpx(fixes))
             points = [None] * 4 if response.get('no_match') else flattened_matched_points(response)

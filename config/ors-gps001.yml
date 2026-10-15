@@ -1,0 +1,27 @@
+# Invented GPS-001 fixture only. Tiny graph pruning explicitly disabled.
+server:
+  port: 8080
+  servlet:
+    context-path: /ors
+ors:
+  engine:
+    init_threads: 1
+    profile_default:
+      graph_path: results/ors-graphs
+      build:
+        source_file: results/gps001.osm.pbf
+        elevation: false
+    profiles:
+      driving-car:
+        enabled: true
+        build:
+          elevation: false
+          preparation:
+            min_network_size: 0
+            methods:
+              ch:
+                enabled: false
+              lm:
+                enabled: false
+              core:
+                enabled: false
