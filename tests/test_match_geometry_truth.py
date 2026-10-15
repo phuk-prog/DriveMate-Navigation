@@ -21,6 +21,9 @@ class CommonGeometryOracleTests(unittest.TestCase):
         p=expected_road_geometry_probe(self.graph,self.coords,"target",(53.0,-2.0005))
         self.assertEqual(p["state"],"near_generated_geometry")
         self.assertGreaterEqual(p["nearby_other_directed_edges"],2)
+        self.assertEqual(p["reverse_same_segment_directed_edges"],1)
+        self.assertEqual(p["nearby_disjoint_graph_segments"],1)
+        self.assertEqual(p["nearby_adjacent_graph_segments"],0)
         self.assertFalse(p["direction_verified"])
     def test_wrong_parallel_link_can_still_be_geometrically_near(self):
         p=expected_road_geometry_probe(self.graph,self.coords,"target",(53.000040,-2.0005))
@@ -89,6 +92,31 @@ class CommonGeometryOracleTests(unittest.TestCase):
         self.assertTrue(expected_road_geometry_probe(self.graph,self.coords,"target",p)["near_expected_geometry"])
         self.assertIsNone(projected_dmn_result(MatchResult("AMBIGUOUS",None,"x",0,2),
                                fix,self.graph,self.coords))
+
+    def test_reverse_only_is_not_a_second_physical_road(self):
+        pts={"a":(53.0,-2.001),"b":(53.0,-2.0)}
+        g=RoadGraph(pts,[RoadEdge("f","a","b",65,35,"allowed"),
+                         RoadEdge("r","b","a",65,35,"allowed")])
+        result=expected_road_geometry_probe(g,pts,"f",(53.0,-2.0005))
+        self.assertEqual(result["nearby_other_directed_edges"],1)
+        self.assertEqual(result["reverse_same_segment_directed_edges"],1)
+        self.assertEqual(result["nearby_disjoint_graph_segments"],0)
+        self.assertEqual(result["nearby_adjacent_graph_segments"],0)
+    def test_junction_continuation_not_classed_as_parallel_road(self):
+        pts={"a":(53.0,-2.001),"b":(53.0,-2.0),"c":(53.0,-1.999)}
+        g=RoadGraph(pts,[RoadEdge("a","a","b",65,35,"allowed"),
+                         RoadEdge("b","b","c",65,35,"allowed")])
+        result=expected_road_geometry_probe(g,pts,"a",(53.0,-2.00001))
+        self.assertEqual(result["nearby_adjacent_graph_segments"],1)
+        self.assertEqual(result["nearby_disjoint_graph_segments"],0)
+    def test_overlapping_disconnected_road_is_flagged_not_verified_wrong(self):
+        pts={"a":(53.0,-2.001),"b":(53.0,-2.0),
+             "c":(53.0,-2.001),"d":(53.0,-2.0)}
+        g=RoadGraph(pts,[RoadEdge("a","a","b",65,35,"allowed"),
+                         RoadEdge("other","c","d",65,35,"allowed")])
+        result=expected_road_geometry_probe(g,pts,"a",(53.0,-2.0005))
+        self.assertEqual(result["nearby_disjoint_graph_segments"],1)
+        self.assertFalse(result["direction_verified"])
     def test_denominator_and_risky_road_alternatives(self):
         totals=Counter()
         report_geometry_last_fix(totals,"provider",self.graph,self.coords,"target",(53,-2.0005))
@@ -100,6 +128,9 @@ class CommonGeometryOracleTests(unittest.TestCase):
                           result["not_alignable_or_withheld"],
                           result["farther_than_5m_from_generating_road"]),(1,1,1))
         self.assertEqual(result["near_but_alternative_directed_roads_within_10m"],1)
+        self.assertEqual(result["near_with_opposite_direction_of_same_segment"],1)
+        self.assertEqual(result["near_with_disjoint_graph_segments"],1)
+        self.assertEqual(result["near_with_connected_junction_segments"],0)
         with self.assertRaises(AssertionError):
             ensure_geometry_denominators(totals,("provider",),4)
 
