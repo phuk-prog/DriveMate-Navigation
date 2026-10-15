@@ -15,3 +15,7 @@ Further provider adapters: Valhalla trace matching and GraphHopper map matching,
 ## Initial gate checks
 
 [GitHub Actions run 38752700333](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38752700333) **passed the research unit and contract suite** including locally mocked OSRM Match adapter protocol tests. Fake responses explicitly report **zero actual external reference engines executed**. A separate opt-in run is required to start the **actual** local OSRM 5.27.1 container and send the same map-generated GPS sequence to the real Match API. An HTTP error or no matching data must be reported as such, not replaced with unit results.
+
+## Verified live external GPS results
+
+[Actual live OSRM Match run 38752861279](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38752861279) passed **193 unit/contract tests** and sent **12 real UK OSM-derived four-fix simulated scenarios** to OSRM 5.27.1 local `/match`. All 12 returned Match `Ok` responses, but only **40/48** tracepoints snapped within 20m and **8/48 were unmatched**. DMN single-fix selected the generating directed edge 6/12 and the older DMN temporal matcher selected 8/12, no confident wrong-road assignments, with 6 and 4 withheld respectively. OSRM returned snapped positions, not directly comparable DMN edge IDs, so do not award winner score. The artifact `dmn-vs-osrm-match-public-uk` has the aggregate metrics. See [two-family comparison report](DMN_EXTERNAL_GPS_FIRST_TWO.md).

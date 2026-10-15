@@ -11,3 +11,7 @@ Valhalla and OSRM are distinct **families**, while CH/MLD OSRM are variants of t
 ## Execution gate
 
 The Valhalla trace_attributes request/schema unit suite has now passed in [GitHub Actions 38753413439](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38753413439). The first **live** Valhalla comparison is deliberately opt-in on a separate CI commit and remains unverified until its own real container and response artifact complete. The prior local OSRM Match reference has already executed independently on [run 38752861279](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38752861279). Do not treat the unit response mocks as a second live provider.
+
+## Verified live Valhalla GPS results
+
+[Actual Valhalla trace_attributes run 38753612912](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38753612912) **succeeded with 198 Python unit/contract checks** and 12/12 real UK **public map-derived artificial four-fix GPS sequences** served by local pinned Valhalla 3.9.1. From 48 returned tracepoints, **43 snapped within 20 m**, **1 snapped farther than 20 m**, **4 unmatched**; all 12 traces had a response. This shares input source and GPS generated traces with OSRM/DMN but does **not** establish correct road ID, travel direction, legal turn, lane selection or comparable confidence: read [two-family results and limitations](DMN_EXTERNAL_GPS_FIRST_TWO.md). Preserve the artifact `dmn-vs-valhalla-map-match-uk` and no overall ranking.
