@@ -442,5 +442,34 @@ jobs:
         run: |
           rm -f "${RUNNER_TEMP}/greater-manchester-260901.osm.pbf"
           rm -f results/public-road-subset.osm
+      - name: Compare three bounded public UK test networks (single explicit opt-in)
+        if: contains(github.event.head_commit.message, '[uk-network-coverage-smoke]') || contains(github.event.pull_request.title, '[uk-network-coverage-smoke]')
+        timeout-minutes: 12
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output "${RUNNER_TEMP}/dmn-network-public-source.osm.pbf" \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          python -m benchmarks.public_network_sweep \
+            --pbf "${RUNNER_TEMP}/dmn-network-public-source.osm.pbf" \
+            --snapshot geofabrik-260901 | tee results/dmn-network-coverage-sweep.json
+      - name: Upload public network coverage counts (never source maps)
+        if: always() && (contains(github.event.head_commit.message, '[uk-network-coverage-smoke]') || contains(github.event.pull_request.title, '[uk-network-coverage-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-public-uk-network-coverage
+          path: results/dmn-network-coverage-sweep.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Remove ephemeral public-network candidate extracts
+        if: always()
+        shell: bash
+        run: |
+          rm -f "${RUNNER_TEMP}/dmn-network-public-source.osm.pbf"
+          rm -f results/dmn-network-*.osm
       - name: Verify opt-in public-road extraction CLI without using a real map
         run: python -m tools.public_osm_extract --help >/dev/null
