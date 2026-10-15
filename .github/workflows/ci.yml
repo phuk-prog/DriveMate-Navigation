@@ -33,6 +33,15 @@ jobs:
         run: python -m compileall -q engine map_data gps benchmarks tools tests
       - name: Run independent routing tests
         run: python -m unittest discover -s tests -v
+      - name: GPS-002 frozen ambiguity fault and recovery batch
+        run: python -m benchmarks.gps_fault_batch --output results/gps002-DMN.json
+      - name: Upload GPS-002 per-event conformance evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: gps002-streaming-contract
+          path: results/gps002-DMN.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Measure synthetic routing latency (informational only)
         run: |
           python -m benchmarks.run --repeat 30

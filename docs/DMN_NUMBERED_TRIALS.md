@@ -136,3 +136,39 @@ references/route001-brouter-20261015.json. Do not repeat this unchanged integrat
 run automatically. Complete remaining applicable reference adapters and harder
 legal/access cases in bounded stages; preserve the independent GPS ambiguity and
 UK coverage work rather than treating this small tie as road readiness.
+
+## GPS-002 frozen batch: stream ambiguity, faults, gaps and recovery
+
+Sixteen analytical synthetic cases and per-event expectations are declared in
+`benchmarks/fixtures/synthetic-gps-002.json` before tuning; a separate invented
+feeder joins only the northern of two parallel one-way roads. Road topology is
+hand-declared, while clock/quality expectations come from explicit engineering
+limits: anchor age 20 seconds, at most two unresolved samples, fix age 10 seconds,
+physical plausibility screen 90 m/s, weak accuracy above 35 m. These limits are
+contracts under test, not independently calibrated GNSS or road/legal truth.
+
+Cases cover equally plausible first/repeated observations; a fresh feeder anchor;
+single bad-speed and weak-accuracy recovery; burst expiry; long-gap withholding
+and reacquisition; duplicate, out-of-order, stale and future timestamps; an
+impossible jump; unavailable heading; stationary ambiguity; and session reset.
+Require every declared event status, the expected directed way for positive
+controls, no edge claim on withheld/rejected outputs, and unchanged trusted fix
+where a packet is rejected. Every assertion must pass for its case to pass.
+Score = `10 * passed / 16`; do not mix with GPS-001 or routing scores.
+
+This is a streaming input-quality/history contract, not a batch position-snap
+contract. Existing OSRM/Valhalla/GraphHopper batch APIs do not expose equivalent
+reception clocks, resets or trusted stream state. ORS pointwise snap and BRouter
+routing likewise cannot express it. Mark these integrated interfaces UNSUPPORTED
+per case, not bad engines or fabricated fails. OsmAnd/Organic Maps need app/native
+lifecycle harnesses; four commercial services lack configured permitted access;
+Waze has no established permitted automation. Retain all twelve external families
+plus DMN with exact per-case reasons. Only DMN has a judged cohort in this stage;
+its numerical score is conformance, not a competitive quality ranking. Do not
+run heavyweight batch routers merely to substitute positions for lifecycle checks.
+
+Execute `python -m benchmarks.gps_fault_batch --output results/gps002-DMN.json`.
+The normal research CI runs this small deterministic batch and preserves its
+per-event report. Map and oracle SHA-256 bind each report. No matcher tuning is
+warranted unless a fault is reproduced. UK coverage remains unresolved, and no
+physical tunnel navigation or device readiness is established by a no-fix gap.
