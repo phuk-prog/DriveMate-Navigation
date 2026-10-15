@@ -172,3 +172,12 @@ The normal research CI runs this small deterministic batch and preserves its
 per-event report. Map and oracle SHA-256 bind each report. No matcher tuning is
 warranted unless a fault is reproduced. UK coverage remains unresolved, and no
 physical tunnel navigation or device readiness is established by a no-fix gap.
+
+GPS-002 completed: run 38816950211 at
+`38933527cb80ff09e0c756bb8717fdd6fe2945e2`, DMN 16/16, no matcher policy
+changes. See GPS_002_RESULTS.md and references/gps002-stream-batch-20261015.json.
+Only DMN was judged; other current endpoints are unsupported or lack lifecycle
+harness/access, with per-case reasons. Normal CI now gates this frozen batch.
+Next bounded work should add other applicable self-hosted engines to ROUTE-001,
+then frozen routing access/turn/disconnection and rerouting cases. Preserve the
+UK ambiguity promotion block and the remaining app/native streaming harness work.
