@@ -36,3 +36,9 @@ destination ambiguity cases remain **unresolved**; this change cannot turn a
 This is a conservative research improvement and must not be treated as a
 verified on-phone GPS, navigation or Bluetooth fix without the required device
 and independently grounded UK road tests.
+
+The first regression run exposed a status compatibility regression: shared-node
+uncertainty was labelled `guidance_unavailable`, hiding the existing
+`junction_position_uncertain` instruction result. `Planner.targets` now
+preserves the **specific** uncertainty status while still suppressing speech.
+The existing independent instruction-timing regression is not changed.

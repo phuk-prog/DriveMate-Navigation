@@ -82,7 +82,15 @@ class Planner:
 
     def targets(self,now):
         s=self.source.snapshot
-        if not self.source.guidance_available(now):return 'guidance_unavailable',()
+        if not self.source.guidance_available(now):
+            # Shared-node hysteresis preserves the last confirmed road but
+            # must not sound a speculative turn. Keep the explicit junction
+            # uncertainty status required by the instruction contract.
+            update=self.source.update
+            if (update is not None and update.match is not None and
+                    update.match.junction_held):
+                return 'junction_position_uncertain',()
+            return 'guidance_unavailable',()
         if self.cache is not None and self.cache[0] is s:return self.cache[1:]
         sessions=self.source.sessions
         layouts=tuple(x._roundabout_progress.remaining_path(x._session.snapshot)[0] for x in sessions)
