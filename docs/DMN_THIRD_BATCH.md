@@ -13,3 +13,7 @@ This batch introduces a **separate, more realistic, bounded road-neighborhood ex
 The separate `gps/fix_quality.py` input-quality checks continue as unit/contract tests. **GPS map matching, true device speed, variable speed limits, lane arrows, and arrival remain NOT TESTED** in this run. This experiment focuses on one verifiable missing layer: wider public road alternatives around real mapped restrictions.
 
 Main command: `python -m benchmarks.uk_neighborhood_detours --pbf results/public.osm.pbf --restriction-source results/public-restrictions.osm --snapshot geofabrik-260901 --limit 4`. It requires the Osmium CLI and the source restricted to explicitly public, nonpersonal OSM. The GitHub workflow runs it only using the special `[neighborhood-detour-smoke]` opt-in marker. Neither production DriveMate nor APK generation is modified.
+
+## Evidence-tier interpretation
+
+This next run is intentionally **one bounded public map study** with at most four eligible restrictions. It must report the number of cases considered, which cases were unsupported, the number of forbidden turns checked, how many alternative paths actually exist *inside* each extracted graph, and how many route-not-found outcomes remain unknown due to clipped boundaries. Even if all checks execute, do not award a safety score or claim an independently legal detour without primary turn-law confirmation. Keep the 12-case two-way-only smoke unchanged as a separate baseline.\n
