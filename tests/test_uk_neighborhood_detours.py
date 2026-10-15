@@ -24,6 +24,11 @@ class BufferedDetourTests(unittest.TestCase):
         self.assertEqual(out["profile_routable_for_restricted_turns"], out["detours_found"])
         self.assertGreaterEqual(out["generated_paths_kept_unverified"], 1)
         self.assertGreaterEqual(out["profile_cases_with_multiple_mapped_candidates"],0)
+        self.assertGreaterEqual(out["neighborhood_comparison_pairs_checked"], 0)
+        self.assertGreaterEqual(out["neighborhood_pairs_with_multiple_routes"], 0)
+        self.assertIn(out["neighborhood_comparison_coverage"],
+                      {"MAP_DIVERGENCE_OBSERVED","INSUFFICIENT"})
+        self.assertGreaterEqual(out["neighborhood_physical_cycle_rank_upper_bound"],0)
         self.assertFalse(out["independent_legality"])
 
     def test_extra_restriction_not_silently_discarded(self):

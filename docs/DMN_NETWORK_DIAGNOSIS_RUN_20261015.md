@@ -62,3 +62,9 @@ To obtain real connected road choice *without weakening the strict importer*, th
 ### One-time bounded real-road preference run
 
 After unit/contract CI for the revised preference probe completed green, request exactly one `[neighborhood-detour-smoke]` public Geofabrik 2026-09-01 test of the existing four mapped-turn-rule neighborhoods. Retain incomplete/conditional areas as unsupported, enforce incoming-edge turn legality for every candidate, and report both ordinary found detours and preference diversity as separate denominators. Once finished clear the PR opt-in marker; do not repeat heavy downloads or claim traffic-law certification.
+
+### Measured restricted-turn alternatives and expanded internal pairing
+
+[Real UK Actions 38791026944](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38791026944) GREEN, **273/273 Python checks**: 4 public UK restriction neighborhoods prepared, 3 with complete imported mapped rules, **3/3 graph-permitted detours found**, **3/3 profile-tested restricted turns with multiple candidate paths**, **0/3 fastest vs shortest mode-optimum divergences**, **7/7 candidate paths explicitly unverified for real UK law**, and 1 incomplete neighbor restriction left unsupported. The bounded results are NOT independent real road law, not whole-UK legal routing proof or competitor scores. This is improved connected-route coverage, but only three very close junction journeys.
+
+The next experiment explores up to **48 additional mapped-graph journey pairs per safely supported neighborhood** (same actual public UK roads, same snapshot and mapped restrictions) and records observed physical cycle availability, alternate candidates, Fastest/Shortest divergence and whether Balanced is distinct. Previously measured single restricted-turn cases are retained unchanged. New OSM-only alternatives remain NOT independently verified UK legal routes. No competitor access or Android APK in this experiment.

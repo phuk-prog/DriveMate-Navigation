@@ -18,6 +18,7 @@ from time import perf_counter_ns
 import xml.etree.ElementTree as ET
 
 from benchmarks.real_uk_turn_probe import _eligible, _public_input
+from benchmarks.public_route_preferences import probe_preference_diversity
 from engine import RouteNotFound, shortest_route
 from engine.route_alternatives import generate_route_candidates
 from map_data import OSMImportError, Provenance, import_osm_xml
@@ -228,6 +229,12 @@ def evaluate_neighborhood(neighborhood_raw: bytes, restriction_raw: bytes,
                 quickest.route.edge_ids != shortest.route.edge_ids)
             found+=1
         durations.append(round((perf_counter_ns()-begin)/1e6,5))
+    # A second, disjoint sample objective: search a bounded number of other
+    # map-graph-origin/destination pairs across this same source-complete
+    # neighborhood. Do not mistake OSM semantics for independent road truth.
+    diversity=probe_preference_diversity(
+        graph,snapshot_id=imported.metadata["source_sha256"],
+        maximum_pairs=48)
     return {"status":"map_rule_checked",
             "rule_pairs":len(pairs),
             "detours_found":found,
@@ -236,6 +243,14 @@ def evaluate_neighborhood(neighborhood_raw: bytes, restriction_raw: bytes,
             "profile_cases_with_multiple_mapped_candidates":multi_candidate,
             "profile_fastest_shortest_different_path_cases":fastest_shortest_divergences,
             "generated_paths_kept_unverified":independent_legality_gates_tripped,
+            "neighborhood_comparison_pairs_checked":diversity["map_derived_preference_pairs_checked"],
+            "neighborhood_pairs_with_multiple_routes":diversity["map_derived_pairs_with_multiple_routes"],
+            "neighborhood_fastest_shortest_divergences":diversity["fastest_and_shortest_different_path_pairs"],
+            "neighborhood_distinct_balanced_cases":diversity["balanced_distinct_from_both_pairs"],
+            "neighborhood_usable_directed_edges":diversity["network_allowed_directed_edges"],
+            "neighborhood_physical_cycle_rank_upper_bound":diversity[
+                "network_undirected_cycle_rank_upper_bound"],
+            "neighborhood_comparison_coverage":diversity["route_preference_discriminating_coverage"],
             "graph_nodes":len(graph.vertices),
             "graph_edges":len(graph.edges),
             "median_route_compute_ms":sorted(durations)[len(durations)//2],
@@ -337,6 +352,20 @@ def execute_public_neighborhoods(source_pbf: Path, restriction_xml: Path,
             x.get("profile_fastest_shortest_different_path_cases",0) for x in records),
         "generated_paths_kept_unverified":sum(
             x.get("generated_paths_kept_unverified",0) for x in records),
+        "neighborhood_comparison_pairs_checked":sum(
+            x.get("neighborhood_comparison_pairs_checked",0) for x in records),
+        "neighborhood_pairs_with_multiple_routes":sum(
+            x.get("neighborhood_pairs_with_multiple_routes",0) for x in records),
+        "neighborhood_fastest_shortest_divergences":sum(
+            x.get("neighborhood_fastest_shortest_divergences",0) for x in records),
+        "neighborhood_distinct_balanced_cases":sum(
+            x.get("neighborhood_distinct_balanced_cases",0) for x in records),
+        "neighborhoods_with_physical_cycles":sum(
+            x.get("neighborhood_physical_cycle_rank_upper_bound",0)>0 for x in records),
+        "neighbor_preference_comparison_coverage":(
+            "MAP_DIVERGENCE_OBSERVED" if any(
+                x.get("neighborhood_fastest_shortest_divergences",0)>0 for x in records)
+            else "INSUFFICIENT"),
         "no_route_in_bounded_graph_unknown":sum(x["no_route_within_buffer"] for x in records),
         "unsupported_or_incomplete_neighborhoods":sum(x["status"]=="unsupported" for x in records),
         "unsupported_reasons":{k:sum(x.get("reason")==k for x in records)
