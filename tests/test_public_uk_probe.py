@@ -17,6 +17,9 @@ class PublicUKValidationTests(unittest.TestCase):
         self.assertFalse(result["user_location_information_used"])
         self.assertEqual(result["external_engines_executed"], 0)
         self.assertEqual(result["scenario_count"], 1)
+        self.assertEqual(result["route_preference_profiles_checked"],1)
+        self.assertTrue(result["route_preference_graph_rules_consistent"])
+        self.assertFalse(result["driver_route_legality_independently_verified"])
 
     def test_only_git_ignored_results_area_allowed_as_real_input(self):
         with self.assertRaises(ValueError):

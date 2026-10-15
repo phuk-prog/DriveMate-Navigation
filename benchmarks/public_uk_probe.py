@@ -14,6 +14,7 @@ from statistics import median
 from time import perf_counter_ns
 
 from engine import RouteNotFound, shortest_route
+from engine.route_alternatives import generate_route_candidates
 from engine.astar import astar_route, prepare_astar
 from map_data import Provenance, import_osm_xml
 from map_data.osm_xml import MAX_INPUT_BYTES
@@ -74,6 +75,8 @@ def check_public_graph(raw: bytes, *, snapshot: str, region: str, samples: int =
     tested = 0
     d_ms, a_ms, cold_ms = [], [], []
     heuristic_count = 0
+    route_profiles_checked = 0
+    distinct_candidate_cases = 0
     for source, target in _scenarios(graph, limit=samples):
         if tested >= samples:
             break
@@ -101,6 +104,25 @@ def check_public_graph(raw: bytes, *, snapshot: str, region: str, samples: int =
             if edge.access != "allowed" or (previous, eid) in graph.prohibited_turns:
                 raise AssertionError("Candidate used a prohibited movement")
             previous = eid
+        new_routes = generate_route_candidates(
+            graph, source, target, snapshot_id=imported.metadata["source_sha256"],
+            max_candidates=4, max_detour_searches=4)
+        if not new_routes:
+            raise AssertionError("Routable public graph produced no profile candidates")
+        expected_seconds = min(r.route.estimated_seconds for r in new_routes)
+        if abs(expected_seconds - baseline.estimated_seconds) > 1e-7:
+            raise AssertionError("Fastest route generator disagreed with Dijkstra")
+        for proposal in new_routes:
+            if proposal.as_unverified_option().independently_verified_legal:
+                raise AssertionError("Map-only route cannot self-certify legality")
+            entering = None
+            for edge_id in proposal.route.edge_ids:
+                edge = graph.edges[edge_id]
+                if edge.access != "allowed" or (entering, edge_id) in graph.prohibited_turns:
+                    raise AssertionError("Route preference bypassed mapped access/turn rule")
+                entering = edge_id
+        route_profiles_checked += 1
+        distinct_candidate_cases += int(len(new_routes) > 1)
         tested += 1
         heuristic_count += int(candidate.geographic_heuristic_used)
     if tested < min(3, samples):
@@ -120,6 +142,10 @@ def check_public_graph(raw: bytes, *, snapshot: str, region: str, samples: int =
         "median_ms_astar_unprepared": round(median(cold_ms), 5),
         "one_time_astar_prepare_ms": round(prepare_ms, 5),
         "external_engines_executed": 0,
+        "route_preference_profiles_checked": route_profiles_checked,
+        "route_preference_distinct_path_scenarios": distinct_candidate_cases,
+        "route_preference_graph_rules_consistent": True,
+        "driver_route_legality_independently_verified": False,
         "source_road_data_public": True,
         "user_location_information_used": False,
         "verified_safe_for_live_navigation": False,
