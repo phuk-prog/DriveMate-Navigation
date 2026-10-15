@@ -66,5 +66,27 @@ class BufferedDetourTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             expanded_bbox("-2.1,53.1,-2.2,53.2")
 
+
+    def test_nondrivable_map_features_do_not_exhaust_importer(self):
+        original=RAW.decode()
+        filler=''.join(
+            f'<way id="{4000+i}"><nd ref="1"/><nd ref="2"/>'
+            '<tag k="highway" v="footway"/>'
+            '<tag k="oneway:conditional" v="no @ (Su)"/></way>'
+            for i in range(200))
+        larger=original.replace('</osm>',filler+'</osm>').encode()
+        out=evaluate_neighborhood(larger,RAW,relation_id="200",snapshot="synthetic-unit")
+        self.assertEqual(out["status"],"map_rule_checked")
+        self.assertGreaterEqual(out["detours_found"],1)
+
+    def test_conditional_motorcar_way_still_blocks_prototype(self):
+        original=RAW.decode()
+        updated=original.replace('<tag k="highway" v="tertiary"/></way>',
+            '<tag k="highway" v="tertiary"/>'
+            '<tag k="maxspeed:conditional" v="30 @ (Mo-Fr 08:00-10:00)"/></way>',1).encode()
+        out=evaluate_neighborhood(updated,RAW,relation_id="200",snapshot="synthetic-unit")
+        self.assertEqual(out["status"],"unsupported")
+        self.assertEqual(out["reason"],"unsupported_graph_or_restriction")
+
 if __name__=="__main__":
     unittest.main()

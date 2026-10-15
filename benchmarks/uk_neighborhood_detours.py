@@ -20,10 +20,12 @@ import xml.etree.ElementTree as ET
 from benchmarks.real_uk_turn_probe import _eligible, _public_input
 from engine import RouteNotFound, shortest_route
 from map_data import OSMImportError, Provenance, import_osm_xml
+from map_data.osm_xml import DRIVING_SPEEDS, UNCERTAIN_ROADS
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "results"
 MAX_NEIGHBORHOOD_BYTES = 6_000_000
+MAX_SOURCE_NEIGHBORHOOD_BYTES = 40_000_000
 
 
 def _parse_public(raw: bytes) -> ET.Element:
@@ -79,8 +81,26 @@ def find_candidates(source_raw: bytes, *, limit: int=4,
 def _compile_neighborhood(neighborhood_raw: bytes, restriction_raw: bytes,
                           *, target_relation_id: str, snapshot: str):
     """Add all known applicable restrictions; decline unsafe/partial subsets."""
-    root=_parse_public(neighborhood_raw)
+    if len(neighborhood_raw)>MAX_SOURCE_NEIGHBORHOOD_BYTES:
+        return None,"public_source_neighborhood_too_large"
+    full_root=_parse_public(neighborhood_raw)
     source=_parse_public(restriction_raw)
+    # Discard non-drivable map objects before the STRICT 6MB graph import.
+    # Keep motorcar road access tags, their connected nodes and barriers, and
+    # ALL applicable source restriction relations. No conditions are erased.
+    motorways={el.get("id"):el for el in full_root.findall("way") if
+               any(t.get("k")=="highway" and t.get("v") in
+                   (DRIVING_SPEEDS.keys() | UNCERTAIN_ROADS)
+                   for t in el.findall("tag"))}
+    used_nodes={n.get("ref") for way in motorways.values() for n in way.findall("nd")}
+    all_nodes={el.get("id"):el for el in full_root.findall("node")}
+    if None in used_nodes or not used_nodes.issubset(all_nodes):
+        return None,"incomplete_motorcar_way_geometry"
+    root=ET.Element("osm",{"version":"0.6"})
+    for node_id in sorted(used_nodes):
+        root.append(deepcopy(all_nodes[node_id]))
+    for way_id in sorted(motorways):
+        root.append(deepcopy(motorways[way_id]))
     target=next((r for r in source.findall("relation")
                  if r.get("id")==target_relation_id),None)
     if target is None or not _eligible(target):
@@ -237,8 +257,8 @@ def execute_public_neighborhoods(source_pbf: Path, restriction_xml: Path,
                     runner(("osmium","cat",str(local_pbf),"-o",str(local_xml),
                             "-f","osm,add_metadata=false"),
                            check=True,timeout=60,stdout=subprocess.DEVNULL)
-                    if local_xml.stat().st_size>MAX_NEIGHBORHOOD_BYTES:
-                        record={"status":"unsupported","reason":"prototype_graph_too_large",
+                    if local_xml.stat().st_size>MAX_SOURCE_NEIGHBORHOOD_BYTES:
+                        record={"status":"unsupported","reason":"public_source_neighborhood_too_large",
                                 "rule_pairs":0,"detours_found":0,"no_route_within_buffer":0,
                                 "independent_legality":False}
                     else:

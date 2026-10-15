@@ -46,3 +46,7 @@ The `batch_from_real_turn_probe` analyzer adds a deduplicated **NAV-042** covera
 ## Bounded detour test discovery from the third batch
 
 The first real UK buffered-neighborhood study found two map-rule detours in the two tested neighborhoods but flagged two further neighborhoods **UNSUPPORTED** because a neighboring restriction referenced a road beyond the selected boundary. This motivated an at-most-once modest boundary expansion, with remaining missing objects still classified as unsupported. See [batch 3 evidence](DMN_THIRD_BATCH.md). Future tasks: independently verify movement legality, assess longer held-out legal detours, compare alternative route qualities, and start GPS/map-matching replays with accurate speed and positioning evidence.
+
+## New real map import capacity gap (15 October)
+
+[Run 38737339329](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38737339329) found that expanding two incomplete public UK junction neighborhoods made their raw extracts exceed the conservative prototype **6 MB importer cap**. That is an **import-capacity limitation, not a verified routing failure**. Prioritize safe prefiltering of irrelevant buildings/footways while retaining drivable roads, barrier nodes and all applicable restrictions; test that conditional motorcar rules still fail closed and rerun the pinned real-data benchmark.
