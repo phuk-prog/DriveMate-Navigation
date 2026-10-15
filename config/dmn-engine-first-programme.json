@@ -120,5 +120,18 @@
     "no_unauthorized_automated_provider_collection": true
   },
   "historical_evidence_not_modified": true,
-  "minimum_reference_families": 10
+  "minimum_reference_families": 10,
+  "owner_decisions": {
+    "1": {
+      "date": "2026-10-15",
+      "selection": "minimum_10_more_allowed",
+      "note": "12 proposed including Google Maps and Waze"
+    },
+    "2": {
+      "date": "2026-10-15",
+      "selection": "B",
+      "policy": "permitted_free_comparisons_first_request_owner_approval_before_any_paid_test",
+      "paid_usage_authorized": false
+    }
+  }
 }
