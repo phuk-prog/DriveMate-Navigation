@@ -17,3 +17,7 @@ One opt-in `[gps-match-smoke]` run on a small dated Geofabrik Greater Manchester
 ### Unmeasured or pending
 
 True GPS/IMU field error, genuine parallel/stacked road driving, Android sensor integration, evolving trajectory history, route-constrained matching, lane-level position, sign-legality evidence, real speed limits, arrival/turn instruction timing, offline entire drive and comparison against external navigation engines. Review new findings under [the adaptive testing loop](DMN_ADAPTIVE_TESTING.md). Production app and APK remain untouched.
+
+## Initial safety regression detected by CI
+
+The first unit run exposed a **stationary dual-carriageway overconfidence** error: a nominal fix on one mapped link was accepted even though its opposite parallel neighbor lay only around 7 m away. The initial branch CI run failed 1 of 159 unit cases and properly blocked the public-map stage. The matcher was corrected to treat multiple nearby plausible directed links as **AMBIGUOUS** without useful movement/heading. [Subsequent green CI run 38738827465](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38738827465) confirms the correction at unit level; the public UK road replay is a separate opt-in measurement and must be reported only after running.
