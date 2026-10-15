@@ -57,10 +57,9 @@ def expected_road_geometry_probe(
 ) -> dict[str,object]:
     """Do not confuse generated-road geometry nearness with true road accuracy.
 
-    Partition nearby allowed candidate edges as reverse of the SAME physical
-    source-node segment, adjoining junction segments or graph-disjoint segments.
-    This is a source-graph diagnostic only: disjoint IDs do NOT themselves
-    prove distinct real-world carriageways, and no category verifies direction.
+    Count allowed directed alternatives within 10 metres of the snapped
+    location; OSM two-way reverse edges can make road direction ambiguous
+    even when their geometry exactly coincides.
     """
     if expected_edge_id not in graph.edges:
         raise ValueError("Unknown generating graph edge")
@@ -119,12 +118,6 @@ def report_geometry_last_fix(acc: Counter, prefix: str, graph: RoadGraph,
         acc[prefix+"_near_geometry"]+=1
         if evidence["nearby_other_directed_edges"]:
             acc[prefix+"_near_but_other_roads_plausible"]+=1
-        if evidence["reverse_same_segment_directed_edges"]:
-            acc[prefix+"_near_with_reverse_of_same_graph_segment"]+=1
-        if evidence["nearby_adjacent_graph_segments"]:
-            acc[prefix+"_near_with_adjacent_junction_segments"]+=1
-        if evidence["nearby_disjoint_graph_segments"]:
-            acc[prefix+"_near_with_disjoint_graph_segments"]+=1
         if evidence["nearby_reversed_same_segment_edges"]:
             acc[prefix+"_near_with_reverse_same_segment"]+=1
         if evidence["nearby_other_segments_same_osm_way"]:
@@ -158,12 +151,6 @@ def geometry_summary(acc: Counter, prefix: str) -> dict[str,int]:
         "not_alignable_or_withheld":acc[prefix+"_withheld"],
         "near_but_alternative_directed_roads_within_10m":
             acc[prefix+"_near_but_other_roads_plausible"],
-        "near_with_opposite_direction_of_same_segment":
-            acc[prefix+"_near_with_reverse_of_same_graph_segment"],
-        "near_with_connected_junction_segments":
-            acc[prefix+"_near_with_adjacent_junction_segments"],
-        "near_with_disjoint_graph_segments":
-            acc[prefix+"_near_with_disjoint_graph_segments"],
         "near_and_reverse_same_segment_present":
             acc[prefix+"_near_with_reverse_same_segment"],
         "near_and_reverse_same_segment_only":acc[prefix+"_near_reverse_only"],
