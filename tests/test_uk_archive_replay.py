@@ -73,6 +73,44 @@ class ArchivedPublicRoadReplayTests(unittest.TestCase):
                 with self.assertRaises(AssertionError):
                     verify_archived_replay(result, ARCHIVE)
 
+    def test_complete_paired_osrm_observations_preserve_archive_truth(self):
+        from benchmarks.uk_osrm_case_comparison import (
+            compare_osrm_case, validate_osrm_case_results)
+        result = matching_study()
+        cases = result["discriminating_case_register"]
+        def reference(_url):
+            return {"code": "Ok",
+                    "waypoints": [{"distance": 1.0}, {"distance": 2.0}],
+                    "routes": [{"distance": 200.0, "duration": 20.0}]}
+        rows = [compare_osrm_case(c, (53.4, -2.2), (53.41, -2.19),
+                                  request=reference) for c in cases]
+        result["external_engines_executed"] = 1
+        result["osrm_case_comparison"] = validate_osrm_case_results(
+            cases, rows, snapshot=ARCHIVE["source_snapshot"])
+        checked = verify_archived_replay(result, ARCHIVE)
+        self.assertTrue(checked["replay_matches_pinned_archive"])
+        self.assertEqual(checked["paired_osrm_cases"], 25)
+        self.assertEqual(checked["external_competitors_executed"], 1)
+        self.assertFalse(result["osrm_case_comparison"]["route_quality_ranking_valid"])
+
+    def test_partial_osrm_evidence_cannot_pass_pinned_archive(self):
+        from benchmarks.uk_osrm_case_comparison import (
+            compare_osrm_case, validate_osrm_case_results)
+        result = matching_study()
+        cases = result["discriminating_case_register"]
+        result["external_engines_executed"] = 1
+        with self.assertRaisesRegex(AssertionError, "paired evidence"):
+            verify_archived_replay(result, ARCHIVE)
+        rows = [compare_osrm_case(c, (53.4, -2.2), (53.41, -2.19),
+                                  request=lambda _: {"code": "NoRoute"})
+                for c in cases]
+        comparison = validate_osrm_case_results(
+            cases, rows, snapshot=ARCHIVE["source_snapshot"])
+        comparison["case_results"].pop()
+        result["osrm_case_comparison"] = comparison
+        with self.assertRaises(AssertionError):
+            verify_archived_replay(result, ARCHIVE)
+
     def test_no_independent_legality_or_competitor_score_inferred(self):
         result = matching_study()
         result["independent_road_legality_verified"] = True
