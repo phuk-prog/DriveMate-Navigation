@@ -20,6 +20,10 @@ def inspect_network(graph: RoadGraph) -> dict[str, int]:
     choice: one-way directions and turn prohibitions may prevent detours.
     """
     allowed = [edge for edge in graph.edges.values() if edge.access == "allowed"]
+    # Distinguish sparse input from fail-closed access treatment. Counts are
+    # directed edge instances, never independent legality observations.
+    access_counts = {state: sum(e.access == state for e in graph.edges.values())
+                     for state in ("allowed", "unknown", "prohibited")}
     active = {node for edge in allowed for node in (edge.source, edge.target)}
     neighbors = {node: set() for node in active}
     undirected = set()
@@ -50,6 +54,8 @@ def inspect_network(graph: RoadGraph) -> dict[str, int]:
         "network_declared_vertices": len(graph.vertices),
         "network_active_drivable_vertices": len(active),
         "network_allowed_directed_edges": len(allowed),
+        "network_unknown_directed_edges": access_counts["unknown"],
+        "network_prohibited_directed_edges": access_counts["prohibited"],
         "network_weak_components_with_roads": len(components),
         "network_largest_weak_component_vertices": max(components, default=0),
         "network_drivable_branch_vertices": branching,
