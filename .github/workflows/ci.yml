@@ -177,12 +177,23 @@ jobs:
             --restriction-source results/dmn-neighborhood-turn-restrictions.osm \
             --snapshot geofabrik-260901 --limit 4 \
             | tee results/dmn-uk-neighborhood-detours.json
+      - name: Replay exact pinned UK preference cases against audited archive
+        if: success() && (contains(github.event.head_commit.message, '[neighborhood-detour-smoke]') || contains(github.event.pull_request.title, '[neighborhood-detour-smoke]'))
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m benchmarks.uk_archive_replay \
+            --actual results/dmn-uk-neighborhood-detours.json \
+            --archive references/uk-route-preference-map-cases-20261015.json \
+            | tee results/dmn-uk-route-case-replay.json
       - name: Upload bounded detour evidence
         if: always() && (contains(github.event.head_commit.message, '[neighborhood-detour-smoke]') || contains(github.event.pull_request.title, '[neighborhood-detour-smoke]'))
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: dmn-uk-neighborhood-detours
-          path: results/dmn-uk-neighborhood-detours.json
+          path: |
+            results/dmn-uk-neighborhood-detours.json
+            results/dmn-uk-route-case-replay.json
           if-no-files-found: warn
           retention-days: 30
       - name: Remove temporary buffered road source and contributor-anonymized extracts
