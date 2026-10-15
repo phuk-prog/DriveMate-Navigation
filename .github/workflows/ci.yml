@@ -30,7 +30,7 @@ jobs:
       - name: Reject personal data and credentials in public repository
         run: python -m tools.privacy_guard
       - name: Compile source
-        run: python -m compileall -q engine map_data benchmarks tools tests
+        run: python -m compileall -q engine map_data gps benchmarks tools tests
       - name: Run independent routing tests
         run: python -m unittest discover -s tests -v
       - name: Measure synthetic routing latency (informational only)
@@ -59,6 +59,46 @@ jobs:
       - name: Propose new regression cases from public-road evidence
         if: success() && (contains(github.event.head_commit.message, '[uk-road-smoke]') || contains(github.event.pull_request.title, '[uk-road-smoke]'))
         run: python -m tools.dmn_test_discovery --input results/public-road-smoke.json --public-smoke --output results/dmn-discovery-proposals.json
+      - name: Real UK public OSM turn-rule exercise (explicit once only)
+        if: contains(github.event.head_commit.message, '[turn-restriction-smoke]')
+        timeout-minutes: 11
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output "${RUNNER_TEMP}/public-uk-turn-source.osm.pbf" \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          osmium tags-filter "${RUNNER_TEMP}/public-uk-turn-source.osm.pbf" \
+            r/type=restriction -o results/public-turn-relations.osm.pbf
+          osmium cat results/public-turn-relations.osm.pbf \
+            -o results/public-turn-candidates.osm -f osm,add_metadata=false
+          python -m benchmarks.real_uk_turn_probe \
+            --input results/public-turn-candidates.osm \
+            --snapshot geofabrik-260901 --limit 12 | tee results/public-turn-smoke.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("results/public-turn-smoke.json").read_text())
+          if not report["cases_with_judged_map_rule"]:
+              raise SystemExit("INCOMPLETE coverage: no actual public motorcar turn restriction case exercised")
+          PY
+      - name: Upload real UK turn-rule evidence
+        if: always() && contains(github.event.head_commit.message, '[turn-restriction-smoke]')
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-uk-real-turn-rule-evidence
+          path: results/public-turn-smoke.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Clean public UK turn-rule intermediate files
+        if: always()
+        shell: bash
+        run: |
+          rm -f "${RUNNER_TEMP}/public-uk-turn-source.osm.pbf"
+          rm -f results/public-turn-relations.osm.pbf results/public-turn-candidates.osm
       - name: Publish honest real-road smoke counts
         if: always() && (contains(github.event.head_commit.message, '[uk-road-smoke]') || contains(github.event.pull_request.title, '[uk-road-smoke]'))
         shell: bash
