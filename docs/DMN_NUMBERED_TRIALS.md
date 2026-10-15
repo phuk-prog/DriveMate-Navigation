@@ -56,3 +56,15 @@ fixture split says `held_out`. Independent real-world legality, physical-road
 identity, GNSS calibration and device navigation still require other evidence.
 Never claim universal superiority; use better tested references to identify
 specific deficits and aim to exceed them on harder, independently justified tests.
+
+## Resume after UK topology investigation
+
+The bounded diagnostic run 38810752808 at
+`f17131dd2ea35b80b94657177074fbbd706aaa6a` identifies backward-adjacent alternatives
+in all seven lost matches; it does not safely resolve them. Full evidence is in
+`references/gps001-uk-topology-20261015.json`. Keep the 40-case coverage tradeoff
+and promotion block open. Do not repeat this unchanged diagnostic automatically.
+The next unblocked stage is GPS ambiguity/fault/recovery: freeze explicit
+analytical cases and required abstention/recovery expectations before tuning,
+then execute applicable permitted references sequentially and preserve interface
+limitations per case. No surveyed UK truth has been obtained.

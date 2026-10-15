@@ -122,6 +122,30 @@ not proof of better safety. Do not force confident matches just to recover a
 historical number. **GPS-001 synthetic improvement is demonstrated; general
 UK-map coverage improvement is not. This open tradeoff blocks promotion.**
 
+## Bounded topology investigation (2026-10-15)
+
+[Run 38810752808](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38810752808)
+on `f17131dd2ea35b80b94657177074fbbd706aaa6a` executed the unchanged 40-case
+cohort with additional read-only diagnostics. Source SHA-256 is unchanged.
+All seven lost cases have a **backward-adjacent**, same-way, same-direction
+alternative; the preferred direct candidate is the best spatial candidate in
+each. Its residual is 0 m on these generated observations; alternatives are
+5.9229–7.4274 m away, with heading differences 0.0095–7.5108 degrees.
+The bounded graph search finds a connector from the direct segment back to the
+alternative (41.8220–77.7906 m of intermediate links). This is graph reachability,
+not proof that such a return movement occurred or is physically/legal-world valid.
+
+The forward-fragment guard therefore does not apply. Selecting the generating
+edge by its synthetic label or discarding the alternative solely to regain seven
+matches would not establish a safe fix. No confidence policy was changed.
+The result remains **17 correct / 0 confident wrong / 23 withheld**; all 40
+impossible-speed and all 40 weak-fix checks withhold safely. **355 local and CI
+unit tests pass**, including three new diagnostic topology tests. This run did
+not rerun external engines or the separate 12-case cohort; their earlier evidence
+remains intact. There is no new comparable ranking from this diagnostic stage.
+[Full per-case evidence](../references/gps001-uk-topology-20261015.json).
+The coverage tradeoff remains unresolved and promotion remains blocked.
+
 ## Next tests
 
 Diagnose short-observation alignment in the GraphHopper adapter; add harder
