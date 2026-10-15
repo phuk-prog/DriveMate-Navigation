@@ -1,6 +1,6 @@
-# DMN: proposed ten-reference navigation comparison protocol
+# DMN: at least ten reference families — navigation comparison protocol
 
-> **Status: draft targets and method, not ten measured engines.** The target list follows the existing historical `benchmarks/reference-engines.json`, pending owner decisions in [DMN_DECISION_QUESTIONS.md](DMN_DECISION_QUESTIONS.md). *Ten* means ten external reference families alongside **DMN**, not eleven independent real-world runs already completed. This programme compares navigation equipment/components, not complete apps or appearance.
+> **Status: owner approved a minimum of ten external reference families, not a maximum.** The original ten targets come from historical `benchmarks/reference-engines.json`; Google Maps and Waze are now *additional* proposed references, bringing the portfolio to **12 external reference families plus DMN**. No new twelve-engine tests are claimed. Exact providers and access rules remain under review in [DMN_DECISION_QUESTIONS.md](DMN_DECISION_QUESTIONS.md). This compares navigation components, not complete apps or appearance.
 
 ## Provisional reference portfolio
 
@@ -16,8 +16,14 @@
 | 8 | Mapbox | Commercial navigation reference | Equivalent map/route inputs often impossible; rights/fees unknown |
 | 9 | TomTom | Commercial routing/navigation reference | Equivalent datasets and test GPS/controller access may not be possible |
 | 10 | openrouteservice | Open-source reference (provisional tenth in historical registry) | Server/profiles/data availability and parity |
+| 11 | Google Maps | Google Maps Platform Routes API, permitted provider observations | Pay-as-you-go [Routes API](https://developers.google.com/maps/documentation/routes/usage-and-billing) requires enabled billing and credentials; no paid calls authorised, no same-map parity presumed |
+| 12 | Waze | Permitted qualitative navigation observations only | [Waze consumer terms](https://support.google.com/waze/answer/12373727?hl=en-GB) restrict automated content access and reuse; [Transport SDK](https://developers.google.com/waze/intro-transport) is partner-only and scheduled to sunset 1 Nov 2026. **No scraping or data transfer**, no automated head-to-head score without permission |
 
-OSRM CH and OSRM MLD are separate *configurations*, not two distinct external families. Compare them separately when useful, never inflate the ten-family count. Potential extra references for later consideration (not automatically substitutes or "top-ranked"): pgRouting, RoutingKit, Navit and Google Maps/Waze as observational black-box outputs **only if lawful/available**. No claim is made that the provisional ten are objectively the ten best systems. User decides whether commercial names and replacements remain.
+OSRM CH and OSRM MLD are separate *configurations*, not distinct external families. Compare them separately when useful without inflating the family count. **Ten is the minimum, not a ceiling**; further candidates such as pgRouting, RoutingKit, Navit or other suitable engines may be added after an execution and licensing check. A named commercial comparator is not permission to call an API, automate an app, scrape results or use proprietary algorithms or data in DMN. Google and Waze remain untested, and any observation under their own terms is not automatically comparable to locally executable engines. The list is not an objective top-twelve ranking.
+
+## Provider-access guardrail (checked 15 October 2026)
+
+Google's documented Compute Routes interface can provide provider route responses, but the service uses enabled billing and credentials, and its independent traffic/map data prevent same-snapshot timing claims. No API use is authorised by listing it. Waze's public terms restrict automated access and derived commercial reuse; its Transport SDK is not a general-public engine interface and Google says support ends **1 November 2026**. Waze stays a conditional/observational target until a lawful repeatable interface exists. Do not collect Waze route data using browser/app automation or other unsupported routes. See the linked provider documentation in the table.
 
 ## Evidence tiers — do not merge them
 
