@@ -1,0 +1,34 @@
+# DMN adaptive testing study — always expand when evidence justifies it
+
+> Added 15 October 2026. **The 72-category / 216-assertion test matrix is a STARTING POINT, not a cap.** The separate 59 proposed modules / 236 checks inventory overlaps it. New evidence can identify previously unrecognized behaviors, new subcategories, tests, modules or independently observable failure types. Preserve all old tests and every historical failure.
+
+## Mandatory discover → verify → test → improve → rerun loop
+
+1. **Record** every new verified failure, unexplained observation, flaky result, competitor divergence, bad GPS/position/speed/timing, unknown legal/lane truth, unsupported capability, missing real-road case, resource spike or unexpected end-to-end interaction. A green status on a tiny subset can itself suggest a coverage gap, but does NOT prove success elsewhere.
+2. **Classify** the distinct behavior against `NAV-001..072` and the 59 modular contracts, including separate checks for speed measurement, posted speed limits, ETA and routing computation time. Deduplicate by root failure signature, not simply the error count. One failure can implicate many modules but should not create redundant regressions.
+3. **Expand** the test study: append an *evidence-backed candidate* to the discovery queue, with original case, real/public map snapshot, GPS-fault injection or scenario provenance, observable expected/actual, oracle/confidence, affected module, reproduction recipe and severity. If none of the existing categories fits, propose an **additional category and potentially an isolated module**, without renumbering previous IDs or arbitrarily forcing it into 72.
+4. **Verify truth before a verdict:** independently confirm turn and U-turn legality where possible; classify absent or disputed sign/lane/speed evidence **UNKNOWN**, not failed or passed. Separate GPS replay input from measured phone sensor performance. Do not acquire or publish private GPS traces.
+5. **Implement** a narrowly scoped executable regression with positive, negative, boundary and recovery variants; include a valid real-UK-road scenario plus fault injection as needed. New tests must be runnable, not simply labels. Keep hold-out cases separate; test as many different difficult junction classes as evidence requires.
+6. **Compare** DMN and runnable legally accessible external reference engines on matching data/settings where possible. Record not-run/noncomparable references without fabricated scores; manual Google/Waze observations remain separate.
+7. **Fix and rerun:** changed check, directly affected modules, nearby interacting modules, prior failures, held-out cases and full start-to-arrival journeys. Recheck GPS, speed, legal maneuvers, lane guidance, prompt timing, offline, resource pressure and arrival, not only geometry. Escalate regressions and newly discovered failure modes into the same loop.
+8. **Publish one honest summary** of scores out of ten and descending ranks only on equivalent independently judged tests, plus correct/judged/planned counts, unknowns, failures and new test discoveries. Maintain full machine-readable evidence in run artifacts. Do not confuse planned 216 checks or 236 inventory names with completed test results.
+
+**Acceptance:** This loop stays permanent. A 'complete' batch means every *available, applicable test* ran or was explicitly classified as unsupported/unknown/not-run with reasons; it never means we've learned every possible failure mode. Add further cases whenever results expose a gap. Severe credible new failures block promotion until investigated. New infrastructure may be written from scratch if it improves navigation and complies with ownership/distribution rights.
+
+## Machine-readable discovery tool
+
+`python -m tools.dmn_test_discovery --input results/normalized-observations.json --output results/dmn-discovery-proposals.json`
+
+The input must identify a public non-personal source run and explicit per-case observations. Each observation needs a category/check (or **proposed new category**), unique failure signature, expected/observed behavior, replay recipe, evidence URL and a new executable test description. The program deterministically deduplicates repeated findings and makes reviewable proposals. It **never** marks the new regression executed, changes a score, pulls proprietary data or pushes code. Only implemented/verified tests are later promoted into the maintained suite. Output remains in ignored `results/` for controlled upload as a CI artifact.
+
+For the existing public-road smoke, run:
+`python -m tools.dmn_test_discovery --input results/public-road-smoke.json --public-smoke --output results/dmn-discovery-proposals.json`
+from a GitHub Actions run (with `GITHUB_RUN_ID`), or supply `--run-url` for reproducible offline review. This identifies the **zero imported node-via forbidden turn pairs** as **UNKNOWN restriction-test coverage**, never as a verified illegal or legal route.
+
+### What has already been highlighted
+
+The real-public-map [8-route experiment](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38726726953) imported **0 prohibited-turn pairs**, so meaningful independently validated real-UK turn-restriction cases must be added before the restriction category can be judged. It measured algorithm cost agreement only; it did not test navigation GPS, vehicle-speed truth, speed-limit truth, lane instructions, traffic, arrival or all twelve reference families. Historical research also identified **4 failed short-approach arrivals and 80 unresolved GPS-replay journeys out of 100**; these are priority regression sources, not new measured results from this branch. They should be linked into the new discovery queue with their original evidence, without copying private traces.
+
+## Boundary and resource guards
+
+Do not automatically grant GitHub Actions write access just to submit newly suggested tests, and do not publish user location data. The discovery tool generates candidates; a reviewed code addition makes them executable. Keep PR-only research changes, controlled CI and minimal repeated setup costs. Use existing GitHub maps/engine caches when allowed, one costly workflow at a time, and no paid provider or APK until separately approved. Production DriveMate is not touched.

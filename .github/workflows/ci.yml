@@ -56,6 +56,9 @@ jobs:
             --region "independent public UK test area" --execute
           python -m benchmarks.public_uk_probe --input results/public-road-subset.osm \
             --snapshot "geofabrik-260901" --samples 8 | tee results/public-road-smoke.json
+      - name: Propose new regression cases from public-road evidence
+        if: success() && (contains(github.event.head_commit.message, '[uk-road-smoke]') || contains(github.event.pull_request.title, '[uk-road-smoke]'))
+        run: python -m tools.dmn_test_discovery --input results/public-road-smoke.json --public-smoke --output results/dmn-discovery-proposals.json
       - name: Publish honest real-road smoke counts
         if: always() && (contains(github.event.head_commit.message, '[uk-road-smoke]') || contains(github.event.pull_request.title, '[uk-road-smoke]'))
         shell: bash
@@ -85,7 +88,9 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: first-dmn-road-smoke
-          path: results/public-road-smoke.json
+          path: |
+            results/public-road-smoke.json
+            results/dmn-discovery-proposals.json
           if-no-files-found: warn
           retention-days: 30
       - name: OSRM MLD public reference smoke (single explicit run only)
