@@ -21,6 +21,9 @@ class BufferedDetourTests(unittest.TestCase):
         self.assertGreaterEqual(out["rule_pairs"],1)
         self.assertGreaterEqual(out["detours_found"],1)
         self.assertEqual(out["no_route_within_buffer"],0)
+        self.assertEqual(out["profile_routable_for_restricted_turns"], out["detours_found"])
+        self.assertGreaterEqual(out["generated_paths_kept_unverified"], 1)
+        self.assertGreaterEqual(out["profile_cases_with_multiple_mapped_candidates"],0)
         self.assertFalse(out["independent_legality"])
 
     def test_extra_restriction_not_silently_discarded(self):

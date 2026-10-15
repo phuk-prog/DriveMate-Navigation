@@ -19,6 +19,7 @@ import xml.etree.ElementTree as ET
 
 from benchmarks.real_uk_turn_probe import _eligible, _public_input
 from engine import RouteNotFound, shortest_route
+from engine.route_alternatives import generate_route_candidates
 from map_data import OSMImportError, Provenance, import_osm_xml
 from map_data.osm_xml import DRIVING_SPEEDS, UNCERTAIN_ROADS
 
@@ -171,6 +172,10 @@ def evaluate_neighborhood(neighborhood_raw: bytes, restriction_raw: bytes,
     found=0
     missing=0
     durations=[]
+    profile_routable=0
+    multi_candidate=0
+    fastest_shortest_divergences=0
+    independent_legality_gates_tripped=0
     for in_id,out_id in pairs:
         incoming,outgoing=graph.edges[in_id],graph.edges[out_id]
         begin=perf_counter_ns()
@@ -190,12 +195,47 @@ def evaluate_neighborhood(neighborhood_raw: bytes, restriction_raw: bytes,
                 prev=eid
             if route.edge_ids[0]==out_id:
                 raise AssertionError("Selected mapped forbidden turn as first action")
+            # Route-preference research on the SAME verified-map-input case,
+            # keeping incoming-edge context and every imported restriction.
+            # Generated paths are explicitly UNVERIFIED by UK road law.
+            candidate_set = generate_route_candidates(
+                graph, incoming.target, outgoing.target,
+                snapshot_id=imported.metadata["source_sha256"],
+                incoming_edge_id=in_id,
+                max_candidates=6, max_detour_searches=8)
+            if not candidate_set:
+                raise AssertionError("Mapped routable junction yielded no candidates")
+            quickest = next(c for c in candidate_set if "fastest" in c.generated_by)
+            shortest = next(c for c in candidate_set if "shortest" in c.generated_by)
+            if abs(quickest.route.estimated_seconds-route.estimated_seconds)>1e-7:
+                raise AssertionError("Fastest profile contradicts independent mapped Dijkstra")
+            for candidate in candidate_set:
+                check_prev=in_id
+                if candidate.as_unverified_option().independently_verified_legal:
+                    raise AssertionError("Public map graph cannot certify UK traffic legality")
+                independent_legality_gates_tripped+=1
+                for proposed_edge_id in candidate.route.edge_ids:
+                    proposed=graph.edges[proposed_edge_id]
+                    if proposed.access!="allowed" or (
+                            check_prev, proposed_edge_id) in graph.prohibited_turns:
+                        raise AssertionError("Profile bypassed a mapped road/turn prohibition")
+                    check_prev=proposed_edge_id
+                if candidate.route.edge_ids and candidate.route.edge_ids[0]==out_id:
+                    raise AssertionError("Profile proposed the target forbidden turn")
+            profile_routable+=1
+            multi_candidate+=int(len(candidate_set)>1)
+            fastest_shortest_divergences+=int(
+                quickest.route.edge_ids != shortest.route.edge_ids)
             found+=1
         durations.append(round((perf_counter_ns()-begin)/1e6,5))
     return {"status":"map_rule_checked",
             "rule_pairs":len(pairs),
             "detours_found":found,
             "no_route_within_buffer":missing,
+            "profile_routable_for_restricted_turns":profile_routable,
+            "profile_cases_with_multiple_mapped_candidates":multi_candidate,
+            "profile_fastest_shortest_different_path_cases":fastest_shortest_divergences,
+            "generated_paths_kept_unverified":independent_legality_gates_tripped,
             "graph_nodes":len(graph.vertices),
             "graph_edges":len(graph.edges),
             "median_route_compute_ms":sorted(durations)[len(durations)//2],
@@ -289,6 +329,14 @@ def execute_public_neighborhoods(source_pbf: Path, restriction_xml: Path,
         "neighborhoods_recovered_with_wider_buffer":sum(x["recovered_by_wider_public_buffer"] for x in records),
         "map_rule_pairs_checked":sum(x["rule_pairs"] for x in records),
         "detours_found_in_bounded_real_road_graph":sum(x["detours_found"] for x in records),
+        "profile_routable_restriction_cases":sum(x.get("profile_routable_for_restricted_turns",0)
+                                               for x in records),
+        "profile_cases_with_multiple_mapped_candidates":sum(
+            x.get("profile_cases_with_multiple_mapped_candidates",0) for x in records),
+        "profile_fastest_shortest_different_path_cases":sum(
+            x.get("profile_fastest_shortest_different_path_cases",0) for x in records),
+        "generated_paths_kept_unverified":sum(
+            x.get("generated_paths_kept_unverified",0) for x in records),
         "no_route_in_bounded_graph_unknown":sum(x["no_route_within_buffer"] for x in records),
         "unsupported_or_incomplete_neighborhoods":sum(x["status"]=="unsupported" for x in records),
         "unsupported_reasons":{k:sum(x.get("reason")==k for x in records)
