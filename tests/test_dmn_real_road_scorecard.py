@@ -41,7 +41,10 @@ class DMNRealRoadScorecardTests(unittest.TestCase):
         result=analyse(*fixtures())
         self.assertEqual(result["real_road_routes_checked"],16)
         self.assertEqual(result["real_road_routes_remaining"],84)
-        self.assertEqual(result["real_road_routes_still_to_validate"],84)
+        # This contract fixture executes only two engine identities and its
+        # dummy DMN name is not the actual compiled candidate label. The
+        # missing mandatory engines therefore must NOT earn completed tests.
+        self.assertEqual(result["real_road_routes_still_to_validate"],100)
         self.assertEqual(result["outstanding_work"]["remaining"],12)
         self.assertEqual(result["outstanding_work"]["open_by_priority"]["critical"],2)
         self.assertEqual(result["outstanding_gps_journeys"],16)
