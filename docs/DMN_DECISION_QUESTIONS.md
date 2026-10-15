@@ -1,6 +1,6 @@
 # Owner decisions — DMN comparison and improvement programme
 
-> **22 decision topics; question 1 partly settled.** On 15 October the owner approved **more than ten references**, so ten is the floor and Google Maps/Waze may be added as conditional comparisons without forcing a replacement. The exact long-term roster and provider rights remain open. Other questions have no recorded owner answer. Existing agreements appear below, so we don't ask them again. Ask these *one at a time in conversation* if that is easier; the numbered list remains reviewable in GitHub. Suggested defaults are **recommendations only**, not commitments.
+> **22 decision topics; questions 1 and 2 recorded.** On 15 October the owner approved **more than ten references** and chose **option B for commercial providers: permitted free comparisons first; ask for approval before any paid test**. Listing a provider never authorises paid API usage, new accounts, data extraction, or otherwise prohibited access. The exact reference roster and remaining choices are open. Existing agreements appear below, so we don't ask them again. Ask these *one at a time in conversation* if that is easier; the numbered list remains reviewable in GitHub. Suggested defaults are **recommendations only**, not commitments.
 
 ## Already agreed (do not re-ask)
 
@@ -14,7 +14,7 @@
 
 **1. Minimum number of external references — OWNER DECISION PARTLY RECORDED (15 October 2026).** **At least ten; more than ten permitted.** Current review portfolio: 12 proposed families (the original ten, plus Google Maps and Waze). They are **proposed**, not all verified or runnable. Specific replacements/additions may still change after accessibility, rights and cost checks. OSRM CH/MLD remain one family. *No further question is needed about allowing over ten.*
 
-**2. What should we do with commercial reference products?** A. Use only permitted free outputs; B. ask before any paid usage; C. exclude them entirely and replace with runnable open engines. *Recommended: B with no spend or account/keys assumed.*
+**2. Commercial references — OWNER DECISION RECORDED (15 October 2026): B.** Use legal/permitted free comparison options first; **ask the owner before any paid test or paid service usage**. No spend, provider credentials, account connection, new subscription, restricted API access, or Waze automated collection is authorised by this choice. Reference systems that cannot be accessed under permitted conditions remain untested.
 
 **3. What happens if a reference is not executable under equivalent conditions?** A. Keep as not-tested until available; B. replace with an available engine; C. retain a clearly labelled black-box qualitative observation. *Recommended: combine A and C where legally permitted; do not manufacture a comparable score.*
 
@@ -58,4 +58,4 @@
 
 ## How to record decisions
 
-Answer each with its number, option or wording. Mixed options are valid. The decision log should record: question number, answer, confirmation date, impacted benchmark schema/stage, and unresolved follow-up. **Until answered, don't turn recommendations into mandatory thresholds or represent a question as a settled owner requirement.** The minimum-count part of #1 is resolved (ten is a floor; twelve are proposed). The next substantive decision is **#2: commercial-provider access and whether any paid usage is ever permitted**. No payable provider may be contacted simply because it is listed; Waze consumer content must not be programmatically collected without explicit legal permission.
+Answer each with its number, option or wording. Mixed options are valid. The decision log should record: question number, answer, confirmation date, impacted benchmark schema/stage, and unresolved follow-up. **Until answered, don't turn recommendations into mandatory thresholds or represent a question as a settled owner requirement.** The minimum-count part of #1 is resolved (ten is a floor; twelve are proposed). The next substantive decision is **#3: how to represent references that cannot be executed under equivalent conditions**. No payable provider may be contacted simply because it is listed; Waze consumer content must not be programmatically collected without explicit legal permission.
