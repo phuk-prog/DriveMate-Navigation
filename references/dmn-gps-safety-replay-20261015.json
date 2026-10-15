@@ -149,10 +149,84 @@
           "OSRM HTTP latency is not comparable to in-process Python matching latency"
         ]
       }
+    },
+    "valhalla": {
+      "run_id": 38804677374,
+      "head_sha": "0eb7e5de1d705a126756f84eadf4bf3ca2040c23",
+      "conclusion": "success",
+      "unit_tests_passed": 337,
+      "report": {
+        "classification": "public-UK-OSM-generated-GPS-Valhalla-trace_attributes-vs-DMN-diagnostic",
+        "source_snapshot": "geofabrik-260901",
+        "source_sha256": "b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5",
+        "public_road_cases_sent_to_both": 12,
+        "simulated_GPS_fixes_per_case": 4,
+        "dmn_single_correct_directed_edge": 6,
+        "dmn_single_wrong_confident_edge": 0,
+        "dmn_single_withheld": 6,
+        "dmn_temporal_correct_directed_edge": 8,
+        "dmn_temporal_wrong_confident_edge": 0,
+        "dmn_temporal_withheld": 4,
+        "valhalla_trace_ok_cases": 12,
+        "valhalla_no_trace_cases": 0,
+        "valhalla_tracepoints_total": 48,
+        "valhalla_tracepoints_unmatched": 4,
+        "valhalla_snapped_within_20m_of_input": 43,
+        "valhalla_snapped_farther_than_20m_from_input": 1,
+        "external_reference_families_executed": 1,
+        "execution_evidence": "live_local_http",
+        "external_reference_version": "Valhalla 3.9.1 pinned container",
+        "same_public_osm_input": true,
+        "same_engine_car_profiles": false,
+        "equivalent_correct_road_metric": false,
+        "actual_surveyed_position_ground_truth": false,
+        "common_last_fix_source_geometry_proxy": {
+          "dmn_single": {
+            "total": 12,
+            "near_generating_road_within_5m": 6,
+            "farther_than_5m_from_generating_road": 0,
+            "not_alignable_or_withheld": 6,
+            "near_but_alternative_directed_roads_within_10m": 6,
+            "near_and_reverse_same_segment_present": 6,
+            "near_and_reverse_same_segment_only": 0,
+            "near_and_other_segment_same_osm_way_present": 6,
+            "near_and_distinct_osm_way_present": 0,
+            "near_and_unidentified_other_segment_present": 0
+          },
+          "dmn_temporal": {
+            "total": 12,
+            "near_generating_road_within_5m": 8,
+            "farther_than_5m_from_generating_road": 0,
+            "not_alignable_or_withheld": 4,
+            "near_but_alternative_directed_roads_within_10m": 8,
+            "near_and_reverse_same_segment_present": 8,
+            "near_and_reverse_same_segment_only": 0,
+            "near_and_other_segment_same_osm_way_present": 8,
+            "near_and_distinct_osm_way_present": 0,
+            "near_and_unidentified_other_segment_present": 0
+          },
+          "valhalla_trace": {
+            "total": 12,
+            "near_generating_road_within_5m": 9,
+            "farther_than_5m_from_generating_road": 1,
+            "not_alignable_or_withheld": 2,
+            "near_but_alternative_directed_roads_within_10m": 9,
+            "near_and_reverse_same_segment_present": 9,
+            "near_and_reverse_same_segment_only": 0,
+            "near_and_other_segment_same_osm_way_present": 9,
+            "near_and_distinct_osm_way_present": 0,
+            "near_and_unidentified_other_segment_present": 0
+          }
+        },
+        "common_proxy_is_independent_truth": false,
+        "common_proxy_proves_correct_road_direction": false,
+        "navigation_score": null,
+        "do_not_rank": true,
+        "note": "Valhalla point proximity, not directed-edge accuracy; version/profile and runner differences prevent a fair ranked accuracy or speed result."
+      }
     }
   },
   "pending_reference_families": [
-    "Valhalla",
     "GraphHopper"
   ]
 }
