@@ -8,6 +8,7 @@ No competitor whole-navigation scores are manufactured.
 """
 import argparse
 import json
+from hashlib import sha256
 import math
 import os
 from pathlib import Path
@@ -269,6 +270,10 @@ def execute(raw, snapshot, maximum):
     return {"component_scorecard": components, "cohort_scorecard": cohort_counts,
             "category": "DriveMate-native-full-GPS-journey-replay-on-real-English-roads",
             "source_snapshot": snapshot,
+            "source_xml_sha256": sha256(raw).hexdigest(),
+            "cohort_sha256": sha256(json.dumps(
+                [(c["id"], c["source"], c["target"]) for c in cases],
+                separators=(",", ":")).encode()).hexdigest(),
             "region": os.environ.get("ENGLAND_BBOX_NAME", "unlabelled"),
             "geometry": "real public English OSM road network",
             "gps_data": "deterministic simulated observations, NOT actual device GPS",

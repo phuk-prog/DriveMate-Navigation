@@ -1,5 +1,7 @@
 name: DMN real England routing latency comparison
 on:
+  push:
+    branches: ['benchmarks/real-england-speed-20261014']
   workflow_dispatch:
 permissions:
   contents: read
@@ -190,7 +192,20 @@ jobs:
           set -euo pipefail
           python -m benchmarks.real_english_journey \
             --input results/real/roads.osm \
-            --snapshot 2026-10-13 --cases 8
+            --snapshot 2026-10-13 --cases 16
+      - name: Report same-road engine ranks without guessing a full-navigation winner
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -s results/real-england/speed.json && -s results/real-england/journeys.json ]]; then
+            python -m benchmarks.dmn_real_road_scorecard \
+              --speed results/real-england/speed.json \
+              --journey results/real-england/journeys.json
+            cat results/real-england/DMN_REAL_ROAD_SCORECARD.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Real-map comparison incomplete: missing engine or GPS journey report' >> "$GITHUB_STEP_SUMMARY"
+          fi
       - name: Clean up reference services
         if: always()
         run: |
@@ -213,6 +228,8 @@ jobs:
             results/real-england/area-preflight.log
             results/real-england/speed.json
             results/real-england/journeys.json
+            results/real-england/dmn-real-road-comparison.json
+            results/real-england/DMN_REAL_ROAD_SCORECARD.md
             results/real-england/dmn-phone-decision.json
             results/real-england/*.log
             results/real/source.sha256

@@ -1,7 +1,5 @@
 name: DMN real-English-road GPS journey research
 on:
-  push:
-    branches: ['benchmarks/real-england-speed-20261014']
   workflow_dispatch:
 permissions:
   contents: read

@@ -260,9 +260,11 @@ def run(raw, jar, repeat, maximum, snapshot, use_osrm, use_valhalla=False, use_o
         "Greater Manchester, England", snapshot,
         "Geofabrik historic public OSM PBF", "© OpenStreetMap contributors (ODbL 1.0)"))
     prepared = prepare_navigation(imported.graph, imported.coordinates)
-    cases = road_cases(prepared, imported.graph, maximum=maximum)
-    if len(cases) < 5:
-        raise ValueError("Insufficient routable real-road cases; do not substitute synthetic roads")
+    # Delayed import shares the original eight and eight held-out public-road
+    # endpoints exactly with the separate DMN GPS journey replay. The module
+    # imports road_cases above, which is already defined when run() executes.
+    from benchmarks.real_english_journey import select_case_cohorts
+    cases = select_case_cohorts(prepared, imported.graph, maximum)
     engines = ["drivemate-native-cpp", "graphhopper"]
     if use_osrm:
         engines += ["osrm-mld", "osrm-ch"]
@@ -322,7 +324,13 @@ def run(raw, jar, repeat, maximum, snapshot, use_osrm, use_valhalla=False, use_o
         "attribution": "© OpenStreetMap contributors, ODbL 1.0",
         "road_graph_vertices": len(imported.graph.vertices),
         "road_graph_edges": len(imported.graph.edges),
-        "cases": [c["id"] for c in cases], "repeats": repeat,
+        "cases": [c["id"] for c in cases],
+        "cohort_sha256": sha256(json.dumps(
+            [(c["id"], c["source"], c["target"]) for c in cases],
+            separators=(",", ":")).encode()).hexdigest(),
+        "route_cohorts": {kind: sum(c["cohort"] == kind for c in cases)
+                          for kind in ("original", "heldout")},
+        "repeats": repeat,
         "warmups": 3, "implementations": summary, "failures": failures,
         "samples": samples,
         "speed_ranks_complete_only": [
