@@ -181,3 +181,18 @@ harness/access, with per-case reasons. Normal CI now gates this frozen batch.
 Next bounded work should add other applicable self-hosted engines to ROUTE-001,
 then frozen routing access/turn/disconnection and rerouting cases. Preserve the
 UK ambiguity promotion block and the remaining app/native streaming harness work.
+
+## ROUTE-001 additional reference execution batch
+
+The `[route001-refs]` bounded workflow executes OSRM 5.27.1, Valhalla 3.9.1,
+GraphHopper 11.1 and openrouteservice 10.1.0 sequentially (max-parallel 1), plus
+DMN on the same frozen four cases. Fixture, oracle, tolerances and acceptance are
+unchanged. Retain BRouter's earlier actual execution with its own run SHA rather
+than claiming it was rerun. Geometry is requested explicitly: OSRM full GeoJSON,
+Valhalla polyline6, GraphHopper unencoded calculated points, ORS directions GeoJSON.
+The decoder is checked against a published polyline test vector and truncation
+controls. No ETA/profile-cost ranking is inferred from these unique-path cases.
+A scorer now rejects incomplete judged outcomes instead of assigning a score to
+unsupported cases; invalid/incomplete engine execution remains unavailable.
+After this expansion, freeze separate access/turn/recalculation expectations
+before tuning, preserving UK unresolved matching evidence and promotion block.

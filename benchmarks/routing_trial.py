@@ -13,6 +13,10 @@ from map_data import Provenance, import_osm_xml
 ROOT=Path(__file__).resolve().parents[1]
 MAP=ROOT/'benchmarks/fixtures/synthetic-route-001.xml'
 ORACLE=ROOT/'benchmarks/fixtures/synthetic-route-001.json'
+VERSIONS={'DMN':'repository shortest_route','BRouter':'1.7.10 official release; car-vario defaults',
+          'OSRM':'5.27.1; car.lua MLD','Valhalla':'3.9.1; auto; polyline6',
+          'GraphHopper':'11.1 / Java25; car CH; full GeoJSON geometry',
+          'openrouteservice':'10.1.0 / Java25; driving-car; fastest; GeoJSON; no CH/LM/core'}
 
 
 def load_cases():
@@ -57,8 +61,8 @@ def judge(case,points):
 
 def report(system,rows):
     return {'test_id':'ROUTE-001','system':system,
-            'version':'1.7.10 official release; car-vario defaults' if system=='BRouter' else 'repository shortest_route',
-            'execution':'actual_live_loopback' if system=='BRouter' else 'actual_local_python',
+            'version':VERSIONS[system],
+            'execution':'actual_local_python' if system=='DMN' else 'actual_live_loopback',
             'classification':'synthetic analytical one-way routing only',
             'independent_real_road_truth':False,
             'map_sha256':sha256(MAP.read_bytes()).hexdigest(),
@@ -102,11 +106,12 @@ def scoreboard(reports):
         if r['system'] in supplied or r['system'] not in roster: raise ValueError('Duplicate or unknown engine')
         if r['map_sha256']!=sha256(MAP.read_bytes()).hexdigest() or r['oracle_sha256']!=sha256(ORACLE.read_bytes()).hexdigest() or [c['case_id'] for c in r['cases']]!=ids or r['test_id']!='ROUTE-001': raise ValueError('Nonmatching cohort')
         if r['execution']!=('actual_local_python' if r['system']=='DMN' else 'actual_live_loopback'): raise ValueError('Not an actual execution')
+        if any(c['outcome'] not in ('PASS','FAIL') for c in r['cases']): raise ValueError('Incomplete judged cohort')
         supplied[r['system']]=r
     rows=[]
     for name in roster:
         r=supplied.get(name); reason=(
-            'Not scheduled in this bounded BRouter integration stage' if name in ('OSRM','Valhalla','GraphHopper','openrouteservice') else
+            'No actual ROUTE-001 execution supplied for this report set' if name in VERSIONS else
             'Routing replay adapter not implemented' if name in ('OsmAnd','Organic Maps') else
             'No permitted automated routing interface established' if name=='Waze' else
             'No configured permitted access and same-fixture interface')
@@ -122,9 +127,10 @@ def scoreboard(reports):
 
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--engine',choices=['DMN','BRouter']);p.add_argument('--reports',nargs='*',type=Path);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--engine',choices=list(VERSIONS));p.add_argument('--reports',nargs='*',type=Path);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
     if not a.output.resolve().is_relative_to((ROOT/'results').resolve()):raise ValueError('Ephemeral output must stay under results/')
-    result=(run_dmn() if a.engine=='DMN' else run_brouter()) if a.engine else {'test_id':'ROUTE-001','formula':'10 * passed / 4; ties share rank','rows':scoreboard([json.loads(p.read_text()) for p in a.reports or []])}
+    from benchmarks.routing_references import run_reference
+    result=(run_dmn() if a.engine=='DMN' else run_brouter() if a.engine=='BRouter' else run_reference(a.engine)) if a.engine else {'test_id':'ROUTE-001','formula':'10 * passed / 4; ties share rank','rows':scoreboard([json.loads(p.read_text()) for p in a.reports or []])}
     a.output.parent.mkdir(exist_ok=True,parents=True);a.output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
 
 if __name__=='__main__':main()
