@@ -73,6 +73,20 @@
       "planned": true,
       "execution": "not_run_under_new_programme",
       "notes": ""
+    },
+    {
+      "name": "Google Maps",
+      "selection": "proposed",
+      "planned": true,
+      "execution": "not_run_under_new_programme",
+      "notes": "Black-box/provider reference only; Routes API is a billed product requiring billing/key and terms review. No automated collection or matched-map assumption. No paid calls authorized."
+    },
+    {
+      "name": "Waze",
+      "selection": "proposed",
+      "planned": true,
+      "execution": "not_run_under_new_programme",
+      "notes": "Observational reference only where permitted. Public Waze service forbids automated content access; Transport SDK is partner-restricted and retiring 2026-11-01. No automation, extraction, reverse engineering or score without rights."
     }
   ],
   "categories": [
@@ -101,7 +115,10 @@
     "include_unknowns": true,
     "unknown_is_pass": false,
     "full_ranking_requires_comparable_complete_results": true,
-    "provider_consensus_is_legal_truth": false
+    "provider_consensus_is_legal_truth": false,
+    "no_unapproved_billable_requests": true,
+    "no_unauthorized_automated_provider_collection": true
   },
-  "historical_evidence_not_modified": true
+  "historical_evidence_not_modified": true,
+  "minimum_reference_families": 10
 }
