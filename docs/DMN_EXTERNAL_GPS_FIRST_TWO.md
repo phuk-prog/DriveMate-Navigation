@@ -26,3 +26,7 @@ Both containers actually served independent local HTTP matching requests, built 
 **Other external systems:** GraphHopper is next for actual lawful map-matching interface execution; the remaining **10 of 12** families have NOT been executed in this GPS comparison. The portfolio remains Valhalla, OSRM, GraphHopper, OsmAnd, Organic Maps, BRouter, HERE, Mapbox, TomTom, openrouteservice, Google Maps and Waze. Each must be labeled according to actual feature availability, provider terms and real evidence. Historical routing comparisons are separate from GPS matching.
 
 **Research only:** This runs in `phuk-prog/DriveMate-Navigation` draft PR; production Android `phuk-prog/DriveMate` remains untouched, no APK, no real device GNSS, no sensor fusion, no multi-engine superiority claim.
+
+## GraphHopper third-family comparison attempt (new stage)
+
+A separate genuine local [GraphHopper 11.1 `/match` adapter](../benchmarks/graphhopper_match_reference.py) and [comparison programme details](DMN_GRAPHHOPPER_GPS_BATCH.md) have been added for the same four-fix public UK scenarios. It uses the documented `extended_json` snapped-observation output, with separate unknown/unmatched tracking. GraphHopper is **not** counted as third until an actual matching request has succeeded and its aggregate evidence exists. No 0–10 ranking from snapped-point proximity.
