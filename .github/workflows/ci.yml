@@ -88,6 +88,41 @@ jobs:
       - name: Propose real UK legal-detour coverage regression
         if: success() && (contains(github.event.head_commit.message, '[turn-restriction-smoke]') || contains(github.event.pull_request.title, '[turn-restriction-smoke]'))
         run: python -m tools.dmn_test_discovery --input results/public-turn-smoke.json --public-turn-smoke --output results/dmn-turn-discovery-proposals.json
+      - name: Bounded real UK complete-road-neighborhood detours (one opt-in)
+        if: contains(github.event.head_commit.message, '[neighborhood-detour-smoke]') || contains(github.event.pull_request.title, '[neighborhood-detour-smoke]')
+        timeout-minutes: 11
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output "${RUNNER_TEMP}/dmn-uk-neighborhood-source.osm.pbf" \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          osmium tags-filter "${RUNNER_TEMP}/dmn-uk-neighborhood-source.osm.pbf" \
+            r/type=restriction -o results/dmn-neighborhood-turn-restrictions.osm.pbf
+          osmium cat results/dmn-neighborhood-turn-restrictions.osm.pbf \
+            -o results/dmn-neighborhood-turn-restrictions.osm -f osm,add_metadata=false
+          python -m benchmarks.uk_neighborhood_detours \
+            --pbf "${RUNNER_TEMP}/dmn-uk-neighborhood-source.osm.pbf" \
+            --restriction-source results/dmn-neighborhood-turn-restrictions.osm \
+            --snapshot geofabrik-260901 --limit 4 \
+            | tee results/dmn-uk-neighborhood-detours.json
+      - name: Upload bounded detour evidence
+        if: always() && (contains(github.event.head_commit.message, '[neighborhood-detour-smoke]') || contains(github.event.pull_request.title, '[neighborhood-detour-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-uk-neighborhood-detours
+          path: results/dmn-uk-neighborhood-detours.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Remove temporary buffered road source and contributor-anonymized extracts
+        if: always()
+        shell: bash
+        run: |
+          rm -f "${RUNNER_TEMP}/dmn-uk-neighborhood-source.osm.pbf"
+          rm -f results/dmn-neighborhood-turn-restrictions.osm.pbf results/dmn-neighborhood-turn-restrictions.osm
       - name: Upload real UK turn-rule evidence
         if: always() && (contains(github.event.head_commit.message, '[turn-restriction-smoke]') || contains(github.event.pull_request.title, '[turn-restriction-smoke]'))
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
