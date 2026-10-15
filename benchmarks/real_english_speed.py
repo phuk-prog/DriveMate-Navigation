@@ -186,7 +186,7 @@ def start_candidate(prepared, native_binary):
     return server, thread, native
 
 
-def query(engine, case, coordinates, candidate_port, gh_port):
+def query(engine, case, coordinates, candidate_port, gh_port, *, return_geometry=False):
     a, b = coordinates[case["source"]], coordinates[case["target"]]
     if engine == "drivemate-native-cpp":
         url = "http://127.0.0.1:%d/route?" % candidate_port + urlencode(
@@ -217,23 +217,26 @@ def query(engine, case, coordinates, candidate_port, gh_port):
         raise ValueError("Unsupported speed engine")
     with urlopen(url, timeout=12) as response:
         raw = json.load(response)
-    if engine == "drivemate-native-cpp":
-        if not raw.get("ok"):
-            raise ValueError("No candidate route")
-        points = raw.get("coordinates")
-    elif engine == "graphhopper":
-        paths = raw.get("paths") or []
-        points = paths[0].get("points", {}).get("coordinates") if paths else None
-    elif engine == "valhalla":
-        legs = raw.get("trip", {}).get("legs") or []
-        points = [[lon, lat] for leg in legs
-                  for lat, lon in polyline6(leg.get("shape", ""))] if legs else None
-    elif engine == "openrouteservice":
-        features = raw.get("features") or []
-        points = features[0].get("geometry", {}).get("coordinates") if features else None
-    else:
-        routes = raw.get("routes") or []
-        points = routes[0].get("geometry", {}).get("coordinates") if routes else None
+    try:
+        if engine == "drivemate-native-cpp":
+            if not raw.get("ok"):
+                raise ValueError("No candidate route")
+            points = raw.get("coordinates")
+        elif engine == "graphhopper":
+            paths = raw.get("paths") or []
+            points = paths[0].get("points", {}).get("coordinates") if paths else None
+        elif engine == "valhalla":
+            legs = raw.get("trip", {}).get("legs") or []
+            points = [[lon, lat] for leg in legs
+                      for lat, lon in polyline6(leg.get("shape", ""))] if legs else None
+        elif engine == "openrouteservice":
+            features = raw.get("features") or []
+            points = features[0].get("geometry", {}).get("coordinates") if features else None
+        else:
+            routes = raw.get("routes") or []
+            points = routes[0].get("geometry", {}).get("coordinates") if routes else None
+    except (AttributeError, TypeError, IndexError) as exc:
+        raise ValueError("Malformed engine response structure") from exc
     if not points or len(points) < 2:
         raise ValueError("Missing route geometry")
     def metres(u, v):
@@ -258,6 +261,10 @@ def query(engine, case, coordinates, candidate_port, gh_port):
                           (a[0]-b[0])*111195)
     if route_metres < max(5.0, separation-24.0):
         raise ValueError("Returned route geometry too short for its endpoints")
+    if engine == "drivemate-native-cpp" and raw.get("implementation") != "compiled-cpp":
+        raise ValueError("Only compiled-native DriveMate results can be ranked")
+    if return_geometry:
+        return {"coordinates": points}
     # Complete legality and orientation need an independent OSM reference judge.
     if engine == "drivemate-native-cpp":
         if raw.get("implementation") != "compiled-cpp":
