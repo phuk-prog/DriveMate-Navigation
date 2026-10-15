@@ -91,3 +91,12 @@ BRouter can be self-hosted for routing, which needs its own frozen route contrac
 OsmAnd and Organic Maps need executable app/native harnesses. Their GPS-001
 adapter gaps remain work, not evidence of poor navigation. Commercial/Waze access
 restrictions remain unchanged. The original twelve-family roster is preserved.
+
+Executed outcome: run 38814980108 at `e80e54a9b4ea3195dede7bcba727c3c65ad8f156`
+completed all six ORS requests: four PASS, two UNSUPPORTED (explicit ORS 8010
+outside-graph-bounds rejection). Full-cohort score remains unassigned; see the
+expanded scorecard and GPS_001_RESULTS.md. A scorecard regression test now ensures
+unsupported cases cannot receive a full score. Next additional original-roster
+reference work is a separately frozen routing contract for self-hosted BRouter,
+which may also enable ORS routing comparisons. Do not substitute snapping for
+ambiguity, fault, temporal-recovery or legal-driving checks.

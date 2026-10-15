@@ -1,0 +1,1026 @@
+{
+  "trial": "GPS-001",
+  "scope": "Frozen synthetic complete-output, 5m position and observed-progression contract; ORS is pointwise snapping, not temporal matching",
+  "formula": "10 * passed / 6; only fully judged six-case cohorts rank; ties share rank",
+  "execution_sources": [
+    {
+      "systems": [
+        "OSRM",
+        "Valhalla",
+        "GraphHopper"
+      ],
+      "run_id": 38807314302,
+      "head_sha": "3581693e66c8854bc3a9cba6d6b2692a2454c0bd"
+    },
+    {
+      "systems": [
+        "DMN",
+        "openrouteservice"
+      ],
+      "run_id": 38814980108,
+      "head_sha": "e80e54a9b4ea3195dede7bcba727c3c65ad8f156"
+    }
+  ],
+  "rows": [
+    {
+      "system": "DMN",
+      "rank": 1,
+      "score_out_of_ten": 10.0,
+      "passed": 6,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "unsupported": 0,
+      "not_run": 0,
+      "reason": "Synthetic closed-world output contract only",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "decision_reasons": [
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate"
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "decision_reasons": [
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate"
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "decision_reasons": [
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate"
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "decision_reasons": [
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate"
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "decision_reasons": [
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate"
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "split": "held_out",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "decision_reasons": [
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate"
+          ]
+        }
+      ]
+    },
+    {
+      "system": "OSRM",
+      "rank": 1,
+      "score_out_of_ten": 10.0,
+      "passed": 6,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "unsupported": 0,
+      "not_run": 0,
+      "reason": "Synthetic closed-world output contract only",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "split": "held_out",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "system": "Valhalla",
+      "rank": 1,
+      "score_out_of_ten": 10.0,
+      "passed": 6,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "unsupported": 0,
+      "not_run": 0,
+      "reason": "Synthetic closed-world output contract only",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "split": "held_out",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "system": "GraphHopper",
+      "rank": 4,
+      "score_out_of_ten": 3.333,
+      "passed": 2,
+      "failed": 4,
+      "planned": 6,
+      "unresolved": 0,
+      "unsupported": 0,
+      "not_run": 0,
+      "reason": "Synthetic closed-world output contract only",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "split": "development",
+          "outcome": "FAIL",
+          "checks": {
+            "complete_four_observations": false,
+            "positions_within_5m": false,
+            "forward_direction": false
+          },
+          "failures": [
+            "missing_required_match"
+          ],
+          "matched_observations": 0,
+          "position_errors_m": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "split": "development",
+          "outcome": "FAIL",
+          "checks": {
+            "complete_four_observations": false,
+            "positions_within_5m": false,
+            "forward_direction": false
+          },
+          "failures": [
+            "missing_required_match"
+          ],
+          "matched_observations": 0,
+          "position_errors_m": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "split": "development",
+          "outcome": "FAIL",
+          "checks": {
+            "complete_four_observations": false,
+            "positions_within_5m": false,
+            "forward_direction": false
+          },
+          "failures": [
+            "missing_required_match"
+          ],
+          "matched_observations": 0,
+          "position_errors_m": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "split": "development",
+          "outcome": "FAIL",
+          "checks": {
+            "complete_four_observations": false,
+            "positions_within_5m": false,
+            "forward_direction": false
+          },
+          "failures": [
+            "missing_required_match"
+          ],
+          "matched_observations": 0,
+          "position_errors_m": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "split": "held_out",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "system": "BRouter",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "unsupported": 0,
+      "not_run": 6,
+      "reason": "Routing reference has no integrated observation-matching interface for GPS-001.",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "outcome": "NOT_RUN",
+          "reason": "Routing reference has no integrated observation-matching interface for GPS-001."
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "outcome": "NOT_RUN",
+          "reason": "Routing reference has no integrated observation-matching interface for GPS-001."
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "outcome": "NOT_RUN",
+          "reason": "Routing reference has no integrated observation-matching interface for GPS-001."
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "outcome": "NOT_RUN",
+          "reason": "Routing reference has no integrated observation-matching interface for GPS-001."
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "outcome": "NOT_RUN",
+          "reason": "Routing reference has no integrated observation-matching interface for GPS-001."
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "outcome": "NOT_RUN",
+          "reason": "Routing reference has no integrated observation-matching interface for GPS-001."
+        }
+      ]
+    },
+    {
+      "system": "Google Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "unsupported": 0,
+      "not_run": 6,
+      "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised.",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        }
+      ]
+    },
+    {
+      "system": "HERE",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "unsupported": 0,
+      "not_run": 6,
+      "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised.",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        }
+      ]
+    },
+    {
+      "system": "Mapbox",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "unsupported": 0,
+      "not_run": 6,
+      "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised.",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        }
+      ]
+    },
+    {
+      "system": "Organic Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "unsupported": 0,
+      "not_run": 6,
+      "reason": "No executable GPS-replay adapter integrated; app behaviour is not a batch matching API.",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "outcome": "NOT_RUN",
+          "reason": "No executable GPS-replay adapter integrated; app behaviour is not a batch matching API."
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "outcome": "NOT_RUN",
+          "reason": "No executable GPS-replay adapter integrated; app behaviour is not a batch matching API."
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "outcome": "NOT_RUN",
+          "reason": "No executable GPS-replay adapter integrated; app behaviour is not a batch matching API."
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "outcome": "NOT_RUN",
+          "reason": "No executable GPS-replay adapter integrated; app behaviour is not a batch matching API."
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "outcome": "NOT_RUN",
+          "reason": "No executable GPS-replay adapter integrated; app behaviour is not a batch matching API."
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "outcome": "NOT_RUN",
+          "reason": "No executable GPS-replay adapter integrated; app behaviour is not a batch matching API."
+        }
+      ]
+    },
+    {
+      "system": "OsmAnd",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "unsupported": 0,
+      "not_run": 6,
+      "reason": "No executable GPS-replay adapter integrated; app behaviour is not a batch matching API.",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "outcome": "NOT_RUN",
+          "reason": "No executable GPS-replay adapter integrated; app behaviour is not a batch matching API."
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "outcome": "NOT_RUN",
+          "reason": "No executable GPS-replay adapter integrated; app behaviour is not a batch matching API."
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "outcome": "NOT_RUN",
+          "reason": "No executable GPS-replay adapter integrated; app behaviour is not a batch matching API."
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "outcome": "NOT_RUN",
+          "reason": "No executable GPS-replay adapter integrated; app behaviour is not a batch matching API."
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "outcome": "NOT_RUN",
+          "reason": "No executable GPS-replay adapter integrated; app behaviour is not a batch matching API."
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "outcome": "NOT_RUN",
+          "reason": "No executable GPS-replay adapter integrated; app behaviour is not a batch matching API."
+        }
+      ]
+    },
+    {
+      "system": "TomTom",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "unsupported": 0,
+      "not_run": 6,
+      "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised.",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+        }
+      ]
+    },
+    {
+      "system": "Waze",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "unsupported": 0,
+      "not_run": 6,
+      "reason": "No permitted automated replay interface; no scraping or automated consumer-app collection.",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated replay interface; no scraping or automated consumer-app collection."
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated replay interface; no scraping or automated consumer-app collection."
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated replay interface; no scraping or automated consumer-app collection."
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated replay interface; no scraping or automated consumer-app collection."
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated replay interface; no scraping or automated consumer-app collection."
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated replay interface; no scraping or automated consumer-app collection."
+        }
+      ]
+    },
+    {
+      "system": "openrouteservice",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 4,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "unsupported": 2,
+      "not_run": 0,
+      "reason": "Incomplete comparable cohort: unsupported or unresolved cases remain",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "split": "development",
+          "outcome": "UNSUPPORTED",
+          "reason": "ORS 8010: observation outside imported graph bounding box",
+          "checks": {},
+          "failures": [],
+          "matched_observations": 0,
+          "position_errors_m": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "split": "development",
+          "outcome": "UNSUPPORTED",
+          "reason": "ORS 8010: observation outside imported graph bounding box",
+          "checks": {},
+          "failures": [],
+          "matched_observations": 0,
+          "position_errors_m": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "split": "held_out",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -19,29 +19,69 @@ must pass. Score = ten times passed cases divided by six; ties share rank.
 
 ## Highest-to-lowest retest scoreboard
 
-| Rank | System/configuration | Score /10 | Pass | Fail | Not run |
-| --- | --- | ---: | ---: | ---: | ---: |
-| 1= | **DMN improved temporal** | **10** | **6** | **0** | 0 |
-| 1= | OSRM 5.27.1, tidy=false | 10 | 6 | 0 | 0 |
-| 1= | Valhalla 3.9.1, auto/map_snap | 10 | 6 | 0 | 0 |
-| 4 | GraphHopper 11.1, car/gps_accuracy=10 m | 3.333 | 2 | 4 | 0 |
-| — | OsmAnd | — | 0 | 0 | 6 |
-| — | Organic Maps | — | 0 | 0 | 6 |
-| — | BRouter | — | 0 | 0 | 6 |
-| — | openrouteservice | — | 0 | 0 | 6 |
-| — | HERE | — | 0 | 0 | 6 |
-| — | Mapbox | — | 0 | 0 | 6 |
-| — | TomTom | — | 0 | 0 | 6 |
-| — | Google Maps | — | 0 | 0 | 6 |
-| — | Waze | — | 0 | 0 | 6 |
+| Rank | System/configuration | Score /10 | Pass | Fail | Unsupported | Not run |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| 1= | **DMN improved temporal** | **10** | **6** | **0** | 0 | 0 |
+| 1= | OSRM 5.27.1, tidy=false | 10 | 6 | 0 | 0 | 0 |
+| 1= | Valhalla 3.9.1, auto/map_snap | 10 | 6 | 0 | 0 | 0 |
+| 4 | GraphHopper 11.1, car/gps_accuracy=10 m | 3.333 | 2 | 4 | 0 | 0 |
+| — | openrouteservice 10.1.0, pointwise snapping | — | 4 | 0 | 2 | 0 |
+| — | OsmAnd | — | 0 | 0 | 0 | 6 |
+| — | Organic Maps | — | 0 | 0 | 0 | 6 |
+| — | BRouter | — | 0 | 0 | 0 | 6 |
+| — | HERE | — | 0 | 0 | 0 | 6 |
+| — | Mapbox | — | 0 | 0 | 0 | 6 |
+| — | TomTom | — | 0 | 0 | 0 | 6 |
+| — | Google Maps | — | 0 | 0 | 0 | 6 |
+| — | Waze | — | 0 | 0 | 0 | 6 |
 
-The four unadapted open-source references lack an integrated, permitted GPS-001
-replay interface; BRouter and openrouteservice are routing references without
-an integrated observation-matching adapter here. This is not proof that their
-products cannot navigate. HERE/Mapbox/TomTom/Google have no configured permitted
-credentials and same-fixture interface. Paid access is not authorised. Waze has
-no permitted automated replay interface; no scraping or consumer-app automation
-was attempted. They are **UNRANKED**, not failed or assigned zero quality.
+[Expanded scorecard with every case and exact run provenance](../references/gps001-expanded-scorecard-20261015.json).
+OSRM/Valhalla/GraphHopper results are retained from the executed retest; DMN and
+ORS were executed in run 38814980108 on the identical map and oracle hashes.
+No claim that all engines were rerun at the newest source SHA is made.
+
+Eight families remain not run for GPS-001. OsmAnd and Organic Maps need app/native
+replay harnesses. BRouter has a self-hostable routing engine, requiring a routing
+contract and map builder adapter. These are implementation gaps, not proof of poor
+products. HERE/Mapbox/TomTom/Google have no configured permitted credentials and
+same-fixture interface. Paid access is not authorised. Waze has no permitted
+automated replay interface. All remain unranked with per-case NOT_RUN reasons.
+
+### Additional executed reference: openrouteservice
+
+[Run 38814980108](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38814980108)
+on `e80e54a9b4ea3195dede7bcba727c3c65ad8f156` used the official integrity-checked
+10.1.0 JAR on Java 25, driving-car, radius 20 m, pointwise snapping, tiny graph
+pruning disabled, no elevation or CH/LM/core preparation. This tests output
+positions and observed progression, not temporal inference or direction legality.
+
+| Frozen case | ORS outcome | Exact evidence |
+| --- | --- | --- |
+| GPS-001-east-clean | PASS | 4/4 returned, all within 5 m, east progress |
+| GPS-001-west-clean | PASS | 4/4 returned, all within 5 m, west progress |
+| GPS-001-east-noise | UNSUPPORTED | HTTP 404 / ORS 8010: observation outside imported graph bounds |
+| GPS-001-west-noise | UNSUPPORTED | HTTP 404 / ORS 8010: observation outside imported graph bounds |
+| GPS-001-east-multilink | PASS | 4/4 returned, all within 5 m, east progress |
+| GPS-001-west-multilink | PASS | 4/4 returned, all within 5 m, west progress |
+
+The alternating noise extends outside this invented graph's bounding box. ORS
+rejects those requests rather than returning matched observations. They remain
+visible as unsupported, not failed position claims, and **no full-six score is
+assigned**. Four passes out of four supported cases are not a six-case 10/10.
+The map and inputs were not enlarged or altered to hide this limitation. The
+other three executed references and DMN delivered alignable output for these
+noise cases, except GraphHopper's previously recorded output omissions.
+
+Two initial executions stopped on HTTP 404 before producing a complete report;
+these failures and the later response-code diagnosis are retained in
+[the ORS evidence](../references/gps001-ors-20261015.json). The adapter now
+continues only for the explicit 8010 input-domain rejection. Other HTTP or setup
+errors still abort as unavailable, never scored as case failures or passes.
+A reproduced scorecard bug that ranked incomplete cohorts was fixed and tested:
+unsupported cases now prevent a full-cohort score while preserving actual passes.
+All 360 local unit tests, compile, privacy checks and execution CI passed.
+The skill's `scripts/unified_preflight.py` is absent in this research repository;
+it was unavailable, not passed. No DMN matching policy changed in this stage.
 
 ## Exactly what passed or failed
 
