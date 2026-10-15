@@ -7,3 +7,7 @@ An independently surveyed vehicle location/lane and legally signed correct road 
 Prior baseline: [OSRM live comparison 38752861279](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38752861279), 12 OSRM Match responses / 48 generated points (40 snapped within 20m, 8 unmatched); on the same 12 scenarios DMN single 6 correct edge, DMN temporal 8, 0 confidently wrong. Those are not equal accuracy measures.
 
 Valhalla and OSRM are distinct **families**, while CH/MLD OSRM are variants of the same family. No personal traces, paid provider API or APK involved.
+
+## Execution gate
+
+The Valhalla trace_attributes request/schema unit suite has now passed in [GitHub Actions 38753413439](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38753413439). The first **live** Valhalla comparison is deliberately opt-in on a separate CI commit and remains unverified until its own real container and response artifact complete. The prior local OSRM Match reference has already executed independently on [run 38752861279](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38752861279). Do not treat the unit response mocks as a second live provider.
