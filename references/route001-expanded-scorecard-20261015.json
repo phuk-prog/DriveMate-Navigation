@@ -1,0 +1,609 @@
+{
+  "trial": "ROUTE-001",
+  "scope": "Frozen four-case analytical synthetic one-way routing only",
+  "formula": "10 * passed / 4; equal scores share rank; unavailable families unranked",
+  "execution_sources": [
+    {
+      "systems": [
+        "DMN",
+        "OSRM",
+        "Valhalla",
+        "GraphHopper",
+        "openrouteservice"
+      ],
+      "run_id": 38818121643,
+      "head_sha": "4b5cc0a72c82c71bf26cf8ac5a643f2ebd7b6185"
+    },
+    {
+      "systems": [
+        "BRouter"
+      ],
+      "run_id": 38815930888,
+      "head_sha": "f8e7cc3d4e5bb07b82ca9a7cbbba88ee7eac420d"
+    }
+  ],
+  "rows": [
+    {
+      "system": "BRouter",
+      "rank": 1,
+      "passed": 4,
+      "failed": 0,
+      "not_run": 0,
+      "score_out_of_ten": 10.0,
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        }
+      ]
+    },
+    {
+      "system": "DMN",
+      "rank": 1,
+      "passed": 4,
+      "failed": 0,
+      "not_run": 0,
+      "score_out_of_ten": 10.0,
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        }
+      ]
+    },
+    {
+      "system": "GraphHopper",
+      "rank": 1,
+      "passed": 4,
+      "failed": 0,
+      "not_run": 0,
+      "score_out_of_ten": 10.0,
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        }
+      ]
+    },
+    {
+      "system": "OSRM",
+      "rank": 1,
+      "passed": 4,
+      "failed": 0,
+      "not_run": 0,
+      "score_out_of_ten": 10.0,
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        }
+      ]
+    },
+    {
+      "system": "Valhalla",
+      "rank": 1,
+      "passed": 4,
+      "failed": 0,
+      "not_run": 0,
+      "score_out_of_ten": 10.0,
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        }
+      ]
+    },
+    {
+      "system": "openrouteservice",
+      "rank": 1,
+      "passed": 4,
+      "failed": 0,
+      "not_run": 0,
+      "score_out_of_ten": 10.0,
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        }
+      ]
+    },
+    {
+      "system": "Google Maps",
+      "rank": null,
+      "passed": 0,
+      "failed": 0,
+      "not_run": 4,
+      "score_out_of_ten": null,
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        }
+      ]
+    },
+    {
+      "system": "HERE",
+      "rank": null,
+      "passed": 0,
+      "failed": 0,
+      "not_run": 4,
+      "score_out_of_ten": null,
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        }
+      ]
+    },
+    {
+      "system": "Mapbox",
+      "rank": null,
+      "passed": 0,
+      "failed": 0,
+      "not_run": 4,
+      "score_out_of_ten": null,
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        }
+      ]
+    },
+    {
+      "system": "Organic Maps",
+      "rank": null,
+      "passed": 0,
+      "failed": 0,
+      "not_run": 4,
+      "score_out_of_ten": null,
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "NOT_RUN",
+          "reason": "Routing replay adapter not implemented"
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "NOT_RUN",
+          "reason": "Routing replay adapter not implemented"
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "NOT_RUN",
+          "reason": "Routing replay adapter not implemented"
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "NOT_RUN",
+          "reason": "Routing replay adapter not implemented"
+        }
+      ]
+    },
+    {
+      "system": "OsmAnd",
+      "rank": null,
+      "passed": 0,
+      "failed": 0,
+      "not_run": 4,
+      "score_out_of_ten": null,
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "NOT_RUN",
+          "reason": "Routing replay adapter not implemented"
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "NOT_RUN",
+          "reason": "Routing replay adapter not implemented"
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "NOT_RUN",
+          "reason": "Routing replay adapter not implemented"
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "NOT_RUN",
+          "reason": "Routing replay adapter not implemented"
+        }
+      ]
+    },
+    {
+      "system": "TomTom",
+      "rank": null,
+      "passed": 0,
+      "failed": 0,
+      "not_run": 4,
+      "score_out_of_ten": null,
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        }
+      ]
+    },
+    {
+      "system": "Waze",
+      "rank": null,
+      "passed": 0,
+      "failed": 0,
+      "not_run": 4,
+      "score_out_of_ten": null,
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated routing interface established"
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated routing interface established"
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated routing interface established"
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated routing interface established"
+        }
+      ]
+    }
+  ]
+}

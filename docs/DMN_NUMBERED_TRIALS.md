@@ -196,3 +196,14 @@ A scorer now rejects incomplete judged outcomes instead of assigning a score to
 unsupported cases; invalid/incomplete engine execution remains unavailable.
 After this expansion, freeze separate access/turn/recalculation expectations
 before tuning, preserving UK unresolved matching evidence and promotion block.
+
+ROUTE-001 expansion completed: run 38818121643 at
+`4b5cc0a72c82c71bf26cf8ac5a643f2ebd7b6185`, OSRM/Valhalla/GraphHopper/ORS
+and DMN each 4/4. Combined with BRouter's prior executed 4/4, six systems tie
+10/10 on the unchanged four-case synthetic one-way contract. Seven external
+families remain unranked with exact per-case reasons. No engine policy changed.
+See ROUTE_001_RESULTS.md and references/route001-expanded-20261015.json plus
+route001-expanded-scorecard-20261015.json. Do not rerun unchanged heavy engines.
+Next bounded stage: freeze and execute routing access/turn/disconnection and
+rerouting-context cases. These harder cases have not yet been executed; the
+four-case tie does not clear them, and does not clear the UK coverage block.
