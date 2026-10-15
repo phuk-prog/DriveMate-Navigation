@@ -58,3 +58,7 @@ The first real UK buffered-neighborhood study found two map-rule detours in the 
 ## Fourth stage: GPS candidate positioning and confidence
 
 Added independent prototype `gps/matcher.py` and [public-UK geometry-derived controlled-error benchmark](../benchmarks/public_gps_matching.py). Run a sequence of fix-quality, directional edge, near-parallel opposing road, degraded accuracy, stale fixes, invalid reported speed and simulated offset tests. Record **correct/ambiguous/unknown/confident-wrong** separately, as well as sample size and whether a true field/oracle was used. A confidently wrong edge is a priority failure; ambiguous on insufficient information is safer than an invented precision claim. This is **not** phone GNSS, IMU fusion, speed-limit source validation or a complete driving navigation session. Expand to multi-fix wrong-road, service/slip roads, bridge levels, turn restrictions, loss/reacquisition and rerouting after measuring first test results.
+
+## GPS second-pass safety study — harder ambiguity checks
+
+After the first 90/90 easy geometry-derived UK fixes, extend evidence to two overlapping opposite-direction mapped links (travel heading matters), parallel **same-direction** nearby roads (position alone insufficient), stopped/heading-less fixes, and clean recovery after a rejected speed spike. Check safe UNKNOWN/AMBIGUOUS responses separately from correct MATCHED values. Add progressively complex true UK road intersections and GPS-replay trajectories; no field GPS truth or device IMU claims are established by injected coordinate tests.

@@ -67,6 +67,52 @@ def evaluate(raw:bytes, *, snapshot:str,limit:int=30)->dict:
             counts[key+"_total"]+=1
             counts[key+"_safe"]+=int(r.status in ("REJECTED","UNKNOWN","AMBIGUOUS"))
             counts[key+"_confident"]+=int(r.status=="MATCHED")
+
+    # Explicit hard cohort: same OSM segment mapped in both travel directions.
+    # Moving heading should resolve the directed edge, but stationary lack
+    # of heading must not invent carriageway/direction.
+    by_ends={(e.source,e.target):e for e in imported.graph.edges.values()
+             if e.access=="allowed"}
+    pairs=[]
+    for e in sorted(by_ends.values(),key=lambda e:e.edge_id):
+        opposite=by_ends.get((e.target,e.source))
+        if opposite is not None and e.edge_id<opposite.edge_id:
+            pairs.append((e,opposite))
+        if len(pairs)>=min(15,limit):
+            break
+    for e,reverse in pairs:
+        a,b=imported.coordinates[e.source],imported.coordinates[e.target]
+        lat=(a[0]+b[0])/2
+        lon=(a[1]+b[1])/2
+        heading=_bearing(a,b)
+        for edge,bearing in ((e,heading),(reverse,(heading+180.0)%360.0)):
+            r=matcher.match(GPSFix(1000,lat,lon,3.0,10.0,bearing))
+            counts["bidirectional_moving_total"]+=1
+            counts["bidirectional_moving_correct"]+=int(r.status=="MATCHED" and r.edge_id==edge.edge_id)
+            counts["bidirectional_moving_wrong"]+=int(r.status=="MATCHED" and r.edge_id!=edge.edge_id)
+            counts["bidirectional_moving_withheld"]+=int(r.status!="MATCHED")
+        stopped=matcher.match(GPSFix(1000,lat,lon,3.0,0.0,None))
+        counts["bidirectional_stopped_total"]+=1
+        counts["bidirectional_stopped_safely_withheld"]+=int(stopped.status!="MATCHED")
+        counts["bidirectional_stopped_confident"]+=int(stopped.status=="MATCHED")
+    # A clean reading after a rejected spike should be eligible for recovery.
+    # Still a *stateless matching* check, not a running navigation controller.
+    for e in chosen:
+        a,b=imported.coordinates[e.source],imported.coordinates[e.target]
+        lat,lon=(a[0]+b[0])/2,(a[1]+b[1])/2
+        heading=_bearing(a,b)
+        accepted=GPSFix(1000,lat,lon,3.0,10.0,heading)
+        rejected=GPSFix(2000,lat,lon,3.0,120.0,heading)
+        recovered=GPSFix(3000,lat,lon,3.0,10.0,heading)
+        first=matcher.match(accepted)
+        bad=matcher.match(rejected,previous_fix=accepted)
+        after=matcher.match(recovered,previous_fix=accepted,
+                            prior_edge_id=first.edge_id if first.status=="MATCHED" else None)
+        counts["post_spike_recovery_cases"]+=1
+        counts["post_spike_rejected_correctly"]+=int(bad.status=="REJECTED")
+        counts["post_spike_recovery_correct"]+=int(after.status=="MATCHED" and after.edge_id==e.edge_id)
+        counts["post_spike_recovery_wrong"]+=int(after.status=="MATCHED" and after.edge_id!=e.edge_id)
+        counts["post_spike_recovery_withheld"]+=int(after.status!="MATCHED")
     return {
         "classification":"public-UK-mapped-road-simulated-GPS-not-device-accuracy",
         "source_snapshot":snapshot,"source_sha256":sha256(raw).hexdigest(),
@@ -83,6 +129,18 @@ def evaluate(raw:bytes, *, snapshot:str,limit:int=30)->dict:
             ("weak_fix","speed_spike","stale_fix")),
         "adversarial_confident_matches":sum(counts[k+"_confident"] for k in
             ("weak_fix","speed_spike","stale_fix")),
+        "bidirectional_moving_total":counts["bidirectional_moving_total"],
+        "bidirectional_moving_correct":counts["bidirectional_moving_correct"],
+        "bidirectional_moving_wrong":counts["bidirectional_moving_wrong"],
+        "bidirectional_moving_withheld":counts["bidirectional_moving_withheld"],
+        "bidirectional_stopped_total":counts["bidirectional_stopped_total"],
+        "bidirectional_stopped_safely_withheld":counts["bidirectional_stopped_safely_withheld"],
+        "bidirectional_stopped_confident":counts["bidirectional_stopped_confident"],
+        "post_spike_recovery_cases":counts["post_spike_recovery_cases"],
+        "post_spike_rejected_correctly":counts["post_spike_rejected_correctly"],
+        "post_spike_recovery_correct":counts["post_spike_recovery_correct"],
+        "post_spike_recovery_wrong":counts["post_spike_recovery_wrong"],
+        "post_spike_recovery_withheld":counts["post_spike_recovery_withheld"],
         "actual_phone_GPS_measurements":0,
         "sensor_fusion_implemented":False,
         "full_session_navigation_tested":False,

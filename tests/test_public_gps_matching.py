@@ -21,5 +21,20 @@ class PublicGPSMatchingHarnessTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             evaluate(RAW,snapshot="synthetic",limit=101)
 
+
+    def test_bidirectional_and_recovery_cohorts_have_truthful_denominators(self):
+        report=evaluate(RAW,snapshot="synthetic fixture only",limit=8)
+        self.assertEqual(report["bidirectional_moving_total"],
+                         report["bidirectional_moving_correct"]+
+                         report["bidirectional_moving_wrong"]+
+                         report["bidirectional_moving_withheld"])
+        self.assertEqual(report["post_spike_recovery_cases"],
+                         report["post_spike_recovery_correct"]+
+                         report["post_spike_recovery_wrong"]+
+                         report["post_spike_recovery_withheld"])
+        self.assertEqual(report["post_spike_recovery_cases"],
+                         report["post_spike_rejected_correctly"])
+        self.assertEqual(report["bidirectional_stopped_confident"],0)
+
 if __name__=="__main__":
     unittest.main()

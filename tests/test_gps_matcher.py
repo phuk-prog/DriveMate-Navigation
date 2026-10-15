@@ -54,5 +54,34 @@ class DirectedRoadMatcherTests(unittest.TestCase):
         self.assertAlmostEqual(angular_difference(355,5),10)
         self.assertAlmostEqual(angular_difference(180,0),180)
 
+
+    def test_same_heading_close_parallel_roads_are_ambiguous(self):
+        # Distinct, nearly parallel same-direction roads 5 m apart.
+        points={"a":(53.0,-2.0000),"b":(53.0,-1.9990),
+                "c":(53.000045,-2.0000),"d":(53.000045,-1.9990)}
+        roads=RoadGraph(points,[RoadEdge("south","a","b",65,35,"allowed"),
+                                RoadEdge("north","c","d",65,35,"allowed")])
+        matcher=DirectedRoadMatcher(roads,points)
+        observed=GPSFix(1000,53.000045,-1.9995,3,10,90)
+        value=matcher.match(observed)
+        self.assertEqual(value.status,"AMBIGUOUS")
+        self.assertIsNone(value.edge_id)
+    def test_same_heading_parallel_priors_do_not_force_a_wrong_match(self):
+        points={"a":(53.0,-2.0000),"b":(53.0,-1.9990),
+                "c":(53.000045,-2.0000),"d":(53.000045,-1.9990)}
+        roads=RoadGraph(points,[RoadEdge("south","a","b",65,35,"allowed"),
+                                RoadEdge("north","c","d",65,35,"allowed")])
+        matcher=DirectedRoadMatcher(roads,points)
+        observed=GPSFix(1000,53.000045,-1.9995,3,10,90)
+        value=matcher.match(observed,prior_edge_id="south")
+        self.assertEqual(value.status,"AMBIGUOUS")
+    def test_recover_only_after_a_valid_fix(self):
+        good=self.fix(t=1000)
+        bad=self.fix(t=2000,speed=120)
+        good_again=self.fix(t=3000)
+        self.assertEqual(self.matcher.match(bad,previous_fix=good).status,"REJECTED")
+        result=self.matcher.match(good_again,previous_fix=good)
+        self.assertEqual((result.status,result.edge_id),("MATCHED","east"))
+
 if __name__=="__main__":
     unittest.main()

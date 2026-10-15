@@ -129,13 +129,16 @@ class DirectedRoadMatcher:
             return MatchResult("UNKNOWN",None,"no_supported_road_near_fix",None,0)
         contenders.sort(key=lambda c:(c.score,c.distance_m,c.edge_id))
         first=contenders[0]
-        # A static/heading-less fix cannot reliably distinguish close-by
-        # directed links even when its nominal coordinate lies on one line.
-        # Do not let a tiny error circle manufacture carriageway certainty.
-        if not moving and len(contenders)>1 and any(
+        # Do not turn a location coordinate into false road-level precision.
+        # Heading can disambiguate opposing traffic directions, but NOT two
+        # nearby *same-direction* roads that equally fit that heading. For
+        # stationary / heading-less fixes, any close competing link is enough.
+        if len(contenders)>1 and any(
                 c.distance_m <= max(12.0,2.0*fix.horizontal_accuracy_m)
                 for c in contenders[1:]):
-            return MatchResult("AMBIGUOUS",None,"insufficient_motion_to_disambiguate",
+            return MatchResult("AMBIGUOUS",None,
+                               "nearby_parallel_or_overlapping_roads" if moving
+                               else "insufficient_motion_to_disambiguate",
                                round(first.distance_m,2),len(contenders))
         if len(contenders)>1 and contenders[1].score-first.score<self.minimum_score_separation:
             return MatchResult("AMBIGUOUS",None,"multiple_plausible_roads",
