@@ -24,7 +24,7 @@ class TemporalGPSMatcherTests(unittest.TestCase):
         self.assertEqual(b.match.status,"AMBIGUOUS")
     def test_topology_resolves_after_entering_unique_continuation(self):
         a=advance(self.m,TemporalState(),self.fix(1000))
-        b=advance(self.m,a.state,self.fix(2000,lon=-1.9985))
+        b=advance(self.m,a.state,self.fix(11000,lon=-1.9985))
         self.assertEqual((b.match.status,b.match.edge_id),("MATCHED","next"))
     def test_rejected_speed_spike_does_not_update_history(self):
         a=advance(self.m,TemporalState(),self.fix(1000))
@@ -40,6 +40,12 @@ class TemporalGPSMatcherTests(unittest.TestCase):
         a=advance(self.m,TemporalState(),self.fix(1000,lat=53.000045))
         b=advance(self.m,a.state,self.fix(2000,lat=53.0,lon=-1.9985))
         self.assertNotEqual(b.match.status,"MATCHED")
+    def test_fast_graph_connected_jump_rejected_by_speed_consistency(self):
+        a=advance(self.m,TemporalState(),self.fix(1000))
+        b=advance(self.m,a.state,self.fix(2000,lon=-1.9985))
+        self.assertEqual((b.match.status,b.match.reason),
+                         ("REJECTED","distance_speed_disagreement"))
+        self.assertEqual(b.state,a.state)
     def test_stale_fix_rejected_without_state_advance(self):
         a=advance(self.m,TemporalState(),self.fix(1000))
         b=advance(self.m,a.state,self.fix(2000),now_ms=15000)

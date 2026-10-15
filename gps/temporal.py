@@ -35,6 +35,20 @@ def advance(matcher: DirectedRoadMatcher, state: TemporalState,
     if quality.status=="UNCERTAIN":
         return TemporalResult(MatchResult("UNKNOWN",None,quality.reason,None,0),
                               TemporalState(fix,frozenset(),0))
+    # Reject an apparently connected *graph* jump that is physically
+    # incompatible with successive GNSS speed readings. Map connectivity
+    # alone is not evidence that the vehicle traversed an entire link.
+    if (state.last_fix is not None and fix.speed_mps is not None
+            and state.last_fix.speed_mps is not None):
+        from .fix_quality import _distance_m
+        seconds=(fix.timestamp_ms-state.last_fix.timestamp_ms)/1000.0
+        lower_bound=max(0.0,_distance_m(state.last_fix,fix)
+                        -state.last_fix.horizontal_accuracy_m
+                        -fix.horizontal_accuracy_m)
+        reported=max(state.last_fix.speed_mps,fix.speed_mps)
+        if lower_bound/seconds>max(20.0,3.0*reported):
+            return TemporalResult(
+                MatchResult("REJECTED",None,"distance_speed_disagreement",None,0),state)
     single=matcher.match(fix)
     if single.status in ("REJECTED","UNKNOWN"):
         return TemporalResult(single,TemporalState(fix,frozenset(),0))
