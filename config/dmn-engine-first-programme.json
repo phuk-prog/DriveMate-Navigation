@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "status": "proposed_pending_owner_decisions",
+  "scope": "DMN navigation components, not full navigation apps",
+  "primary_candidate": "DMN",
+  "reference_families": [
+    {
+      "name": "Valhalla",
+      "selection": "proposed",
+      "planned": true,
+      "execution": "not_run_under_new_programme",
+      "notes": ""
+    },
+    {
+      "name": "OSRM",
+      "selection": "proposed",
+      "planned": true,
+      "execution": "not_run_under_new_programme",
+      "notes": "MLD and CH are configurations of one family, not additional families"
+    },
+    {
+      "name": "GraphHopper",
+      "selection": "proposed",
+      "planned": true,
+      "execution": "not_run_under_new_programme",
+      "notes": ""
+    },
+    {
+      "name": "OsmAnd",
+      "selection": "proposed",
+      "planned": true,
+      "execution": "not_run_under_new_programme",
+      "notes": ""
+    },
+    {
+      "name": "Organic Maps",
+      "selection": "proposed",
+      "planned": true,
+      "execution": "not_run_under_new_programme",
+      "notes": ""
+    },
+    {
+      "name": "BRouter",
+      "selection": "proposed",
+      "planned": true,
+      "execution": "not_run_under_new_programme",
+      "notes": ""
+    },
+    {
+      "name": "HERE",
+      "selection": "proposed",
+      "planned": true,
+      "execution": "not_run_under_new_programme",
+      "notes": ""
+    },
+    {
+      "name": "Mapbox",
+      "selection": "proposed",
+      "planned": true,
+      "execution": "not_run_under_new_programme",
+      "notes": ""
+    },
+    {
+      "name": "TomTom",
+      "selection": "proposed",
+      "planned": true,
+      "execution": "not_run_under_new_programme",
+      "notes": ""
+    },
+    {
+      "name": "openrouteservice",
+      "selection": "proposed",
+      "planned": true,
+      "execution": "not_run_under_new_programme",
+      "notes": ""
+    }
+  ],
+  "categories": [
+    "legal_routing",
+    "route_quality",
+    "roundabouts",
+    "junctions",
+    "lanes",
+    "gps_matching",
+    "gps_loss_recovery",
+    "rerouting",
+    "instruction_timing",
+    "arrival",
+    "route_line_adherence",
+    "offline_reliability",
+    "performance_and_resources",
+    "failure_handling"
+  ],
+  "comparability_tiers": [
+    "matched_public_map",
+    "provider_observation",
+    "historical_or_unavailable"
+  ],
+  "evidence_policy": {
+    "score_unrun": false,
+    "include_unknowns": true,
+    "unknown_is_pass": false,
+    "full_ranking_requires_comparable_complete_results": true,
+    "provider_consensus_is_legal_truth": false
+  },
+  "historical_evidence_not_modified": true
+}
