@@ -92,3 +92,7 @@ The result includes `discriminating_case_register` and a case count per safely i
 ## Route preference evidence continuity — follow-up validation
 
 The new map-only case register now has an **aggregate consistency gate**: every safely imported neighborhood's counted Fastest/Shortest divergence must have exactly one reproducible, pinned-map case identity; per-neighborhood checksums and the combined register must agree, with no duplicate cases across neighborhoods. Incomplete/unsupported source areas remain UNSUPPORTED and may never manufacture route cases. Generated public-map journey IDs and cost/distance diagnostics do **not** certify actual current UK legality or live traffic. The next opt-in GitHub action will exercise this on the identical pinned source and retain only sanitized JSON.
+
+### Pending one-time case-register evidence run
+
+After 280/280 research Python tests passed, the bounded Greater Manchester neighborhood workflow is requested **once** with strict all-neighborhood reproducible case-register integrity checks enabled. Report whether the same three supported areas reproduce 25/144 route-profile divergences, whether all 25 map-only cases have unique reproducible IDs and UNKNOWN legal truth, and whether the original 3 graph-permitted restricted-turn detours remain. This is research evidence only, not independently established UK road/legal/traffic/lane correctness. Remove the workflow marker immediately after execution.
