@@ -81,5 +81,34 @@ class AdaptiveStudyTests(unittest.TestCase):
         smoke["node_via_forbidden_turn_pairs"] = 1
         self.assertEqual(propose(batch_from_public_smoke(smoke, batch["run_url"]), self.matrix)["new_candidate_count"], 0)
 
+
+    def test_real_turn_no_route_is_unknown_full_graph_coverage(self):
+        from tools.dmn_test_discovery import batch_from_real_turn_probe
+        report = {"classification": "real-public-uk-osm-rule-adherence-not-independent-legality",
+                  "safe_no_route_decisions": 11}
+        batch = batch_from_real_turn_probe(report,
+            "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38734700233")
+        out = propose(batch, self.matrix)
+        self.assertEqual(out["new_candidate_count"], 1)
+        self.assertEqual(out["candidates"][0]["category_id"], "NAV-042")
+        self.assertEqual(out["candidates"][0]["observed_outcome"], "UNKNOWN")
+        self.assertTrue(out["candidates"][0]["requires_independent_truth"])
+        self.assertFalse(out["automatically_added_to_production_or_rankings"])
+
+    def test_real_turn_no_route_none_does_not_create_duplicate(self):
+        from tools.dmn_test_discovery import batch_from_real_turn_probe
+        report = {"classification": "real-public-uk-osm-rule-adherence-not-independent-legality",
+                  "safe_no_route_decisions": 0}
+        batch = batch_from_real_turn_probe(report,
+            "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38734700233")
+        self.assertEqual(propose(batch, self.matrix)["new_candidate_count"], 0)
+
+    def test_real_turn_invalid_count_rejected(self):
+        from tools.dmn_test_discovery import batch_from_real_turn_probe
+        with self.assertRaises(ValueError):
+            batch_from_real_turn_probe({"classification":"real-public-uk-osm-rule-adherence-not-independent-legality",
+                                        "safe_no_route_decisions":-1},
+                                      "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38734700233")
+
 if __name__ == "__main__":
     unittest.main()

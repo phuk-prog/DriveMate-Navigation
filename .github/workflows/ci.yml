@@ -85,12 +85,17 @@ jobs:
           if not report["cases_with_judged_map_rule"]:
               raise SystemExit("INCOMPLETE coverage: no actual public motorcar turn restriction case exercised")
           PY
+      - name: Propose real UK legal-detour coverage regression
+        if: success() && (contains(github.event.head_commit.message, '[turn-restriction-smoke]') || contains(github.event.pull_request.title, '[turn-restriction-smoke]'))
+        run: python -m tools.dmn_test_discovery --input results/public-turn-smoke.json --public-turn-smoke --output results/dmn-turn-discovery-proposals.json
       - name: Upload real UK turn-rule evidence
         if: always() && (contains(github.event.head_commit.message, '[turn-restriction-smoke]') || contains(github.event.pull_request.title, '[turn-restriction-smoke]'))
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: dmn-uk-real-turn-rule-evidence
-          path: results/public-turn-smoke.json
+          path: |
+            results/public-turn-smoke.json
+            results/dmn-turn-discovery-proposals.json
           if-no-files-found: warn
           retention-days: 30
       - name: Clean public UK turn-rule intermediate files

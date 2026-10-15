@@ -213,10 +213,44 @@ def batch_from_public_smoke(smoke: dict, run_url: str) -> dict:
     }
 
 
+def batch_from_real_turn_probe(report: dict, run_url: str) -> dict:
+    """Translate limited UK public graph output to honest new-coverage proposals.
+
+    A legal alternative absent from a two-road *extract* is UNKNOWN, not a
+    demonstrated failure of full-network rerouting or legal driving.
+    """
+    if report.get("classification") != "real-public-uk-osm-rule-adherence-not-independent-legality":
+        raise ValueError("Unrecognised or independently unverified public-turn report")
+    missing = report.get("safe_no_route_decisions")
+    if type(missing) is not int or missing < 0:
+        raise ValueError("Expected nonnegative no-route count")
+    observations = []
+    if missing:
+        observations.append({
+            "case_id": "public-uk-turn-extract-limited-detours",
+            "category_id": "NAV-042",
+            "check_id": "NAV-042-A",
+            "outcome": "UNKNOWN",
+            "signal": "coverage_gap",
+            "failure_signature": "partial_real_osm_restriction_graph_lacks_full_legal_detour",
+            "reproduction": "Retest supported real UK node-via turn restrictions against a complete buffered road network, pinned public snapshot, confirmed car access and independent signed movement evidence",
+            "expected": "Demonstrate a fully legal detour when one exists, or independently establish genuine no-route status on complete local roads",
+            "observed": f"{missing} cases yielded no-route in two-way-only partial graph; full-network reroute truth is not yet known",
+            "oracle": None,
+            "evidence_ref": run_url,
+            "new_test": "Implement full-neighborhood road extraction, compare turn-aware legal detour to independent public truth and rerun after missed turns",
+        })
+    return {
+        "schema_version": 1, "source_kind": "public_nonpersonal",
+        "run_url": run_url, "observations": observations,
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description="Propose new DMN regression tests from reported anomalies")
     parser.add_argument("--input", type=Path, required=True, help="Normalized observations JSON, or public road smoke with --public-smoke")
     parser.add_argument("--public-smoke", action="store_true", help="Convert real public-road smoke coverage gaps")
+    parser.add_argument("--public-turn-smoke", action="store_true", help="Convert actual public OSM turn-rule result coverage gaps")
     parser.add_argument("--run-url", help="Public GitHub Actions URL; required for --public-smoke outside Actions")
     parser.add_argument("--output", type=Path, default=ROOT / "results/dmn-discovery-proposals.json")
     args = parser.parse_args()
@@ -225,11 +259,15 @@ def main():
         raise ValueError("Output must remain in ignored results/, not auto-committed or published")
     matrix = json.loads(MATRIX_PATH.read_text(encoding="utf-8"))
     incoming = json.loads(args.input.read_text(encoding="utf-8"))
-    if args.public_smoke:
+    if args.public_smoke and args.public_turn_smoke:
+        raise ValueError("Choose only one report conversion type")
+    if args.public_smoke or args.public_turn_smoke:
         url = args.run_url
         if not url and os.getenv("GITHUB_RUN_ID") and os.getenv("GITHUB_REPOSITORY"):
             url = f'https://github.com/{os.environ["GITHUB_REPOSITORY"]}/actions/runs/{os.environ["GITHUB_RUN_ID"]}'
-        incoming = batch_from_public_smoke(incoming, _require_text(url, "run-url"))
+        url = _require_text(url, "run-url")
+        incoming = (batch_from_public_smoke(incoming, url) if args.public_smoke
+                    else batch_from_real_turn_probe(incoming, url))
     report = propose(incoming, matrix)
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
