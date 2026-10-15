@@ -11,3 +11,17 @@ Following a successful full-job run, remove the PR-title opt-in marker and retai
 ## GitHub Actions opt-in trigger
 
 On the `pull_request` synchronization event, `github.event.head_commit.message` is not populated. Enable the one-time OSRM study by adding `[uk-case-osrm-smoke]` to **draft PR #1's title** before the next research-branch push; GitHub must then execute the paired engine step rather than merely passing unit CI. Verify from the step conclusion and artifact contents, not green workflow status alone. Remove the marker immediately after capturing the result. Maintain the 25-case checksum and use `NOT_COMPARABLE` when any route or snap is not a fair match.
+
+## First execution, source-backed measurements
+
+[Actions run 38798997437](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38798997437) passed **306 Python unit tests** and completed a real local OSRM MLD run on all **25/25 pinned DMN map-only cases**, with **25/25** endpoints snapped within 15 metres, no OSRM NoRoute or NoSegment outcomes, and all archive fingerprints reproduced. Aggregate comparison evidence artifact: `dmn-uk-25-mapcase-osrm-paired-evidence`, ID **12003008396**. The opt-in draft PR title marker was removed.
+
+The actual source-matched cases show five sizable DMN-fastest-map-distance vs OSRM car.lua-distance gaps worth investigating: four around **253 m** and one around **85 m**, with both endpoints matching. Their anonymized case IDs and rounded gap magnitudes are:
+
+- `dmn-mapcase-20142904c879eddde89ba850`: OSRM approximately 253.183 m shorter.
+- `dmn-mapcase-9837949746c78e783e307c35`: OSRM approximately 253.170 m shorter.
+- `dmn-mapcase-ded34a7dbf3aa4711ea909d0`: OSRM approximately 253.091 m shorter.
+- `dmn-mapcase-ed2d1bc1ff679e28e5c80c53`: OSRM approximately 253.079 m shorter.
+- `dmn-mapcase-295d57396b784f578e59e668`: OSRM approximately 85.226 m shorter.
+
+These gaps **do not identify a winner or a DMN failure**: DMN's prototype model may forbid/avoid a movement that OSRM's broader/different car profile permits, and the bounded buffer or geometry cost may account for another difference. Reconstruct their exact directed approaches privately from the pinned public data; independently check signed restrictions/official TROs, road geometry, sources and arrival movement. Do not widen access or remove turn restrictions simply to shrink the gap. The comparator now triages materially divergent routes in priority order, without asserting legal superiority.

@@ -116,6 +116,43 @@ class SameCaseLocalOSRMTests(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, "snap"):
             validate_osrm_case_results([self.case], [row], snapshot="geofabrik-test")
 
+    def test_large_same_endpoint_distance_gap_is_review_not_failure(self):
+        from benchmarks.uk_osrm_case_comparison import distance_discrepancy_triage
+        rows = [self.score()]
+        rows[0]["osrm_distance_m"] = 40.0  # 80.5m deviation
+        review = distance_discrepancy_triage(rows)
+        self.assertEqual(review["high_gap_case_count"], 1)
+        self.assertEqual(review["review_cases_in_priority_order"][0]["case_id"],
+                         self.case["case_id"])
+        self.assertEqual(review["independently_verified_navigation_failures"], 0)
+        self.assertFalse(review["ranking_supported"])
+
+    def test_tiny_distance_gap_does_not_trigger_investigation(self):
+        row = self.score()
+        row["osrm_distance_m"] = 121.0
+        summary = validate_osrm_case_results([self.case], [row],
+                                             snapshot="geofabrik-test")
+        self.assertEqual(summary["distance_discrepancy_review"]["high_gap_case_count"], 0)
+
+    def test_no_route_or_far_snap_never_looks_like_distance_gap_proof(self):
+        from benchmarks.uk_osrm_case_comparison import distance_discrepancy_triage
+        no_route = self.score(lambda _: {"code": "NoRoute"})
+        far = self.score(lambda _: response(origin=30.0))
+        self.assertEqual(distance_discrepancy_triage(
+            [no_route, far])["high_gap_case_count"], 0)
+
+    def test_distance_gap_review_sorted_in_priority_order(self):
+        from benchmarks.uk_osrm_case_comparison import distance_discrepancy_triage
+        a = self.score()
+        b = deepcopy(a)
+        b["case_id"] = "dmn-mapcase-different"
+        a["osrm_distance_m"] = 60.0
+        b["osrm_distance_m"] = 10.0
+        report = distance_discrepancy_triage([a, b])
+        self.assertEqual(report["high_gap_case_count"], 2)
+        self.assertEqual(report["review_cases_in_priority_order"][0]["case_id"],
+                         b["case_id"])
+
     def test_original_case_identity_required(self):
         self.case["competitor_outcomes"] = "PASS"
         with self.assertRaises(ValueError):

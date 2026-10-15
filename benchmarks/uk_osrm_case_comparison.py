@@ -82,6 +82,44 @@ def compare_osrm_case(case: dict, origin: tuple[float, float],
     return result
 
 
+def distance_discrepancy_triage(rows: Sequence[dict]) -> dict:
+    """Prioritize *investigation*, NOT a route winner, from observed distances.
+
+    Unlike fast/shortest rankings this is not proof of a missed illegal turn:
+    two driving profiles and geometry estimators may disagree legitimately.
+    """
+    flagged = []
+    secondary = 0
+    for row in rows:
+        if row["status"] != "ENDPOINTS_NEAR_DIFFERENT_PROFILES":
+            continue
+        dmn = row["dmn_fastest_mapped_distance_m"]
+        osrm = row["osrm_distance_m"]
+        absolute_gap = abs(osrm - dmn)
+        denominator = max(osrm, dmn)
+        gap_pct = 100 * absolute_gap / denominator if denominator else 0
+        if absolute_gap >= 50 and gap_pct >= 10:
+            flagged.append({
+                "case_id": row["case_id"],
+                "absolute_distance_gap_m": round(absolute_gap, 3),
+                "relative_distance_gap_pct": round(gap_pct, 2),
+                "review_classification": "HIGH_GAP_VERIFY_TURN_AND_MAP_TRUTH",
+            })
+        elif absolute_gap >= 15 and gap_pct >= 2:
+            secondary += 1
+    flagged.sort(key=lambda r: (-r["absolute_distance_gap_m"], r["case_id"]))
+    return {
+        "high_gap_case_count": len(flagged),
+        "secondary_gap_case_count": secondary,
+        "review_cases_in_priority_order": flagged,
+        "independently_verified_navigation_failures": 0,
+        "ranking_supported": False,
+        "review_next": ("Check matching incoming/exit directed road, mapped turn "
+                        "prohibitions, access, source data completeness and "
+                        "dated official road evidence before changing DMN."),
+    }
+
+
 def validate_osrm_case_results(cases: Sequence[dict], rows: Sequence[dict],
                                *, snapshot: str) -> dict:
     """Require exactly one strictly unverified local reference outcome per case."""
@@ -131,6 +169,7 @@ def validate_osrm_case_results(cases: Sequence[dict], rows: Sequence[dict],
         "independent_legality_established": False,
         "travel_time_truth_established": False,
         "route_quality_ranking_valid": False,
+        "distance_discrepancy_review": distance_discrepancy_triage(rows),
         "profile_equivalence_established": False,
         "physical_approach_or_departure_edge_equivalence_established": False,
         "note": ("DMN and OSRM used identical OSM snapshot era and actual map-point "
