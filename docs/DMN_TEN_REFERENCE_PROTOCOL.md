@@ -1,6 +1,6 @@
 # DMN: at least ten reference families — navigation comparison protocol
 
-> **Status: owner approved a minimum of ten external reference families, not a maximum.** The original ten targets come from historical `benchmarks/reference-engines.json`; Google Maps and Waze are now *additional* proposed references, bringing the portfolio to **12 external reference families plus DMN**. No new twelve-engine tests are claimed. Exact providers and access rules remain under review in [DMN_DECISION_QUESTIONS.md](DMN_DECISION_QUESTIONS.md). This compares navigation components, not complete apps or appearance.
+> **Status: owner approved a minimum of ten external reference families, not a maximum.** The original ten targets come from historical `benchmarks/reference-engines.json`; Google Maps and Waze are now *additional* proposed references, bringing the portfolio to **12 external reference families plus DMN**. No new twelve-engine tests are claimed. Provider access remains conditional; refer to [recorded owner decisions](DMN_DECISION_QUESTIONS.md). This compares navigation components, not complete apps or appearance.
 
 ## Provisional reference portfolio
 
@@ -69,6 +69,10 @@ Google's documented Compute Routes interface can provide provider route response
 
 Existing historical Wigan comparison includes **DMN and 4 external engine configurations**, *not ten family references*; the 100-route legality categories were not all exercised. Separate experimental GraphHopper runs exist, but are not equivalent to a complete ten-engine end-to-end judgement. The current Android cross-engine component check is **48/48 each** for a restricted eight-route cohort; research GPS cohort **16 pass / 4 fail / 80 unresolved**. Existing snapshots and failing evidence must be carried forward without score inflation.
 
-## Proposed decision thresholds, not yet approved
+## Owner-approved evaluation goals; technical scoring details still open
 
-Propose legality and no fabricated driver instruction as hard blockers; approve a minimum real-road coverage denominator per category and region; record acceptable unknown-rate (especially independent lane ground truth); choose how to weight safety vs recovery vs speed; specify allowed use of proprietary references and owner cost ceiling; determine Android/emulator checkpoint frequency. [Answer questions](DMN_DECISION_QUESTIONS.md) before hardcoding thresholds in the scoring pipeline. No overall 100% claim for a sparse exercise.
+Confirmed: **no arbitrary fixed scenario count**; build reasonable difficult-junction coverage plus controls. Test the passenger-car engine, full offline navigation, all relevant GPS/fusion sources, verifiable lane/roundabout instructions and precise arrival. Missing reliable lane truth is UNKNOWN, not FAIL. Verify whether movements are genuinely illegal before classifying them; permit legal U-turns at dead ends. Compare matched judged cohorts and show **scores out of ten, ranked descending** on one concise scoreboard; retain detailed failures, unknowns and provenance. For an untestable case show UNRANKED and continue other cases. Manual Google/Waze observations are only separately labelled context. Mix targeted replays with fewer full Android emulator journeys; physical-device checks later. DMN should aim to **beat every fairly comparable rival per issue**, not merely reach parity. A scoring formula, weighting, exact performance repeats and legal-rule source details require explicit methodology before publication; no new paid-provider access is authorised.
+
+## Display and ranking safeguard
+
+Only compare separately **judged** and **genuinely equivalent** tests. Numeric category scores use an owner-approved out-of-ten scale with highest-first ordering; an untested reference gets no score, not zero. Label unknown lane truth, unsupported APIs, single unrunnable cases and observations explicitly. Never claim a win against an engine that cannot be compared. Preserve the full audit dataset, even though the default user view is one compact summary. Define transparent weights and coverage gates before generating new numerical scores.

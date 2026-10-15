@@ -1,6 +1,6 @@
-# DMN engine-first programme — review draft (15 October 2026)
+# DMN engine-first programme — decision baseline (15 October 2026)
 
-> **Status: PROPOSED FOR REMAINING OWNER DECISIONS.** The owner has confirmed **at least ten** external navigation reference families, with **more permitted**. The registry currently proposes **12** (original ten plus Google Maps and Waze); they are not all executed or automatically comparable. Other thresholds, rights and exact provider selection remain open in [Questions](DMN_DECISION_QUESTIONS.md). This document is the planning focal point; preserve history and prior measured evidence.
+> **Status: 22 conversational decisions recorded; detailed scoring methodology and execution are still pending.** Ten reference families minimum, twelve proposed, none assumed fully benchmarked. Passenger-car first, full offline, out-of-ten descending category ranks, precision arrival and all relevant GPS strategies are required. See [the actual answers](DMN_DECISION_QUESTIONS.md).
 
 ## Confirmed objective and boundaries
 
@@ -24,7 +24,7 @@ Direct navigation work: route computation and costs, legal turns/access and rest
 4. Validate the isolated fix on reproducible real UK roads and counterexamples; rerun relevant regressions. Continue into dependent subsystems only if necessary. Track **requirements and dependencies**, not an automatic rewrite mandate.
 5. Test the changed component through stable contracts, and finally through DriveMate's isolated Android integration branch when it needs runtime validation. Preserve current Android engine as a control/fallback. Do not ship the candidate merely because a host test is green.
 
-### Decision gates (principles; thresholds awaiting answers)
+### Decision gates (owner goals fixed; implementation thresholds still to define)
 
 - **Legality gate**: independently supported turns, one-way/access/vehicle conditions and prohibitions; critical errors block promotion. OSM is source evidence, not legal ground truth in every location.
 - **Robustness gate**: adversarial and held-out real-road scenarios; route correctness and uncertainty behavior, no invented lane/exits or confirmation without evidence.
@@ -46,7 +46,7 @@ These numbers are a dated baseline, not fresh evidence for the proposed programm
 
 ## Revised working stages (no commitment to exact target counts yet)
 
-**A. Lock evaluation questions.** Confirm competitors, target car profile, driving domains, truth sources, weighting, execution budget and promotion policy. Unknown choices remain pending; don't convert suggestions to requirements.
+**A. Apply confirmed owner decisions.** The 22 spoken questions were answered on 15 October 2026. Do not assume the earlier differently-worded draft was answered. Resolve technical weighting, reproducibility and licence details openly, without inventing agreement.
 
 **B. Establish the reusable comparison spine.** Canonical public road scenarios, immutable map provenance, objective expected results and supported/unsupported capabilities. Make each run report raw counts, per-case diagnosis, execution metadata, map/profile hashes, route geometry correctness and outcome class. Reuse historical tests unchanged.
 
@@ -54,7 +54,7 @@ These numbers are a dated baseline, not fresh evidence for the proposed programm
 
 **D. Improve navigation core and dependent technology.** Rank safety/correctness failures first, then performance; fix and repeat affected cohort, full regression, held-out tests. If a map/data/graph or renderer gap blocks correctness, work on it as a DMN dependency, rather than accepting a lower-quality engine.
 
-**E. Confirm readiness for app integration.** Run a comparable, end-to-end navigation replay in the isolated Android branch when appropriate, including GPS, turns, lanes, reroutes, arrival, prompt timing, offline consistency and measured resources. Keep the existing app engine for baseline and rollback. No release or production changes without further authorization.
+**E. Confirm readiness for app integration.** Mix many cheap targeted replays with fewer complete journeys in the isolated Android emulator branch; physical-device testing comes later. Require full offline, verifiable lane/roundabout guidance, correct-side/entrance arrival, broad GPS/sensor testing, acceptable resources and rollback. **DMN must aim to outperform every fairly comparable tested competitor on each issue, not only match the old engine.** No unsupported universal victory claims, release or production changes without authorization.
 
 ## Permanent evidence/reporting contract
 
@@ -78,3 +78,7 @@ Preserve legacy docs, branches, source and measured artifacts for auditability. 
 - [Owner decisions — questions and proposed defaults](DMN_DECISION_QUESTIONS.md)
 - [Existing research scope](DMN_SCOPE.md)
 - [Current DriveMate integration register](https://github.com/phuk-prog/DriveMate/blob/codex/dmn-integration-tests-20261015/docs/dmn-integration-register.md)
+
+## Agreed scorecard and dependent-system interpretation (15 October 2026)
+
+One owner-facing summary with highest-to-lowest category scores **out of ten** and DMN highlighted; keep full correct/judged/planned/fail/unknown/unrunnable records for audit. An individual unavailable test is unranked and does not prevent testing others. Missing lane data is **UNKNOWN**, not a failure; genuinely wrong verified lane instructions are failures. There is **no predetermined scenario-number minimum**: justify difficulty mix, repeatability and coverage. Legality of turns/U-turns must be established rather than presumed from the appearance of the junction; legal U-turns may be needed at dead ends. Test complexity-first across real UK roads, including control roads. Full offline operation, broad positioning/fusion tests and exact usable vehicle entrance are required. Initially keep the renderer stable but follow evidence-led map/data/graph/rendering dependency changes instead of compromising navigation accuracy. Google/Waze manual observations are non-comparable. The numerical scoring formula/weights remain to be specified **before publishing any new ranks**. See [owner decisions](DMN_DECISION_QUESTIONS.md).

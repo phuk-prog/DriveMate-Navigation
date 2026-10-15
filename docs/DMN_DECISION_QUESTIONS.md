@@ -1,61 +1,48 @@
-# Owner decisions — DMN comparison and improvement programme
+# DMN — owner decisions recorded on 15 October 2026
 
-> **22 decision topics; questions 1–4 recorded.** On 15 October the owner approved **more than ten references** and chose **option B for commercial providers: permitted free comparisons first; ask for approval before any paid test**. Listing a provider never authorises paid API usage, new accounts, data extraction, or otherwise prohibited access. The exact reference roster and remaining choices are open. Existing agreements appear below, so we don't ask them again. Ask these *one at a time in conversation* if that is easier; the numbered list remains reviewable in GitHub. Suggested defaults are **recommendations only**, not commitments.
+**22 of 22 conversational questions answered.** This is the decision record of questions actually spoken; after question 5 their wording diverged from the earlier unconfirmed draft questions. Old suggestions are visible in Git history, but must not be mistaken for owner approvals.
 
-## Already agreed (do not re-ask)
+**Purpose:** DriveMate Navigation (DMN) is an engine-first research programme to make the existing DriveMate Android app the strongest possible navigation app. Do not build a second standalone app. Work independently on navigation, and when credible evidence requires better road data, routing graph, matcher, GPS, offline map, renderer or another supporting system, improve/rebuild the dependency and its downstream consequences. Do not force the engine to fit today's app. Use an isolated integration branch later, not production.
 
-- DMN = DriveMate Navigation; no second standalone app.
-- Maximise eventual **DriveMate app** quality by making the navigation engine the leading programme. Improve, replace, or rebuild supporting map/data/routing/software only when evidence justifies it, including downstream dependencies; never compromise solely to fit present app constraints.
-- Use real UK road-map geometry as primary evidence and synthetic fault cases as secondary; test on GitHub, not the user's phone; never release an APK or modify app production during R&D.
-- Keep research evidence and failures, compare engines honestly, avoid subscriptions/royalties/permission restrictions and personal traces in a public repository.
-- Existing DriveMate navigation engine remains a control on the separate integration-testing branch, not DMN's engineering constraint.
+## Recorded answers
 
-## Questions (the recommendation follows the question, not vice versa)
+| # | Decision topic | Owner decision or accepted recommendation |
+|---|---|---|
+| 1 | Minimum comparator families | Ten minimum, more permitted; twelve references currently proposed, not yet all tested. |
+| 2 | Commercial access | Use only free, legally permitted access first; ask before any paid test. |
+| 3 | Inaccessible or different-condition comparators | A plus C: retain as Not Tested, and permit separate lawful observational findings without comparable scores. |
+| 4 | Test geography | Select complex real UK junctions wherever located, not Manchester-first; keep ordinary controls. |
+| 5 | First vehicle | A: ordinary passenger cars first. |
+| 6 | Meaning of best routing | Accept priority of legal and safe directions, reliability, then ETA; individual route preference ordering was not specified. |
+| 7 | Scores and ranks | Each category out of ten, sorted highest to lowest among comparable systems only. |
+| 8 | Execution environment | Use reproducible GPS replays and emulator/GitHub runs now; physical device later. |
+| 9 | Rendering | A: freeze renderer as initial control; if navigation evidence requires better map/rendering software, revisit as a dependency. |
+| 10 | Offline | Full offline navigation required; existing offline data in another repository is user-reported, not independently validated here. |
+| 11 | GPS | Test everything relevant, including multi-source fusion. |
+| 12 | Guidance | Lane and roundabout guidance must pass when objectively verifiable; missing reliable lane data is UNKNOWN, not FAIL or PASS. |
+| 13 | Arrival | Require correct approach side and usable vehicle entrance from beginning when verifiable. |
+| 14 | Display | One concise summary scoreboard by default; retain full individual evidence records underneath. |
+| 15 | Illegal/unsafe turn verdict | Investigate and verify legality before declaring a manoeuvre illegal and blocking it; do not assert uncertain manoeuvres are lawful. |
+| 16 | U-turn | Allow necessary lawful U-turns including dead ends; lack of options does not legalise prohibited turns. |
+| 17 | Source gaps | Investigate and fill missing map data using justified evidence; never fabricate or auto-publish unverified edits. |
+| 18 | Unrunnable individual test | Leave test unranked/not tested, and continue the other tests without automatically dropping engine. |
+| 19 | Required scenario count | No fixed numerical minimum: representative reasonable sample with difficult cases and controls. |
+| 20 | Manual Google/Waze observations | Manual, lawful spot checks for context are acceptable, but are observational and not head-to-head ranks. |
+| 21 | Emulator runs | Mix fast focused replays with smaller number of whole end-to-end journeys. |
+| 22 | Replacing current app navigation | Aim for DMN to be BETTER than every fairly comparable competitor on each tested issue, not merely on par. No claim of beating unavailable competitors; promotion still requires regression, legality, offline, ownership and rollback evidence, with separate release approval. |
 
-**1. Minimum number of external references — OWNER DECISION PARTLY RECORDED (15 October 2026).** **At least ten; more than ten permitted.** Current review portfolio: 12 proposed families (the original ten, plus Google Maps and Waze). They are **proposed**, not all verified or runnable. Specific replacements/additions may still change after accessibility, rights and cost checks. OSRM CH/MLD remain one family. *No further question is needed about allowing over ten.*
+## Scoring, source and delivery rules
 
-**2. Commercial references — OWNER DECISION RECORDED (15 October 2026): B.** Use legal/permitted free comparison options first; **ask the owner before any paid test or paid service usage**. No spend, provider credentials, account connection, new subscription, restricted API access, or Waze automated collection is authorised by this choice. Reference systems that cannot be accessed under permitted conditions remain untested.
+Only report numeric scores **out of ten** on independently judged, comparable cases. Show **highest-to-lowest category ranks** and DMN distinctly. Keep correct/judged/planned counts, failures, unknown, untestable, unsupported, not-run, case difficulty and provenance in the underlying records; the requested default presentation is **one concise summary scoreboard**, not deletion of audit details. Missing map or lane truth is UNKNOWN and does not create an automatic fail or pass. An individual case that cannot be run is unranked, not a reason to stop other cases. Do not award high confidence for a trivial, tiny or unrepresentative cohort merely because there is no numerical minimum.
 
-**3. Non-equivalent or unavailable engines — OWNER DECISION RECORDED (15 October 2026): A + C.** Keep unavailable or non-equivalently executable engines in the comparison inventory as **Not Tested** for the affected categories. When legally permitted, record their outputs separately as **observational / not directly comparable**, with source, date, limits and provenance. Do not give either class a numeric score or head-to-head rank, and do not automatically replace a reference.
+Legality is established from independent reliable evidence where obtainable; provider consensus does not make a turn lawful. A **verified** prohibited turn must fail. Do not classify an unusual turn as illegal without checking. A lawful U-turn can be required at a dead end. Neither missing source material nor necessity overrides an actual legal prohibition.
 
-**4. UK test-area selection — OWNER DECISION RECORDED (15 October 2026): C, complexity-first nationwide.** The specific region does **not** matter: choose **wherever the more complex real-road junctions and roundabouts are**, rather than Manchester-first or an equal-by-country quota. Include diverse difficult UK junction types, lane arrangements, legal restrictions, grade separation and GPS ambiguity, without claiming complexity alone establishes legal ground truth. Keep simpler representative roads as controls. Existing Wigan/Manchester benchmarks are retained as historical baseline and may be reused where relevant; do not confine future tests to them.
+**Full offline operation** is a target; verify that existing data in the other repository actually supports correct routing, updates, instructions and regional boundaries. Broad GPS-source and fusion tests, correct-side/entrance arrival and verifiable lane and roundabout accuracy are mandatory goals. Freeze the renderer initially as a controlled test condition, but an evidence-based navigation dependency may justify replacing it.
 
-**5. What vehicle profile must be correct first?** A. ordinary UK passenger car; B. car + van/caravan dimension and weight constraints immediately; C. all vehicle classes. *Recommended: A with explicit exceptions untested, then add vehicle variants.*
+DMN's intended standard is **better than every legitimately comparable reference per issue**, not mere parity. When a reference cannot be tested comparably, label it Not Tested or Observation Only; never claim it was beaten. A release additionally needs independent safety checks, repeated/held-out regression, good resources, licence compliance and rollback, plus explicit production authorisation. Tests run through GitHub and emulators; physical phone testing is deferred.
 
-**6. Which car-routing policies matter most?** Pick and rank fastest legal, shortest legal, avoid motorways, avoid tolls/charges, low-emission zones, fuel efficiency, traffic, and multi-stop. *Recommended: safety and accurate fastest legal route first; others clearly separate.*
+## Still unspecified, not silently approved
 
-**7. How do we decide whether a turn is legally permitted?** A. Official legal orders/signage where available plus dated mapped evidence; B. OSM only; C. agreement among providers. *Recommended: A, with conflicts unresolved; never treat B or C as guaranteed on-road truth.*
+Exact scoring formula and severity weights; precise repeat-counts; all traffic/school-street/conditional rule oracles; route-policy preference ordering; per-category national coverage quotas; concrete allowed licence implementations and paid providers; exact performance/battery thresholds. These are **open technical policy details**, not additional answered questions. Resolve them with evidence and request owner approval if they involve cost, distribution/licensing, safety or major irreversible architecture changes.
 
-**8. Should time-dependent rules be mandatory in early gates?** Include school streets, bus gates, timed turns, temporary closures, restricted vehicles and public-holiday restrictions? *Recommended: yes for published known restrictions, but separate permanent rules from live/uncertain closures.*
-
-**9. How many real-road scenarios are required per category before a category can earn a rank?** E.g. 100, 250, 500 or adaptive coverage until difficult junction/road types are represented. *Recommended: coverage-stratified, minimum 100 meaningful judged cases per applicable major category, subject to available independent truth; report all unjudged.*
-
-**10. How do you want the test scenarios split?** A. random real-road sample; B. designed difficult/junction cases; C. both with development vs secret/held-out sets. *Recommended: C, with rare legal and GPS edge cases oversampled.*
-
-**11. How many repeated measurements for performance?** A. 10; B. 30; C. 100 warm requests per case, plus cold-start and p95/p99. *Recommended: B as default, scale up for close results; record host identity.*
-
-**12. Should all available references (ten or more) face identical category checklists even if they cannot expose a feature?** A. yes, explicitly unsupported/not-tested; B. test only common functions and omit others. *Recommended: A for transparency; rank on matched judged coverage only.*
-
-**13. How should competing navigation outputs be judged?** A. independently checked map/legal evidence first; B. most competitors agreeing; C. a manually signed reference answer. *Recommended: A with C where independently verified; disagreement is an investigation target, not truth.*
-
-**14. Do you want a global ranking now or only category-specific rankings until we have complete evidence?** A. overall ranking regardless of missing categories; B. category ranks and an overall **unresolved** state until coverage is comparable. *Recommended: B.*
-
-**15. What should outweigh route-computation speed?** Rank these: illegal directions, wrong-road GPS matching, wrong junction exit/lane, missed reroute, missed arrival, wrong ETA, response latency, memory/battery. *Recommended: legality and wrong-road/incorrect instruction as hard blockers; speed evaluated only after acceptable correctness.*
-
-**16. What GPS-replay sources are allowed?** A. simulated GPS over real public roads plus synthetic fault injections; B. additionally use *properly licensed public non-personal* GPS examples; C. user-provided real drives stored privately under a separate future consent protocol. *Recommended: A, and B after provenance checks; not C by default.*
-
-**17. What must happen when lane guidance or a roundabout exit is uncertain?** A. withhold specific claim and give safe direction-only guidance; B. choose most likely lane/exit; C. stop navigation entirely. *Recommended: A; count coverage loss as unresolved, never as passing guidance.*
-
-**18. How strict is offline navigation?** A. entire UK offline operation on a phone; B. selected downloaded regions offline with online fallback; C. online first. *Recommended: B as an early engineering stage while keeping the longer-term UK-wide offline requirement visible.*
-
-**19. Which dependent systems may the programme rebuild without another decision?** Options include OSM importer, routing graph, GPS matcher, map schema, map renderer, download/update system, instructions, voice, search and traffic. *Recommended: evaluate all; make reversible non-production changes only where evidence justifies them; ask on major architectural/licensing trade-offs.*
-
-**20. How strictly must component ownership and distribution be controlled?** A. entirely independently authored engine; B. permissively licensed dependencies acceptable after audit; C. some reciprocal/share-alike compatible components if obligations explicitly accepted. *Recommended: A+B with explicit licence and ODbL data obligations; never assume an open-source label settles distribution rights.*
-
-**21. At what point should we run DriveMate Android emulator tests?** A. after every small change; B. after each meaningful engine/dependency milestone and before promotion; C. only at end. *Recommended: B, with cheap component CI first and no overlapping costly builds.*
-
-**22. What evidence is enough to promote or replace a DriveMate component?** A. works better on one sample; B. all applicable critical safety gates passed, broad held-out improvement without regressions, acceptable resources, licence review and rollback; C. one complete end-to-end emulator run. *Recommended: B; production still requires explicit authorization and mandatory app robot gates.*
-
-## How to record decisions
-
-Answer each with its number, option or wording. Mixed options are valid. The decision log should record: question number, answer, confirmation date, impacted benchmark schema/stage, and unresolved follow-up. **Until answered, don't turn recommendations into mandatory thresholds or represent a question as a settled owner requirement.** The minimum-count part of #1 is resolved (ten is a floor; twelve are proposed). The next substantive decision is **#5: which vehicle classes to support initially**. No payable provider may be contacted simply because it is listed; Waze consumer content must not be programmatically collected without explicit legal permission.
+**State:** 12 proposed external reference families plus DMN; 14 planned test categories. No new 12-engine comparison or Android tests are claimed by this documentation change. Preserve all historical branches, results, tests and failures. Next engineering action: implement an evidence-backed scorecard, choose diverse complex real UK cases, check runnable engine interfaces, run and rerun fair comparisons, and improve navigation/dependencies without modifying production.

@@ -165,5 +165,129 @@
     "representative_simple_controls": true,
     "source": "real_public_road_geometry_and_independent_rules_when_available",
     "geographic_quota": "not_required_by_owner"
-  }
+  },
+  "owner_conversational_questions_completed": 22,
+  "owner_decision_date": "2026-10-15",
+  "confirmed_spoken_decisions": {
+    "1": {
+      "topic": "Minimum comparator families",
+      "answer": "Ten minimum, more permitted; twelve references currently proposed, not yet all tested."
+    },
+    "2": {
+      "topic": "Commercial access",
+      "answer": "Use only free, legally permitted access first; ask before any paid test."
+    },
+    "3": {
+      "topic": "Inaccessible or different-condition comparators",
+      "answer": "A plus C: retain as Not Tested, and permit separate lawful observational findings without comparable scores."
+    },
+    "4": {
+      "topic": "Test geography",
+      "answer": "Select complex real UK junctions wherever located, not Manchester-first; keep ordinary controls."
+    },
+    "5": {
+      "topic": "First vehicle",
+      "answer": "A: ordinary passenger cars first."
+    },
+    "6": {
+      "topic": "Meaning of best routing",
+      "answer": "Accept priority of legal and safe directions, reliability, then ETA; individual route preference ordering was not specified."
+    },
+    "7": {
+      "topic": "Scores and ranks",
+      "answer": "Each category out of ten, sorted highest to lowest among comparable systems only."
+    },
+    "8": {
+      "topic": "Execution environment",
+      "answer": "Use reproducible GPS replays and emulator/GitHub runs now; physical device later."
+    },
+    "9": {
+      "topic": "Rendering",
+      "answer": "A: freeze renderer as initial control; if navigation evidence requires better map/rendering software, revisit as a dependency."
+    },
+    "10": {
+      "topic": "Offline",
+      "answer": "Full offline navigation required; existing offline data in another repository is user-reported, not independently validated here."
+    },
+    "11": {
+      "topic": "GPS",
+      "answer": "Test everything relevant, including multi-source fusion."
+    },
+    "12": {
+      "topic": "Guidance",
+      "answer": "Lane and roundabout guidance must pass when objectively verifiable; missing reliable lane data is UNKNOWN, not FAIL or PASS."
+    },
+    "13": {
+      "topic": "Arrival",
+      "answer": "Require correct approach side and usable vehicle entrance from beginning when verifiable."
+    },
+    "14": {
+      "topic": "Display",
+      "answer": "One concise summary scoreboard by default; retain full individual evidence records underneath."
+    },
+    "15": {
+      "topic": "Illegal/unsafe turn verdict",
+      "answer": "Investigate and verify legality before declaring a manoeuvre illegal and blocking it; do not assert uncertain manoeuvres are lawful."
+    },
+    "16": {
+      "topic": "U-turn",
+      "answer": "Allow necessary lawful U-turns including dead ends; lack of options does not legalise prohibited turns."
+    },
+    "17": {
+      "topic": "Source gaps",
+      "answer": "Investigate and fill missing map data using justified evidence; never fabricate or auto-publish unverified edits."
+    },
+    "18": {
+      "topic": "Unrunnable individual test",
+      "answer": "Leave test unranked/not tested, and continue the other tests without automatically dropping engine."
+    },
+    "19": {
+      "topic": "Required scenario count",
+      "answer": "No fixed numerical minimum: representative reasonable sample with difficult cases and controls."
+    },
+    "20": {
+      "topic": "Manual Google/Waze observations",
+      "answer": "Manual, lawful spot checks for context are acceptable, but are observational and not head-to-head ranks."
+    },
+    "21": {
+      "topic": "Emulator runs",
+      "answer": "Mix fast focused replays with smaller number of whole end-to-end journeys."
+    },
+    "22": {
+      "topic": "Replacing current app navigation",
+      "answer": "Aim for DMN to be BETTER than every fairly comparable competitor on each tested issue, not merely on par. No claim of beating unavailable competitors; promotion still requires regression, legality, offline, ownership and rollback evidence, with separate release approval."
+    }
+  },
+  "confirmed_testing_policies": {
+    "first_vehicle_profile": "passenger_car",
+    "offline": "full",
+    "score": "out_of_10",
+    "rank_order": "highest_to_lowest_comparable_judged_only",
+    "report": "one_summary",
+    "retain_full_evidence": true,
+    "missing_lane_truth": "unknown_not_fail",
+    "unrunnable_individual_case": "unranked_continue_other_tests",
+    "scenario_count": "no_fixed_minimum_ensure_reasonable_difficult_mix",
+    "arrival": "correct_side_and_vehicle_entrance",
+    "gps": "test_relevant_sources_and_fusion",
+    "renderer": "freeze_initially_change_if_engine_evidence_demands",
+    "legality": "verify_before_illegal_classification",
+    "u_turn": "lawful_when_necessary_never_override_prohibition",
+    "map_gaps": "evidence_based_remediation",
+    "google_waze": "manual_lawful_observations_only",
+    "testing": "targeted_replay_plus_fewer_end_to_end_emulator",
+    "physical_phone": "later",
+    "comparison_goal": "better_than_every_fairly_comparable_tested_reference_per_issue",
+    "no_unmeasured_wins": true
+  },
+  "undecided_method_details": [
+    "out_of_ten_scoring_formula",
+    "severity_weights",
+    "performance_repeat_count",
+    "temporal_restriction_evidence",
+    "routing_preference_order",
+    "commercial_paid_access",
+    "licence_decisions",
+    "battery_limit"
+  ]
 }
