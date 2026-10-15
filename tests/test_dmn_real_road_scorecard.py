@@ -47,7 +47,8 @@ class DMNRealRoadScorecardTests(unittest.TestCase):
     def test_no_invented_complete_engine(self):
         a,b=fixtures();a["samples"]["osrm-mld"].pop()
         with self.assertRaises(ValueError):analyse(a,b)
-        a,b=fixtures();a["implementations"]["osrm-mld"]["complete"]=False
+        a,b=fixtures();a["samples"]["osrm-mld"].pop()
+        a["implementations"]["osrm-mld"]["complete"]=False
         a["implementations"]["osrm-mld"].update(passed_requests=47,p95_ms=None)
         result=analyse(a,b)
         self.assertEqual(len(result["routing_latency_ranking_only"]),1)
