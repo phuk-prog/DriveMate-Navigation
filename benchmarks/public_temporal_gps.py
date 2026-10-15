@@ -30,6 +30,54 @@ def _bearing(p,q):
 def _point(p,q,ratio):
     return (p[0]+(q[0]-p[0])*ratio,p[1]+(q[1]-p[1])*ratio)
 
+
+def competing_link_evidence(temporal, fix, direct, reachable):
+    """Expose topology/fit facts without dumping road IDs or observations.
+
+    These are mapped facts and heuristic residuals, not independent truth.
+    A missing bounded connector does not prove the full network disconnected.
+    """
+    if len(direct) != 1:
+        return []
+    from gps.matcher import angular_difference
+    graph = temporal.matcher.graph
+    chosen = next(iter(direct))
+    edge = graph.edges[chosen]
+    candidates = temporal.matcher._candidates(fix)
+    by_id = {c.edge_id: c for c in candidates}
+    first = candidates[0].edge_id if candidates else None
+    rows = []
+    for eid in sorted(reachable - {chosen}):
+        other = graph.edges[eid]
+        if edge.source == other.target and edge.target == other.source:
+            relation = 'opposite_same_endpoints'
+        elif edge.target == other.source:
+            relation = 'forward_adjacent'
+        elif edge.source == other.target:
+            relation = 'backward_adjacent'
+        elif edge.source == other.source:
+            relation = 'shared_source'
+        elif edge.target == other.target:
+            relation = 'shared_target'
+        else:
+            relation = 'not_adjacent'
+        a, b = chosen.split(':'), eid.split(':')
+        identified = (len(a) == len(b) == 4 and a[0] == b[0] == 'w'
+                      and a[1].isdigit() and b[1].isdigit())
+        left, right = by_id.get(chosen), by_id.get(eid)
+        rows.append({
+            'relationship': relation,
+            'same_osm_way': a[1] == b[1] if identified else None,
+            'same_direction_flag': a[3] == b[3] if identified and a[1] == b[1] else None,
+            'direct_is_best_spatial_candidate': chosen == first,
+            'direct_position_residual_m': round(left.distance_m, 4) if left else None,
+            'alternative_position_residual_m': round(right.distance_m, 4) if right else None,
+            'heading_difference_deg': round(angular_difference(left.heading, right.heading), 4)
+                if left and right else None,
+            'bounded_connector_from_direct_m': temporal._connection_length(chosen, eid),
+        })
+    return rows
+
 def verify_nonregression(report: dict) -> None:
     """Prevent a higher apparent match rate from hiding new wrong-road claims."""
     n=report["same_candidate_journeys"]
@@ -115,6 +163,7 @@ def evaluate(raw:bytes, *, snapshot:str,limit:int=40)->dict:
             'time_reachable_includes_expected':outgoing.edge_id in reachable,
             'reachable_same_expected_way':sum(e.split(':')[1]==expected_way for e in reachable),
             'reachable_other_way':sum(e.split(':')[1]!=expected_way for e in reachable),
+            'competing_link_details':competing_link_evidence(temporal,second,direct,reachable),
         })
         summary["selected_pairs"]+=1
         summary["initial_confident_anchor"]+=int(anchor.status=="MATCHED" and anchor.edge_id==incoming.edge_id)
