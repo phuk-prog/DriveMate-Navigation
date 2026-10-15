@@ -118,3 +118,21 @@ HTTP/subprocess research adapter. This is an architectural performance
 candidate, not approval to integrate into the actual Android app. Test
 JNI call/memory/power effects on real Android hardware with exact legal
 route parity before changing production code.
+
+
+## Native C++ compiler improvement adopted for DMN research
+
+GitHub run 38700923509 executed 6,000 algorithm-only queries: three search
+modes, two compiler settings, 100 real Wigan routes, ten repetitions each.
+All paths had identical legal-graph costs and passed the tested correctness
+contracts. p95 timings were 0.023284 ms for O3 ALT and 0.034295 ms for
+O2 ALT, approximately 32 percent lower native-core p95 in this same-run test.
+
+The native research build now defaults to portable O3. CI compiles a
+separate unmodified O2 binary for continued fair A/B tests. Neither the
+production Android app nor its compiler flags are touched.
+
+This measured improvement covers core computations only. It does NOT
+establish equivalent whole-app performance, ARM mobile battery use,
+full UK map-scale performance, or independent current UK turn legality.
+All 11 previously open workstreams remain open until separately verified.

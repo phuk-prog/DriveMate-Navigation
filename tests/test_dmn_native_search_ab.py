@@ -34,6 +34,17 @@ class DMNNativeSpeedABTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"invalid measured"):
             summarise_records(rows,1,1,{"o2":1,"o3":1})
 
+    def test_research_build_is_o3_while_ab_uses_separate_o2(self):
+        from pathlib import Path
+        root=Path(__file__).resolve().parents[1]
+        build=(root/"navigation_core/native/build.sh").read_text()
+        workflow=(root/".github/workflows/real-england-speed.yml").read_text()
+        self.assertIn("-O3",build)
+        self.assertIn("-O2",workflow)
+        self.assertIn("-o results/real-england/router-o2",workflow)
+        self.assertIn("--o2 results/real-england/router-o2",workflow)
+        self.assertIn("--o3 navigation_core/native/router",workflow)
+
     def test_percentile_is_native_only_not_http(self):
         x=stats([1000]*19+[3000])
         self.assertEqual(x["median_ms"],.001)

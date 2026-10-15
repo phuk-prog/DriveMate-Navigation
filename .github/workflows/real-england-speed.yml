@@ -189,12 +189,13 @@ jobs:
         timeout-minutes: 5
         run: |
           set -euo pipefail
-          g++ -std=c++17 -O3 -Wall -Wextra -Wpedantic -Wconversion -Werror \
-            navigation_core/native/main.cpp -o results/real-england/router-o3
+          # Research build now uses O3. Compile a separate genuine O2 comparator.
+          g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -Wconversion -Werror \
+            navigation_core/native/main.cpp -o results/real-england/router-o2
           python -m benchmarks.dmn_native_search_ab \
             --input results/real/roads.osm --snapshot 2026-10-13 \
-            --o2 navigation_core/native/router \
-            --o3 results/real-england/router-o3 \
+            --o2 results/real-england/router-o2 \
+            --o3 navigation_core/native/router \
             --cases 100 --repeats 10
           cat results/real-england/DMN_NATIVE_SEARCH_AB.md >> "$GITHUB_STEP_SUMMARY"
       - name: DriveMate native routing and GPS-to-arrival journey on real Wigan roads
