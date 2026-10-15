@@ -243,9 +243,21 @@ def query(engine, case, coordinates, candidate_port, gh_port):
         raise ValueError("Endpoint snapping exceeds 12m; incomparable")
     if any(len(pt) != 2 or not all(math.isfinite(x) for x in pt) for pt in points):
         raise ValueError("Invalid route geometry")
-    if sum(math.hypot((v[0] - u[0]) * 66000, (v[1] - u[1]) * 111195)
-           for u, v in zip(points, points[1:])) < 100:
-        raise ValueError("Unexpectedly short or incomplete route geometry")
+    # The route that the driver actually takes can be much SHORTER than the
+    # 250 m graph walk used to select a distant endpoint. Rejecting every
+    # returned polyline under 100 m falsely invalidated the *same two* real
+    # Wigan cases for all five independent engines. Instead require a
+    # non-degenerate route whose geometry covers the straight-line separation
+    # of the two requested points (allowing 12 m snap at each end).
+    def distance_m(u, v):
+        mean_lat=math.radians((u[1]+v[1])*.5)
+        return math.hypot((u[0]-v[0])*111195*math.cos(mean_lat),
+                          (u[1]-v[1])*111195)
+    route_metres=sum(distance_m(u,v) for u,v in zip(points,points[1:]))
+    separation=math.hypot((a[1]-b[1])*111195*math.cos(math.radians((a[0]+b[0])*.5)),
+                          (a[0]-b[0])*111195)
+    if route_metres < max(5.0, separation-24.0):
+        raise ValueError("Returned route geometry too short for its endpoints")
     # Complete legality and orientation need an independent OSM reference judge.
     if engine == "drivemate-native-cpp":
         if raw.get("implementation") != "compiled-cpp":
@@ -356,7 +368,7 @@ def run(raw, jar, repeat, maximum, snapshot, use_osrm, use_valhalla=False, use_o
             "The Python server marshals validated requests to one persistent compiled native process, not Python route search.",
             "Native in-core calculation times are separately recorded and exclude HTTP serialization/IPC.",
             "All measured services use warm local HTTP; distinct algorithms and costing.",
-            "Endpoints, finite polyline and minimum returned distance are checked; full external route legality remains unverified.",
+            "Endpoints, finite polyline, non-degenerate path and endpoint-relative minimum length are checked; full external route legality remains unverified.",
             "Only endpoint/shape-validated response-time ranks; not independently proved legal-route-speed ranks.",
             "No device battery, regional UK map, traffic or mobile benchmark claim.",
             "No personal routes or GPS logs; scenario endpoints are derived solely from public map.",

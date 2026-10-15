@@ -33,6 +33,23 @@ class RealRoadAdditionalEngineTests(TestCase):
             self.assertEqual(json.loads(sent.data)["coordinates"],
                              [[-2.64, 53.53], [-2.64, 53.531]])
 
+    def test_genuine_shorter_urban_route_is_not_falsely_rejected(self):
+        # Constructed adapter contract; not claimed as a new measured road.
+        # A legitimate 50m shortest route can be much shorter than the
+        # independent 250m graph walk that selected these endpoints.
+        coords={"a": (53.53, -2.64), "b": (53.53045, -2.64)}
+        route={"features":[{"geometry":{"coordinates":[[-2.64,53.53],[-2.64,53.53045]]}}]}
+        with patch("benchmarks.real_english_speed.urlopen",return_value=_Reply(route)):
+            self.assertIsNone(query("openrouteservice",CASE,coords,1234,None))
+
+    def test_degenerate_but_endpoint_nearby_polyline_is_rejected(self):
+        # Tiny/coincident shapes cannot silently become successful routes.
+        coords={"a": (53.53,-2.64), "b":(53.53002,-2.64)}
+        route={"features":[{"geometry":{"coordinates":[[-2.64,53.53],[-2.64,53.53]]}}]}
+        with patch("benchmarks.real_english_speed.urlopen",return_value=_Reply(route)):
+            with self.assertRaisesRegex(ValueError,"too short"):
+                query("openrouteservice",CASE,coords,1234,None)
+
     def test_openrouteservice_wrong_destination_not_timed(self):
         reply = {"features": [{"geometry": {"coordinates":
                  [[-2.64, 53.53], [-2.65, 53.531]]}}]}

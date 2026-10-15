@@ -71,3 +71,25 @@ p95 latency rank for complete engine cohorts only.
 The distinct open workstreams are **not** the same number as individual
 GPS junction holds or unverified full journeys, and never collapse to
 zero merely because all regression methods passed.
+
+
+### Correction to real-route geometry validation
+
+The first 100-route attempt (run 38699306204) returned 980/1000 valid HTTP
+route responses on each of five configured engines. All five rejected the
+same two endpoint pairs (heldout-064 and heldout-066) solely because the
+test harness demanded a returned polyline of at least 100 m, even when
+a valid shortest road path was shorter than the 250-m graph walk that
+selected the pair. This was a **test benchmark defect**, not five
+independent route failures.
+
+The new validator still checks finite geometry, endpoint proximity and
+a non-degenerate path, but uses a necessary lower bound based on the
+actual endpoint separation, allowing known snap tolerance. A route
+cannot become valid just by lowering a fixed target threshold; the
+response must be compatible with the physical endpoints. The baseline
+100 case IDs remain unchanged so the retest is directly comparable.
+
+The report now distinguishes routes **attempted** from routes
+**fully validated across required comparator engines**, and lists both
+numbers next to the remaining open workstream count.

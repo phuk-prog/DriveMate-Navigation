@@ -41,6 +41,7 @@ class DMNRealRoadScorecardTests(unittest.TestCase):
         result=analyse(*fixtures())
         self.assertEqual(result["real_road_routes_checked"],16)
         self.assertEqual(result["real_road_routes_remaining"],84)
+        self.assertEqual(result["real_road_routes_still_to_validate"],84)
         self.assertEqual(result["outstanding_work"]["remaining"],12)
         self.assertEqual(result["outstanding_work"]["open_by_priority"]["critical"],2)
         self.assertEqual(result["outstanding_gps_journeys"],16)

@@ -123,12 +123,17 @@ def analyse(speed, journey):
     if (set(jcounts)-{"pass","fail","unresolved"} or
             any(journey.get(s)!=jcounts[s] for s in ("pass","fail","unresolved"))):
         raise ValueError("Contradictory full GPS journey case ledger")
+    required=("drivemate-native-cpp","graphhopper","osrm-mld","osrm-ch")
+    common_valid_routes=min((engines[e]["valid_routes"] if e in engines else 0)
+                            for e in required)
     work = work_progress(count,repeats,engines,jcounts)
     return {
         "project": "DMN",
         "real_road_route_target": ROUTE_TARGET,
         "real_road_routes_checked": count,
         "real_road_routes_remaining": max(0,ROUTE_TARGET-count),
+        "real_road_routes_validated_minimum": common_valid_routes,
+        "real_road_routes_still_to_validate": max(0,ROUTE_TARGET-common_valid_routes),
         "outstanding_work": work,
         "outstanding_gps_journeys": jcounts["unresolved"]+jcounts["fail"],
         "scope": "same-real-English-public-OSM-routing-response-comparison",
@@ -192,6 +197,9 @@ def markdown(report):
         "## Tests and issues still left", "",
         f"- Real UK route scenarios checked: **{report['real_road_routes_checked']}/{report['real_road_route_target']}**; "
         f"**{report['real_road_routes_remaining']} remaining** toward the 100-route expansion.",
+        f"- Complete same-route HTTP response validation across required engines: "
+        f"**{report['real_road_routes_validated_minimum']}/{report['real_road_route_target']}**, "
+        f"**{report['real_road_routes_still_to_validate']} still to validate**.",
         f"- Engineering / validation workstreams: **{work['remaining']}/{work['total']} open** "
         f"(critical {work['open_by_priority']['critical']}, high {work['open_by_priority']['high']}, "
         f"medium {work['open_by_priority']['medium']}).",
