@@ -12,6 +12,8 @@ or independently verified legality. Never assumes map completeness.
 from __future__ import annotations
 
 from math import hypot, isfinite
+from heapq import heappop, heappush
+from itertools import count
 
 from .fix_quality import GPSFix, assess_fix, _distance_m
 from .matcher import (DirectedRoadMatcher, MatchResult,
@@ -44,13 +46,44 @@ class TemporalRoadMatcher:
         self.unresolved = 0
 
     def _connected(self, old_id: str, new_id: str) -> bool:
+        return self._connection_length(old_id, new_id) is not None
+
+    def _connection_length(self, old_id: str, new_id: str) -> float | None:
+        """Bounded turn-aware connector between observed directed segments.
+
+        At most eight intermediate links and 128 expanded states. Exhausting
+        this local research bound withholds confidence, never invents a path.
+        Distances are measured graph lengths; access and turn rules still apply.
+        """
         graph = self.matcher.graph
         if new_id == old_id:
-            return True
+            return 0.0
         old, new = graph.edges[old_id], graph.edges[new_id]
-        return old.target == new.source and (old_id, new_id) not in graph.prohibited_turns
+        serial = count()
+        pending = [(0.0, next(serial), old.target, old_id, 0)]
+        best = {(old.target, old_id, 0): 0.0}
+        expanded = 0
+        while pending and expanded < 128:
+            distance, _, vertex, entering, hops = heappop(pending)
+            if distance > best[(vertex, entering, hops)]:
+                continue
+            expanded += 1
+            if vertex == new.source and (entering, new_id) not in graph.prohibited_turns:
+                return distance
+            if hops == 8:
+                continue
+            for edge in graph.adjacency[vertex]:
+                if edge.access != 'allowed' or (entering, edge.edge_id) in graph.prohibited_turns:
+                    continue
+                later = (edge.target, edge.edge_id, hops + 1)
+                candidate = distance + edge.length_m
+                if candidate < best.get(later, float('inf')):
+                    best[later] = candidate
+                    heappush(pending, (candidate, next(serial), *later))
+        return None
 
-    def _transition_fits_time(self, old_id: str, new_id: str, fix: GPSFix) -> bool:
+    def _transition_fits_time(self, old_id: str, new_id: str, fix: GPSFix,
+                              connector_length: float | None = None) -> bool:
         """Bound travel via the shared junction, not just between GPS fixes.
 
         Great-circle distances to/from that junction are lower bounds even
@@ -62,11 +95,17 @@ class TemporalRoadMatcher:
         if old_id == new_id:
             return self._same_edge_direction_fits(old_id, fix)
         assert self.anchor_fix is not None
+        if connector_length is None:
+            connector_length = self._connection_length(old_id, new_id)
+        if connector_length is None:
+            return False
         junction = self.matcher.coords[self.matcher.graph.edges[old_id].target]
         vertex_fix = GPSFix(0, junction[0], junction[1], 0.0)
+        new_start = self.matcher.coords[self.matcher.graph.edges[new_id].source]
+        entry_fix = GPSFix(0, new_start[0], new_start[1], 0.0)
         minimum_distance = max(
             0.0, _distance_m(self.anchor_fix, vertex_fix)
-            + _distance_m(vertex_fix, fix)
+            + connector_length + _distance_m(entry_fix, fix)
             - self.anchor_fix.horizontal_accuracy_m - fix.horizontal_accuracy_m)
         seconds = (fix.timestamp_ms - self.anchor_fix.timestamp_ms) / 1000.0
         # Match the existing displacement screen's generous reported-speed
@@ -197,10 +236,12 @@ class TemporalRoadMatcher:
         old = self.anchor_edge_id
         assert old is not None
         plausible = self._plausible_edges(fix)
-        connected = {candidate for candidate in plausible
-                     if self._connected(old, candidate)}
+        connections = {candidate: self._connection_length(old, candidate)
+                       for candidate in plausible}
+        connected = {candidate for candidate, distance in connections.items()
+                     if distance is not None}
         reachable = {candidate for candidate in connected
-                     if self._transition_fits_time(old, candidate, fix)}
+                     if self._transition_fits_time(old, candidate, fix, connections[candidate])}
         moving = (fix.speed_mps is not None and fix.speed_mps >= 2.0
                   and fix.bearing_deg is not None)
 

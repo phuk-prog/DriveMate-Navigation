@@ -28,6 +28,7 @@ class _Candidate:
     edge_id: str
     distance_m: float
     score: float
+    heading: float
 
 def angular_difference(a: float, b: float) -> float:
     return abs((a - b + 180.0) % 360.0 - 180.0)
@@ -82,6 +83,22 @@ class DirectedRoadMatcher:
             (e for e in graph.edges.values() if e.access=="allowed"),
             key=lambda e:e.edge_id))
 
+    def _straight_same_way(self, first: _Candidate, other: _Candidate) -> bool:
+        """Adjacent collinear pieces of one OSM way are not parallel roads.
+
+        Arbitrary labels, different ways, diverging branches and opposing
+        directions retain the existing ambiguity rules.
+        """
+        a, b = first.edge_id.split(':'), other.edge_id.split(':')
+        if not (len(a) == len(b) == 4 and a[0] == b[0] == 'w'
+                and a[1].isdigit() and a[1] == b[1]
+                and a[2].isdigit() and b[2].isdigit()
+                and a[3] in ('f', 'r') and b[3] in ('f', 'r')):
+            return False
+        left, right = self.graph.edges[first.edge_id], self.graph.edges[other.edge_id]
+        contiguous = left.target == right.source or right.target == left.source
+        return contiguous and angular_difference(first.heading, other.heading) < 1e-6
+
     def match(self, fix: GPSFix, *, previous_fix: GPSFix | None = None,
               prior_edge_id: str | None = None, now_ms: int | None = None) -> MatchResult:
         check=assess_fix(fix,previous=previous_fix,now_ms=now_ms)
@@ -124,11 +141,13 @@ class DirectedRoadMatcher:
                         (prior_edge_id,edge.edge_id) not in self.graph.prohibited_turns):
                     continuity=-0.08
             contenders.append(_Candidate(edge.edge_id,distance,
-                                          lateral+heading_penalty+continuity))
+                                          lateral+heading_penalty+continuity,heading))
         if not contenders:
             return MatchResult("UNKNOWN",None,"no_supported_road_near_fix",None,0)
         contenders.sort(key=lambda c:(c.score,c.distance_m,c.edge_id))
         first=contenders[0]
+        contenders = [first] + [c for c in contenders[1:]
+                                if not self._straight_same_way(first, c)]
         # Do not turn a location coordinate into false road-level precision.
         # Heading can disambiguate opposing traffic directions, but NOT two
         # nearby *same-direction* roads that equally fit that heading. For

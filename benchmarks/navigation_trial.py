@@ -79,7 +79,13 @@ def _report(system, rows, execution):
             'system': system, 'version': VERSIONS[system], 'execution': execution,
             'map_sha256': sha256(FIXTURE.read_bytes()).hexdigest(),
             'oracle_sha256': sha256(ORACLE.read_bytes()).hexdigest(), 'cases': rows,
-            'independent_real_road_truth': False, 'real_device_tests': 0}
+            'independent_real_road_truth': False, 'real_device_tests': 0,
+            'configuration': {
+                'DMN': 'streaming directed temporal matcher; no location lookahead',
+                'OSRM': 'car.lua MLD; radiuses=6m; tidy=false; four original tracepoint slots',
+                'Valhalla': 'auto; map_snap; search_radius=20m; matched_points alignment',
+                'GraphHopper': 'car; gps_accuracy=10m; extended_json; exact four-point alignment',
+            }[system]}
 
 
 def run_dmn():
@@ -124,7 +130,10 @@ def run_external(system):
     for case in load_cases():
         fixes = [GPSFix(*obs) for obs in case['observations']]
         if system == 'OSRM':
-            response = request_local_osrm_match(local_match_url(fixes))
+            # GPS-001 requires every original observation. Test the hypothesis
+            # that OSRM's optional tidy preprocessing caused baseline omissions;
+            # keep the existing historical UK adapter configuration unchanged.
+            response = request_local_osrm_match(local_match_url(fixes).replace('tidy=true', 'tidy=false'))
             points = [None] * 4
             if response.get('code') == 'Ok':
                 points = [(p['location'][1], p['location'][0]) if p else None
