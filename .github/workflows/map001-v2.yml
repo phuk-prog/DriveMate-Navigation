@@ -1,0 +1,52 @@
+name: MAP-001 v2 full context owner-approved retest
+on:
+  pull_request:
+    paths:
+      - 'benchmarks/map001_v2.py'
+      - 'tests/test_map001_v2.py'
+      - '.github/workflows/map001-v2.yml'
+permissions:
+  contents: read
+concurrency:
+  group: map001-v2-only
+  cancel-in-progress: true
+jobs:
+  map001:
+    if: contains(github.event.pull_request.title, '[map001-v2]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Run only MAP-001 v2 and privacy controls
+        run: |
+          python -m tools.privacy_guard
+          python -m unittest discover -s tests -p test_map001_v2.py -v
+          mkdir -p results
+      - name: New frozen source snapshot, same six area boxes
+        run: |
+          set -euo pipefail
+          curl -fLsS --retry 2 --get --data-urlencode 'bbox=-2.248,53.479,-2.244,53.483' https://api.openstreetmap.org/api/0.6/map -o results/map001-manchester.osm
+          curl -fLsS --retry 2 --get --data-urlencode 'bbox=-1.895,52.477,-1.891,52.481' https://api.openstreetmap.org/api/0.6/map -o results/map001-birmingham.osm
+          curl -fLsS --retry 2 --get --data-urlencode 'bbox=-2.936,54.892,-2.932,54.896' https://api.openstreetmap.org/api/0.6/map -o results/map001-carlisle.osm
+          curl -fLsS --retry 2 --get --data-urlencode 'bbox=-3.182,51.480,-3.178,51.484' https://api.openstreetmap.org/api/0.6/map -o results/map001-cardiff.osm
+          curl -fLsS --retry 2 --get --data-urlencode 'bbox=-4.254,55.860,-4.250,55.864' https://api.openstreetmap.org/api/0.6/map -o results/map001-glasgow.osm
+          curl -fLsS --retry 2 --get --data-urlencode 'bbox=-5.932,54.599,-5.928,54.603' https://api.openstreetmap.org/api/0.6/map -o results/map001-belfast.osm
+          python -m benchmarks.map001_v2
+      - name: Upload source-derived case decisions, excluding raw OSM
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: map001-v2-complete-relation-context
+          path: |
+            results/map001-v2-manifest.json
+            results/map001-v2-scorecard.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Cleanup raw OSM objects
+        if: always()
+        run: rm -f results/map001-*.osm
