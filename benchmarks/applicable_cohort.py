@@ -20,8 +20,8 @@ def rank_applicable(reports,*,test_id,case_ids,map_sha256,oracle_sha256,road_sou
         seen.add(name)
         if (r['test_id']!=test_id or r['map_sha256']!=map_sha256 or r['oracle_sha256']!=oracle_sha256
                 or [c['case_id'] for c in r['cases']]!=case_ids):raise ValueError('Different or incomplete frozen cohort')
-        execution='actual_local_python' if name=='DMN' else 'actual_live_loopback'
-        if r['execution']!=execution:raise ValueError('Actual supported execution evidence required')
+        executions=('actual_local_python',) if name=='DMN' else ('actual_live_loopback','actual_dotnet_source_build_and_route_calculation')
+        if r['execution'] not in executions:raise ValueError('Actual supported execution evidence required')
         if not r.get('version'):raise ValueError('Version/configuration evidence required')
         unusable=[c for c in r['cases'] if c['outcome'] not in ('PASS','FAIL')]
         if unusable:

@@ -493,3 +493,12 @@ Greater Manchester map, three preselected cases, finite route/5m endpoint contra
 No fabricated roads, legal/GNSS-truth verdict or ten-engine ranking is inferred.
 Preserve the seven unresolved UK coverage cases and promotion block. Emulator
 readiness is not asserted from location-injection scaffolding or host tests.
+
+Owner asked how app adoption will be judged. DMN_APP_READINESS.md and
+`python -m tools.app_readiness` now expose explicit evidence gates and current
+NOT_READY_FOR_LIVE_NAVIGATION state. No aggregate score overrides UK coverage,
+missing real-map/source-backed labels, incomplete ten-engine cohort, app
+integration or unverified Android/native/lifecycle/performance evidence. DMN is
+judged independently; references run separately against the same frozen oracle,
+not as dependencies or hidden truth judges. Clear-fix output coverage and safe
+bad-fix abstention are both required; do not reward an all-withheld engine.

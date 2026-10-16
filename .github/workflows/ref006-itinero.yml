@@ -50,6 +50,21 @@ jobs:
           dotnet list benchmarks/itinero_reference/Reference.csproj package --include-transitive --format json > results/ref006-dependencies.json
           sha256sum benchmarks/itinero_reference/bin/Release/net8.0/*.dll > results/ref006-assembly-hashes.txt
           cat results/ref006-assembly-hashes.txt
+          python - <<'PYCODE'
+          import json,subprocess
+          from pathlib import Path
+          d=json.loads(Path('results/ref006-dependencies.json').read_text());packages={}
+          def visit(x):
+              if isinstance(x,dict):
+                  if 'id' in x and 'resolvedVersion' in x: packages[x['id']]=x['resolvedVersion']
+                  for v in x.values():visit(v)
+              elif isinstance(x,list):
+                  for v in x:visit(v)
+          visit(d)
+          m={'sdk_version':subprocess.check_output(['dotnet','--version'],text=True).strip(),'resolved_packages':packages}
+          Path('results/ref006-build-metadata.json').write_text(json.dumps(m,indent=2))
+          print(json.dumps({'ref006_build_metadata':m},indent=2))
+          PYCODE
       - name: Execute actual Itinero on the frozen real-map cases
         env:
           GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}

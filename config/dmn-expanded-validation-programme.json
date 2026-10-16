@@ -94,9 +94,11 @@
     },
     {
       "family": "Itinero",
-      "execution_status": "NOT_RUN",
+      "execution_status": "EXECUTED_STATIC_ROUTING",
       "target_ten": true,
-      "reason": "adapter, pinned executable and fixture smoke test missing"
+      "last_executed_configuration": "source b8a004a831d353565572c7ba41b5a40c29d79360; source package1.6.0-pre037; car/uncontracted; real Geofabrik260901 XML subset b3a883...",
+      "evidence": "references/ref006-itinero-real-map-20261016.json",
+      "evidence_scope": "REF-006 three real-map route/endpoint output cases only; GPS signals/independent legality not judged"
     },
     {
       "family": "libosmscout",

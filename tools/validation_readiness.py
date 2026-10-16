@@ -21,9 +21,9 @@ def audit(config=None):
         if r['execution_status']=='EXECUTED_STATIC_ROUTING':
             path=(ROOT/r['evidence']).resolve()
             if not path.is_relative_to(ROOT) or not path.is_file():raise ValueError('Missing execution evidence')
-            report=json.loads(path.read_text());engine=next((x for x in report['reports'] if x['system']==r['family']),None)
-            if not engine or engine['execution']!='actual_live_loopback' or not engine['cases']:raise ValueError('No actual reference execution in cited evidence')
-            actual[r['family']]=dict(family=r['family'],source_sha=report['run_sha'],ci_url=report['ci_url'],scope='historical static JUNCTION-001 only',quality_score=None)
+            report=json.loads(path.read_text());engine=next((x for x in report.get('reports',[report.get('report',{})]) if x.get('system')==r['family']),None)
+            if not engine or engine['execution'] not in ('actual_live_loopback','actual_dotnet_source_build_and_route_calculation') or not engine['cases']:raise ValueError('No actual reference execution in cited evidence')
+            actual[r['family']]=dict(family=r['family'],source_sha=report['run_sha'],ci_url=report['ci_url'],scope=engine['test_id']+' actual routing integration only; not shared real-map or GPS-quality cohort',quality_score=None)
         elif r['execution_status']!='NOT_RUN':raise ValueError('Unrecognized execution claim')
     if c['scale_policy']['executed_generated_variants_under_this_revision']!=0:raise ValueError('No million-case execution evidence exists for this revision')
     if len({b['id'] for b in c['batches']})!=len(c['batches']) or any(not b['checks'] for b in c['batches']):raise ValueError('Explicit unique batch checks required')

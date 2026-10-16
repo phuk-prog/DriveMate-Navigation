@@ -15,6 +15,7 @@ from map_data.osm_xml import _haversine
 ROOT=Path(__file__).resolve().parents[1]
 SOURCE='https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf'
 EXPECTED_XML_HASH='b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5'
+EXPECTED_ARCHIVE_HASH='b7188b22501b878fddba6e06a90bb44ce6c2d721333e0ca57e10a1a82b568807'
 ITINERO_SOURCE='b8a004a831d353565572c7ba41b5a40c29d79360'
 
 
@@ -32,6 +33,8 @@ def judge(case,row):
 def main():
     p=argparse.ArgumentParser();p.add_argument('--prepare',action='store_true');a=p.parse_args()
     if a.prepare:
+        archive=json.loads((ROOT/'results/ref006-source-hashes.json').read_text())
+        if archive['archive_sha256']!=EXPECTED_ARCHIVE_HASH:raise ValueError('Pinned real source archive differs; do not substitute')
         raw=(ROOT/'results/ref006-map.osm').read_bytes()
         if sha256(raw).hexdigest()!=EXPECTED_XML_HASH:raise ValueError('Real XML subset differs from pinned prior map; preserve failure, do not substitute data')
         data=import_osm_xml(raw,provenance=Provenance('public Greater Manchester test bbox','Geofabrik260901',SOURCE,'OpenStreetMap contributors; ODbL; public road data, no personal traces'))

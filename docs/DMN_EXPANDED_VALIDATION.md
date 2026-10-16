@@ -25,9 +25,10 @@ No competitor service is a dependency of DMN routing or its correctness oracle.
 ## At least ten actually runnable external references
 
 The objective is DMN plus at least ten distinct external families per applicable
-competitive cohort. Current retained evidence establishes five external static
-routing/maneuver executions: OSRM, Valhalla, GraphHopper, ORS and BRouter. This is
-not ten and is not a new shared real-map/GPS cohort. CH/MLD and DMN search variants
+competitive cohort. Retained evidence initially established five external static
+routing/maneuver executions: OSRM, Valhalla, GraphHopper, ORS and BRouter. REF-006
+has now additionally executed Itinero on the real pinned Greater Manchester map. These six
+are not ten and do not constitute a shared real-map/GPS-quality cohort. CH/MLD and DMN search variants
 never inflate family count. No claim to an industry “top ten” is supported by
 adding ten names or generically ranking apps with different responsibilities.
 
@@ -154,3 +155,28 @@ Historical checks remain auditable. This programme is not complete, and no map/
 road/device readiness has been established by a schema validator. Preserve the
 UK promotion block and all failing/ambiguous evidence while continuing the
 owner-authorized work in bounded executable stages.
+
+## Executed REF-006 result and readiness view
+
+The first setup attempt38863763043 at626cee45397a77a88905174e7fa39d21c42f1b98
+stopped before engine execution: the known XML-subset fingerprint was mistakenly
+checked against the full PBF archive. Root cause is recorded in
+references/ref006-first-setup-failure-20261016.json; no case was passed or scored.
+The correct XML scope was verified from public_temporal_gps.py's sha256(raw XML).
+
+Corrected run38864046561 at9c45c8417917f5d2eb51c1dbb68b0a0923fc7637 built actual
+Itinero source b8a004a831d353565572c7ba41b5a40c29d79360 (package metadata1.6.0-pre037,
+assembly1.0.0.0), car/uncontracted. All three real-map output/endpoint cases pass,
+maximum endpoint error1.045m. Map XML exactly matches prior b3a883... source; the
+full archive's distinct SHA256 is b7188b22501b878fddba6e06a90bb44ce6c2d721333e0ca57e10a1a82b568807.
+The six executed routing families include historical scopes and are not a shared
+ten-engine cohort or a market-top-ten claim. No low-signal/streamed-GPS or
+independently verified one-way legality verdict was inferred from this probe.
+Full cases, map/oracle/source/assembly hashes and CI are in
+references/ref006-itinero-real-map-20261016.json. A bounded confirmation pins
+both archive and XML fingerprints and captures SDK/resolved dependency metadata.
+
+DMN_APP_READINESS.md and tools.app_readiness show why DMN is not ready to replace
+app navigation. The readiness inventory records each missing/blocked gate and
+has no aggregate score that could hide a critical fault. Current live adoption
+is blocked; reversible prototype research is separate from release readiness.
