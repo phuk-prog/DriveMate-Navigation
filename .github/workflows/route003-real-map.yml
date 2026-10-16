@@ -8,14 +8,14 @@ concurrency:
   cancel-in-progress: true
 jobs:
   baseline:
-    if: contains(github.event.pull_request.title, '[route003-baseline]')
+    if: contains(github.event.pull_request.title, '[route003-baseline]') || contains(github.event.pull_request.title, '[route003-brouter-only]')
     runs-on: ubuntu-latest
     timeout-minutes: 18
     strategy:
       fail-fast: false
       max-parallel: 1
       matrix:
-        engine: [OSRM, Valhalla, GraphHopper, openrouteservice, BRouter]
+        engine: ${{ contains(github.event.pull_request.title, '[route003-brouter-only]') && fromJSON('["BRouter"]') || fromJSON('["OSRM","Valhalla","GraphHopper","openrouteservice","BRouter"]') }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -102,6 +102,9 @@ jobs:
           assert len(jars)==len(profiles)==1
           shutil.copyfile(jars[0],'results/brouter.jar'); shutil.copytree(profiles[0],'results/brouter-profiles')
           PYCODE
+          for PROFILE in all softaccess; do
+            curl -fsSL --retry 2 --max-time 30 "https://raw.githubusercontent.com/abrensch/brouter/4d2639af77ea5ed9c30d3e400764eb6f9e8522da/misc/profiles2/${PROFILE}.brf" -o "results/brouter-profiles/${PROFILE}.brf"
+          done
           mkdir -p results/brouter-build/{nodetiles,waytiles,nodes55,waytiles55,unodes55,segments,elevation,customprofiles}
           cd results/brouter-build
           java -Xmx512m -DavoidMapPolling=true -cp ../brouter.jar btools.mapcreator.OsmFastCutter ../brouter-profiles/lookups.dat nodetiles waytiles nodes55 waytiles55 bordernids.dat relations.dat restrictions.dat ../brouter-profiles/all.brf ../brouter-profiles/trekking.brf ../brouter-profiles/softaccess.brf ../route003-map.osm.pbf
