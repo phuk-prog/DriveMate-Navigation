@@ -99,7 +99,13 @@ def load_progress(registry: Path, results: Path) -> dict:
     if not rows or rows[0]["category"] != "map_data":
         raise ValueError("Automated progression must begin at MAP-001")
     first_blocker = blockers[0]["category"] if blockers else None
-    next_priority = first_blocker or rows[0]["category"]
+    unit_queue_complete = first_blocker is None
+    next_priority = first_blocker
+    next_priority_reason = (
+        "FIRST_FAILED_OR_UNIMPLEMENTED_UNIT_CATEGORY"
+        if first_blocker else
+        "ALL_UNIT_CONTRACTS_EXECUTED_STRONGER_EVIDENCE_QUEUE_REQUIRED"
+    )
     output = {
         "trial":"DMN-21-CATEGORY-AUTOMATIC-RESEARCH-QUEUE-1",
         "source_registry_sha256":sha256(registry.read_bytes()).hexdigest(),
@@ -112,7 +118,9 @@ def load_progress(registry: Path, results: Path) -> dict:
         "failed_case_count":len(all_cases),
         "all_category_results_collected_sequentially":True,
         "automatic_next_test_enabled":True,
+        "unit_queue_complete":unit_queue_complete,
         "next_priority_category":next_priority,
+        "next_priority_reason":next_priority_reason,
         "next_category_independent_result_required":True,
         "category_queue":rows,"unresolved":blockers,
         "failures":all_cases,
@@ -146,8 +154,12 @@ def write_progress(registry: Path, results: Path) -> dict:
     for row in report["category_queue"]:
         md.append(f"| {row['order']} | {row['label']} | {row['unit_status']} | "
                   f"{row['passed']}/{row['unit_total']} | {row['research_status']} |")
-    md.extend(["",f"**Investigate first:** {report['next_priority_category']}",
-               "",
+    if report["next_priority_category"]:
+        md.extend(["",f"**Investigate first:** {report['next_priority_category']}", ""])
+    else:
+        md.extend(["", "**Unit queue complete:** all registered unit contracts executed; "
+                   "the next category requires a separately frozen stronger-evidence test.", ""])
+    md.extend([
                "Next actions require stronger frozen real-road truth and genuine comparable "
                "external references; missing data must remain UNKNOWN/NOT_JUDGED.",
                "No app, APK, release, merge, or automatic unsafe navigation change."])
@@ -155,7 +167,7 @@ def write_progress(registry: Path, results: Path) -> dict:
     print(json.dumps({k:report[k] for k in (
         "trial","category_count","unit_contract_pass_categories",
         "failed_or_infrastructure_categories","unimplemented_categories",
-        "next_priority_category")},indent=2),flush=True)
+        "unit_queue_complete","next_priority_category","next_priority_reason")},indent=2),flush=True)
     return report
 
 

@@ -43,9 +43,11 @@ The difference is explicit in every per-category report.
   auto-progress summariser itself.
 - Evidence: GitHub Actions artifact `dmn-independent-category-tests`, now
   containing both original results and `dmn-auto-progress.*`.
-- Priority: first failed or unimplemented category, else first category
-  awaiting stronger independent road and applicable competitor evidence.
-  A unit PASS is never falsely promoted to an engine or legal ranking.
+- Priority: first failed or unimplemented unit category. When all 21 unit
+  categories have executed successfully, the unit queue is complete and the
+  report emits no invented category priority. Stronger independent-road and
+  applicable-competitor experiments remain a separate evidence queue. A unit
+  PASS is never falsely promoted to an engine or legal ranking.
 - Fail-closed: absent individual JSON, truncated case counts, false navigation
   scores, tampered identity/order and unknown statuses fail the analysis.
 

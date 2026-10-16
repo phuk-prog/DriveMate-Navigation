@@ -52,6 +52,11 @@ class AutoProgressTest(unittest.TestCase):
             self.assertEqual(report["category_queue"][1]["category"],"legal_routing")
             self.assertEqual(report["category_queue"][-1]["category"],"reference_adapters")
             self.assertTrue(report["all_category_results_collected_sequentially"])
+            self.assertTrue(report["unit_queue_complete"])
+            self.assertIsNone(report["next_priority_category"])
+            self.assertEqual(
+                report["next_priority_reason"],
+                "ALL_UNIT_CONTRACTS_EXECUTED_STRONGER_EVIDENCE_QUEUE_REQUIRED")
             self.assertFalse(report["guardrails"]["no_score_for_missing_engines"] is False)
             self.assertEqual(report["evidence_levels"]["verified_real_road_legality"],
                              "NOT_PROVEN_BY_THIS_QUEUE")
@@ -68,6 +73,9 @@ class AutoProgressTest(unittest.TestCase):
             write_casefiles(path,rows)
             report=load_progress(REGISTRY,path)
             self.assertEqual(report["next_priority_category"],"legal_routing")
+            self.assertFalse(report["unit_queue_complete"])
+            self.assertEqual(report["next_priority_reason"],
+                             "FIRST_FAILED_OR_UNIMPLEMENTED_UNIT_CATEGORY")
             self.assertEqual(report["failed_case_count"],1)
             self.assertEqual(report["failures"][0]["result"],"FAIL")
             self.assertEqual(report["category_queue"][2]["unit_status"],"UNIT_PASS")
