@@ -283,3 +283,23 @@ https://onlineservices.glasgow.gov.uk/CouncillorsandCommittees/viewSelectedDocum
 New evidence artifacts: results/map001-remaining-access.json and
 results/map001-native-turn-barrier.json. Preserve historical runs;
 no Android app changes, APK, production merge or Category 2.
+
+
+### Complete native outgoing junction mask, only-turn subset
+
+Follow-up Category 1 work now checks certain `only_*` relations by enumerating
+**all** car-accessible native outgoing edges at the same source-geometry-matched
+junction graph node. It requires the arrival native edge and nominated legal
+exit to be uniquely matched; all alternatives must align exactly to OSM
+segments with unambiguous allowed car access. An ordinary source only-turn
+relation should leave the nominated exit bit unblocked and block every
+other qualified native exit in the incoming edge's restriction mask.
+If any outgoing candidate has contextual access, missing geometry,
+extra unalignable nodes or incomplete native flags, the entire relation
+stays NOT_JUDGED; no bit is promoted to full AutoCost legality.
+
+Synthetic mutation controls prove that omitting an alternative prohibition
+produces a FAIL, and that incomplete or context-dependent exit sets remain
+unjudged. Raw outgoing graph-edge IDs and both expected/observed mask bits
+are preserved in the existing native turn/barrier artifact. Original
+Valhalla engine/graph bits are unchanged.

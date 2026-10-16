@@ -9,7 +9,7 @@ import xml.etree.ElementTree as ET
 
 from benchmarks.map001_remaining_access import source_family,scenario,conditioned_way
 from benchmarks.map001_native_turn_barrier import (
-    native_mask_verdict,candidate_pairs,assess_relation,barrier_case)
+    native_mask_verdict,candidate_pairs,assess_relation,barrier_case,only_native_junction_verdict)
 
 
 def fixture(road='residential',other='',barrier=''):
@@ -162,6 +162,52 @@ class NativeStructuralControls(unittest.TestCase):
         row=assess_relation("fixture",rel(),{"42":way},nodes,[])
         self.assertNotEqual(row["verdict"],"FAIL")
         self.assertEqual(row["full_turn_legality"],"NOT_INSPECTED")
+
+    def test_only_turn_checks_all_outgoing_graph_alternatives(self):
+        root=ET.fromstring("""<osm>
+          <node id="1" lat="53" lon="-2"/>
+          <node id="2" lat="53.0001" lon="-2.0001"/>
+          <node id="3" lat="53.0002" lon="-2.0002"/>
+          <node id="4" lat="53.0003" lon="-2.0003"/>
+          <way id="42"><nd ref="1"/><nd ref="2"/>
+            <tag k="highway" v="residential"/></way>
+          <way id="43"><nd ref="2"/><nd ref="3"/>
+            <tag k="highway" v="residential"/></way>
+          <way id="44"><nd ref="2"/><nd ref="4"/>
+            <tag k="highway" v="residential"/></way>
+        </osm>""")
+        nodes={n.get("id"):n for n in root.findall("node")}
+        ways={w.get("id"):w for w in root.findall("way")}
+        relation=ET.fromstring("""<relation id="777">
+          <member type="way" ref="42" role="from"/>
+          <member type="node" ref="2" role="via"/>
+          <member type="way" ref="43" role="to"/>
+          <tag k="type" v="restriction"/>
+          <tag k="restriction" v="only_right_turn"/>
+        </relation>""")
+        def edge(wayid,start,end,graphid,index,points,mask=0):
+            return {"way_id":int(wayid),"start_node":start,"end_node":end,
+                "graph_id":graphid,"car_access":True,"local_index":index,
+                "restriction_mask":mask,"complex":False,"start_restriction":0,
+                "end_restriction":0,"access_restriction":0,
+                "destination_only":False,"shape":points}
+        inc=edge("42",800,900,101,0,[[53,-2],[53.0001,-2.0001]],4)
+        intended=edge("43",900,901,102,1,[[53.0001,-2.0001],[53.0002,-2.0002]])
+        other=edge("44",900,902,103,2,[[53.0001,-2.0001],[53.0003,-2.0003]])
+        correct=assess_relation("fixture",relation,ways,nodes,[inc,intended,other])
+        self.assertEqual(correct["verdict"],"PASS")
+        self.assertEqual(len(correct["native_only_exit_completeness_evidence"]),2)
+        broken=dict(inc,restriction_mask=0)
+        wrong=assess_relation("fixture",relation,ways,nodes,[broken,intended,other])
+        self.assertEqual(wrong["verdict"],"FAIL")
+        self.assertTrue(any(not x["agrees"] for x in wrong["native_only_exit_completeness_evidence"]))
+        incomplete=assess_relation("fixture",relation,ways,nodes,[inc,intended])
+        self.assertEqual(incomplete["verdict"],"NOT_JUDGED_ONLY_MISSING_ALTERNATIVES")
+        unknown_way=ET.fromstring("""<way id="44"><nd ref="2"/><nd ref="4"/>
+          <tag k="highway" v="service"/></way>""")
+        withheld=assess_relation("fixture",relation,{**ways,"44":unknown_way},
+                                 nodes,[inc,intended,other])
+        self.assertEqual(withheld["verdict"],"NOT_JUDGED_ONLY_OTHER_EXIT_ACCESS")
 
     def test_candidate_pair_index_bounds_fail_closed(self):
         way,nodes=fixture("residential")

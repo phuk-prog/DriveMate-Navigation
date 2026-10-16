@@ -12,7 +12,8 @@ import xml.etree.ElementTree as ET
 from benchmarks.map001_graph_fact_audit import ROOT, AREAS, digest, source, tags
 from benchmarks.map001_v3 import FROZEN_V2_IDS
 from benchmarks.map001_native_reference import read_native
-from benchmarks.map001_category1_closure import relation_facts
+from benchmarks.map001_category1_closure import relation_facts, expected_way
+from benchmarks.map001_native_reference import align_edge
 
 
 def native_mask_verdict(rule, source_status, candidates):
@@ -73,6 +74,59 @@ def candidate_pairs(rel, edges, nodes):
     return list(found.values())
 
 
+
+def only_native_junction_verdict(rel, ways, nodes, edges, source_status, pairs):
+    """Compare complete source-qualified outgoing native mask bits (not AutoCost)."""
+    if source_status != "REPRESENTABLE_SOURCE_MOVEMENT" or len(pairs)!=1:
+        return "NOT_JUDGED_ONLY_SOURCE_OR_PAIR", []
+    pair=pairs[0]
+    if (not pair["incoming_car"] or not pair["outgoing_car"]
+            or pair["contextual_native_flags"]):
+        return "NOT_JUDGED_ONLY_NATIVE_CONTEXT", []
+    arr=[e for e in edges if e["graph_id"]==pair["incoming_graph_edge"]]
+    if len(arr)!=1:
+        return "NOT_JUDGED_ONLY_AMBIGUOUS_ARRIVAL", []
+    incoming=arr[0]
+    members=rel.findall("member")
+    targets=[m.get("ref") for m in members if m.get("role")=="to" and m.get("type")=="way"]
+    vias=[m.get("ref") for m in members if m.get("role")=="via" and m.get("type")=="node"]
+    if len(targets)!=1 or len(vias)!=1 or vias[0] not in nodes:
+        return "NOT_JUDGED_ONLY_SOURCE_SHAPE", []
+    point=(float(nodes[vias[0]].get("lat")),float(nodes[vias[0]].get("lon")))
+    all_out=[e for e in edges if e["start_node"]==pair["junction_graph_node"] and e["car_access"]]
+    out=[e for e in all_out if e.get("shape") and
+         max(abs(e["shape"][0][k]-point[k]) for k in (0,1))<=0.000002]
+    if len(out)!=len(all_out) or len(out)<2:
+        return "NOT_JUDGED_ONLY_MISSING_ALTERNATIVES", []
+    checks=[]
+    for e in out:
+        wid=str(e["way_id"])
+        if wid not in ways or e.get("local_index") not in range(8):
+            return "NOT_JUDGED_ONLY_MISSING_GRAPH_SOURCE", checks
+        if any(e.get(k) for k in ("complex","start_restriction","end_restriction",
+                                  "access_restriction","destination_only")):
+            return "NOT_JUDGED_ONLY_NATIVE_CONTEXT", checks
+        source_expected,issue=expected_way(ways[wid],nodes)
+        mapped=align_edge(e,ways[wid],nodes)
+        if issue or not mapped or any(
+                eid not in source_expected or source_expected[eid][2]!="allowed"
+                for eid in mapped):
+            return "NOT_JUDGED_ONLY_OTHER_EXIT_ACCESS", checks
+        prohibited=bool(incoming["restriction_mask"] & (1<<e["local_index"]))
+        expected=wid!=targets[0]
+        checks.append({"outgoing_graph_id":e["graph_id"],
+                       "outgoing_osm_way":wid,
+                       "outgoing_local_index":e["local_index"],
+                       "expected_mask_prohibits":expected,
+                       "observed_mask_prohibits":prohibited,
+                       "source_segments":mapped,
+                       "agrees":prohibited==expected})
+    if not any(not x["expected_mask_prohibits"] for x in checks):
+        return "NOT_JUDGED_ONLY_INTENDED_EXIT_MISSING",checks
+    if not any(x["expected_mask_prohibits"] for x in checks):
+        return "NOT_JUDGED_ONLY_NO_ALTERNATIVE",checks
+    return ("PASS" if all(x["agrees"] for x in checks) else "FAIL"),checks
+
 def assess_relation(area,rel,ways,nodes,edges):
     source=relation_facts(rel,ways,nodes)
     rule=tags(rel).get("restriction:motorcar",
@@ -89,9 +143,15 @@ def assess_relation(area,rel,ways,nodes,edges):
     if source["verdict"]=="EXCEPTED_MOTORCAR":
         return {**row,"verdict":"NOT_JUDGED_MOTORCAR_EXEMPT","native_pairs":[]}
     pairs=candidate_pairs(rel,edges,nodes)
-    status=native_mask_verdict(rule,source["verdict"],pairs)
+    if rule.startswith("only_"):
+        status,alternatives=only_native_junction_verdict(
+            rel,ways,nodes,edges,source["verdict"],pairs)
+    else:
+        status=native_mask_verdict(rule,source["verdict"],pairs)
+        alternatives=[]
     return {**row,"verdict":status,"native_pairs":pairs,
-            "scope":"SOURCE_PROHIBITED_TURN_VS_NATIVE_MASK_BIT_ONLY",
+            "native_only_exit_completeness_evidence":alternatives,
+            "scope":"SOURCE_PROHIBITED_TURN_VS_NATIVE_MASK_BITS_ONLY",
             "native_route_autocost_checked":False}
 
 
