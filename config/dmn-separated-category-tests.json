@@ -17,7 +17,8 @@
         "test_map001_graph_fact_audit.py",
         "test_map001_v2.py",
         "test_map001_v3.py",
-        "test_map001_v3_fact_extensions.py"
+        "test_map001_v3_fact_extensions.py",
+        "test_map001_direction_contract.py"
       ],
       "engine_rank": null,
       "navigation_score": null

@@ -12,34 +12,12 @@ import xml.etree.ElementTree as ET
 from benchmarks.map001_graph_fact_audit import ROOT,digest,tags
 from benchmarks.map001_valhalla_locate import way_midpoint, LOCATE_URL
 from benchmarks.map001_v3 import FROZEN_V2_IDS
-from benchmarks.map001_v3_restriction_diagnostics import explicit_direction, YES,NO
 
 
 def expected_direction(t,forward):
-    """A direction/car-access mask is NOT a destination/private-permission rule."""
-    orient="forward" if forward else "backward"
-    oneway=t.get("oneway","")
-    if not oneway and t.get("junction") in ("roundabout","circular"):
-        oneway="yes"
-    # These are hard directional limitations unless mode-specific exceptions exist.
-    if oneway in ("yes","1","true") and not forward:return "prohibited"
-    if oneway in ("-1","reverse") and forward:return "prohibited"
-    if any(k.endswith(":conditional") for k in t):return "unknown"
-    contextual={"private","destination","delivery","customers",
-                "permit","agricultural","forestry"}
-    for key in ("motorcar","motor_vehicle","vehicle","access"):
-        value=t.get(key+":"+orient)
-        if value is not None:
-            return ("prohibited" if value=="no" else
-                    "contextual" if value in contextual else
-                    "allowed" if value in YES else "unknown")
-    for key in ("motorcar","motor_vehicle","vehicle","access"):
-        if key in t:
-            value=t[key]
-            return ("prohibited" if value=="no" else
-                    "contextual" if value in contextual else
-                    "allowed" if value in YES else "unknown")
-    return "unknown" if t.get("highway") in ("service","track") else "allowed"
+    """Use the prospective source contract; keep original reports unchanged."""
+    from benchmarks.map001_direction_contract import direction_access
+    return direction_access(t, forward)
 
 
 def summarize_way(wid,located,source_way):
@@ -62,6 +40,9 @@ def summarize_way(wid,located,source_way):
           "start_car":start.get("car") if isinstance(start,dict) else None,
           "end_car":end.get("car") if isinstance(end,dict) else None,
           "edge_access_restriction":item.get("access_restriction"),
+          "simple_turn_mask":item.get("restrictions"),
+          "local_edge_index":item.get("local_edge_index"),
+          "opposing_edge_index":item.get("opp_index"),
           "destination_only":item.get("destination_only"),
           "not_thru":item.get("not_thru"),
           "part_of_complex_restriction":item.get("part_of_complex_restriction"),
@@ -143,7 +124,16 @@ def main():
        "graph_coverage":"SPATIAL_SAMPLE_NOT_EXHAUSTIVE_DIRECTED_EDGES",
        "complete_turn_pair_exposure":False,
        "turn_mask_interpretation":"per-edge flags only; no relation-level pair legality",
-       "full_category1_ranking":None,"cases":cases}
+       "full_category1_ranking":None,
+       "candidate_graph_ids_available":sum(x["edge_graph_id"] is not None
+           for c in cases for x in c["candidates"]),
+       "candidate_end_node_ids_available":sum(x["end_node_graph_id"] is not None
+           for c in cases for x in c["candidates"]),
+       "simple_turn_masks_available":sum(x["turn_mask_observation"]["simple_turn_mask"] is not None
+           for c in cases for x in c["candidates"]),
+       "missing_edge_detection":"UNSUPPORTED_SPATIAL_SAMPLING",
+       "native_tile_adapter":"NOT_IMPLEMENTED_REQUIRES_GRAPHREADER_AND_PROFILE_RULES",
+       "cases":cases}
     (ROOT/"map001-v3-valhalla-graph-facts.json").write_text(
         json.dumps(report,indent=2)+"\n")
     print(json.dumps({"trial":report["trial"],"counts":report["counts"],

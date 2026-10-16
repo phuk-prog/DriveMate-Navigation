@@ -688,3 +688,13 @@ reverse-fragment behavioral improvement and required fresh full retest.**
 ## Owner-approved forward GPS progress experiment — completed 16 October 2026
 
 The new [verified multi-region engine-only GPS result](DMN_GPS_DIRECTED_PROGRESS_RESULTS_20261016.md) documents default UK40 17/40 versus research **30/40**, frozen GPS-003 8/24 versus 24/24, and **Salford/Stockport/Oldham** real OSM-road geometry cohorts of **13/36 default versus 27/36 research**, with 18 additional backward-motion controls and 0 confidently wrong generating-edge selections observed. These are PROVISIONAL map-source and analytical controls; original frozen tests and both matcher paths remain available. [GPS run](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38924328629), [engine units](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38924328641) 527/527, [GPS-004](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38924328663). Conditional/restriction-linked ways were explicitly excluded from the GPS-only scored subset, not treated as safe. No default promotion. STOP for review.
+
+### Category 1 direction contract follow-up (2026-10-16)
+
+See [Manchester directional investigation](DMN_CATEGORY_01_DIRECTION_INVESTIGATION.md).
+Preserves v1/v2/v3; evidence-only oracle and 23 new synthetic control methods.
+Frozen 20-way isolated audit: DMN 9 pass / 3 fail / 0 withheld / 8 not judged;
+108 edge comparisons expose 15 backward-access mismatches across King Street
+155729945 and Princess Street 115559329/548694371. No runtime fix or category
+advance. Valhalla candidate graph metadata gets a fresh same-input run;
+exhaustive edge/turn equivalence and comparative rank remain unsupported.
