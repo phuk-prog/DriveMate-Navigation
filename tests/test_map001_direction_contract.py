@@ -192,3 +192,72 @@ class AccessApplicabilityReview(unittest.TestCase):
         self.assertEqual(x['candidates'][0]['bucket'],'filtered_edges')
         self.assertIsNone(x['candidates'][0]['osm_forward_verified'])
         self.assertTrue(x['turn_pairs_verdict'].startswith('UNSUPPORTED'))
+
+class NativeReferenceControls(unittest.TestCase):
+    def edges(self):
+        base={'way_id':11,'restriction_mask':0,'local_index':0,'access_restriction':0,
+              'start_restriction':0,'end_restriction':0,'complex':False}
+        return [{**base,'graph_id':1,'start_node':101,'end_node':102,'car_access':True,
+                 'shape':[[53,-2],[53.001,-2]]},
+                {**base,'graph_id':2,'start_node':102,'end_node':101,'car_access':False,
+                 'shape':[[53.001,-2],[53,-2]]}]
+
+    def test_native_car_access_matches_both_source_directions(self):
+        from benchmarks.map001_native_reference import compare_way
+        n,w,r=fixture();x=compare_way(w['11'],n,self.edges())
+        self.assertEqual(x['valhalla_verdict'],'PASS')
+        self.assertEqual(x['expected_checks'],2)
+        self.assertTrue(x['equivalent_scored_cohort'])
+
+    def test_wrong_reverse_permission_is_a_failure(self):
+        from benchmarks.map001_native_reference import compare_way
+        n,w,r=fixture();e=self.edges();e[1]['car_access']=True
+        x=compare_way(w['11'],n,e)
+        self.assertEqual(x['valhalla_verdict'],'FAIL')
+        self.assertEqual(x['wrong_access'][0]['edge'],'w:11:0:r')
+
+    def test_missing_geometry_is_unsupported_not_a_competitor_fault(self):
+        from benchmarks.map001_native_reference import compare_way
+        n,w,r=fixture();x=compare_way(w['11'],n,self.edges()[:1])
+        self.assertEqual(x['valhalla_verdict'],'UNSUPPORTED')
+        self.assertFalse(x['equivalent_scored_cohort'])
+
+    def test_source_context_is_never_ranked_as_boolean_access(self):
+        from benchmarks.map001_native_reference import compare_way
+        n,w,r=fixture();ET.SubElement(w['11'],'tag',k='motorcar',v='destination')
+        x=compare_way(w['11'],n,self.edges())
+        self.assertEqual(x['valhalla_verdict'],'NOT_JUDGED')
+        self.assertFalse(x['equivalent_scored_cohort'])
+
+    def test_native_shape_backtracking_is_not_expanded(self):
+        from benchmarks.map001_native_reference import align_edge
+        n,w,r=fixture();e=self.edges()[0];e['shape'] += [[53,-2],[53.001,-2]]
+        self.assertIsNone(align_edge(e,w['11'],n))
+
+    def test_conflicting_duplicate_access_is_unsupported(self):
+        from benchmarks.map001_native_reference import compare_way
+        n,w,r=fixture();e=self.edges();e.append({**e[1],'car_access':True,'graph_id':3})
+        x=compare_way(w['11'],n,e)
+        self.assertEqual(x['valhalla_verdict'],'UNSUPPORTED')
+        self.assertEqual(x['conflicting_observations'],['w:11:0:r'])
+
+    def test_incomplete_native_export_is_rejected(self):
+        import tempfile,json
+        from pathlib import Path
+        from benchmarks.map001_native_reference import read_native
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d)/'edges.jsonl';p.write_text(json.dumps(self.edges()[0]))
+            with self.assertRaises(ValueError):read_native(p)
+            p.write_text(json.dumps({'kind':'complete','directed_edges':1}))
+            with self.assertRaises(ValueError):read_native(p)
+
+    def test_turn_mask_is_bound_to_connected_departure_local_index(self):
+        from benchmarks.map001_native_reference import pair_observations
+        n,w,r=fixture();rel=r[0];rel.set('id','7844440')
+        for m in rel.findall('member'):
+            if m.get('role')=='to':m.set('ref','11')
+        e=self.edges();e[1]['restriction_mask']=4;e[0]['local_index']=2
+        x=pair_observations(e,w,n,[rel])[0]['native_pairs']
+        self.assertEqual(len(x),1)
+        self.assertTrue(x[0]['explicit_mask_prohibits'])
+        self.assertEqual(x[0]['full_turn_legality'],'UNSUPPORTED_AUTOCOST_CONTEXT_NOT_EVALUATED')

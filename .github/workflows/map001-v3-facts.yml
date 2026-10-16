@@ -2,6 +2,8 @@ name: MAP-001 v3 Manchester diagnosis and Valhalla graph facts
 on:
   pull_request:
     paths:
+      - 'tools/reference/valhalla_graph_probe.cc'
+      - 'benchmarks/map001_native_reference.py'
       - 'benchmarks/map001_access_review.py'
       - 'map_data/osm_xml.py'
       - 'tests/test_osm_import.py'
@@ -64,6 +66,35 @@ jobs:
           PY
           python -m benchmarks.map001_valhalla_graph_facts
           python -m benchmarks.map001_access_review
+      - name: Compile read-only native graph probe against unchanged Valhalla installation
+        timeout-minutes: 7
+        run: |
+          set -euo pipefail
+          docker cp tools/reference/valhalla_graph_probe.cc map001-facts:/tmp/reference_probe.cc
+          docker exec -u 0 map001-facts bash -lc '
+            set -euo pipefail
+            export DEBIAN_FRONTEND=noninteractive
+            apt-get update -qq >/dev/null
+            apt-get install -y -qq g++ pkg-config libboost-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-date-time-dev libboost-regex-dev libboost-program-options-dev libprotobuf-dev libsqlite3-dev libcurl4-openssl-dev zlib1g-dev libzmq3-dev libczmq-dev libluajit-5.1-dev libgeotiff-dev liblz4-dev rapidjson-dev >/dev/null
+            pkg-config --modversion libvalhalla
+            c++ -std=c++20 -O2 /tmp/reference_probe.cc -o /tmp/reference_probe $(pkg-config --cflags --libs --static libvalhalla) -pthread
+          '
+          python - <<'PYCODE'
+          import hashlib,json
+          from pathlib import Path
+          files=sorted(Path('results/valhalla').rglob('*.gph'))
+          assert files, 'No native graph tiles'
+          manifest={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
+          Path('results/map001-native-tile-hashes.json').write_text(json.dumps(manifest,sort_keys=True))
+          PYCODE
+          docker exec map001-facts /tmp/reference_probe /custom_files/valhalla.json > results/map001-valhalla-native.jsonl
+          python - <<'PYCODE'
+          import hashlib,json
+          from pathlib import Path
+          manifest=json.loads(Path('results/map001-native-tile-hashes.json').read_text())
+          assert all(hashlib.sha256(Path(p).read_bytes()).hexdigest()==h for p,h in manifest.items()), 'Reference graph changed during inspection'
+          PYCODE
+          python -m benchmarks.map001_native_reference
       - name: Gate approved directional fix on frozen cohort
         run: |
           python - <<'PYCODE'
@@ -85,6 +116,9 @@ jobs:
             results/map001-v3-manchester-diagnostics.json
             results/map001-direction-contract.json
             results/map001-unit-checks/
+            results/map001-native-comparison.json
+            results/map001-valhalla-native.jsonl
+            results/map001-native-tile-hashes.json
             results/map001-access-applicability.json
             results/map001-valhalla-fresh-candidates.json
             results/map001-v3-valhalla-graph-facts.json

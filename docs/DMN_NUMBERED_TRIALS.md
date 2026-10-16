@@ -332,3 +332,12 @@ OSM node order. No exhaustive turn-pair equivalence or ranking. Local 101/101
 map-data and 595/595 full unit regressions pass. See
 `DMN_CATEGORY_01_ACCESS_APPLICABILITY.md`; verify fresh GitHub artifacts for final
 candidate counts and exact-SHA outcomes. No runtime or category advancement.
+
+### Category 1 native reference interface
+
+From 3c8e8d2, add a read-only exporter linked to installed Valhalla 3.9.1 and a
+bounded source-segment car-access comparison. Installs reference build dependencies
+without patching engine behaviour. Same frozen Manchester input and cohort;
+record masks/local indexes/connectivity but do not infer full AutoCost legality.
+109/109 Category 1 and 603/603 full unit methods pass locally; actual native
+compile/enumeration requires GitHub. See `DMN_CATEGORY_01_NATIVE_REFERENCE.md`.
