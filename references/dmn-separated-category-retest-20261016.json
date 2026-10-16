@@ -1,0 +1,241 @@
+{
+  "trial": "DMN-SEPARATE-CATEGORY-RETEST-20261016",
+  "type": "UNIT_CONTRACT_ONLY",
+  "commit": "342be01508f202b97076698a8e91db932d838b12",
+  "run_id": 38899639703,
+  "job_id": 116968411350,
+  "conclusion": "success",
+  "url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38899639703",
+  "artifact_id": 12045312476,
+  "artifact_digest": "sha256:40b831df5194e629866296a6e8e8faa33da31d8f633a4e1c93f37a26949b1498",
+  "category_count": 23,
+  "unit_total": 472,
+  "unit_passed": 472,
+  "unit_failures": 0,
+  "executed_category_count": 15,
+  "not_run_count": 8,
+  "real_road_truth_verified": false,
+  "external_engine_ranking_executed": false,
+  "engine_quality_score": null,
+  "results": [
+    {
+      "id": "map_data",
+      "status": "UNIT_PASS",
+      "passed": 39,
+      "total": 39,
+      "label": "Map data and road graph",
+      "scope": "OSM graph, import and provenance checks; no independently surveyed UK road law.",
+      "unitTestFiles": 6
+    },
+    {
+      "id": "legal_routing",
+      "status": "UNIT_PASS",
+      "passed": 25,
+      "total": 25,
+      "label": "Road legality and restrictions",
+      "scope": "Mapped one-way, access and turn restriction contract checks; legal truth provisional.",
+      "unitTestFiles": 4
+    },
+    {
+      "id": "gps_matching",
+      "status": "UNIT_PASS",
+      "passed": 40,
+      "total": 40,
+      "label": "GPS positioning and road matching",
+      "scope": "Map-derived position/heading/candidate tests; no independent real GNSS accuracy.",
+      "unitTestFiles": 5
+    },
+    {
+      "id": "gps_loss_recovery",
+      "status": "UNIT_PASS",
+      "passed": 68,
+      "total": 68,
+      "label": "GPS signal loss and recovery",
+      "scope": "Simulated invalid GPS, missed fixes and reacquisition; no phone/tunnel field proof.",
+      "unitTestFiles": 8
+    },
+    {
+      "id": "route_computation",
+      "status": "UNIT_PASS",
+      "passed": 33,
+      "total": 33,
+      "label": "Route computation and validity",
+      "scope": "Actual local route search and frozen input validation tests.",
+      "unitTestFiles": 4
+    },
+    {
+      "id": "route_quality",
+      "status": "UNIT_PASS",
+      "passed": 87,
+      "total": 87,
+      "label": "Route quality and preferences",
+      "scope": "Route length/time/cost and preference units, not independently optimal UK routes.",
+      "unitTestFiles": 9
+    },
+    {
+      "id": "route_calculation_speed",
+      "status": "UNIT_PASS",
+      "passed": 4,
+      "total": 4,
+      "label": "Route calculation speed",
+      "scope": "Timing-worker test methodology and algorithm units; no comparable cross-engine latency ranking.",
+      "unitTestFiles": 1
+    },
+    {
+      "id": "junctions",
+      "status": "UNIT_PASS",
+      "passed": 6,
+      "total": 6,
+      "label": "Junction turns and maneuvers",
+      "scope": "Junction scorer and instruction contract tests; not road-truth verified.",
+      "unitTestFiles": 1
+    },
+    {
+      "id": "roundabouts",
+      "status": "UNIT_PASS",
+      "passed": 10,
+      "total": 10,
+      "label": "Roundabout exits and paths",
+      "scope": "Synthetic roundabout exit/instruction controls only.",
+      "unitTestFiles": 1
+    },
+    {
+      "id": "lanes",
+      "status": "NOT_RUN",
+      "passed": 0,
+      "total": 0,
+      "label": "Lane counts and next-turn guidance",
+      "scope": "Actual UK lane arrows, combined turn/through and best-lane advice not executed.",
+      "unitTestFiles": 0
+    },
+    {
+      "id": "route_line_adherence",
+      "status": "NOT_RUN",
+      "passed": 0,
+      "total": 0,
+      "label": "Route line and turn-point road adherence",
+      "scope": "Full route-line drift, roundabout arc clipping, wrong-side turn point untested.",
+      "unitTestFiles": 0
+    },
+    {
+      "id": "rerouting",
+      "status": "UNIT_PASS",
+      "passed": 15,
+      "total": 15,
+      "label": "Wrong turns and rerouting",
+      "scope": "Rerouting controller state and wrong-turn policies; not full Android real drives.",
+      "unitTestFiles": 3
+    },
+    {
+      "id": "instruction_timing",
+      "status": "NOT_RUN",
+      "passed": 0,
+      "total": 0,
+      "label": "Navigation instructions and timing",
+      "scope": "No measured approach/at-turn/after-turn or adaptive spoken timing test.",
+      "unitTestFiles": 0
+    },
+    {
+      "id": "live_traffic",
+      "status": "NOT_RUN",
+      "passed": 0,
+      "total": 0,
+      "label": "Traffic, closures and dynamic replanning",
+      "scope": "Live incident, closure and traffic response tests not executed.",
+      "unitTestFiles": 0
+    },
+    {
+      "id": "speed_limits",
+      "status": "NOT_RUN",
+      "passed": 0,
+      "total": 0,
+      "label": "Road section speed limits and alerts",
+      "scope": "Speed-limit per-section, alert correctness and verified camera checks not executed.",
+      "unitTestFiles": 0
+    },
+    {
+      "id": "arrival",
+      "status": "UNIT_PASS",
+      "passed": 12,
+      "total": 12,
+      "label": "Correct arrival and approach side",
+      "scope": "Arrival state/controller units, not verified driveway/property approach.",
+      "unitTestFiles": 1
+    },
+    {
+      "id": "offline_reliability",
+      "status": "UNIT_PASS",
+      "passed": 8,
+      "total": 8,
+      "label": "Offline routing, maps and updates",
+      "scope": "Host offline navigation package tests; Android downloads/updates not demonstrated.",
+      "unitTestFiles": 1
+    },
+    {
+      "id": "voice_audio",
+      "status": "NOT_RUN",
+      "passed": 0,
+      "total": 0,
+      "label": "Voice, Bluetooth and music ducking",
+      "scope": "Android voice/Bluetooth music ducking not tested.",
+      "unitTestFiles": 0
+    },
+    {
+      "id": "failure_handling",
+      "status": "UNIT_PASS",
+      "passed": 65,
+      "total": 65,
+      "label": "Failure handling, integrity and safety gates",
+      "scope": "Evidence integrity and readiness gate tests, not full app resilience.",
+      "unitTestFiles": 11
+    },
+    {
+      "id": "performance_resources",
+      "status": "UNIT_PASS",
+      "passed": 3,
+      "total": 3,
+      "label": "Memory, CPU, energy and map size",
+      "scope": "Synthetic benchmark controls; no equivalent device CPU/RAM/battery measurements.",
+      "unitTestFiles": 1
+    },
+    {
+      "id": "integrated_end_to_end",
+      "status": "NOT_RUN",
+      "passed": 0,
+      "total": 0,
+      "label": "Complete press-navigate driving",
+      "scope": "No end-to-end full UK map-replay with actual Android navigation.",
+      "unitTestFiles": 0
+    },
+    {
+      "id": "android_integration",
+      "status": "NOT_RUN",
+      "passed": 0,
+      "total": 0,
+      "label": "Android emulator and app integration",
+      "scope": "No Android emulator/device integration executed by this unit stage.",
+      "unitTestFiles": 0
+    },
+    {
+      "id": "reference_adapters",
+      "status": "UNIT_PASS",
+      "passed": 57,
+      "total": 57,
+      "label": "Competitor adapters and comparison integrity",
+      "scope": "Adapter contract checks are not live external engine comparisons.",
+      "unitTestFiles": 10
+    }
+  ],
+  "separate_named_ci": "GPS-002 ROUTE-002 REROUTE-001 JUNCTION-001 ARRIVAL-001 OFFLINE-001 RESOURCE-001 individual test stages also completed; refer to run artifacts",
+  "preexisting_unresolved_gps003": {
+    "streams_pass": 8,
+    "streams_total": 24,
+    "failures": 16,
+    "run_id": 38869427281
+  },
+  "preexisting_unresolved_uk40": {
+    "matched": 17,
+    "withheld": 23,
+    "confident_wrong": 0
+  }
+}

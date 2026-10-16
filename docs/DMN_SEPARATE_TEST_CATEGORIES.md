@@ -52,3 +52,9 @@ python -m tools.category_test_runner --category gps_matching --output-dir result
 ```
 
 CI saves `results/category-checks/index.json`, `summary.md` and 23 separate category JSON case records as one audit artifact; no historical frozen source evidence is rewritten. CI's other, named independent DMN benchmarks remain in place. This unit suite does **not** launch heavyweight reference providers or create a fake all-engine ranking.
+
+
+## Most recent executed category unit retest — 16 October 2026
+
+[Executed unit results in logical order](DMN_SEPARATE_CATEGORY_RESULTS_20261016.md)
+from [successful CI run 38899639703](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38899639703) show **15 categories with runnable tests, all 472/472 units passing**, and **eight categories explicitly NOT_RUN**, not passed. This result does not change the earlier 16/24 GPS-003 stream availability failure or the 17/40 UK matching regression. Cross-engine ratings and route-calculation milliseconds require separately executed comparable contracts; no new comparative ranking was run here. Proposed DMN improvements are listed at the end of the result report for owner review.
