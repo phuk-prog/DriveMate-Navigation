@@ -19,6 +19,9 @@ from gps.temporal_matcher import TemporalRoadMatcher
 from map_data import Provenance, import_osm_xml
 
 ROOT=Path(__file__).resolve().parents[1]
+# Historical 18-case group was frozen before the directed-progress experiment.
+PREVIOUS_18=frozenset(f'TGP-{n:03d}' for n in
+    (1,2,4,5,7,9,10,11,12,13,14,15,16,18,19,21,25,40))
 
 def require(ok,reason):
     if not ok:
@@ -49,15 +52,15 @@ def inspect(raw):
     shadow=evaluate(graph,coords,frozen,True)["uk40"]
     require((baseline["correct"],baseline["confident_wrong"],baseline["withheld"])==(17,0,23),
             "original variant verdicts")
-    require((shadow["correct"],shadow["confident_wrong"],shadow["withheld"])==(22,0,18),
-            "experimental variant verdicts")
+    require(shadow["confident_wrong"]==0 and shadow["correct"]>=22
+            and shadow["withheld"]<=18,"research variant regressed correctness or safety")
     old={x["case_id"]:x for x in baseline["cases"]}
     new={x["case_id"]:x for x in shadow["cases"]}
     retained=[]
     totals=Counter()
     for n,(incoming,outgoing) in enumerate(pairs,1):
         caseid=f"TGP-{n:03d}"
-        if new[caseid]["status"]!="WITHHELD":continue
+        if caseid not in PREVIOUS_18:continue
         first=GPSFix(1000,*_point(coords[incoming.source],coords[incoming.target],.70),
                      3.,10.,_bearing(coords[incoming.source],coords[incoming.target]))
         second=GPSFix(9000,*_point(coords[outgoing.source],coords[outgoing.target],.20),
@@ -91,11 +94,13 @@ def inspect(raw):
                 "same_direction":len(a)==len(b)==4 and a[3]==b[3]
             })
         result=temporal.update(second)
-        require(result.status==new[caseid]["status"]=="WITHHELD" or
-                (result.status=="AMBIGUOUS" and new[caseid]["status"]=="WITHHELD"),
-                caseid+" outcome changed")
+        expected_status=new[caseid]["status"]
+        require((result.status=="MATCHED")==(expected_status=="CORRECT")
+                and (result.status!="MATCHED")== (expected_status=="WITHHELD"),
+                caseid+" replay status diverged")
         require(result.edge_id==new[caseid]["actual_edge"],caseid+" edge changed")
-        cls=classify(anchor,outgoing.edge_id,ids,reachable)
+        cls=("RESOLVED_BY_NEW_RESEARCH_PROGRESS" if new[caseid]["status"]=="CORRECT"
+             else classify(anchor,outgoing.edge_id,ids,reachable))
         totals[cls]+=1
         retained.append({
             "case_id":caseid,"generating_source_edge":outgoing.edge_id,
@@ -116,10 +121,16 @@ def inspect(raw):
     return {
         "test":"DMN-UK40-WITHHELD-18","classification":"DIAGNOSTIC_ONLY",
         "map_sha256":EXPECTED_XML_HASH,"original_oracle_sha256":ORACLE,
-        "default_correct":17,"shadow_correct":22,"shadow_withheld":18,
+        "default_correct":17,"historical_shadow_correct":22,
+        "historical_shadow_withheld":18,
+        "shadow_correct":shadow["correct"],"shadow_withheld":shadow["withheld"],
+        "historical_18_case_ids":sorted(PREVIOUS_18),
         "confident_wrong":0,"previous_correct_lost":lost,
         "reason_counts":dict(sorted(totals.items())),
-        "remaining_case_ids":[r["case_id"] for r in retained],
+        "remaining_case_ids":[r["case_id"] for r in retained
+                              if r["shadow_status"]=="WITHHELD"],
+        "newly_resolved_case_ids":[r["case_id"] for r in retained
+                                  if r["shadow_status"]=="CORRECT"],
         "cases":retained,"external_engine_comparison":False,
         "independent_position_and_road_legality":"UNVERIFIED",
         "default_engine_changed":False
@@ -143,7 +154,9 @@ def main():
     result=inspect(raw)
     x.output.write_text(json.dumps(result,indent=2,sort_keys=True)+"\n")
     print(json.dumps({
-        "test":result["test"],"withheld":len(result["cases"]),
+        "test":result["test"],"historic_cases_inspected":len(result["cases"]),
+        "currently_withheld":result["shadow_withheld"],
+        "newly_resolved":len(result["newly_resolved_case_ids"]),
         "reasons":result["reason_counts"],
         "cases":[{"id":v["case_id"],"cause":v["cause"],"anchor":v["anchor_status"],
                   "candidates":[c["edge"] for c in v["candidates"]],
