@@ -87,9 +87,20 @@ def scenario(way, nodes, area, family):
     unrelated=JourneyAccessContext(sha,authorized_way_ids=frozenset({"99999999999999999"}),
                                    destination_way_ids=frozenset({"99999999999999999"}),
                                    destination_node="osm:"+way.findall("nd")[-1].get("ref"))
-    wrong=import_osm_xml(raw,provenance=p,access_context=unrelated)
-    wrong_states=Counter(e.access for e in wrong.graph.edges.values())
-    wrong_safe=not any(x.access=="allowed" for x in wrong.graph.edges.values())
+    # The real importer rightly rejects missing IDs before constructing a
+    # journey view. Rejection is stronger evidence than an unchanged graph.
+    wrong=None
+    rejected_unrelated=False
+    try:
+        wrong=import_osm_xml(raw,provenance=p,access_context=unrelated)
+    except OSMImportError as exc:
+        rejected_unrelated="absent source objects" in str(exc)
+        if not rejected_unrelated:
+            raise
+    wrong_states=(Counter(e.access for e in wrong.graph.edges.values())
+                  if wrong is not None else Counter())
+    wrong_safe=(not any(x.access=="allowed" for x in wrong.graph.edges.values())
+                if wrong is not None else rejected_unrelated)
     if family=="QUALIFYING_JOURNEY_DESTINATION":
         destination="osm:"+way.findall("nd")[-1].get("ref")
         ctx=JourneyAccessContext(sha,destination_node=destination,
@@ -123,7 +134,7 @@ def scenario(way, nodes, area, family):
         except RouteNotFound:
             return False
     baseline_route=routed(default.graph)
-    wrong_route=routed(wrong.graph)
+    wrong_route=routed(wrong.graph) if wrong is not None else False
     contextual_route=routed(contextual.graph)
     route_contract=not baseline_route and not wrong_route and (
         contextual_route if expected=="allowed" else not contextual_route)
@@ -132,6 +143,8 @@ def scenario(way, nodes, area, family):
             "selected_mode_tags":{k:tags(way)[k] for k in MODE_KEYS if k in tags(way)},
             "baseline_states":base_states, "baseline_policy":verdict,
             "unrelated_context_states":dict(wrong_states),
+            "unrelated_context_input_rejected":rejected_unrelated,
+            "unrelated_context_graph_created":wrong is not None,
             "unrelated_context_safely_withheld":wrong_safe,
             "matched_scenario":contextual_label,
             "matched_scenario_states":dict(contextual_states),
