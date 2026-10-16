@@ -95,7 +95,7 @@ class ReroutingController:
             self.pending_request=None
             self._clear_evidence()
             return None
-        if self._last_counted_timestamp is not None and timestamp_ms-self._last_counted_timestamp>self.max_observation_age_ms:
+        if self._last_counted_timestamp is not None and now_ms-self._last_counted_timestamp>self.max_observation_age_ms:
             self._count=0
             self._last_counted_timestamp=None
         self._latest_off_route_timestamp=timestamp_ms

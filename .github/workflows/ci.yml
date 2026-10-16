@@ -51,6 +51,15 @@ jobs:
           path: results/route002-DMN.json
           if-no-files-found: error
           retention-days: 30
+      - name: REROUTE-001 frozen lifecycle and freshness counterexamples
+        run: python -m benchmarks.rerouting_lifecycle_trial --output results/reroute001-DMN.json
+      - name: Upload REROUTE-001 lifecycle evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: reroute001-lifecycle-contract
+          path: results/reroute001-DMN.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Measure synthetic routing latency (informational only)
         run: |
           python -m benchmarks.run --repeat 30
