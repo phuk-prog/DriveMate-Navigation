@@ -78,6 +78,18 @@ jobs:
           path: results/arrival001-DMN.json
           if-no-files-found: error
           retention-days: 30
+      - name: OFFLINE-001 actual routes in isolated Linux network namespace
+        env:
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          sudo unshare --net -- env GITHUB_HEAD_SHA="$GITHUB_HEAD_SHA" "$(command -v python)" -m benchmarks.offline_integrity_trial --require-isolated-network --output results/offline001-DMN.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: offline001-package-contract
+          path: results/offline001-DMN.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: Measure synthetic routing latency (informational only)
         run: |
           python -m benchmarks.run --repeat 30

@@ -1,0 +1,104 @@
+{
+  "test_id": "OFFLINE-001",
+  "classification": "synthetic analytical capability baseline; no package activation execution",
+  "source_sha": "669a76f0ce70c2e54ddbc15cca451d21ecfedb47",
+  "execution": "UNAVAILABLE",
+  "reason": "No verified package activation wrapper at inspected baseline; not an invented 0/18 score",
+  "oracle_sha256": "5a826150c996fa36f9f953431541feb4314db72f7d7b67dc94615085699c28c3",
+  "map_sha256": {
+    "A": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+    "B": "8b9d409865dd0b272456c2b99575c8dd29d3459602db7016377889b9b00ab465"
+  },
+  "cases": [
+    {
+      "case_id": "OFFLINE-001-no-active",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-valid",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-checksum",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-truncated",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-length",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-schema-version",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-format",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-provenance",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-malformed",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-unsupported-condition",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-bad-update-retains",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-valid-replacement",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-disconnected",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-prohibited-destination",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-unknown-node",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-recovery",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-missing-required-coverage",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    },
+    {
+      "case_id": "OFFLINE-001-oversize",
+      "outcome": "NOT_RUN",
+      "reason": "Verified offline activation capability absent"
+    }
+  ]
+}
