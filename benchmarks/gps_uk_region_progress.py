@@ -92,6 +92,16 @@ def conservative_executable_subset(raw):
         if direction not in ("","no","0","false","yes","1","true","-1","reverse"):
             forbidden.add(way_id)
             flags["unsupported_oneway"]+=1
+    # A GPS category cannot validate complex legal turn relations. Treat
+    # their entire involved road components as unknown and unscored, rather
+    # than importing incomplete or misinterpreted permissions.
+    for relation in restrictions:
+        involved={m.get("ref") for m in relation.findall("member")
+                  if m.get("type")=="way"}
+        unscored=involved & ways.keys()
+        forbidden.update(unscored)
+        flags["restriction_linked_ways_unscored"]+=len(unscored)
+    flags["restriction_relations_unscored"]=len(restrictions)
     flags["conditional_nodes"]=len(bad_nodes)
     # A motorcar graph has no use for buildings/POI/non-driving ways.
     # Do not weaken the importer: remove these whole non-road objects.
