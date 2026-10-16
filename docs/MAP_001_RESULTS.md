@@ -55,3 +55,8 @@ No confirmed false direction or incorrect endpoints were found among tested elig
 ## Next action / strict owner gate
 
 **STOP after Category 1.** Show this report and let the owner approve either (a) a **Category 1 test-harness correction and new equivalent competitor graph adapters** followed by fresh comparable tests, or (b) proceeding to a separate Category 2 review. No Category 2 execution is authorized. Do not modify DMN routing/GPS/default rules, remove any option, merge into production or release an APK.
+
+
+## Subsequent owner-approved Category 1 v2 and fresh one-way competitor proxy
+
+[**MAP-001 v2 executed results and separate issue register**](MAP_001_V2_RESULTS.md): 107/120 source passes, 8 safely withheld (conditional), 5 unjudged. Includes preserved relation context and independent access checks. A freshly executed six-engine **one-way route-response proxy** was 12/12 for DMN ★, OSRM, Valhalla, GraphHopper, openrouteservice, BRouter; all tied **only on this narrow proxy**. Main graph fidelity comparison remains **NOT_COMPARABLE**. Categories 2-21 were not started. See [test categories linked to actual engine functions](DMN_ENGINE_CATEGORY_MATRIX.md).

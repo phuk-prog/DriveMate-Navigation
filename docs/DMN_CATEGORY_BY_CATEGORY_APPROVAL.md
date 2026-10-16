@@ -52,3 +52,8 @@ Every category below is **AWAITING OWNER START** for a new head-to-head test, ev
 ## Current gate
 
 **Review category 1 only.** No category is started and no new category ranking is available just because this design exists. See [Category 1 readiness and proposed checks](DMN_CATEGORY_01_MAP_GRAPH_TEST_DESIGN.md). The owner will decide whether/when to start it.
+
+
+## Current progress update — Category 1 owner-approved work completed
+
+Category 1 v1 and v2 have executed and are saved in [MAP-001 v2 report](MAP_001_V2_RESULTS.md). The six-engine shared one-way route *proxy* was freshly rerun, but graph-fact inspection remains a comparator limitation. Category 1 **STOPPED for owner review**, with further fixes requiring a new explicit approval. Category 2 remains **AWAITING OWNER START**. All original 21 module/category IDs remain preserved; the [navigation-engine functional test matrix](DMN_ENGINE_CATEGORY_MATRIX.md) explains exactly what each needs to measure.

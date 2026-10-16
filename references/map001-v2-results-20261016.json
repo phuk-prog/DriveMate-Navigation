@@ -1,0 +1,102 @@
+{
+  "schema": "map001-v2-results",
+  "date": "2026-10-16",
+  "research_sha": "c4d13700feae9d6f672669e2ed31a5f192f7fece",
+  "map001": {
+    "run": 38938343380,
+    "artifact": 12061463540,
+    "passing": 107,
+    "safe_withheld": 8,
+    "not_judged": 5,
+    "source_failures": 0,
+    "per_city": {
+      "manchester": [
+        18,
+        0,
+        2
+      ],
+      "birmingham": [
+        20,
+        0,
+        0
+      ],
+      "carlisle": [
+        18,
+        0,
+        2
+      ],
+      "cardiff": [
+        20,
+        0,
+        0
+      ],
+      "glasgow": [
+        16,
+        3,
+        1
+      ],
+      "belfast": [
+        15,
+        5,
+        0
+      ]
+    },
+    "verified_source_only": true,
+    "independent_current_road_law": false,
+    "snapshot_same_as_v1": false
+  },
+  "route004_proxy": {
+    "run": 38938343146,
+    "classification": "functionally observable one-way routing, not complete graph internal facts",
+    "engines": [
+      "DMN",
+      "OSRM",
+      "Valhalla",
+      "GraphHopper",
+      "openrouteservice",
+      "BRouter"
+    ],
+    "per_engine": {
+      "DMN": {
+        "pass": 12,
+        "total": 12
+      },
+      "OSRM": {
+        "pass": 12,
+        "total": 12,
+        "artifact": 12061114480
+      },
+      "Valhalla": {
+        "pass": 12,
+        "total": 12,
+        "artifact": 12062550197
+      },
+      "GraphHopper": {
+        "pass": 12,
+        "total": 12,
+        "artifact": 12061997402
+      },
+      "openrouteservice": {
+        "pass": 12,
+        "total": 12,
+        "artifact": 12061709780
+      },
+      "BRouter": {
+        "pass": 12,
+        "total": 12,
+        "artifact": 12061224084
+      }
+    },
+    "all_tied_on_proxy": true,
+    "fully_comparable_graph_fidelity": false,
+    "valid_cross_engine_calculation_speed_ranking": false
+  },
+  "issues": [
+    "8 conditional source rules safely withheld",
+    "3 missing public bbox relation source members",
+    "2 unsupported or missing motorcar maneuver reference",
+    "no complete external graph-fact adapter yet"
+  ],
+  "full_category1_rank": null,
+  "category2_started": false
+}
