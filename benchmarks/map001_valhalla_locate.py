@@ -64,19 +64,28 @@ def probe():
     eligible = [wid for wid in FROZEN_V2_IDS["manchester"]
                 if wid in ways and len(ways[wid].findall("nd")) >= 2]
     locations = [way_midpoint(ways[wid], nodes) for wid in eligible]
-    body = json.dumps({"costing": "auto", "verbose": True,
-                       "locations": locations}, separators=(",", ":")).encode()
-    if len(body) > 10_000:
-        raise ValueError("Valhalla request exceeds 10 KB")
-    req = Request(LOCATE_URL, data=body, headers={"Content-Type": "application/json"},
-                  method="POST")
-    with urlopen(req, timeout=30) as response:
-        raw_output = response.read(500_001)
-    if len(raw_output) > 500_000:
-        raise ValueError("Valhalla response exceeds 500KB")
-    parsed = json.loads(raw_output)
-    if not isinstance(parsed, list) or len(parsed) != len(eligible):
-        raise ValueError("Valhalla /locate unexpected response contract")
+    # 20-location verbose responses exceeded 500 KB in the first real v3 run.
+    # Keep the protective per-request bound and make smaller deterministic
+    # batches, with no source-map changes or skipped case IDs.
+    parsed = []
+    for offset in range(0, len(locations), 4):
+        batch = locations[offset:offset + 4]
+        body = json.dumps({"costing": "auto", "verbose": True,
+                           "locations": batch}, separators=(",", ":")).encode()
+        if len(body) > 10_000:
+            raise ValueError("Valhalla request exceeds 10 KB")
+        req = Request(LOCATE_URL, data=body, headers={"Content-Type": "application/json"},
+                      method="POST")
+        with urlopen(req, timeout=30) as response:
+            raw_output = response.read(500_001)
+        if len(raw_output) > 500_000:
+            raise ValueError("Valhalla response exceeds 500KB")
+        part = json.loads(raw_output)
+        if not isinstance(part, list) or len(part) != len(batch):
+            raise ValueError("Valhalla /locate unexpected response contract")
+        parsed.extend(part)
+    if len(parsed) != len(eligible):
+        raise ValueError("Valhalla probe coverage incomplete")
     cases = [{"case_id": "manchester-" + wid, "verdict": interpret(wid, item),
               "visible_way_count": len(extract_way_ids(item) or ())}
              for wid, item in zip(eligible, parsed)]

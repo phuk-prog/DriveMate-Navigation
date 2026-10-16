@@ -9,6 +9,7 @@ on:
       - '.github/workflows/map001-v3.yml'
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: map001-v3-only
   cancel-in-progress: false
@@ -31,20 +32,17 @@ jobs:
           python -m unittest discover -s tests -p 'test_map001_v3.py' -v
           python -m unittest discover -s tests -p 'test_map001_valhalla_locate.py' -v
           mkdir -p results
-      - name: Download bounded public UK OSM sources once
+      - name: Reuse the exact v3 OSM bytes and prior case manifest
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          curl -fLsS --retry 2 --connect-timeout 15 --max-time 120 --get --data-urlencode 'bbox=-2.248,53.479,-2.244,53.483' https://api.openstreetmap.org/api/0.6/map -o results/map001-manchester.osm
-          curl -fLsS --retry 2 --connect-timeout 15 --max-time 120 --get --data-urlencode 'bbox=-1.895,52.477,-1.891,52.481' https://api.openstreetmap.org/api/0.6/map -o results/map001-birmingham.osm
-          curl -fLsS --retry 2 --connect-timeout 15 --max-time 120 --get --data-urlencode 'bbox=-2.936,54.892,-2.932,54.896' https://api.openstreetmap.org/api/0.6/map -o results/map001-carlisle.osm
-          curl -fLsS --retry 2 --connect-timeout 15 --max-time 120 --get --data-urlencode 'bbox=-3.182,51.480,-3.178,51.484' https://api.openstreetmap.org/api/0.6/map -o results/map001-cardiff.osm
-          curl -fLsS --retry 2 --connect-timeout 15 --max-time 120 --get --data-urlencode 'bbox=-4.254,55.860,-4.250,55.864' https://api.openstreetmap.org/api/0.6/map -o results/map001-glasgow.osm
-          curl -fLsS --retry 2 --connect-timeout 15 --max-time 120 --get --data-urlencode 'bbox=-5.932,54.599,-5.928,54.603' https://api.openstreetmap.org/api/0.6/map -o results/map001-belfast.osm
-      - name: Close missing relation members and freeze sources
-        run: |
-          set -euo pipefail
-          python -m benchmarks.map001_v3 close
-          python -m benchmarks.map001_v3 freeze
+          mkdir -p results
+          gh run download 38944666096 --repo phuk-prog/DriveMate-Navigation -n map001-v3-frozen-osm-closure-and-valhalla -D results
+          for AREA in manchester birmingham carlisle cardiff glasgow belfast; do
+            test -s "results/map001-${AREA}.osm"
+          done
+          test -s results/map001-v3-manifest.json
           python -m benchmarks.map001_v3 score
       - name: Build local Valhalla graph from frozen Manchester source
         run: |

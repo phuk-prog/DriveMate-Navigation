@@ -15,7 +15,8 @@
         "test_public_network_sweep.py",
         "test_public_diversity_study.py",
         "test_map001_graph_fact_audit.py",
-        "test_map001_v2.py"
+        "test_map001_v2.py",
+        "test_map001_v3.py"
       ],
       "engine_rank": null,
       "navigation_score": null
@@ -268,7 +269,8 @@
         "test_graphhopper_match_reference.py",
         "test_osrm_match_reference.py",
         "test_valhalla_match_reference.py",
-        "test_ors_snap_reference.py"
+        "test_ors_snap_reference.py",
+        "test_map001_valhalla_locate.py"
       ],
       "engine_rank": null,
       "navigation_score": null
