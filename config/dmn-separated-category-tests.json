@@ -13,7 +13,9 @@
         "test_public_osm_extract.py",
         "test_public_network_coverage.py",
         "test_public_network_sweep.py",
-        "test_public_diversity_study.py"
+        "test_public_diversity_study.py",
+        "test_map001_graph_fact_audit.py",
+        "test_map001_v2.py"
       ],
       "engine_rank": null,
       "navigation_score": null
