@@ -114,12 +114,17 @@ def astar_route(
         maximum_mps = max((e.estimated_kph for e in graph.edges.values()), default=1.0) / 3.6
     if source == destination:
         return AStarResult(Route((), 0.0, 0.0), 0, bool(can_heuristic))
+    # Incoming-edge search states share one destination-dependent value per
+    # vertex. Keep this cache local to the request, never in prepared map state.
+    heuristic_values: dict[str, float] = {}
     def heuristic(vertex: str) -> float:
         if not can_heuristic:
             return 0.0
         assert coordinates is not None
         # Subtract tolerance: avoid slight rounding making h larger than truth.
-        return max(0.0, metres(coordinates[vertex], coordinates[destination]) - 0.02) / maximum_mps
+        if vertex not in heuristic_values:
+            heuristic_values[vertex] = max(0.0, metres(coordinates[vertex], coordinates[destination]) - 0.02) / maximum_mps
+        return heuristic_values[vertex]
 
     start = (source, incoming_edge_id)
     distances = {start: 0.0}

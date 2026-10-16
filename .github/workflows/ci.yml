@@ -90,6 +90,17 @@ jobs:
           path: results/offline001-DMN.json
           if-no-files-found: warn
           retention-days: 30
+      - name: RESOURCE-001 separate setup timing and memory workers
+        env:
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python -m benchmarks.resource_trial --output results/resource001-DMN.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: resource001-characterization
+          path: results/resource001-DMN.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: Measure synthetic routing latency (informational only)
         run: |
           python -m benchmarks.run --repeat 30
