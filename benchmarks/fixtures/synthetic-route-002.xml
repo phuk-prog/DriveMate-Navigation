@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='utf-8'?>
+<osm version="0.6" generator="DMN synthetic ROUTE-002 analytical controls">
+  <node id="1" version="1" lat="1" lon="1" />
+  <node id="2" version="1" lat="1" lon="1.001" />
+  <node id="3" version="1" lat="1" lon="1.002" />
+  <node id="4" version="1" lat="1.001" lon="1.001" />
+  <node id="5" version="1" lat="1.001" lon="1.002" />
+  <node id="6" version="1" lat="1.002" lon="1.001" />
+  <node id="7" version="1" lat="1.002" lon="1.002" />
+  <node id="8" version="1" lat="1.003" lon="1.003" />
+  <node id="9" version="1" lat="1.003" lon="1.004" />
+  <way id="10" version="1">
+    <nd ref="1" />
+    <nd ref="2" />
+    <tag k="highway" v="secondary" />
+    <tag k="oneway" v="yes" />
+    <tag k="motor_vehicle" v="yes" />
+    <tag k="maxspeed" v="50" />
+  </way>
+  <way id="20" version="1">
+    <nd ref="2" />
+    <nd ref="3" />
+    <tag k="highway" v="secondary" />
+    <tag k="oneway" v="yes" />
+    <tag k="motor_vehicle" v="yes" />
+    <tag k="maxspeed" v="50" />
+  </way>
+  <way id="30" version="1">
+    <nd ref="2" />
+    <nd ref="4" />
+    <tag k="highway" v="secondary" />
+    <tag k="oneway" v="yes" />
+    <tag k="motor_vehicle" v="yes" />
+    <tag k="maxspeed" v="50" />
+  </way>
+  <way id="40" version="1">
+    <nd ref="4" />
+    <nd ref="5" />
+    <tag k="highway" v="secondary" />
+    <tag k="oneway" v="yes" />
+    <tag k="motor_vehicle" v="yes" />
+    <tag k="maxspeed" v="50" />
+  </way>
+  <way id="50" version="1">
+    <nd ref="5" />
+    <nd ref="3" />
+    <tag k="highway" v="secondary" />
+    <tag k="oneway" v="yes" />
+    <tag k="motor_vehicle" v="yes" />
+    <tag k="maxspeed" v="50" />
+  </way>
+  <way id="60" version="1">
+    <nd ref="2" />
+    <nd ref="5" />
+    <tag k="highway" v="secondary" />
+    <tag k="oneway" v="yes" />
+    <tag k="motor_vehicle" v="no" />
+    <tag k="maxspeed" v="50" />
+  </way>
+  <way id="70" version="1">
+    <nd ref="4" />
+    <nd ref="6" />
+    <tag k="highway" v="secondary" />
+    <tag k="oneway" v="yes" />
+    <tag k="motor_vehicle" v="no" />
+    <tag k="maxspeed" v="50" />
+  </way>
+  <way id="80" version="1">
+    <nd ref="6" />
+    <nd ref="7" />
+    <tag k="highway" v="secondary" />
+    <tag k="oneway" v="yes" />
+    <tag k="motor_vehicle" v="yes" />
+    <tag k="maxspeed" v="50" />
+  </way>
+  <way id="90" version="1">
+    <nd ref="8" />
+    <nd ref="9" />
+    <tag k="highway" v="secondary" />
+    <tag k="oneway" v="yes" />
+    <tag k="motor_vehicle" v="yes" />
+    <tag k="maxspeed" v="50" />
+  </way>
+  <way id="95" version="1">
+    <nd ref="4" />
+    <nd ref="7" />
+    <tag k="highway" v="secondary" />
+    <tag k="oneway" v="yes" />
+    <tag k="motor_vehicle" v="yes" />
+    <tag k="maxspeed" v="50" />
+  </way>
+  <way id="100" version="1">
+    <nd ref="7" />
+    <nd ref="5" />
+    <tag k="highway" v="secondary" />
+    <tag k="oneway" v="yes" />
+    <tag k="motor_vehicle" v="yes" />
+    <tag k="maxspeed" v="50" />
+  </way>
+  <relation id="1000" version="1">
+    <member type="way" ref="10" role="from" />
+    <member type="way" ref="20" role="to" />
+    <member type="node" ref="2" role="via" />
+    <tag k="type" v="restriction" />
+    <tag k="restriction" v="no_straight_on" />
+  </relation>
+</osm>

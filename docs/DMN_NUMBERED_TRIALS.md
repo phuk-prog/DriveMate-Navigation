@@ -207,3 +207,34 @@ route001-expanded-scorecard-20261015.json. Do not rerun unchanged heavy engines.
 Next bounded stage: freeze and execute routing access/turn/disconnection and
 rerouting-context cases. These harder cases have not yet been executed; the
 four-case tie does not clear them, and does not clear the UK coverage block.
+
+## ROUTE-002 frozen legality/recalculation stage
+
+Eight hand-authored synthetic cases use a new explicit directed map and JSON
+oracle: prohibited-turn detour, unrestricted fresh-origin control, motor_vehicle=no
+shortcut bypass, disconnected destination, prohibited-access destination,
+rerouting with an incoming prohibited turn, rerouting around a blocked link and
+safe no-route when all legal detours are blocked. Expectations are analytical,
+not independently surveyed/legal road truth. All declared legal simple path
+variants are accepted: different provider turn costs must not become fake
+legality failures. A road geometry must satisfy ROUTE-001's 2 m endpoint/path and
+5 m length tolerances for one enumerated legal path. No-route requires an explicit
+route-search refusal, never generic HTTP errors, missing maps or invented output.
+
+Freeze `synthetic-route-002.xml` and `.json` before tuning. Five static cases are
+shared by DMN, OSRM, Valhalla, GraphHopper, ORS and BRouter; execute all permitted
+local engines sequentially (`[route002-refs]`, max-parallel 1). Rank only the five
+fully judged shared cases, score `10 * passed / 5`, ties share rank. Preserve
+all eight cases for every family. Three state cases use DMN incoming-edge or
+arbitrary blocked-link state: existing external adapters cannot express the same
+state and remain UNSUPPORTED for those cases, not failed. Seven unavailable
+families remain unranked with per-case NOT_RUN reasons. An unresolved shared
+case prevents ranking that engine on the full five-case cohort.
+
+Use prior version-pinned engines/configuration families, the same invented map,
+full geometry, no elevation and disabled tiny-network pruning. BRouter uses its
+actual official builder and car-vario profile, with prepared-map/profile hashes.
+Generic server failures, timeouts and ambiguous provider errors are UNRESOLVED or
+unavailable, not passed no-route. Successful CI means execution/evidence checks
+passed; inspect case verdicts before claiming a quality result. No DMN engine
+policy has been changed to author this harness. Preserve the UK coverage block.
