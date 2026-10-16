@@ -640,3 +640,18 @@ multi-vertex reverse-path detection gaps, absence of required edge coverage,
 and a provisional York Street reverse detour-length disagreement. Original
 engine results and frozen tests remain unchanged. **STOP for owner review**;
 GPS-003 and seven UK unresolved matches remain open, without matcher tuning.
+
+
+### GPS-003 diagnosis of the two first-fix ambiguities (2026-10-16)
+
+Read-only review of frozen [GPS-003 case data](../references/gps003-real-map-20261016.json)
+and the older [UK 40-case topology data](../references/gps001-uk-topology-20261015.json)
+was published in [the detailed GPS-003 investigation](GPS_003_INVESTIGATION_20261016.md).
+Sixteen failing streams are eight repetitions each of two unanchored first-fix
+ambiguous coordinates on one Moss Lane way; no confident wrong road and all24
+final clear recoveries remain as recorded. Seven distinct historical UK lost
+matches involve backward-adjacent same-way fragments with recorded residuals;
+these are not sixteen additional independent roads. The report provides a
+separate issue register, source limitations and a diagnostic-only proposal.
+Zero comparable external GPS-003 stream executions; no synthetic ranking.
+No test run, matcher change, confidence adjustment or promotion. **STOP FOR REVIEW.**

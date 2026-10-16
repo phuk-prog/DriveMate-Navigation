@@ -122,3 +122,14 @@ are diagnostic in-process timings, not device estimates or a cross-engine rankin
 Full per-update measurements are retained. Proposed next investigation, subject
 to review: inspect competing candidate geometry at the two repeated initial
 positions before judging whether output can safely be restored. No fix is verified.
+
+
+## Read-only review of the two repeated GPS-003 first-fix failures (2026-10-16)
+
+[GPS-003 and seven UK GPS-matching losses — retained-evidence investigation](GPS_003_INVESTIGATION_20261016.md)
+documents all sixteen frozen first-reading availability failures as two repeated
+ambiguous Moss Lane coordinates, separates deliberate noise/quality abstentions
+from genuine required-output failures, and reviews the seven distinct older
+backward-adjacent cases. No GPS safety behavior, frozen acceptance, run or source
+truth was changed. Proposes a bounded candidate-geometry diagnostic only after
+owner authorization. **STOP FOR OWNER REVIEW.**
