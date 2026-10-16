@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'benchmarks/gps003_candidate_diagnostic.py'
+      - 'benchmarks/gps003_research_variant.py'
       - '.github/workflows/gps003-candidate-diagnostic.yml'
 permissions:
   contents: read
@@ -53,11 +54,19 @@ jobs:
             --map results/gps003-map.osm \
             --archive-hash results/gps003-source-hashes.json \
             --output results/gps003-candidate-diagnostic.json
+      - name: Recheck all frozen GPS003 and UK40 cases with default and opt-in matcher
+        run: |
+          python -m benchmarks.gps003_research_variant \
+            --map results/gps003-map.osm \
+            --archive-hash results/gps003-source-hashes.json \
+            --output results/gps003-research-variant.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
           name: gps003-candidate-diagnostic
-          path: results/gps003-candidate-diagnostic.json
+          path: |
+            results/gps003-candidate-diagnostic.json
+            results/gps003-research-variant.json
           if-no-files-found: warn
           retention-days: 30
       - name: Delete temporary map data

@@ -41,7 +41,8 @@
         "test_public_gps_matching.py",
         "test_competing_link_evidence.py",
         "test_match_geometry_truth.py",
-        "test_gps_fragment_experiment.py"
+        "test_gps_fragment_experiment.py",
+        "test_gps003_research_variant.py"
       ],
       "engine_rank": null,
       "navigation_score": null
