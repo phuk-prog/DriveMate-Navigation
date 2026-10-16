@@ -32,7 +32,7 @@ jobs:
           curl -fLsS --retry 2 --connect-timeout 20 --max-time 180 https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf -o results/route004-source.osm.pbf
           ARCHIVE_HASH="$(sha256sum results/route004-source.osm.pbf | cut -d' ' -f1)"
           osmium extract --strategy complete_ways --bbox=-2.245000,53.475000,-2.225000,53.490000 results/route004-source.osm.pbf -o results/route004-full.osm.pbf
-          osmium tags-filter results/route004-full.osm.pbf w/highway r/type=restriction -o results/route004-map.osm.pbf
+          osmium tags-filter results/route004-full.osm.pbf w/highway -o results/route004-map.osm.pbf
           osmium cat results/route004-map.osm.pbf -o results/route004-raw-map.osm -f osm,add_metadata=false
           python -m benchmarks.real_map_legality_baseline --sanitize --map results/route004-raw-map.osm --output results/route004-map.osm
           rm results/route004-map.osm.pbf

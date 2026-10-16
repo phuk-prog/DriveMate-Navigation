@@ -606,7 +606,9 @@ OSRM, Valhalla, GraphHopper, openrouteservice and BRouter receive the same exact
 node endpoints. Required-route availability, endpoint alignment, finite distance
 and ETA, and absence of direct traversal along the mapped forbidden direction are
 judged. OSM tags remain source-map evidence rather than independent current road
-law. No UK17/0/23 ambiguity threshold or retained GPS case is changed.
+law. Turn-restriction relations are outside this one-way-only cohort; unsupported
+conditional objects and their dependants are removed for every engine rather than
+interpreted. No UK17/0/23 ambiguity threshold or retained GPS case is changed.
 
 DMN_RESULTS_OVERVIEW.md now consolidates retained per-case comparative rankings,
 failures and actual measured milliseconds, clearly separating missing/unmatched
