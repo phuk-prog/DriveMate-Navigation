@@ -96,6 +96,7 @@ def conservative_executable_subset(raw):
     # Unsupported/missing restrictions cause all involved road ways to become
     # unknown in this bounded experiment. Propagate to dependent manoeuvres.
     active=[]
+    unsupported_relations=set()
     for relation in restrictions:
         attr=tags(relation)
         members=relation.findall("member")
@@ -108,8 +109,16 @@ def conservative_executable_subset(raw):
         supported=(not any(k.endswith("conditional") for k in attr)
                    and (rule.startswith("no_") or rule.startswith("only_"))
                    and len(froms)==len(tos)==len(vias)==1 and len(members)==3
-                   and all(w in ways for w in related) and vias[0].get("ref") in nodes)
+                   and all(w in ways for w in related)
+                   and all(tags(ways[w]).get("highway") in
+                        ("motorway","trunk","primary","secondary","tertiary",
+                         "unclassified","residential","living_street",
+                         "motorway_link","trunk_link","primary_link",
+                         "secondary_link","tertiary_link","service","track")
+                        for w in related)
+                   and vias[0].get("ref") in nodes)
         if not supported:
+            unsupported_relations.add(id(relation))
             forbidden.update(related & ways.keys())
             flags["unsupported_restriction_relations"]+=1
         else:
@@ -128,12 +137,13 @@ def conservative_executable_subset(raw):
     for relation in restrictions:
         related={m.get("ref") for m in relation.findall("member")
                  if m.get("type")=="way"}
-        if related & forbidden or any(
+        if id(relation) in unsupported_relations or related & forbidden or any(
             k.endswith("conditional") for k in tags(relation)):
             root.remove(relation)
     # Nonrestriction relations are not interpreted by the motorcar importer.
     for node_id in bad_nodes:
         if node_id in nodes:root.remove(nodes[node_id])
+    flags["unsupported_relations_excluded"]=len(unsupported_relations)
     flags["omitted_complete_ways"]=len(forbidden & ways.keys())
     result=ET.tostring(root,encoding="utf-8",xml_declaration=True)
     if len(result)>6_000_000:
