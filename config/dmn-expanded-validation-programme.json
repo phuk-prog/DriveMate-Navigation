@@ -1,0 +1,266 @@
+{
+  "schema_version": 1,
+  "status": "authorized_programme_readiness_audit_not_engine_test_results",
+  "minimum_external_engines_per_competitive_cohort": 10,
+  "selection_policy": {
+    "active_comparison": "only actually executed, applicable engines with equivalent judged inputs",
+    "unusable_engines": "exclude from active test/ranking; record reason in separate audit",
+    "underfilled_cohort": "minimum-ten requirement unmet; internal/exploratory results may continue but cannot claim ten-engine comparison",
+    "original_results": "preserve all frozen historical evidence; do not rescore retroactively",
+    "family_count": "OSRM CH/MLD and DMN algorithms are configurations, never extra families"
+  },
+  "references": [
+    {
+      "family": "Valhalla",
+      "execution_status": "EXECUTED_STATIC_ROUTING",
+      "target_ten": true,
+      "last_executed_configuration": "3.9.1 auto",
+      "evidence": "references/junction001-executed-20261016.json",
+      "evidence_scope": "JUNCTION-001 static routing/maneuvers only; not universal capability"
+    },
+    {
+      "family": "OSRM",
+      "execution_status": "EXECUTED_STATIC_ROUTING",
+      "target_ten": true,
+      "last_executed_configuration": "5.27.1 car.lua/MLD",
+      "evidence": "references/junction001-executed-20261016.json",
+      "evidence_scope": "JUNCTION-001 static routing/maneuvers only; not universal capability"
+    },
+    {
+      "family": "GraphHopper",
+      "execution_status": "EXECUTED_STATIC_ROUTING",
+      "target_ten": true,
+      "last_executed_configuration": "11.1 car/CH",
+      "evidence": "references/junction001-executed-20261016.json",
+      "evidence_scope": "JUNCTION-001 static routing/maneuvers only; not universal capability"
+    },
+    {
+      "family": "OsmAnd",
+      "execution_status": "NOT_RUN",
+      "target_ten": true,
+      "reason": "native/app replay harness missing"
+    },
+    {
+      "family": "Organic Maps",
+      "execution_status": "NOT_RUN",
+      "target_ten": true,
+      "reason": "native/app replay harness missing"
+    },
+    {
+      "family": "BRouter",
+      "execution_status": "EXECUTED_STATIC_ROUTING",
+      "target_ten": true,
+      "last_executed_configuration": "1.7.10 car-vario",
+      "evidence": "references/junction001-executed-20261016.json",
+      "evidence_scope": "JUNCTION-001 static routing/maneuvers only; not universal capability"
+    },
+    {
+      "family": "HERE",
+      "execution_status": "NOT_RUN",
+      "target_ten": false,
+      "reason": "no configured permitted access/equivalent harness; no paid calls"
+    },
+    {
+      "family": "Mapbox",
+      "execution_status": "NOT_RUN",
+      "target_ten": false,
+      "reason": "no configured permitted access/equivalent harness; no paid calls"
+    },
+    {
+      "family": "TomTom",
+      "execution_status": "NOT_RUN",
+      "target_ten": false,
+      "reason": "no configured permitted access/equivalent harness; no paid calls"
+    },
+    {
+      "family": "openrouteservice",
+      "execution_status": "EXECUTED_STATIC_ROUTING",
+      "target_ten": true,
+      "last_executed_configuration": "10.1.0 driving-car/fastest",
+      "evidence": "references/junction001-executed-20261016.json",
+      "evidence_scope": "JUNCTION-001 static routing/maneuvers only; not universal capability"
+    },
+    {
+      "family": "Google Maps",
+      "execution_status": "NOT_RUN",
+      "target_ten": false,
+      "reason": "no configured permitted access/equivalent harness; no paid calls"
+    },
+    {
+      "family": "Waze",
+      "execution_status": "NOT_RUN",
+      "target_ten": false,
+      "reason": "no established permitted automated interface"
+    },
+    {
+      "family": "Itinero",
+      "execution_status": "NOT_RUN",
+      "target_ten": true,
+      "reason": "adapter, pinned executable and fixture smoke test missing"
+    },
+    {
+      "family": "libosmscout",
+      "execution_status": "NOT_RUN",
+      "target_ten": true,
+      "reason": "adapter, pinned executable and fixture smoke test missing"
+    },
+    {
+      "family": "Routino",
+      "execution_status": "NOT_RUN",
+      "target_ten": true,
+      "reason": "adapter, pinned executable and fixture smoke test missing"
+    }
+  ],
+  "batches": [
+    {
+      "id": "GPS-QUALITY",
+      "purpose": "Clear fixes, low accuracy, stationary heading, stale/future/duplicate packets, signal gaps, multipath and impossible jumps",
+      "checks": [
+        "correct road and direction where independently justified",
+        "withhold ambiguous claims",
+        "reject invalid packets without corrupting trusted state",
+        "recovery time and distance after signal returns",
+        "no confident wrong carriageway or bridge level"
+      ]
+    },
+    {
+      "id": "ROUTE-LEGALITY",
+      "purpose": "One-way, turn restrictions, access classes, dated closures, conditional restrictions and exact endpoints",
+      "checks": [
+        "every traversed edge and transition legal for the frozen profile/time",
+        "no destination relocation outside tolerance",
+        "documented no-route versus missing coverage",
+        "route geometry and maneuver alignment"
+      ]
+    },
+    {
+      "id": "REROUTE-WRONG-TURN",
+      "purpose": "True wrong turns versus noisy drift, missed exits, repeated deviations, stale callbacks and context changes",
+      "checks": [
+        "corroborated reroute trigger",
+        "detection delay separate from route calculation time",
+        "no illegal recovery or prohibited U-turn",
+        "no oscillation or stale result installation"
+      ]
+    },
+    {
+      "id": "JUNCTION-GUIDANCE",
+      "purpose": "Forks, merges, grade separation, motorway exits, nested/complex roundabouts and close consecutive turns",
+      "checks": [
+        "correct maneuver and exit count",
+        "correct approach and outgoing road",
+        "instruction indices and sequence align to geometry",
+        "lane assertions only with licensed verified lane data"
+      ]
+    },
+    {
+      "id": "ARRIVAL",
+      "purpose": "Nearby parallel roads, wrong carriageway, early proximity, overshoot, weak fixes and destination changes",
+      "checks": [
+        "route progress plus proximity plus fresh corroboration",
+        "no false arrival",
+        "one arrival event per context",
+        "safe recovery after rejected evidence"
+      ]
+    },
+    {
+      "id": "OFFLINE-RECOVERY",
+      "purpose": "No network, partial coverage, corrupt/truncated maps, interrupted updates, stale packages and reconnects",
+      "checks": [
+        "actual route calculation using verified local data",
+        "known-good snapshot survives failed update",
+        "missing data distinct from no legal route",
+        "no silent online fallback in offline mode",
+        "map version/freshness limits stated"
+      ]
+    },
+    {
+      "id": "RESOURCE-LONG-RUN",
+      "purpose": "Warm/cold calculations, route lengths/scales, repeated reroutes and wall-clock soaks",
+      "checks": [
+        "same workload/hardware/transport for ranked measurements",
+        "startup/map preparation separated from requests",
+        "raw latency samples and quantiles with sample counts",
+        "CPU/memory/storage growth and leaks",
+        "actual versus accelerated duration explicit",
+        "correctness retained throughout"
+      ]
+    },
+    {
+      "id": "ANDROID-EMULATOR",
+      "purpose": "Location injection, coarse/precise permissions, background/stop/restart, screen-off, GPS loss and offline transitions",
+      "checks": [
+        "actual integrated DMN component exercised, not just Android mock-location plumbing",
+        "route/GPS service lifecycle and notification stop",
+        "stale guidance suppressed",
+        "ephemeral debug/test APKs distinguished from release artifacts",
+        "no standalone replacement DMN app or production repository changes"
+      ]
+    }
+  ],
+  "scale_policy": {
+    "initial": "freeze small explicit cases and oracles; run baseline, diagnose, fix, retest all affected safety cases",
+    "expansion": "seeded generated variants in bounded shards after harness/oracle verification",
+    "target_generated_variants": 1000000,
+    "executed_generated_variants_under_this_revision": 0,
+    "counting": "separate unique base cases, generated variants, repeats, engine executions and independently verified real-world cases",
+    "truth": "a million generated variants do not create a million independent road facts",
+    "limits": "declare per-shard time/memory/request budgets and resume checkpoints before launching"
+  },
+  "sources": [
+    {
+      "name": "National Highways travel updates",
+      "url": "https://nationalhighways.co.uk/travel-updates/",
+      "status": "CANDIDATE_RETRIEVAL_BLOCKED",
+      "reason": "direct free retrieval blocked by environment proxy HTTP403; no facts/terms/data verified",
+      "intended_use": "dated incidents/planned closures where covered; not standalone road-legality/GNSS truth"
+    },
+    {
+      "name": "OS Open Roads",
+      "url": "https://www.ordnancesurvey.co.uk/products/os-open-roads",
+      "status": "CANDIDATE_RETRIEVAL_BLOCKED",
+      "reason": "direct free retrieval blocked by environment proxy HTTP403; no dataset downloaded",
+      "intended_use": "independent network/geometry cross-check subject to accuracy, licensing and coverage review; not turn/closure truth"
+    }
+  ],
+  "oracle_requirements": [
+    "source URL and document/data hash",
+    "licence and permitted retention/output",
+    "jurisdiction and responsible authority",
+    "publication/effective/expiry dates",
+    "vehicle/profile/time exceptions",
+    "explicit expected result and tolerance before tuning",
+    "independence from DMN, competitor consensus and source-map agreement",
+    "conflict/missing evidence => unresolved, never manufactured truth"
+  ],
+  "score_policy": {
+    "formula": "10 * passed cases / frozen genuinely comparable judged cases; ties share rank",
+    "incomplete": "incomplete or unavailable execution is unranked, never zero-quality",
+    "report_fields": [
+      "case ID",
+      "expected result and source",
+      "actual result",
+      "pass/fail/unresolved and exact reason",
+      "wrong-road/illegal-turn/false-arrival safety flags",
+      "version/configuration",
+      "map/oracle hash",
+      "run SHA/CI link",
+      "latency and resource units/scopes"
+    ],
+    "safety": "critical safety failures block promotion independently of numeric score",
+    "overall": "no universal winner or cross-category composite without a separately frozen justified method"
+  },
+  "road_data_policy": {
+    "future_comparison_batches": "real licensed public road maps only; invented road networks remain internal/historical regression controls, not this requested validation",
+    "only_simulated_input": "GPS observations: noise, accuracy metadata, gaps, timestamps, headings and speeds",
+    "identical_inputs": "same frozen real-map snapshot/hash and byte-identical timestamped GPS observations per applicable cohort",
+    "expected_truth": "source-backed expected road behavior; geometry agreement alone is not legal or surveyed GNSS truth",
+    "emulator": "actual integrated engine required; private ephemeral test/debug APKs may be necessary for requested emulator tests; no production/release APK or new standalone DMN app"
+  },
+  "next_execution": {
+    "stage": "REF-006 Itinero real-map executable integration",
+    "purpose": "find and execute an additional applicable external routing engine; not a GPS-stream or ten-engine ranking claim",
+    "map_source": "pinned Geofabrik Greater Manchester260901 real OSM, same established public research bbox",
+    "verdict_scope": "complete finite geometry and exact endpoint fidelity; road/legal truth unresolved without independent labels"
+  }
+}

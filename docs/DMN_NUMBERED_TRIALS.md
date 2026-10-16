@@ -471,3 +471,25 @@ available. No adb/emulator/research Android project is available here; device
 checks are UNAVAILABLE, never passed. Independent road/legal/GNSS truth and
 broader same-workload reference adapters remain work. Preserve UK17/0/23 and
 promotion block; do not declare the programme complete or universally superior.
+
+## Owner steering: real maps, controlled GPS, applicable replacement engines
+
+Future requested comparisons use real licensed public road maps and source-backed
+facts; only injected GPS observations are simulated. Earlier invented-map checks
+remain historical/internal controls and do not satisfy this real-map programme.
+Target at least ten actually executed external engines per comparable cohort.
+Unusable engines are excluded from active test/rank tables; record reasons in a
+separate audit and build/find replacements rather than filling ranks with names.
+Do not collapse five prior static executions into ten or claim generic feature
+coverage. Test DMN independently against frozen evidence, then run other engines
+separately on identical inputs; another engine never defines correctness.
+See DMN_EXPANDED_VALIDATION.md and config/dmn-expanded-validation-programme.json
+for detailed GPS/one-way/wrong-turn/junction/arrival/offline/resource/emulator
+batches, truth/source rules, bounded million-variant expansion and improvement
+register. New-registry generated-variant execution count is zero. New selector
+requires a real-map source manifest and preserves historical frozen evidence.
+Next bounded execution is REF-006: real Itinero source build and real pinned
+Greater Manchester map, three preselected cases, finite route/5m endpoint contract.
+No fabricated roads, legal/GNSS-truth verdict or ten-engine ranking is inferred.
+Preserve the seven unresolved UK coverage cases and promotion block. Emulator
+readiness is not asserted from location-injection scaffolding or host tests.

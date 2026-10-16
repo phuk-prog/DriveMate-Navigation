@@ -1,0 +1,66 @@
+name: REF-006 Itinero real-map executable probe
+on:
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: ref006-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  probe:
+    if: contains(github.event.pull_request.title, '[ref006-itinero]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Pin and inspect actual Itinero source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: itinero/routing
+          ref: b8a004a831d353565572c7ba41b5a40c29d79360
+          path: results/itinero-source
+          persist-credentials: false
+      - name: Prepare real map and freeze cases before engine execution
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl -fLsS --retry 2 --connect-timeout 20 --max-time 180 https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf -o "${RUNNER_TEMP}/ref006-source.osm.pbf"
+          printf '%s  %s\n' b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5 "${RUNNER_TEMP}/ref006-source.osm.pbf" | sha256sum --check
+          osmium extract --strategy complete_ways --bbox=-2.270000,53.350000,-2.260000,53.360000 "${RUNNER_TEMP}/ref006-source.osm.pbf" -o results/ref006-map.osm.pbf
+          osmium cat results/ref006-map.osm.pbf -o results/ref006-map.osm -f osm,add_metadata=false
+          python -m benchmarks.itinero_public_probe --prepare
+          cat results/ref006-requests.json
+      - name: Compile real reference engine and capture exact dependencies
+        run: |
+          set -euo pipefail
+          dotnet --info > results/ref006-dotnet-info.txt
+          dotnet build benchmarks/itinero_reference/Reference.csproj -c Release
+          dotnet list benchmarks/itinero_reference/Reference.csproj package --include-transitive --format json > results/ref006-dependencies.json
+          sha256sum benchmarks/itinero_reference/bin/Release/net8.0/*.dll > results/ref006-assembly-hashes.txt
+          cat results/ref006-assembly-hashes.txt
+      - name: Execute actual Itinero on the frozen real-map cases
+        env:
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          dotnet benchmarks/itinero_reference/bin/Release/net8.0/Reference.dll results/ref006-map.osm.pbf results/ref006-requests.json results/ref006-itinero-output.json
+          python -m benchmarks.itinero_public_probe
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: ref006-itinero-real-map
+          path: |
+            results/ref006-*.json
+            results/ref006-*.txt
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Remove ephemeral map, source and compiled outputs
+        if: always()
+        run: |
+          rm -f "${RUNNER_TEMP}/ref006-source.osm.pbf" results/ref006-map.osm results/ref006-map.osm.pbf
+          rm -rf results/itinero-source benchmarks/itinero_reference/bin benchmarks/itinero_reference/obj
