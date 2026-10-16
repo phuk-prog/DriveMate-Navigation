@@ -49,3 +49,7 @@ The file `gps-uk40-18-withheld.json` is produced alongside the prior GPS-003
 comparison in the existing bounded GitHub workflow. Its source-map labels are
 **provisional**, never independent road/GNSS truth. Exact findings will determine
 the next proposed safety tests; stop for review before implementing any fix.
+
+## Latest exact 18-case UK40 ambiguity diagnosis
+
+[Retained-evidence UK40 diagnosis](DMN_UK40_REMAINING_18_RESULTS_20261016.md) from [successful diagnostic](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38915981032) proves that all 18 still-withheld source-map cases have an existing matched first anchor, **exactly two time-reachable directed segments of the same OSM way**, and the same conservative `nearby_parallel_or_overlapping_roads` final reason. Original default 17/40 and shadow 22/40 remain unchanged. Independent real GNSS/road legality is not verified; no new GPS behavior was enabled. The separate [engine-only CI](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38915980817) passed **517/517** units across 21 categories. STOP for owner review before fixes.
