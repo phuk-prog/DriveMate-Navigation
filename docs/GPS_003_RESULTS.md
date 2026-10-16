@@ -57,3 +57,11 @@ clear output and rejected-fix history poisoning. Canonical unified preflight scr
 is absent (UNAVAILABLE). Full local suite/compile/privacy/whitespace must pass
 before upload. Real-map execution pending CI; no score or pass is presumed.
 Preserve UK17/0/23 and all seven unresolved earlier cases unchanged.
+
+First CI38869088303 at9791160c1137d59f5b577ac653d2966d3299dea0 stopped before
+any matcher update: tuple coordinates in the recomputed Python manifest compared
+unequal to identical decoded JSON lists. Map/archive checks and preparation had
+succeeded. Corrected comparison uses exact canonical serialized manifest bytes;
+signals, selection and expectations are unchanged. Added tuple roundtrip and
+manifest-tampering controls. Retained gps003-setup-failure-20261016.json; no
+navigation failure or pass is assigned to that setup attempt.

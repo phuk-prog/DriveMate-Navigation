@@ -85,13 +85,19 @@ def freeze(raw):
                 clocks='deterministic monotonic millisecond source/receipt clocks; accelerated, not wall-clock soak')
 
 
+def verify_manifest(raw_bytes,frozen):
+    # Compare canonical serialized bytes, not Python tuple versus decoded list.
+    if raw_bytes!=(json.dumps(frozen,indent=2)+'\n').encode():
+        raise ValueError('Frozen cases changed')
+
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('--prepare',action='store_true');a=p.parse_args()
     area=ROOT/'results';raw=(area/'gps003-map.osm').read_bytes();path=area/'gps003-cases.json'
     frozen=freeze(raw)
     if a.prepare:
         path.write_text(json.dumps(frozen,indent=2)+'\n');print(path.read_text());return
-    if json.loads(path.read_text())!=frozen:raise ValueError('Frozen cases changed')
+    verify_manifest(path.read_bytes(),frozen)
     data=import_osm_xml(raw,provenance=Provenance('public Manchester GPS-003','Geofabrik260901',SOURCE,'OpenStreetMap contributors; ODbL'))
     rows=[];counts=dict(correct=0,confident_wrong=0,withheld=0,rejected=0)
     for case in frozen['cases']:
