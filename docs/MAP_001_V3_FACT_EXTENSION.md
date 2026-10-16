@@ -38,3 +38,15 @@ snapping candidate as a missing graph edge.
 
 Keep original v1/v2/v3 evidence, failures and safety gates. No app work.
 After the run, report, then stop for the owner.
+
+## Follow-up on first extended adapter run
+
+The initial adapter classified 13 candidate edges on `motor_vehicle=destination`
+and `access=private` roads as suspected contradictions because it expected
+`edge.access.car=false`. This comparison is INVALID: those tags express a
+purpose-/permission-dependent rule, while Valhalla's car access bit is not a
+complete authorization oracle. The historical artifact and its initial labels
+remain preserved. The revised adapter reports these candidates as
+`POLICY_CONTEXT_NOT_BINARY`, and records `destination_only` and `not_thru`
+where exposed. It reruns over identical frozen v3 source and does not claim
+Valhalla correctness or DMN navigation improvement based on a score adjustment.

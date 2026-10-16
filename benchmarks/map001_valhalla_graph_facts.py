@@ -16,22 +16,29 @@ from benchmarks.map001_v3_restriction_diagnostics import explicit_direction, YES
 
 
 def expected_direction(t,forward):
+    """A direction/car-access mask is NOT a destination/private-permission rule."""
     orient="forward" if forward else "backward"
-    directional=explicit_direction(t,orient)
-    if directional is not None:
-        return directional
     oneway=t.get("oneway","")
     if not oneway and t.get("junction") in ("roundabout","circular"):
         oneway="yes"
+    # These are hard directional limitations unless mode-specific exceptions exist.
     if oneway in ("yes","1","true") and not forward:return "prohibited"
     if oneway in ("-1","reverse") and forward:return "prohibited"
-    # A conservative reference: unknown/conditional access must never be credited.
     if any(k.endswith(":conditional") for k in t):return "unknown"
+    contextual={"private","destination","delivery","customers",
+                "permit","agricultural","forestry"}
+    for key in ("motorcar","motor_vehicle","vehicle","access"):
+        value=t.get(key+":"+orient)
+        if value is not None:
+            return ("prohibited" if value=="no" else
+                    "contextual" if value in contextual else
+                    "allowed" if value in YES else "unknown")
     for key in ("motorcar","motor_vehicle","vehicle","access"):
         if key in t:
-            if t[key] in NO:return "prohibited"
-            if t[key] in YES:return "allowed"
-            return "unknown"
+            value=t[key]
+            return ("prohibited" if value=="no" else
+                    "contextual" if value in contextual else
+                    "allowed" if value in YES else "unknown")
     return "unknown" if t.get("highway") in ("service","track") else "allowed"
 
 
@@ -55,6 +62,8 @@ def summarize_way(wid,located,source_way):
           "start_car":start.get("car") if isinstance(start,dict) else None,
           "end_car":end.get("car") if isinstance(end,dict) else None,
           "edge_access_restriction":item.get("access_restriction"),
+          "destination_only":item.get("destination_only"),
+          "not_thru":item.get("not_thru"),
           "part_of_complex_restriction":item.get("part_of_complex_restriction"),
           "access_restrictions_count":len(e["access_restrictions"]) if isinstance(
              e.get("access_restrictions"),list) else None}
@@ -62,6 +71,7 @@ def summarize_way(wid,located,source_way):
         verdict=("UNKNOWN_EDGE_SCHEMA" if type(car) is not bool or type(forward) is not bool
               else "SOURCE_DIRECTION_CONTRADICTION" if expected=="prohibited" and car
               else "MATCHES_EXPLICIT_DENIAL" if expected=="prohibited" and not car
+              else "POLICY_CONTEXT_NOT_BINARY" if expected=="contextual"
               else "SOURCE_DIRECTION_VISIBLE" if expected=="allowed" and car
               else "UNKNOWN_OR_OTHER_RESTRICTION")
         matches.append({"forward":forward,"car_access":car,"source_expected":expected,
@@ -77,6 +87,8 @@ def summarize_way(wid,located,source_way):
                 type(x["forward"]) is bool and type(x["car_access"]) is bool for x in matches),
             "source_contradiction_candidates":sum(x["verdict"]=="SOURCE_DIRECTION_CONTRADICTION"
                                                  for x in matches),
+            "contextual_candidate_count":sum(x["verdict"]=="POLICY_CONTEXT_NOT_BINARY"
+                                            for x in matches),
             "candidates":matches, "turn_pairs_comparable":False}
 
 
@@ -119,11 +131,15 @@ def main():
                     "directed_access_schema":sum(x["directed_candidate_schema_available"]
                                                  for x in cases),
                     "source_contradiction_candidates":sum(x["source_contradiction_candidates"]
-                                                         for x in cases)})
+                                                         for x in cases),
+                    "contextual_candidate_count":sum(x["contextual_candidate_count"]
+                                                    for x in cases)})
     report={"trial":"MAP-001-V3-VALHALLA-GRAPH-FACTS",
        "engine":"Valhalla 3.9.1, locally imported frozen OSM",
        "source_sha256":expected,"cases_total":len(cases),"counts":dict(counts),
        "evidence":"PROVISIONAL_OSM_SOURCE_GRAPH_CANDIDATES",
+       "car_access_flag_not_equivalent_to_private_or_destination_permission":True,
+       "policy_context_status":"NOT_SCORED_AS_WRONG_OR_CORRECT",
        "graph_coverage":"SPATIAL_SAMPLE_NOT_EXHAUSTIVE_DIRECTED_EDGES",
        "complete_turn_pair_exposure":False,
        "turn_mask_interpretation":"per-edge flags only; no relation-level pair legality",

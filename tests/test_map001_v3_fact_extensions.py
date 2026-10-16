@@ -49,6 +49,19 @@ class V3FactExtensions(unittest.TestCase):
         self.assertEqual(x["source_contradiction_candidates"],1)
         self.assertFalse(x["turn_pairs_comparable"])
 
+    def test_destination_access_is_not_hard_denial(self):
+        n,w,r=fixture()
+        t={"highway":"residential","motor_vehicle":"destination"}
+        self.assertEqual(expected_direction(t,True),"contextual")
+        self.assertEqual(expected_direction({"access":"private"},False),"contextual")
+        tagged=ET.fromstring('<way id="15"><tag k="highway" v="residential"/><tag k="motor_vehicle" v="destination"/></way>')
+        fake={"edges":[{"way_id":15,"edge":{"forward":True,"access":{"car":True},
+                     "destination_only":True}}]}
+        observation=summarize_way("15",fake,tagged)
+        self.assertEqual(observation["source_contradiction_candidates"],0)
+        self.assertEqual(observation["contextual_candidate_count"],1)
+        self.assertEqual(observation["candidates"][0]["verdict"],"POLICY_CONTEXT_NOT_BINARY")
+
     def test_missing_verbose_fields_are_unknown(self):
         n,w,r=fixture()
         x=summarize_way("11",{"edges":[{"way_id":11}]},w["11"])
