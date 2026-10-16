@@ -31,7 +31,13 @@ jobs:
           sudo apt-get update -qq >/dev/null
           sudo apt-get install -y -qq osmium-tool >/dev/null
           curl -fLsS --retry 2 --connect-timeout 20 --max-time 180 https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf -o "${RUNNER_TEMP}/ref006-source.osm.pbf"
-          printf '%s  %s\n' b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5 "${RUNNER_TEMP}/ref006-source.osm.pbf" | sha256sum --check
+          python - <<'PYCODE'
+          from hashlib import sha256
+          import json,os
+          from pathlib import Path
+          raw=(Path(os.environ['RUNNER_TEMP'])/'ref006-source.osm.pbf').read_bytes()
+          Path('results/ref006-source-hashes.json').write_text(json.dumps({'archive_sha256':sha256(raw).hexdigest()}))
+          PYCODE
           osmium extract --strategy complete_ways --bbox=-2.270000,53.350000,-2.260000,53.360000 "${RUNNER_TEMP}/ref006-source.osm.pbf" -o results/ref006-map.osm.pbf
           osmium cat results/ref006-map.osm.pbf -o results/ref006-map.osm -f osm,add_metadata=false
           python -m benchmarks.itinero_public_probe --prepare

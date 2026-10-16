@@ -14,7 +14,7 @@ from map_data import Provenance,import_osm_xml
 from map_data.osm_xml import _haversine
 ROOT=Path(__file__).resolve().parents[1]
 SOURCE='https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf'
-SOURCE_HASH='b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5'
+EXPECTED_XML_HASH='b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5'
 ITINERO_SOURCE='b8a004a831d353565572c7ba41b5a40c29d79360'
 
 
@@ -33,11 +33,12 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--prepare',action='store_true');a=p.parse_args()
     if a.prepare:
         raw=(ROOT/'results/ref006-map.osm').read_bytes()
+        if sha256(raw).hexdigest()!=EXPECTED_XML_HASH:raise ValueError('Real XML subset differs from pinned prior map; preserve failure, do not substitute data')
         data=import_osm_xml(raw,provenance=Provenance('public Greater Manchester test bbox','Geofabrik260901',SOURCE,'OpenStreetMap contributors; ODbL; public road data, no personal traces'))
         pairs=_scenarios(data.graph,limit=3)[:3]
         if len(pairs)!=3:raise ValueError('Required three frozen-selection cases unavailable; do not substitute cases')
         cases=[dict(id=f'REF-006-{i:03d}',start=data.coordinates[s],end=data.coordinates[t]) for i,(s,t) in enumerate(pairs,1)]
-        r=dict(classification='real public map; synthetic selected GPS endpoints, not personal traces',source_url=SOURCE,source_sha256=SOURCE_HASH,map_xml_sha256=sha256(raw).hexdigest(),map_pbf_sha256=sha256((ROOT/'results/ref006-map.osm.pbf').read_bytes()).hexdigest(),selection='existing _scenarios; first3, before Itinero execution; no failed case discarded',case_expectation='actual complete finite route; both exact endpoints within5m; no legal/GNSS-truth claim',cases=cases)
+        r=dict(classification='real public map; synthetic selected GPS endpoints, not personal traces',source_url=SOURCE,source_archive_sha256=json.loads((ROOT/'results/ref006-source-hashes.json').read_text())['archive_sha256'],expected_xml_sha256=EXPECTED_XML_HASH,map_xml_sha256=sha256(raw).hexdigest(),map_pbf_sha256=sha256((ROOT/'results/ref006-map.osm.pbf').read_bytes()).hexdigest(),selection='existing _scenarios; first3, before Itinero execution; no failed case discarded',case_expectation='actual complete finite route; both exact endpoints within5m; no legal/GNSS-truth claim',cases=cases)
         (ROOT/'results/ref006-requests.json').write_text(json.dumps(r,indent=2)+'\n');return
     requests=json.loads((ROOT/'results/ref006-requests.json').read_text());actual=json.loads((ROOT/'results/ref006-itinero-output.json').read_text())
     if len(actual['cases'])!=len(requests['cases']):raise ValueError('Incomplete actual case cohort')

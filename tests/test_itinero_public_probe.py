@@ -13,3 +13,9 @@ class ItineroProbeTests(unittest.TestCase):
     def test_nonfinite_geometry_never_passes(self):
         r=judge(self.case(),dict(id='control',status='OUTPUT',points=[[53.355,-2.265],[float('nan'),-2.265]]))
         self.assertEqual(r['outcome'],'UNRESOLVED')
+
+    def test_expected_map_hash_is_prior_xml_fingerprint(self):
+        import json
+        from benchmarks.itinero_public_probe import ROOT,EXPECTED_XML_HASH
+        prior=json.loads((ROOT/'references/gps001-uk-topology-20261015.json').read_text())['report']
+        self.assertEqual(EXPECTED_XML_HASH,prior['source_sha256'])
