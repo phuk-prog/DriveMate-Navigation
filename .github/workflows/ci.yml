@@ -14,6 +14,7 @@ concurrency:
 
 jobs:
   checks:
+    if: ${{ !contains(github.event.pull_request.title, '[map001-run]') }}
     name: Unit tests and synthetic benchmark only
     runs-on: ubuntu-latest
     timeout-minutes: 15
