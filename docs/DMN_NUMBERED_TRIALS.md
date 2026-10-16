@@ -570,6 +570,23 @@ freeze one shared real-map position/direction contract that actual external
 matching engines support; do not substitute unmatched controller/routing APIs.
 No automatic DMN tuning or next trial from this baseline is authorized yet.
 
+### ROUTE-003 shared real-map route-output baseline (2026-10-16)
+
+This owner-authorized baseline reuses the pinned Greater Manchester 260901
+extract and the three endpoint pairs frozen before the REF-006 engine execution.
+It measures complete route output, endpoint alignment, finite distance and ETA,
+and calculation time for DMN, OSRM, Valhalla, GraphHopper, openrouteservice and
+BRouter on identical inputs. The score is `10 * passed / 3`; incomplete cohorts
+remain unranked and timing is reported separately because DMN in-process timing
+and external warm loopback-request timing have different boundaries.
+
+This stage does not claim current road-law truth, fastest-route superiority,
+traffic performance, Android performance, or wrong-turn safety. OpenStreetMap
+agreement is only source-map evidence. Itinero and Routino remain visible as not
+run because their retained adapters do not expose the full shared distance, ETA
+and timing contract. The baseline must stop for owner review before any DMN
+change, retest, traffic stage or expanded route cohort.
+
 DMN_RESULTS_OVERVIEW.md now consolidates retained per-case comparative rankings,
 failures and actual measured milliseconds, clearly separating missing/unmatched
 latency and historical synthetic controls. APP_VALIDATION_PROGRAMME.md extends
