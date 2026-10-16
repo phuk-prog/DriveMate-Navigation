@@ -73,15 +73,18 @@ jobs:
       - name: Reuse pinned historical OSM for three different real-road regions
         run: |
           set -euo pipefail
-          osmium extract --strategy complete_ways --bbox=-2.287,53.469,-2.260,53.493 \
+          osmium extract --strategy complete_ways --bbox=-2.279,53.473,-2.268,53.484 \
             "${RUNNER_TEMP}/gps003-source.osm.pbf" -o results/salford.osm.pbf
           osmium cat results/salford.osm.pbf -o results/salford.osm -f osm,add_metadata=false
-          osmium extract --strategy complete_ways --bbox=-2.180,53.399,-2.146,53.425 \
+          osmium extract --strategy complete_ways --bbox=-2.164,53.404,-2.153,53.416 \
             "${RUNNER_TEMP}/gps003-source.osm.pbf" -o results/stockport.osm.pbf
           osmium cat results/stockport.osm.pbf -o results/stockport.osm -f osm,add_metadata=false
-          osmium extract --strategy complete_ways --bbox=-2.135,53.532,-2.105,53.556 \
+          osmium extract --strategy complete_ways --bbox=-2.123,53.538,-2.112,53.550 \
             "${RUNNER_TEMP}/gps003-source.osm.pbf" -o results/oldham.osm.pbf
           osmium cat results/oldham.osm.pbf -o results/oldham.osm -f osm,add_metadata=false
+      - name: Report bounded input sizes before import
+        run: |
+          wc -c results/salford.osm results/stockport.osm results/oldham.osm
       - name: Compare default and research GPS on multiple actual UK roads
         run: |
           python -m benchmarks.gps_uk_region_progress \
