@@ -140,7 +140,7 @@ jobs:
           python -m benchmarks.map001_profile_trial score
       - name: Add local open-source reference profile unit contract
         run: |
-          python -m unittest tests.test_map001_additional_profiles -v
+          python -m unittest discover -s tests -p 'test_map001_additional_profiles.py' -v
       - name: Fresh OSRM MLD 5.27.1 on four identical frozen binary ways
         timeout-minutes: 12
         run: |

@@ -40,3 +40,11 @@ provider, and no commercial reference without permission.
 The frozen input, artifact and case register are retained. If setup fails,
 label the event SETUP_FAILURE; repair setup without silently changing car
 policy or deleting historical results. No Category 2/app/APK/merge work.
+
+## Preserved first setup failure
+
+Initial batch commit 9145f1f on CI runs 38968182356 and 38968182544 failed
+**before engine execution**: category_test_runner rejected an unregistered
+new test file. Corrective commit registers it to map_data without changing
+test expectations, frozen data, engine configuration or DMN runtime.
+Fresh complete execution is required; the failed CI evidence remains on GitHub.
