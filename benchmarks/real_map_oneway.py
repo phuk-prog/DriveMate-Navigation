@@ -60,14 +60,13 @@ def prepare(raw):
             break
         if len(cases) == 6:
             break
-    if len(cases) != 6:
-        raise ValueError('Frozen six-way selection unavailable; preserve failure')
     return dict(test_id='REAL-ONEWAY-001', classification='real public map; synthetic exact-node endpoints, no personal traces',
                 source_url=SOURCE, map_sha256=EXPECTED_XML_HASH, attribution='OpenStreetMap contributors; ODbL',
                 selection='first six eligible ways numerically; first nondegenerate segment; raw XML before importer/router',
                 expectation='allowed edge present; forbidden edge absent; both route directions never use any forbidden selected edge; allowed direction returns route',
                 reverse_no_route_scope='direction safety only; does not prove absence of a legal alternative',
-                independent_road_law='UNRESOLVED: authority source not acquired', cases=cases)
+                independent_road_law='UNRESOLVED: authority source not acquired',
+                required_distinct_ways=6, selected_distinct_ways=len(cases), selection_complete=len(cases)==6, cases=cases)
 
 
 def main():
@@ -101,11 +100,15 @@ def main():
                 execution='actual_local_python_import_and_shortest_route', version='repository run_sha',
                 manifest=frozen, oracle_sha256=sha256(manifest.read_bytes()).hexdigest(), cases=rows,
                 passed=sum(r['outcome']=='PASS' for r in rows), total=len(rows),
+                required_observations=12, cohort_complete=frozen['selection_complete'],
+                trial_outcome='JUDGED' if frozen['selection_complete'] else 'INCOMPLETE_CASE_INVENTORY',
                 external_engines_executed=0, comparative_rank=None, score_out_of_ten=None,
                 independent_road_law='UNRESOLVED', gps_quality_cases=0,
                 limitations=['map-tag contract only', 'no independent legality or optimality proof', 'no comparative performance ranking', 'only selected directions checked', 'not Android execution'])
     (ROOT/'results/real-oneway-report.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report,indent=2))
+    if not report['cohort_complete']:
+        raise SystemExit('Incomplete frozen case inventory; diagnostic rows are not a completed trial')
     if report['passed'] != report['total']:
         raise SystemExit('Direction contract failed; retain all cases')
 

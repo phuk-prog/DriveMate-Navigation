@@ -58,3 +58,12 @@ failed before case selection/routing: the ignored results directory was absent
 on a fresh checkout. The archive download/hash check had succeeded. Added explicit
 mkdir before any output; map hashes, selection and acceptance remain unchanged.
 Retained references/real-oneway-setup-failure-20261016.json; zero cases executed.
+
+Corrected setup run38866570406 atad2a149df06298f55e07a7ab71bb01210b14edfc
+verified archive/XML fingerprints but the fixed bbox contained fewer than six
+eligible distinct ways. The selector stopped before printing count or routing.
+Retained references/real-oneway-inventory-failure-20261016.json. This is missing
+case coverage, not demonstrated DMN wrong-way routing. The next bounded diagnostic
+prints the unchanged selection and executes available requests, explicitly
+INCOMPLETE_CASE_INVENTORY and failing CI when fewer than twelve observations
+exist. The six-way requirement is unchanged; no map/case is substituted.
