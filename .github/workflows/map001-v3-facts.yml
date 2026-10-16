@@ -11,6 +11,7 @@ on:
       - 'engine/astar.py'
       - 'engine/route_alternatives.py'
       - 'benchmarks/map001_context_access.py'
+      - 'benchmarks/map001_profile_trial.py'
       - 'tests/test_osm_import.py'
       - 'benchmarks/map001_direction_contract.py'
       - 'tests/test_map001_direction_contract.py'
@@ -114,6 +115,27 @@ jobs:
           assert v['source_sha256'] == r['source_sha256'], 'Engine input mismatch'
           assert v['cases_total'] == 20, 'Valhalla cohort incomplete'
           PYCODE
+      - name: Run isolated real-way access profiles through both engines
+        timeout-minutes: 7
+        run: |
+          set -euo pipefail
+          python -m benchmarks.map001_profile_trial prepare
+          docker rm -f map001-facts >/dev/null
+          IMAGE='ghcr.io/valhalla/valhalla-scripted:3.9.1@sha256:6238809f9dc3057743d70a20efd3911ec38e458bfa13a0601909b58f68dfd956'
+          for WAY in 4816180 4857542 553071025 553071026 553071028 4721486 8777654 27255314 155729945 115559329 548694371 35277147; do
+            mkdir -p "results/profile-engine-$WAY"
+            osmium sort "results/map001-profiles/$WAY.osm" -o "results/profile-engine-$WAY/input.osm.pbf"
+            sha256sum "results/profile-engine-$WAY/input.osm.pbf" >> results/map001-profiles/derived-pbf-sha256.txt
+            docker run -d --rm --name map001-profile -p 127.0.0.1:8002:8002 -v "$PWD/results/profile-engine-$WAY:/custom_files" -e build_admins=False -e build_time_zones=False -e build_elevation=False -e build_tar=False -e server_threads=2 "$IMAGE"
+            python - <<'PYCODE'
+          from benchmarks.valhalla_live_reference import wait_for_local_router
+          wait_for_local_router(60)
+          PYCODE
+            python -m benchmarks.map001_profile_trial probe --way "$WAY"
+            docker rm -f map001-profile >/dev/null
+            sudo rm -rf "results/profile-engine-$WAY"
+          done
+          python -m benchmarks.map001_profile_trial score
       - name: Publish small case-level evidence, not duplicate map files
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -123,6 +145,8 @@ jobs:
             results/map001-v3-manchester-diagnostics.json
             results/map001-direction-contract.json
             results/map001-contextual-access.json
+            results/map001-profiles/*.json
+            results/map001-profiles/derived-pbf-sha256.txt
             results/map001-unit-checks/
             results/map001-native-comparison.json
             results/map001-valhalla-native.jsonl
@@ -134,9 +158,13 @@ jobs:
           retention-days: 30
       - name: Diagnostics on failed reference
         if: failure()
-        run: docker logs map001-facts 2>/dev/null | tail -60 || true
+        run: |
+          docker logs map001-facts 2>/dev/null | tail -60 || true
+          docker logs map001-profile 2>/dev/null | tail -60 || true
       - name: Cleanup
         if: always()
         run: |
           docker rm -f map001-facts >/dev/null 2>&1 || true
+          docker rm -f map001-profile >/dev/null 2>&1 || true
+          sudo rm -rf results/profile-engine-*
           sudo rm -rf results/valhalla results/map001-facts.osm.pbf

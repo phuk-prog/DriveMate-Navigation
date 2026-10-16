@@ -269,3 +269,41 @@ class NativeReferenceControls(unittest.TestCase):
         x=compare_way(w['11'],n,e)
         self.assertEqual(x['valhalla_verdict'],'PASS')
         self.assertEqual(x['expected_checks'],2)
+
+class LiveProfileTrialControls(unittest.TestCase):
+    def test_profile_mapping_does_not_claim_private_equivalence(self):
+        from benchmarks.map001_profile_trial import profiles
+        private=profiles('553071025',{'access':'private'})
+        self.assertEqual([x[2] for x in private],['unknown','unknown','allowed'])
+        self.assertTrue(all(not x[3] for x in private))
+        dest=profiles('4857542',{'motor_vehicle':'destination'})
+        self.assertEqual([x[3] for x in dest],[False,True,False])
+
+    def test_default_profile_never_ignores_access_or_turn_rules(self):
+        from benchmarks.map001_profile_trial import request_body
+        flags=request_body((53,-2),(53.001,-2))['costing_options']['auto']
+        self.assertTrue(all(v is False for v in flags.values()))
+
+    def test_no_route_requires_known_engine_error_not_any_bad_request(self):
+        import io,json
+        from urllib.error import HTTPError
+        from unittest.mock import patch
+        from benchmarks.map001_profile_trial import observe_valhalla,request_body
+        for error,expected in [(442,'NO_ROUTE'),(171,'NO_ROUTE'),(100,'NOT_JUDGED_HTTP_ERROR')]:
+            e=HTTPError('http://127.0.0.1:8002/route',400,'bad',{},io.BytesIO(json.dumps({'error_code':error}).encode()))
+            with patch('benchmarks.map001_profile_trial._OPENER.open',side_effect=e):
+                self.assertEqual(observe_valhalla(request_body((53,-2),(53.001,-2)))['result'],expected)
+
+    def test_empty_snapped_route_is_not_correct_prohibition(self):
+        import io,json
+        from unittest.mock import patch
+        from benchmarks.map001_profile_trial import observe_valhalla,request_body
+        response={'trip':{'legs':[{'shape':'??AC'}],'summary':{'length':0}}}
+        with patch('benchmarks.map001_profile_trial._OPENER.open',return_value=io.BytesIO(json.dumps(response).encode())):
+            x=observe_valhalla(request_body((0,0),(0.000001,0.000002)))
+        self.assertEqual(x['result'],'NOT_JUDGED_ENDPOINT_CORRELATION')
+
+    def test_binary_reverse_control_retains_explicit_prohibition(self):
+        from benchmarks.map001_profile_trial import profiles
+        rows=profiles('155729945',{'vehicle:backward':'no'})
+        self.assertEqual(rows[1],('ORDINARY_REVERSE',False,'prohibited',True))

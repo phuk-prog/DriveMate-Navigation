@@ -352,3 +352,13 @@ unknown access is not assumed open. Nineteen new controls: 129/129 map-data and
 frozen-source policy scenarios. Fresh same-source native Valhalla/common binary
 comparison required; hypothetical permission scenarios have no equivalent
 competitor profile or legality ranking. See `DMN_CATEGORY_01_CONTEXT_ACCESS.md`.
+
+### Category 1 actual profile trial
+
+Owner requested a driver-access profile test after 3b5850d. Freeze 32 checks on
+12 isolated real Manchester ways: 24 context-profile controls and eight binary
+forward/reverse controls. Exercise unchanged Valhalla auto on the same derived
+inputs; expected equivalent subset is 10, with 22 permission/purpose mappings
+unsupported rather than scored as faults. Local 134/134 map-data and 628/628
+regression methods pass; actual live profile outcomes await GitHub. See
+`DMN_CATEGORY_01_PROFILE_TRIAL.md`. No runtime/category advancement.
