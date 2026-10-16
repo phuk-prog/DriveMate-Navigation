@@ -80,3 +80,8 @@ and always retain the default result as authoritative. Do not automatically
 promote the shadow variant merely because it improves map-derived coverage.
 The remaining independent road-truth, safety and full competitor retest gates
 are unchanged.
+
+
+## Newest owner review / launch rule — one category at a time
+
+Owner now explicitly controls the start of **every** category. Preparing a better category specification **does not authorize execution**. The planning queue is [DMN_CATEGORY_BY_CATEGORY_APPROVAL.md](DMN_CATEGORY_BY_CATEGORY_APPROVAL.md) and the current first review is [Category 1](DMN_CATEGORY_01_MAP_GRAPH_TEST_DESIGN.md). All 21 categories are in an **AWAITING EXPLICIT START** state for *new* head-to-head comparisons. Earlier historic category results remain recorded as historical runs and are not undone or confused with a new rerun. Test only the selected category after the user's unambiguous 'Start category N'; report its results, safety evidence, engine rankings and proposed fixes; **STOP** before another category. If the wording could merely mean reviewing the next plan, do not start it. This is the latest instruction and overrides earlier 'continue autonomously' and multi-category rerun requests. Do not modify any production application or disable GPS variants.

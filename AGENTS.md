@@ -129,3 +129,8 @@ Android integration, audio/Bluetooth, map UI, emulator, app builds, APK release
 or production DriveMate changes. The active independent category catalogue is
 21 engine-only categories. Any complete-navigation test is a non-app engine
 replay; report absent live GNSS/UK verification honestly. No app readiness claim.
+
+
+## Latest owner instruction — explicit category start required (supersedes earlier automatic continuation)
+
+The owner wants to **improve and review the tests one navigation-engine category at a time**, then **personally decide when each category begins**. Follow [the 21-category approval queue](docs/DMN_CATEGORY_BY_CATEGORY_APPROVAL.md) and start with [Category 1 map-data test design](docs/DMN_CATEGORY_01_MAP_GRAPH_TEST_DESIGN.md). Never run an existing category unit suite, a new GitHub workflow, a benchmark, or an external engine just because a category review or preparatory improvement is requested. Do not interpret 'next' or 'continue' as permission to start a category. Require an explicit named or numbered start instruction for every category. After its results, stop for review and do not start the next category or implement a navigation behaviour fix without a separate approval. Only **engine research**, no Android app. Preserve all existing engine functionality and both GPS methods.
