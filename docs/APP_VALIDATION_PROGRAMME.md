@@ -95,3 +95,17 @@ Use available applicable engines now, state their exact count, and keep the
 ten-external-engine objective visibly unmet until a common cohort actually runs.
 See AGENTS.md for the standing instructions. This supersedes the earlier automatic
 improve/retest wording. No permanent scope/rule changes without checking first.
+
+## Resource budget
+
+Each test specification must include a bounded execution budget: maximum cases,
+engine runs, retries, wall time, memory/storage and retained artifact size. Reuse
+unchanged map/input/oracle hashes and prior successful setup evidence. Prefer one
+representative baseline over repeated confirmations; add scale only when a smaller
+cohort has demonstrated that the harness and oracle detect the intended faults.
+
+Run focused checks during development and one full affected regression pass before
+upload. CI should perform work that cannot be proved locally or from unchanged
+retained evidence. Reports should be generated from compact evidence summaries and
+links rather than duplicating raw logs. The budget cannot reduce safety coverage,
+hide failures or make unlike engines appear comparable.

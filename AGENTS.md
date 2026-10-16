@@ -61,3 +61,35 @@ Keep heavy references sequential and bounded; no duplicate jobs. Use routine
 reversible research branches/draft PRs and nonforced SHA-checked writes. Preserve
 progress in docs/DMN_NUMBERED_TRIALS.md and per-trial evidence. Missing tools are
 unavailable, never passed. A green research CI or score is not live-app readiness.
+
+## Resource-efficient execution
+
+Minimize Codex tokens, tool calls, CI minutes, downloads, storage and repeated
+computation while preserving correctness and auditability:
+
+- Read the smallest relevant files/ranges and summarize retained evidence instead
+  of repeatedly loading raw logs or large JSON reports.
+- Batch independent read-only checks. Reuse already verified hashes, versions,
+  maps, cases and successful artifacts when the requested contract is unchanged.
+- Check active/queued jobs once before launch. Never start duplicate workflows.
+- Run focused local tests first. Run the full affected suite once before upload;
+  do not repeat unchanged green checks without new code, evidence or a failure.
+- Use one baseline execution per frozen cohort. Confirmation runs require a
+  concrete reproducibility risk, material nondeterminism or owner request.
+- Keep heavyweight engines sequential, use the smallest representative real-map
+  extract and case cohort that can expose the tested behavior, and set time,
+  memory, retry and output limits.
+- Cache/reuse legally obtained public data and prepared engine state when hashes
+  prove identity. Do not redownload or rebuild merely to create another run.
+- Store compact summaries plus hashes and links. Retain raw artifacts only when
+  needed to reproduce a failure or substantiate a result; avoid duplicating large
+  evidence in repository files, PR text and chat.
+- Keep commentary and final reports concise: show the requested ranking, exact
+  failures, timing scope and decision. Link detailed evidence instead of copying it.
+- Stop after the owner review gate. Do not spend resources on fixes, retests,
+  adapter expansion or the next cohort before authorization.
+
+Efficiency never permits fewer required engines within an applicable baseline,
+discarding failures, weaker acceptance, invented evidence, mixed timing scopes or
+skipping a check needed to support the claimed result. Record saved/reused work
+and any unavailable measurement so lower usage remains auditable.
