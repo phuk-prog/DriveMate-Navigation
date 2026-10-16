@@ -655,3 +655,14 @@ these are not sixteen additional independent roads. The report provides a
 separate issue register, source limitations and a diagnostic-only proposal.
 Zero comparable external GPS-003 stream executions; no synthetic ranking.
 No test run, matcher change, confidence adjustment or promotion. **STOP FOR REVIEW.**
+
+
+### GPS-003 candidate-geometry diagnostic completed (2026-10-16)
+
+[Exact two first-fix and seven historical UK candidate identities/geometry](GPS_003_CANDIDATE_DIAGNOSTIC_RESULTS.md)
+were recorded in successful [bounded diagnostic run 38880782913](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38880782913).
+All nine checks reproduced the original ambiguous decisions; both GPS-003
+competition pairs and all seven older UK losses are same-way backward-adjacent
+fragments of OSM way32113418, not independently verified roadway/guidance truth.
+No matcher fix, score modification, competitor rank or new route test was made.
+**STOP and request owner approval before improvements.**

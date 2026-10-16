@@ -133,3 +133,16 @@ from genuine required-output failures, and reviews the seven distinct older
 backward-adjacent cases. No GPS safety behavior, frozen acceptance, run or source
 truth was changed. Proposes a bounded candidate-geometry diagnostic only after
 owner authorization. **STOP FOR OWNER REVIEW.**
+
+
+## Executed bounded candidate-geometry diagnostic (2026-10-16)
+
+[GPS-003 / UK40 candidate-geometry diagnostic results](GPS_003_CANDIDATE_DIAGNOSTIC_RESULTS.md)
+from successful [CI run 38880782913](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38880782913). The same pinned map and
+original oracle hashes were verified. The two repeated Moss Lane initial GPS
+ambiguities are between intended forward fragments 4/6 and backward-adjacent
+same-way fragments 3/5, 7.289/7.048 m away respectively. All seven older
+UK40 regressions reproduce backward-adjacent same-way competition on this same
+mapped way; no independent road-law/GNSS truth is claimed. Original 8/24
+GPS-003 and 17/40 UK verdicts remain unchanged; **no matcher policy or
+acceptance change**. STOP for owner review before a fix or new tests.
