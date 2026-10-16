@@ -1,0 +1,1776 @@
+{
+  "test_id": "OFFLINE-001",
+  "formula": "10 * passes / 18; unavailable/incomplete cohorts unranked",
+  "scope": "DMN package conformance only; not a comparative offline-engine ranking",
+  "rows": [
+    {
+      "system": "DMN",
+      "rank": 1,
+      "score_out_of_ten": 10,
+      "passed": 18,
+      "failed": 0,
+      "score_reason": "Required Linux network isolation demonstrated",
+      "cases": [
+        {
+          "case_id": "OFFLINE-001-no-active",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "route",
+              "actual_status": "NO_ACTIVE",
+              "expected_status": "NO_ACTIVE",
+              "checks": {
+                "expected_status": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-valid",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "ACTIVE",
+              "expected_status": "ACTIVE",
+              "actual_active": "A",
+              "rejection_reason": null,
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            },
+            {
+              "event": 1,
+              "action": "route",
+              "returned_edges": [
+                "w:10:0:f",
+                "w:30:0:f",
+                "w:40:0:f",
+                "w:50:0:f"
+              ],
+              "package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+              "length_m": 444.74580163927334,
+              "actual_status": "ROUTE",
+              "expected_status": "ROUTE",
+              "checks": {
+                "exact_declared_edges": true,
+                "route_bound_to_active_snapshot": true,
+                "expected_status": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-checksum",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "REJECTED",
+              "expected_status": "REJECTED",
+              "actual_active": "NONE",
+              "rejection_reason": "SHA256 mismatch",
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            },
+            {
+              "event": 1,
+              "action": "route",
+              "actual_status": "NO_ACTIVE",
+              "expected_status": "NO_ACTIVE",
+              "checks": {
+                "expected_status": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-truncated",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "REJECTED",
+              "expected_status": "REJECTED",
+              "actual_active": "NONE",
+              "rejection_reason": "Byte length mismatch",
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-length",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "REJECTED",
+              "expected_status": "REJECTED",
+              "actual_active": "NONE",
+              "rejection_reason": "Byte length mismatch",
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-schema-version",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "REJECTED",
+              "expected_status": "REJECTED",
+              "actual_active": "NONE",
+              "rejection_reason": "Unsupported schema or format",
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-format",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "REJECTED",
+              "expected_status": "REJECTED",
+              "actual_active": "NONE",
+              "rejection_reason": "Unsupported schema or format",
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-provenance",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "REJECTED",
+              "expected_status": "REJECTED",
+              "actual_active": "NONE",
+              "rejection_reason": "Complete bounded provenance required",
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-malformed",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "REJECTED",
+              "expected_status": "REJECTED",
+              "actual_active": "NONE",
+              "rejection_reason": "Invalid OSM XML",
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-unsupported-condition",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "REJECTED",
+              "expected_status": "REJECTED",
+              "actual_active": "NONE",
+              "rejection_reason": "way 10: conditional tags are unsupported",
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-bad-update-retains",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "ACTIVE",
+              "expected_status": "ACTIVE",
+              "actual_active": "A",
+              "rejection_reason": null,
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            },
+            {
+              "event": 1,
+              "action": "route",
+              "returned_edges": [
+                "w:10:0:f",
+                "w:30:0:f",
+                "w:40:0:f",
+                "w:50:0:f"
+              ],
+              "package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+              "length_m": 444.74580163927334,
+              "actual_status": "ROUTE",
+              "expected_status": "ROUTE",
+              "checks": {
+                "exact_declared_edges": true,
+                "route_bound_to_active_snapshot": true,
+                "expected_status": true
+              },
+              "passed": true
+            },
+            {
+              "event": 2,
+              "action": "activate",
+              "actual_status": "REJECTED",
+              "expected_status": "REJECTED",
+              "actual_active": "A",
+              "rejection_reason": "SHA256 mismatch",
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            },
+            {
+              "event": 3,
+              "action": "route",
+              "returned_edges": [
+                "w:10:0:f",
+                "w:30:0:f",
+                "w:40:0:f",
+                "w:50:0:f"
+              ],
+              "package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+              "length_m": 444.74580163927334,
+              "actual_status": "ROUTE",
+              "expected_status": "ROUTE",
+              "checks": {
+                "exact_declared_edges": true,
+                "route_bound_to_active_snapshot": true,
+                "expected_status": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-valid-replacement",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "ACTIVE",
+              "expected_status": "ACTIVE",
+              "actual_active": "A",
+              "rejection_reason": null,
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            },
+            {
+              "event": 1,
+              "action": "route",
+              "returned_edges": [
+                "w:10:0:f",
+                "w:30:0:f",
+                "w:40:0:f",
+                "w:50:0:f"
+              ],
+              "package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+              "length_m": 444.74580163927334,
+              "actual_status": "ROUTE",
+              "expected_status": "ROUTE",
+              "checks": {
+                "exact_declared_edges": true,
+                "route_bound_to_active_snapshot": true,
+                "expected_status": true
+              },
+              "passed": true
+            },
+            {
+              "event": 2,
+              "action": "activate",
+              "actual_status": "ACTIVE",
+              "expected_status": "ACTIVE",
+              "actual_active": "B",
+              "rejection_reason": null,
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            },
+            {
+              "event": 3,
+              "action": "route",
+              "returned_edges": [
+                "w:101:0:f",
+                "w:102:0:f"
+              ],
+              "package_sha256": "8b9d409865dd0b272456c2b99575c8dd29d3459602db7016377889b9b00ab465",
+              "length_m": 222.37291776319935,
+              "actual_status": "ROUTE",
+              "expected_status": "ROUTE",
+              "checks": {
+                "exact_declared_edges": true,
+                "route_bound_to_active_snapshot": true,
+                "expected_status": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-disconnected",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "ACTIVE",
+              "expected_status": "ACTIVE",
+              "actual_active": "A",
+              "rejection_reason": null,
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            },
+            {
+              "event": 1,
+              "action": "route",
+              "actual_status": "NO_ROUTE",
+              "expected_status": "NO_ROUTE",
+              "checks": {
+                "expected_status": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-prohibited-destination",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "ACTIVE",
+              "expected_status": "ACTIVE",
+              "actual_active": "A",
+              "rejection_reason": null,
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            },
+            {
+              "event": 1,
+              "action": "route",
+              "actual_status": "NO_ROUTE",
+              "expected_status": "NO_ROUTE",
+              "checks": {
+                "expected_status": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-unknown-node",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "ACTIVE",
+              "expected_status": "ACTIVE",
+              "actual_active": "A",
+              "rejection_reason": null,
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            },
+            {
+              "event": 1,
+              "action": "route",
+              "actual_status": "NO_COVERAGE",
+              "expected_status": "NO_COVERAGE",
+              "checks": {
+                "expected_status": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-recovery",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "REJECTED",
+              "expected_status": "REJECTED",
+              "actual_active": "NONE",
+              "rejection_reason": "Invalid OSM XML",
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            },
+            {
+              "event": 1,
+              "action": "activate",
+              "actual_status": "ACTIVE",
+              "expected_status": "ACTIVE",
+              "actual_active": "A",
+              "rejection_reason": null,
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            },
+            {
+              "event": 2,
+              "action": "route",
+              "returned_edges": [
+                "w:10:0:f",
+                "w:30:0:f",
+                "w:40:0:f",
+                "w:50:0:f"
+              ],
+              "package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+              "length_m": 444.74580163927334,
+              "actual_status": "ROUTE",
+              "expected_status": "ROUTE",
+              "checks": {
+                "exact_declared_edges": true,
+                "route_bound_to_active_snapshot": true,
+                "expected_status": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-missing-required-coverage",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "ACTIVE",
+              "expected_status": "ACTIVE",
+              "actual_active": "A",
+              "rejection_reason": null,
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            },
+            {
+              "event": 1,
+              "action": "activate",
+              "actual_status": "REJECTED",
+              "expected_status": "REJECTED",
+              "actual_active": "A",
+              "rejection_reason": "Required node coverage missing",
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            },
+            {
+              "event": 2,
+              "action": "route",
+              "returned_edges": [
+                "w:10:0:f",
+                "w:30:0:f",
+                "w:40:0:f",
+                "w:50:0:f"
+              ],
+              "package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+              "length_m": 444.74580163927334,
+              "actual_status": "ROUTE",
+              "expected_status": "ROUTE",
+              "checks": {
+                "exact_declared_edges": true,
+                "route_bound_to_active_snapshot": true,
+                "expected_status": true
+              },
+              "passed": true
+            }
+          ]
+        },
+        {
+          "case_id": "OFFLINE-001-oversize",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "activate",
+              "actual_status": "REJECTED",
+              "expected_status": "REJECTED",
+              "actual_active": "NONE",
+              "rejection_reason": "Nonempty immutable bytes within size limit required",
+              "checks": {
+                "expected_status": true,
+                "expected_active_map": true
+              },
+              "passed": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "system": "Valhalla",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "OFFLINE-001-no-active",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-valid",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-checksum",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-truncated",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-length",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-schema-version",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-format",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-provenance",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-malformed",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-unsupported-condition",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-bad-update-retains",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-valid-replacement",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-disconnected",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-prohibited-destination",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-unknown-node",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-recovery",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-missing-required-coverage",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-oversize",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        }
+      ]
+    },
+    {
+      "system": "OSRM",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "OFFLINE-001-no-active",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-valid",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-checksum",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-truncated",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-length",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-schema-version",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-format",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-provenance",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-malformed",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-unsupported-condition",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-bad-update-retains",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-valid-replacement",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-disconnected",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-prohibited-destination",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-unknown-node",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-recovery",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-missing-required-coverage",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-oversize",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        }
+      ]
+    },
+    {
+      "system": "GraphHopper",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "OFFLINE-001-no-active",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-valid",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-checksum",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-truncated",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-length",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-schema-version",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-format",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-provenance",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-malformed",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-unsupported-condition",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-bad-update-retains",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-valid-replacement",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-disconnected",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-prohibited-destination",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-unknown-node",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-recovery",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-missing-required-coverage",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-oversize",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        }
+      ]
+    },
+    {
+      "system": "OsmAnd",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "OFFLINE-001-no-active",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-valid",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-checksum",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-truncated",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-length",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-schema-version",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-format",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-provenance",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-malformed",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-unsupported-condition",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-bad-update-retains",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-valid-replacement",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-disconnected",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-prohibited-destination",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-unknown-node",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-missing-required-coverage",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-oversize",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        }
+      ]
+    },
+    {
+      "system": "Organic Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "OFFLINE-001-no-active",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-valid",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-checksum",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-truncated",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-length",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-schema-version",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-format",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-provenance",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-malformed",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-unsupported-condition",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-bad-update-retains",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-valid-replacement",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-disconnected",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-prohibited-destination",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-unknown-node",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-missing-required-coverage",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        },
+        {
+          "case_id": "OFFLINE-001-oversize",
+          "outcome": "NOT_RUN",
+          "reason": "Executable native/app package lifecycle harness not implemented"
+        }
+      ]
+    },
+    {
+      "system": "BRouter",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "OFFLINE-001-no-active",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-valid",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-checksum",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-truncated",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-length",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-schema-version",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-format",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-provenance",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-malformed",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-unsupported-condition",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-bad-update-retains",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-valid-replacement",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-disconnected",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-prohibited-destination",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-unknown-node",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-recovery",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-missing-required-coverage",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-oversize",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        }
+      ]
+    },
+    {
+      "system": "HERE",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "OFFLINE-001-no-active",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-valid",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-checksum",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-truncated",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-length",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-schema-version",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-format",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-provenance",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-malformed",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-unsupported-condition",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-bad-update-retains",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-valid-replacement",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-disconnected",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-prohibited-destination",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-unknown-node",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-missing-required-coverage",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-oversize",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        }
+      ]
+    },
+    {
+      "system": "Mapbox",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "OFFLINE-001-no-active",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-valid",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-checksum",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-truncated",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-length",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-schema-version",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-format",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-provenance",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-malformed",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-unsupported-condition",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-bad-update-retains",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-valid-replacement",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-disconnected",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-prohibited-destination",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-unknown-node",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-missing-required-coverage",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-oversize",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        }
+      ]
+    },
+    {
+      "system": "TomTom",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "OFFLINE-001-no-active",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-valid",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-checksum",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-truncated",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-length",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-schema-version",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-format",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-provenance",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-malformed",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-unsupported-condition",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-bad-update-retains",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-valid-replacement",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-disconnected",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-prohibited-destination",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-unknown-node",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-missing-required-coverage",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-oversize",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        }
+      ]
+    },
+    {
+      "system": "openrouteservice",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "OFFLINE-001-no-active",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-valid",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-checksum",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-truncated",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-length",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-schema-version",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-format",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-provenance",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-malformed",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-unsupported-condition",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-bad-update-retains",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-valid-replacement",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-disconnected",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-prohibited-destination",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-unknown-node",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-recovery",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-missing-required-coverage",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        },
+        {
+          "case_id": "OFFLINE-001-oversize",
+          "outcome": "UNSUPPORTED",
+          "reason": "Integrated static directions endpoint does not expose DMN package schema, transactional map activation or exact node-ID coverage errors"
+        }
+      ]
+    },
+    {
+      "system": "Google Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "OFFLINE-001-no-active",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-valid",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-checksum",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-truncated",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-length",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-schema-version",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-format",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-provenance",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-malformed",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-unsupported-condition",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-bad-update-retains",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-valid-replacement",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-disconnected",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-prohibited-destination",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-unknown-node",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-missing-required-coverage",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        },
+        {
+          "case_id": "OFFLINE-001-oversize",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent offline package harness; paid calls unauthorized"
+        }
+      ]
+    },
+    {
+      "system": "Waze",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "OFFLINE-001-no-active",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-valid",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-checksum",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-truncated",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-length",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-schema-version",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-format",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-provenance",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-malformed",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-unsupported-condition",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-bad-update-retains",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-valid-replacement",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-disconnected",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-prohibited-destination",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-unknown-node",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-missing-required-coverage",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        },
+        {
+          "case_id": "OFFLINE-001-oversize",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated offline replay interface"
+        }
+      ]
+    }
+  ],
+  "run_sha": "1fb644870e0b5886ef63a9750f1ef1e6afa652a4",
+  "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38859329753"
+}

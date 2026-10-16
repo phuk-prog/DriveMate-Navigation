@@ -1,0 +1,679 @@
+{
+  "trial": "OFFLINE-001",
+  "classification": "synthetic analytical research package activation only; not Android/native offline readiness",
+  "fixture_freeze_sha": "2d7885db99d3588d26cea3243ffa7c756c74b5b1",
+  "run_sha": "1fb644870e0b5886ef63a9750f1ef1e6afa652a4",
+  "run_id": 38859329753,
+  "job_id": 116837785614,
+  "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38859329753",
+  "verification": {
+    "tests": 425,
+    "conclusion": "success",
+    "offline_test_log_lines": [
+      "test_active_info_is_immutable (test_offline_package.OfflinePackageTests.test_active_info_is_immutable) ... ok",
+      "test_frozen_eighteen_cases (test_offline_package.OfflinePackageTests.test_frozen_eighteen_cases) ... ok",
+      "test_incomplete_scorecard_rejected (test_offline_package.OfflinePackageTests.test_incomplete_scorecard_rejected) ... ok",
+      "test_manifest_mutation_does_not_mutate_active_snapshot (test_offline_package.OfflinePackageTests.test_manifest_mutation_does_not_mutate_active_snapshot) ... ok",
+      "test_old_routes_retain_original_package_identity (test_offline_package.OfflinePackageTests.test_old_routes_retain_original_package_identity) ... ok",
+      "test_payload_limit_boundaries (test_offline_package.OfflinePackageTests.test_payload_limit_boundaries) ... ok",
+      "test_strict_manifest_and_mutable_payload_rejected (test_offline_package.OfflinePackageTests.test_strict_manifest_and_mutable_payload_rejected) ... ok",
+      "test_unisolated_execution_cannot_receive_offline_score (test_offline_package.OfflinePackageTests.test_unisolated_execution_cannot_receive_offline_score) ... ok"
+    ],
+    "canonical_preflight": "UNAVAILABLE: scripts/unified_preflight.py absent; never passed"
+  },
+  "report": {
+    "test_id": "OFFLINE-001",
+    "system": "DMN",
+    "version": "repository research OfflineMapStore/import_osm_xml/shortest_route",
+    "execution": "actual_local_python_import_and_routes",
+    "classification": "synthetic analytical package conformance; not real road truth or Android/native readiness",
+    "configuration": {
+      "max_payload_bytes": 100000,
+      "manifest_schema": 1,
+      "format": "dmn-osm-xml-v1",
+      "trusted_manifest_required": true,
+      "persistent_disk_install": false
+    },
+    "map_sha256": {
+      "A": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+      "B": "8b9d409865dd0b272456c2b99575c8dd29d3459602db7016377889b9b00ab465"
+    },
+    "oracle_sha256": "5a826150c996fa36f9f953431541feb4314db72f7d7b67dc94615085699c28c3",
+    "component_sha256": "bc0b97b78e1dac0dbeb60fc9b3047258e2159b7aae788cdcdb7b096f54d50b93",
+    "harness_sha256": "2fe23a09fcdc03bcdac4c526ca91b747f14e67892973341a89a384be0461f80b",
+    "input_variant_sha256": {
+      "A": {
+        "payload": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+        "manifest": "fa863afaa644874a170fae2bc7ba4f0c4e52651168fd7aec0ac5d3a6ba06d5f7"
+      },
+      "B": {
+        "payload": "8b9d409865dd0b272456c2b99575c8dd29d3459602db7016377889b9b00ab465",
+        "manifest": "fe5be31440744dffc35b0803a6d566649aa1418ddf67267b2020ff660791b598"
+      },
+      "checksum": {
+        "payload": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+        "manifest": "c809a7aa36de0a22b2ded848e27ae09edb38dd3fa4017a295d27b843364c77bc"
+      },
+      "truncated": {
+        "payload": "21a0897ce8dd51fb319a73e6b2716ebbc92e292d7b0b8e30f3878c02be78bfb2",
+        "manifest": "fa863afaa644874a170fae2bc7ba4f0c4e52651168fd7aec0ac5d3a6ba06d5f7"
+      },
+      "length": {
+        "payload": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+        "manifest": "6fbecffdc363c4c6ad49b85c043ead3537e98230f68751d75b64750af9fe35c4"
+      },
+      "schema-version": {
+        "payload": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+        "manifest": "7dfd46a9ebb1350621657d218174fb76441513fce4751a38519830e6ecbea5f2"
+      },
+      "format": {
+        "payload": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+        "manifest": "eb1e87e8e5e06fbbe81eefe3b144bd30c82d273f5b83a96d9e2b7dbdddd5e954"
+      },
+      "provenance": {
+        "payload": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+        "manifest": "7513a54a9e1a5a19fbeedcc36bd3d33c88617a9830dee467eb2e072c5ced2a92"
+      },
+      "missing-anchor": {
+        "payload": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+        "manifest": "aa80ed7b0b39e3f06d2668f6ec1cf7b67c10707c439c3a3afa1ccbfc1e5472df"
+      },
+      "malformed": {
+        "payload": "e06b5a9f294f9b855e8be8110782567d0fd98f1d037ab767a03f6ce905e7b44c",
+        "manifest": "9bed07223c4051f2c4eb937c21d4164b4bed4fad9a99cade72ecd8b027263134"
+      },
+      "conditional": {
+        "payload": "8c582d3e6fd72ecd0973adb3cf0b66f4c31cd4be94406d0090bb0530b7fd70ee",
+        "manifest": "e2265017fc5034e7cfb2337eedd97596d911baacf7122c90f0f173ae83bf04ae"
+      },
+      "oversize": {
+        "payload": "5108afd0c5e3aa707e391d4fa1e30f110c985660740494df85552d3823be63b5",
+        "manifest": "c10d5da731d7f19d85b05056fd5e1ca181dd2e3be90b40e4875f48d6096f3bef"
+      }
+    },
+    "run_sha": "1fb644870e0b5886ef63a9750f1ef1e6afa652a4",
+    "network": {
+      "namespace": "net:[4026532267]",
+      "initial_namespace": "net:[4026531833]",
+      "separate_namespace": true,
+      "ipv4_default_routes": 0,
+      "ipv6_nonloopback_default_routes": 0,
+      "isolated": true
+    },
+    "actual_map_store_route_calls": 12,
+    "actual_core_route_calculations": 9,
+    "external_engine_executions": 0,
+    "android_device_tests": 0,
+    "cases": [
+      {
+        "case_id": "OFFLINE-001-no-active",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "route",
+            "actual_status": "NO_ACTIVE",
+            "expected_status": "NO_ACTIVE",
+            "checks": {
+              "expected_status": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-valid",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "ACTIVE",
+            "expected_status": "ACTIVE",
+            "actual_active": "A",
+            "rejection_reason": null,
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "route",
+            "returned_edges": [
+              "w:10:0:f",
+              "w:30:0:f",
+              "w:40:0:f",
+              "w:50:0:f"
+            ],
+            "package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+            "length_m": 444.74580163927334,
+            "actual_status": "ROUTE",
+            "expected_status": "ROUTE",
+            "checks": {
+              "exact_declared_edges": true,
+              "route_bound_to_active_snapshot": true,
+              "expected_status": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-checksum",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "REJECTED",
+            "expected_status": "REJECTED",
+            "actual_active": "NONE",
+            "rejection_reason": "SHA256 mismatch",
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "route",
+            "actual_status": "NO_ACTIVE",
+            "expected_status": "NO_ACTIVE",
+            "checks": {
+              "expected_status": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-truncated",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "REJECTED",
+            "expected_status": "REJECTED",
+            "actual_active": "NONE",
+            "rejection_reason": "Byte length mismatch",
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-length",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "REJECTED",
+            "expected_status": "REJECTED",
+            "actual_active": "NONE",
+            "rejection_reason": "Byte length mismatch",
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-schema-version",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "REJECTED",
+            "expected_status": "REJECTED",
+            "actual_active": "NONE",
+            "rejection_reason": "Unsupported schema or format",
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-format",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "REJECTED",
+            "expected_status": "REJECTED",
+            "actual_active": "NONE",
+            "rejection_reason": "Unsupported schema or format",
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-provenance",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "REJECTED",
+            "expected_status": "REJECTED",
+            "actual_active": "NONE",
+            "rejection_reason": "Complete bounded provenance required",
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-malformed",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "REJECTED",
+            "expected_status": "REJECTED",
+            "actual_active": "NONE",
+            "rejection_reason": "Invalid OSM XML",
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-unsupported-condition",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "REJECTED",
+            "expected_status": "REJECTED",
+            "actual_active": "NONE",
+            "rejection_reason": "way 10: conditional tags are unsupported",
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-bad-update-retains",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "ACTIVE",
+            "expected_status": "ACTIVE",
+            "actual_active": "A",
+            "rejection_reason": null,
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "route",
+            "returned_edges": [
+              "w:10:0:f",
+              "w:30:0:f",
+              "w:40:0:f",
+              "w:50:0:f"
+            ],
+            "package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+            "length_m": 444.74580163927334,
+            "actual_status": "ROUTE",
+            "expected_status": "ROUTE",
+            "checks": {
+              "exact_declared_edges": true,
+              "route_bound_to_active_snapshot": true,
+              "expected_status": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "activate",
+            "actual_status": "REJECTED",
+            "expected_status": "REJECTED",
+            "actual_active": "A",
+            "rejection_reason": "SHA256 mismatch",
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "route",
+            "returned_edges": [
+              "w:10:0:f",
+              "w:30:0:f",
+              "w:40:0:f",
+              "w:50:0:f"
+            ],
+            "package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+            "length_m": 444.74580163927334,
+            "actual_status": "ROUTE",
+            "expected_status": "ROUTE",
+            "checks": {
+              "exact_declared_edges": true,
+              "route_bound_to_active_snapshot": true,
+              "expected_status": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-valid-replacement",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "ACTIVE",
+            "expected_status": "ACTIVE",
+            "actual_active": "A",
+            "rejection_reason": null,
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "route",
+            "returned_edges": [
+              "w:10:0:f",
+              "w:30:0:f",
+              "w:40:0:f",
+              "w:50:0:f"
+            ],
+            "package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+            "length_m": 444.74580163927334,
+            "actual_status": "ROUTE",
+            "expected_status": "ROUTE",
+            "checks": {
+              "exact_declared_edges": true,
+              "route_bound_to_active_snapshot": true,
+              "expected_status": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "activate",
+            "actual_status": "ACTIVE",
+            "expected_status": "ACTIVE",
+            "actual_active": "B",
+            "rejection_reason": null,
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "route",
+            "returned_edges": [
+              "w:101:0:f",
+              "w:102:0:f"
+            ],
+            "package_sha256": "8b9d409865dd0b272456c2b99575c8dd29d3459602db7016377889b9b00ab465",
+            "length_m": 222.37291776319935,
+            "actual_status": "ROUTE",
+            "expected_status": "ROUTE",
+            "checks": {
+              "exact_declared_edges": true,
+              "route_bound_to_active_snapshot": true,
+              "expected_status": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-disconnected",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "ACTIVE",
+            "expected_status": "ACTIVE",
+            "actual_active": "A",
+            "rejection_reason": null,
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "route",
+            "actual_status": "NO_ROUTE",
+            "expected_status": "NO_ROUTE",
+            "checks": {
+              "expected_status": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-prohibited-destination",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "ACTIVE",
+            "expected_status": "ACTIVE",
+            "actual_active": "A",
+            "rejection_reason": null,
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "route",
+            "actual_status": "NO_ROUTE",
+            "expected_status": "NO_ROUTE",
+            "checks": {
+              "expected_status": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-unknown-node",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "ACTIVE",
+            "expected_status": "ACTIVE",
+            "actual_active": "A",
+            "rejection_reason": null,
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "route",
+            "actual_status": "NO_COVERAGE",
+            "expected_status": "NO_COVERAGE",
+            "checks": {
+              "expected_status": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-recovery",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "REJECTED",
+            "expected_status": "REJECTED",
+            "actual_active": "NONE",
+            "rejection_reason": "Invalid OSM XML",
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "activate",
+            "actual_status": "ACTIVE",
+            "expected_status": "ACTIVE",
+            "actual_active": "A",
+            "rejection_reason": null,
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "route",
+            "returned_edges": [
+              "w:10:0:f",
+              "w:30:0:f",
+              "w:40:0:f",
+              "w:50:0:f"
+            ],
+            "package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+            "length_m": 444.74580163927334,
+            "actual_status": "ROUTE",
+            "expected_status": "ROUTE",
+            "checks": {
+              "exact_declared_edges": true,
+              "route_bound_to_active_snapshot": true,
+              "expected_status": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-missing-required-coverage",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "ACTIVE",
+            "expected_status": "ACTIVE",
+            "actual_active": "A",
+            "rejection_reason": null,
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "activate",
+            "actual_status": "REJECTED",
+            "expected_status": "REJECTED",
+            "actual_active": "A",
+            "rejection_reason": "Required node coverage missing",
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "route",
+            "returned_edges": [
+              "w:10:0:f",
+              "w:30:0:f",
+              "w:40:0:f",
+              "w:50:0:f"
+            ],
+            "package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+            "length_m": 444.74580163927334,
+            "actual_status": "ROUTE",
+            "expected_status": "ROUTE",
+            "checks": {
+              "exact_declared_edges": true,
+              "route_bound_to_active_snapshot": true,
+              "expected_status": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "OFFLINE-001-oversize",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "activate",
+            "actual_status": "REJECTED",
+            "expected_status": "REJECTED",
+            "actual_active": "NONE",
+            "rejection_reason": "Nonempty immutable bytes within size limit required",
+            "checks": {
+              "expected_status": true,
+              "expected_active_map": true
+            },
+            "passed": true
+          }
+        ]
+      }
+    ]
+  }
+}

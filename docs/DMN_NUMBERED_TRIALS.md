@@ -413,3 +413,19 @@ NOT_RUN. Retain12 families plus DMN and per-case reasons. Only a complete judged
 18-case cohort may receive10*passes/18; solo DMN conformance is not a competitor
 quality ranking. Separate native package/network-isolated routing comparisons
 remain unexecuted. Preserve UK17/0/23 ambiguity and promotion block.
+
+OFFLINE-001 completed: freeze2d7885db99d3588d26cea3243ffa7c756c74b5b1;
+implementation/fix1fb644870e0b5886ef63a9750f1ef1e6afa652a4, CI38859329753,
+job116837785614.18/18 package cases and425 full tests pass. The actual parser/
+router ran in a separate Linux network namespace with zero default routes:
+12 store requests,9 core calculations. Failed updates preserve the current map;
+missing coverage differs from no legal route. New wrapper is in-memory Python,
+not Android/native offline readiness or authenticated/crash-safe disk installation.
+First local scorer incorrectly assigned an offline score without isolation; its
+function/hash/failure evidence is preserved. Fixed scoring keeps unisolated runs
+unranked; negative control and isolated cohort pass. All12 reference families
+remain visible with18 per-case unsupported/not-run reasons. Solo DMN10/10 is
+package conformance, not superiority. See OFFLINE_001_RESULTS.md and offline001
+before/first-scorer/after/scorecard JSON. Next bounded stage: frozen resource
+measurements (setup separate from requests), then integration/native offline
+proof. Keep UK17/0/23 ambiguity/promotion block and existing reference failures.
