@@ -21,6 +21,7 @@ jobs:
       - name: Prepare real map and freeze cases before engine execution
         run: |
           set -euo pipefail
+          mkdir -p results
           sudo apt-get update -qq >/dev/null
           sudo apt-get install -y -qq osmium-tool >/dev/null
           curl -fLsS --retry 2 --connect-timeout 20 --max-time 180 https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf -o "${RUNNER_TEMP}/ref006-source.osm.pbf"
@@ -31,7 +32,7 @@ jobs:
           raw=(Path(os.environ['RUNNER_TEMP'])/'ref006-source.osm.pbf').read_bytes()
           from benchmarks.itinero_public_probe import EXPECTED_ARCHIVE_HASH
           assert sha256(raw).hexdigest()==EXPECTED_ARCHIVE_HASH, 'Pinned archive mismatch'
-          Path('results/ref006-source-hashes.json').write_text(json.dumps({'archive_sha256':sha256(raw).hexdigest()}))
+          Path('results/real-oneway-source-hashes.json').write_text(json.dumps({'archive_sha256':sha256(raw).hexdigest()}))
           PYCODE
           osmium extract --strategy complete_ways --bbox=-2.270000,53.350000,-2.260000,53.360000 "${RUNNER_TEMP}/ref006-source.osm.pbf" -o results/real-oneway-map.osm.pbf
           osmium cat results/real-oneway-map.osm.pbf -o results/real-oneway-map.osm -f osm,add_metadata=false

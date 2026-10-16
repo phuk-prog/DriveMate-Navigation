@@ -52,3 +52,9 @@ pass. The canonical scripts/unified_preflight.py is absent (UNAVAILABLE).
 Actual real-map execution is pending CI; setup/selection failure is not a pass.
 UK coverage remains 17 correct / 0 confident wrong / 23 withheld; seven cases
 remain unresolved and app promotion stays blocked.
+
+First CI attempt38866454548 at8256dffaba03f0375b52413ea74a6b3ecf9085b2
+failed before case selection/routing: the ignored results directory was absent
+on a fresh checkout. The archive download/hash check had succeeded. Added explicit
+mkdir before any output; map hashes, selection and acceptance remain unchanged.
+Retained references/real-oneway-setup-failure-20261016.json; zero cases executed.
