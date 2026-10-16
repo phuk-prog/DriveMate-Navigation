@@ -283,3 +283,17 @@ Keep all twelve plus DMN visible; only a complete judged16-case controller cohor
 can receive `10 * passed / 16`, and it is not a competitor quality ranking.
 No Android service, real route-progress/GPS integration or device readiness is
 established by this isolated research component. Keep UK promotion blocked.
+
+REROUTE-001 completed: fixture freeze50236e5eb5e40c17aa30502d002e82565c03ef7a;
+first implementationdf2c1e45e8117f5b90f2fa1d5390e74173f131be preserved a reproduced
+stale-corroboration fault. Fixed1824621281fa4d9343a69260cd93c1fa0a956198,
+CI38847369324:16/16 frozen cases plus3/3 additional controls,389 tests. Additional
+controls were2/3 before the fix and are not blind holdouts. There was no prior
+controller: availability baseline is UNAVAILABLE, never an invented0/16 score.
+See REROUTE_001_RESULTS.md and reroute001-before/first-implementation/after JSON.
+No external controller cohort is executed; all twelve remain visible with exact
+unsupported/not-run reasons. This new isolated research controller suppresses
+stale callbacks but does not physically cancel/serialize computation or integrate
+Android/GPS/progress yet. Next bounded stage: junction/roundabout/instruction
+cases and applicable actual maneuver references; then arrival/offline/resources
+and integration. Keep the UK coverage tradeoff/promotion block open.

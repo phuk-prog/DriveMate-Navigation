@@ -1,0 +1,3433 @@
+{
+  "trial": "REROUTE-001",
+  "phase": "implemented_controller_after_request_time_freshness_fix",
+  "fixture_freeze_sha": "50236e5eb5e40c17aa30502d002e82565c03ef7a",
+  "first_implementation_sha": "df2c1e45e8117f5b90f2fa1d5390e74173f131be",
+  "head_sha": "1824621281fa4d9343a69260cd93c1fa0a956198",
+  "run_id": 38847369324,
+  "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38847369324",
+  "job_id": 116800840072,
+  "execution_conclusion": "success",
+  "verified_fix": "Age corroborating history against request-time monotonic now, not separation between sample timestamps. A delayed packet cannot reuse an already-expired first sample.",
+  "verification": {
+    "unit_tests": 389,
+    "compile": "passed",
+    "privacy_guard": "passed",
+    "external_controller_executions": 0,
+    "cloud_skill": "Unavailable in this invocation; no skill/preflight result counted as passed."
+  },
+  "report": {
+    "test_id": "REROUTE-001",
+    "system": "DMN",
+    "version": "repository isolated ReroutingController and shortest_route",
+    "execution": "actual_local_python_with_declared_synthetic_delivery",
+    "classification": "synthetic analytical lifecycle conformance only",
+    "configuration": {
+      "minimum_off_route_samples": 2,
+      "minimum_sample_gap_ms": 1000,
+      "max_observation_age_ms": 10000,
+      "cooldown_ms": 30000,
+      "max_request_age_ms": 15000
+    },
+    "map_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+    "oracle_sha256": "467f51d173abb37b34d0485b3bed4cccd2c09c287d18763b5489292d87a64cee",
+    "controller_sha256": "f058239c3c4b869fe7282f5728b8b879ba8bbdf5687a038c4e6a16f53a1cb349",
+    "harness_sha256": "dd04dfb4dc592639f6c8e8f1affe9c54be605adef40c2834eb7a095dec77249c",
+    "actual_core_route_calculations": 35,
+    "cases": [
+      {
+        "case_id": "REROUTE-001-corroborated-install",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-on-route-resets",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 1,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-weak-sample-resets",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 4,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-timestamp-rejection",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 4,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 5,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 6,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-independent-spacing",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 4,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-one-pending-request",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-cooldown-and-recovery",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 3,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 4,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 5,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 6,
+            "action": "observe",
+            "request_id": 2,
+            "expected_request_alias": "b",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 7,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-on-route-cancels",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "initial",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-weak-sample-cancels",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "initial",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-context-change",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 4,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "begin",
+            "actual_route": "replacement",
+            "checks": {
+              "expected_installed_route": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "replacement",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          },
+          {
+            "event": 4,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 5,
+            "action": "observe",
+            "request_id": 2,
+            "expected_request_alias": "b",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 6,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-stop-cancels",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "stop",
+            "actual_route": "NONE",
+            "checks": {
+              "expected_installed_route": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "NONE",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          },
+          {
+            "event": 4,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-stale-evidence-result",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "initial",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-request-timeout",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "initial",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-request-age-boundary",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-failed-route-preserves",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "initial",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 4,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-unknown-callback",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 3,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "initial",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      }
+    ],
+    "real_GNSS_measurements": 0,
+    "android_device_tests": 0,
+    "external_engine_executions": 0,
+    "physical_computation_cancellation_implemented": false
+  },
+  "additional_report": {
+    "test_id": "REROUTE-001-ADDITIONAL",
+    "system": "DMN",
+    "version": "repository isolated ReroutingController and shortest_route",
+    "execution": "actual_local_python_with_declared_synthetic_delivery",
+    "classification": "synthetic analytical lifecycle conformance only",
+    "configuration": {
+      "minimum_off_route_samples": 2,
+      "minimum_sample_gap_ms": 1000,
+      "max_observation_age_ms": 10000,
+      "cooldown_ms": 30000,
+      "max_request_age_ms": 15000
+    },
+    "map_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+    "oracle_sha256": "389d2eb25dd4a13e050dba56f582e7858175c8892dbd9c58ec3b4e8ad6e63fa4",
+    "controller_sha256": "f058239c3c4b869fe7282f5728b8b879ba8bbdf5687a038c4e6a16f53a1cb349",
+    "harness_sha256": "dd04dfb4dc592639f6c8e8f1affe9c54be605adef40c2834eb7a095dec77249c",
+    "actual_core_route_calculations": 6,
+    "cases": [
+      {
+        "case_id": "REROUTE-001-ADDITIONAL-expired-first-sample",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-ADDITIONAL-first-sample-age-boundary",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-ADDITIONAL-unknown-progress-cancels",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "initial",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      }
+    ],
+    "real_GNSS_measurements": 0,
+    "android_device_tests": 0,
+    "external_engine_executions": 0,
+    "physical_computation_cancellation_implemented": false
+  },
+  "coverage": {
+    "test_id": "REROUTE-001",
+    "formula": "10 * passed / sixteen frozen cases; unavailable cohorts unranked",
+    "scope": "Only DMN has an executed lifecycle cohort; no competitor quality ranking is supported.",
+    "rows": [
+      {
+        "system": "DMN",
+        "rank": 1,
+        "score_out_of_ten": 10,
+        "passed": 16,
+        "failed": 0,
+        "unsupported": 0,
+        "not_run": 0,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-corroborated-install",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 2,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "complete",
+                "actual_accepted": true,
+                "actual_route": "detour",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-on-route-resets",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 1,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-resets",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 2,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 4,
+                "action": "complete",
+                "actual_accepted": true,
+                "actual_route": "detour",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-timestamp-rejection",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 2,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 4,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 5,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 6,
+                "action": "complete",
+                "actual_accepted": true,
+                "actual_route": "detour",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-independent-spacing",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 2,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 4,
+                "action": "complete",
+                "actual_accepted": true,
+                "actual_route": "detour",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-one-pending-request",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 2,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "action": "complete",
+                "actual_accepted": true,
+                "actual_route": "detour",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-cooldown-and-recovery",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 3,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "complete",
+                "actual_accepted": true,
+                "actual_route": "detour",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 4,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 5,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 6,
+                "action": "observe",
+                "request_id": 2,
+                "expected_request_alias": "b",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 7,
+                "action": "complete",
+                "actual_accepted": true,
+                "actual_route": "detour",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-on-route-cancels",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 2,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "action": "complete",
+                "actual_accepted": false,
+                "actual_route": "initial",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-cancels",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 2,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "action": "complete",
+                "actual_accepted": false,
+                "actual_route": "initial",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-context-change",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 4,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "begin",
+                "actual_route": "replacement",
+                "checks": {
+                  "expected_installed_route": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "action": "complete",
+                "actual_accepted": false,
+                "actual_route": "replacement",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              },
+              {
+                "event": 4,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 5,
+                "action": "observe",
+                "request_id": 2,
+                "expected_request_alias": "b",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 6,
+                "action": "complete",
+                "actual_accepted": true,
+                "actual_route": "detour",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-stop-cancels",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 2,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "stop",
+                "actual_route": "NONE",
+                "checks": {
+                  "expected_installed_route": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "action": "complete",
+                "actual_accepted": false,
+                "actual_route": "NONE",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              },
+              {
+                "event": 4,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-stale-evidence-result",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 2,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "complete",
+                "actual_accepted": false,
+                "actual_route": "initial",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-request-timeout",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 2,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "action": "complete",
+                "actual_accepted": false,
+                "actual_route": "initial",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-request-age-boundary",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 2,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "action": "complete",
+                "actual_accepted": true,
+                "actual_route": "detour",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-failed-route-preserves",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 2,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "complete",
+                "actual_accepted": false,
+                "actual_route": "initial",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 4,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-unknown-callback",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 3,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "complete",
+                "actual_accepted": false,
+                "actual_route": "initial",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "action": "complete",
+                "actual_accepted": true,
+                "actual_route": "detour",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "system": "Valhalla",
+        "rank": null,
+        "score_out_of_ten": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 16,
+        "not_run": 0,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-corroborated-install",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-on-route-resets",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-resets",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-timestamp-rejection",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-independent-spacing",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-one-pending-request",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-cooldown-and-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-on-route-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-context-change",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-stop-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-stale-evidence-result",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-request-timeout",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-request-age-boundary",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-failed-route-preserves",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-unknown-callback",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          }
+        ]
+      },
+      {
+        "system": "OSRM",
+        "rank": null,
+        "score_out_of_ten": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 16,
+        "not_run": 0,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-corroborated-install",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-on-route-resets",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-resets",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-timestamp-rejection",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-independent-spacing",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-one-pending-request",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-cooldown-and-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-on-route-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-context-change",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-stop-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-stale-evidence-result",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-request-timeout",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-request-age-boundary",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-failed-route-preserves",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-unknown-callback",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          }
+        ]
+      },
+      {
+        "system": "GraphHopper",
+        "rank": null,
+        "score_out_of_ten": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 16,
+        "not_run": 0,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-corroborated-install",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-on-route-resets",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-resets",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-timestamp-rejection",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-independent-spacing",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-one-pending-request",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-cooldown-and-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-on-route-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-context-change",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-stop-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-stale-evidence-result",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-request-timeout",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-request-age-boundary",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-failed-route-preserves",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-unknown-callback",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          }
+        ]
+      },
+      {
+        "system": "OsmAnd",
+        "rank": null,
+        "score_out_of_ten": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 0,
+        "not_run": 16,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-corroborated-install",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-on-route-resets",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-resets",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-timestamp-rejection",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-independent-spacing",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-one-pending-request",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-cooldown-and-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-on-route-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-context-change",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-stop-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-stale-evidence-result",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-request-timeout",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-request-age-boundary",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-failed-route-preserves",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-unknown-callback",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          }
+        ]
+      },
+      {
+        "system": "Organic Maps",
+        "rank": null,
+        "score_out_of_ten": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 0,
+        "not_run": 16,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-corroborated-install",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-on-route-resets",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-resets",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-timestamp-rejection",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-independent-spacing",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-one-pending-request",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-cooldown-and-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-on-route-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-context-change",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-stop-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-stale-evidence-result",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-request-timeout",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-request-age-boundary",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-failed-route-preserves",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-unknown-callback",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          }
+        ]
+      },
+      {
+        "system": "BRouter",
+        "rank": null,
+        "score_out_of_ten": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 16,
+        "not_run": 0,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-corroborated-install",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-on-route-resets",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-resets",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-timestamp-rejection",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-independent-spacing",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-one-pending-request",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-cooldown-and-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-on-route-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-context-change",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-stop-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-stale-evidence-result",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-request-timeout",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-request-age-boundary",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-failed-route-preserves",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-unknown-callback",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          }
+        ]
+      },
+      {
+        "system": "HERE",
+        "rank": null,
+        "score_out_of_ten": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 0,
+        "not_run": 16,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-corroborated-install",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-on-route-resets",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-resets",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-timestamp-rejection",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-independent-spacing",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-one-pending-request",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-cooldown-and-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-on-route-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-context-change",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-stop-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-stale-evidence-result",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-request-timeout",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-request-age-boundary",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-failed-route-preserves",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-unknown-callback",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          }
+        ]
+      },
+      {
+        "system": "Mapbox",
+        "rank": null,
+        "score_out_of_ten": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 0,
+        "not_run": 16,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-corroborated-install",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-on-route-resets",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-resets",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-timestamp-rejection",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-independent-spacing",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-one-pending-request",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-cooldown-and-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-on-route-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-context-change",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-stop-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-stale-evidence-result",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-request-timeout",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-request-age-boundary",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-failed-route-preserves",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-unknown-callback",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          }
+        ]
+      },
+      {
+        "system": "TomTom",
+        "rank": null,
+        "score_out_of_ten": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 0,
+        "not_run": 16,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-corroborated-install",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-on-route-resets",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-resets",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-timestamp-rejection",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-independent-spacing",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-one-pending-request",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-cooldown-and-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-on-route-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-context-change",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-stop-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-stale-evidence-result",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-request-timeout",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-request-age-boundary",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-failed-route-preserves",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-unknown-callback",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          }
+        ]
+      },
+      {
+        "system": "openrouteservice",
+        "rank": null,
+        "score_out_of_ten": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 16,
+        "not_run": 0,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-corroborated-install",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-on-route-resets",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-resets",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-timestamp-rejection",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-independent-spacing",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-one-pending-request",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-cooldown-and-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-on-route-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-context-change",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-stop-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-stale-evidence-result",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-request-timeout",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-request-age-boundary",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-failed-route-preserves",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-unknown-callback",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          }
+        ]
+      },
+      {
+        "system": "Google Maps",
+        "rank": null,
+        "score_out_of_ten": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 0,
+        "not_run": 16,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-corroborated-install",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-on-route-resets",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-resets",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-timestamp-rejection",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-independent-spacing",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-one-pending-request",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-cooldown-and-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-on-route-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-context-change",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-stop-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-stale-evidence-result",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-request-timeout",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-request-age-boundary",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-failed-route-preserves",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-unknown-callback",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          }
+        ]
+      },
+      {
+        "system": "Waze",
+        "rank": null,
+        "score_out_of_ten": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 0,
+        "not_run": 16,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-corroborated-install",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-on-route-resets",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-resets",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-timestamp-rejection",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-independent-spacing",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-one-pending-request",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-cooldown-and-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-on-route-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-weak-sample-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-context-change",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-stop-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-stale-evidence-result",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-request-timeout",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-request-age-boundary",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-failed-route-preserves",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-unknown-callback",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          }
+        ]
+      }
+    ]
+  },
+  "additional_case_coverage": {
+    "scope": "Three adversarial controls are reported separately from the frozen sixteen-case score; no competitive ranking.",
+    "rows": [
+      {
+        "system": "DMN",
+        "rank": null,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-expired-first-sample",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 2,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "action": "complete",
+                "actual_accepted": true,
+                "actual_route": "detour",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-first-sample-age-boundary",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 2,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "complete",
+                "actual_accepted": true,
+                "actual_route": "detour",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-unknown-progress-cancels",
+            "outcome": "PASS",
+            "actual_core_route_calculations": 2,
+            "events": [
+              {
+                "event": 0,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "observe",
+                "request_id": 1,
+                "expected_request_alias": "a",
+                "checks": {
+                  "expected_request_creation": true,
+                  "request_id_unique": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "action": "observe",
+                "expected_request_alias": null,
+                "checks": {
+                  "expected_request_creation": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "action": "complete",
+                "actual_accepted": false,
+                "actual_route": "initial",
+                "checks": {
+                  "expected_install_decision": true,
+                  "expected_installed_route": true
+                },
+                "passed": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "system": "Valhalla",
+        "rank": null,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-expired-first-sample",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-first-sample-age-boundary",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-unknown-progress-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          }
+        ]
+      },
+      {
+        "system": "OSRM",
+        "rank": null,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-expired-first-sample",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-first-sample-age-boundary",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-unknown-progress-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          }
+        ]
+      },
+      {
+        "system": "GraphHopper",
+        "rank": null,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-expired-first-sample",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-first-sample-age-boundary",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-unknown-progress-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          }
+        ]
+      },
+      {
+        "system": "OsmAnd",
+        "rank": null,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-expired-first-sample",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-first-sample-age-boundary",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-unknown-progress-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          }
+        ]
+      },
+      {
+        "system": "Organic Maps",
+        "rank": null,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-expired-first-sample",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-first-sample-age-boundary",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-unknown-progress-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native lifecycle harness not implemented"
+          }
+        ]
+      },
+      {
+        "system": "BRouter",
+        "rank": null,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-expired-first-sample",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-first-sample-age-boundary",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-unknown-progress-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          }
+        ]
+      },
+      {
+        "system": "HERE",
+        "rank": null,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-expired-first-sample",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-first-sample-age-boundary",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-unknown-progress-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          }
+        ]
+      },
+      {
+        "system": "Mapbox",
+        "rank": null,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-expired-first-sample",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-first-sample-age-boundary",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-unknown-progress-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          }
+        ]
+      },
+      {
+        "system": "TomTom",
+        "rank": null,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-expired-first-sample",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-first-sample-age-boundary",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-unknown-progress-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          }
+        ]
+      },
+      {
+        "system": "openrouteservice",
+        "rank": null,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-expired-first-sample",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-first-sample-age-boundary",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-unknown-progress-cancels",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated coordinate-routing/batch endpoint does not expose equivalent off-route evidence, cooldown, session or callback installation state."
+          }
+        ]
+      },
+      {
+        "system": "Google Maps",
+        "rank": null,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-expired-first-sample",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-first-sample-age-boundary",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-unknown-progress-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent lifecycle harness"
+          }
+        ]
+      },
+      {
+        "system": "Waze",
+        "rank": null,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-expired-first-sample",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-first-sample-age-boundary",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          },
+          {
+            "case_id": "REROUTE-001-ADDITIONAL-unknown-progress-cancels",
+            "outcome": "NOT_RUN",
+            "reason": "No established permitted automated lifecycle replay interface"
+          }
+        ]
+      }
+    ]
+  }
+}
