@@ -316,3 +316,17 @@ Missing execution is NOT_RUN; unparseable output is UNRESOLVED, never a pass.
 DMN currently has no maneuver generator: availability baseline UNAVAILABLE, not0/5.
 No voice timing, lane guidance, multi-lane exit counting, real-map legal truth or
 Android integration is established. UK coverage/promotion remains blocked.
+
+JUNCTION-001 completed: freeze6761d694d9eeabd1e3df648f77f9c6c5012b1a12;
+initial sequential reference run38853990046 at90f51f43c90d59b260fc88a873843ff4deb7c478;
+confirmation38854474267 at2996b127760764131530596e156c5a3e58ea0930.
+DMN/OSRM/GraphHopper/ORS5/5 tied10/10; BRouter4/5 (8/10), Valhalla3/5 (6/10).
+BRouter truncates the right-turn path111.195m before destination; Valhalla reports
+exit2 for exits1 and3 despite correct paths. Both failures repeat with raw
+coordinates retained. All12 external families remain visible; seven unranked
+with per-case access/harness reasons. DMN's new isolated generator passes5/5
+and nine additional safety controls;405 tests. No baseline generator existed,
+so never call its baseline0/5. See JUNCTION_001_RESULTS.md and junction001 JSON.
+Next bounded stage: frozen arrival safeguards, then offline reliability/resources
+and integration. No voice/lane/device/road-readiness claims. Preserve unresolved
+UK17/0/23 evidence and promotion block. Do not repeat unchanged heavyweight runs.
