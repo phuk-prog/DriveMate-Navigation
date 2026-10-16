@@ -60,13 +60,18 @@ class DirectedRoadMatcher:
     """
     def __init__(self, graph: RoadGraph, coordinates: Mapping[str,tuple[float,float]],
                  *, maximum_snap_m: float=35.0,
-                 minimum_score_separation: float=0.85):
+                 minimum_score_separation: float=0.85,
+                 experimental_adjacent_fragment_equivalence: bool=False):
         if not isinstance(graph,RoadGraph):
             raise TypeError("Requires a directed RoadGraph")
         if not isfinite(maximum_snap_m) or maximum_snap_m<=0 or maximum_snap_m>1000:
             raise ValueError("Invalid snap distance")
         if not isfinite(minimum_score_separation) or minimum_score_separation<=0:
             raise ValueError("Invalid ambiguity separation")
+        if type(experimental_adjacent_fragment_equivalence) is not bool:
+            raise ValueError('Experimental mode must be boolean')
+        # Default mode and previously frozen GPS-003 judgments are unchanged.
+        self.experimental_adjacent_fragment_equivalence=experimental_adjacent_fragment_equivalence
         self.graph=graph
         self.maximum_snap_m=maximum_snap_m
         self.minimum_score_separation=minimum_score_separation
@@ -98,6 +103,35 @@ class DirectedRoadMatcher:
         left, right = self.graph.edges[first.edge_id], self.graph.edges[other.edge_id]
         contiguous = left.target == right.source or right.target == left.source
         return contiguous and angular_difference(first.heading, other.heading) < 1e-6
+
+    def _experimental_same_way_bend(self, first: _Candidate, other: _Candidate,
+                                     fix: GPSFix) -> bool:
+        """Opt-in research hypothesis, NOT a verified safe driving matcher.
+
+        Require an accurately aligned, moving fix and a clearly worse,
+        physically adjacent, same-OSM-way same-direction fragment. Keep
+        competing carriageways, different ways, prohibited turns, reverse
+        directions, stationary fixes and sharp turns ambiguous.
+        """
+        if (fix.speed_mps is None or fix.speed_mps < 2.0 or
+                fix.bearing_deg is None or fix.horizontal_accuracy_m > 5.0 or
+                first.distance_m > fix.horizontal_accuracy_m or
+                other.distance_m <= max(2.0*fix.horizontal_accuracy_m,
+                                        first.distance_m+4.0) or
+                angular_difference(first.heading,other.heading) > 8.0):
+            return False
+        a,b=first.edge_id.split(':'),other.edge_id.split(':')
+        if not (len(a)==len(b)==4 and a[0]==b[0]=='w' and
+                a[1].isdigit() and a[1]==b[1] and
+                a[2].isdigit() and b[2].isdigit() and
+                a[3]==b[3] and a[3] in ('f','r')):
+            return False
+        left,right=self.graph.edges[first.edge_id],self.graph.edges[other.edge_id]
+        if right.target==left.source:
+            return (other.edge_id,first.edge_id) not in self.graph.prohibited_turns
+        if left.target==right.source:
+            return (first.edge_id,other.edge_id) not in self.graph.prohibited_turns
+        return False
 
     def _candidates(self, fix: GPSFix, prior_edge_id: str | None = None) -> list[_Candidate]:
         """One shared candidate policy for stateless and temporal matching."""
@@ -140,7 +174,9 @@ class DirectedRoadMatcher:
         contenders.sort(key=lambda c: (c.score, c.distance_m, c.edge_id))
         first = contenders[0]
         return [first] + [c for c in contenders[1:]
-                          if not self._straight_same_way(first, c)]
+                          if not self._straight_same_way(first, c)
+                          and not (self.experimental_adjacent_fragment_equivalence
+                                   and self._experimental_same_way_bend(first,c,fix))]
 
     def match(self, fix: GPSFix, *, previous_fix: GPSFix | None = None,
               prior_edge_id: str | None = None, now_ms: int | None = None) -> MatchResult:
