@@ -1,0 +1,160 @@
+{
+  "classification": "synthetic analytical directed topology and maneuver semantics; NOT independent surveyed truth",
+  "cases": [
+    {
+      "id": "J001-L",
+      "source_node": 1,
+      "target_node": 3,
+      "path": [
+        [
+          1,
+          0.999
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1.001,
+          1
+        ]
+      ],
+      "maneuvers": [
+        {
+          "kind": "left"
+        }
+      ]
+    },
+    {
+      "id": "J001-R",
+      "source_node": 1,
+      "target_node": 4,
+      "path": [
+        [
+          1,
+          0.999
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0.999,
+          1
+        ]
+      ],
+      "maneuvers": [
+        {
+          "kind": "right"
+        }
+      ]
+    },
+    {
+      "id": "J001-E1",
+      "source_node": 10,
+      "target_node": 16,
+      "path": [
+        [
+          1.01,
+          1.008
+        ],
+        [
+          1.01,
+          1.009
+        ],
+        [
+          1.009,
+          1.01
+        ],
+        [
+          1.008,
+          1.01
+        ]
+      ],
+      "maneuvers": [
+        {
+          "kind": "roundabout",
+          "exit": 1
+        }
+      ]
+    },
+    {
+      "id": "J001-E2",
+      "source_node": 10,
+      "target_node": 17,
+      "path": [
+        [
+          1.01,
+          1.008
+        ],
+        [
+          1.01,
+          1.009
+        ],
+        [
+          1.009,
+          1.01
+        ],
+        [
+          1.0093,
+          1.0107
+        ],
+        [
+          1.01,
+          1.011
+        ],
+        [
+          1.01,
+          1.012
+        ]
+      ],
+      "maneuvers": [
+        {
+          "kind": "roundabout",
+          "exit": 2
+        }
+      ]
+    },
+    {
+      "id": "J001-E3",
+      "source_node": 10,
+      "target_node": 18,
+      "path": [
+        [
+          1.01,
+          1.008
+        ],
+        [
+          1.01,
+          1.009
+        ],
+        [
+          1.009,
+          1.01
+        ],
+        [
+          1.0093,
+          1.0107
+        ],
+        [
+          1.01,
+          1.011
+        ],
+        [
+          1.011,
+          1.01
+        ],
+        [
+          1.012,
+          1.01
+        ]
+      ],
+      "maneuvers": [
+        {
+          "kind": "roundabout",
+          "exit": 3
+        }
+      ]
+    }
+  ]
+}

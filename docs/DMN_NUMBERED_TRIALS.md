@@ -297,3 +297,22 @@ stale callbacks but does not physically cancel/serialize computation or integrat
 Android/GPS/progress yet. Next bounded stage: junction/roundabout/instruction
 cases and applicable actual maneuver references; then arrival/offline/resources
 and integration. Keep the UK coverage tradeoff/promotion block open.
+
+## JUNCTION-001 frozen acceptance
+
+Five synthetic cases fix two90-degree turns and directed roundabout exits1–3
+before guidance implementation. Oracle paths use explicit invented coordinates.
+Incoming-only feeder at the first exit and motor_vehicle=no spur between first
+and second exits must not count. Only accessible outgoing spokes count once per
+visited junction; prohibited turns cannot count. Principal maneuvers must exactly
+match the oracle; start/arrival/continue and the paired roundabout-exit instruction
+are administrative. Other unexpected turn instructions fail. Require the existing
+ROUTE-001 geometry checks (2m endpoints/path,5m length,0.5m progress).
+
+Run actual DMN and all five available reference directions interfaces sequentially
+with instructions enabled. Retain raw maneuver fields. Rank only complete judged
+five-case cohorts,10*passes/5 with ties. All12 external families remain visible.
+Missing execution is NOT_RUN; unparseable output is UNRESOLVED, never a pass.
+DMN currently has no maneuver generator: availability baseline UNAVAILABLE, not0/5.
+No voice timing, lane guidance, multi-lane exit counting, real-map legal truth or
+Android integration is established. UK coverage/promotion remains blocked.
