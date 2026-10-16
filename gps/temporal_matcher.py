@@ -178,6 +178,66 @@ class TemporalRoadMatcher:
                 return None
         return chosen
 
+    def _research_directed_progress(self, old_id: str, reachable: set[str],
+                                    fix: GPSFix) -> str | None:
+        """Opt-in forward confirmation, not a source of real-world road truth.
+
+        Only the current trusted edge and its immediate direct successor may
+        remain reachable. The successor must clearly better explain a moving
+        high-accuracy observation *past* their shared boundary. Existing
+        prohibition, heading, reverse, and anchor freshness gates still apply.
+        No guessed detour and no confidence for two independent roadways.
+        """
+        if (len(reachable) != 2 or old_id not in reachable
+                or self.anchor_fix is None or fix.speed_mps is None
+                or fix.speed_mps < 2 or fix.bearing_deg is None
+                or fix.horizontal_accuracy_m > 5):
+            return None
+        candidates = self.matcher._candidates(fix)
+        if len(candidates) != 2:
+            return None
+        best = candidates[0]
+        if best.edge_id not in reachable or best.edge_id == old_id:
+            return None
+        older = next((c for c in candidates if c.edge_id == old_id), None)
+        if older is None:
+            return None
+        before, after = old_id.split(":"), best.edge_id.split(":")
+        if (len(before) != 4 or len(after) != 4
+                or before[0] != after[0] or before[0] != "w"
+                or not before[1].isdigit() or before[1] != after[1]
+                or not before[2].isdigit() or not after[2].isdigit()
+                or abs(int(before[2])-int(after[2])) != 1
+                or before[3] != after[3] or before[3] not in ("f","r")):
+            return None
+        graph = self.matcher.graph
+        prior, next_edge = graph.edges[old_id], graph.edges[best.edge_id]
+        if (prior.target != next_edge.source
+                or next_edge.access != "allowed"
+                or (old_id,best.edge_id) in graph.prohibited_turns):
+            return None
+        from .matcher import angular_difference
+        if (best.distance_m > fix.horizontal_accuracy_m
+                or older.distance_m <= best.distance_m + max(3.0,fix.horizontal_accuracy_m)
+                or angular_difference(best.heading,fix.bearing_deg) > 12.0
+                or angular_difference(older.heading,best.heading) > 35.0
+                or _distance_m(self.anchor_fix,fix) <=
+                     self.anchor_fix.horizontal_accuracy_m + fix.horizontal_accuracy_m):
+            return None
+        # A boundary fix is not a guaranteed transition. Require at least 2m
+        # of directed progress inside the new segment in the shared local frame.
+        a=self.matcher.coords[next_edge.source]
+        b=self.matcher.coords[next_edge.target]
+        vx,vy=_local(*b,*a)
+        norm=hypot(vx,vy)
+        if norm < 1e-4:
+            return None
+        px,py=_local(fix.latitude,fix.longitude,*a)
+        progress=(px*vx+py*vy)/norm
+        if not max(2.0,0.10*norm) < progress < norm:
+            return None
+        return best.edge_id
+
     def _live_anchor(self, fix: GPSFix) -> bool:
         if self.anchor_fix is None or self.anchor_edge_id is None:
             return False
@@ -287,6 +347,16 @@ class TemporalRoadMatcher:
             self._remember(fix, chosen)
             return MatchResult("MATCHED", chosen, "unique_legal_temporal_connection",
                                base.distance_m, len(plausible))
+
+        if (base.status == 'AMBIGUOUS' and moving
+                and self.matcher.experimental_adjacent_fragment_equivalence):
+            # Research matcher only. Default matcher remains authoritative.
+            chosen = self._research_directed_progress(old, reachable, fix)
+            if chosen is not None:
+                self._remember(fix, chosen)
+                return MatchResult('MATCHED',chosen,
+                                   'research_confirmed_directed_progress',
+                                   base.distance_m,len(plausible))
 
         if base.status == 'AMBIGUOUS' and moving and len(reachable) > 1:
             chosen = self._direct_fragment_before_bend(old, reachable, fix)
