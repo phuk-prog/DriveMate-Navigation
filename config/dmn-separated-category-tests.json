@@ -127,16 +127,20 @@
     {
       "id": "lanes",
       "label": "Lane counts and next-turn guidance",
-      "scope": "Actual UK lane arrows, combined turn/through and best-lane advice not executed.",
-      "test_files": [],
+      "scope": "Analytical OSM lane-arrow parser/unknown gates only; real UK lane signage and next-lane guidance unverified.",
+      "test_files": [
+        "test_lane_evidence.py"
+      ],
       "engine_rank": null,
       "navigation_score": null
     },
     {
       "id": "route_line_adherence",
       "label": "Route line and turn-point road adherence",
-      "scope": "Full route-line drift, roundabout arc clipping, wrong-side turn point untested.",
-      "test_files": [],
+      "scope": "Route-vs-directed-graph geometry/turn-control tests only; no independent UK road-line survey.",
+      "test_files": [
+        "test_route_line_adherence.py"
+      ],
       "engine_rank": null,
       "navigation_score": null
     },
@@ -155,24 +159,30 @@
     {
       "id": "instruction_timing",
       "label": "Navigation instructions and timing",
-      "scope": "No measured approach/at-turn/after-turn or adaptive spoken timing test.",
-      "test_files": [],
+      "scope": "Deterministic approach/turn timing confidence gates only; no Android voice timing.",
+      "test_files": [
+        "test_instruction_cues.py"
+      ],
       "engine_rank": null,
       "navigation_score": null
     },
     {
       "id": "live_traffic",
       "label": "Traffic, closures and dynamic replanning",
-      "scope": "Live incident, closure and traffic response tests not executed.",
-      "test_files": [],
+      "scope": "Simulated freshness/closure input policy only; no live traffic feed tested.",
+      "test_files": [
+        "test_traffic_evidence.py"
+      ],
       "engine_rank": null,
       "navigation_score": null
     },
     {
       "id": "speed_limits",
       "label": "Road section speed limits and alerts",
-      "scope": "Speed-limit per-section, alert correctness and verified camera checks not executed.",
-      "test_files": [],
+      "scope": "OSM speed-unit and unknown handling only; road signs and enforcement unverified.",
+      "test_files": [
+        "test_speed_evidence.py"
+      ],
       "engine_rank": null,
       "navigation_score": null
     },
@@ -199,8 +209,10 @@
     {
       "id": "voice_audio",
       "label": "Voice, Bluetooth and music ducking",
-      "scope": "Android voice/Bluetooth music ducking not tested.",
-      "test_files": [],
+      "scope": "Audio ducking intent contract only; Android Bluetooth/music integration untested.",
+      "test_files": [
+        "test_audio_focus_policy.py"
+      ],
       "engine_rank": null,
       "navigation_score": null
     },
