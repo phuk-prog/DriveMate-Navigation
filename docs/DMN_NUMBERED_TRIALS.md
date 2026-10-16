@@ -453,3 +453,21 @@ and per-case outcomes. No cross-family performance rank from different models,
 hardware or in-process versus HTTP timings. DMN variant timings may be compared
 within the recorded process/host protocol, but are not separate engine families.
 UK coverage/promotion block and all prior reference failures remain unchanged.
+
+RESOURCE-001 completed: freeze9dd63134411b9562519d7bd6cf5abfe1a4b19ea6;
+implementation83f3830ee346ba428e4d78ad09e528f40e28ba95, CI38861398588/
+job116844266276. Nine cases across three DMN configurations, separate timing/
+memory phases and324 actual searches pass;429 full tests. A reproduced redundant
+heuristic-work control failed223>64 before caching and passes64<=64 after a
+per-request cache. Destination isolation/safety regressions pass. Memory rises
+about50KB on largest diagonal queries. Latencies are informational: unchanged
+Dijkstra also drifted, so do not attribute the whole timing difference to cache.
+No native/phone or cross-family resource ranking; all12 references retain nine
+per-case NOT_RUN reasons. See RESOURCE_001_RESULTS.md and resource001 before-local/
+after-local/ci JSON with raw samples, graph/source hashes and environment.
+The owner authorized remaining stages; continue bounded research integration
+next, then native/device/long-duration and independent-truth work as actually
+available. No adb/emulator/research Android project is available here; device
+checks are UNAVAILABLE, never passed. Independent road/legal/GNSS truth and
+broader same-workload reference adapters remain work. Preserve UK17/0/23 and
+promotion block; do not declare the programme complete or universally superior.
