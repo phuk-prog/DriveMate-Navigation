@@ -12,6 +12,8 @@ on:
       - 'engine/route_alternatives.py'
       - 'benchmarks/map001_context_access.py'
       - 'benchmarks/map001_profile_trial.py'
+      - 'benchmarks/map001_additional_profiles.py'
+      - 'tests/test_map001_additional_profiles.py'
       - 'tests/test_osm_import.py'
       - 'benchmarks/map001_direction_contract.py'
       - 'tests/test_map001_direction_contract.py'
@@ -29,7 +31,7 @@ jobs:
   facts:
     if: contains(github.event.pull_request.title, '[map001-facts]')
     runs-on: ubuntu-latest
-    timeout-minutes: 18
+    timeout-minutes: 47
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -136,6 +138,64 @@ jobs:
             sudo rm -rf "results/profile-engine-$WAY"
           done
           python -m benchmarks.map001_profile_trial score
+      - name: Add local open-source reference profile unit contract
+        run: |
+          python -m unittest tests.test_map001_additional_profiles -v
+      - name: Fresh OSRM MLD 5.27.1 on four identical frozen binary ways
+        timeout-minutes: 12
+        run: |
+          set -euo pipefail
+          IMAGE='ghcr.io/project-osrm/osrm-backend:v5.27.1@sha256:855614a38f464b0558a2ad6eaa7cb8c139f39887da9b38b485ce453c6e6e6124'
+          docker pull "$IMAGE"
+          for WAY in 155729945 115559329 548694371 35277147; do
+            mkdir -p "results/map001-osrm-$WAY"
+            osmium sort "results/map001-profiles/$WAY.osm" -o "results/map001-osrm-$WAY/input.osm.pbf"
+            docker run --rm -v "$PWD/results/map001-osrm-$WAY:/data" "$IMAGE" osrm-extract -p /opt/car.lua /data/input.osm.pbf
+            docker run --rm -v "$PWD/results/map001-osrm-$WAY:/data" "$IMAGE" osrm-partition /data/input.osrm
+            docker run --rm -v "$PWD/results/map001-osrm-$WAY:/data" "$IMAGE" osrm-customize /data/input.osrm
+            docker run -d --rm --name map001-osrm -p 127.0.0.1:5000:5000 -v "$PWD/results/map001-osrm-$WAY:/data" "$IMAGE" osrm-routed --algorithm mld /data/input.osrm
+            python - <<'PYCODE'
+          from benchmarks.osrm_live_reference import wait_for_local_router
+          wait_for_local_router(40)
+          PYCODE
+            python -m benchmarks.map001_additional_profiles probe --engine OSRM --way "$WAY"
+            docker rm -f map001-osrm >/dev/null
+            sudo rm -rf "results/map001-osrm-$WAY"
+          done
+      - uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Fresh GraphHopper 11.1 on four identical frozen binary ways
+        timeout-minutes: 13
+        run: |
+          set -euo pipefail
+          BASE='https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/11.1/graphhopper-web-11.1.jar'
+          curl -fsSL --retry 2 --max-time 180 "$BASE" -o "$RUNNER_TEMP/map001-graphhopper.jar"
+          curl -fsSL --retry 2 --max-time 30 "$BASE.sha1" -o "$RUNNER_TEMP/map001-graphhopper.sha1"
+          printf '%s  %s\n' "$(cat "$RUNNER_TEMP/map001-graphhopper.sha1")" "$RUNNER_TEMP/map001-graphhopper.jar" | sha1sum --check --status
+          GH_PID=''
+          trap 'if [ -n "$GH_PID" ]; then kill "$GH_PID" 2>/dev/null || true; fi' EXIT
+          for WAY in 155729945 115559329 548694371 35277147; do
+            mkdir -p "results/map001-gh-$WAY"
+            osmium sort "results/map001-profiles/$WAY.osm" -o "results/map001-gh-$WAY/input.osm.pbf"
+            sed -e "s@results/public-graphhopper-subset.osm.pbf@results/map001-gh-$WAY/input.osm.pbf@" -e "s@results/graphhopper-cache@results/map001-gh-$WAY/cache@" -e 's/prepare.min_network_size: 10/prepare.min_network_size: 0/' config/graphhopper-public-smoke.yml > "results/map001-gh-$WAY/config.yml"
+            java -Xms128m -Xmx1024m -jar "$RUNNER_TEMP/map001-graphhopper.jar" server "results/map001-gh-$WAY/config.yml" > "results/map001-gh-$WAY/startup.log" 2>&1 &
+            GH_PID=$!
+            python - <<'PYCODE'
+          from benchmarks.graphhopper_live_reference import wait_for_graphhopper
+          wait_for_graphhopper(75)
+          PYCODE
+            python -m benchmarks.map001_additional_profiles probe --engine GraphHopper --way "$WAY"
+            kill "$GH_PID" 2>/dev/null || true
+            wait "$GH_PID" 2>/dev/null || true
+            GH_PID=''
+            sudo rm -rf "results/map001-gh-$WAY"
+          done
+      - name: Score all four fresh reference/API profiles on their exact shared cases
+        run: |
+          set -euo pipefail
+          python -m benchmarks.map001_additional_profiles score
       - name: Publish small case-level evidence, not duplicate map files
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -146,6 +206,7 @@ jobs:
             results/map001-direction-contract.json
             results/map001-contextual-access.json
             results/map001-profiles/*.json
+            results/map001-additional-profiles/*.json
             results/map001-profiles/derived-pbf-sha256.txt
             results/map001-unit-checks/
             results/map001-native-comparison.json
@@ -161,10 +222,13 @@ jobs:
         run: |
           docker logs map001-facts 2>/dev/null | tail -60 || true
           docker logs map001-profile 2>/dev/null | tail -60 || true
+          docker logs map001-osrm 2>/dev/null | tail -60 || true
+          find results -path '*/startup.log' -exec tail -40 {} \; 2>/dev/null || true
       - name: Cleanup
         if: always()
         run: |
           docker rm -f map001-facts >/dev/null 2>&1 || true
           docker rm -f map001-profile >/dev/null 2>&1 || true
-          sudo rm -rf results/profile-engine-*
+          docker rm -f map001-osrm >/dev/null 2>&1 || true
+          sudo rm -rf results/profile-engine-* results/map001-osrm-* results/map001-gh-*
           sudo rm -rf results/valhalla results/map001-facts.osm.pbf
