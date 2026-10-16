@@ -38,6 +38,36 @@ def _tags(element):
     return {tag.get("k"): tag.get("v") for tag in element.findall("tag")}
 
 
+def sanitize_supported_map(raw: bytes) -> tuple[bytes, dict]:
+    """Prune conditional objects instead of guessing unsupported semantics."""
+    root = ET.fromstring(raw)
+    removed_nodes = {item.get("id") for item in root.findall("node")
+                     if any("conditional" in key for key in _tags(item))}
+    removed_ways = set()
+    for way in root.findall("way"):
+        tags = _tags(way)
+        refs = {nd.get("ref") for nd in way.findall("nd")}
+        if any("conditional" in key for key in tags) or refs & removed_nodes:
+            removed_ways.add(way.get("id"))
+    removed_relations = set()
+    for relation in root.findall("relation"):
+        tags = _tags(relation)
+        members = {(member.get("type"), member.get("ref")) for member in relation.findall("member")}
+        if (any("conditional" in key for key in tags) or
+                any(kind == "node" and ref in removed_nodes or kind == "way" and ref in removed_ways
+                    for kind, ref in members)):
+            removed_relations.add(relation.get("id"))
+    for item in list(root):
+        if ((item.tag == "node" and item.get("id") in removed_nodes) or
+                (item.tag == "way" and item.get("id") in removed_ways) or
+                (item.tag == "relation" and item.get("id") in removed_relations)):
+            root.remove(item)
+    result = ET.tostring(root, encoding="utf-8", xml_declaration=True)
+    return result, {"removed_conditional_nodes": len(removed_nodes),
+                    "removed_conditional_or_dependent_ways": len(removed_ways),
+                    "removed_conditional_or_dependent_relations": len(removed_relations)}
+
+
 def prepare(raw: bytes, archive_sha256: str) -> dict:
     if archive_sha256 != EXPECTED_ARCHIVE_HASH:
         raise ValueError("Pinned source archive mismatch")
@@ -178,8 +208,13 @@ def execute(system, manifest, map_path=None):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument("--prepare",action="store_true");p.add_argument("--engine",choices=EXECUTABLE)
-    p.add_argument("--map",type=Path,required=True);p.add_argument("--archive-hash");p.add_argument("--manifest",type=Path,required=True);p.add_argument("--output",type=Path)
-    a=p.parse_args();raw=a.map.read_bytes()
+    p.add_argument("--sanitize",action="store_true");p.add_argument("--map",type=Path);p.add_argument("--archive-hash");p.add_argument("--manifest",type=Path);p.add_argument("--output",type=Path)
+    a=p.parse_args()
+    if a.sanitize:
+        if not a.map or not a.output:raise ValueError("Sanitize requires --map input and --output")
+        sanitized,summary=sanitize_supported_map(a.map.read_bytes());a.output.write_bytes(sanitized);print(json.dumps(summary,indent=2));return
+    if not a.map or not a.manifest:raise ValueError("Execution requires --map and --manifest")
+    raw=a.map.read_bytes()
     if a.prepare:
         result=prepare(raw,a.archive_hash);a.manifest.write_text(json.dumps(result,indent=2)+"\n")
         print(json.dumps(result,indent=2));

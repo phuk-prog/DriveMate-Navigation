@@ -1,5 +1,5 @@
 import unittest
-from benchmarks.real_map_legality_baseline import forbidden_direct_traversal, judge
+from benchmarks.real_map_legality_baseline import forbidden_direct_traversal, judge, sanitize_supported_map
 
 
 class LegalityBaselineTests(unittest.TestCase):
@@ -19,5 +19,12 @@ class LegalityBaselineTests(unittest.TestCase):
 
     def test_allowed_no_route_fails(self):
         self.assertEqual("FAIL",judge(self.case,"allowed",{"status":"NO_ROUTE"},1)["outcome"])
+
+    def test_sanitizer_removes_conditional_node_and_dependent_way(self):
+        raw=b'''<osm version="0.6"><node id="1" lat="53" lon="-2"><tag k="access:conditional" v="no @ (Mo)"/></node><node id="2" lat="53.001" lon="-2"/><way id="3"><nd ref="1"/><nd ref="2"/><tag k="highway" v="residential"/></way></osm>'''
+        clean,summary=sanitize_supported_map(raw)
+        self.assertNotIn(b'<way',clean)
+        self.assertNotIn(b'id="1"',clean)
+        self.assertEqual(1,summary["removed_conditional_or_dependent_ways"])
 
 if __name__=="__main__":unittest.main()
