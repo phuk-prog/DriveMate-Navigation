@@ -34,11 +34,12 @@ class V3FactExtensions(unittest.TestCase):
         self.assertEqual(relation_viability(r[0],w,n)["verdict"],
                          "NO_AVAILABLE_MOTORCAR_MOVEMENT")
 
-    def test_isolated_way_records_source_direction_mismatch(self):
+    def test_isolated_way_no_longer_has_source_direction_mismatch(self):
         n,w,r=fixture()
         result=isolated_direction_mismatch(w["11"],n)
         self.assertEqual(len(result),1)
-        self.assertEqual(result[0]["verdict"],"SOURCE_DIRECTIONAL_ACCESS_MISMATCH")
+        self.assertEqual(result[0]["verdict"],"NO_MISMATCH_DETECTED")
+        self.assertEqual(result[0]["graph_edge_count"],0)
 
     def test_valhalla_edge_fields_are_not_turn_pair_proof(self):
         n,w,r=fixture()

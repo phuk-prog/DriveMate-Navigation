@@ -2,7 +2,7 @@
 
 Prospective contract: mode specificity before directional refinement within a
 mode. Unimplemented one-way exceptions, conditions and contextual permissions
-are unjudged. Historical MAP-001 reports and import behaviour remain unchanged.
+are unjudged. Historical MAP-001 reports remain unchanged; runtime corrections are owner-approved.
 """
 from collections import Counter
 import json
@@ -148,7 +148,9 @@ def main():
     rels={r.get('id'):r for wid in ('155729945','246124643') for r in related(wid,root.findall('relation'))}
     report={'trial':'MAP-001-DIRECTION-CONTRACT-1','source_sha256':expected,
             'oracle_sha256':digest(Path(__file__).read_bytes()),
-            'truth':'PROVISIONAL_OSM_SOURCE_NOT_ROAD_LAW','runtime_changed':False,
+            'truth':'PROVISIONAL_OSM_SOURCE_NOT_ROAD_LAW',
+            'runtime_changed':digest(Path('map_data/osm_xml.py').read_bytes()) !=
+                '927e84b8226f23249c18de40a9e78998b2e6fa2d113f59cf3c121b53e43bac16',
             'importer_sha256':digest(Path('map_data/osm_xml.py').read_bytes()),
             'cases':cases,'counts':dict(Counter(x['verdict'] for x in cases)),
             'edge_checks':sum(x.get('checks',0) for x in cases),

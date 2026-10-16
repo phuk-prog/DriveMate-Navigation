@@ -108,3 +108,64 @@ class OSMImporterTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class DirectionalAccessRegression(unittest.TestCase):
+    """Approved per-direction semantics; fabricated fixtures, not road-law proof."""
+    def graph(self, extra='', node_tags=''):
+        raw = ('<osm><node id="1" lat="53" lon="-2">' + node_tags +
+               '</node><node id="2" lat="53.001" lon="-2"/>'
+               '<way id="11"><nd ref="1"/><nd ref="2"/>'
+               '<tag k="highway" v="residential"/>' + extra + '</way></osm>')
+        return imported(raw.encode()).graph
+
+    def tag(self, key, value):
+        return f'<tag k="{key}" v="{value}"/>'
+
+    def test_all_directional_modes_block_only_requested_orientation(self):
+        for mode in ('motorcar', 'motor_vehicle', 'vehicle', 'access'):
+            for direction, blocked, allowed in (('forward','f','r'),('backward','r','f')):
+                with self.subTest(mode=mode,direction=direction):
+                    g=self.graph(self.tag(mode+':'+direction,'no'))
+                    self.assertEqual(g.edges['w:11:0:'+blocked].access,'prohibited')
+                    self.assertEqual(g.edges['w:11:0:'+allowed].access,'allowed')
+                    a,b=('osm:1','osm:2') if blocked=='f' else ('osm:2','osm:1')
+                    with self.assertRaises(RouteNotFound): shortest_route(g,a,b)
+                    self.assertEqual(shortest_route(g,b,a).edge_ids,('w:11:0:'+allowed,))
+
+    def test_specific_mode_precedence_and_directional_refinement(self):
+        cases=[({'vehicle:backward':'no','motorcar':'yes'},'allowed'),
+               ({'motorcar':'yes','motorcar:backward':'no'},'prohibited'),
+               ({'motor_vehicle':'no','motorcar:backward':'yes'},'allowed'),
+               ({'motorcar':'no','vehicle:backward':'yes'},'prohibited'),
+               ({'access':'no','access:backward':'yes'},'allowed')]
+        for t, expected in cases:
+            with self.subTest(tags=t):
+                g=self.graph(''.join(self.tag(k,v) for k,v in t.items()))
+                self.assertEqual(g.edges['w:11:0:r'].access,expected)
+
+    def test_other_modes_do_not_override_ordinary_car_denial(self):
+        t=self.tag('vehicle:backward','no')+''.join(self.tag(k+':backward','designated')
+                     for k in ('bus','taxi','bicycle'))
+        self.assertEqual(self.graph(t).edges['w:11:0:r'].access,'prohibited')
+
+    def test_unknown_and_contextual_direction_fail_closed(self):
+        for value, expected in [('mystery','unknown'),('private','prohibited'),
+                                ('destination','prohibited'),('customers','prohibited')]:
+            with self.subTest(value=value):
+                g=self.graph(self.tag('vehicle:backward',value))
+                self.assertEqual(g.edges['w:11:0:r'].access,expected)
+                with self.assertRaises(RouteNotFound): shortest_route(g,'osm:2','osm:1')
+
+    def test_directional_permission_never_opens_physical_barrier(self):
+        g=self.graph(self.tag('vehicle:backward','yes'),self.tag('barrier','bollard'))
+        self.assertTrue(all(e.access=='prohibited' for e in g.edges.values()))
+
+    def test_oneway_geometry_remains_authoritative(self):
+        for oneway, permission, absent in [('yes','vehicle:backward','r'),('-1','vehicle:forward','f')]:
+            with self.subTest(oneway=oneway):
+                g=self.graph(self.tag('oneway',oneway)+self.tag(permission,'yes'))
+                self.assertNotIn('w:11:0:'+absent,g.edges)
+
+    def test_directional_condition_still_rejects_import(self):
+        with self.assertRaises(OSMImportError):
+            self.graph(self.tag('vehicle:backward:conditional','yes @ (Mo)'))

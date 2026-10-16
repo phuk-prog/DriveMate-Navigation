@@ -92,19 +92,22 @@ def _estimated_speed(highway: str, maxspeed: str | None) -> float:
     return min(default, speed) if isfinite(speed) and speed > 0 else default
 
 
-def _road_access(tags: dict[str, str]) -> str | None:
+def _road_access(tags: dict[str, str], direction: str | None = None) -> str | None:
     highway = tags.get("highway", "")
     if highway not in DRIVING_SPEEDS and highway not in UNCERTAIN_ROADS:
         return None
-    # Specific car permission overrides general vehicle/access tags.
-    for key in ("motorcar", "motor_vehicle", "vehicle", "access"):
-        value = tags.get(key)
-        if value is not None:
-            if value in ALLOWED_VALUES:
-                return "allowed"
-            if value in BLOCKED_VALUES:
-                return "prohibited"
-            return "unknown"
+    # Resolve mode specificity first, then direction within that mode. A bus,
+    # taxi or bicycle exception does not grant ordinary-motorcar access.
+    for mode in ("motorcar", "motor_vehicle", "vehicle", "access"):
+        keys = (f"{mode}:{direction}", mode) if direction else (mode,)
+        for key in keys:
+            value = tags.get(key)
+            if value is not None:
+                if value in ALLOWED_VALUES:
+                    return "allowed"
+                if value in BLOCKED_VALUES:
+                    return "prohibited"
+                return "unknown"
     return "unknown" if highway in UNCERTAIN_ROADS else "allowed"
 
 
@@ -203,10 +206,12 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance) -> ImportedMap:
             length = _haversine(coordinates[src], coordinates[dst])
             if length < 0.01:
                 raise OSMImportError(f"way {way_id}: degenerate road segment")
-            actual = _combine_access(access, _combine_access(barriers[src], barriers[dst]))
+            physical = _combine_access(barriers[src], barriers[dst])
             if direction == 1:
+                actual = _combine_access(_road_access(tags, "forward"), physical)
                 edges.append(RoadEdge(f"w:{way_id}:{i}:f", src, dst, length, speed, actual))
             if direction == -1 or oneway in ("", "no", "0", "false"):
+                actual = _combine_access(_road_access(tags, "backward"), physical)
                 edges.append(RoadEdge(f"w:{way_id}:{i}:r", dst, src, length, speed, actual))
     if not edges:
         raise OSMImportError("No motorcar graph edges extracted")

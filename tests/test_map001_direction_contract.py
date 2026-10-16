@@ -56,11 +56,11 @@ class DirectionContract(unittest.TestCase):
     def test_both_turn_prohibition_errors(self):
         self.assertEqual(turn_differences({('a','b')},{('a','c')}),([('a','b')],[('a','c')]))
 
-    def test_runtime_defect_is_detected_without_fixing_importer(self):
+    def test_runtime_directional_fix_agrees_with_frozen_oracle(self):
         n,w,r=fixture()
         x=audit_way(w['11'],n)
-        self.assertEqual(x['verdict'],'FAIL')
-        self.assertEqual(x['differences']['wrong_edges'][0]['edge'],'w:11:0:r')
+        self.assertEqual(x['verdict'],'PASS')
+        self.assertEqual(x['differences']['wrong_edges'],[])
 
     def test_reversing_node_order_preserves_source_direction_meaning(self):
         n,w,r=fixture()
@@ -98,7 +98,7 @@ class DirectionContract(unittest.TestCase):
         n,w,r=fixture();del w['12']
         self.assertEqual(relation_contract(r[0],w,n)['verdict'],'INCOMPLETE_SOURCE')
 
-    def test_importer_exposes_all_eight_directional_denial_controls(self):
+    def test_importer_honours_all_eight_directional_denial_controls(self):
         for mode in ('motorcar','motor_vehicle','vehicle','access'):
             for orient in ('forward','backward'):
                 with self.subTest(mode=mode,orient=orient):
@@ -108,8 +108,8 @@ class DirectionContract(unittest.TestCase):
                         if tag.get('k')!='highway':way.remove(tag)
                     ET.SubElement(way,'tag',k=mode+':'+orient,v='no')
                     x=audit_way(way,n)
-                    self.assertEqual(x['verdict'],'FAIL')
-                    self.assertEqual(len(x['differences']['wrong_edges']),1)
+                    self.assertEqual(x['verdict'],'PASS')
+                    self.assertEqual(x['differences']['wrong_edges'],[])
 
     def test_conditional_import_is_safely_withheld(self):
         n,w,r=fixture();ET.SubElement(w['11'],'tag',k='vehicle:conditional',v='no @ (Mo)')
@@ -122,3 +122,16 @@ class DirectionContract(unittest.TestCase):
     def test_barrier_uncertainty_is_unjudged(self):
         n,w,r=fixture();ET.SubElement(n['1'],'tag',k='barrier',v='gate')
         self.assertEqual(audit_way(w['11'],n)['verdict'],'NOT_JUDGED')
+
+    def test_old_directional_bug_mutation_is_still_detected(self):
+        from unittest.mock import patch
+        from types import SimpleNamespace
+        n,w,r=fixture()
+        graph=SimpleNamespace(edges={
+            'w:11:0:f':SimpleNamespace(source='osm:1',target='osm:2',access='allowed'),
+            'w:11:0:r':SimpleNamespace(source='osm:2',target='osm:1',access='allowed')})
+        with patch('benchmarks.map001_direction_contract.import_osm_xml',
+                   return_value=SimpleNamespace(graph=graph)):
+            x=audit_way(w['11'],n)
+        self.assertEqual(x['verdict'],'FAIL')
+        self.assertEqual(x['differences']['wrong_edges'][0]['edge'],'w:11:0:r')
