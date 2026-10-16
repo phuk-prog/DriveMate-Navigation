@@ -1,0 +1,122 @@
+{
+  "classification": "synthetic analytical adversarial rerouting freshness controls; authored after initial implementation, not blind holdouts",
+  "frozen_before_implementation": true,
+  "parameters": {
+    "minimum_off_route_samples": 2,
+    "minimum_sample_gap_ms": 1000,
+    "max_observation_age_ms": 10000,
+    "cooldown_ms": 30000,
+    "max_request_age_ms": 15000
+  },
+  "map_fixture": "synthetic-route-002.xml",
+  "planner_basis": "Actual imported DMN graph and shortest_route: initial4->3; detour4->3 with way40 blocked; replacement2->3; unreachable4->3 with ways40 and95 blocked. Clock and reliability/on-route decisions are declared synthetic inputs, not derived from a sensor or mocked reference engine.",
+  "cases": [
+    {
+      "id": "REROUTE-001-ADDITIONAL-expired-first-sample",
+      "oracle_rationale": "At request time12000 the first sample timestamp1000 is11000ms old. It cannot corroborate a still-within-limit delayed second sample timestamp2000. A subsequent fresh independent sample may recover.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "reliable": true,
+          "on_route": false,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 12000,
+          "reliable": true,
+          "on_route": false,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 12000,
+          "now_ms": 12000,
+          "reliable": true,
+          "on_route": false,
+          "expect_request": "a"
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 12500,
+          "planner": "detour",
+          "expect_accepted": true,
+          "expect_route": "detour"
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-ADDITIONAL-first-sample-age-boundary",
+      "oracle_rationale": "At time11000 the first sample timestamp1000 is exactly10000ms old and remains eligible; do not accidentally change the inclusive freshness boundary.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "reliable": true,
+          "on_route": false,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 11000,
+          "reliable": true,
+          "on_route": false,
+          "expect_request": "a"
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 11500,
+          "planner": "detour",
+          "expect_accepted": true,
+          "expect_route": "detour"
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-ADDITIONAL-unknown-progress-cancels",
+      "oracle_rationale": "A new reliable position with unknown route membership cannot support installing an off-route replacement.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "reliable": true,
+          "on_route": false,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "reliable": true,
+          "on_route": false,
+          "expect_request": "a"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2500,
+          "now_ms": 2500,
+          "reliable": true,
+          "on_route": null,
+          "expect_request": null
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 3000,
+          "planner": "detour",
+          "expect_accepted": false,
+          "expect_route": "initial"
+        }
+      ]
+    }
+  ],
+  "test_id": "REROUTE-001-ADDITIONAL"
+}
