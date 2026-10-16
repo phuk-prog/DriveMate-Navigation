@@ -330,3 +330,34 @@ so never call its baseline0/5. See JUNCTION_001_RESULTS.md and junction001 JSON.
 Next bounded stage: frozen arrival safeguards, then offline reliability/resources
 and integration. No voice/lane/device/road-readiness claims. Preserve unresolved
 UK17/0/23 evidence and promotion block. Do not repeat unchanged heavyweight runs.
+
+## ARRIVAL-001 frozen acceptance
+
+Twenty analytical synthetic arrival cases are frozen before implementing the
+missing controller. Reuse JUNCTION-001's invented map and actual DMN routes from
+node1 to north3/south4. Progress, reliability and on-route assessments are supplied
+explicitly by the replay; they are not measured GPS or integrated map matching.
+Arrival requires destination distance<=20m, remaining route distance in[0,25]m,
+accuracy<=15m, reliable/on-route=true and two qualifying observations separated
+by>=1000ms. Both observations must remain<=10000ms old at receipt time. Duplicate,
+out-of-order, stale/future or invalid observations clear provisional evidence.
+A too-close-in-time qualifying sample cannot move the original corroboration
+anchor. Negative/unknown progress, excessive accuracy, unreliable/off-route fixes
+and distance outside the radius withhold and clear provisional evidence. A long
+gap restarts corroboration. A stopped session cannot arrive; destination/route
+change starts fresh; arrival emits once and stays latched until begin/stop.
+Clock values are nonnegative monotonic milliseconds. Thresholds are engineering
+contracts, not physically calibrated arrival guarantees.
+
+Cases include positive corroboration, proximity without progress, parallel-road
+proximity, outside radius, weak/unreliable recovery, stale/future/duplicate/order
+interruptions, overshoot, unknown progress, gap, stop, destination change, single
+arrival emission, threshold boundaries, minimum separation and delayed history.
+No existing arrival controller is present: baseline UNAVAILABLE, not0/20.
+Batch OSRM/Valhalla/GH/ORS/BRouter route endpoints expose static final instructions,
+not equivalent live fix/progress arrival state; mark integrated interfaces
+UNSUPPORTED per case. Seven other families lack permitted access or executable
+app/native lifecycle harnesses: NOT_RUN. Retain all12 plus DMN. Only fully judged
+20-case cohorts may receive10*passed/20; a solo DMN score is conformance, never a
+competitor ranking. No heavyweight static router runs can substitute for this
+state contract. Preserve UK17/0/23 ambiguity and promotion block.
