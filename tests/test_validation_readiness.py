@@ -21,3 +21,7 @@ class ReadinessTests(unittest.TestCase):
     def test_million_case_claim_needs_evidence(self):
         c=json.loads(CONFIG.read_text());c['scale_policy']['executed_generated_variants_under_this_revision']=1000000
         with self.assertRaises(ValueError):audit(c)
+    def test_historical_runs_cannot_fill_new_real_map_cohort(self):
+        from tools.validation_readiness import ROOT
+        reports=json.loads((ROOT/'references/junction001-executed-20261016.json').read_text())['reports']
+        with self.assertRaises(ValueError):audit(cohort_reports=reports,cohort_spec={'historical':True})

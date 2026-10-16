@@ -502,3 +502,20 @@ integration or unverified Android/native/lifecycle/performance evidence. DMN is
 judged independently; references run separately against the same frozen oracle,
 not as dependencies or hidden truth judges. Clear-fix output coverage and safe
 bad-fix abstention are both required; do not reward an all-withheld engine.
+
+REF-006 completed: actual Itinero source build and real Greater Manchester routes.
+First setup38863763043 stopped before engine execution due to an XML-vs-PBF hash
+scope error; correction preserved the exact prior XML fingerprint and acceptance.
+Successful38864046561 at9c45c8417917f5d2eb51c1dbb68b0a0923fc7637 and confirmation
+38864551063 atd38540e66aa175264e4534800a7d66a39ca47223 each pass3/3 finite route/
+5m endpoint checks. Same request hash b4348997...; max endpoint error1.045m.
+Itinero sourceb8a004.../package1.6.0-pre037/car uncontracted; SDK10.0.401, exact
+resolved packages and assembly hashes retained. This is a sixth actual routing
+family across prior scopes, not ten comparable real-map GPS engines. Simulated
+signal-quality and independently labelled legality cases executed here: zero.
+See REF_006_RESULTS.md and ref006 first-failure/real-map/confirmation JSON.
+Next bounded stage: another executable applicable reference/replacement and
+real-map source-backed GPS/one-way case bank; do not revert to invented roads
+for the requested comparisons or silently count historical/mismatched cohorts.
+Readiness reports now accompany normal CI; NOT_READY_FOR_LIVE_NAVIGATION and
+all UK/app/native/source/cohort blockers remain explicit. No release or promotion.

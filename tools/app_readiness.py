@@ -1,6 +1,7 @@
 """Evidence inventory for DMN app adoption; never averages away safety blockers."""
 import argparse
 import json
+import os
 from pathlib import Path
 from tools.validation_readiness import audit
 ROOT=Path(__file__).resolve().parents[1]
@@ -17,7 +18,7 @@ def readiness():
         dict(id='android_native_offline_lifecycle',status='UNVERIFIED',reason='Host Python offline namespace proof is not actual Android/native routing, permissions, background, stop/restart or failure recovery evidence'),
         dict(id='target_device_performance_and_long_runs',status='UNVERIFIED',reason='No frozen target-device budgets or measured phone/emulator lifecycle and sustained-run evidence; host synthetic-grid timings do not establish this'),
         dict(id='reversible_app_integration',status='NOT_IMPLEMENTED',reason='No verified app feature isolation, existing-navigation fallback or rollback/upgrade validation; production repository has not been modified')]
-    return dict(classification='app-adoption readiness inventory; not a new engine test or certification',status='NOT_READY_FOR_LIVE_NAVIGATION',ready_for_live_navigation=False,ready_to_replace_existing_navigation=False,overall_score=None,interpretation='No aggregate score or competitor win overrides an unresolved critical gate. Prototype experimentation is not production readiness.',gates=gates,next_action='Complete executable real-map reference expansion and integrated replay; close each gate with actual source/run/artifact evidence before considering app adoption')
+    return dict(run_sha=os.environ.get('GITHUB_HEAD_SHA') or os.environ.get('GITHUB_SHA'),classification='app-adoption readiness inventory; not a new engine test or certification',status='NOT_READY_FOR_LIVE_NAVIGATION',ready_for_live_navigation=False,ready_to_replace_existing_navigation=False,overall_score=None,interpretation='No aggregate score or competitor win overrides an unresolved critical gate. Prototype experimentation is not production readiness.',gates=gates,next_action='Complete executable real-map reference expansion and integrated replay; close each gate with actual source/run/artifact evidence before considering app adoption')
 
 
 def main():

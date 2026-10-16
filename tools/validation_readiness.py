@@ -6,7 +6,7 @@ ROOT=Path(__file__).resolve().parents[1]
 CONFIG=ROOT/'config/dmn-expanded-validation-programme.json'
 
 
-def audit(config=None):
+def audit(config=None,*,cohort_reports=None,cohort_spec=None):
     c=json.loads(CONFIG.read_text()) if config is None else config
     refs=c['references'];names=[r['family'] for r in refs]
     if len(names)!=len(set(names)) or any(n in ('DMN','OSRM CH','OSRM MLD') for n in names):raise ValueError('Distinct external canonical families required')
@@ -27,7 +27,13 @@ def audit(config=None):
         elif r['execution_status']!='NOT_RUN':raise ValueError('Unrecognized execution claim')
     if c['scale_policy']['executed_generated_variants_under_this_revision']!=0:raise ValueError('No million-case execution evidence exists for this revision')
     if len({b['id'] for b in c['batches']})!=len(c['batches']) or any(not b['checks'] for b in c['batches']):raise ValueError('Explicit unique batch checks required')
-    return dict(classification='capability/evidence audit only; not navigation test outcomes',minimum_external_target=target,actual_static_families=len(actual),ten_engine_requirement_met=len(actual)>=target,actual_prior_static_executions=list(actual.values()),candidate_target_families=[r['family'] for r in selected],active_cohort_policy=c['selection_policy']['active_comparison'],excluded_from_active_comparisons=[dict(family=r['family'],reason=r['reason']) for r in refs if r['execution_status']=='NOT_RUN'],new_generated_variants_executed=0,batch_count=len(c['batches']),external_execution_this_audit=0)
+    cohort=None
+    if cohort_reports is not None or cohort_spec is not None:
+        if cohort_reports is None or not isinstance(cohort_spec,dict) or cohort_spec.get('historical'):
+            raise ValueError('Actual common real-map cohort required; historical executions cannot fill it')
+        from benchmarks.applicable_cohort import rank_applicable
+        cohort=rank_applicable(cohort_reports,**cohort_spec)
+    return dict(classification='capability/evidence audit only; not navigation test outcomes',minimum_external_target=target,actual_static_families=len(actual),candidate_execution_target_met=len(actual)>=target,ten_engine_requirement_met=bool(cohort and cohort['minimum_ten_met']),shared_real_map_cohort_status=cohort['comparison_status'] if cohort else 'NO_EXECUTED_COMMON_COHORT_SUPPLIED',actual_prior_static_executions=list(actual.values()),candidate_target_families=[r['family'] for r in selected],active_cohort_policy=c['selection_policy']['active_comparison'],excluded_from_active_comparisons=[dict(family=r['family'],reason=r['reason']) for r in refs if r['execution_status']=='NOT_RUN'],new_generated_variants_executed=0,batch_count=len(c['batches']),external_execution_this_audit=0)
 
 
 def main():

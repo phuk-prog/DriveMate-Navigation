@@ -1,0 +1,110 @@
+{
+  "classification": "repository readiness inventory derived from retained actual evidence, not a new navigation execution",
+  "base_sha": "d38540e66aa175264e4534800a7d66a39ca47223",
+  "report": {
+    "classification": "capability/evidence audit only; not navigation test outcomes",
+    "minimum_external_target": 10,
+    "actual_static_families": 6,
+    "candidate_execution_target_met": false,
+    "ten_engine_requirement_met": false,
+    "shared_real_map_cohort_status": "NO_EXECUTED_COMMON_COHORT_SUPPLIED",
+    "actual_prior_static_executions": [
+      {
+        "family": "Valhalla",
+        "source_sha": "90f51f43c90d59b260fc88a873843ff4deb7c478",
+        "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38853990046",
+        "scope": "JUNCTION-001 actual routing integration only; not shared real-map or GPS-quality cohort",
+        "quality_score": null
+      },
+      {
+        "family": "OSRM",
+        "source_sha": "90f51f43c90d59b260fc88a873843ff4deb7c478",
+        "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38853990046",
+        "scope": "JUNCTION-001 actual routing integration only; not shared real-map or GPS-quality cohort",
+        "quality_score": null
+      },
+      {
+        "family": "GraphHopper",
+        "source_sha": "90f51f43c90d59b260fc88a873843ff4deb7c478",
+        "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38853990046",
+        "scope": "JUNCTION-001 actual routing integration only; not shared real-map or GPS-quality cohort",
+        "quality_score": null
+      },
+      {
+        "family": "BRouter",
+        "source_sha": "90f51f43c90d59b260fc88a873843ff4deb7c478",
+        "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38853990046",
+        "scope": "JUNCTION-001 actual routing integration only; not shared real-map or GPS-quality cohort",
+        "quality_score": null
+      },
+      {
+        "family": "openrouteservice",
+        "source_sha": "90f51f43c90d59b260fc88a873843ff4deb7c478",
+        "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38853990046",
+        "scope": "JUNCTION-001 actual routing integration only; not shared real-map or GPS-quality cohort",
+        "quality_score": null
+      },
+      {
+        "family": "Itinero",
+        "source_sha": "9c45c8417917f5d2eb51c1dbb68b0a0923fc7637",
+        "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38864046561",
+        "scope": "REF-006 actual routing integration only; not shared real-map or GPS-quality cohort",
+        "quality_score": null
+      }
+    ],
+    "candidate_target_families": [
+      "Valhalla",
+      "OSRM",
+      "GraphHopper",
+      "OsmAnd",
+      "Organic Maps",
+      "BRouter",
+      "openrouteservice",
+      "Itinero",
+      "libosmscout",
+      "Routino"
+    ],
+    "active_cohort_policy": "only actually executed, applicable engines with equivalent judged inputs",
+    "excluded_from_active_comparisons": [
+      {
+        "family": "OsmAnd",
+        "reason": "native/app replay harness missing"
+      },
+      {
+        "family": "Organic Maps",
+        "reason": "native/app replay harness missing"
+      },
+      {
+        "family": "HERE",
+        "reason": "no configured permitted access/equivalent harness; no paid calls"
+      },
+      {
+        "family": "Mapbox",
+        "reason": "no configured permitted access/equivalent harness; no paid calls"
+      },
+      {
+        "family": "TomTom",
+        "reason": "no configured permitted access/equivalent harness; no paid calls"
+      },
+      {
+        "family": "Google Maps",
+        "reason": "no configured permitted access/equivalent harness; no paid calls"
+      },
+      {
+        "family": "Waze",
+        "reason": "no established permitted automated interface"
+      },
+      {
+        "family": "libosmscout",
+        "reason": "adapter, pinned executable and fixture smoke test missing"
+      },
+      {
+        "family": "Routino",
+        "reason": "adapter, pinned executable and fixture smoke test missing"
+      }
+    ],
+    "new_generated_variants_executed": 0,
+    "batch_count": 8,
+    "external_execution_this_audit": 0
+  }
+}
