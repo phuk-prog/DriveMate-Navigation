@@ -31,8 +31,9 @@ jobs:
           sudo apt-get install -y -qq osmium-tool >/dev/null
           curl -fLsS --retry 2 --connect-timeout 20 --max-time 180 https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf -o results/route004-source.osm.pbf
           ARCHIVE_HASH="$(sha256sum results/route004-source.osm.pbf | cut -d' ' -f1)"
-          osmium extract --strategy complete_ways --bbox=-2.260000,53.470000,-2.220000,53.500000 results/route004-source.osm.pbf -o results/route004-map.osm.pbf
+          osmium extract --strategy complete_ways --bbox=-2.245000,53.475000,-2.225000,53.490000 results/route004-source.osm.pbf -o results/route004-map.osm.pbf
           osmium cat results/route004-map.osm.pbf -o results/route004-map.osm -f osm,add_metadata=false
+          test "$(stat -c %s results/route004-map.osm)" -le 6000000
           python -m benchmarks.real_map_legality_baseline --prepare --archive-hash "$ARCHIVE_HASH" --map results/route004-map.osm --manifest results/route004-manifest.json
           python -m benchmarks.real_map_legality_baseline --engine DMN --map results/route004-map.osm --manifest results/route004-manifest.json --output results/route004-DMN.json
       - name: OSRM 5.27.1
