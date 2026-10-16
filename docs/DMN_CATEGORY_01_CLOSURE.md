@@ -116,3 +116,65 @@ preserved. The corrected workflow tries both official Maven Central mirrors
 and still requires the original JAR's published checksum. A fresh entire
 affected Category 1 retest is required before reporting native expansion
 results or treating the workflow as green.
+
+## Independent authority/corridor correlation
+
+The archived Manchester source geometries were compared with the official
+Manchester King Street bus-gate description. Source way **155729945**
+starts at the Cross Street junction shared with source way 246124643,
+and ends at Essex Street shared with source way 8878437; its reverse
+direction is westbound, Essex to Cross. The OSM
+`vehicle:backward=no` fact is consistent with the council's
+description prohibiting ordinary cars westbound at all times. This is
+now a **geographically correlated independent authority statement**, but
+not a signed order or a current on-site signage survey.
+
+New test guard: the official correspondence is withheld if any frozen
+street identity, shared junction, geometry orientation or directional tag
+is inconsistent. The evidence record does not grant permission to other
+vehicle classes or fabricate effective-date/legal certification.
+
+## Bounded conditional-syntax diagnosis, not runtime override
+
+The archived UK regional material contains seven selected ways and four
+Glasgow turn relations with simple time-window conditions. The bounded
+research-only evaluator parses daily local clock intervals with explicit
+`Europe/London` timezone and overnight handling, including
+Glasgow `no @ 07:00-19:00` and Belfast
+`delivery @ (18:00-11:00)`. Complex calendars, bank holidays,
+different rule types, absent purpose/permit declarations and stale council
+orders remain unjudged; no driver permission is inferred and the existing
+conservative importer is not bypassed.
+
+Authoritative context includes:
+- Glasgow City Council's 2026 People First Zone programme records,
+  which describe a delayed operational bus-gate period:
+  https://onlineservices.glasgow.gov.uk/councillorsandcommittees/viewSelectedDocument.asp?c=P62AFQDNUT0G2U810G
+- Northern Ireland's pedestrian-zone permits and Belfast vehicle-access
+  exceptions: https://www.nidirect.gov.uk/articles/pedestrian-zone-permits
+- Belfast City Council's documented delivery period and exceptional access
+  requirements:
+  https://minutes.belfastcity.gov.uk/mgAi.aspx?ID=49246
+
+These records cannot automatically establish when the 2026 frozen OSM
+source became legally effective. New artifact
+`results/map001-conditional-syntax.json` separates parsed source
+time windows from independently verified permission.
+
+## Preserved native reference startup failure and correction
+
+The first six-region Valhalla runner passed Manchester and Birmingham
+native graph inspections but stopped on the next regional build because
+the scripted HTTP /status endpoint did not respond. Failed run:
+https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38970391800
+Birmingham's first native partial cohort (source-derived):
+**DMN 11/11 and Valhalla 11/11 ways, 68 directed segment checks each**.
+
+The revised inspector no longer assumes a routing HTTP server is required
+to inspect a read-only native graph. It verifies stable completed tile
+hashes and that the original container has exited or the service is
+healthy, runs the unchanged pinned 3.9.1 native graph reader separately
+against those immutable tiles, and keeps per-region startup logs.
+If there are no complete native tiles, the trial **fails and records
+SETUP_UNAVAILABLE** instead of declaring an engine quality failure.
+A fresh six-region retest is required.
