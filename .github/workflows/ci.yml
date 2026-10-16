@@ -34,6 +34,10 @@ jobs:
         run: python -m compileall -q engine map_data gps benchmarks tools tests
       - name: Run independently isolated category unit checks
         run: python -m tools.category_test_runner --all --output-dir results/category-checks
+      - name: Automatically record all 21 next-category decisions and evidence gaps
+        if: always()
+        run: |
+          python -m tools.dmn_auto_progress --output-dir results/category-checks
       - name: Upload independent category verdicts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

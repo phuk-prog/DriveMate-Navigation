@@ -1,3 +1,12 @@
+> **16 October 2026 owner update (supersedes the test-start pause below):** The owner
+> has approved automatic implementation and sequential execution of all
+> navigation-engine **research tests** across the 21 categories. There is
+> no longer a per-category question/approval pause for running those tests.
+> Read docs/DMN_AUTOMATIC_TEST_PROGRESS.md and AGENTS.md for the current
+> automated test-only policy. Safety-critical navigation behaviour changes,
+> merge, app and APK remain outside this approval. All historic paused-test
+> text below is retained as an archived earlier policy, not today's rule.
+
 # DMN — owner-controlled, one-category-at-a-time comparison programme
 
 **Status: ALL CATEGORY EXECUTIONS PAUSED / NOT STARTED under this protocol.** This is a *prospective test-design improvement*, not a new execution result. Existing historic run artifacts remain historic evidence and are not re-labelled. Scope: DMN navigation engine only; never run the Android app, emulator, UI, audio, APK or private `phuk-prog/DriveMate`.

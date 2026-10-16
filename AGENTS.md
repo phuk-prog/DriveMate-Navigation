@@ -134,3 +134,34 @@ replay; report absent live GNSS/UK verification honestly. No app readiness claim
 ## Latest owner instruction — explicit category start required (supersedes earlier automatic continuation)
 
 The owner wants to **improve and review the tests one navigation-engine category at a time**, then **personally decide when each category begins**. Follow [the 21-category approval queue](docs/DMN_CATEGORY_BY_CATEGORY_APPROVAL.md) and start with [Category 1 map-data test design](docs/DMN_CATEGORY_01_MAP_GRAPH_TEST_DESIGN.md). Never run an existing category unit suite, a new GitHub workflow, a benchmark, or an external engine just because a category review or preparatory improvement is requested. Do not interpret 'next' or 'continue' as permission to start a category. Require an explicit named or numbered start instruction for every category. After its results, stop for review and do not start the next category or implement a navigation behaviour fix without a separate approval. Only **engine research**, no Android app. Preserve all existing engine functionality and both GPS methods.
+
+
+## Latest owner override — automated engine-category test continuation (2026-10-16)
+
+The owner now explicitly authorizes implementing and running outstanding **research
+tests** automatically, advancing to the next separate category test without
+another per-category question or start approval. This is a NEWER instruction
+that supersedes the older "owner personally starts every category" gate **for
+tests and reproducible test-harness corrections only**. Follow the canonical
+21-category order in config/dmn-separated-category-tests.json. The normal
+research PR CI already executes each category in an isolated subprocess;
+tools/dmn_auto_progress.py now checks the fresh case-level reports and writes
+a non-fabricated progress/issue register and the next research priority.
+
+Do not pretend that UNIT_PASS means independent road-law, field GPS, native
+graph parity, live reference ranking, or whole-category scientific completion.
+Where no independently equivalent external engine or case truth exists, keep
+UNKNOWN/NOT_JUDGED/NOT_EXECUTED and advance to the next test's diagnostics.
+A failed category remains FAILED in the report even when subsequent separate
+research tests execute. Investigate the failure; never auto-change verdicts,
+delete historical results, bypass safety gates or silently reclassify failures.
+
+No automatic changes to production driving legality, engine routing behaviour
+or its accept/reject policy merely to make a test green. Source-modifying
+research and behavioural fixes require explicit valid evidence and a fresh
+whole affected frozen cohort retest; preserve separate engine comparisons.
+No production repo, Android, APK, merge, release, private user data,
+proprietary reference automation, paid providers or increased compute budget.
+GitHub PR pushes trigger the continuous research unit suite automatically;
+an automatic question-advance does not establish a new independent test that
+cannot be built from legally usable available evidence.
