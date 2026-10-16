@@ -68,6 +68,16 @@ jobs:
           path: results/junction001-DMN.json
           if-no-files-found: error
           retention-days: 30
+      - name: ARRIVAL-001 frozen proximity progress and freshness lifecycle
+        env:
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python -m benchmarks.arrival_lifecycle_trial --output results/arrival001-DMN.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: arrival001-lifecycle-contract
+          path: results/arrival001-DMN.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Measure synthetic routing latency (informational only)
         run: |
           python -m benchmarks.run --repeat 30

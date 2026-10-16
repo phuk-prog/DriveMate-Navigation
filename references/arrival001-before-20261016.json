@@ -1,0 +1,112 @@
+{
+  "test_id": "ARRIVAL-001",
+  "classification": "synthetic analytical availability baseline; not an executed arrival cohort",
+  "source_sha": "a6c414927de6e657ab051f393a6ceace9bdbd948",
+  "system": "DMN",
+  "execution": "UNAVAILABLE",
+  "reason": "No arrival lifecycle controller at inspected baseline; not an invented 0/20 failure score",
+  "map_sha256": "8b9d409865dd0b272456c2b99575c8dd29d3459602db7016377889b9b00ab465",
+  "oracle_sha256": "c6b95ec811aef34ee1910a1d4d314141d63250190f8d9ec09434a990dd2bcc71",
+  "cases": [
+    {
+      "case_id": "ARRIVAL-001-corroborated",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-near-destination-early-progress",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-parallel-road",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-outside-radius",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-weak-accuracy-recovery",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-unreliable-recovery",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-stale-interrupts",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-future-interrupts",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-duplicate-interrupts",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-out-of-order-interrupts",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-overshoot",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-unknown-progress",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-signal-gap",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-stop",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-context-change",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-latched-once",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-accuracy-boundary",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-remaining-boundary",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-minimum-time-separation",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    },
+    {
+      "case_id": "ARRIVAL-001-delayed-history-expiration",
+      "outcome": "NOT_RUN",
+      "reason": "Arrival lifecycle capability absent at baseline"
+    }
+  ]
+}
