@@ -196,3 +196,18 @@ reference rank contains **only regions with complete inspected graphs**;
 unavailable reference rows are not counted as PASS or FAIL.
 This protects comparisons from being blocked by one reference startup,
 without inventing test outputs or loosening road-safety acceptance.
+
+## Root cause of two previously unavailable native graphs
+
+Read-only logs in successful partial run
+https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38971682665
+show the exact same setup exception in Carlisle and Glasgow:
+`std::runtime_error: Detected unsorted input data`.
+The reference importer requires object-sorted PBF input, but this stage had
+converted the archived XML with `osmium cat` (which retains original object
+order) rather than `osmium sort`. Fix **only** the derived PBF conversion
+for the five additional native regions. Do not change the original frozen
+OSM snapshots or their SHA-256, case selection, source/access expectation,
+Valhalla/DMN behaviour or scoring policy. Record the new derived PBF hashes.
+Re-execute all affected Category 1 source, native and route-profile checks;
+previous partial, unavailable and failing attempts remain preserved.

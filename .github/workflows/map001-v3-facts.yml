@@ -239,7 +239,8 @@ jobs:
             # Frozen map, fresh graph. The native inspector is independent of
             # HTTP /status, which may fail on small disconnected extracts.
             PBF="results/map001-native-region-$AREA.osm.pbf"
-            osmium cat "results/map001-$AREA.osm" -o "$PBF"
+            # Sort objects for Valhalla PBF importer; do not alter frozen OSM source bytes.
+            osmium sort "results/map001-$AREA.osm" -o "$PBF"
             sha256sum "$PBF" >> results/map001-native-derived-pbf-sha256.txt
             sudo rm -rf results/valhalla
             mkdir -p results/valhalla
