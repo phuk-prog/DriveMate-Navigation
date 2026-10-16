@@ -627,3 +627,16 @@ latency and historical synthetic controls. APP_VALIDATION_PROGRAMME.md extends
 case/metric coverage to the whole app. Private app metadata/test-file discovery
 was read-only; private source/inventory stays outside this public repository.
 No app test execution, production code change, APK or adoption is claimed.
+
+
+ROUTE-004 results published from the retained 38873690712 artifacts (no new tests):
+[Full provisional six-engine source-map direction comparison](ROUTE_004_RESULTS.md)
+with 12/12 passing for DMN, OSRM, Valhalla, GraphHopper,
+openrouteservice and BRouter; no verified current UK road-law labels.
+All six tie in this narrowly judged contract. Observed request milliseconds
+are preserved but cannot be ranked across unlike HTTP and in-process scopes.
+The separate issues register identifies no proven engine failure, possible
+multi-vertex reverse-path detection gaps, absence of required edge coverage,
+and a provisional York Street reverse detour-length disagreement. Original
+engine results and frozen tests remain unchanged. **STOP for owner review**;
+GPS-003 and seven UK unresolved matches remain open, without matcher tuning.
