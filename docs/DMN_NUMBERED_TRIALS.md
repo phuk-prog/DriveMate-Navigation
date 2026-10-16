@@ -1,5 +1,16 @@
 # Numbered navigation trials
 
+**Owner-approved prospective policy (16 October 2026):**
+[DMN_PERMANENT_TESTING_POLICY.md](DMN_PERMANENT_TESTING_POLICY.md) supersedes
+any earlier recommendations here about universal score-first rankings, running
+only DMN on post-fix retests, or automatically improving without review. Future
+tests rank each category by actual measured units; full and partial cohorts,
+and verified and provisional source truth, remain separate. After explicit
+approval of an improvement, newly run DMN **and every available applicable
+competitor** on the complete affected comparable frozen set. Earlier entries
+below are historical test records and are **not** retroactively rescored or
+re-executed by this documentation change.
+
 The owner requested twelve external references plus DMN, exact case verdicts,
 descending ranks, independent judgement, error diagnosis, improvements and
 retesting. Begin with **GPS-001**, a deliberately small controlled correctness

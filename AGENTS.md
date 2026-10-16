@@ -4,9 +4,13 @@ Read live PR/head and active/queued jobs before experiments. Do not assume the
 workspace or scheduled head is current. Work only in this existing research
 repository unless separately authorized; production DriveMate stays unchanged.
 
+## Permanent six-rule policy — owner approved 2026-10-16
+
+Follow [the full permanent testing policy](docs/DMN_PERMANENT_TESTING_POLICY.md) for all future trials: (1) separate rankings for every navigation behaviour; (2) combine executions only where independently accurate and fair; (3) rank by the relevant actual measured metric, with optional correctness scores; (4) keep complete and partial common-case cohorts separately; (5) separate independently verified from provisional/map-derived rankings; and (6) stop for owner approval before fixes, then freshly rerun DMN **and all applicable competitors** on the entire affected comparable cohort after each approved improvement. Every test report must give ranked comparisons, a separate exact-case issue register and proposed improvements. Historical completed case evidence and any original scoring formula remain as recorded; prospective policy governs the next experiments.
+
 ## Standing owner decision (2026-10-16)
 
-Use one named frozen test at a time. Test DMN and every actually available,
+Use one named frozen category contract at a time; several categories may share one execution only when each remains accurately measured and independently ranked. Test DMN and every actually available,
 applicable reference on identical inputs and a genuinely comparable output
 contract. Use available engines now; report the exact executed count rather than
 waiting for ten or pretending the minimum-ten objective is met. Original families
@@ -16,8 +20,11 @@ not appear as zero-quality entries in the active ranking.
 After each baseline, show the user:
 - The test name, exact issues/cases tested and independent/analytical/map-derived
   oracle scope, versions/configurations, map/input/oracle hashes and run/CI links.
-- A comparison table ranked highest to lowest, with ties and the transparent
-  score10*passed/frozen judged cases; show per-case pass/fail/unresolved reasons.
+- A highest-to-lowest ranking per independent category based on its declared actual
+  metric; show exact pass/total/failure/withheld/unresolved counts, optional
+  clearly labelled out-of-ten correctness score, full-cohort ranking, and separate
+  partial shared-case ranking where applicable. Keep VERIFIED and PROVISIONAL
+  evidence in separate ranked tables; include case-level reasons.
 - Raw measured calculation times in milliseconds where available. Separate
   cold/warm/setup/process/network scopes, medians,p95,sample count and errors.
   Rank speed only on equivalent valid workload/hardware/measurement scope.
@@ -31,8 +38,13 @@ proposed improvements, change acceptance or begin the next trial until the owner
 instructs continuation of that step. This explicit review choice supersedes the
 earlier automatic improve/retest cycle. Authorized harness setup recovery may
 continue before a baseline executes, preserving every failed attempt and inputs.
-After an authorized improvement, rerun the same frozen cases, full affected safety
-regressions and additional separately labelled cases; show a separate retest table.
+After an authorized improvement, freshly rerun DMN and **every available applicable
+competitor** over the entire affected frozen comparable test set, including
+unchanged external engines. Do not reuse historical competitor verdicts as fresh
+retests. Also run full affected DMN safety regressions and separately labelled
+additional cases; show new separate rankings and before/after DMN changes.
+Reuse hashed source maps, downloads and prepared environments only, not old
+execution outcomes.
 
 Ask before material uncertainty or a proposed permanent workflow/scope change.
 Do not silently switch from the requested comparable baseline to adapter expansion
@@ -69,8 +81,9 @@ computation while preserving correctness and auditability:
 
 - Read the smallest relevant files/ranges and summarize retained evidence instead
   of repeatedly loading raw logs or large JSON reports.
-- Batch independent read-only checks. Reuse already verified hashes, versions,
-  maps, cases and successful artifacts when the requested contract is unchanged.
+- Batch independent read-only checks. Reuse verified hashes, versions,
+  maps, frozen cases and successful setup artifacts when unchanged; never
+  substitute prior competitor outcomes for owner-required fresh post-fix retests.
 - Check active/queued jobs once before launch. Never start duplicate workflows.
 - Run focused local tests first. Run the full affected suite once before upload;
   do not repeat unchanged green checks without new code, evidence or a failure.

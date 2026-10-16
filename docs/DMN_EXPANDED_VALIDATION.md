@@ -1,5 +1,9 @@
 # Owner-directed real-map validation programme
 
+**Permanent owner-approved comparison and full-retest rules:** see
+[DMN_PERMANENT_TESTING_POLICY.md](DMN_PERMANENT_TESTING_POLICY.md). They govern
+future runs and reports; earlier source records remain unchanged.
+
 The owner clarified the requirement: future comparison cases use real licensed
 public road maps and source-backed road facts. Only injected GPS observations
 are simulated. Invented road grids/loops remain historical/internal regression
@@ -118,8 +122,13 @@ The full road source is real; no invented road layout is used in this probe.
 ## Scale, ranking and improvement loop
 
 Start with small explicit source-backed cases. Run all applicable engines and DMN
-baseline before tuning. Diagnose an actual DMN deficit, reproduce it, fix it,
-then rerun changed cases, full safety regressions and additional controls.
+baseline before tuning, then show separate category rankings and an exact-case
+failure register; STOP for the owner's review. Diagnose an actual DMN deficit,
+propose a correction, and implement it only after explicit approval. Afterwards,
+freshly retest DMN and **all available applicable competitors** on the complete
+affected frozen comparable test set (not just changed cases), plus affected DMN
+safety regressions and separately labelled additional controls. Reuse hashed
+map/build/setup assets but not prior competitor results as the fresh retest.
 Track every reproduced fault/capability gap in the improvement register below.
 
 After the harness/oracle is proven, expand GPS variations with recorded seeds
@@ -130,14 +139,19 @@ facts. A million noisy variants of a few roads are not a million independent roa
 validations. Use explicit time/memory/request limits, failure retention, checkpoints
 and stop conditions; no unbounded expensive experiment is authorized.
 
-Score each complete genuinely comparable cohort:`10*passed/frozen judged cases`,
-rank highest to lowest and share ties. Include exact expected/actual/error reason,
-source/version/configuration, map/oracle hashes, run SHA/CI URL, runtime units,
-coverage, confident wrong-road/illegal-turn/false-arrival counts and recovery.
-Unknown evidence or execution errors are unresolved/unranked, never invented
-passes. Missing required output from an executed supported contract is a failure.
-Critical safety failures block promotion independently of an aggregate score.
-No overall winner is created by mixing unmatched cohorts or hiding missing tests.
+Every navigation category and submeasure has its own highest-to-lowest ranking
+using the actual predeclared relevant metric (e.g. correctness counts, GPS metres,
+valid comparable milliseconds); a 0-10 correctness score may be added for context
+but is not a universal rank. Shared journey execution is allowed only if each
+measurement remains accurate and fair; otherwise split experiments. Publish full
+and partial/shared-subset cohorts separately, as well as VERIFIED versus
+PROVISIONAL source-judgement rankings. Include exact expected/actual/error
+reasons, source/version/configuration, map/oracle hashes, run SHA/CI URL,
+comparable timing scope, coverage, confident wrong-road/illegal-turn/false-arrival
+counts and recovery. Failures and proposed fixes are separately enumerated.
+Unknown truth and execution errors are unresolved, never invented passes. Missing
+required output in an executed supported case is a failure. Critical safety
+failures block promotion independently. Never mix unlike cohorts or categories.
 
 ## Evidence-backed improvement register
 

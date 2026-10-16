@@ -1,5 +1,10 @@
 # Whole-app evidence and improvement programme
 
+For navigation comparisons, the [permanent owner-approved DMN testing policy](DMN_PERMANENT_TESTING_POLICY.md)
+governs independent category rankings, combined-execution validity, full versus
+partial cohorts, verified versus provisional truth, review approval and full fresh
+competitor retesting after an approved improvement.
+
 Owner authorization extends the test/compare/diagnose/improve/retest approach to
 anything the app is responsible for. Navigation R&D remains here; app source,
 private architecture and implementation stay in the existing private repository.
@@ -12,8 +17,12 @@ For each component, inventory its exact version/configuration, define its public
 contract, freeze a small real applicable workload and justified expectations,
 then execute the current implementation and runnable alternatives separately.
 Report every case including errors, unsupported features and missing evidence.
-Reproduce a verified deficit, implement a scoped reversible improvement, retest
-changed cases, safety regressions and additional cases before considering adoption.
+Show ranked results and a separate case-by-case fault register, then STOP for owner
+review. Propose a scoped reversible improvement but implement only after approval.
+Following an approved improvement, freshly rerun the whole affected comparable
+case set for DMN and all currently available applicable competitors, as well as
+full affected safety regressions and separately labelled additional cases, before
+considering adoption.
 
 Real licensed maps and public source-backed facts are required where applicable.
 Only GPS signals are simulated for the requested road tests. Unit controls remain
@@ -22,12 +31,17 @@ A competitor, screenshot resemblance or a green build is not the correctness ora
 
 ## Ranked results and measured units
 
-Correctness:10*passed/frozen judged cases, highest to lowest, ties share rank,
-only applicable actually executed comparable cohorts. Unavailable options appear
-in a separate audit, never as zero-quality or mocked passes. Original twelve
-navigation families remain auditable; navigation competitive cohorts target ten
-actually runnable external families. Other app components use genuinely relevant
-alternatives/configurations, not ten arbitrarily named navigation engines.
+For navigation, maintain a separate highest-to-lowest table for every category
+and submeasure, ranked on its actual predeclared valid measurement. A supplemental
+10*passed/frozen judged cases score may be shown where meaningful, never as a
+forced all-purpose ranking. Shared execution is permitted only when separate
+measurements remain fair and accurate. Publish full-comparison and partial
+shared-case rankings separately; publish independently VERIFIED and PROVISIONAL
+rankings separately. Ties share rank. Unavailable engines belong in a named
+coverage audit, never as zero-quality or mocked passes. The original twelve
+navigation families remain auditable and the goal of ten comparable runnable
+references remains visible. Other app components use genuinely relevant
+alternatives/configurations, not arbitrarily named navigation engines.
 
 Speed:retain raw milliseconds with workload/map/oracle/version/run hashes,
 hardware/runtime, repetitions, timeout/error count and precise measurement scope.
@@ -89,8 +103,11 @@ current adoption decision stays NOT_READY_FOR_LIVE_NAVIGATION.
 ## Owner-confirmed review gate
 
 The owner selected **stop after each baseline for review**, then explicitly
-authorize any improvement/retest. The baseline table, failures and proposed
-improvements must be separate items; do not automatically tune from the baseline.
+authorize any improvement/retest. The independently ranked category tables,
+individual failures and proposed improvements must be separate items; do not
+automatically tune from a baseline. After an approved improvement, fresh
+complete-cohort retests of DMN and all available applicable competitors are
+mandatory even when those competitors did not change.
 Use available applicable engines now, state their exact count, and keep the
 ten-external-engine objective visibly unmet until a common cohort actually runs.
 See AGENTS.md for the standing instructions. This supersedes the earlier automatic
@@ -100,7 +117,8 @@ improve/retest wording. No permanent scope/rule changes without checking first.
 
 Each test specification must include a bounded execution budget: maximum cases,
 engine runs, retries, wall time, memory/storage and retained artifact size. Reuse
-unchanged map/input/oracle hashes and prior successful setup evidence. Prefer one
+unchanged map/input/oracle hashes and prior successful setup evidence, but
+not old competitor execution results as post-improvement retests. Prefer one
 representative baseline over repeated confirmations; add scale only when a smaller
 cohort has demonstrated that the harness and oracle detect the intended faults.
 
