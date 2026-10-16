@@ -60,6 +60,14 @@ jobs:
           path: results/reroute001-DMN.json
           if-no-files-found: error
           retention-days: 30
+      - name: JUNCTION-001 principal maneuver semantics
+        run: python -m benchmarks.junction_trial --engine DMN --output results/junction001-DMN.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: junction001-dmn-contract
+          path: results/junction001-DMN.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Measure synthetic routing latency (informational only)
         run: |
           python -m benchmarks.run --repeat 30
