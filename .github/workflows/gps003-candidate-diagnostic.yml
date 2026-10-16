@@ -4,6 +4,7 @@ on:
     paths:
       - 'benchmarks/gps003_candidate_diagnostic.py'
       - 'benchmarks/gps003_research_variant.py'
+      - 'benchmarks/gps_uk40_withheld_diagnostic.py'
       - 'gps/matcher.py'
       - 'gps/temporal_matcher.py'
       - 'gps/shadow_comparison.py'
@@ -62,6 +63,12 @@ jobs:
             --map results/gps003-map.osm \
             --archive-hash results/gps003-source-hashes.json \
             --output results/gps003-research-variant.json
+      - name: Diagnose each of the 18 remaining UK40 GPS ambiguities
+        run: |
+          python -m benchmarks.gps_uk40_withheld_diagnostic \
+            --map results/gps003-map.osm \
+            --archive-hash results/gps003-source-hashes.json \
+            --output results/gps-uk40-18-withheld.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
@@ -69,6 +76,7 @@ jobs:
           path: |
             results/gps003-candidate-diagnostic.json
             results/gps003-research-variant.json
+            results/gps-uk40-18-withheld.json
           if-no-files-found: warn
           retention-days: 30
       - name: Delete temporary map data

@@ -43,7 +43,8 @@
         "test_match_geometry_truth.py",
         "test_gps_fragment_experiment.py",
         "test_gps003_research_variant.py",
-        "test_gps_shadow_comparison.py"
+        "test_gps_shadow_comparison.py",
+        "test_gps_uk40_withheld_diagnostic.py"
       ],
       "engine_rank": null,
       "navigation_score": null

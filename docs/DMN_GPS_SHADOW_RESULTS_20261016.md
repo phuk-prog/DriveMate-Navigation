@@ -33,3 +33,19 @@ The historical six-engine ROUTE-004 mapped one-way cohort remains a six-way firs
 Further improvements (not yet authorized for default behaviour): independently source UK vehicle/road truth; analyse the 18 still-withheld UK40 cases; add adversarial opposite-carriageway, reverse-progress, slip-road, roundabout and weak-GNSS trails; implement genuine applicable external map-matching comparisons under identical contracts; perform valid matched-scope route-speed trials. After any owner-approved default behavioural change, freshly rerun all applicable competitors on the complete affected common case set.
 
 **STOP for safety review before promoting the shadow candidate.** No matcher was disabled and neither was removed. No production application, merge or APK was changed.
+
+## Focused diagnosis of the remaining 18 UK40 withheld cases
+
+New diagnostic-only executable evidence uses the same pinned historical OSM
+extract and immutable case generator. For each still-withheld second observation
+it records original and experimental status, source edge ID, first-fix anchor,
+candidate IDs and distance/heading scores, graph connectivity, time-reachable
+alternatives and a **diagnostic cause category**. It fails if the original
+17/40 or research 22/40 reproduction changes or the experiment loses any old
+source-correct case. No GPS match threshold, decision, case answer or road
+legality rule has been changed.
+
+The file `gps-uk40-18-withheld.json` is produced alongside the prior GPS-003
+comparison in the existing bounded GitHub workflow. Its source-map labels are
+**provisional**, never independent road/GNSS truth. Exact findings will determine
+the next proposed safety tests; stop for review before implementing any fix.
