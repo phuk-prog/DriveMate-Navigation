@@ -50,3 +50,39 @@ not installed locally; CI is required, not treated as already passed.
 Pending actual bounded execution. UK17/0/23, incomplete one-way case bank,
 independent authority evidence, ten-engine common cohort and Android readiness
 remain unresolved. No app-promotion or general engine-superiority claim.
+
+### Executed result
+
+Run38867638822 at6beb57c80cf0b45881dc71773fcf38919b494653 completed successfully.
+Actual package: routino3.4.1-1build1 amd64, CPython3.11.17, Ubuntu24.04.
+The distributed copyright declares **AGPL-3+ for upstream**, GPL-3+ for Debian
+packaging, Expat for listed Windows compatibility files. Exact copyright document
+hash is retained; full original bytes are hex-encoded in the CI artifact. No
+production dependency adoption or relicensing is implied by this CLI execution.
+
+All archive/subset/request fingerprints match the frozen specification. Real
+planetsplitter import and three sequential routino-router calculations executed.
+
+| Frozen request | Outcome | Start error m | End error m | Returned vertices |
+|---|---|---:|---:|---:|
+|REF-006-001|PASS|2.253772|1.195891|2|
+|REF-006-002|PASS|0.022806|0.033186|2|
+|REF-006-003|PASS|0.033186|0.022806|2|
+
+Result3/3 endpoint/output observations; maximum error2.254m against5m. Two returned
+vertices per route satisfy only this limited contract: no interior shape/road-law,
+turn, maneuver or GPS-quality correctness is inferred. No comparative score/rank.
+Itinero previously passed the same endpoint requests; this does not establish
+an advantage for DMN or justify a DMN algorithm change. Raw GPX bytes/hash, CLI
+arguments, output, returncodes, map/request/executable/configuration hashes and
+per-case verdicts are in references/ref007-routino-real-map-20261016.json.
+
+Import process wall time12.059ms; individual router processes1.680/1.367/1.314ms.
+These are single process measurements on this CI runner, not stable speed results
+or comparable in-process DMN benchmarks. No resource ranking is assigned.
+
+This is the seventh actually executed external routing family across historical
+scopes. Ten engines on a common requested real-map/GPS-quality cohort remain
+unproven. A subsequent bounded confirmation pins the now-observed exact package
+version and explicitly checks upstream AGPL licence metadata before execution.
+Original cases, hashes and5m endpoint acceptance are unchanged.

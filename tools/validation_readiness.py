@@ -22,7 +22,7 @@ def audit(config=None,*,cohort_reports=None,cohort_spec=None):
             path=(ROOT/r['evidence']).resolve()
             if not path.is_relative_to(ROOT) or not path.is_file():raise ValueError('Missing execution evidence')
             report=json.loads(path.read_text());engine=next((x for x in report.get('reports',[report.get('report',{})]) if x.get('system')==r['family']),None)
-            if not engine or engine['execution'] not in ('actual_live_loopback','actual_dotnet_source_build_and_route_calculation') or not engine['cases']:raise ValueError('No actual reference execution in cited evidence')
+            if not engine or engine['execution'] not in ('actual_live_loopback','actual_dotnet_source_build_and_route_calculation','actual_packaged_cli_import_and_route_calculation') or not engine['cases']:raise ValueError('No actual reference execution in cited evidence')
             actual[r['family']]=dict(family=r['family'],source_sha=report['run_sha'],ci_url=report['ci_url'],scope=engine['test_id']+' actual routing integration only; not shared real-map or GPS-quality cohort',quality_score=None)
         elif r['execution_status']!='NOT_RUN':raise ValueError('Unrecognized execution claim')
     if c['scale_policy']['executed_generated_variants_under_this_revision']!=0:raise ValueError('No million-case execution evidence exists for this revision')

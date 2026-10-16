@@ -6,7 +6,7 @@ from tools.validation_readiness import audit,CONFIG
 
 class ReadinessTests(unittest.TestCase):
     def test_real_execution_evidence_is_under_ten(self):
-        r=audit();self.assertEqual(r['actual_static_families'],6)
+        r=audit();self.assertEqual(r['actual_static_families'],7)
         self.assertFalse(r['ten_engine_requirement_met']);self.assertEqual(r['new_generated_variants_executed'],0)
         self.assertEqual(len(r['candidate_target_families']),10)
     def test_variants_cannot_inflate_family_count(self):

@@ -23,13 +23,13 @@ jobs:
           set -euo pipefail
           mkdir -p results
           sudo apt-get update -qq >/dev/null
-          sudo apt-get install -y -qq routino osmium-tool >/dev/null
+          sudo apt-get install -y -qq routino=3.4.1-1build1 osmium-tool >/dev/null
           python - <<'PYCODE'
           from pathlib import Path
           from hashlib import sha256
           import subprocess,json
           copyright=Path('/usr/share/doc/routino/copyright').read_bytes()
-          if b'GPL-' not in copyright and b'GNU General Public License' not in copyright:
+          if b'License: AGPL-3+' not in copyright:
               raise RuntimeError('Unrecognized package licence; stop before routing')
           metadata={'package':subprocess.check_output(['dpkg-query','-W','-f=${Package} ${Version} ${Architecture}','routino'],text=True),'package_copyright_sha256':sha256(copyright).hexdigest(),'copyright_notice_utf8_hex':copyright.hex(),'package_inventory':subprocess.check_output(['dpkg-query','-L','routino'],text=True),'apt_policy':subprocess.check_output(['apt-cache','policy','routino'],text=True),'python':subprocess.check_output(['python','--version'],text=True).strip()}
           Path('results/ref007-package-metadata.json').write_text(json.dumps(metadata,indent=2)+'\n')
