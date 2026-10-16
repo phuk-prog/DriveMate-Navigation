@@ -59,3 +59,24 @@ production readiness test runs as part of this engine-only programme.
 ## Final tested research-batch results
 
 [View verified **strict engine-only** result and GPS before/after](DMN_ENGINE_ONLY_RESULTS_20261016.md): 21 separately executed engine categories, 506/506 unit checks passing, no legacy app tests, pinned Manchester GPS-003 default 8/24 versus research option 24/24, UK40 default 17/40 versus research option 22/40, 0 confidently wrong-road selections in these simulated test cases. The opt-in GPS candidate is **off by default**, 18 UK40 withheld remain and independent real-road validation is outstanding.
+
+## Both GPS matchers retained — parallel research evidence
+
+The conservative DMN matcher remains the **authoritative/default** navigation result.
+The opt-in adjacent-fragment matcher remains available as a shadow comparison and
+is never silently selected for guidance. The test helper
+`gps/shadow_comparison.py` feeds each observation into **separate temporal
+matchers**, returning the baseline answer and the experimental answer. Any
+shadow-only error is exposed without replacing the baseline.
+
+Independent GPS-matching unit tests execute in the normal 21-category CI suite.
+For changes to the GPS matcher, temporal matcher, comparison benchmark or
+diagnostic workflow, the bounded historical GPS-003/UK40 workflow runs both
+variants on the same pinned map and frozen observations. Its artifact now records
+every changed stream, individual GPS update and UK40 case, including original
+versus experimental road IDs. Other categories do not become GPS tests and
+unrelated documentation commits do not trigger historical map downloads.
+
+**No navigation behaviour is disabled or replaced.** No Android app, APK or
+production project is involved. A shadow improvement in map-generated data does
+not justify enabling it for navigation or relaxing an existing safety gate.

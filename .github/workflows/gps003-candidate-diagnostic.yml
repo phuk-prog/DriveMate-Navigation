@@ -4,6 +4,9 @@ on:
     paths:
       - 'benchmarks/gps003_candidate_diagnostic.py'
       - 'benchmarks/gps003_research_variant.py'
+      - 'gps/matcher.py'
+      - 'gps/temporal_matcher.py'
+      - 'gps/shadow_comparison.py'
       - '.github/workflows/gps003-candidate-diagnostic.yml'
 permissions:
   contents: read
@@ -12,7 +15,6 @@ concurrency:
   cancel-in-progress: true
 jobs:
   geometry:
-    if: contains(github.event.pull_request.title, '[gps003-diagnostic]')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

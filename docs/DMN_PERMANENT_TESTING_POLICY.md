@@ -70,3 +70,13 @@ DriveMate/Android app builds, emulator runs, UI tests, Bluetooth/audio tests or
 APK jobs as part of this research phase. Engine end-to-end means a bounded
 routing/GPS/rerouting/guidance/arrival replay outside the app. Keep the earlier
 app release safeguards on record, but they are outside the current work.
+
+## Retain both GPS methods during engine testing
+
+Owner approval: do not disable either the conservative default DMN GPS method
+or the optional experimental method. Test both on identical frozen GPS
+observations using isolated matcher histories, publish per-case disagreements,
+and always retain the default result as authoritative. Do not automatically
+promote the shadow variant merely because it improves map-derived coverage.
+The remaining independent road-truth, safety and full competitor retest gates
+are unchanged.

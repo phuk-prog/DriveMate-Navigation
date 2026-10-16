@@ -108,12 +108,59 @@ def main():
         (unchanged["uk40"]["correct"],unchanged["uk40"]["confident_wrong"],
          unchanged["uk40"]["withheld"])!=(17,0,23)):
         raise ValueError("Default matcher no longer reproduces frozen evidence")
+    # Disagreements belong to explicit shadow evidence: baseline is authoritative.
+    # Both versions have seen the same immutable frozen stream/UK case IDs.
+    mismatched_streams=[]
+    differing_events=[]
+    for baseline_case,shadow_case in zip(
+            unchanged["gps003"]["cases"],variant["gps003"]["cases"]):
+        if baseline_case["case_id"]!=shadow_case["case_id"]:
+            raise ValueError("Frozen GPS stream case order diverged")
+        if len(baseline_case["events"])!=len(shadow_case["events"]):
+            raise ValueError("Frozen GPS events differ")
+        if baseline_case["outcome"]!=shadow_case["outcome"]:
+            mismatched_streams.append({
+                "case_id":baseline_case["case_id"],
+                "default":baseline_case["outcome"],
+                "experimental":shadow_case["outcome"]})
+        for event_index,(left,right) in enumerate(zip(
+                baseline_case["events"],shadow_case["events"])):
+            if (left["status"],left["actual_edge"])!=(
+                    right["status"],right["actual_edge"]):
+                differing_events.append({
+                    "case_id":baseline_case["case_id"],
+                    "event_index":event_index,
+                    "default_status":left["status"],
+                    "default_edge":left["actual_edge"],
+                    "experimental_status":right["status"],
+                    "experimental_edge":right["actual_edge"]})
+    uk_differences=[]
+    for left,right in zip(unchanged["uk40"]["cases"],variant["uk40"]["cases"]):
+        if left["case_id"]!=right["case_id"]:
+            raise ValueError("Frozen UK40 case order diverged")
+        if (left["status"],left["actual_edge"])!=(
+                right["status"],right["actual_edge"]):
+            uk_differences.append({
+                "case_id":left["case_id"],
+                "default":left["status"],
+                "experimental":right["status"],
+                "default_edge":left["actual_edge"],
+                "experimental_edge":right["actual_edge"]})
+    shadow_comparison={
+        "authoritative":"default DMN matcher; experimental never changes guidance",
+        "identical_frozen_inputs":True,
+        "changed_stream_outcomes":mismatched_streams,
+        "changed_gps_events":differing_events,
+        "changed_uk40_cases":uk_differences,
+        "external_engine_ranking":None
+    }
     new_wrong=(variant["gps003"]["counts"]["confident_wrong"]+
                variant["uk40"]["confident_wrong"])
     report=dict(trial="GPS003-RESEARCH-VARIANT-001",
         classification="same frozen map-derived GPS and UK40; no field road truth",
         map_sha256=EXPECTED_XML_HASH,oracle_sha256=ORACLE,
         historical_default_unmodified=True,default=unchanged,experimental=variant,
+        shadow_comparison=shadow_comparison,
         new_confident_wrong=new_wrong,external_engines_executed=0,
         comparison_scope="DMN versions only; no cross-engine GPS rank",
         safety_gate_pass=new_wrong==0)
@@ -124,6 +171,9 @@ def main():
         "default_uk40":unchanged["uk40"]["correct"],
         "variant_uk40":variant["uk40"]["correct"],
         "new_confident_wrong":new_wrong,
+        "changed_stream_outcomes":len(mismatched_streams),
+        "changed_gps_events":len(differing_events),
+        "changed_uk40_cases":len(uk_differences),
         "default_unchanged":True,"output":str(args.output)},indent=2),flush=True)
     if new_wrong:
         raise SystemExit("Safety gate: opt-in variant made confident wrong-road claims")
