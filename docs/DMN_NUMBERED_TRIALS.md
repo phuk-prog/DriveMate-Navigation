@@ -254,3 +254,32 @@ unchanged heavyweight cohort automatically. Next bounded stage: rerouting
 controller lifecycle (off-route corroboration, cooldown, stale/cancelled result
 suppression) before junction/roundabout/instruction/arrival/offline/resource work.
 The UK coverage tradeoff and promotion block remain open.
+
+## REROUTE-001 frozen lifecycle acceptance
+
+Sixteen analytical synthetic cases in synthetic-reroute-001.json are fixed before
+implementing the missing controller. Existing shortest_route recalculates paths,
+but no module currently owns off-route corroboration, cooldown, pending callbacks
+or session cancellation. This baseline capability is unavailable, not a failed
+or zero-quality engine score. Existing GPS/ROUTE evidence remains unchanged.
+
+Require two reliable off-route observations at least1000ms apart, maximum10000ms
+observation age, minimum30000ms between request starts, one pending request,
+maximum15000ms request lifetime, and current fresh off-route evidence before
+installing a result. Returning on route, new weak evidence, stopping or changing
+context cancels prior pending state. Duplicate/out-of-order/stale/future packets
+cannot count as corroboration. Failed/no-route results preserve the active route.
+Clock inputs are nonnegative monotonic milliseconds. Frozen cases include the
+request-age boundary and recovery after bad samples, gaps, cooldown and context
+changes. These are engineering contracts, not calibrated physical thresholds.
+
+The harness must calculate actual DMN routes on the frozen ROUTE-002 map; it
+simulates delivery times and reliability/on-route decisions explicitly. No fake
+external result may be counted as execution. Batch OSRM/Valhalla/GraphHopper,
+ORS snapping/directions and BRouter routing endpoints do not expose this full
+controller lifecycle, so their integrated interfaces are UNSUPPORTED per case.
+The remaining seven families lack lifecycle harness/access and remain NOT_RUN.
+Keep all twelve plus DMN visible; only a complete judged16-case controller cohort
+can receive `10 * passed / 16`, and it is not a competitor quality ranking.
+No Android service, real route-progress/GPS integration or device readiness is
+established by this isolated research component. Keep UK promotion blocked.
