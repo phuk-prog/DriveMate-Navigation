@@ -45,3 +45,12 @@
 **After each test:** present the individual case pass/fail list, highest-to-lowest comparative rankings only where actually measured, scoped timings, unknown truth, and **improvement suggestions last**. Before enabling the GPS variant or any navigation behaviour change beyond the isolated research experiment, stop and require owner review. Freshly rerun every applicable real competitor on the entire affected common frozen comparison if a behavioural change is approved.
 
 Keep heavyweight external engines sequential and use version-pinned public sources. No changes to the private app, no APK, no merge without separate approval.
+
+
+### Strict engine-only CI exclusion
+
+The legacy `tests/test_app_readiness.py` remains in repository history for audit
+but is explicitly excluded from active category execution; the separate
+`tools.app_readiness` and adoption-artifact stage have been replaced by an
+engine comparison evidence-integrity check. No Android app, Bluetooth or
+production readiness test runs as part of this engine-only programme.

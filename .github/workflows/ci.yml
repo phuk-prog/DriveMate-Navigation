@@ -109,18 +109,15 @@ jobs:
           path: results/resource001-DMN.json
           if-no-files-found: warn
           retention-days: 30
-      - name: Report app-adoption readiness without treating test success as release readiness
+      - name: Report engine comparison evidence readiness only
         env:
           GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
           python -m tools.validation_readiness --output results/comparison-readiness.json
-          python -m tools.app_readiness --output results/app-readiness.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: dmn-adoption-readiness
-          path: |
-            results/app-readiness.json
-            results/comparison-readiness.json
+          name: dmn-engine-comparison-readiness
+          path: results/comparison-readiness.json
           if-no-files-found: error
           retention-days: 30
       - name: Measure synthetic routing latency (informational only)

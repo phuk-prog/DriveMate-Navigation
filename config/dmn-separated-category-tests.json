@@ -211,9 +211,8 @@
     {
       "id": "failure_handling",
       "label": "Failure handling, integrity and safety gates",
-      "scope": "Evidence integrity and readiness gate tests, not full app resilience.",
+      "scope": "Engine reliability, privacy, benchmark integrity and no-false-ranking safeguards; app readiness excluded.",
       "test_files": [
-        "test_app_readiness.py",
         "test_privacy_guard.py",
         "test_validation_readiness.py",
         "test_dmn_atomic_coverage.py",

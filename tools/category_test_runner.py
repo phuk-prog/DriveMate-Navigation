@@ -24,7 +24,11 @@ def validate(data):
         raise ValueError("Missing navigation categories")
     ids=[c["id"] for c in categories]
     if len(ids)!=len(set(ids)):raise ValueError("Duplicate category")
-    actual={p.name for p in TESTS.glob("test_*.py")}
+    # Old app-adoption tests remain archived but are outside engine scope.
+    excluded={"test_app_readiness.py"}
+    actual={p.name for p in TESTS.glob("test_*.py")} - excluded
+    if any(not (TESTS / name).exists() for name in excluded):
+        raise ValueError("Explicit engine-only exclusions changed")
     claimed=[]
     for c in categories:
         if c.get("engine_rank") is not None or c.get("navigation_score") is not None:
