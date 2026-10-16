@@ -8,14 +8,14 @@ concurrency:
   cancel-in-progress: true
 jobs:
   trial:
-    if: contains(github.event.pull_request.title, '[route002-refs]')
+    if: contains(github.event.pull_request.title, '[route002-refs]') || contains(github.event.pull_request.title, '[route002-brouter]')
     runs-on: ubuntu-latest
     timeout-minutes: 12
     strategy:
       fail-fast: false
       max-parallel: 1
       matrix:
-        engine: [OSRM, Valhalla, GraphHopper, openrouteservice, BRouter]
+        engine: ${{ contains(github.event.pull_request.title, '[route002-brouter]') && fromJSON('["BRouter"]') || fromJSON('["OSRM","Valhalla","GraphHopper","openrouteservice","BRouter"]') }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:

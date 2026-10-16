@@ -4,12 +4,13 @@ from hashlib import sha256
 import json
 from pathlib import Path
 import socket
+from math import isfinite,hypot
 from time import monotonic,sleep
 from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request
 
-from benchmarks.routing_trial import judge as judge_geometry, VERSIONS
+from benchmarks.routing_trial import judge as judge_geometry, VERSIONS, xy
 from benchmarks.routing_references import OPENER,route_request,route_points
 from engine import shortest_route,RouteNotFound
 from map_data import Provenance,import_osm_xml
@@ -28,6 +29,20 @@ def judge_case(case,result):
     if status in ('UNRESOLVED','UNSUPPORTED'):
         return {**row,'outcome':status,'reason':result['reason'],'checks':{}}
     if status not in ('ROUTE','NO_ROUTE'):raise ValueError('Unknown engine outcome')
+    if status=='ROUTE':
+        points=result.get('points')
+        if (not isinstance(points,list) or not 2<=len(points)<=2000
+                or any(not isinstance(p,(list,tuple)) or len(p)!=2
+                       or any(type(v) not in (int,float) or not isfinite(v) for v in p)
+                       or not -90<=p[0]<=90 or not -180<=p[1]<=180 for p in points)):
+            return {**row,'actual':'UNRESOLVED','outcome':'UNRESOLVED',
+                    'reason':'Malformed or incomplete route geometry','checks':{}}
+        distance=lambda a,b:hypot(xy(a)[0]-xy(b)[0],xy(a)[1]-xy(b)[1])
+        row['geometry_diagnostics']={'returned_start':points[0],'returned_end':points[-1],
+                                     'start_error_m':round(distance(case['start'],points[0]),4),
+                                     'end_error_m':round(distance(case['end'],points[-1]),4),
+                                     'returned_vertices':len(points)}
+        if case['expected']=='NO_ROUTE':row['returned_geometry']=points
     if case['expected']=='NO_ROUTE':
         checks={'no_route_returned':status=='NO_ROUTE'}
         return {**row,'outcome':'PASS' if all(checks.values()) else 'FAIL','checks':checks,

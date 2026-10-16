@@ -39,3 +39,13 @@ class RoutingLegalityBatchTests(unittest.TestCase):
     def test_longer_legal_variant_not_failed_for_profile_costs(self):
         case=load_cases()[0]
         self.assertEqual(judge_case(case,{'status':'ROUTE','points':case['accepted_paths'][1]})['outcome'],'PASS')
+
+    def test_returned_route_diagnoses_endpoint_relocation(self):
+        case=load_cases()[3]
+        result=judge_case(case,{'status':'ROUTE','points':[[1,1],[1,1.002]]})
+        self.assertEqual(result['outcome'],'FAIL')
+        self.assertGreater(result['geometry_diagnostics']['end_error_m'],100)
+
+    def test_malformed_negative_route_is_unresolved_not_a_judged_route(self):
+        case=load_cases()[3]
+        self.assertEqual(judge_case(case,{'status':'ROUTE','points':[]})['outcome'],'UNRESOLVED')
