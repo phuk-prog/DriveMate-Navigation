@@ -56,8 +56,95 @@ def run_pair(graph,xy,a,b):
                       "initial_status":anchor.status}
     return result
 
+
+def conservative_executable_subset(raw):
+    """Exclude uncertain source ways and dependent turn manoeuvres, not tags.
+
+    The prototype importer cannot prove conditional legality. Omitting the
+    entire connected restriction cohort is safer than stripping a condition
+    and treating the road as unconditionally legal. Keep source hash/audit.
+    """
+    import xml.etree.ElementTree as ET
+    from collections import Counter
+    if b"<!DOCTYPE" in raw.upper() or b"<!ENTITY" in raw.upper():
+        raise ValueError("OSM source with entities/DTD is prohibited")
+    root=ET.fromstring(raw)
+    ways={w.get("id"):w for w in root.findall("way")}
+    nodes={n.get("id"):n for n in root.findall("node")}
+    restrictions=[r for r in root.findall("relation")
+                  if any(t.get("k")=="type" and t.get("v")=="restriction"
+                         for t in r.findall("tag"))]
+    flags=Counter()
+    def tags(elem):
+        return {t.get("k",""):t.get("v","") for t in elem.findall("tag")}
+    bad_nodes={node_id for node_id,node in nodes.items()
+               if any(k.endswith("conditional") for k in tags(node))}
+    forbidden=set()
+    for way_id,way in ways.items():
+        attributes=tags(way)
+        if any(k.endswith("conditional") for k in attributes):
+            forbidden.add(way_id)
+            flags["conditional_way"]+=1
+        if any(nd.get("ref") in bad_nodes for nd in way.findall("nd")):
+            forbidden.add(way_id)
+            flags["touches_conditional_node"]+=1
+        direction=attributes.get("oneway","").lower()
+        if direction not in ("","no","0","false","yes","1","true","-1","reverse"):
+            forbidden.add(way_id)
+            flags["unsupported_oneway"]+=1
+    flags["conditional_nodes"]=len(bad_nodes)
+    # Unsupported/missing restrictions cause all involved road ways to become
+    # unknown in this bounded experiment. Propagate to dependent manoeuvres.
+    active=[]
+    for relation in restrictions:
+        attr=tags(relation)
+        members=relation.findall("member")
+        froms=[m for m in members if m.get("type")=="way" and m.get("role")=="from"]
+        tos=[m for m in members if m.get("type")=="way" and m.get("role")=="to"]
+        vias=[m for m in members if m.get("type")=="node" and m.get("role")=="via"]
+        rule=attr.get("restriction:motorcar",
+             attr.get("restriction:motor_vehicle",attr.get("restriction","")))
+        related={m.get("ref") for m in members if m.get("type")=="way"}
+        supported=(not any(k.endswith("conditional") for k in attr)
+                   and (rule.startswith("no_") or rule.startswith("only_"))
+                   and len(froms)==len(tos)==len(vias)==1 and len(members)==3
+                   and all(w in ways for w in related) and vias[0].get("ref") in nodes)
+        if not supported:
+            forbidden.update(related & ways.keys())
+            flags["unsupported_restriction_relations"]+=1
+        else:
+            active.append((relation,related))
+    changed=True
+    while changed:
+        changed=False
+        for relation,related in active:
+            if related & forbidden:
+                add=(related & ways.keys())-forbidden
+                forbidden.update(add)
+                changed=changed or bool(add)
+                if add:flags["excluded_restriction_dependents"]+=len(add)
+    for way_id in forbidden:
+        if way_id in ways:root.remove(ways[way_id])
+    for relation in restrictions:
+        related={m.get("ref") for m in relation.findall("member")
+                 if m.get("type")=="way"}
+        if related & forbidden or any(
+            k.endswith("conditional") for k in tags(relation)):
+            root.remove(relation)
+    # Nonrestriction relations are not interpreted by the motorcar importer.
+    for node_id in bad_nodes:
+        if node_id in nodes:root.remove(nodes[node_id])
+    flags["omitted_complete_ways"]=len(forbidden & ways.keys())
+    result=ET.tostring(root,encoding="utf-8",xml_declaration=True)
+    if len(result)>6_000_000:
+        raise ValueError("Filtered analytical input still exceeds importer limit")
+    return result,dict(sorted(flags.items()))
+
 def analyse(name,raw):
-    data=import_osm_xml(raw,provenance=Provenance(
+    # Historical public XML stays unchanged; unsupported conditions are
+    # excluded as entire road ways and connected restrictions, not stripped.
+    filtered,exclusions=conservative_executable_subset(raw)
+    data=import_osm_xml(filtered,provenance=Provenance(
         "UK GPS real-map regional comparison","Geofabrik260901-"+name,
         "historical public OSM","OpenStreetMap contributors; ODbL"))
     graph,xy=data.graph,data.coordinates
@@ -100,6 +187,8 @@ def analyse(name,raw):
     danger=totals["research"].get("CONFIDENT_WRONG",0)+sum(
         r["research_confident_same_edge_reverse"] for r in reverse)
     return {"region":name,"map_sha256":sha256(raw).hexdigest(),
+            "scored_subset_sha256":sha256(filtered).hexdigest(),
+            "excluded_source_objects":exclusions,
             "case_count":len(rows),"distinct_incoming_ways":len(rows),
             "cases":rows,"summary":totals,
             "reverse_trajectory_checks":reverse,"safety_failure_count":danger,
@@ -127,6 +216,7 @@ def main():
     print(json.dumps({"test":report["test"],"count":report["total_cases"],
         "regions":[{"name":x["region"],"cases":x["case_count"],
             "default":x["summary"]["default"],"research":x["summary"]["research"],
+            "excluded_source_objects":x["excluded_source_objects"],
             "reverse_checks":len(x["reverse_trajectory_checks"]),
             "safety_failures":x["safety_failure_count"]} for x in regions],
         "independent_road_truth":False},indent=2),flush=True)
