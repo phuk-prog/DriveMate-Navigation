@@ -6,6 +6,11 @@ on:
       - 'benchmarks/map001_native_reference.py'
       - 'benchmarks/map001_access_review.py'
       - 'map_data/osm_xml.py'
+      - 'map_data/offline.py'
+      - 'engine/routing.py'
+      - 'engine/astar.py'
+      - 'engine/route_alternatives.py'
+      - 'benchmarks/map001_context_access.py'
       - 'tests/test_osm_import.py'
       - 'benchmarks/map001_direction_contract.py'
       - 'tests/test_map001_direction_contract.py'
@@ -49,6 +54,7 @@ jobs:
         run: |
           python -m benchmarks.map001_v3_restriction_diagnostics
           python -m benchmarks.map001_direction_contract
+          python -m benchmarks.map001_context_access
       - name: Build bounded local Valhalla 3.9.1 reference graph
         run: |
           set -euo pipefail
@@ -116,6 +122,7 @@ jobs:
           path: |
             results/map001-v3-manchester-diagnostics.json
             results/map001-direction-contract.json
+            results/map001-contextual-access.json
             results/map001-unit-checks/
             results/map001-native-comparison.json
             results/map001-valhalla-native.jsonl

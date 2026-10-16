@@ -48,7 +48,7 @@ class Route:
 
 
 class RouteNotFound(ValueError):
-    """No route exists using explicitly accessible links and legal turns."""
+    """No route under current access evidence and mapped turn restrictions."""
 
 
 class RoadGraph:
@@ -57,10 +57,14 @@ class RoadGraph:
         vertices: Iterable[str],
         edges: Iterable[RoadEdge],
         prohibited_turns: Iterable[tuple[str, str]] = (),
+        *, journey_destination: str | None = None,
     ) -> None:
         self.vertices = frozenset(vertices)
         if not self.vertices or any(not v for v in self.vertices):
             raise ValueError("At least one valid vertex is required")
+        if journey_destination is not None and journey_destination not in self.vertices:
+            raise ValueError("Journey destination must be in the graph")
+        self.journey_destination = journey_destination
         self.edges: dict[str, RoadEdge] = {}
         adjacency: dict[str, list[RoadEdge]] = {vertex: [] for vertex in self.vertices}
         for edge in edges:
@@ -98,6 +102,8 @@ def shortest_route(
     assumed legal. Penalties must be nonnegative; they never override access.
     Rerouting can pass the incoming edge so a prohibited turn stays prohibited.
     """
+    if graph.journey_destination is not None and destination != graph.journey_destination:
+        raise ValueError("Journey-scoped access cannot be reused for another destination")
     if source not in graph.vertices or destination not in graph.vertices:
         raise ValueError("Unknown origin or destination")
     if incoming_edge_id is not None:
@@ -142,7 +148,7 @@ def shortest_route(
                 heappush(pending, (candidate, next(order), later))
 
     if goal is None:
-        raise RouteNotFound("No route using available allowed roads and legal turns")
+        raise RouteNotFound("No route using allowed edges and mapped turn restrictions")
     ids: list[str] = []
     state = goal
     while state != begin:

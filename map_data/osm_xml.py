@@ -9,10 +9,12 @@ Never treat this importer as road-legal navigation without independent checks.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from hashlib import sha256
 from math import asin, cos, isfinite, radians, sin, sqrt
 import re
+from types import MappingProxyType
+from typing import Mapping
 import xml.etree.ElementTree as ET
 
 from engine import RoadEdge, RoadGraph
@@ -28,8 +30,9 @@ DRIVING_SPEEDS = {
 }
 UNCERTAIN_ROADS = {"service", "track"}
 ALLOWED_VALUES = {"yes", "designated", "permissive"}
-BLOCKED_VALUES = {"no", "private", "agricultural", "forestry", "delivery",
-                  "destination", "customers", "permit"}
+BLOCKED_VALUES = {"no"}
+CONTEXTUAL_VALUES = {"private", "agricultural", "forestry", "delivery",
+                     "destination", "customers", "permit"}
 BLOCKING_BARRIERS = {"bollard", "block", "cycle_barrier", "bus_trap"}
 UNCERTAIN_BARRIERS = {"gate", "lift_gate", "swing_gate", "cattle_grid"}
 CONDITIONAL = re.compile(r"(?:^|:)conditional$")
@@ -56,10 +59,41 @@ class Provenance:
 
 
 @dataclass(frozen=True)
+class JourneyAccessContext:
+    """Caller-asserted permission, scoped to exact source bytes and destination.
+
+    Permission is not inferred from an OSM tag. Never persist a journey view as
+    the general map or claim this assertion independently proves road law.
+    """
+    source_sha256: str
+    authorized_way_ids: frozenset[str] = frozenset()
+    authorized_node_ids: frozenset[str] = frozenset()
+    destination_way_ids: frozenset[str] = frozenset()
+    destination_node: str | None = None
+
+    def __post_init__(self):
+        if type(self.source_sha256) is not str or re.fullmatch(r"[0-9a-f]{64}", self.source_sha256) is None:
+            raise OSMImportError("Access context requires exact source SHA-256")
+        for ids in (self.authorized_way_ids, self.authorized_node_ids, self.destination_way_ids):
+            if type(ids) is not frozenset or len(ids)>1000 or any(
+                    type(x) is not str or re.fullmatch(r"[1-9][0-9]{0,18}",x) is None for x in ids):
+                raise OSMImportError("Bounded immutable source IDs required for permission")
+        if self.destination_way_ids and self.destination_node is None:
+            raise OSMImportError("Qualifying destination ways require an actual destination")
+        if self.destination_node is not None and (type(self.destination_node) is not str or
+                re.fullmatch(r"osm:[1-9][0-9]{0,18}",self.destination_node) is None):
+            raise OSMImportError("Context destination must identify an OSM node")
+
+
+@dataclass(frozen=True)
 class ImportedMap:
     graph: RoadGraph
     coordinates: dict[str, tuple[float, float]]
     metadata: dict[str, str | int]
+    access_requirements: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
+
+    def __post_init__(self):
+        object.__setattr__(self, "access_requirements", MappingProxyType(dict(self.access_requirements)))
 
 
 def _tags(element: ET.Element) -> dict[str, str]:
@@ -92,26 +126,40 @@ def _estimated_speed(highway: str, maxspeed: str | None) -> float:
     return min(default, speed) if isfinite(speed) and speed > 0 else default
 
 
-def _road_access(tags: dict[str, str], direction: str | None = None) -> str | None:
+def _selected_access(tags: dict[str, str], direction: str | None = None):
+    for mode in ("motorcar", "motor_vehicle", "vehicle", "access"):
+        for key in ((f"{mode}:{direction}", mode) if direction else (mode,)):
+            if key in tags:
+                return tags[key]
+    return None
+
+
+def _requirements(tags, scope, ident, direction=None):
+    value = _selected_access(tags, direction)
+    return (f"{scope}:{ident}:{value}",) if value in CONTEXTUAL_VALUES else ()
+
+
+def _road_access(tags: dict[str, str], direction: str | None = None, *,
+                 authorized: bool = False, qualifying_destination: bool = False) -> str | None:
     highway = tags.get("highway", "")
     if highway not in DRIVING_SPEEDS and highway not in UNCERTAIN_ROADS:
         return None
-    # Resolve mode specificity first, then direction within that mode. A bus,
-    # taxi or bicycle exception does not grant ordinary-motorcar access.
-    for mode in ("motorcar", "motor_vehicle", "vehicle", "access"):
-        keys = (f"{mode}:{direction}", mode) if direction else (mode,)
-        for key in keys:
-            value = tags.get(key)
-            if value is not None:
-                if value in ALLOWED_VALUES:
-                    return "allowed"
-                if value in BLOCKED_VALUES:
-                    return "prohibited"
-                return "unknown"
+    value = _selected_access(tags, direction)
+    if value in ALLOWED_VALUES:
+        return "allowed"
+    if value in BLOCKED_VALUES:
+        return "prohibited"
+    if value == "private" and authorized:
+        return "allowed"
+    if value == "destination" and qualifying_destination:
+        return "allowed"
+    if value is not None:
+        return "unknown"
     return "unknown" if highway in UNCERTAIN_ROADS else "allowed"
 
 
-def _barrier_access(tags: dict[str, str]) -> str:
+def _barrier_access(tags: dict[str, str], *, authorized: bool = False,
+                    qualifying_destination: bool = False) -> str:
     kind = tags.get("barrier")
     if not kind:
         return "allowed"
@@ -120,7 +168,9 @@ def _barrier_access(tags: dict[str, str]) -> str:
         if value is not None:
             if value in BLOCKED_VALUES:
                 return "prohibited"
-            if value in ALLOWED_VALUES and kind not in BLOCKING_BARRIERS:
+            permitted = (value in ALLOWED_VALUES or (value == "private" and authorized)
+                         or (value == "destination" and qualifying_destination))
+            if permitted and kind not in BLOCKING_BARRIERS:
                 return "allowed"
             return "unknown"
     if kind in BLOCKING_BARRIERS:
@@ -137,9 +187,14 @@ def _combine_access(a: str, b: str) -> str:
     return "allowed"
 
 
-def import_osm_xml(raw: bytes, *, provenance: Provenance) -> ImportedMap:
+def import_osm_xml(raw: bytes, *, provenance: Provenance,
+                   access_context: JourneyAccessContext | None = None) -> ImportedMap:
     if not isinstance(raw, bytes) or not raw or len(raw) > MAX_INPUT_BYTES:
         raise OSMImportError("Expected nonempty OSM XML bytes within 6 MB prototype limit")
+    source_hash = sha256(raw).hexdigest()
+    if access_context is not None and (not isinstance(access_context, JourneyAccessContext)
+            or access_context.source_sha256 != source_hash):
+        raise OSMImportError("Access context does not match this source snapshot")
     if b"<!DOCTYPE" in raw.upper() or b"<!ENTITY" in raw.upper():
         raise OSMImportError("DTD/entities are not permitted")
     try:
@@ -154,6 +209,7 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance) -> ImportedMap:
 
     coordinates: dict[str, tuple[float, float]] = {}
     barriers: dict[str, str] = {}
+    node_context: dict[str, tuple[str, ...]] = {}
     ways: dict[str, tuple[list[str], dict[str, str]]] = {}
     relations: list[ET.Element] = []
     for element in objects:
@@ -173,7 +229,11 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance) -> ImportedMap:
             tags = _tags(element)
             _check_conditions(tags, f"node {ident}")
             coordinates[node] = (lat, lon)
-            barriers[node] = _barrier_access(tags)
+            barriers[node] = _barrier_access(tags,
+                authorized=bool(access_context and ident in access_context.authorized_node_ids),
+                qualifying_destination=bool(access_context and access_context.destination_way_ids
+                    and access_context.destination_node == node))
+            node_context[node] = _requirements(tags,"node",ident) if tags.get("barrier") else ()
         elif element.tag == "way":
             if ident in ways:
                 raise OSMImportError("Duplicate OSM way")
@@ -186,6 +246,15 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance) -> ImportedMap:
         else:
             relations.append(element)
 
+    if access_context is not None:
+        if (not (access_context.authorized_way_ids | access_context.destination_way_ids) <= ways.keys() or
+                not {f"osm:{n}" for n in access_context.authorized_node_ids} <= coordinates.keys() or
+                (access_context.destination_node is not None and access_context.destination_node not in coordinates)):
+            raise OSMImportError("Access context references absent source objects")
+        if any(access_context.destination_node not in ways[wid][0]
+               for wid in access_context.destination_way_ids):
+            raise OSMImportError("Qualifying destination must be on each declared destination way")
+    access_requirements: dict[str, tuple[str, ...]] = {}
     edges: list[RoadEdge] = []
     # Segments with a barrier *at either endpoint* remain inaccessible/uncertain.
     # This is conservative and may block an adjacent leg too.
@@ -200,6 +269,9 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance) -> ImportedMap:
             raise OSMImportError(f"way {way_id}: unsupported oneway value {oneway}")
         direction = -1 if oneway in ("-1", "reverse") else 1
         speed = _estimated_speed(tags.get("highway", ""), tags.get("maxspeed"))
+        authorized = bool(access_context and way_id in access_context.authorized_way_ids)
+        destination = bool(access_context and way_id in access_context.destination_way_ids
+                           and access_context.destination_node in refs)
         for i, (src, dst) in enumerate(zip(refs, refs[1:])):
             if src not in coordinates or dst not in coordinates:
                 raise OSMImportError(f"way {way_id}: missing node coordinate")
@@ -207,12 +279,17 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance) -> ImportedMap:
             if length < 0.01:
                 raise OSMImportError(f"way {way_id}: degenerate road segment")
             physical = _combine_access(barriers[src], barriers[dst])
+            node_requirements = node_context[src] + node_context[dst]
             if direction == 1:
-                actual = _combine_access(_road_access(tags, "forward"), physical)
+                actual = _combine_access(_road_access(tags, "forward", authorized=authorized, qualifying_destination=destination), physical)
                 edges.append(RoadEdge(f"w:{way_id}:{i}:f", src, dst, length, speed, actual))
+                conditions = _requirements(tags,"way",way_id,"forward") + node_requirements
+                if conditions: access_requirements[f"w:{way_id}:{i}:f"] = conditions
             if direction == -1 or oneway in ("", "no", "0", "false"):
-                actual = _combine_access(_road_access(tags, "backward"), physical)
+                actual = _combine_access(_road_access(tags, "backward", authorized=authorized, qualifying_destination=destination), physical)
                 edges.append(RoadEdge(f"w:{way_id}:{i}:r", dst, src, length, speed, actual))
+                conditions = _requirements(tags,"way",way_id,"backward") + node_requirements
+                if conditions: access_requirements[f"w:{way_id}:{i}:r"] = conditions
     if not edges:
         raise OSMImportError("No motorcar graph edges extracted")
     # Directed manoeuvres at each via node, mapping way IDs to concrete edges.
@@ -259,12 +336,15 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance) -> ImportedMap:
                 for other in outgoing.get(node, []):
                     if other.edge_id not in permitted:
                         turns.add((arrival.edge_id, other.edge_id))
-    graph = RoadGraph(coordinates.keys(), edges, turns)
+    graph = RoadGraph(coordinates.keys(), edges, turns,
+        journey_destination=access_context.destination_node if access_context else None)
     return ImportedMap(
         graph=graph,
         coordinates=coordinates,
+        access_requirements=access_requirements,
         metadata={
-            "source_sha256": sha256(raw).hexdigest(),
+            "source_sha256": source_hash,
+            "journey_scoped_access": access_context is not None,
             "source": provenance.source,
             "snapshot": provenance.snapshot,
             "region": provenance.region,

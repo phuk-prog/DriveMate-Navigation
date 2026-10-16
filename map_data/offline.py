@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from hashlib import sha256
 import re
 from engine import Route, shortest_route
-from .osm_xml import MAX_INPUT_BYTES, OSMImportError, Provenance, import_osm_xml
+from .osm_xml import JourneyAccessContext, MAX_INPUT_BYTES, OSMImportError, Provenance, import_osm_xml
 
 
 class PackageValidationError(ValueError):
@@ -78,14 +78,23 @@ class OfflineMapStore:
         if not set(anchors)<=data.graph.vertices:
             raise PackageValidationError('Required node coverage missing')
         info=PackageInfo(digest,provenance['region'],provenance['snapshot'],tuple(anchors),len(data.graph.vertices),len(data.graph.edges))
-        self._active=(info,data)
+        self._active=(info,data,payload)
         return info
 
-    def route(self,source,destination):
+    def route(self,source,destination,*,access_context=None):
         active=self._active
         if active is None:raise NoActiveMap('No verified active map')
-        info,data=active
+        info,data,payload=active
         if type(source) is not str or type(destination) is not str or source not in data.graph.vertices or destination not in data.graph.vertices:
             raise CoverageUnavailable('Requested node is not covered by active map')
+        if access_context is not None:
+            if not isinstance(access_context,JourneyAccessContext):
+                raise OSMImportError("Expected JourneyAccessContext")
+            if access_context.destination_node is not None and access_context.destination_node != destination:
+                raise ValueError('Access context belongs to another destination')
+            # Journey view is rebuilt in memory; active package remains context-free.
+            data=import_osm_xml(payload,provenance=Provenance(
+                data.metadata['region'],data.metadata['snapshot'],data.metadata['source'],
+                data.metadata['attribution']),access_context=access_context)
         route=shortest_route(data.graph,source,destination)
         return OfflineRoute(info.sha256,route)

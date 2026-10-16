@@ -92,6 +92,8 @@ def _search(graph: RoadGraph, source: str, destination: str,
             complex_turns: frozenset[tuple[str, str]],
             settings: DriverNavigationSettings, mode: str) -> tuple[Route, int]:
     """Positive-weight shortest path over (vertex, incoming directed edge)."""
+    if graph.journey_destination is not None and destination != graph.journey_destination:
+        raise ValueError("Journey-scoped access cannot be reused for another destination")
     if source == destination:
         return Route((), 0.0, 0.0), 0
     initial = (source, incoming_edge_id)

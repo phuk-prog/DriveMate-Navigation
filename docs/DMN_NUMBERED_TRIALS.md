@@ -341,3 +341,14 @@ without patching engine behaviour. Same frozen Manchester input and cohort;
 record masks/local indexes/connectivity but do not infer full AutoCost legality.
 109/109 Category 1 and 603/603 full unit methods pass locally; actual native
 compile/enumeration requires GitHub. See `DMN_CATEGORY_01_NATIVE_REFERENCE.md`.
+
+### Category 1 context-aware access correction
+
+Owner approved permission/journey-purpose handling from aed44f6. Private and
+destination access without applicable caller evidence becomes unknown, not a
+blanket prohibition. Grants are exact-source/way scoped and destination bound;
+unknown access is not assumed open. Nineteen new controls: 129/129 map-data and
+623/623 full regression methods pass locally, plus 16/16 separately labelled
+frozen-source policy scenarios. Fresh same-source native Valhalla/common binary
+comparison required; hypothetical permission scenarios have no equivalent
+competitor profile or legality ranking. See `DMN_CATEGORY_01_CONTEXT_ACCESS.md`.

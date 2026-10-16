@@ -88,6 +88,8 @@ def astar_route(
     With no fully validated geometry, reverts automatically to a zero heuristic.
     The caller is responsible for separately verifying road-data completeness.
     """
+    if graph.journey_destination is not None and destination != graph.journey_destination:
+        raise ValueError("Journey-scoped access cannot be reused for another destination")
     if source not in graph.vertices or destination not in graph.vertices:
         raise ValueError("Unknown source or destination")
     if incoming_edge_id is not None:
@@ -154,7 +156,7 @@ def astar_route(
                 predecessor[next_state] = (state, edge.edge_id)
                 heappush(heap, (new_cost + heuristic(edge.target), next(sequence), new_cost, next_state))
     if goal is None:
-        raise RouteNotFound("No legal route under current graph")
+        raise RouteNotFound("No route using allowed edges under current graph")
     ids = []
     state = goal
     while state != start:
