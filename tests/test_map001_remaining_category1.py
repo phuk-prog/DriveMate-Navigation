@@ -43,6 +43,23 @@ class OutstandingAccessControls(unittest.TestCase):
         self.assertTrue(out["actual_route_search_observation"]["hypothetical_matched_can_route"])
         self.assertFalse(out["legal_permission_proven"])
 
+    def test_private_authorization_cannot_pass_a_gated_midway_node(self):
+        root=ET.fromstring('''<osm>
+          <node id="1" lat="53" lon="-2"/>
+          <node id="2" lat="53.0001" lon="-2.0001"><tag k="barrier" v="gate"/></node>
+          <node id="3" lat="53.0002" lon="-2.0002"/>
+          <way id="42"><nd ref="1"/><nd ref="2"/><nd ref="3"/>
+            <tag k="highway" v="service"/><tag k="access" v="private"/></way>
+        </osm>''')
+        way=root.find('way')
+        nodes={n.get('id'):n for n in root.findall('node')}
+        out=scenario(way,nodes,"fixture","OWNER_AUTHORIZATION")
+        self.assertTrue(out["route_safety_gate_pass"])
+        self.assertFalse(out["actual_route_search_observation"]["hypothetical_matched_can_route"])
+        self.assertEqual(out["remaining_unverified_physical_barrier_nodes"],{"2":"gate"})
+        self.assertEqual(out["matched_scenario_states"],{"unknown":4})
+        self.assertFalse(out["legal_permission_proven"])
+
     def test_destination_requires_matching_way_and_actual_destination(self):
         way,nodes=fixture('residential','<tag k="motor_vehicle" v="destination"/>')
         self.assertEqual(source_family(way,nodes),'QUALIFYING_JOURNEY_DESTINATION')

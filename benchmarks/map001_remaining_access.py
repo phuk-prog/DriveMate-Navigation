@@ -115,10 +115,27 @@ def scenario(way, nodes, area, family):
         expected="allowed" if family=="OWNER_AUTHORIZATION" else "unknown"
     contextual=import_osm_xml(raw,provenance=p,access_context=ctx)
     contextual_states=Counter(e.access for e in contextual.graph.edges.values())
+    # A hypothetical way-level authorization does not grant passage through
+    # real source node gates / lift gates. Inspect the exact OSM endpoints of
+    # every still-unknown edge before accepting a mixed allowed/unknown view.
+    uncertain_barriers={"gate","lift_gate","swing_gate","cattle_grid"}
+    barrier_nodes={nid:tags(nodes[nid]).get("barrier")
+                   for nid in [n.get("ref") for n in way.findall("nd")]
+                   if tags(nodes[nid]).get("barrier") in uncertain_barriers}
+    unresolved_edges=[e.edge_id for e in contextual.graph.edges.values()
+                      if e.access=="unknown"]
+    unknown_explained=all(
+        e.source.split(":")[1] in barrier_nodes or
+        e.target.split(":")[1] in barrier_nodes
+        for e in contextual.graph.edges.values() if e.access=="unknown")
     # The importer supports private/destination evidence only, not general
     # permit traffic orders; a test assertion is never proof of real permission.
-    context_correct=all(e.access==expected or e.access=="prohibited"
-                        for e in contextual.graph.edges.values())
+    context_correct=all(
+        e.access in ("allowed","prohibited") or
+        (e.access=="unknown" and (
+            expected=="unknown" or
+            (expected=="allowed" and unknown_explained)))
+        for e in contextual.graph.edges.values())
     if family in ("OWNER_AUTHORIZATION","QUALIFYING_JOURNEY_DESTINATION"):
         context_correct=context_correct and contextual_states["allowed"]>0
     else:
@@ -137,7 +154,8 @@ def scenario(way, nodes, area, family):
     wrong_route=routed(wrong.graph) if wrong is not None else False
     contextual_route=routed(contextual.graph)
     route_contract=not baseline_route and not wrong_route and (
-        contextual_route if expected=="allowed" else not contextual_route)
+        (contextual_route if not barrier_nodes else not contextual_route)
+        if expected=="allowed" else not contextual_route)
     return {"source_way":wid,"family":family,
             "isolated_input_sha256":sha,"source_highway":tags(way).get("highway"),
             "selected_mode_tags":{k:tags(way)[k] for k in MODE_KEYS if k in tags(way)},
@@ -148,6 +166,9 @@ def scenario(way, nodes, area, family):
             "unrelated_context_safely_withheld":wrong_safe,
             "matched_scenario":contextual_label,
             "matched_scenario_states":dict(contextual_states),
+            "remaining_unverified_physical_barrier_nodes":barrier_nodes,
+            "remaining_unknown_edges":unresolved_edges,
+            "unknown_edges_physically_explained":unknown_explained,
             "matched_scenario_matches_supported_engine_policy":context_correct,
             "original_source_and_unscoped_import_unchanged":default_unchanged,
             "actual_route_search_observation":{"default_can_route":baseline_route,
