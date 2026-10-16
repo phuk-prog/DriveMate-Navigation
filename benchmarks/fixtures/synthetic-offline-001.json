@@ -1,0 +1,343 @@
+{
+  "test_id": "OFFLINE-001",
+  "classification": "synthetic analytical offline in-memory map activation and routing; no real-world legal truth or Android native readiness",
+  "max_payload_bytes": 100000,
+  "map_files": {
+    "A": "synthetic-route-002.xml",
+    "B": "synthetic-junction-001.xml"
+  },
+  "required_nodes": [
+    "osm:1",
+    "osm:3"
+  ],
+  "cases": [
+    {
+      "id": "OFFLINE-001-no-active",
+      "events": [
+        {
+          "action": "route",
+          "source": "osm:1",
+          "target": "osm:3",
+          "expect_status": "NO_ACTIVE"
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-valid",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "A",
+          "expect_status": "ACTIVE",
+          "expect_active": "A"
+        },
+        {
+          "action": "route",
+          "source": "osm:1",
+          "target": "osm:3",
+          "expect_status": "ROUTE",
+          "expect_edges": [
+            "w:10:0:f",
+            "w:30:0:f",
+            "w:40:0:f",
+            "w:50:0:f"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-checksum",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "checksum",
+          "expect_status": "REJECTED",
+          "expect_active": "NONE"
+        },
+        {
+          "action": "route",
+          "source": "osm:1",
+          "target": "osm:3",
+          "expect_status": "NO_ACTIVE"
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-truncated",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "truncated",
+          "expect_status": "REJECTED",
+          "expect_active": "NONE"
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-length",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "length",
+          "expect_status": "REJECTED",
+          "expect_active": "NONE"
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-schema-version",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "schema-version",
+          "expect_status": "REJECTED",
+          "expect_active": "NONE"
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-format",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "format",
+          "expect_status": "REJECTED",
+          "expect_active": "NONE"
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-provenance",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "provenance",
+          "expect_status": "REJECTED",
+          "expect_active": "NONE"
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-malformed",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "malformed",
+          "expect_status": "REJECTED",
+          "expect_active": "NONE"
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-unsupported-condition",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "conditional",
+          "expect_status": "REJECTED",
+          "expect_active": "NONE"
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-bad-update-retains",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "A",
+          "expect_status": "ACTIVE",
+          "expect_active": "A"
+        },
+        {
+          "action": "route",
+          "source": "osm:1",
+          "target": "osm:3",
+          "expect_status": "ROUTE",
+          "expect_edges": [
+            "w:10:0:f",
+            "w:30:0:f",
+            "w:40:0:f",
+            "w:50:0:f"
+          ]
+        },
+        {
+          "action": "activate",
+          "variant": "checksum",
+          "expect_status": "REJECTED",
+          "expect_active": "A"
+        },
+        {
+          "action": "route",
+          "source": "osm:1",
+          "target": "osm:3",
+          "expect_status": "ROUTE",
+          "expect_edges": [
+            "w:10:0:f",
+            "w:30:0:f",
+            "w:40:0:f",
+            "w:50:0:f"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-valid-replacement",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "A",
+          "expect_status": "ACTIVE",
+          "expect_active": "A"
+        },
+        {
+          "action": "route",
+          "source": "osm:1",
+          "target": "osm:3",
+          "expect_status": "ROUTE",
+          "expect_edges": [
+            "w:10:0:f",
+            "w:30:0:f",
+            "w:40:0:f",
+            "w:50:0:f"
+          ]
+        },
+        {
+          "action": "activate",
+          "variant": "B",
+          "expect_status": "ACTIVE",
+          "expect_active": "B"
+        },
+        {
+          "action": "route",
+          "source": "osm:1",
+          "target": "osm:3",
+          "expect_status": "ROUTE",
+          "expect_edges": [
+            "w:101:0:f",
+            "w:102:0:f"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-disconnected",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "A",
+          "expect_status": "ACTIVE",
+          "expect_active": "A"
+        },
+        {
+          "action": "route",
+          "source": "osm:1",
+          "target": "osm:9",
+          "expect_status": "NO_ROUTE"
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-prohibited-destination",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "A",
+          "expect_status": "ACTIVE",
+          "expect_active": "A"
+        },
+        {
+          "action": "route",
+          "source": "osm:2",
+          "target": "osm:6",
+          "expect_status": "NO_ROUTE"
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-unknown-node",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "A",
+          "expect_status": "ACTIVE",
+          "expect_active": "A"
+        },
+        {
+          "action": "route",
+          "source": "osm:1",
+          "target": "osm:9999",
+          "expect_status": "NO_COVERAGE"
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-recovery",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "malformed",
+          "expect_status": "REJECTED",
+          "expect_active": "NONE"
+        },
+        {
+          "action": "activate",
+          "variant": "A",
+          "expect_status": "ACTIVE",
+          "expect_active": "A"
+        },
+        {
+          "action": "route",
+          "source": "osm:1",
+          "target": "osm:3",
+          "expect_status": "ROUTE",
+          "expect_edges": [
+            "w:10:0:f",
+            "w:30:0:f",
+            "w:40:0:f",
+            "w:50:0:f"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-missing-required-coverage",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "A",
+          "expect_status": "ACTIVE",
+          "expect_active": "A"
+        },
+        {
+          "action": "activate",
+          "variant": "missing-anchor",
+          "expect_status": "REJECTED",
+          "expect_active": "A"
+        },
+        {
+          "action": "route",
+          "source": "osm:1",
+          "target": "osm:3",
+          "expect_status": "ROUTE",
+          "expect_edges": [
+            "w:10:0:f",
+            "w:30:0:f",
+            "w:40:0:f",
+            "w:50:0:f"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "OFFLINE-001-oversize",
+      "events": [
+        {
+          "action": "activate",
+          "variant": "oversize",
+          "expect_status": "REJECTED",
+          "expect_active": "NONE"
+        }
+      ]
+    }
+  ]
+}

@@ -377,3 +377,39 @@ See ARRIVAL_001_RESULTS.md and references/arrival001-before/after/scorecard JSON
 Next bounded stage: offline integrity/coverage and failure recovery, then bounded
 resource measurement and integration. Keep UK17/0/23 unresolved and promotion
 blocked. Do not repeat unchanged heavyweight references or UK diagnostics.
+
+## OFFLINE-001 frozen activation/integrity acceptance
+
+Eighteen synthetic cases freeze a research in-memory package wrapper before
+implementation. Input is immutable XML bytes and a caller-trusted manifest, not
+a ZIP/file installer. Manifest schema1/format dmn-osm-xml-v1 must bind exact byte
+length, lowercase SHA256, required node anchors and complete source attribution.
+Reject unknown schema/format, mismatched size/hash, missing provenance/coverage,
+malformed or unsupported XML and payloads above100000bytes in this replay. Verify
+all integrity/coverage checks before replacing the active snapshot. A rejected
+update preserves the prior snapshot and routes; a valid replacement changes
+all snapshot state together. Recovery after rejection must work. Before first
+activation return NO_ACTIVE. Missing node coverage returns NO_COVERAGE, distinct
+from a known-node but disconnected/prohibited destination NO_ROUTE. Never snap
+unreachable endpoints elsewhere, fabricate routes or fetch a fallback online.
+
+MapA is ROUTE-002 and mapB JUNCTION-001, with independently declared route edge
+sequences already frozen in their earlier analytical trials. Cases cover no map,
+valid map, checksum, truncation, length, schema, format, provenance, malformed
+XML, conditional tags, failed update, successful replacement, disconnected and
+prohibited destination, unknown node, recovery, missing anchor and oversize.
+Run actual import and route calculations in a Linux network namespace with no
+default route in CI; local pure-Python results alone do not prove isolation.
+No existing package activation wrapper is present: baseline UNAVAILABLE, not0/18.
+SHA256 validates consistency against the trusted manifest, not authorship, map
+freshness or legal truth. No signature/authentication, disk crash recovery,
+concurrent update or Android/native offline readiness is established.
+
+The integrated five external static directions APIs do not expose this DMN
+package schema, transactional activation and exact node-ID coverage errors;
+mark those interfaces UNSUPPORTED for this package contract, not failed offline
+engines. Seven others lack permitted access or executable native/app harnesses:
+NOT_RUN. Retain12 families plus DMN and per-case reasons. Only a complete judged
+18-case cohort may receive10*passes/18; solo DMN conformance is not a competitor
+quality ranking. Separate native package/network-isolated routing comparisons
+remain unexecuted. Preserve UK17/0/23 ambiguity and promotion block.
