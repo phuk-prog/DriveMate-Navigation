@@ -3,6 +3,7 @@
 Compares ordinary-car access on source-identical directed segments. Turn masks
 are exposed as structural evidence, not a complete AutoCost legality evaluator.
 """
+import argparse
 from collections import Counter
 from pathlib import Path
 import json
@@ -110,20 +111,23 @@ def pair_observations(edges, ways, nodes, relations):
     return rows
 
 
-def main():
-    raw=(ROOT/'map001-manchester.osm').read_bytes()
+def main(area='manchester', native=None, output=None):
+    if area not in FROZEN_V2_IDS: raise ValueError('Unknown frozen UK region')
+    native=native or ROOT/'map001-valhalla-native.jsonl'
+    output=output or ROOT/'map001-native-comparison.json'
+    raw=(ROOT/('map001-'+area+'.osm')).read_bytes()
     manifest=json.loads((ROOT/'map001-v3-manifest.json').read_text())
-    expected=next(x['source_sha256'] for x in manifest['areas'] if x['area']=='manchester')
+    expected=next(x['source_sha256'] for x in manifest['areas'] if x['area']==area)
     if digest(raw)!=expected:raise ValueError('Frozen source hash mismatch')
     root=ET.fromstring(raw);ways={x.get('id'):x for x in root.findall('way')};nodes={x.get('id'):x for x in root.findall('node')}
-    edges,footer,output_hash=read_native(ROOT/'map001-valhalla-native.jsonl')
-    cases=[compare_way(ways[wid],nodes,edges) for wid in FROZEN_V2_IDS['manchester']]
+    edges,footer,output_hash=read_native(native)
+    cases=[compare_way(ways[wid],nodes,edges) for wid in FROZEN_V2_IDS[area]]
     common=[x for x in cases if x['equivalent_scored_cohort']]
     rank=sorted([{'engine':engine,'passed':sum(x[key]=='PASS' for x in common),
                   'failed':sum(x[key]=='FAIL' for x in common),'total':len(common)}
                  for engine,key in [('DMN ★','dmn_verdict'),('Valhalla 3.9.1','valhalla_verdict')]],
                  key=lambda x:(-x['passed'],x['failed'])) if common else []
-    report={'trial':'MAP-001-NATIVE-DIRECTED-ACCESS-1','source_sha256':expected,
+    report={'trial':'MAP-001-NATIVE-DIRECTED-ACCESS-1','area':area,'source_sha256':expected,
             'native_output_sha256':output_hash,'native_enumeration':footer,
             'engine_versions':{'Valhalla':'3.9.1','DMN_importer_sha256':digest(Path('map_data/osm_xml.py').read_bytes())},
             'truth':'PROVISIONAL_OSM_SOURCE_NOT_ROAD_LAW','runtime_changed':False,
@@ -132,8 +136,14 @@ def main():
             'common_binary_way_cohort':len(common),'common_segment_checks':sum(x['expected_checks'] for x in common),
             'partial_access_only_ranking':rank,'full_category_ranking':None,'cases':cases,
             'turn_mask_observations':pair_observations(edges,ways,nodes,root.findall('relation'))}
-    (ROOT/'map001-native-comparison.json').write_text(json.dumps(report,indent=2)+'\n')
+    output.write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps({k:report[k] for k in ('trial','native_enumeration','dmn_counts','valhalla_counts',
         'common_binary_way_cohort','common_segment_checks','partial_access_only_ranking')},indent=2))
 
-if __name__=='__main__': main()
+if __name__=='__main__':
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--area',choices=tuple(FROZEN_V2_IDS),default='manchester')
+    parser.add_argument('--native',type=Path)
+    parser.add_argument('--output',type=Path)
+    args=parser.parse_args()
+    main(args.area,args.native,args.output)

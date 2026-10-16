@@ -15,6 +15,8 @@ on:
       - 'benchmarks/map001_additional_profiles.py'
       - 'tests/test_map001_additional_profiles.py'
       - 'benchmarks/map001_category1_closure.py'
+      - 'benchmarks/map001_native_six_region.py'
+      - 'benchmarks/map001_native_reference.py'
       - 'tests/test_map001_category1_closure.py'
       - 'tests/test_osm_import.py'
       - 'benchmarks/map001_direction_contract.py'
@@ -33,7 +35,7 @@ jobs:
   facts:
     if: contains(github.event.pull_request.title, '[map001-facts]')
     runs-on: ubuntu-latest
-    timeout-minutes: 47
+    timeout-minutes: 58
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -114,6 +116,9 @@ jobs:
           assert all(hashlib.sha256(Path(p).read_bytes()).hexdigest()==h for p,h in manifest.items()), 'Reference graph changed during inspection'
           PYCODE
           python -m benchmarks.map001_native_reference
+          # Preserve read-only instrumentation and its runtime dependencies;
+          # Valhalla engine files and pinned base binary remain unchanged.
+          docker commit map001-facts dmn-map001-inspector:valhalla-3.9.1 >/dev/null
       - name: Gate approved directional fix on frozen cohort
         run: |
           python - <<'PYCODE'
@@ -179,9 +184,20 @@ jobs:
         timeout-minutes: 13
         run: |
           set -euo pipefail
-          BASE='https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/11.1/graphhopper-web-11.1.jar'
-          curl -fsSL --retry 2 --max-time 180 "$BASE" -o "$RUNNER_TEMP/map001-graphhopper.jar"
-          curl -fsSL --retry 2 --max-time 30 "$BASE.sha1" -o "$RUNNER_TEMP/map001-graphhopper.sha1"
+          MAVEN_PATH='com/graphhopper/graphhopper-web/11.1/graphhopper-web-11.1.jar'
+          SOURCE=''
+          # Identical Maven Central 11.1 artifact, two official endpoints;
+          # preserve checksum validation rather than replacing a missing JAR.
+          for HOST in https://repo1.maven.org/maven2 https://repo.maven.apache.org/maven2; do
+            if curl -fsSL --retry 1 --max-time 180 "$HOST/$MAVEN_PATH" -o "$RUNNER_TEMP/map001-graphhopper.jar" &&
+               curl -fsSL --retry 1 --max-time 30 "$HOST/$MAVEN_PATH.sha1" -o "$RUNNER_TEMP/map001-graphhopper.sha1"; then
+              SOURCE="$HOST"
+              break
+            fi
+            rm -f "$RUNNER_TEMP/map001-graphhopper.jar" "$RUNNER_TEMP/map001-graphhopper.sha1"
+          done
+          test -n "$SOURCE" || { echo "Pinned GraphHopper 11.1 unavailable from Maven Central"; exit 1; }
+          echo "Pinned GraphHopper 11.1 Maven source: $SOURCE"
           printf '%s  %s\n' "$(cat "$RUNNER_TEMP/map001-graphhopper.sha1")" "$RUNNER_TEMP/map001-graphhopper.jar" | sha1sum --check --status
           GH_PID=''
           trap 'if [ -n "$GH_PID" ]; then kill "$GH_PID" 2>/dev/null || true; fi' EXIT
@@ -205,6 +221,33 @@ jobs:
         run: |
           set -euo pipefail
           python -m benchmarks.map001_additional_profiles score
+      - name: Inspect remaining five frozen UK native graphs sequentially
+        timeout-minutes: 25
+        run: |
+          set -euo pipefail
+          IMAGE='dmn-map001-inspector:valhalla-3.9.1'
+          docker image inspect "$IMAGE" >/dev/null
+          for AREA in birmingham carlisle cardiff glasgow belfast; do
+            # Do not repurpose old Manchester native outcomes as a fresh test.
+            PBF="results/map001-native-region-$AREA.osm.pbf"
+            osmium cat "results/map001-$AREA.osm" -o "$PBF"
+            sha256sum "$PBF" >> results/map001-native-derived-pbf-sha256.txt
+            sudo rm -rf results/valhalla
+            mkdir -p results/valhalla
+            cp "$PBF" results/valhalla/
+            docker run -d --rm --name map001-region -p 127.0.0.1:8002:8002 -v "$PWD/results/valhalla:/custom_files" -e build_admins=False -e build_time_zones=False -e build_elevation=False -e build_tar=False -e server_threads=2 "$IMAGE"
+            python - <<'PYCODE'
+          from benchmarks.valhalla_live_reference import wait_for_local_router
+          wait_for_local_router(150)
+          PYCODE
+            test "$(docker exec map001-region pkg-config --modversion libvalhalla)" = "3.9.1"
+            docker exec map001-region /tmp/reference_probe /custom_files/valhalla.json > "results/map001-valhalla-native-$AREA.jsonl"
+            python -m benchmarks.map001_native_reference --area "$AREA" --native "results/map001-valhalla-native-$AREA.jsonl" --output "results/map001-native-$AREA-comparison.json"
+            docker rm -f map001-region >/dev/null
+            sudo rm -rf results/valhalla
+            rm -f "$PBF"
+          done
+          python -m benchmarks.map001_native_six_region
       - name: Publish small case-level evidence, not duplicate map files
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -220,7 +263,11 @@ jobs:
             results/map001-profiles/derived-pbf-sha256.txt
             results/map001-unit-checks/
             results/map001-native-comparison.json
+            results/map001-native-*-comparison.json
+            results/map001-native-six-region-summary.json
+            results/map001-native-derived-pbf-sha256.txt
             results/map001-valhalla-native.jsonl
+            results/map001-valhalla-native-*.jsonl
             results/map001-native-tile-hashes.json
             results/map001-access-applicability.json
             results/map001-valhalla-fresh-candidates.json
@@ -233,6 +280,7 @@ jobs:
           docker logs map001-facts 2>/dev/null | tail -60 || true
           docker logs map001-profile 2>/dev/null | tail -60 || true
           docker logs map001-osrm 2>/dev/null | tail -60 || true
+          docker logs map001-region 2>/dev/null | tail -60 || true
           find results -path '*/startup.log' -exec tail -40 {} \; 2>/dev/null || true
       - name: Cleanup
         if: always()
@@ -240,5 +288,7 @@ jobs:
           docker rm -f map001-facts >/dev/null 2>&1 || true
           docker rm -f map001-profile >/dev/null 2>&1 || true
           docker rm -f map001-osrm >/dev/null 2>&1 || true
+          docker rm -f map001-region >/dev/null 2>&1 || true
           sudo rm -rf results/profile-engine-* results/map001-osrm-* results/map001-gh-*
           sudo rm -rf results/valhalla results/map001-facts.osm.pbf
+          sudo rm -rf results/map001-native-region-*.osm.pbf

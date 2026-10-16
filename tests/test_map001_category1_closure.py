@@ -1,5 +1,6 @@
 """Independent source-oracle mutation controls (synthetic, not UK legal facts)."""
 import unittest
+from benchmarks.map001_native_six_region import rank_rows
 import xml.etree.ElementTree as ET
 from benchmarks.map001_category1_closure import (
     expected_way, compare_rows, relation_facts, mode_access, barrier_access,
@@ -88,6 +89,21 @@ class FrozenCategoryClosureTests(unittest.TestCase):
           </relation>''')
         r = relation_facts(rel, {"42": way}, nodes)
         self.assertEqual(r["verdict"], "WITHHELD_UNQUALIFIED_MOTORCAR_ACCESS")
+
+    def test_native_rank_only_shared_binary_complete_cases(self):
+        rows = [
+            {"source_way": "1", "equivalent_scored_cohort": True,
+             "dmn_verdict": "PASS", "valhalla_verdict": "PASS"},
+            {"source_way": "2", "equivalent_scored_cohort": False,
+             "dmn_verdict": "PASS", "valhalla_verdict": "UNSUPPORTED"},
+            {"source_way": "3", "equivalent_scored_cohort": True,
+             "dmn_verdict": "PASS", "valhalla_verdict": "FAIL"}]
+        common, ranks = rank_rows(rows)
+        self.assertEqual(len(common), 2)
+        self.assertEqual(ranks[0]["engine"], "DMN ★")
+        self.assertEqual(ranks[0]["pass"], 2)
+        self.assertEqual(ranks[1]["fail"], 1)
+        self.assertTrue(all(r["total"] == 2 for r in ranks))
 
 
 if __name__ == "__main__":

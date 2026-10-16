@@ -89,3 +89,30 @@ remain explicit, never scored as failed engines.
 
 No promotion to full Category 1 road-law certification until those gaps have
 verifiable, dated case-level proof.
+
+## Additional native reference expansion — six regions
+
+The approved second pass upgrades the read-only Valhalla 3.9.1 graph
+inspector to accept a named frozen UK region, while leaving the existing
+Manchester output and native probe semantics unchanged. The exact same
+20 old source way IDs in each of the other five frozen regions are probed
+against freshly built, unchanged native Valhalla tiles sequentially.
+
+The workflow compiles the same independent read-only inspector once against
+the pinned reference, carries its runtime tooling forward using an ephemeral
+runner-local container image (never published), and checks that each region's
+installed Valhalla version is 3.9.1. Each result contains the native output
+hash and frozen region source hash. The separate six-region summary refuses
+missing, wrong-version or mismatched source reports and only ranks genuinely
+equivalent directed car-access cases. No scoring for unsupported context
+or full turn legality.
+
+Independent legal source verification still requires date/vehicle/extent
+alignment; native source-map agreement cannot replace authority records.
+The initial Category 1 expansion run 38969822742 passed the six-region
+120-way **DMN-source auditor** but failed later due to a GraphHopper 11.1
+JAR download returning Maven HTTP 404. Earlier successful runs remain
+preserved. The corrected workflow tries both official Maven Central mirrors
+and still requires the original JAR's published checksum. A fresh entire
+affected Category 1 retest is required before reporting native expansion
+results or treating the workflow as green.
