@@ -519,3 +519,13 @@ real-map source-backed GPS/one-way case bank; do not revert to invented roads
 for the requested comparisons or silently count historical/mismatched cohorts.
 Readiness reports now accompany normal CI; NOT_READY_FOR_LIVE_NAVIGATION and
 all UK/app/native/source/cohort blockers remain explicit. No release or promotion.
+
+### REAL-ONEWAY-001: real-map inventory failure retained (2026-10-16)
+
+Pinned existing Manchester bbox has zero eligible one-way ways under the frozen
+raw-tag selector. Diagnostic38866815919 executed zero routes and correctly failed
+coverage; no score or comparative rank. See REAL_ONEWAY_001_RESULTS.md and
+references/real-oneway-*.json for original setup failure, unchanged fingerprints,
+empty inventory and source-access403 evidence. Select/freeze a suitable new real
+area with authority evidence next; do not relabel this trial as passed. Ten-engine
+cohort, independent law labels and UK seven-case promotion block remain open.

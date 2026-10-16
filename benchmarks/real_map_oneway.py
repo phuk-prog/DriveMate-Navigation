@@ -97,7 +97,8 @@ def main():
             rows.append(dict(case_id=c['id']+('-allowed' if positive else '-reverse'), source=s, destination=t,
                              route_edge_ids=ids, no_route=no_route, calculation_ns=elapsed, **verdict))
     report=dict(test_id='REAL-ONEWAY-001', system='DMN', run_sha=os.environ.get('GITHUB_HEAD_SHA'),
-                execution='actual_local_python_import_and_shortest_route', version='repository run_sha',
+                execution='actual_local_python_import_and_shortest_route' if rows else 'actual_local_python_import_only_no_routing',
+                actual_route_calculations=len(rows), version='repository run_sha',
                 manifest=frozen, oracle_sha256=sha256(manifest.read_bytes()).hexdigest(), cases=rows,
                 passed=sum(r['outcome']=='PASS' for r in rows), total=len(rows),
                 required_observations=12, cohort_complete=frozen['selection_complete'],

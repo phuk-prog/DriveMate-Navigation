@@ -1,0 +1,76 @@
+{
+  "test_id": "REAL-ONEWAY-001",
+  "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38866815919",
+  "job_id": 116861441883,
+  "run_sha": "76671c33dff33c83bd2caeb9f1d691eb5ae07648",
+  "classification": "actual pinned-map inventory/import, zero route calculations",
+  "report_metadata_correction": "Raw report execution field describes adapter capability. With zero selected cases shortest_route was never called; this is not an actual routing execution or scored cohort.",
+  "map_manifest": {
+    "test_id": "REAL-ONEWAY-001",
+    "classification": "real public map; synthetic exact-node endpoints, no personal traces",
+    "source_url": "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf",
+    "map_sha256": "b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5",
+    "attribution": "OpenStreetMap contributors; ODbL",
+    "selection": "first six eligible ways numerically; first nondegenerate segment; raw XML before importer/router",
+    "expectation": "allowed edge present; forbidden edge absent; both route directions never use any forbidden selected edge; allowed direction returns route",
+    "reverse_no_route_scope": "direction safety only; does not prove absence of a legal alternative",
+    "independent_road_law": "UNRESOLVED: authority source not acquired",
+    "required_distinct_ways": 6,
+    "selected_distinct_ways": 0,
+    "selection_complete": false,
+    "cases": []
+  },
+  "raw_report": {
+    "test_id": "REAL-ONEWAY-001",
+    "system": "DMN",
+    "run_sha": "76671c33dff33c83bd2caeb9f1d691eb5ae07648",
+    "execution": "actual_local_python_import_and_shortest_route",
+    "version": "repository run_sha",
+    "manifest": {
+      "test_id": "REAL-ONEWAY-001",
+      "classification": "real public map; synthetic exact-node endpoints, no personal traces",
+      "source_url": "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf",
+      "map_sha256": "b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5",
+      "attribution": "OpenStreetMap contributors; ODbL",
+      "selection": "first six eligible ways numerically; first nondegenerate segment; raw XML before importer/router",
+      "expectation": "allowed edge present; forbidden edge absent; both route directions never use any forbidden selected edge; allowed direction returns route",
+      "reverse_no_route_scope": "direction safety only; does not prove absence of a legal alternative",
+      "independent_road_law": "UNRESOLVED: authority source not acquired",
+      "required_distinct_ways": 6,
+      "selected_distinct_ways": 0,
+      "selection_complete": false,
+      "cases": []
+    },
+    "oracle_sha256": "92fd95d3efa369cd991bc92f22a2280f41fcf0376c6cf32af46013523483c578",
+    "cases": [],
+    "passed": 0,
+    "total": 0,
+    "required_observations": 12,
+    "cohort_complete": false,
+    "trial_outcome": "INCOMPLETE_CASE_INVENTORY",
+    "external_engines_executed": 0,
+    "comparative_rank": null,
+    "score_out_of_ten": null,
+    "independent_road_law": "UNRESOLVED",
+    "gps_quality_cases": 0,
+    "limitations": [
+      "map-tag contract only",
+      "no independent legality or optimality proof",
+      "no comparative performance ranking",
+      "only selected directions checked",
+      "not Android execution"
+    ]
+  },
+  "authority_access_checks": {
+    "date": "2026-10-16",
+    "mechanism": "permitted direct HTTPS read; environment proxy rejected tunnel",
+    "urls": [
+      "https://www.data.gov.uk/",
+      "https://www.manchester.gov.uk/",
+      "https://www.trafford.gov.uk/",
+      "https://www.cheshireeast.gov.uk/"
+    ],
+    "status": "HTTP403",
+    "road_law_facts_verified": 0
+  }
+}

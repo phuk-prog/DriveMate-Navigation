@@ -67,3 +67,26 @@ case coverage, not demonstrated DMN wrong-way routing. The next bounded diagnost
 prints the unchanged selection and executes available requests, explicitly
 INCOMPLETE_CASE_INVENTORY and failing CI when fewer than twelve observations
 exist. The six-way requirement is unchanged; no map/case is substituted.
+
+Final inventory diagnostic38866815919 at76671c33dff33c83bd2caeb9f1d691eb5ae07648
+successfully verified/prepared/imported the pinned map, then reported **zero**
+eligible one-way ways, zero route calculations and INCOMPLETE_CASE_INVENTORY.
+CI failed as required; no score/rank/pass cohort exists. Exact manifest SHA256
+92fd95d3efa369cd991bc92f22a2280f41fcf0376c6cf32af46013523483c578.
+Full manifest/raw report and execution-metadata correction are retained in
+references/real-oneway-inventory-20261016.json. The raw report's capability-style
+execution label was too broad for zero routes; subsequent code explicitly emits
+import-only and the actual calculation count. This metadata correction does not
+turn the diagnostic into a routing execution. No DMN routing improvement was
+established or needed from this inventory failure.
+
+Direct reads of Manchester, Trafford and Cheshire East official council websites
+also returned proxy tunnel HTTP403 on2026-10-16. No source documents or restrictions
+were acquired. Official public traffic-order PDFs supplied by the user could
+resolve source access; URL-only access may remain blocked in this environment.
+
+Next bounded stage must select a new suitable real-map area before any router
+executes, retain this empty-area evidence and freeze independently source-backed
+one-way cases. This original six-way trial remains incomplete, not waived.
+All450 regression tests and normal CI38866815862 pass at the diagnostic source.
+Those host checks do not establish one-way road law, GPS quality or app readiness.
