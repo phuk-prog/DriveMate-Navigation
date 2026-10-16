@@ -1,0 +1,65 @@
+name: GPS-003 bounded candidate geometry diagnostic
+on:
+  pull_request:
+    paths:
+      - 'benchmarks/gps003_candidate_diagnostic.py'
+      - '.github/workflows/gps003-candidate-diagnostic.yml'
+permissions:
+  contents: read
+concurrency:
+  group: gps003-candidates-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  geometry:
+    if: contains(github.event.pull_request.title, '[gps003-diagnostic]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Restore historical map and verify pinned hash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl -fLsS --retry 2 --connect-timeout 20 --max-time 180 \
+            'https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf' \
+            -o "${RUNNER_TEMP}/gps003-source.osm.pbf"
+          python - <<'PYCODE'
+          from hashlib import sha256
+          import json,os
+          from pathlib import Path
+          from benchmarks.itinero_public_probe import EXPECTED_ARCHIVE_HASH
+          archive=Path(os.environ['RUNNER_TEMP'])/'gps003-source.osm.pbf'
+          found=sha256(archive.read_bytes()).hexdigest()
+          if found!=EXPECTED_ARCHIVE_HASH: raise SystemExit("Archive checksum mismatch")
+          Path('results/gps003-source-hashes.json').write_text(json.dumps({'archive_sha256':found})+'\n')
+          PYCODE
+          osmium extract --strategy complete_ways \
+            --bbox=-2.270000,53.350000,-2.260000,53.360000 \
+            "${RUNNER_TEMP}/gps003-source.osm.pbf" -o results/gps003-map.osm.pbf
+          osmium cat results/gps003-map.osm.pbf \
+            -o results/gps003-map.osm -f osm,add_metadata=false
+      - name: Inspect only two first fixes and seven older UK candidate pairs
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python -m benchmarks.gps003_candidate_diagnostic \
+            --map results/gps003-map.osm \
+            --archive-hash results/gps003-source-hashes.json \
+            --output results/gps003-candidate-diagnostic.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: gps003-candidate-diagnostic
+          path: results/gps003-candidate-diagnostic.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Delete temporary map data
+        if: always()
+        run: rm -f "${RUNNER_TEMP}/gps003-source.osm.pbf" results/gps003-map.osm results/gps003-map.osm.pbf
