@@ -550,3 +550,29 @@ no DMN logic change was justified by this output probe. UK17/0/23, seven unresol
 matches, missing independent one-way case bank and Android/integration/resource
 readiness gaps remain blocking. Next bounded stage is another applicable reference
 or independent source-backed real-map case acquisition; preserve existing failures.
+
+### GPS-003 baseline and owner-confirmed review workflow (2026-10-16)
+
+Real pinned map, three raw-selected segments of one way, eight streams each:
+24streams/72updates. First attempt38869088303 stopped before matcher calls due to
+tuple/list manifest comparison; corrected exact serialized-byte comparison with
+regressions, without changing signals or acceptance. Actual baseline38869427281
+atc6202e406450d6f9fbb8e01c7679193d92522358 fails16streams for required first-fix
+availability (two positions repeated eight times);8streams pass. Counts39correct,
+0confidentwrong,33withheld including12rejects; all24final clear observations pass.
+Only DMN ran; no external rank/score is possible for this stream contract.
+See GPS_003_RESULTS.md and references/gps003-*.json. Confidence policy unchanged.
+
+Owner explicitly chose STOP AFTER BASELINE FOR REVIEW, then separately authorize
+improvement/retest, and use currently available applicable engines rather than
+waiting for ten. AGENTS.md records this standing rule. Before the next comparison,
+freeze one shared real-map position/direction contract that actual external
+matching engines support; do not substitute unmatched controller/routing APIs.
+No automatic DMN tuning or next trial from this baseline is authorized yet.
+
+DMN_RESULTS_OVERVIEW.md now consolidates retained per-case comparative rankings,
+failures and actual measured milliseconds, clearly separating missing/unmatched
+latency and historical synthetic controls. APP_VALIDATION_PROGRAMME.md extends
+case/metric coverage to the whole app. Private app metadata/test-file discovery
+was read-only; private source/inventory stays outside this public repository.
+No app test execution, production code change, APK or adoption is claimed.

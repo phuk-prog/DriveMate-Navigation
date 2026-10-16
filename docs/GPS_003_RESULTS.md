@@ -65,3 +65,60 @@ succeeded. Corrected comparison uses exact canonical serialized manifest bytes;
 signals, selection and expectations are unchanged. Added tuple roundtrip and
 manifest-tampering controls. Retained gps003-setup-failure-20261016.json; no
 navigation failure or pass is assigned to that setup attempt.
+
+## Executed baseline: failing availability, no forced confidence
+
+Run38869427281 atc6202e406450d6f9fbb8e01c7679193d92522358 executed24streams and72
+matcher updates on three raw-selected segments. All three belong to the same OSM
+way32113418 (segments4,6,9), lengths24.297m,23.494m,34.127m. They are not three
+independent roads. Manifest and actual inputs/outcomes are retained in
+references/gps003-real-map-20261016.json with exact source/oracle/run hashes.
+
+**8/24 streams pass;16 fail** because their first required clear output is withheld
+as AMBIGUOUS with two candidates. This repeats the same first position eight times
+on each of base segmentsB1/B2, not16independent initial-position failures. B3 passes
+all eight streams. Aggregate72updates:39source-map-correct,0confidently wrong,
+33withheld (including12rejected). All24final clear/recovery observations pass.
+
+| Category | Passing streams /3 | Additional checked behaviour |
+|---|---:|---|
+|Clear|1/3|B1/B2 first fix ambiguous; subsequent fixes match|
+|Noisy2m|1/3|No wrong claim; one noisy match and two safe withholds|
+|Weak60m|1/3|All three weak observations withhold|
+|Stale|1/3|All three stale packets reject and preserve history|
+|Future|1/3|All three future packets reject and preserve history|
+|Duplicate|1/3|All three duplicates reject and preserve history|
+|Impossible speed100m/s|1/3|All three impossible-speed packets reject and preserve history|
+|Gap31s|1/3|All six post-gap clear observations match|
+
+Each1/3 stream result includes the initial availability check; passing the middle
+fault condition does not erase that initial failure. No failed case was discarded.
+No recovery, bad-fix handling or confident wrong-road fault was reproduced here.
+The first-position ambiguity is an unresolved availability deficit. A generated
+exact point and road identity do not prove a3m-accuracy measurement uniquely
+identifies that segment; candidate geometry/independent evidence must be checked
+before a safe improvement can be justified. No confidence threshold was loosened.
+This is a recorded failing trial, not an app-readiness pass or competitor victory.
+
+Only DMN's stream contract ran. Comparison rank and score remain null; external
+batch/routing interfaces do not implement this same clock/history contract.
+The owner is clarifying the permanent baseline/table/fix/retest cycle before a
+new comparison is selected. Preserve this completed baseline and all earlier
+UK17/0/23 evidence. No DMN policy change or navigation retest is claimed.
+
+## Baseline review gate and observed timing
+
+The owner selected stop after baseline for review and comparison using available
+applicable engines now. This completed DMN-only stream trial has0external engines
+and cannot fill that comparison request; it must not be relabelled a competitive
+baseline. The next owner-authorized competitive baseline should use a genuinely
+shared real-map position/direction contract across available matching engines,
+with explicit exclusions for unsupported stream lifecycle operations. No new
+comparison or DMN improvement is executed in this saved baseline.
+
+Seventy-two measured matcher updates on this CI runner: median0.0744115ms,
+nearest-rank p95(72samples)0.153038ms, maximum0.214390ms. These single-pass values
+are diagnostic in-process timings, not device estimates or a cross-engine ranking.
+Full per-update measurements are retained. Proposed next investigation, subject
+to review: inspect competing candidate geometry at the two repeated initial
+positions before judging whether output can safely be restored. No fix is verified.
