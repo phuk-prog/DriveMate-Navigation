@@ -239,3 +239,47 @@ only the genuine ambiguous policy dimensions are excluded.
 
 Independently verified node-traversal and signed legal-road entitlement are
 still a separate Category 1 prerequisite before road legality certification.
+
+
+## Owner-approved remaining Category 1 comparison batch (16 October 2026)
+
+**All 34 previously uncertain-access ways** now receive three executed DMN
+import/route profiles: default no asserted right, a deliberately unrelated way
+permission, and an exact-source hypothetical permission/destination. Frozen
+source classifications: 14 unspecified service ways, 9 private, 8 destination,
+2 permit-restricted, and 1 unknown physical node gate. The latter three
+categories cannot be unlocked by generic user assertions; permission evidence
+is not independently confirmed. Results preserve road-legality NOT_JUDGED.
+
+**Seven conditional source ways** (Glasgow 2 and Belfast 5) are each checked
+against the current fail-closed importer and evaluated at four explicit UTC
+instants including both winter and UK daylight saving. Four Glasgow timed
+turn relations are tracked separately. Parsing a source time window is not
+proof of an active legal order or a motorcar permit.
+
+**Native turn and node-barrier inspection** examines all 26 restriction
+relations connected to the original 120 selected ways across six freshly
+built pinned Valhalla 3.9.1 native graphs. A simple no-turn relation's
+restriction-mask bit can be judged against the frozen source only if the
+source movement is confidently representable, its via-node geometry and
+native graph node match, there is a single native edge pair, and neither
+edge signals access, complex restriction or destination context.
+Only-turn completeness and physical-node traversal rules remain unsupported
+when the native interface cannot prove them. Do not call a native edge
+car_access flag a proof of traversability through a block or gate.
+Any confidently comparable source-mask disagreement fails the test; full
+AutoCost turn legality and UK signed legal truth remain unverified.
+
+Official category-level guidance, not exact signed source-way legal truth:
+Birmingham bus gates:
+https://www.birmingham.gov.uk/directory_record/136446/moor_street_queensway_outside_moor_street_station
+Cardiff traffic access permits:
+https://www.cardiff.gov.uk/trafficaccesspermits
+Northern Ireland pedestrian-zone permits:
+https://www.nidirect.gov.uk/articles/pedestrian-zone-permits
+Glasgow People First Zone official project update:
+https://onlineservices.glasgow.gov.uk/CouncillorsandCommittees/viewSelectedDocument.asp?c=P62AFQDNUTDNDN0G2U
+
+New evidence artifacts: results/map001-remaining-access.json and
+results/map001-native-turn-barrier.json. Preserve historical runs;
+no Android app changes, APK, production merge or Category 2.
