@@ -93,6 +93,16 @@ def conservative_executable_subset(raw):
             forbidden.add(way_id)
             flags["unsupported_oneway"]+=1
     flags["conditional_nodes"]=len(bad_nodes)
+    # A motorcar graph has no use for buildings/POI/non-driving ways.
+    # Do not weaken the importer: remove these whole non-road objects.
+    drive_types=frozenset(("motorway","trunk","primary","secondary","tertiary",
+        "unclassified","residential","living_street","motorway_link",
+        "trunk_link","primary_link","secondary_link","tertiary_link",
+        "service","track"))
+    for way_id,way in ways.items():
+        if tags(way).get("highway") not in drive_types:
+            forbidden.add(way_id)
+            flags["non_driving_ways_not_scored"]+=1
     # Unsupported/missing restrictions cause all involved road ways to become
     # unknown in this bounded experiment. Propagate to dependent manoeuvres.
     active=[]
@@ -140,9 +150,18 @@ def conservative_executable_subset(raw):
         if id(relation) in unsupported_relations or related & forbidden or any(
             k.endswith("conditional") for k in tags(relation)):
             root.remove(relation)
-    # Nonrestriction relations are not interpreted by the motorcar importer.
-    for node_id in bad_nodes:
-        if node_id in nodes:root.remove(nodes[node_id])
+    # Retain only nodes that form surviving road geometry. Nothing about a
+    # remaining road's tags, node coordinates or turn permission is rewritten.
+    kept_refs={ref.get("ref") for way in root.findall("way")
+               for ref in way.findall("nd")}
+    for node in root.findall("node"):
+        if node.get("id") not in kept_refs:
+            root.remove(node)
+            flags["unreferenced_nonroad_nodes_not_scored"]+=1
+    for relation in root.findall("relation"):
+        if relation not in restrictions:
+            root.remove(relation)
+            flags["nonrestriction_relations_not_scored"]+=1
     flags["unsupported_relations_excluded"]=len(unsupported_relations)
     flags["omitted_complete_ways"]=len(forbidden & ways.keys())
     result=ET.tostring(root,encoding="utf-8",xml_declaration=True)
