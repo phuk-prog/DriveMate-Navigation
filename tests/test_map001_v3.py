@@ -3,7 +3,7 @@ import unittest
 import xml.etree.ElementTree as ET
 from benchmarks.map001_v3 import (FROZEN_V2_IDS, turn_differences,
                                    relation_missing_ways, merge_way_full, close_area)
-from tests.test_map001_v2 import setup
+from test_map001_v2 import setup
 
 class Map001v3(unittest.TestCase):
     def test_original_case_selection_immutable(self):
