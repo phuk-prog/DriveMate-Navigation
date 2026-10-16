@@ -80,3 +80,7 @@ unrelated documentation commits do not trigger historical map downloads.
 **No navigation behaviour is disabled or replaced.** No Android app, APK or
 production project is involved. A shadow improvement in map-generated data does
 not justify enabling it for navigation or relaxing an existing safety gate.
+
+## Latest completed permanent shadow GPS retest
+
+[Verified shadow GPS comparison and independent engine category scorecard](DMN_GPS_SHADOW_RESULTS_20261016.md): both methods remain available, default authoritative; frozen GPS-003 8/24 versus shadow 24/24, UK40 17/40 versus 22/40, no confidently wrong-road outputs observed in sampled map-generated inputs, 18 remaining UK40 withheld. All 21 engine category unit suites passed 511/511. See [CI GPS](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38914756822) and [CI engine tests](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38914756154). Real driving verification remains outstanding.

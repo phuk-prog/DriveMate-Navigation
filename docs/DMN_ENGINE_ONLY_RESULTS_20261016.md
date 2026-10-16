@@ -67,3 +67,7 @@ The previously executed [ROUTE-004](ROUTE_004_RESULTS.md) (not rerun in this bat
 **Review gate:** Unit success is not road-navigation certification. Proposed improvement remains **disabled in default DMN**, no navigation behaviour was promoted, and no DriveMate app work happened. Further safety trials and any change enabling the GPS research candidate require owner review; a subsequent approved active behavioural change requires fresh retests of DMN **and every available applicable competitor** over the full affected frozen shared cases.
 
 **Project state:** Implemented source/tests and finished two successful GitHub workflows; no merge or release performed.
+
+## Subsequent GPS dual-matcher CI execution — 16 October 2026
+
+[Both-method shadow rerun and its full per-case evidence](DMN_GPS_SHADOW_RESULTS_20261016.md) supersedes no earlier evidence. The unchanged default retained 8/24 GPS streams and 17/40 UK40 source matches, while the isolated research matcher returned 24/24 and 22/40. Unit checks increased from 506 to **511/511** (all 21 engine categories passed). No newly confident wrong-road selections were observed. This remains simulated/map-derived research; original matcher remains authoritative. No production/Android work.
