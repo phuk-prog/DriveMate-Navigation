@@ -1,0 +1,137 @@
+name: ROUTE-003 shared real-map baseline
+on:
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: route003-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  baseline:
+    if: contains(github.event.pull_request.title, '[route003-baseline]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        engine: [OSRM, Valhalla, GraphHopper, openrouteservice, BRouter]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Freeze pinned map and endpoint manifest before engine execution
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl -fLsS --retry 2 --connect-timeout 20 --max-time 180 https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf -o results/route003-source.osm.pbf
+          python - <<'PYCODE'
+          from hashlib import sha256
+          import json
+          from pathlib import Path
+          from benchmarks.itinero_public_probe import EXPECTED_ARCHIVE_HASH
+          source=Path('results/route003-source.osm.pbf')
+          assert sha256(source.read_bytes()).hexdigest()==EXPECTED_ARCHIVE_HASH
+          retained=json.loads(Path('references/ref006-itinero-confirmation-20261016.json').read_text())
+          manifest=retained['report']['request_manifest']
+          Path('results/route003-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+          PYCODE
+          osmium extract --strategy complete_ways --bbox=-2.270000,53.350000,-2.260000,53.360000 results/route003-source.osm.pbf -o results/route003-map.osm.pbf
+          osmium cat results/route003-map.osm.pbf -o results/route003-map.osm -f osm,add_metadata=false
+          python -m benchmarks.real_map_route_baseline --engine DMN --manifest results/route003-manifest.json --map results/route003-map.osm --output results/route003-DMN.json
+      - name: OSRM 5.27.1
+        if: matrix.engine == 'OSRM'
+        run: |
+          set -euo pipefail
+          IMAGE='ghcr.io/project-osrm/osrm-backend:v5.27.1@sha256:855614a38f464b0558a2ad6eaa7cb8c139f39887da9b38b485ce453c6e6e6124'
+          docker pull "$IMAGE"
+          docker run --rm -v "$PWD/results:/data" "$IMAGE" osrm-extract -p /opt/car.lua /data/route003-map.osm.pbf
+          docker run --rm -v "$PWD/results:/data" "$IMAGE" osrm-partition /data/route003-map.osrm
+          docker run --rm -v "$PWD/results:/data" "$IMAGE" osrm-customize /data/route003-map.osrm
+          docker run -d --rm --name route003-reference -p 127.0.0.1:5000:5000 -v "$PWD/results:/data" "$IMAGE" osrm-routed --algorithm mld /data/route003-map.osrm
+      - name: Valhalla 3.9.1
+        if: matrix.engine == 'Valhalla'
+        run: |
+          set -euo pipefail
+          IMAGE='ghcr.io/valhalla/valhalla-scripted:3.9.1@sha256:6238809f9dc3057743d70a20efd3911ec38e458bfa13a0601909b58f68dfd956'
+          mkdir -p results/valhalla
+          cp results/route003-map.osm.pbf results/valhalla/
+          docker pull "$IMAGE"
+          docker run -d --rm --name route003-reference -p 127.0.0.1:8002:8002 -v "$PWD/results/valhalla:/custom_files" -e build_admins=False -e build_time_zones=False -e build_elevation=False -e use_default_speeds_config=False -e build_tar=False -e server_threads=2 "$IMAGE"
+      - uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165
+        if: matrix.engine == 'GraphHopper' || matrix.engine == 'openrouteservice' || matrix.engine == 'BRouter'
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.engine == 'BRouter' && '17' || '25' }}
+      - name: GraphHopper 11.1
+        if: matrix.engine == 'GraphHopper'
+        run: |
+          set -euo pipefail
+          BASE='https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/11.1/graphhopper-web-11.1.jar'
+          curl -fsSL --retry 2 --max-time 180 "$BASE" -o "${RUNNER_TEMP}/graphhopper.jar"
+          curl -fsSL --retry 2 --max-time 30 "$BASE.sha1" -o "${RUNNER_TEMP}/graphhopper.sha1"
+          printf '%s  %s\n' "$(cat "${RUNNER_TEMP}/graphhopper.sha1")" "${RUNNER_TEMP}/graphhopper.jar" | sha1sum --check --status
+          sed -e 's@results/public-graphhopper-subset.osm.pbf@results/route003-map.osm.pbf@' config/graphhopper-public-smoke.yml > results/graphhopper.yml
+          java -Xms128m -Xmx1024m -jar "${RUNNER_TEMP}/graphhopper.jar" server results/graphhopper.yml > "${RUNNER_TEMP}/route003-graphhopper.log" 2>&1 &
+          echo "$!" > "${RUNNER_TEMP}/route003-pid"
+      - name: openrouteservice 10.1.0
+        if: matrix.engine == 'openrouteservice'
+        run: |
+          set -euo pipefail
+          curl -fsSL --retry 2 --max-time 180 https://github.com/GIScience/openrouteservice/releases/download/v10.1.0/ors.jar -o "${RUNNER_TEMP}/ors.jar"
+          printf '%s  %s\n' '46b83b353eaf8830a1b53cad91d027e00547cd9a00e86efddd64a45335bfb8e1' "${RUNNER_TEMP}/ors.jar" | sha256sum --check
+          sed 's@results/gps001.osm.pbf@results/route003-map.osm.pbf@' config/ors-gps001.yml > results/ors-route003.yml
+          ORS_CONFIG_LOCATION="$PWD/results/ors-route003.yml" java -Xms128m -Xmx1536m -jar "${RUNNER_TEMP}/ors.jar" > "${RUNNER_TEMP}/route003-ors.log" 2>&1 &
+          echo "$!" > "${RUNNER_TEMP}/route003-pid"
+      - name: BRouter 1.7.10
+        if: matrix.engine == 'BRouter'
+        run: |
+          set -euo pipefail
+          curl -fsSL --retry 2 --max-time 180 https://github.com/abrensch/brouter/releases/download/v1.7.10/brouter-1.7.10.zip -o "${RUNNER_TEMP}/brouter.zip"
+          printf '%s  %s\n' '023fec3ba997758e8cd7ab9e1bae52e962af3f00b57683e3de86b84ffad01532' "${RUNNER_TEMP}/brouter.zip" | sha256sum --check
+          unzip -q "${RUNNER_TEMP}/brouter.zip" -d results/brouter-release
+          python - <<'PYCODE'
+          from pathlib import Path
+          import shutil
+          root=Path('results/brouter-release'); jars=list(root.rglob('brouter-*-all.jar')); profiles=list(root.rglob('profiles2'))
+          assert len(jars)==len(profiles)==1
+          shutil.copyfile(jars[0],'results/brouter.jar'); shutil.copytree(profiles[0],'results/brouter-profiles')
+          PYCODE
+          mkdir -p results/brouter-build/{nodetiles,waytiles,nodes55,waytiles55,unodes55,segments,elevation,customprofiles}
+          cd results/brouter-build
+          java -Xmx512m -DavoidMapPolling=true -cp ../brouter.jar btools.mapcreator.OsmFastCutter ../brouter-profiles/lookups.dat nodetiles waytiles nodes55 waytiles55 bordernids.dat relations.dat restrictions.dat ../brouter-profiles/all.brf ../brouter-profiles/trekking.brf ../brouter-profiles/softaccess.brf ../route003-map.osm.pbf
+          java -Xmx512m -cp ../brouter.jar btools.mapcreator.PosUnifier nodes55 unodes55 bordernids.dat bordernodes.dat elevation
+          java -Xmx512m -cp ../brouter.jar btools.mapcreator.WayLinker unodes55 waytiles55 bordernodes.dat restrictions.dat ../brouter-profiles/lookups.dat ../brouter-profiles/all.brf segments rd5
+          cd ../..
+          java -Xmx512m -DmaxRunningTime=30 -cp results/brouter.jar btools.server.RouteServer results/brouter-build/segments results/brouter-profiles results/brouter-build/customprofiles 17777 1 127.0.0.1 > "${RUNNER_TEMP}/route003-brouter.log" 2>&1 &
+          echo "$!" > "${RUNNER_TEMP}/route003-pid"
+      - name: Execute actual reference on identical frozen inputs
+        env:
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python -m benchmarks.real_map_route_baseline --engine "${{ matrix.engine }}" --manifest results/route003-manifest.json --output "results/route003-${{ matrix.engine }}.json"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: route003-${{ matrix.engine }}
+          path: |
+            results/route003-DMN.json
+            results/route003-${{ matrix.engine }}.json
+            results/route003-manifest.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Diagnostics
+        if: failure()
+        run: |
+          for log in "${RUNNER_TEMP}"/route003-*.log; do test -f "$log" && tail -80 "$log" || true; done
+          docker logs route003-reference 2>/dev/null | tail -80 || true
+      - name: Cleanup
+        if: always()
+        run: |
+          docker rm -f route003-reference >/dev/null 2>&1 || true
+          if [ -f "${RUNNER_TEMP}/route003-pid" ]; then kill "$(cat "${RUNNER_TEMP}/route003-pid")" 2>/dev/null || true; fi
+          sudo rm -rf results/route003-source.osm.pbf results/route003-map.osm.pbf results/route003-map.osm results/valhalla results/graphhopper-cache results/ors-graphs results/brouter-build results/brouter-release results/brouter-profiles
