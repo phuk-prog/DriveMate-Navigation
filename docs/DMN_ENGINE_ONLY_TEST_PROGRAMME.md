@@ -54,3 +54,8 @@ but is explicitly excluded from active category execution; the separate
 `tools.app_readiness` and adoption-artifact stage have been replaced by an
 engine comparison evidence-integrity check. No Android app, Bluetooth or
 production readiness test runs as part of this engine-only programme.
+
+
+## Final tested research-batch results
+
+[View verified **strict engine-only** result and GPS before/after](DMN_ENGINE_ONLY_RESULTS_20261016.md): 21 separately executed engine categories, 506/506 unit checks passing, no legacy app tests, pinned Manchester GPS-003 default 8/24 versus research option 24/24, UK40 default 17/40 versus research option 22/40, 0 confidently wrong-road selections in these simulated test cases. The opt-in GPS candidate is **off by default**, 18 UK40 withheld remain and independent real-road validation is outstanding.

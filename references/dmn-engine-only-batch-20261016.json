@@ -1,0 +1,194 @@
+{
+  "schema": "dmn-engine-only-batch-v1",
+  "date": "2026-10-16",
+  "repo": "phuk-prog/DriveMate-Navigation",
+  "branch": "codex/dmn-gps001-ranked-trial-20261015",
+  "strict_engine_only": true,
+  "app_tests_excluded": true,
+  "unit": {
+    "run_id": 38904037336,
+    "conclusion": "success",
+    "passed": 506,
+    "total": 506,
+    "artifact_id": 12046204399,
+    "categories": [
+      {
+        "id": "map_data",
+        "status": "UNIT_PASS",
+        "pass": 39,
+        "total": 39,
+        "label": "Map data and road graph"
+      },
+      {
+        "id": "legal_routing",
+        "status": "UNIT_PASS",
+        "pass": 25,
+        "total": 25,
+        "label": "Road legality and restrictions"
+      },
+      {
+        "id": "gps_matching",
+        "status": "UNIT_PASS",
+        "pass": 48,
+        "total": 48,
+        "label": "GPS positioning and road matching"
+      },
+      {
+        "id": "gps_loss_recovery",
+        "status": "UNIT_PASS",
+        "pass": 68,
+        "total": 68,
+        "label": "GPS signal loss and recovery"
+      },
+      {
+        "id": "route_computation",
+        "status": "UNIT_PASS",
+        "pass": 33,
+        "total": 33,
+        "label": "Route computation and validity"
+      },
+      {
+        "id": "route_quality",
+        "status": "UNIT_PASS",
+        "pass": 87,
+        "total": 87,
+        "label": "Route quality and preferences"
+      },
+      {
+        "id": "route_calculation_speed",
+        "status": "UNIT_PASS",
+        "pass": 9,
+        "total": 9,
+        "label": "Route calculation speed"
+      },
+      {
+        "id": "junctions",
+        "status": "UNIT_PASS",
+        "pass": 6,
+        "total": 6,
+        "label": "Junction turns and maneuvers"
+      },
+      {
+        "id": "roundabouts",
+        "status": "UNIT_PASS",
+        "pass": 10,
+        "total": 10,
+        "label": "Roundabout exits and paths"
+      },
+      {
+        "id": "lanes",
+        "status": "UNIT_PASS",
+        "pass": 4,
+        "total": 4,
+        "label": "Lane counts and next-turn guidance"
+      },
+      {
+        "id": "route_line_adherence",
+        "status": "UNIT_PASS",
+        "pass": 4,
+        "total": 4,
+        "label": "Route line and turn-point road adherence"
+      },
+      {
+        "id": "rerouting",
+        "status": "UNIT_PASS",
+        "pass": 15,
+        "total": 15,
+        "label": "Wrong turns and rerouting"
+      },
+      {
+        "id": "instruction_timing",
+        "status": "UNIT_PASS",
+        "pass": 4,
+        "total": 4,
+        "label": "Navigation instructions and timing"
+      },
+      {
+        "id": "live_traffic",
+        "status": "UNIT_PASS",
+        "pass": 5,
+        "total": 5,
+        "label": "Traffic, closures and dynamic replanning"
+      },
+      {
+        "id": "speed_limits",
+        "status": "UNIT_PASS",
+        "pass": 3,
+        "total": 3,
+        "label": "Road section speed limits and alerts"
+      },
+      {
+        "id": "arrival",
+        "status": "UNIT_PASS",
+        "pass": 12,
+        "total": 12,
+        "label": "Correct arrival and approach side"
+      },
+      {
+        "id": "offline_reliability",
+        "status": "UNIT_PASS",
+        "pass": 8,
+        "total": 8,
+        "label": "Offline routing, maps and updates"
+      },
+      {
+        "id": "failure_handling",
+        "status": "UNIT_PASS",
+        "pass": 63,
+        "total": 63,
+        "label": "Failure handling, integrity and safety gates"
+      },
+      {
+        "id": "performance_resources",
+        "status": "UNIT_PASS",
+        "pass": 3,
+        "total": 3,
+        "label": "Memory, CPU, energy and map size"
+      },
+      {
+        "id": "integrated_end_to_end",
+        "status": "UNIT_PASS",
+        "pass": 3,
+        "total": 3,
+        "label": "Complete navigation-engine journey"
+      },
+      {
+        "id": "reference_adapters",
+        "status": "UNIT_PASS",
+        "pass": 57,
+        "total": 57,
+        "label": "Competitor adapters and comparison integrity"
+      }
+    ]
+  },
+  "gps": {
+    "run_id": 38903461428,
+    "conclusion": "success",
+    "artifact_id": 12046628920,
+    "classification": "map-source generated simulated GPS, provisional",
+    "trial": "GPS003-RESEARCH-VARIANT-001",
+    "default_gps": 8,
+    "variant_gps": 24,
+    "default_uk40": 17,
+    "variant_uk40": 22,
+    "new_confident_wrong": 0,
+    "default_unchanged": true,
+    "output": "results/gps003-research-variant.json",
+    "external_engines_executed": 0,
+    "experimental_enabled_in_default": false
+  },
+  "historical_route004": {
+    "six_systems": 6,
+    "source_rule_cases_per_engine": 12,
+    "passed_per_engine": 12,
+    "independent_road_law": false
+  },
+  "timing_cross_engine_ranking": "UNAVAILABLE: execution interfaces/workers incomparable",
+  "issues": [
+    "18 of 40 UK40 withheld after candidate",
+    "independent UK GNSS/legality truth missing",
+    "external GPS stream comparison absent",
+    "same-interface same-worker route-speed ranking absent"
+  ],
+  "android_app_or_apk": false
+}
