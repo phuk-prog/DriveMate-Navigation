@@ -361,3 +361,19 @@ app/native lifecycle harnesses: NOT_RUN. Retain all12 plus DMN. Only fully judge
 20-case cohorts may receive10*passed/20; a solo DMN score is conformance, never a
 competitor ranking. No heavyweight static router runs can substitute for this
 state contract. Preserve UK17/0/23 ambiguity and promotion block.
+
+ARRIVAL-001 completed: fixture freeze fb3f152ef75f8131c2e869f906f2a8300dd6fc6d,
+implementation 3057a28c3dc50a9ecaa10f6ad0452832e1a29ea0, CI38857319048/job116831599535.
+DMN20/20 frozen cases, nine additional controller safety groups and417 full tests
+pass. The new isolated ArrivalController requires progress+proximity and two
+fresh eligible observations, scopes state to a context token, clears unsafe
+provisional evidence and emits arrival once. There was no prior controller;
+baseline unavailable is never0/20. Replay makes21 actual DMN core route calls
+but supplies synthetic GPS/progress/reliability; no Android/GNSS integration.
+The five integrated static reference APIs are UNSUPPORTED for this live arrival
+contract; seven other families remain NOT_RUN with exact per-case reasons. All13
+remain visible. A DMN-only10/10 means conformance, not competitor superiority.
+See ARRIVAL_001_RESULTS.md and references/arrival001-before/after/scorecard JSON.
+Next bounded stage: offline integrity/coverage and failure recovery, then bounded
+resource measurement and integration. Keep UK17/0/23 unresolved and promotion
+blocked. Do not repeat unchanged heavyweight references or UK diagnostics.

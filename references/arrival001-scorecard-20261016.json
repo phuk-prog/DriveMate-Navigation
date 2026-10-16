@@ -1,0 +1,2294 @@
+{
+  "test_id": "ARRIVAL-001",
+  "formula": "10 * passed / 20; incomplete/unavailable cohorts unranked",
+  "scope": "DMN-only arrival conformance; no comparative quality ranking",
+  "rows": [
+    {
+      "system": "DMN",
+      "rank": 1,
+      "score_out_of_ten": 10,
+      "passed": 20,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "ARRIVAL-001-corroborated",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "ARRIVED",
+              "actual_status": "ARRIVED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": true,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-near-destination-early-progress",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "WITHHELD",
+              "actual_status": "WITHHELD",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "WITHHELD",
+              "actual_status": "WITHHELD",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-parallel-road",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "WITHHELD",
+              "actual_status": "WITHHELD",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "WITHHELD",
+              "actual_status": "WITHHELD",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-outside-radius",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "WITHHELD",
+              "actual_status": "WITHHELD",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "WITHHELD",
+              "actual_status": "WITHHELD",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-weak-accuracy-recovery",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "WITHHELD",
+              "actual_status": "WITHHELD",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 2,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 3,
+              "action": "observe",
+              "expected_status": "ARRIVED",
+              "actual_status": "ARRIVED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": true,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-unreliable-recovery",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "WITHHELD",
+              "actual_status": "WITHHELD",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 2,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 3,
+              "action": "observe",
+              "expected_status": "ARRIVED",
+              "actual_status": "ARRIVED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": true,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-stale-interrupts",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "REJECTED",
+              "actual_status": "REJECTED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 2,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 3,
+              "action": "observe",
+              "expected_status": "ARRIVED",
+              "actual_status": "ARRIVED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": true,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-future-interrupts",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "REJECTED",
+              "actual_status": "REJECTED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 2,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 3,
+              "action": "observe",
+              "expected_status": "ARRIVED",
+              "actual_status": "ARRIVED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": true,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-duplicate-interrupts",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "REJECTED",
+              "actual_status": "REJECTED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 2,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 3,
+              "action": "observe",
+              "expected_status": "ARRIVED",
+              "actual_status": "ARRIVED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": true,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-out-of-order-interrupts",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "REJECTED",
+              "actual_status": "REJECTED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 2,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 3,
+              "action": "observe",
+              "expected_status": "ARRIVED",
+              "actual_status": "ARRIVED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": true,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-overshoot",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "WITHHELD",
+              "actual_status": "WITHHELD",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "WITHHELD",
+              "actual_status": "WITHHELD",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-unknown-progress",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "WITHHELD",
+              "actual_status": "WITHHELD",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "WITHHELD",
+              "actual_status": "WITHHELD",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-signal-gap",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 2,
+              "action": "observe",
+              "expected_status": "ARRIVED",
+              "actual_status": "ARRIVED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": true,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-stop",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "stop",
+              "checks": {
+                "arrival_state": true,
+                "at_most_one_arrival_in_context": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 2
+            },
+            {
+              "event": 2,
+              "action": "observe",
+              "expected_status": "INACTIVE",
+              "actual_status": "INACTIVE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 2
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-context-change",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "begin",
+              "checks": {
+                "arrival_state": true,
+                "at_most_one_arrival_in_context": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 2
+            },
+            {
+              "event": 2,
+              "action": "observe",
+              "expected_status": "WITHHELD",
+              "actual_status": "WITHHELD",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 2
+            },
+            {
+              "event": 3,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 2
+            },
+            {
+              "event": 4,
+              "action": "observe",
+              "expected_status": "ARRIVED",
+              "actual_status": "ARRIVED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": true,
+              "context_revision": 2
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-latched-once",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "ARRIVED",
+              "actual_status": "ARRIVED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": true,
+              "context_revision": 1
+            },
+            {
+              "event": 2,
+              "action": "observe",
+              "expected_status": "ALREADY_ARRIVED",
+              "actual_status": "ALREADY_ARRIVED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": true,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-accuracy-boundary",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "ARRIVED",
+              "actual_status": "ARRIVED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": true,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-remaining-boundary",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "ARRIVED",
+              "actual_status": "ARRIVED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": true,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-minimum-time-separation",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 2,
+              "action": "observe",
+              "expected_status": "ARRIVED",
+              "actual_status": "ARRIVED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": true,
+              "context_revision": 1
+            }
+          ]
+        },
+        {
+          "case_id": "ARRIVAL-001-delayed-history-expiration",
+          "outcome": "PASS",
+          "events": [
+            {
+              "event": 0,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 1,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 2,
+              "action": "observe",
+              "expected_status": "CANDIDATE",
+              "actual_status": "CANDIDATE",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": false,
+              "context_revision": 1
+            },
+            {
+              "event": 3,
+              "action": "observe",
+              "expected_status": "ARRIVED",
+              "actual_status": "ARRIVED",
+              "checks": {
+                "expected_status": true,
+                "at_most_one_arrival_in_context": true,
+                "arrival_latch_matches_status": true
+              },
+              "passed": true,
+              "actual_arrived": true,
+              "context_revision": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "system": "Valhalla",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "ARRIVAL-001-corroborated",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-near-destination-early-progress",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-parallel-road",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-outside-radius",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-weak-accuracy-recovery",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-unreliable-recovery",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-stale-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-future-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-duplicate-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-out-of-order-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-overshoot",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-unknown-progress",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-signal-gap",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-stop",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-context-change",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-latched-once",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-accuracy-boundary",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-remaining-boundary",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-minimum-time-separation",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-delayed-history-expiration",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        }
+      ]
+    },
+    {
+      "system": "OSRM",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "ARRIVAL-001-corroborated",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-near-destination-early-progress",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-parallel-road",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-outside-radius",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-weak-accuracy-recovery",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-unreliable-recovery",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-stale-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-future-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-duplicate-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-out-of-order-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-overshoot",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-unknown-progress",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-signal-gap",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-stop",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-context-change",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-latched-once",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-accuracy-boundary",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-remaining-boundary",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-minimum-time-separation",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-delayed-history-expiration",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        }
+      ]
+    },
+    {
+      "system": "GraphHopper",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "ARRIVAL-001-corroborated",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-near-destination-early-progress",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-parallel-road",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-outside-radius",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-weak-accuracy-recovery",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-unreliable-recovery",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-stale-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-future-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-duplicate-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-out-of-order-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-overshoot",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-unknown-progress",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-signal-gap",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-stop",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-context-change",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-latched-once",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-accuracy-boundary",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-remaining-boundary",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-minimum-time-separation",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-delayed-history-expiration",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        }
+      ]
+    },
+    {
+      "system": "OsmAnd",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "ARRIVAL-001-corroborated",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-near-destination-early-progress",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-parallel-road",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-outside-radius",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-weak-accuracy-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-unreliable-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-stale-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-future-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-duplicate-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-out-of-order-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-overshoot",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-unknown-progress",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-signal-gap",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-stop",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-context-change",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-latched-once",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-accuracy-boundary",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-remaining-boundary",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-minimum-time-separation",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-delayed-history-expiration",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        }
+      ]
+    },
+    {
+      "system": "Organic Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "ARRIVAL-001-corroborated",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-near-destination-early-progress",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-parallel-road",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-outside-radius",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-weak-accuracy-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-unreliable-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-stale-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-future-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-duplicate-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-out-of-order-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-overshoot",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-unknown-progress",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-signal-gap",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-stop",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-context-change",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-latched-once",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-accuracy-boundary",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-remaining-boundary",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-minimum-time-separation",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        },
+        {
+          "case_id": "ARRIVAL-001-delayed-history-expiration",
+          "outcome": "NOT_RUN",
+          "reason": "No executable app/native live arrival replay harness implemented"
+        }
+      ]
+    },
+    {
+      "system": "BRouter",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "ARRIVAL-001-corroborated",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-near-destination-early-progress",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-parallel-road",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-outside-radius",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-weak-accuracy-recovery",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-unreliable-recovery",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-stale-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-future-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-duplicate-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-out-of-order-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-overshoot",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-unknown-progress",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-signal-gap",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-stop",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-context-change",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-latched-once",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-accuracy-boundary",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-remaining-boundary",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-minimum-time-separation",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-delayed-history-expiration",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        }
+      ]
+    },
+    {
+      "system": "HERE",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "ARRIVAL-001-corroborated",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-near-destination-early-progress",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-parallel-road",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-outside-radius",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-weak-accuracy-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-unreliable-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-stale-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-future-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-duplicate-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-out-of-order-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-overshoot",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-unknown-progress",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-signal-gap",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-stop",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-context-change",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-latched-once",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-accuracy-boundary",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-remaining-boundary",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-minimum-time-separation",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-delayed-history-expiration",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        }
+      ]
+    },
+    {
+      "system": "Mapbox",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "ARRIVAL-001-corroborated",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-near-destination-early-progress",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-parallel-road",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-outside-radius",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-weak-accuracy-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-unreliable-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-stale-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-future-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-duplicate-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-out-of-order-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-overshoot",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-unknown-progress",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-signal-gap",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-stop",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-context-change",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-latched-once",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-accuracy-boundary",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-remaining-boundary",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-minimum-time-separation",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-delayed-history-expiration",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        }
+      ]
+    },
+    {
+      "system": "TomTom",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "ARRIVAL-001-corroborated",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-near-destination-early-progress",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-parallel-road",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-outside-radius",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-weak-accuracy-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-unreliable-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-stale-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-future-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-duplicate-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-out-of-order-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-overshoot",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-unknown-progress",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-signal-gap",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-stop",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-context-change",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-latched-once",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-accuracy-boundary",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-remaining-boundary",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-minimum-time-separation",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-delayed-history-expiration",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        }
+      ]
+    },
+    {
+      "system": "openrouteservice",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "ARRIVAL-001-corroborated",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-near-destination-early-progress",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-parallel-road",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-outside-radius",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-weak-accuracy-recovery",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-unreliable-recovery",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-stale-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-future-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-duplicate-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-out-of-order-interrupts",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-overshoot",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-unknown-progress",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-signal-gap",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-stop",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-context-change",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-latched-once",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-accuracy-boundary",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-remaining-boundary",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-minimum-time-separation",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        },
+        {
+          "case_id": "ARRIVAL-001-delayed-history-expiration",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current static route/directions endpoint cannot express fresh fixes, live route progress, session tokens or corroborated arrival state"
+        }
+      ]
+    },
+    {
+      "system": "Google Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "ARRIVAL-001-corroborated",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-near-destination-early-progress",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-parallel-road",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-outside-radius",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-weak-accuracy-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-unreliable-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-stale-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-future-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-duplicate-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-out-of-order-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-overshoot",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-unknown-progress",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-signal-gap",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-stop",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-context-change",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-latched-once",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-accuracy-boundary",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-remaining-boundary",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-minimum-time-separation",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        },
+        {
+          "case_id": "ARRIVAL-001-delayed-history-expiration",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and equivalent live arrival harness; no paid calls authorized"
+        }
+      ]
+    },
+    {
+      "system": "Waze",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "ARRIVAL-001-corroborated",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-near-destination-early-progress",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-parallel-road",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-outside-radius",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-weak-accuracy-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-unreliable-recovery",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-stale-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-future-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-duplicate-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-out-of-order-interrupts",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-overshoot",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-unknown-progress",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-signal-gap",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-stop",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-context-change",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-latched-once",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-accuracy-boundary",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-remaining-boundary",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-minimum-time-separation",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        },
+        {
+          "case_id": "ARRIVAL-001-delayed-history-expiration",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated live arrival replay interface"
+        }
+      ]
+    }
+  ],
+  "run_sha": "3057a28c3dc50a9ecaa10f6ad0452832e1a29ea0",
+  "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38857319048"
+}
