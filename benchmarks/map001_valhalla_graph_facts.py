@@ -107,6 +107,10 @@ def main():
     if any(x not in ways for x in wanted):raise ValueError("Original source way absent")
     locations=[way_midpoint(ways[wid],nodes) for wid in wanted]
     returned=request_batches(locations)
+    # Same-execution evidence reused by applicability review; never old verdicts.
+    (ROOT/"map001-valhalla-fresh-candidates.json").write_text(json.dumps({
+        "source_sha256":expected,"way_ids":wanted,"responses":returned},
+        separators=(",",":"))+"\n")
     cases=[summarize_way(wid,data,ways[wid]) for wid,data in zip(wanted,returned)]
     counts=Counter({"way_visible":sum(x["graph_way_visible"] for x in cases),
                     "directed_access_schema":sum(x["directed_candidate_schema_available"]

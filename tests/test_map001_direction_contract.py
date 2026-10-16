@@ -135,3 +135,60 @@ class DirectionContract(unittest.TestCase):
             x=audit_way(w['11'],n)
         self.assertEqual(x['verdict'],'FAIL')
         self.assertEqual(x['differences']['wrong_edges'][0]['edge'],'w:11:0:r')
+
+class AccessApplicabilityReview(unittest.TestCase):
+    def test_private_and_destination_require_different_evidence(self):
+        from benchmarks.map001_access_review import access_basis
+        self.assertEqual(access_basis({'access':'private'})[0],'AUTHORIZATION_REQUIRED')
+        self.assertEqual(access_basis({'motor_vehicle':'destination'})[0],'JOURNEY_PURPOSE_REQUIRED')
+
+    def test_explicit_car_permission_precedes_private_general_access(self):
+        from benchmarks.map001_access_review import access_basis
+        self.assertEqual(access_basis({'motorcar':'yes','access':'private'})[0],'EXPLICIT_MODE_PERMISSION')
+
+    def test_service_default_does_not_invent_legal_denial(self):
+        from benchmarks.map001_access_review import access_basis
+        self.assertEqual(access_basis({'highway':'service','bus':'yes'})[0],'UNSPECIFIED_SERVICE_PERMISSION')
+
+    def test_context_withholding_is_not_a_road_legality_pass(self):
+        from benchmarks.map001_access_review import review_way
+        n,w,r=fixture()
+        ET.SubElement(w['11'],'tag',k='access',v='private')
+        x=review_way(w['11'],n)
+        self.assertEqual(x['road_legality_verdict'],'NOT_JUDGED')
+        self.assertEqual(x['dmn_no_permission_safety_policy'],'SAFE_WITHHELD')
+        self.assertNotIn('PASS',x.values())
+
+    def test_previously_judged_way_is_not_added_to_unjudged_cohort(self):
+        from benchmarks.map001_access_review import review_way
+        n,w,r=fixture()
+        self.assertIsNone(review_way(w['11'],n))
+
+    def test_decode_polyline6_and_reject_malformed(self):
+        from benchmarks.map001_access_review import decode_shape
+        self.assertEqual(decode_shape('??AC'),[(0,0),(0.000001,0.000002)])
+        for s in ('','?','~~~~~~~','!','??'):
+            with self.subTest(shape=s),self.assertRaises(ValueError):decode_shape(s)
+
+    def test_stored_shape_direction_is_verified_against_osm_order(self):
+        from unittest.mock import patch
+        from benchmarks.map001_access_review import osm_orientation
+        n,w,r=fixture()
+        c={'edge':{'forward':True},'edge_info':{'shape':'unused'}}
+        with patch('benchmarks.map001_access_review.decode_shape',return_value=[(53,-2),(53.001,-2)]):
+            self.assertTrue(osm_orientation(c,w['11'],n))
+        with patch('benchmarks.map001_access_review.decode_shape',return_value=[(53.001,-2),(53,-2)]):
+            self.assertFalse(osm_orientation(c,w['11'],n))
+        with patch('benchmarks.map001_access_review.decode_shape',return_value=[(54,-2),(54.001,-2)]):
+            self.assertIsNone(osm_orientation(c,w['11'],n))
+
+    def test_filtered_candidates_are_preserved_without_inventing_turn_proof(self):
+        from benchmarks.map001_access_review import candidate_review
+        n,w,r=fixture()
+        x=candidate_review('11',{'edges':[],'filtered_edges':[{
+            'edge_info':{'way_id':11},'edge_id':{'value':42},
+            'edge':{'access':{'car':False},'forward':True,'end_node':{'value':9}}}]},w['11'],n)
+        self.assertEqual(x['candidates'][0]['graph_id'],42)
+        self.assertEqual(x['candidates'][0]['bucket'],'filtered_edges')
+        self.assertIsNone(x['candidates'][0]['osm_forward_verified'])
+        self.assertTrue(x['turn_pairs_verdict'].startswith('UNSUPPORTED'))

@@ -320,3 +320,15 @@ Use prior version-pinned engines/configuration families, the same i…10447 toke
             "limitations": "prototype-no-conditional-via-way-or-real-world-legality-claims",
         },
     )
+
+### Category 1 access applicability review
+
+Evidence-only continuation from c763fea: eight unjudged ways split into three
+unspecified service-access, two destination-purpose and three private-authorization
+cases. Existing DMN safely withholds 59 edges (21 unknown / 38 prohibited) under
+no asserted permission; legality verdicts remain 12/0/0/8. Fresh Valhalla capture
+includes filtered candidates and verifies stored geometry orientation against
+OSM node order. No exhaustive turn-pair equivalence or ranking. Local 101/101
+map-data and 595/595 full unit regressions pass. See
+`DMN_CATEGORY_01_ACCESS_APPLICABILITY.md`; verify fresh GitHub artifacts for final
+candidate counts and exact-SHA outcomes. No runtime or category advancement.

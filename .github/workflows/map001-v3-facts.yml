@@ -2,6 +2,7 @@ name: MAP-001 v3 Manchester diagnosis and Valhalla graph facts
 on:
   pull_request:
     paths:
+      - 'benchmarks/map001_access_review.py'
       - 'map_data/osm_xml.py'
       - 'tests/test_osm_import.py'
       - 'benchmarks/map001_direction_contract.py'
@@ -62,6 +63,7 @@ jobs:
           wait_for_local_router(150)
           PY
           python -m benchmarks.map001_valhalla_graph_facts
+          python -m benchmarks.map001_access_review
       - name: Gate approved directional fix on frozen cohort
         run: |
           python - <<'PYCODE'
@@ -83,6 +85,8 @@ jobs:
             results/map001-v3-manchester-diagnostics.json
             results/map001-direction-contract.json
             results/map001-unit-checks/
+            results/map001-access-applicability.json
+            results/map001-valhalla-fresh-candidates.json
             results/map001-v3-valhalla-graph-facts.json
           if-no-files-found: warn
           retention-days: 30
