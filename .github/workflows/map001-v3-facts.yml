@@ -14,6 +14,8 @@ on:
       - 'benchmarks/map001_profile_trial.py'
       - 'benchmarks/map001_additional_profiles.py'
       - 'tests/test_map001_additional_profiles.py'
+      - 'benchmarks/map001_category1_closure.py'
+      - 'tests/test_map001_category1_closure.py'
       - 'tests/test_osm_import.py'
       - 'benchmarks/map001_direction_contract.py'
       - 'tests/test_map001_direction_contract.py'
@@ -53,6 +55,13 @@ jobs:
           gh run download 38945058272 --repo phuk-prog/DriveMate-Navigation -n map001-v3-frozen-osm-closure-and-valhalla -D results
           test -s results/map001-manchester.osm
           test -s results/map001-v3-manifest.json
+      - name: Independently audit all 120 original frozen UK road ways
+        run: |
+          set -euo pipefail
+          for AREA in manchester birmingham carlisle cardiff glasgow belfast; do
+            test -s "results/map001-$AREA.osm"
+          done
+          python -m benchmarks.map001_category1_closure
       - name: Investigate Manchester cases on archived Manchester map
         run: |
           python -m benchmarks.map001_v3_restriction_diagnostics
@@ -204,6 +213,7 @@ jobs:
           path: |
             results/map001-v3-manchester-diagnostics.json
             results/map001-direction-contract.json
+            results/map001-category1-closure.json
             results/map001-contextual-access.json
             results/map001-profiles/*.json
             results/map001-additional-profiles/*.json
