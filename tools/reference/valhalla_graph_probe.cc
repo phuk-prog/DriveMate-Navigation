@@ -18,11 +18,13 @@ int main(int argc, char** argv) {
     valhalla::midgard::logging::Configure({{"type","std_err"},{"color","false"}});
     using namespace valhalla::baldr;
     GraphReader reader(config.get_child("mjolnir"));
-    // Local road level only: avoid hierarchy duplicates and shortcut semantics.
-    const auto tiles = reader.GetTileSet(2);
+    // Enumerate all road levels: promoted arterial edges can be absent at level 2.
+    // Shortcuts are excluded below; duplicate source observations must agree.
+    const auto tiles = reader.GetTileSet();
     if (tiles.empty() || tiles.size() > 100) throw std::runtime_error("Unexpected tile count");
     size_t count=0;
     for (const auto& tid : tiles) {
+      if (tid.level() > 2) continue;
       auto tile=reader.GetGraphTile(tid);
       if (!tile) throw std::runtime_error("Enumerated tile unavailable");
       for (uint32_t ni=0; ni<tile->header()->nodecount(); ++ni) {
@@ -39,6 +41,7 @@ int main(int argc, char** argv) {
           if (!edge->forward()) std::reverse(shape.begin(),shape.end());
           if (shape.size()>10000) throw std::runtime_error("Shape bound exceeded");
           std::cout << std::setprecision(9) << "{\"kind\":\"edge\",\"graph_id\":" << uint64_t(id)
+                    << ",\"road_level\":" << unsigned(tid.level())
                     << ",\"way_id\":" << info.wayid() << ",\"start_node\":" << uint64_t(source)
                     << ",\"end_node\":" << uint64_t(edge->endnode())
                     << ",\"car_access\":" << ((edge->forwardaccess() & kAutoAccess) ? "true":"false")
@@ -59,7 +62,7 @@ int main(int argc, char** argv) {
         }
       }
     }
-    std::cout << "{\"kind\":\"complete\",\"local_tiles\":" << tiles.size()
+    std::cout << "{\"kind\":\"complete\",\"road_tiles\":" << tiles.size()
               << ",\"directed_edges\":" << count << "}\n";
     return 0;
   } catch (const std::exception& e) {

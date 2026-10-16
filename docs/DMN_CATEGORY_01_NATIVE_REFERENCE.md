@@ -15,8 +15,8 @@ added in the same workflow, not another reference build.
 The official image copies its installed library and headers into the runner.
 Install compiler/development dependencies in that reference container and compile
 `tools/reference/valhalla_graph_probe.cc` against the installed library. No
-Valhalla rebuild or behavioural change. Local-road level 2 enumeration avoids
-hierarchy duplication and shortcuts. The exporter bounds tiles, edges and shape
+Valhalla rebuild or behavioural change. Enumerate all road hierarchy levels, exclude shortcuts and require consistent
+permissions across any duplicate source observations. The exporter bounds tiles, edges and shape
 sizes, fails on incomplete reads, and exposes actual directed graph IDs,
 start/end nodes, way identity, directed shapes, motorcar access bits, simple
 restriction masks, local indexes and complex/access-restriction indicators.
@@ -92,3 +92,24 @@ Valhalla's private dependency packages instead of recursively requesting their
 static archives. This only adjusts the standalone reader's linker flags; no
 engine binary, source, profile or map is modified. Retain both failures as
 installation/measurement-tool issues, not competitor navigation faults.
+
+## Native execution and hierarchy coverage correction
+
+Run https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38962312453
+on 373a222 compiled and executed the reader successfully. Tile hashes stayed
+unchanged. It enumerated 894 directed edges on local level 2; the common binary
+subset was 7 ways / 60 segments, with both engines passing all 7. Five selected
+ways had no local-level native observations: 115559329, 154986397, 155729945,
+548694371, 550963219. These were correctly reported UNSUPPORTED, not engine FAIL.
+Valhalla hierarchy construction promotes edges by road classification, so level
+2 alone is not exhaustive for this cohort. Expand enumeration to all road levels
+0/1/2; still reject shortcuts, ambiguous alignment and conflicting observations.
+Preserve that first successful partial result rather than overwriting it.
+
+The native local-level output already exposes the connected pair for Cross Street
+relation 7844440: arrival graph 8495877946, departure graph 8697204538, via graph
+node 3194277690; arrival mask 6, departure local index 1, explicit prohibition
+bit set. Both edges expose car access. This is structural mask evidence, not a
+claim that all AutoCost turn semantics are evaluated. Other target relation
+pairs require the expanded hierarchy inspection. Frozen expectations and source
+bytes stay unchanged.

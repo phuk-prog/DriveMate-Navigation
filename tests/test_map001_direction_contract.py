@@ -261,3 +261,11 @@ class NativeReferenceControls(unittest.TestCase):
         self.assertEqual(len(x),1)
         self.assertTrue(x[0]['explicit_mask_prohibits'])
         self.assertEqual(x[0]['full_turn_legality'],'UNSUPPORTED_AUTOCOST_CONTEXT_NOT_EVALUATED')
+
+    def test_consistent_multi_level_observations_do_not_invent_a_conflict(self):
+        from benchmarks.map001_native_reference import compare_way
+        n,w,r=fixture();e=self.edges()
+        e += [{**x,'graph_id':x['graph_id']+10,'road_level':1} for x in e]
+        x=compare_way(w['11'],n,e)
+        self.assertEqual(x['valhalla_verdict'],'PASS')
+        self.assertEqual(x['expected_checks'],2)
