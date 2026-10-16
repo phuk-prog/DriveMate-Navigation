@@ -46,7 +46,8 @@
         "test_gps_shadow_comparison.py",
         "test_gps_uk40_withheld_diagnostic.py",
         "test_gps_progress_safety_baseline.py",
-        "test_gps_research_forward_progress.py"
+        "test_gps_research_forward_progress.py",
+        "test_gps_uk_region_progress.py"
       ],
       "engine_rank": null,
       "navigation_score": null
