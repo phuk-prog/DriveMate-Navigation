@@ -120,3 +120,12 @@ Efficiency never permits fewer required engines within an applicable baseline,
 discarding failures, weaker acceptance, invented evidence, mixed timing scopes or
 skipping a check needed to support the claimed result. Record saved/reused work
 and any unavailable measurement so lower usage remains auditable.
+
+
+## Current owner scope — strictly engine research
+
+Implement, test and compare the DMN navigation **engine only**. Do not launch
+Android integration, audio/Bluetooth, map UI, emulator, app builds, APK release
+or production DriveMate changes. The active independent category catalogue is
+21 engine-only categories. Any complete-navigation test is a non-app engine
+replay; report absent live GNSS/UK verification honestly. No app readiness claim.

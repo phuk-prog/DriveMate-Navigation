@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "status": "UNIT_TEST_CATEGORY_EXECUTION_ONLY",
-  "rules": "Each existing unit test file exactly once; zero-test categories NOT_RUN; separate category unit results never substitute for engine rankings or real-world truth.",
+  "rules": "Navigation engine only: 21 independent categories; no Android/app, voice hardware or UI tests. Unit contracts are not field navigation proof or competitor engine rankings.",
   "categories": [
     {
       "id": "map_data",
@@ -99,7 +99,8 @@
       "label": "Route calculation speed",
       "scope": "Timing-worker test methodology and algorithm units; no comparable cross-engine latency ranking.",
       "test_files": [
-        "test_resource_trial.py"
+        "test_resource_trial.py",
+        "test_latency_comparability.py"
       ],
       "engine_rank": null,
       "navigation_score": null
@@ -207,16 +208,6 @@
       "navigation_score": null
     },
     {
-      "id": "voice_audio",
-      "label": "Voice, Bluetooth and music ducking",
-      "scope": "Audio ducking intent contract only; Android Bluetooth/music integration untested.",
-      "test_files": [
-        "test_audio_focus_policy.py"
-      ],
-      "engine_rank": null,
-      "navigation_score": null
-    },
-    {
       "id": "failure_handling",
       "label": "Failure handling, integrity and safety gates",
       "scope": "Evidence integrity and readiness gate tests, not full app resilience.",
@@ -248,17 +239,11 @@
     },
     {
       "id": "integrated_end_to_end",
-      "label": "Complete press-navigate driving",
-      "scope": "No end-to-end full UK map-replay with actual Android navigation.",
-      "test_files": [],
-      "engine_rank": null,
-      "navigation_score": null
-    },
-    {
-      "id": "android_integration",
-      "label": "Android emulator and app integration",
-      "scope": "No Android emulator/device integration executed by this unit stage.",
-      "test_files": [],
+      "label": "Complete navigation-engine journey",
+      "scope": "Actual DMN core components on analytically invented geometry; no physical drive, app or Android.",
+      "test_files": [
+        "test_navigation_engine_journey.py"
+      ],
       "engine_rank": null,
       "navigation_score": null
     },

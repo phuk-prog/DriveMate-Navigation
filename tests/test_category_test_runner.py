@@ -10,17 +10,18 @@ class CategoryRunnerTests(unittest.TestCase):
     def setUpClass(cls):
         cls.data=json.loads(REGISTRY.read_text())
     def test_all_unit_files_assigned_exactly_once(self):
-        self.assertEqual(validate(self.data)["category_count"],23)
+        self.assertEqual(validate(self.data)["category_count"],21)
         self.assertGreaterEqual(validate(self.data)["unit_test_files"],65)
     def test_missing_unit_is_rejected(self):
         changed=json.loads(json.dumps(self.data))
         changed["categories"][0]["test_files"].pop()
         with self.assertRaisesRegex(ValueError,"exactly one category"):
             validate(changed)
-    def test_no_impl_lanes_must_be_not_run(self):
-        lanes=next(c for c in self.data["categories"] if c["id"]=="lanes")
+    def test_empty_category_is_not_a_pass(self):
+        selected=dict(next(c for c in self.data["categories"] if c["id"]=="lanes"))
+        selected["test_files"]=[]
         with tempfile.TemporaryDirectory() as dest:
-            self.assertEqual(run_one(lanes,Path(dest)),0)
+            self.assertEqual(run_one(selected,Path(dest)),0)
             evidence=json.loads((Path(dest)/"lanes.json").read_text())
         self.assertEqual(evidence["status"],"NOT_RUN")
         self.assertEqual(evidence["unit_total"],0)

@@ -58,3 +58,19 @@ CI saves `results/category-checks/index.json`, `summary.md` and 23 separate cate
 
 [Executed unit results in logical order](DMN_SEPARATE_CATEGORY_RESULTS_20261016.md)
 from [successful CI run 38899639703](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38899639703) show **15 categories with runnable tests, all 472/472 units passing**, and **eight categories explicitly NOT_RUN**, not passed. This result does not change the earlier 16/24 GPS-003 stream availability failure or the 17/40 UK matching regression. Cross-engine ratings and route-calculation milliseconds require separately executed comparable contracts; no new comparative ranking was run here. Proposed DMN improvements are listed at the end of the result report for owner review.
+
+
+## Active scope correction — navigation engine only (owner update)
+
+The active registry contains **21 engine-only categories**. Android integration, Bluetooth
+speech/music behaviour and other app concerns are removed from the active run. The
+historical 23-category snapshot above is retained only for audit; it is not an
+instruction to test the app. `integrated_end_to_end` now means a complete **DMN
+navigation-core replay** (routing, GPS, reroute, guidance decision, arrival)
+and must not be presented as an Android or real-world drive. Six newly added engine
+module contracts are individually tested: lane source, full graph route line,
+prompt trigger, closure source freshness, road speed tags, and the conservative
+GPS experiment. The Android/audio draft changes were excluded from this scope.
+
+Speed comparisons only rank genuinely equivalent hardware/interface/case
+boundaries; unmatched timing is NOT_COMPARABLE. No real-road truth is implied.

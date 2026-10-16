@@ -61,3 +61,12 @@ Full fresh competitor retesting after an approved improvement is an explicit own
 Do not modify production DriveMate, automatically merge, release an APK, relax safety/accuracy thresholds, publish unsafe navigation or purchase proprietary access. Ask the owner before any uncertain permanent process/scope/safety change. Live-app readiness requires separately documented real-world independent truth, GPS coverage/safety, integrated navigation, Android/offline/emulator, resource and rollback gates; a green scorecard never overrides those gates.
 
 Historical evidence remains authoritative for what was actually done: `docs/DMN_NUMBERED_TRIALS.md`, `docs/DMN_RESULTS_OVERVIEW.md`, `docs/GPS_003_RESULTS.md`, `docs/DMN_APP_READINESS.md` and the original `references/` artifacts. Applying this policy does **not** itself execute or validate a test.
+
+
+## Engine-only active interpretation (owner update)
+
+The active test programme is **DMN navigation engine only**. Never run private
+DriveMate/Android app builds, emulator runs, UI tests, Bluetooth/audio tests or
+APK jobs as part of this research phase. Engine end-to-end means a bounded
+routing/GPS/rerouting/guidance/arrival replay outside the app. Keep the earlier
+app release safeguards on record, but they are outside the current work.

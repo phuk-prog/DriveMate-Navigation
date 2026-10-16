@@ -41,8 +41,8 @@ def validate(data):
               "route_computation","route_quality","route_calculation_speed",
               "junctions","roundabouts","lanes","route_line_adherence",
               "rerouting","instruction_timing","live_traffic","speed_limits",
-              "arrival","offline_reliability","voice_audio","failure_handling",
-              "performance_resources","integrated_end_to_end","android_integration",
+              "arrival","offline_reliability","failure_handling",
+              "performance_resources","integrated_end_to_end",
               "reference_adapters"}
     if set(ids)!=required:raise ValueError("Owner-approved category list drift")
     return {"category_count":len(categories),"unit_test_files":len(actual)}
