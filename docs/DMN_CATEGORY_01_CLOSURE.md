@@ -178,3 +178,21 @@ against those immutable tiles, and keeps per-region startup logs.
 If there are no complete native tiles, the trial **fails and records
 SETUP_UNAVAILABLE** instead of declaring an engine quality failure.
 A fresh six-region retest is required.
+
+## Native reference graph absence is not an incorrect DMN road
+
+The next attempt https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38971214208
+freshly confirmed the same Birmingham partial 11/11 comparable native-way
+agreement for DMN and Valhalla, but Carlisle's Valhalla scripted build
+exited during "Parsing ways" and created **no graph tiles**. It is
+incorrect to infer that DMN is better or that Valhalla is unsafe from
+a missing native graph. This is a setup/availability limitation.
+
+The coordinator now emits `map001-native-unavailable-<area>.json` with the
+exact source hash, unchanged reference engine version, container exit
+status and startup log digest, then continues to other regions.
+The full 120-way selected cohort is still accounted for, but a native
+reference rank contains **only regions with complete inspected graphs**;
+unavailable reference rows are not counted as PASS or FAIL.
+This protects comparisons from being blocked by one reference startup,
+without inventing test outputs or loosening road-safety acceptance.

@@ -235,6 +235,7 @@ jobs:
           docker image inspect "$IMAGE" >/dev/null
           test "$(docker run --rm --entrypoint pkg-config "$IMAGE" --modversion libvalhalla)" = "3.9.1"
           for AREA in birmingham carlisle cardiff glasgow belfast; do
+            export AREA
             # Frozen map, fresh graph. The native inspector is independent of
             # HTTP /status, which may fail on small disconnected extracts.
             PBF="results/map001-native-region-$AREA.osm.pbf"
@@ -277,11 +278,39 @@ jobs:
                         'server_running=',running,flush=True)
                   break
               if not running and not files:
-                  raise RuntimeError('Reference stopped without native graph tiles')
+                  print('Reference terminated before writing native tiles',flush=True)
+                  break
               sleep(2)
           else:
-              raise RuntimeError('No stable completed native graph; inspect engine logs')
+              if list(root.rglob('*.gph')):
+                  raise RuntimeError('Native graph tiles remained unstable; do not score')
+              print('Native graph build timed out without tiles',flush=True)
           PYCODE
+            if ! find results/valhalla -name '*.gph' -print -quit | grep -q .; then
+              docker logs map001-region > "results/map001-$AREA-reference-startup.log" 2>&1 || true
+              python - <<'PYCODE'
+          import hashlib,json,os,subprocess
+          from pathlib import Path
+          name=os.environ['AREA']
+          manifest=json.loads(Path('results/map001-v3-manifest.json').read_text())
+          source_sha=next(x['source_sha256'] for x in manifest['areas'] if x['area']==name)
+          check=subprocess.run(['docker','inspect','--format','{{.State.ExitCode}}','map001-region'],
+                              capture_output=True,text=True)
+          report={'area':name,'source_sha256':source_sha,
+                  'status':'REFERENCE_GRAPH_BUILD_UNAVAILABLE',
+                  'reason':'PINNED_VALHALLA_BUILD_NO_NATIVE_TILES',
+                  'container_exit_code':check.stdout.strip() or 'UNKNOWN',
+                  'engine_version':'3.9.1','reference_rank':None,
+                  'not_a_dmn_navigation_fault':True,
+                  'log_sha256':hashlib.sha256(Path('results/map001-'+name+'-reference-startup.log').read_bytes()).hexdigest()}
+          Path('results/map001-native-unavailable-'+name+'.json').write_text(json.dumps(report,indent=2)+'\n')
+          print(json.dumps(report),flush=True)
+          PYCODE
+              docker rm -f map001-region >/dev/null
+              sudo rm -rf results/valhalla
+              rm -f "$PBF"
+              continue
+            fi
             # Use the read-only native tile reader, not HTTP route responses.
             docker run --rm --entrypoint /tmp/reference_probe -v "$PWD/results/valhalla:/custom_files:ro" "$IMAGE" /custom_files/valhalla.json > "results/map001-valhalla-native-$AREA.jsonl"
             python -m benchmarks.map001_native_reference --area "$AREA" --native "results/map001-valhalla-native-$AREA.jsonl" --output "results/map001-native-$AREA-comparison.json"
@@ -310,6 +339,7 @@ jobs:
             results/map001-native-comparison.json
             results/map001-native-*-comparison.json
             results/map001-native-six-region-summary.json
+            results/map001-native-unavailable-*.json
             results/map001-native-derived-pbf-sha256.txt
             results/map001-*-reference-startup.log
             results/map001-valhalla-native.jsonl

@@ -35,7 +35,25 @@ def summarize():
         path = ROOT/("map001-native-comparison.json" if area == "manchester" else
                     "map001-native-"+area+"-comparison.json")
         if not path.is_file():
-            raise ValueError("Missing fresh native engine report: " + area)
+            unavailable_path=ROOT/("map001-native-unavailable-"+area+".json")
+            if not unavailable_path.is_file():
+                raise ValueError("No successful native report OR measured build failure: "+area)
+            failure=json.loads(unavailable_path.read_text())
+            if (failure.get("area")!=area or failure.get("source_sha256")!=spec["source_sha256"] or
+                    failure.get("status")!="REFERENCE_GRAPH_BUILD_UNAVAILABLE"):
+                raise ValueError("Unverified native setup-failure record: "+area)
+            by_region.append({"area":area,"source_sha256":spec["source_sha256"],
+                              "native_graph":"UNAVAILABLE","reason":failure.get("reason"),
+                              "container_exit_code":failure.get("container_exit_code"),
+                              "selected_ways":20,"comparable_ways":0,
+                              "source_segments_compared":0,"partial_ranking":[]})
+            allcases.extend({"area":area,"source_way":wid,
+                             "equivalent_scored_cohort":False,
+                             "dmn_verdict":"NOT_SCORED",
+                             "valhalla_verdict":"REFERENCE_GRAPH_UNAVAILABLE",
+                             "reason":failure.get("reason","reference_graph_unavailable")}
+                            for wid in FROZEN_V2_IDS[area])
+            continue
         row = json.loads(path.read_text())
         if row.get("area", "manchester") != area or row["source_sha256"] != spec["source_sha256"]:
             raise ValueError("Mixed region or source hash: " + area)
@@ -72,6 +90,8 @@ def summarize():
               "partial_common_native_ways": len(common),
               "partial_native_access_ranking": rank,
               "regional_results": by_region,
+              "unavailable_native_regions": [x["area"] for x in by_region
+                                              if x.get("native_graph")=="UNAVAILABLE"],
               "total_comparable_segment_checks": sum(x.get("expected_checks", 0) for x in common),
               "not_judged_native_cases": [{ "area": r["area"], "source_way": r["source_way"],
                                            "reason": r.get("reason", r.get("valhalla_verdict"))}
