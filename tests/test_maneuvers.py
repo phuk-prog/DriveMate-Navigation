@@ -52,3 +52,18 @@ class ManeuverTests(unittest.TestCase):
         data,ring=load_map()
         with self.assertRaises(ValueError):
             principal_maneuvers(data.graph,data.coordinates,(),ring|{'missing'})
+
+    def test_reversed_ring_first_exit(self):
+        # Analytical control for opposite circulation, not UK map evidence.
+        from engine.routing import RoadGraph
+        from dataclasses import replace
+        data,ring=load_map()
+        graph=RoadGraph(data.graph.vertices,[replace(e,source=e.target,target=e.source) if e.edge_id in ring else e for e in data.graph.edges.values()])
+        r=shortest_route(graph,'osm:10','osm:18')
+        self.assertEqual(principal_maneuvers(graph,data.coordinates,r.edge_ids,ring),[{'kind':'roundabout','exit':1}])
+
+    def test_repeated_ring_junction_withholds(self):
+        data,ring=load_map()
+        ids=('w:110:0:f',)+tuple(f'w:111:{i}:f' for i in range(5))+('w:111:0:f','w:112:0:f')
+        with self.assertRaisesRegex(ValueError,'Repeated roundabout'):
+            principal_maneuvers(data.graph,data.coordinates,ids,ring)

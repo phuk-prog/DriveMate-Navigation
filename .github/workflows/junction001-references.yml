@@ -8,14 +8,14 @@ concurrency:
   cancel-in-progress: true
 jobs:
   trial:
-    if: contains(github.event.pull_request.title, '[junction001-refs]')
+    if: contains(github.event.pull_request.title, '[junction001-refs]') || contains(github.event.pull_request.title, '[junction001-diagnose]')
     runs-on: ubuntu-latest
     timeout-minutes: 12
     strategy:
       fail-fast: false
       max-parallel: 1
       matrix:
-        engine: [OSRM, Valhalla, GraphHopper, openrouteservice, BRouter]
+        engine: ${{ contains(github.event.pull_request.title, '[junction001-diagnose]') && fromJSON('["Valhalla","BRouter"]') || fromJSON('["OSRM","Valhalla","GraphHopper","openrouteservice","BRouter"]') }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -109,7 +109,7 @@ jobs:
           cd ../..
           java -Xmx512m -DmaxRunningTime=30 -cp results/brouter.jar btools.server.RouteServer results/brouter-build/segments results/brouter-profiles results/brouter-build/customprofiles 17777 1 127.0.0.1 > "${RUNNER_TEMP}/junction001-brouter.log" 2>&1 &
           echo "$!" > "${RUNNER_TEMP}/junction001-pid"
-      - name: Execute actual engine against frozen legality and rerouting cases
+      - name: Execute actual engine against frozen maneuver cases
         env:
           TRIAL_ENGINE: ${{ matrix.engine }}
         run: python -m benchmarks.junction_trial --engine "$TRIAL_ENGINE" --output "results/junction001-${TRIAL_ENGINE}.json"

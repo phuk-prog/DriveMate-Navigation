@@ -30,12 +30,13 @@ def judged(case,points,maneuvers,raw):
     row=judge(case,points)
     row['checks']['principal_maneuvers']=maneuvers==case['maneuvers']
     row['failures']=[k for k,v in row['checks'].items() if not v]
+    row['returned_points']=points
     row.update(outcome='FAIL' if row['failures'] else 'PASS',expected_maneuvers=case['maneuvers'],returned_maneuvers=maneuvers,raw_maneuvers=raw)
     return row
 
 
 def report(system,rows):
-    return dict(test_id='JUNCTION-001',system=system,version=VERSIONS[system],instructions_enabled=True,execution='actual_local_python' if system=='DMN' else 'actual_live_loopback',classification='synthetic analytical only',independent_real_road_truth=False,map_sha256=sha256(MAP.read_bytes()).hexdigest(),oracle_sha256=sha256(ORACLE.read_bytes()).hexdigest(),cases=rows)
+    return dict(test_id='JUNCTION-001',system=system,version=('repository engine.maneuvers.principal_maneuvers' if system=='DMN' else VERSIONS[system]),instructions_enabled=True,execution='actual_local_python' if system=='DMN' else 'actual_live_loopback',classification='synthetic analytical only',independent_real_road_truth=False,map_sha256=sha256(MAP.read_bytes()).hexdigest(),oracle_sha256=sha256(ORACLE.read_bytes()).hexdigest(),cases=rows)
 
 
 def run_dmn():
