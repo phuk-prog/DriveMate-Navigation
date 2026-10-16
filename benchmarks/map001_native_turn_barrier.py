@@ -165,15 +165,48 @@ def barrier_case(area,way,nodes,edges):
     if not barriers:
         return None
     native=[{key:e.get(key) for key in ("graph_id","way_id","car_access",
+            "start_node_auto_access","end_node_auto_access",
+            "start_node_type","end_node_type",
             "start_restriction","end_restriction","access_restriction","restriction_mask",
             "complex","destination_only")}
             for e in edges if str(e["way_id"])==wid]
+    node_checks=[]
+    for barrier in barriers:
+        osm_id=barrier["osm_node"]
+        point=(float(nodes[osm_id].get("lat")),float(nodes[osm_id].get("lon")))
+        actual=[]
+        for e in edges:
+            if str(e["way_id"])!=wid or len(e.get("shape",[]))<2:
+                continue
+            for suffix,ind,graph_key,access_key,type_key in (
+                ("start",0,"start_node","start_node_auto_access","start_node_type"),
+                ("end",-1,"end_node","end_node_auto_access","end_node_type")):
+                if max(abs(e["shape"][ind][k]-point[k]) for k in (0,1))>0.000002:
+                    continue
+                actual.append({"source_osm_node":osm_id,"native_graph_node":e[graph_key],
+                               "edge_graph_id":e["graph_id"],"endpoint":suffix,
+                               "native_node_auto_access":e.get(access_key),
+                               "native_node_type":e.get(type_key)})
+        unique={(x["native_graph_node"],x["native_node_auto_access"],x["native_node_type"])
+                for x in actual}
+        kind=barrier["source_tags"]["barrier"]
+        mask_agrees=(kind in ("block","bollard","bus_trap","cycle_barrier")
+                     and len(unique)==1 and all(x[1] is False for x in unique))
+        node_checks.append({"source_osm_node":osm_id,"source_barrier_type":kind,
+                            "native_samples":actual,
+                            "unique_native_node_states":[list(x) for x in sorted(unique,
+                                           key=lambda x: str(x))],
+                            "source_vs_native_node_access":(
+                                "MATCHED_CLOSED_NATIVE_AUTO_ACCESS_MASK" if mask_agrees else
+                                "NOT_JUDGED_NODE_POLICY_OR_GATE_STATE"),
+                            "motorcar_traversal_verified":False})
     return {"area":area,"source_way":wid,"source_node_barriers":barriers,
             "native_edge_indicators":native,
+            "source_vs_native_node_access_checks":node_checks,
             "source_car_rule":"NODE_BARRIER_REQUIRES_TRAVERSAL_POLICY_CHECK",
             "native_node_policy_equivalent":False,
             "scored":False,"verdict":"NOT_JUDGED_NATIVE_NODE_TRAVERSAL",
-            "reason":"DIRECTED_EDGE_CAR_ACCESS_NOT_COMPLETE_NODE_BARRIER_ROUTABILITY"}
+            "reason":"NATIVE_NODE_AUTO_MASK_IS_NOT_FULL_AUTOCOST_TRAVERSAL_POLICY"}
 
 
 def run():
@@ -209,6 +242,10 @@ def run():
     report={"trial":"MAP-001-NATIVE-SIX-REGION-TURNS-BARRIERS",
             "source_restrictions_checked":len(restrictions),
             "barrier_ways_checked":len(barriers),
+            "source_node_barriers_checked":sum(len(x["source_node_barriers"]) for x in barriers),
+            "matched_closed_native_node_auto_masks":sum(
+                x["source_vs_native_node_access"]=="MATCHED_CLOSED_NATIVE_AUTO_ACCESS_MASK"
+                for row in barriers for x in row["source_vs_native_node_access_checks"]),
             "native_mask_structural_verdicts":dict(scores),
             "cases":restrictions, "node_barriers":barriers,
             "areas":region_meta,

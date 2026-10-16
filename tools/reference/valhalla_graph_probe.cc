@@ -36,6 +36,7 @@ int main(int argc, char** argv) {
           if (edge->is_shortcut() || edge->IsTransitLine()) continue;
           if (++count > 100000) throw std::runtime_error("Edge bound exceeded");
           GraphId id=tid; id.set_id(ei);
+          const auto* endinfo=reader.nodeinfo(edge->endnode());
           auto info=tile->edgeinfo(edge);
           auto shape=info.shape();
           if (!edge->forward()) std::reverse(shape.begin(),shape.end());
@@ -45,6 +46,10 @@ int main(int argc, char** argv) {
                     << ",\"way_id\":" << info.wayid() << ",\"start_node\":" << uint64_t(source)
                     << ",\"end_node\":" << uint64_t(edge->endnode())
                     << ",\"car_access\":" << ((edge->forwardaccess() & kAutoAccess) ? "true":"false")
+                    << ",\"start_node_auto_access\":" << ((node->access() & kAutoAccess) ? "true":"false")
+                    << ",\"end_node_auto_access\":" << (endinfo ? ((endinfo->access() & kAutoAccess) ? "true":"false") : "null")
+                    << ",\"start_node_type\":" << unsigned(node->type())
+                    << ",\"end_node_type\":" << (endinfo ? std::to_string(unsigned(endinfo->type())) : "null")
                     << ",\"restriction_mask\":" << edge->restrictions()
                     << ",\"local_index\":" << edge->localedgeidx()
                     << ",\"access_restriction\":" << edge->access_restriction()

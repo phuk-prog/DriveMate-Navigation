@@ -157,6 +157,38 @@ class NativeStructuralControls(unittest.TestCase):
         self.assertEqual(out["verdict"],"NOT_JUDGED_NATIVE_NODE_TRAVERSAL")
         self.assertTrue(out["native_edge_indicators"][0]["car_access"])
 
+    def test_native_node_auto_mask_correlates_block_but_not_full_traversal(self):
+        way,nodes=fixture("unclassified",barrier='<tag k="barrier" v="block"/>')
+        native=[{"graph_id":82,"way_id":42,"car_access":True,
+                 "start_node":901,"end_node":902,
+                 "start_node_auto_access":False,"end_node_auto_access":True,
+                 "start_node_type":4,"end_node_type":0,
+                 "shape":[[53,-2],[53.0001,-2.0001]],
+                 "start_restriction":0,"end_restriction":0,
+                 "access_restriction":0,"restriction_mask":0}]
+        out=barrier_case("fixture",way,nodes,native)
+        checks=out["source_vs_native_node_access_checks"]
+        self.assertEqual(checks[0]["source_vs_native_node_access"],
+                         "MATCHED_CLOSED_NATIVE_AUTO_ACCESS_MASK")
+        self.assertFalse(checks[0]["motorcar_traversal_verified"])
+        self.assertFalse(out["native_node_policy_equivalent"])
+        self.assertEqual(out["verdict"],"NOT_JUDGED_NATIVE_NODE_TRAVERSAL")
+
+    def test_native_gate_auto_access_does_not_prove_permission(self):
+        way,nodes=fixture("unclassified",barrier='<tag k="barrier" v="gate"/>')
+        native=[{"graph_id":83,"way_id":42,"car_access":True,
+                 "start_node":901,"end_node":902,
+                 "start_node_auto_access":True,"end_node_auto_access":True,
+                 "start_node_type":5,"end_node_type":0,
+                 "shape":[[53,-2],[53.0001,-2.0001]],
+                 "start_restriction":0,"end_restriction":0,
+                 "access_restriction":0,"restriction_mask":0}]
+        out=barrier_case("fixture",way,nodes,native)
+        self.assertEqual(out["source_vs_native_node_access_checks"][0]
+                         ["source_vs_native_node_access"],
+                         "NOT_JUDGED_NODE_POLICY_OR_GATE_STATE")
+        self.assertFalse(out["scored"])
+
     def test_relation_context_and_missing_geometry_not_automatic_fail(self):
         way,nodes=fixture("residential")
         row=assess_relation("fixture",rel(),{"42":way},nodes,[])

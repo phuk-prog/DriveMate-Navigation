@@ -303,3 +303,22 @@ produces a FAIL, and that incomplete or context-dependent exit sets remain
 unjudged. Raw outgoing graph-edge IDs and both expected/observed mask bits
 are preserved in the existing native turn/barrier artifact. Original
 Valhalla engine/graph bits are unchanged.
+
+
+### Valhalla native NodeInfo barrier-access facts (pinned 3.9.1)
+
+The read-only C++ reference probe now reports NodeInfo ordinary-auto access
+bit and raw node type separately for both ends of each enumerated native edge.
+This permits source-node-to-native-node correlation from the exact frozen OSM
+endpoint geometry instead of incorrectly reading an edge car_access flag as
+node permission. The original engine/AutoCost code is untouched.
+
+A physical block or bollard can receive a PARTIAL_SOURCE_NODE_AUTO_MASK
+agreement only when all correlated observations are for exactly one native
+graph node and its native auto-access mask excludes cars. An unknown gate
+or lift gate is NEVER converted to permission based on a node type or
+access bit. Even matching masks are not proof of the complete AutoCost
+Allowed(NodeInfo) or a signed legally valid crossing; full traverse policy
+remains NOT_JUDGED. The updated six-region artifact preserves raw source
+barrier nodes and native node mask/type observations. Unit mutations verify
+both the blocked-node match and the gate-unknown non-equivalence.
