@@ -1,0 +1,76 @@
+name: MAP-001 v3 Manchester diagnosis and Valhalla graph facts
+on:
+  pull_request:
+    paths:
+      - 'benchmarks/map001_v3_restriction_diagnostics.py'
+      - 'benchmarks/map001_valhalla_graph_facts.py'
+      - 'tests/test_map001_v3_fact_extensions.py'
+      - '.github/workflows/map001-v3-facts.yml'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: map001-v3-facts
+  cancel-in-progress: false
+jobs:
+  facts:
+    if: contains(github.event.pull_request.title, '[map001-facts]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Test Category 1 diagnosis and graph facts only
+        run: |
+          set -euo pipefail
+          python -m tools.privacy_guard
+          python -m unittest discover -s tests -p 'test_map001_v3_fact_extensions.py' -v
+      - name: Reuse exactly frozen Category 1 v3 source files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          gh run download 38945058272 --repo phuk-prog/DriveMate-Navigation -n map001-v3-frozen-osm-closure-and-valhalla -D results
+          test -s results/map001-manchester.osm
+          test -s results/map001-v3-manifest.json
+      - name: Investigate Manhattan cases on archived Manchester map
+        run: python -m benchmarks.map001_v3_restriction_diagnostics
+      - name: Build bounded local Valhalla 3.9.1 reference graph
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          osmium cat results/map001-manchester.osm -o results/map001-facts.osm.pbf
+          IMAGE='ghcr.io/valhalla/valhalla-scripted:3.9.1@sha256:6238809f9dc3057743d70a20efd3911ec38e458bfa13a0601909b58f68dfd956'
+          docker pull "$IMAGE"
+          mkdir -p results/valhalla
+          cp results/map001-facts.osm.pbf results/valhalla/
+          docker run -d --rm --name map001-facts -p 127.0.0.1:8002:8002 -v "$PWD/results/valhalla:/custom_files" -e build_admins=False -e build_time_zones=False -e build_elevation=False -e build_tar=False -e server_threads=2 "$IMAGE"
+          python - <<'PY'
+          from benchmarks.valhalla_live_reference import wait_for_local_router
+          wait_for_local_router(150)
+          PY
+          python -m benchmarks.map001_valhalla_graph_facts
+      - name: Publish small case-level evidence, not duplicate map files
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: map001-v3-manchester-and-valhalla-graph-facts
+          path: |
+            results/map001-v3-manchester-diagnostics.json
+            results/map001-v3-valhalla-graph-facts.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Diagnostics on failed reference
+        if: failure()
+        run: docker logs map001-facts 2>/dev/null | tail -60 || true
+      - name: Cleanup
+        if: always()
+        run: |
+          docker rm -f map001-facts >/dev/null 2>&1 || true
+          sudo rm -rf results/valhalla results/map001-facts.osm.pbf

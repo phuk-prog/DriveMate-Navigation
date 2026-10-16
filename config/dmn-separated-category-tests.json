@@ -16,7 +16,8 @@
         "test_public_diversity_study.py",
         "test_map001_graph_fact_audit.py",
         "test_map001_v2.py",
-        "test_map001_v3.py"
+        "test_map001_v3.py",
+        "test_map001_v3_fact_extensions.py"
       ],
       "engine_rank": null,
       "navigation_score": null
