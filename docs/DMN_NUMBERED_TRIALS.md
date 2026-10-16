@@ -666,3 +666,20 @@ competition pairs and all seven older UK losses are same-way backward-adjacent
 fragments of OSM way32113418, not independently verified roadway/guidance truth.
 No matcher fix, score modification, competitor rank or new route test was made.
 **STOP and request owner approval before improvements.**
+
+### GPS-004 adjacent-fragment directed-progress safety baseline (2026-10-16)
+
+Ten analytical synthetic controls were frozen before matcher tuning and executed
+in successful run [38918971210](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38918971210)
+at `ef4d454972685759064907210cb14d4818e61b77`. Authoritative DMN passes 9/10;
+the isolated non-guiding adjacent-fragment research matcher passes 10/10. The
+single authoritative failure is reverse-directed progress from a trusted reverse
+fragment to its immediate same-way successor: DMN withholds rather than returning
+a wrong road. Backward motion, prohibited continuation, a different-way competitor,
+stationary/headingless/weak fixes and a sharp bend retain conservative outcomes.
+No external integrated endpoint exposes the identical stateful shadow contract,
+so all twelve families retain explicit unsupported/not-run reasons and no
+competitive rank. No default matcher logic changed. See GPS_004_RESULTS.md and
+references/gps004-baseline-20261016.json. UK17/0/23 and shadow22/0/18 remain
+unchanged; promotion is blocked. **STOP for owner review before the proposed
+reverse-fragment behavioral improvement and required fresh full retest.**

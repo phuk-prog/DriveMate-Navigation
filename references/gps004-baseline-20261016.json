@@ -1,0 +1,391 @@
+{
+  "trial": "GPS-004",
+  "classification": "analytical synthetic directed-progress safety baseline",
+  "oracle_sha256": "9110a9e0df1502180813aa7fcc05c80a9a391a569938c7d54c86b38d0d6c4da8",
+  "engine_family": "DMN",
+  "variants": {
+    "default": "authoritative unchanged matcher",
+    "experimental": "isolated research-only adjacent-fragment matcher"
+  },
+  "external_engines_executed": 0,
+  "external_reason": "Available batch snapping/routing APIs do not expose equivalent stateful fix history and authoritative/shadow outputs",
+  "passed": 9,
+  "total": 10,
+  "score_out_of_10": 9.0,
+  "cases": [
+    {
+      "case_id": "forward_adjacent",
+      "outcome": "PASS",
+      "expected": {
+        "default": [
+          "MATCHED",
+          "AMBIGUOUS"
+        ],
+        "experimental": [
+          "MATCHED",
+          "MATCHED"
+        ],
+        "experimental_edge": "w:1:1:f"
+      },
+      "default": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "AMBIGUOUS",
+          "edge_id": null,
+          "reason": "nearby_parallel_or_overlapping_roads",
+          "candidate_count": 2
+        }
+      ],
+      "experimental": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:1:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        }
+      ]
+    },
+    {
+      "case_id": "remain_before_boundary",
+      "outcome": "PASS",
+      "expected": {
+        "default": [
+          "MATCHED",
+          "AMBIGUOUS"
+        ],
+        "experimental": [
+          "MATCHED",
+          "AMBIGUOUS"
+        ]
+      },
+      "default": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "AMBIGUOUS",
+          "edge_id": null,
+          "reason": "nearby_parallel_or_overlapping_roads",
+          "candidate_count": 2
+        }
+      ],
+      "experimental": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "AMBIGUOUS",
+          "edge_id": null,
+          "reason": "nearby_parallel_or_overlapping_roads",
+          "candidate_count": 2
+        }
+      ]
+    },
+    {
+      "case_id": "reverse_same_edge",
+      "outcome": "PASS",
+      "expected": {
+        "default": [
+          "MATCHED",
+          "AMBIGUOUS"
+        ],
+        "experimental": [
+          "MATCHED",
+          "AMBIGUOUS"
+        ]
+      },
+      "default": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:9:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "AMBIGUOUS",
+          "edge_id": null,
+          "reason": "backward_directed_progress",
+          "candidate_count": 1
+        }
+      ],
+      "experimental": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:9:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "AMBIGUOUS",
+          "edge_id": null,
+          "reason": "backward_directed_progress",
+          "candidate_count": 1
+        }
+      ]
+    },
+    {
+      "case_id": "mapped_prohibited_continuation",
+      "outcome": "PASS",
+      "expected": {
+        "forbidden_edge": "w:1:1:f"
+      },
+      "default": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:f",
+          "reason": "unique_legal_temporal_connection",
+          "candidate_count": 2
+        }
+      ],
+      "experimental": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:f",
+          "reason": "unique_legal_temporal_connection",
+          "candidate_count": 2
+        }
+      ]
+    },
+    {
+      "case_id": "different_way_competitor",
+      "outcome": "PASS",
+      "expected": {
+        "final_status": "AMBIGUOUS"
+      },
+      "default": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "AMBIGUOUS",
+          "edge_id": null,
+          "reason": "nearby_parallel_or_overlapping_roads",
+          "candidate_count": 3
+        }
+      ],
+      "experimental": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "AMBIGUOUS",
+          "edge_id": null,
+          "reason": "nearby_parallel_or_overlapping_roads",
+          "candidate_count": 3
+        }
+      ]
+    },
+    {
+      "case_id": "stationary_boundary",
+      "outcome": "PASS",
+      "expected": {
+        "final_status": "AMBIGUOUS"
+      },
+      "default": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "AMBIGUOUS",
+          "edge_id": null,
+          "reason": "insufficient_motion_to_disambiguate",
+          "candidate_count": 2
+        }
+      ],
+      "experimental": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "AMBIGUOUS",
+          "edge_id": null,
+          "reason": "insufficient_motion_to_disambiguate",
+          "candidate_count": 2
+        }
+      ]
+    },
+    {
+      "case_id": "heading_missing_boundary",
+      "outcome": "PASS",
+      "expected": {
+        "final_status": "AMBIGUOUS"
+      },
+      "default": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "AMBIGUOUS",
+          "edge_id": null,
+          "reason": "insufficient_motion_to_disambiguate",
+          "candidate_count": 2
+        }
+      ],
+      "experimental": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "AMBIGUOUS",
+          "edge_id": null,
+          "reason": "insufficient_motion_to_disambiguate",
+          "candidate_count": 2
+        }
+      ]
+    },
+    {
+      "case_id": "weak_accuracy_boundary",
+      "outcome": "PASS",
+      "expected": {
+        "final_status": "UNKNOWN"
+      },
+      "default": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "UNKNOWN",
+          "edge_id": null,
+          "reason": "weak_position_accuracy",
+          "candidate_count": 0
+        }
+      ],
+      "experimental": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "UNKNOWN",
+          "edge_id": null,
+          "reason": "weak_position_accuracy",
+          "candidate_count": 0
+        }
+      ]
+    },
+    {
+      "case_id": "reverse_directed_progress",
+      "outcome": "FAIL",
+      "expected": {
+        "final_status": "MATCHED",
+        "final_edge": "w:1:0:r"
+      },
+      "default": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:1:r",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "AMBIGUOUS",
+          "edge_id": null,
+          "reason": "nearby_parallel_or_overlapping_roads",
+          "candidate_count": 2
+        }
+      ],
+      "experimental": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:1:r",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "MATCHED",
+          "edge_id": "w:1:0:r",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        }
+      ]
+    },
+    {
+      "case_id": "sharp_bend",
+      "outcome": "PASS",
+      "expected": {
+        "experimental_final_status": "AMBIGUOUS"
+      },
+      "default": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:3:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "AMBIGUOUS",
+          "edge_id": null,
+          "reason": "nearby_parallel_or_overlapping_roads",
+          "candidate_count": 2
+        }
+      ],
+      "experimental": [
+        {
+          "status": "MATCHED",
+          "edge_id": "w:3:0:f",
+          "reason": "directed_road_candidate",
+          "candidate_count": 1
+        },
+        {
+          "status": "AMBIGUOUS",
+          "edge_id": null,
+          "reason": "nearby_parallel_or_overlapping_roads",
+          "candidate_count": 2
+        }
+      ]
+    }
+  ],
+  "independent_real_world_truth": false
+}
