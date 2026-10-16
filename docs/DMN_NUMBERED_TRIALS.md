@@ -596,6 +596,18 @@ adapter/setup failures are retained. No verified DMN fault was found, no engine
 tuning occurred, and the owner review gate is now active. See
 ROUTE_003_RESULTS.md and references/route003-baseline-20261016.json.
 
+### ROUTE-004 real-map one-way source-rule baseline (2026-10-16)
+
+Owner authorized the next bounded baseline. It uses the pinned Greater Manchester
+260901 archive and a central-Manchester extract large enough to contain eligible
+one-way roads. Six ways are selected numerically from raw XML before any engine
+runs; each contributes an allowed-direction and reverse-direction case. DMN plus
+OSRM, Valhalla, GraphHopper, openrouteservice and BRouter receive the same exact
+node endpoints. Required-route availability, endpoint alignment, finite distance
+and ETA, and absence of direct traversal along the mapped forbidden direction are
+judged. OSM tags remain source-map evidence rather than independent current road
+law. No UK17/0/23 ambiguity threshold or retained GPS case is changed.
+
 DMN_RESULTS_OVERVIEW.md now consolidates retained per-case comparative rankings,
 failures and actual measured milliseconds, clearly separating missing/unmatched
 latency and historical synthetic controls. APP_VALIDATION_PROGRAMME.md extends
