@@ -70,3 +70,15 @@ Pinned API evidence:
 
 No Android app/APK, Category 2, merge or production change. Results and any
 remaining discrepancies must be reported for review before category advancement.
+
+## Preserved setup failure and correction
+
+Run https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38961774507
+on 8f44f01 passed Python controls and fresh engine probes but failed native linking.
+The installed library's pkg-config requirements lacked Spatialite, GEOS and
+OpenSSL development metadata. A command substitution failure then left the
+compiler without library flags. Add libspatialite-dev, libgeos-dev, libssl-dev;
+resolve flags in a separate fail-fast shell assignment before compilation.
+No engine failure or native comparison verdict is inferred from this setup error.
+Original logs/artifacts and previous commit are preserved. Rerun the same frozen
+cohort after this installation correction; do not change acceptance or input.

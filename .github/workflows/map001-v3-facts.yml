@@ -75,9 +75,10 @@ jobs:
             set -euo pipefail
             export DEBIAN_FRONTEND=noninteractive
             apt-get update -qq >/dev/null
-            apt-get install -y -qq g++ pkg-config libboost-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-date-time-dev libboost-regex-dev libboost-program-options-dev libprotobuf-dev libsqlite3-dev libcurl4-openssl-dev zlib1g-dev libzmq3-dev libczmq-dev libluajit-5.1-dev libgeotiff-dev liblz4-dev rapidjson-dev >/dev/null
+            apt-get install -y -qq g++ pkg-config libboost-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-date-time-dev libboost-regex-dev libboost-program-options-dev libprotobuf-dev libsqlite3-dev libcurl4-openssl-dev zlib1g-dev libzmq3-dev libczmq-dev libluajit-5.1-dev libgeotiff-dev liblz4-dev rapidjson-dev libspatialite-dev libgeos-dev libssl-dev >/dev/null
             pkg-config --modversion libvalhalla
-            c++ -std=c++20 -O2 /tmp/reference_probe.cc -o /tmp/reference_probe $(pkg-config --cflags --libs --static libvalhalla) -pthread
+            DMN_REFERENCE_FLAGS=$(pkg-config --cflags --libs --static libvalhalla)
+            c++ -std=c++20 -O2 /tmp/reference_probe.cc -o /tmp/reference_probe $DMN_REFERENCE_FLAGS -pthread
           '
           python - <<'PYCODE'
           import hashlib,json
