@@ -53,6 +53,17 @@ def geometry_length(points: list[list[float]]) -> float:
     return sum(_haversine(a, b) for a, b in zip(points, points[1:]))
 
 
+def numeric(value):
+    """Accept finite numeric provider fields, including BRouter JSON strings."""
+    if isinstance(value, bool):
+        return None
+    try:
+        result = float(value)
+    except (TypeError, ValueError):
+        return None
+    return result if isfinite(result) else None
+
+
 def judge(case: dict, result: dict, calculation_ms: float) -> dict:
     base = {"case_id": case["id"], "calculation_ms": calculation_ms}
     if result.get("status") != "ROUTE":
@@ -65,14 +76,14 @@ def judge(case: dict, result: dict, calculation_ms: float) -> dict:
         return {**base, "outcome": "FAIL", "reason": "Malformed route geometry"}
     start_error = _haversine(case["start"], points[0])
     end_error = _haversine(case["end"], points[-1])
-    length_m = result.get("distance_m", geometry_length(points))
-    duration_s = result.get("duration_s")
+    length_m = numeric(result.get("distance_m", geometry_length(points)))
+    duration_s = numeric(result.get("duration_s"))
     checks = {
         "complete_geometry": len(points) >= 2,
         "start_within_5m": start_error <= 5,
         "end_within_5m": end_error <= 5,
-        "positive_finite_distance": type(length_m) in (int, float) and isfinite(length_m) and length_m > 0,
-        "positive_finite_duration": type(duration_s) in (int, float) and isfinite(duration_s) and duration_s > 0,
+        "positive_finite_distance": length_m is not None and length_m > 0,
+        "positive_finite_duration": duration_s is not None and duration_s > 0,
     }
     return {
         **base,
@@ -81,8 +92,8 @@ def judge(case: dict, result: dict, calculation_ms: float) -> dict:
         "failures": [name for name, passed in checks.items() if not passed],
         "start_error_m": round(start_error, 6),
         "end_error_m": round(end_error, 6),
-        "distance_m": round(length_m, 3) if isfinite(length_m) else None,
-        "duration_s": round(duration_s, 3) if isinstance(duration_s, (int, float)) and isfinite(duration_s) else None,
+        "distance_m": round(length_m, 3) if length_m is not None else None,
+        "duration_s": round(duration_s, 3) if duration_s is not None else None,
         "returned_vertices": len(points),
         "mapped_legality": "UNRESOLVED",
     }

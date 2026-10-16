@@ -1,6 +1,6 @@
 import unittest
 
-from benchmarks.real_map_route_baseline import geometry_length, judge, scorecard
+from benchmarks.real_map_route_baseline import geometry_length, judge, numeric, scorecard
 
 
 class RealMapRouteBaselineTests(unittest.TestCase):
@@ -28,6 +28,11 @@ class RealMapRouteBaselineTests(unittest.TestCase):
 
     def test_geometry_length_is_positive(self):
         self.assertGreater(geometry_length([[53.0, -2.0], [53.001, -2.0]]), 100)
+
+    def test_provider_numeric_strings_are_normalized(self):
+        self.assertEqual(12.5, numeric("12.5"))
+        self.assertIsNone(numeric("unknown"))
+        self.assertIsNone(numeric(True))
 
 
 if __name__ == "__main__":
