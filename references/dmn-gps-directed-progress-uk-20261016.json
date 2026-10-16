@@ -1,0 +1,121 @@
+{
+  "test_id": "DMN-GPS-DIRECTED-PROGRESS-UK-20261016",
+  "date": "2026-10-16",
+  "repository": "phuk-prog/DriveMate-Navigation",
+  "branch": "codex/dmn-gps001-ranked-trial-20261015",
+  "source_commit": "0a60d9f92617806d4196c8da414d4f8f65e150cd",
+  "executed": {
+    "gps_ci": {
+      "run": 38924328629,
+      "job": 117051909232,
+      "conclusion": "success",
+      "artifact_id": 12055029313
+    },
+    "gps004": {
+      "run": 38924328663,
+      "conclusion": "success"
+    },
+    "units": {
+      "run": 38924328641,
+      "job": 117051910316,
+      "conclusion": "success",
+      "pass": 527,
+      "total": 527,
+      "categories": 21,
+      "gps_unit_pass": 69
+    }
+  },
+  "baseline": {
+    "gps003_streams_pass": 8,
+    "gps003_total": 24,
+    "uk40_correct": 17,
+    "uk40_withheld": 23
+  },
+  "early_research": {
+    "gps003_streams_pass": 24,
+    "uk40_correct": 22,
+    "uk40_withheld": 18
+  },
+  "current_research": {
+    "gps003_streams_pass": 24,
+    "gps003_total": 24,
+    "uk40_correct": 30,
+    "uk40_withheld": 10,
+    "confident_wrong": 0
+  },
+  "historical_18": {
+    "newly_resolved": 8,
+    "still_withheld": 10,
+    "original_case_ids": [
+      "TGP-001",
+      "TGP-002",
+      "TGP-004",
+      "TGP-005",
+      "TGP-007",
+      "TGP-009",
+      "TGP-010",
+      "TGP-011",
+      "TGP-012",
+      "TGP-013",
+      "TGP-014",
+      "TGP-015",
+      "TGP-016",
+      "TGP-018",
+      "TGP-019",
+      "TGP-021",
+      "TGP-025",
+      "TGP-040"
+    ]
+  },
+  "region_test": {
+    "map_source": "Geofabrik Greater Manchester snapshot 2026-09-01",
+    "areas": [
+      {
+        "name": "Salford",
+        "defaultCorrect": 6,
+        "researchCorrect": 11,
+        "unresolved": 1,
+        "reverseChecks": 6,
+        "executed_cases": 12,
+        "real_geography": true,
+        "map_source_oracle": "provisional"
+      },
+      {
+        "name": "Stockport",
+        "defaultCorrect": 5,
+        "researchCorrect": 9,
+        "unresolved": 3,
+        "reverseChecks": 6,
+        "executed_cases": 12,
+        "real_geography": true,
+        "map_source_oracle": "provisional"
+      },
+      {
+        "name": "Oldham",
+        "defaultCorrect": 2,
+        "researchCorrect": 7,
+        "unresolved": 5,
+        "reverseChecks": 6,
+        "executed_cases": 12,
+        "real_geography": true,
+        "map_source_oracle": "provisional"
+      }
+    ],
+    "total": 36,
+    "default_correct": 13,
+    "research_correct": 27,
+    "research_withheld": 9,
+    "reverse_controls": 18,
+    "confident_wrong": 0
+  },
+  "prototype_scope": {
+    "real_gnss_truth": false,
+    "current_road_legality_verified": false,
+    "source_exclusion_counts": "recorded in original run artifact",
+    "default_matcher_enabled_only": true,
+    "research_enabled_default": false,
+    "external_gps_engines_executed": 0
+  },
+  "files_in_github_artifact": "gps003-candidate-diagnostic includes gps003-candidate-diagnostic.json gps003-research-variant.json gps-uk40-18-withheld.json gps-uk-regions-progress.json",
+  "review_gate": "STOP before promotion/merging/app/APK"
+}
