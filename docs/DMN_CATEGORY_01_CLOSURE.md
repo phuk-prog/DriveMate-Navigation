@@ -211,3 +211,31 @@ OSM snapshots or their SHA-256, case selection, source/access expectation,
 Valhalla/DMN behaviour or scoring policy. Record the new derived PBF hashes.
 Re-execute all affected Category 1 source, native and route-profile checks;
 previous partial, unavailable and failing attempts remain preserved.
+
+## Glasgow Hanover Street: a node-barrier comparison, not a proved engine fault
+
+The first **complete six-region native graph execution**, after sorting
+the same frozen source objects, exposed one native access mismatch on
+Glasgow source way **827453788**, Hanover Street. Its archived first
+node 7725157389 has `barrier=block`, though the way itself has
+no explicit car-access prohibition. DMN represents the physical barrier
+as prohibited segment access. The unchanged Valhalla 3.9.1 native reader
+reported both directed edges `car_access=true` and exposed
+additional start/end restriction metadata; **the presence of a native
+edge-access flag is not proof the node can be legally traversed**.
+
+Initial full-cohort failure evidence:
+https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38972097042
+The frozen input and the engine source are unchanged. Full native output,
+node barrier and initial provisional FAIL remain archived in this run.
+The corrected comparison explicitly classifies any selected way with an
+OSM endpoint node barrier as `UNSUPPORTED_NODE_BARRIER_EQUIVALENCE`
+(reason field `SOURCE_NODE_BARRIER_NOT_EQUIVALENT_TO_NATIVE_EDGE_CAR_ACCESS`)
+and retains source barrier IDs + native directed-edge/restriction indicators.
+It must **not** quietly award Valhalla PASS or DMN a competitive safety victory
+on this non-equivalent interface. New mutation tests prove explicit
+vehicle-way access mismatches without endpoint barriers are still FAIL;
+only the genuine ambiguous policy dimensions are excluded.
+
+Independently verified node-traversal and signed legal-road entitlement are
+still a separate Category 1 prerequisite before road legality certification.

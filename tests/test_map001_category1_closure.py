@@ -90,6 +90,48 @@ class FrozenCategoryClosureTests(unittest.TestCase):
         r = relation_facts(rel, {"42": way}, nodes)
         self.assertEqual(r["verdict"], "WITHHELD_UNQUALIFIED_MOTORCAR_ACCESS")
 
+    def test_native_node_barrier_is_not_false_edge_access_failure(self):
+        from benchmarks.map001_native_reference import compare_way
+        import xml.etree.ElementTree as ET
+        root=ET.fromstring("""<osm>
+          <node id="1" lat="53" lon="-2"><tag k="barrier" v="block"/></node>
+          <node id="2" lat="53.001" lon="-2.001"/>
+          <way id="42"><nd ref="1"/><nd ref="2"/>
+            <tag k="highway" v="residential"/></way>
+          </osm>""")
+        nodes={n.get('id'):n for n in root.findall('node')}
+        way=root.find('way')
+        fake=[{'kind':'edge','graph_id':98,'way_id':42,'car_access':True,
+               'start_restriction':1565,'end_restriction':0,
+               'access_restriction':0}]
+        row=compare_way(way,nodes,fake)
+        self.assertFalse(row['equivalent_scored_cohort'])
+        self.assertEqual(row['valhalla_verdict'],'UNSUPPORTED')
+        self.assertEqual(row['source_node_barriers'],
+                         [{'node':'1','barrier':'block'}])
+        self.assertEqual(row['unscored_native_edge_indicators'][0]['car_access'],True)
+        self.assertEqual(row['dmn_verdict'],'PASS')
+        self.assertFalse(row['full_node_barrier_legality']=='PASS')
+
+    def test_native_without_barrier_can_still_detect_bad_access(self):
+        from benchmarks.map001_native_reference import compare_way
+        import xml.etree.ElementTree as ET
+        root=ET.fromstring("""<osm>
+          <node id="1" lat="53" lon="-2"/>
+          <node id="2" lat="53.001" lon="-2.001"/>
+          <way id="42"><nd ref="1"/><nd ref="2"/>
+            <tag k="highway" v="residential"/>
+            <tag k="vehicle:backward" v="no"/></way>
+          </osm>""")
+        nodes={n.get('id'):n for n in root.findall('node')}
+        fake=[{'kind':'edge','graph_id':98,'way_id':42,'car_access':True,
+               'shape':[[53,-2],[53.001,-2.001]]},
+              {'kind':'edge','graph_id':99,'way_id':42,'car_access':True,
+               'shape':[[53.001,-2.001],[53,-2]]}]
+        row=compare_way(root.find('way'),nodes,fake)
+        self.assertEqual(row['valhalla_verdict'],'FAIL')
+        self.assertEqual(row['wrong_access'][0]['edge'],'w:42:0:r')
+
     def test_native_rank_only_shared_binary_complete_cases(self):
         rows = [
             {"source_way": "1", "equivalent_scored_cohort": True,

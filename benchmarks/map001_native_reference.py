@@ -49,6 +49,24 @@ def compare_way(way,nodes,edges):
     dmn=audit_way(way,nodes)
     result={'source_way':wid,'dmn_verdict':dmn['verdict'],'dmn_details':dmn,
             'scope':'DIRECTED_SOURCE_SEGMENT_CAR_ACCESS_ONLY'}
+    # A native DirectedEdge car-access bit is not the complete Valhalla
+    # traversal policy at a physical OSM node barrier. Score explicit
+    # way-level access only, retain the native node evidence unjudged.
+    endpoints={n.get('ref') for n in way.findall('nd')}
+    physical=[{'node':nid,'barrier':tags(nodes[nid])['barrier']}
+              for nid in sorted(endpoints)
+              if nid in nodes and 'barrier' in tags(nodes[nid])]
+    if physical:
+        native=[{k:e.get(k) for k in ('graph_id','car_access',
+                'start_restriction','end_restriction','access_restriction')}
+                for e in edges if str(e.get('way_id'))==wid]
+        return {**result,'valhalla_verdict':'UNSUPPORTED',
+                'reason':'SOURCE_NODE_BARRIER_NOT_EQUIVALENT_TO_NATIVE_EDGE_CAR_ACCESS',
+                'source_node_barriers':physical,
+                'unscored_native_edge_indicators':native,
+                'equivalent_scored_cohort':False,
+                'full_node_barrier_legality':'NOT_INSPECTED',
+                'previous_unscored_candidate_disagreement_preserved':True}
     if issue or any(x[2] in ('contextual','unknown') for x in (expected or {}).values()):
         return {**result,'valhalla_verdict':'NOT_JUDGED','reason':issue or 'CONTEXTUAL_PERMISSION',
                 'equivalent_scored_cohort':False}
