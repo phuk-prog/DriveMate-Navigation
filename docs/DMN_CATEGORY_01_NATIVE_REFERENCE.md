@@ -82,3 +82,13 @@ resolve flags in a separate fail-fast shell assignment before compilation.
 No engine failure or native comparison verdict is inferred from this setup error.
 Original logs/artifacts and previous commit are preserved. Rerun the same frozen
 cohort after this installation correction; do not change acceptance or input.
+
+Second preserved setup run:
+https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38961978148
+on a670865 resolved missing metadata and confirmed installed version 3.9.1, then
+failed because recursive static pkg-config flags referenced an absent
+`libprotokit.a`. Use normal shared dependency linkage and explicitly request
+Valhalla's private dependency packages instead of recursively requesting their
+static archives. This only adjusts the standalone reader's linker flags; no
+engine binary, source, profile or map is modified. Retain both failures as
+installation/measurement-tool issues, not competitor navigation faults.
