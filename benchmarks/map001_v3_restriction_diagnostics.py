@@ -69,7 +69,7 @@ def relation_viability(relation, ways, nodes):
     via = [m.get("ref") for m in members if m.get("type")=="node" and m.get("role")=="via"]
     row = {"relation": relation.get("id"), "restriction": tags(relation).get("restriction"),
            "from": fr, "to": to, "via": via}
-    if len(fr)!=len(to)!=1 or len(fr)!=1 or len(to)!=1 or len(via)!=1:
+    if len(fr) != 1 or len(to) != 1 or len(via) != 1:
         return {**row, "verdict": "UNSUPPORTED_RELATION_SHAPE"}
     if fr[0] not in ways or to[0] not in ways or via[0] not in nodes:
         return {**row, "verdict": "INCOMPLETE_SOURCE"}

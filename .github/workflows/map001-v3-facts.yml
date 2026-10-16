@@ -38,7 +38,7 @@ jobs:
           gh run download 38945058272 --repo phuk-prog/DriveMate-Navigation -n map001-v3-frozen-osm-closure-and-valhalla -D results
           test -s results/map001-manchester.osm
           test -s results/map001-v3-manifest.json
-      - name: Investigate Manhattan cases on archived Manchester map
+      - name: Investigate Manchester cases on archived Manchester map
         run: python -m benchmarks.map001_v3_restriction_diagnostics
       - name: Build bounded local Valhalla 3.9.1 reference graph
         run: |
