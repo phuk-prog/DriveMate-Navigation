@@ -1,0 +1,16 @@
+{
+  "trial": "GPS-004",
+  "classification": "analytical synthetic directed-progress safety baseline",
+  "cases": [
+    {"id":"forward_adjacent","scenario":"forward_adjacent","expected":{"default":["MATCHED","AMBIGUOUS"],"experimental":["MATCHED","MATCHED"],"experimental_edge":"w:1:1:f"}},
+    {"id":"remain_before_boundary","scenario":"remain","expected":{"default":["MATCHED","AMBIGUOUS"],"experimental":["MATCHED","AMBIGUOUS"]}},
+    {"id":"reverse_same_edge","scenario":"reverse_same_edge","expected":{"default":["MATCHED","AMBIGUOUS"],"experimental":["MATCHED","AMBIGUOUS"]}},
+    {"id":"mapped_prohibited_continuation","scenario":"prohibited","expected":{"forbidden_edge":"w:1:1:f"}},
+    {"id":"different_way_competitor","scenario":"parallel","expected":{"final_status":"AMBIGUOUS"}},
+    {"id":"stationary_boundary","scenario":"stationary","expected":{"final_status":"AMBIGUOUS"}},
+    {"id":"heading_missing_boundary","scenario":"heading_missing","expected":{"final_status":"AMBIGUOUS"}},
+    {"id":"weak_accuracy_boundary","scenario":"weak_accuracy","expected":{"final_status":"UNKNOWN"}},
+    {"id":"reverse_directed_progress","scenario":"reverse_directed","expected":{"final_status":"MATCHED","final_edge":"w:1:0:r"}},
+    {"id":"sharp_bend","scenario":"sharp_bend","expected":{"experimental_final_status":"AMBIGUOUS"}}
+  ]
+}
