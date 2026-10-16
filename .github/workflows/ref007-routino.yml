@@ -1,0 +1,58 @@
+name: REF-007 Routino real-map executable probe
+on:
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: ref007-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  probe:
+    if: contains(github.event.pull_request.title, '[ref007-routino]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Install actual packaged reference and inspect licence/configuration
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq routino osmium-tool >/dev/null
+          python - <<'PYCODE'
+          from pathlib import Path
+          from hashlib import sha256
+          import subprocess,json
+          copyright=Path('/usr/share/doc/routino/copyright').read_bytes()
+          if b'GPL-' not in copyright and b'GNU General Public License' not in copyright:
+              raise RuntimeError('Unrecognized package licence; stop before routing')
+          metadata={'package':subprocess.check_output(['dpkg-query','-W','-f=${Package} ${Version} ${Architecture}','routino'],text=True),'package_copyright_sha256':sha256(copyright).hexdigest(),'copyright_notice_utf8_hex':copyright.hex(),'package_inventory':subprocess.check_output(['dpkg-query','-L','routino'],text=True),'apt_policy':subprocess.check_output(['apt-cache','policy','routino'],text=True),'python':subprocess.check_output(['python','--version'],text=True).strip()}
+          Path('results/ref007-package-metadata.json').write_text(json.dumps(metadata,indent=2)+'\n')
+          print(json.dumps({'ref007_package_metadata':metadata},indent=2))
+          PYCODE
+      - name: Verify identical real map and freeze unchanged endpoint cases
+        run: |
+          set -euo pipefail
+          curl -fLsS --retry 2 --connect-timeout 20 --max-time 180 https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf -o results/ref007-source.osm.pbf
+          osmium extract --strategy complete_ways --bbox=-2.270000,53.350000,-2.260000,53.360000 results/ref007-source.osm.pbf -o results/ref007-map.osm.pbf
+          osmium cat results/ref007-map.osm.pbf -o results/ref007-map.osm -f osm,add_metadata=false
+          python -m benchmarks.routino_public_probe --prepare
+      - name: Execute actual Routino independently on frozen cases
+        env:
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python -m benchmarks.routino_public_probe
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: ref007-routino-real-map
+          path: results/ref007-*.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Remove ephemeral map and routing database
+        if: always()
+        run: rm -rf results/ref007-source.osm.pbf results/ref007-map.osm.pbf results/ref007-map.osm results/ref007-db results/ref007-REF-006-001 results/ref007-REF-006-002 results/ref007-REF-006-003
