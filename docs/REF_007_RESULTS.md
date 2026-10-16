@@ -86,3 +86,25 @@ scopes. Ten engines on a common requested real-map/GPS-quality cohort remain
 unproven. A subsequent bounded confirmation pins the now-observed exact package
 version and explicitly checks upstream AGPL licence metadata before execution.
 Original cases, hashes and5m endpoint acceptance are unchanged.
+
+### Confirmation and retained limitations
+
+Confirmation38867883336 atde528931b5a509dc5b821953b2e70190c0cb32b1 also passes3/3.
+The exact package version is pinned. Request, executable and configuration hashes
+match the first execution; all endpoint errors and returned vertex counts are
+identical. Raw result is references/ref007-routino-confirmation-20261016.json.
+Six actual Routino calculations across two executions are three frozen cases
+repeated, not six independent road cases. Full safety regression CI38867883107
+passes453 tests at this source; no DMN engine behavior was changed.
+
+Readiness/audit now recognizes the actual packaged CLI evidence and reports seven
+historical static families, with ten-engine common-cohort requirement false.
+The generic active-cohort selector accepts this actual execution type for future
+matched comparisons; no unmatched/ref-only cohort is automatically ranked here.
+The registered original twelve families remain in the separate historical/access
+audit. Unsupported provider access has not been attempted.
+
+Next bounded work: another applicable native/reference adapter (OsmAnd, Organic
+Maps or libosmscout candidate), or source-backed real-map GPS/one-way case bank.
+Do not reuse the zero-one-way Manchester bbox as if it supplied legality cases.
+No production app, APK, release, credentials, signing or paid service was touched.

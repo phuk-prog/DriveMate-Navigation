@@ -1,0 +1,232 @@
+{
+  "trial": "REF-007-CONFIRMATION",
+  "classification": "actual real-map reference confirmation; static endpoint/output only",
+  "run_sha": "de528931b5a509dc5b821953b2e70190c0cb32b1",
+  "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38867883336",
+  "run_id": 38867883336,
+  "job_id": 116864804940,
+  "frozen_requests_unchanged": true,
+  "executable_and_configurations_unchanged": true,
+  "report": {
+    "test_id": "REF-007",
+    "system": "Routino",
+    "run_sha": "de528931b5a509dc5b821953b2e70190c0cb32b1",
+    "classification": "actual real-map route/endpoint output probe; no independent road-law/GPS-quality verdict",
+    "execution": "actual_packaged_cli_import_and_route_calculation",
+    "version": {
+      "package": "routino 3.4.1-1build1 amd64",
+      "package_copyright_sha256": "118e807c7cd334c5703133d012f0b979bca96fe8c30e8513cd94f2cce87d0a8c",
+      "package_inventory": "/.\n/usr\n/usr/bin\n/usr/bin/filedumper\n/usr/bin/filedumper-slim\n/usr/bin/filedumperx\n/usr/bin/planetsplitter\n/usr/bin/planetsplitter-slim\n/usr/bin/routino-router\n/usr/bin/routino-router+lib\n/usr/bin/routino-router+lib-slim\n/usr/bin/routino-router-slim\n/usr/share\n/usr/share/doc\n/usr/share/doc/routino\n/usr/share/doc/routino/ALGORITHM.txt.gz\n/usr/share/doc/routino/CONFIGURATION.txt.gz\n/usr/share/doc/routino/DATA.txt.gz\n/usr/share/doc/routino/DATALIFE.txt.gz\n/usr/share/doc/routino/LIBRARY.txt.gz\n/usr/share/doc/routino/LIMITS.txt.gz\n/usr/share/doc/routino/NEWS.txt.gz\n/usr/share/doc/routino/OUTPUT.txt.gz\n/usr/share/doc/routino/README.Debian\n/usr/share/doc/routino/README.txt.gz\n/usr/share/doc/routino/TAGGING.txt.gz\n/usr/share/doc/routino/USAGE.txt.gz\n/usr/share/doc/routino/agpl-3.0.txt.gz\n/usr/share/doc/routino/copyright\n/usr/share/doc/routino/html\n/usr/share/doc/routino/html/algorithm.html\n/usr/share/doc/routino/html/configuration.html\n/usr/share/doc/routino/html/data.html\n/usr/share/doc/routino/html/index.html\n/usr/share/doc/routino/html/installation-ms-windows.html\n/usr/share/doc/routino/html/installation.html\n/usr/share/doc/routino/html/library.html\n/usr/share/doc/routino/html/limits.html\n/usr/share/doc/routino/html/output.html\n/usr/share/doc/routino/html/readme.html\n/usr/share/doc/routino/html/style.css\n/usr/share/doc/routino/html/tagging.html\n/usr/share/doc/routino/html/usage.html\n/usr/share/doc-base\n/usr/share/doc-base/routino.routino\n/usr/share/lintian\n/usr/share/lintian/overrides\n/usr/share/lintian/overrides/routino\n/usr/share/man\n/usr/share/man/man1\n/usr/share/man/man1/filedumper-slim.1.gz\n/usr/share/man/man1/filedumper.1.gz\n/usr/share/man/man1/filedumperx.1.gz\n/usr/share/man/man1/planetsplitter-slim.1.gz\n/usr/share/man/man1/planetsplitter.1.gz\n/usr/share/man/man1/routino-router+lib-slim.1.gz\n/usr/share/man/man1/routino-router+lib.1.gz\n/usr/share/man/man1/routino-router-slim.1.gz\n/usr/share/man/man1/routino-router.1.gz\n/usr/share/doc/routino/changelog.Debian.gz\n",
+      "apt_policy": "routino:\n  Installed: 3.4.1-1build1\n  Candidate: 3.4.1-1build1\n  Version table:\n *** 3.4.1-1build1 500\n        500 mirror+file:/etc/apt/apt-mirrors.txt noble/universe amd64 Packages\n        100 /var/lib/dpkg/status\n",
+      "python": "Python 3.11.17",
+      "license": {
+        "upstream": "AGPL-3.0-or-later",
+        "debian_packaging": "GPL-3.0-or-later",
+        "mman_windows_files": "Expat",
+        "source": "https://www.routino.org/download/",
+        "evidence": "Distributed package copyright file hash above; full bytes retained in CI artifact ref007-package-metadata.json",
+        "copyright_notice_not_republished": "Preserve licence classification and exact document hash; omit public author contact addresses from repository evidence"
+      }
+    },
+    "configuration": {
+      "transport": "motorcar",
+      "objective": "quickest",
+      "configuration_and_executable_sha256": {
+        "/usr/bin/routino-router": "d5f9736ed731efd6a2d0443e6fac79df52442ce24e57891f8bf93dafab5c3728",
+        "/usr/bin/planetsplitter": "88c04153c9d3e3c3d0701ede83f36214c2f7b2a3aa8e24f9a00a5847bb163b04",
+        "/usr/share/routino/profiles.xml": "0f76ab58dda23b65740b0d725d07f487b6714e679c2c5045c541812bbc551626",
+        "/usr/share/routino/tagging.xml": "b06ce9bf99a6c5f3d6206cc8e1b037598ba6ade2179fd4af872cdb7d85644442",
+        "/usr/share/routino/translations.xml": "5344da3ea7a9cf8345d89673146b77c4756f2c11bf03c06e79fef334a1b954f1"
+      }
+    },
+    "request_manifest": {
+      "classification": "real public map; synthetic selected GPS endpoints, not personal traces",
+      "source_url": "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf",
+      "source_archive_sha256": "b7188b22501b878fddba6e06a90bb44ce6c2d721333e0ca57e10a1a82b568807",
+      "expected_xml_sha256": "b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5",
+      "map_xml_sha256": "b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5",
+      "map_pbf_sha256": "0c695874255033cc8f6ed658422afc2d9e11b00443eea584b72206de39567adc",
+      "selection": "existing _scenarios; first3, before Itinero execution; no failed case discarded",
+      "case_expectation": "actual complete finite route; both exact endpoints within5m; no legal/GNSS-truth claim",
+      "cases": [
+        {
+          "id": "REF-006-001",
+          "start": [
+            53.3567653,
+            -2.2586629
+          ],
+          "end": [
+            53.3562105,
+            -2.2607331
+          ]
+        },
+        {
+          "id": "REF-006-002",
+          "start": [
+            53.3517289,
+            -2.2578447
+          ],
+          "end": [
+            53.352182,
+            -2.2580735
+          ]
+        },
+        {
+          "id": "REF-006-003",
+          "start": [
+            53.352182,
+            -2.2580735
+          ],
+          "end": [
+            53.3517289,
+            -2.2578447
+          ]
+        }
+      ]
+    },
+    "request_manifest_sha256": "b4348997ca109fb873c265179f1edb7d4aa0772bad26b5198ad207deea02f87d",
+    "cases": [
+      {
+        "case_id": "REF-006-001",
+        "outcome": "PASS",
+        "scope": "route output/endpoint contract only",
+        "checks": {
+          "start_within_5m": true,
+          "end_within_5m": true,
+          "nonzero_geometry": true
+        },
+        "start_error_m": 2.253772210486772,
+        "end_error_m": 1.1958912034602391,
+        "returned_vertices": 2,
+        "independent_legality": "UNRESOLVED",
+        "gps_quality_tests_executed": 0
+      },
+      {
+        "case_id": "REF-006-002",
+        "outcome": "PASS",
+        "scope": "route output/endpoint contract only",
+        "checks": {
+          "start_within_5m": true,
+          "end_within_5m": true,
+          "nonzero_geometry": true
+        },
+        "start_error_m": 0.022806124500055643,
+        "end_error_m": 0.033185830294164886,
+        "returned_vertices": 2,
+        "independent_legality": "UNRESOLVED",
+        "gps_quality_tests_executed": 0
+      },
+      {
+        "case_id": "REF-006-003",
+        "outcome": "PASS",
+        "scope": "route output/endpoint contract only",
+        "checks": {
+          "start_within_5m": true,
+          "end_within_5m": true,
+          "nonzero_geometry": true
+        },
+        "start_error_m": 0.033185830294164886,
+        "end_error_m": 0.022806124500055643,
+        "returned_vertices": 2,
+        "independent_legality": "UNRESOLVED",
+        "gps_quality_tests_executed": 0
+      }
+    ],
+    "preparation": {
+      "command": [
+        "/usr/bin/planetsplitter",
+        "--dir=/home/runner/work/DriveMate-Navigation/DriveMate-Navigation/results/ref007-db",
+        "--tagging=/usr/share/routino/tagging.xml",
+        "/home/runner/work/DriveMate-Navigation/DriveMate-Navigation/results/ref007-map.osm"
+      ],
+      "returncode": 0,
+      "stdout": "\nParse OSM Data [/home/runner/work/DriveMate-Navigation/DriveMate-Navigation/results/ref007-map.osm]\n==============\n\nRead: Lines=2 Nodes=0 Ways=0 Relations=0\nRead: Lines=9075 Nodes=2023 Ways=86 Relations=20\n\nSort OSM Data\n=============\n\nSorting Nodes\nSorted Nodes: Nodes=2023 Duplicates=0\nSorting Ways\nSorted Ways: Ways=11 Duplicates=0\nSorting Route Relations\nSorted Route Relations: Relations=20 Duplicates=0\n\nProcess OSM Data\n================\n\nChecking Ways for unused Nodes: Ways=0 Highway Nodes=0\nChecked Ways for unused Nodes: Ways=11 Highway Nodes=158\nRemoving unused Nodes: Nodes=0\nRemoved unused Nodes: Nodes=2023 Highway=158 not-Highway=1865\nSplitting Ways: Ways=0 Segments=0\nSplit Ways: Ways=11 Segments=157 \nSorting Way Names\nSorted Way Names: Ways=11\nUpdating Ways with Names: Ways=0 Names=0\nUpdated Ways with Names: Ways=11 Names=6\nSorting Segments\nSorted Segments: Segments=157 Duplicates=0\nIndexing Segments: Segments=0\nIndexing Segments: Segments=157\nIndexed Segments: Segments=157 \nProcessing Route Relations (1): Relations=0 Modified Ways=0\nProcessed Route Relations (1): Relations=20 Modified Ways=11\nProcessing Turn Relations: Relations=0 Deleted=0 Added=0\nProcessed Turn Relations: Relations=0 Deleted=0 Added=0 \nSorting Ways and Compacting\nSorted and Compacted Ways: Ways=11 Unique=9\nSorting Nodes Geographically\nSorted Nodes Geographically: Nodes=158\nSorting Segments Geographically\nSorted Segments Geographically: Segments=157\nIndexing Segments: Segments=0\nIndexing Segments: Segments=157\nIndexed Segments: Segments=157 \nSorting Turn Relations Geographically\nSorted Turn Relations Geographically: Turn Relations=0\n\nPrune Unneeded Data\n===================\n\nAdding Extra Segment Indexes: Segments=0\nAdded Extra Segment Indexes: Segments=157\nPruning Straight Highway Nodes: Nodes=0 Pruned=0\nPruned Straight Highway Nodes: Nodes=158 Pruned=110\nDeleting Pruned Nodes: Nodes=0 Pruned=0\nDeleted Pruned Nodes: Nodes=158 Pruned=110\nSorting and Pruning Segments\nSorted and Pruned Segments: Segments=157 Deleted=110\nSorting Ways and Compacting\nSorted and Compacted Ways: Ways=9 Unique=9\nIndexing Segments: Segments=0\nIndexing Segments: Segments=47\nIndexed Segments: Segments=47 \nAdding Extra Segment Indexes: Segments=0\nAdded Extra Segment Indexes: Segments=47\nPruning Isolated Regions (foot): Segments=0 Adjusted=0 Pruned=0\nPruned Isolated Regions (foot): Segments=47 Adjusted=3 Pruned=0 (1 Regions)\nPruning Isolated Regions (horse): Segments=0 Adjusted=0 Pruned=0\nPruned Isolated Regions (horse): Segments=47 Adjusted=3 Pruned=0 (1 Regions)\nPruning Isolated Regions (wheelchair): Segments=0 Adjusted=0 Pruned=0\nPruned Isolated Regions (wheelchair): Segments=47 Adjusted=6 Pruned=0 (3 Regions)\nPruning Isolated Regions (bicycle): Segments=0 Adjusted=0 Pruned=0\nPruned Isolated Regions (bicycle): Segments=47 Adjusted=9 Pruned=0 (2 Regions)\nPruning Isolated Regions (moped): Segments=0 Adjusted=0 Pruned=0\nPruned Isolated Regions (moped): Segments=47 Adjusted=3 Pruned=0 (1 Regions)\nPruning Isolated Regions (motorcycle): Segments=0 Adjusted=0 Pruned=0\nPruned Isolated Regions (motorcycle): Segments=47 Adjusted=3 Pruned=0 (1 Regions)\nPruning Isolated Regions (motorcar): Segments=0 Adjusted=0 Pruned=0\nPruned Isolated Regions (motorcar): Segments=47 Adjusted=3 Pruned=0 (1 Regions)\nPruning Isolated Regions (goods): Segments=0 Adjusted=0 Pruned=0\nPruned Isolated Regions (goods): Segments=47 Adjusted=3 Pruned=0 (1 Regions)\nPruning Isolated Regions (hgv): Segments=0 Adjusted=0 Pruned=0\nPruned Isolated Regions (hgv): Segments=47 Adjusted=3 Pruned=0 (1 Regions)\nPruning Isolated Regions (psv): Segments=0 Adjusted=0 Pruned=0\nPruned Isolated Regions (psv): Segments=47 Adjusted=0 Pruned=3 (1 Regions)\nDeleting Pruned Nodes: Nodes=0 Pruned=0\nDeleted Pruned Nodes: Nodes=48 Pruned=4\nSorting and Pruning Segments\nSorted and Pruned Segments: Segments=47 Deleted=3\nSorting Ways and Compacting\nSorted and Compacted Ways: Ways=21 Unique=11\nIndexing Segments: Segments=0\nIndexing Segments: Segments=44\nIndexed Segments: Segments=44 \nAdding Extra Segment Indexes: Segments=0\nAdded Extra Segment Indexes: Segments=44\nPruning Short Segments: Segments=0 Short=0 Pruned=0\nPruned Short Segments: Segments=44 Short=1 Pruned=1\nDeleting Pruned Nodes: Nodes=0 Pruned=0\nDeleted Pruned Nodes: Nodes=44 Pruned=1\nSorting and Pruning Segments\nSorted and Pruned Segments: Segments=44 Deleted=1\nSorting Ways and Compacting\nSorted and Compacted Ways: Ways=11 Unique=10\nIndexing Segments: Segments=0\nIndexing Segments: Segments=43\nIndexed Segments: Segments=43 \n\nProcess Super-Data (iteration 0)\n================================\n\nFinding Super-Nodes: Nodes=0 Super-Nodes=0\nFound Super-Nodes: Nodes=43 Super-Nodes=10\nCreating Super-Segments: Super-Nodes=0 Super-Segments=0\nCreated Super-Segments: Super-Nodes=10 Super-Segments=20\nSorting and Deduplicating Super-Segments\nSorted and Deduplicated Super-Segments: Super-Segments=20 Duplicate=10\n\nProcess Super-Data (iteration 1)\n================================\n\nIndexing Segments: Segments=0\nIndexing Segments: Segments=10\nIndexed Segments: Segments=10 \nFinding Super-Nodes: Nodes=0 Super-Nodes=0\nFound Super-Nodes: Nodes=43 Super-Nodes=9 \nCreating Super-Segments: Super-Nodes=0 Super-Segments=0\nCreated Super-Segments: Super-Nodes=9 Super-Segments=18\nSorting and Deduplicating Super-Segments\nSorted and Deduplicated Super-Segments: Super-Segments=18 Duplicate=9\n\nProcess Super-Data (iteration 2)\n================================\n\nIndexing Segments: Segments=0\nIndexing Segments: Segments=9\nIndexed Segments: Segments=9 \nFinding Super-Nodes: Nodes=0 Super-Nodes=0\nFound Super-Nodes: Nodes=43 Super-Nodes=8 \nCreating Super-Segments: Super-Nodes=0 Super-Segments=0\nCreated Super-Segments: Super-Nodes=8 Super-Segments=16\nSorting and Deduplicating Super-Segments\nSorted and Deduplicated Super-Segments: Super-Segments=16 Duplicate=8\n\nProcess Super-Data (iteration 3)\n================================\n\nIndexing Segments: Segments=0\nIndexing Segments: Segments=8\nIndexed Segments: Segments=8 \nFinding Super-Nodes: Nodes=0 Super-Nodes=0\nFound Super-Nodes: Nodes=43 Super-Nodes=7 \nCreating Super-Segments: Super-Nodes=0 Super-Segments=0\nCreated Super-Segments: Super-Nodes=7 Super-Segments=14\nSorting and Deduplicating Super-Segments\nSorted and Deduplicated Super-Segments: Super-Segments=14 Duplicate=7\n\nProcess Super-Data (iteration 4)\n================================\n\nIndexing Segments: Segments=0\nIndexing Segments: Segments=7\nIndexed Segments: Segments=7 \nFinding Super-Nodes: Nodes=0 Super-Nodes=0\nFound Super-Nodes: Nodes=43 Super-Nodes=7 \nCreating Super-Segments: Super-Nodes=0 Super-Segments=0\nCreated Super-Segments: Super-Nodes=7 Super-Segments=14\nSorting and Deduplicating Super-Segments\nSorted and Deduplicated Super-Segments: Super-Segments=14 Duplicate=7\n\nCombine Segments and Super-Segments\n===================================\n\nMerging Segments: Segments=0 Super=0 Merged=0 Added=0\nMerged Segments: Segments=43 Super=7 Merged=4 Added=3\n\nCross-Reference Nodes and Segments\n==================================\n\nSorting Nodes Geographically\nSorted Nodes Geographically: Nodes=43\nSorting Segments Geographically\nSorted Segments Geographically: Segments=46\nIndexing Segments: Segments=0\nIndexing Segments: Segments=46\nIndexed Segments: Segments=46 \nSorting Turn Relations Geographically\nSorted Turn Relations Geographically: Turn Relations=0\n\nWrite Out Database Files\n========================\n\nWriting Nodes: Nodes=0\nWrote Nodes: Nodes=43 \nWriting Segments: Segments=0\nWrote Segments: Segments=46 \nWriting Ways: Ways=0\nWrote Ways: Ways=10 \nWriting Relations: Turn Relations=0\nWrote Relations: Turn Relations=0  \n\n",
+      "stderr": "",
+      "wall_ns": 11194994
+    },
+    "raw_outputs": [
+      {
+        "case_id": "REF-006-001",
+        "command": [
+          "/usr/bin/routino-router",
+          "--dir=/home/runner/work/DriveMate-Navigation/DriveMate-Navigation/results/ref007-db",
+          "--profiles=/usr/share/routino/profiles.xml",
+          "--translations=/usr/share/routino/translations.xml",
+          "--transport=motorcar",
+          "--quickest",
+          "--output-gpx-track",
+          "--lat1=53.3567653",
+          "--lon1=-2.2586629",
+          "--lat2=53.3562105",
+          "--lon2=-2.2607331"
+        ],
+        "returncode": 0,
+        "stdout": "Loading Files:\nLoaded Files: nodes, segments, ways & relations\nFinding Closest Point: Waypoint 1\nFound Closest Point: Waypoint 1  \nWaypoint 1 is segment 35 (node 29 -> 36): -2.258676 53.356784 = 0.000 km\nFinding Closest Point: Waypoint 2\nFound Closest Point: Waypoint 2  \nWaypoint 2 is segment 35 (node 29 -> 36): -2.260737 53.356200 = 0.000 km\nRouting from waypoint 1 to waypoint 2\nFinding Start Route: Nodes checked = 0\nFound Start Route: Nodes checked = 5  \nRouted OK\nGenerating Result Outputs\nGenerated Result Outputs \n",
+        "stderr": "",
+        "wall_ns": 1661987,
+        "gpx_files": [
+          "quickest-track.gpx"
+        ],
+        "gpx_sha256": "519614f026b5aca8343d6791b203be01b4f043cd8b9ac8ba460c7ca0f58be3be",
+        "gpx_utf8_hex": "3c3f786d6c2076657273696f6e3d22312e302220656e636f64696e673d225554462d38223f3e0a3c6770782076657273696f6e3d22312e31222063726561746f723d22526f7574696e6f2220786d6c6e733a7873693d22687474703a2f2f7777772e77332e6f72672f323030312f584d4c536368656d612d696e7374616e63652220786d6c6e733d22687474703a2f2f7777772e746f706f6772616669782e636f6d2f4750582f312f3122207873693a736368656d614c6f636174696f6e3d22687474703a2f2f7777772e746f706f6772616669782e636f6d2f4750582f312f3120687474703a2f2f7777772e746f706f6772616669782e636f6d2f4750582f312f312f6770782e787364223e0a3c6d657461646174613e0a3c646573633e43726561746f72203a20526f7574696e6f202d20687474703a2f2f7777772e726f7574696e6f2e6f72672f3c2f646573633e0a3c636f7079726967687420617574686f723d224261736564206f6e204f70656e5374726565744d617020646174612066726f6d20687474703a2f2f7777772e6f70656e7374726565746d61702e6f72672f223e0a3c6c6963656e73653e687474703a2f2f7777772e6f70656e7374726565746d61702e6f72672f636f707972696768743c2f6c6963656e73653e0a3c2f636f707972696768743e0a3c2f6d657461646174613e0a3c74726b3e0a3c6e616d653e517569636b65737420726f7574653c2f6e616d653e0a3c646573633e517569636b65737420726f757465206265747765656e20262333393b7374617274262333393b20616e6420262333393b66696e697368262333393b20776179706f696e74733c2f646573633e0a3c74726b7365673e0a3c74726b7074206c61743d2235332e33353637383422206c6f6e3d222d322e323538363736222f3e0a3c74726b7074206c61743d2235332e33353632303022206c6f6e3d222d322e323630373337222f3e0a3c2f74726b7365673e0a3c2f74726b3e0a3c2f6770783e0a"
+      },
+      {
+        "case_id": "REF-006-002",
+        "command": [
+          "/usr/bin/routino-router",
+          "--dir=/home/runner/work/DriveMate-Navigation/DriveMate-Navigation/results/ref007-db",
+          "--profiles=/usr/share/routino/profiles.xml",
+          "--translations=/usr/share/routino/translations.xml",
+          "--transport=motorcar",
+          "--quickest",
+          "--output-gpx-track",
+          "--lat1=53.3517289",
+          "--lon1=-2.2578447",
+          "--lat2=53.352182",
+          "--lon2=-2.2580735"
+        ],
+        "returncode": 0,
+        "stdout": "Loading Files:\nLoaded Files: nodes, segments, ways & relations\nFinding Closest Point: Waypoint 1\nFound Closest Point: Waypoint 1  \nWaypoint 1 is node 39: -2.257845 53.351729 = 0.000 km\nFinding Closest Point: Waypoint 2\nFound Closest Point: Waypoint 2  \nWaypoint 2 is node 37: -2.258073 53.352182 = 0.000 km\nRouting from waypoint 1 to waypoint 2\nFinding Start Route: Nodes checked = 0\nFound Start Route: Nodes checked = 2  \nRouted OK\nGenerating Result Outputs\nGenerated Result Outputs \n",
+        "stderr": "",
+        "wall_ns": 1426876,
+        "gpx_files": [
+          "quickest-track.gpx"
+        ],
+        "gpx_sha256": "9b7ab16e3426b2ec66accfbcf0523beea10f4e7eee0397df4e2987ae162a0c5a",
+        "gpx_utf8_hex": "3c3f786d6c2076657273696f6e3d22312e302220656e636f64696e673d225554462d38223f3e0a3c6770782076657273696f6e3d22312e31222063726561746f723d22526f7574696e6f2220786d6c6e733a7873693d22687474703a2f2f7777772e77332e6f72672f323030312f584d4c536368656d612d696e7374616e63652220786d6c6e733d22687474703a2f2f7777772e746f706f6772616669782e636f6d2f4750582f312f3122207873693a736368656d614c6f636174696f6e3d22687474703a2f2f7777772e746f706f6772616669782e636f6d2f4750582f312f3120687474703a2f2f7777772e746f706f6772616669782e636f6d2f4750582f312f312f6770782e787364223e0a3c6d657461646174613e0a3c646573633e43726561746f72203a20526f7574696e6f202d20687474703a2f2f7777772e726f7574696e6f2e6f72672f3c2f646573633e0a3c636f7079726967687420617574686f723d224261736564206f6e204f70656e5374726565744d617020646174612066726f6d20687474703a2f2f7777772e6f70656e7374726565746d61702e6f72672f223e0a3c6c6963656e73653e687474703a2f2f7777772e6f70656e7374726565746d61702e6f72672f636f707972696768743c2f6c6963656e73653e0a3c2f636f707972696768743e0a3c2f6d657461646174613e0a3c74726b3e0a3c6e616d653e517569636b65737420726f7574653c2f6e616d653e0a3c646573633e517569636b65737420726f757465206265747765656e20262333393b7374617274262333393b20616e6420262333393b66696e697368262333393b20776179706f696e74733c2f646573633e0a3c74726b7365673e0a3c74726b7074206c61743d2235332e33353137323922206c6f6e3d222d322e323537383435222f3e0a3c74726b7074206c61743d2235332e33353231383222206c6f6e3d222d322e323538303733222f3e0a3c2f74726b7365673e0a3c2f74726b3e0a3c2f6770783e0a"
+      },
+      {
+        "case_id": "REF-006-003",
+        "command": [
+          "/usr/bin/routino-router",
+          "--dir=/home/runner/work/DriveMate-Navigation/DriveMate-Navigation/results/ref007-db",
+          "--profiles=/usr/share/routino/profiles.xml",
+          "--translations=/usr/share/routino/translations.xml",
+          "--transport=motorcar",
+          "--quickest",
+          "--output-gpx-track",
+          "--lat1=53.352182",
+          "--lon1=-2.2580735",
+          "--lat2=53.3517289",
+          "--lon2=-2.2578447"
+        ],
+        "returncode": 0,
+        "stdout": "Loading Files:\nLoaded Files: nodes, segments, ways & relations\nFinding Closest Point: Waypoint 1\nFound Closest Point: Waypoint 1  \nWaypoint 1 is node 37: -2.258073 53.352182 = 0.000 km\nFinding Closest Point: Waypoint 2\nFound Closest Point: Waypoint 2  \nWaypoint 2 is node 39: -2.257845 53.351729 = 0.000 km\nRouting from waypoint 1 to waypoint 2\nFinding Start Route: Nodes checked = 0\nFound Start Route: Nodes checked = 3  \nRouted OK\nGenerating Result Outputs\nGenerated Result Outputs \n",
+        "stderr": "",
+        "wall_ns": 1279746,
+        "gpx_files": [
+          "quickest-track.gpx"
+        ],
+        "gpx_sha256": "5b43317b12467c12706be08ad864d4121499af6940cda1bab441fb39911d21aa",
+        "gpx_utf8_hex": "3c3f786d6c2076657273696f6e3d22312e302220656e636f64696e673d225554462d38223f3e0a3c6770782076657273696f6e3d22312e31222063726561746f723d22526f7574696e6f2220786d6c6e733a7873693d22687474703a2f2f7777772e77332e6f72672f323030312f584d4c536368656d612d696e7374616e63652220786d6c6e733d22687474703a2f2f7777772e746f706f6772616669782e636f6d2f4750582f312f3122207873693a736368656d614c6f636174696f6e3d22687474703a2f2f7777772e746f706f6772616669782e636f6d2f4750582f312f3120687474703a2f2f7777772e746f706f6772616669782e636f6d2f4750582f312f312f6770782e787364223e0a3c6d657461646174613e0a3c646573633e43726561746f72203a20526f7574696e6f202d20687474703a2f2f7777772e726f7574696e6f2e6f72672f3c2f646573633e0a3c636f7079726967687420617574686f723d224261736564206f6e204f70656e5374726565744d617020646174612066726f6d20687474703a2f2f7777772e6f70656e7374726565746d61702e6f72672f223e0a3c6c6963656e73653e687474703a2f2f7777772e6f70656e7374726565746d61702e6f72672f636f707972696768743c2f6c6963656e73653e0a3c2f636f707972696768743e0a3c2f6d657461646174613e0a3c74726b3e0a3c6e616d653e517569636b65737420726f7574653c2f6e616d653e0a3c646573633e517569636b65737420726f757465206265747765656e20262333393b7374617274262333393b20616e6420262333393b66696e697368262333393b20776179706f696e74733c2f646573633e0a3c74726b7365673e0a3c74726b7074206c61743d2235332e33353231383222206c6f6e3d222d322e323538303733222f3e0a3c74726b7074206c61743d2235332e33353137323922206c6f6e3d222d322e323537383435222f3e0a3c2f74726b7365673e0a3c2f74726b3e0a3c2f6770783e0a"
+      }
+    ],
+    "actual_route_calculations": 3,
+    "passed": 3,
+    "total": 3,
+    "score_out_of_ten": null,
+    "rank": null,
+    "independent_legality_cases": 0,
+    "gps_quality_cases": 0
+  }
+}

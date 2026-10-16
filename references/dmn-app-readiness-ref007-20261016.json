@@ -1,0 +1,55 @@
+{
+  "run_sha": "de528931b5a509dc5b821953b2e70190c0cb32b1",
+  "classification": "app-adoption readiness inventory; not a new engine test or certification",
+  "status": "NOT_READY_FOR_LIVE_NAVIGATION",
+  "ready_for_live_navigation": false,
+  "ready_to_replace_existing_navigation": false,
+  "overall_score": null,
+  "interpretation": "No aggregate score or competitor win overrides an unresolved critical gate. Prototype experimentation is not production readiness.",
+  "gates": [
+    {
+      "id": "uk_coverage_regression",
+      "status": "BLOCKED",
+      "reason": "Seven backward-adjacent cases remain unresolved; no independent evidence closes this tradeoff",
+      "prior_correct": 24,
+      "current_correct": 17,
+      "confident_wrong": 0,
+      "withheld": 23,
+      "evidence": "references/gps001-uk-topology-20261015.json",
+      "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38810752808"
+    },
+    {
+      "id": "source_backed_real_map_test_batches",
+      "status": "INCOMPLETE",
+      "reason": "Requested real-map/GPS batches not yet completed against independently justified source-backed expectations; historical invented-map controls do not fill this gate"
+    },
+    {
+      "id": "ten_applicable_reference_cohort",
+      "status": "INCOMPLETE",
+      "reason": "No ten-engine shared real-map judged cohort exists; historical static executions are not a universal capability or shared cohort",
+      "historical_static_families": 7,
+      "minimum": 10
+    },
+    {
+      "id": "integrated_dmn_replay",
+      "status": "INCOMPLETE",
+      "reason": "Matching/progress/rerouting/guidance/arrival components have not been verified together in the app; caller-supplied assessments remain isolated research inputs"
+    },
+    {
+      "id": "android_native_offline_lifecycle",
+      "status": "UNVERIFIED",
+      "reason": "Host Python offline namespace proof is not actual Android/native routing, permissions, background, stop/restart or failure recovery evidence"
+    },
+    {
+      "id": "target_device_performance_and_long_runs",
+      "status": "UNVERIFIED",
+      "reason": "No frozen target-device budgets or measured phone/emulator lifecycle and sustained-run evidence; host synthetic-grid timings do not establish this"
+    },
+    {
+      "id": "reversible_app_integration",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "No verified app feature isolation, existing-navigation fallback or rollback/upgrade validation; production repository has not been modified"
+    }
+  ],
+  "next_action": "Complete executable real-map reference expansion and integrated replay; close each gate with actual source/run/artifact evidence before considering app adoption"
+}

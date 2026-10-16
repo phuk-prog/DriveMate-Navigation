@@ -111,7 +111,7 @@
       "execution_status": "EXECUTED_STATIC_ROUTING",
       "target_ten": true,
       "last_executed_configuration": "Ubuntu routino 3.4.1-1build1 amd64; motorcar; quickest",
-      "evidence": "references/ref007-routino-real-map-20261016.json",
+      "evidence": "references/ref007-routino-confirmation-20261016.json",
       "evidence_scope": "REF-007 actual pinned real-map endpoint/output probe only; no GPS quality or independent road-law proof"
     }
   ],

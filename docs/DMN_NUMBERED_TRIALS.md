@@ -529,3 +529,24 @@ references/real-oneway-*.json for original setup failure, unchanged fingerprints
 empty inventory and source-access403 evidence. Select/freeze a suitable new real
 area with authority evidence next; do not relabel this trial as passed. Ten-engine
 cohort, independent law labels and UK seven-case promotion block remain open.
+
+### REF-007: actual Routino real-map output probe and confirmation (2026-10-16)
+
+Added an actual packaged CLI reference, motorcar/quickest, Routino3.4.1-1build1
+amd64. Run38867638822 at6beb57c80cf0b45881dc71773fcf38919b494653 and pinned-package
+confirmation38867883336 atde528931b5a509dc5b821953b2e70190c0cb32b1 each pass3/3
+on the exact REF-006 public-map endpoint requests. Archive/XML/PBF/request hashes
+verified; executable/configuration hashes identical. Max endpoint error2.254m
+against5m, two returned vertices per route. These are endpoint/output probes,
+not interior road law, GNSS stream, optimality or general navigation quality.
+See REF_007_RESULTS.md and references/ref007-routino-*.json for all cases, versions,
+licence/source/configuration hashes, raw bytes/commands, run SHAs and CI links.
+Upstream package copyright: AGPL-3+; research CLI execution only, no app adoption.
+
+Historical executed routing families now seven, not a shared ten-engine cohort.
+Remaining candidates need actual applicable native execution; old unavailable
+families remain audited without invented scores. Full453-test regressions pass;
+no DMN logic change was justified by this output probe. UK17/0/23, seven unresolved
+matches, missing independent one-way case bank and Android/integration/resource
+readiness gaps remain blocking. Next bounded stage is another applicable reference
+or independent source-backed real-map case acquisition; preserve existing failures.

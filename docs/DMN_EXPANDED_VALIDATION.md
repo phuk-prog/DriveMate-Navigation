@@ -27,7 +27,7 @@ No competitor service is a dependency of DMN routing or its correctness oracle.
 The objective is DMN plus at least ten distinct external families per applicable
 competitive cohort. Retained evidence initially established five external static
 routing/maneuver executions: OSRM, Valhalla, GraphHopper, ORS and BRouter. REF-006
-has now additionally executed Itinero on the real pinned Greater Manchester map. These six
+has additionally executed Itinero and REF-007 has executed Routino on the real pinned Greater Manchester map. These seven
 are not ten and do not constitute a shared real-map/GPS-quality cohort. CH/MLD and DMN search variants
 never inflate family count. No claim to an industry “top ten” is supported by
 adding ten names or generically ranking apps with different responsibilities.
@@ -144,7 +144,7 @@ No overall winner is created by mixing unmatched cohorts or hiding missing tests
 | Item | Evidence/classification | Next required proof |
 |---|---|---|
 |Recover UK coverage safely|Verified unresolved regression:24/0/16 to17/0/23; seven backward-adjacent alternatives; GPS_001_RESULTS.md|Independent evidence or a safety-preserving resolution; no forced confidence|
-|Reach ten applicable runnable references|Capability gap:five prior static engines, no new common real-map ten-cohort|Build/execute replacements per category, starting with REF-006; exact profiles and snapshots|
+|Reach ten applicable runnable references|Capability gap:seven static routing families across historical scopes, no common real-map ten-cohort|Build/execute remaining applicable replacements per category; exact profiles and snapshots|
 |Real-map integrated GPS/progress pipeline|Integration gap:isolated controllers consume supplied assessments|Replay real-road geometry with frozen simulated signals through matching, progress, rerouting, guidance and arrival together|
 |Independent real-road legality labels|Evidence gap:map tags/consensus alone insufficient|Obtain/check dated authority records and their scope before assigning verdicts|
 |Native/offline/device integration and long runs|Unverified platform work; host Python package proofs are limited|Actual integrated emulator/native run, lifecycle/offline/recovery and sustained resource evidence|
@@ -169,7 +169,7 @@ Itinero source b8a004a831d353565572c7ba41b5a40c29d79360 (package metadata1.6.0-p
 assembly1.0.0.0), car/uncontracted. All three real-map output/endpoint cases pass,
 maximum endpoint error1.045m. Map XML exactly matches prior b3a883... source; the
 full archive's distinct SHA256 is b7188b22501b878fddba6e06a90bb44ce6c2d721333e0ca57e10a1a82b568807.
-The six executed routing families include historical scopes and are not a shared
+At the REF-006 stage, the six executed routing families included historical scopes and are not a shared
 ten-engine cohort or a market-top-ten claim. No low-signal/streamed-GPS or
 independently verified one-way legality verdict was inferred from this probe.
 Full cases, map/oracle/source/assembly hashes and CI are in
