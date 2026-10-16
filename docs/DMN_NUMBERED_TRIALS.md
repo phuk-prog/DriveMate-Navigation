@@ -587,6 +587,15 @@ run because their retained adapters do not expose the full shared distance, ETA
 and timing contract. The baseline must stop for owner review before any DMN
 change, retest, traffic stage or expanded route cohort.
 
+Baseline runs38870925774 and38871562075 completed. DMN, OSRM, Valhalla,
+GraphHopper, openrouteservice and BRouter each passed3/3 and tie at10/10 for the
+narrow route-output contract. Median measured calculation/request times were
+0.027190ms,1.075801ms,5.181559ms,8.694816ms,8.812027ms and7.272329ms
+respectively; differing timing boundaries prevent a fair speed rank. Two BRouter
+adapter/setup failures are retained. No verified DMN fault was found, no engine
+tuning occurred, and the owner review gate is now active. See
+ROUTE_003_RESULTS.md and references/route003-baseline-20261016.json.
+
 DMN_RESULTS_OVERVIEW.md now consolidates retained per-case comparative rankings,
 failures and actual measured milliseconds, clearly separating missing/unmatched
 latency and historical synthetic controls. APP_VALIDATION_PROGRAMME.md extends
