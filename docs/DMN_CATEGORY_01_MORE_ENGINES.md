@@ -48,3 +48,31 @@ Initial batch commit 9145f1f on CI runs 38968182356 and 38968182544 failed
 new test file. Corrective commit registers it to map_data without changing
 test expectations, frozen data, engine configuration or DMN runtime.
 Fresh complete execution is required; the failed CI evidence remains on GitHub.
+
+## First actual run and corrective classification
+
+Full workflow https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38968306967
+PASS with fresh local execution of all four engines. Its original strict
+route-error classifier judged 5/8 common binary cases (four engines 5/5 on
+that shared subset), with three reverse-denial cases unjudged for both OSRM
+and GraphHopper. The 12-way native directed access comparison remained
+12/12 and 108 segment checks for DMN and Valhalla. Valhalla's original
+profile check was 10/10 comparable; DMN passed all 32 isolated-way profiles.
+
+Investigation found a **harness classification gap**, not evidence that the
+three reverse road movements are permitted. OSRM 5.x can return HTTP 400
+with JSON code NoRoute; GraphHopper can return HTTP 400 with the exact
+message "Connection between locations not found". The adapter previously
+withheld those responses because it accepted only HTTP 200 OSRM NoRoute and
+a different GraphHopper error string. It now recognises these exact error
+signatures while preserving NOT_JUDGED for NoSegment, snap mismatches,
+invalid options, missing geometry and other HTTP error responses.
+
+External documentation supporting the correction:
+- https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md
+- https://github.com/Project-OSRM/osrm-backend/issues/1968
+- https://github.com/graphhopper/graphhopper/issues/2826
+
+Fresh four-engine execution on the original unchanged frozen inputs is
+required. Do not promote the original 5/5 to 8/8 by reclassifying historical
+observations. Preserve that first execution as separate evidence.

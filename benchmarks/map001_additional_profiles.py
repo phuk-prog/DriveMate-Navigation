@@ -51,7 +51,7 @@ def classify(engine, status, response, start, end):
     if engine == "OSRM":
         code = response.get("code")
         if code == "NoRoute":
-            return "NO_ROUTE" if status == 200 else "NOT_JUDGED_HTTP"
+            return "NO_ROUTE" if status in (200, 400) else "NOT_JUDGED_HTTP"
         if code == "NoSegment":
             return "NOT_JUDGED_SNAPPING"
         if status != 200 or code != "Ok":
@@ -68,7 +68,8 @@ def classify(engine, status, response, start, end):
     if engine == "GraphHopper":
         if status != 200:
             message = response.get("message", "")
-            return "NO_ROUTE" if status == 400 and message == "Connection not found" else "NOT_JUDGED_HTTP_OR_SNAPPING"
+            known_disconnect = message in ("Connection not found", "Connection between locations not found")
+            return "NO_ROUTE" if status == 400 and known_disconnect else "NOT_JUDGED_HTTP_OR_SNAPPING"
         paths = response.get("paths")
         if not isinstance(paths, list) or len(paths) != 1:
             return "NOT_JUDGED_SCHEMA"

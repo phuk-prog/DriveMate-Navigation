@@ -18,9 +18,13 @@ class Category1MoreEngines(unittest.TestCase):
 
     def test_noroute_vs_snapping(self):
         self.assertEqual(classify("OSRM", 200, {"code": "NoRoute"}, self.a, self.b), "NO_ROUTE")
+        self.assertEqual(classify("OSRM", 400, {"code": "NoRoute"}, self.a, self.b), "NO_ROUTE")
+        self.assertNotEqual(classify("OSRM", 400, {"code": "InvalidOptions"}, self.a, self.b), "NO_ROUTE")
         self.assertEqual(classify("OSRM", 200, {"code": "NoSegment"}, self.a, self.b),
                          "NOT_JUDGED_SNAPPING")
         self.assertEqual(classify("GraphHopper", 400, {"message": "Connection not found"}, self.a, self.b),
+                         "NO_ROUTE")
+        self.assertEqual(classify("GraphHopper", 400, {"message": "Connection between locations not found"}, self.a, self.b),
                          "NO_ROUTE")
         self.assertNotEqual(classify("GraphHopper", 400, {"message": "Point not found"}, self.a, self.b),
                             "NO_ROUTE")
