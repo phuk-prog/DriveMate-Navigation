@@ -31,8 +31,16 @@ jobs:
         run: python -m tools.privacy_guard
       - name: Compile source
         run: python -m compileall -q engine map_data gps benchmarks tools tests
-      - name: Run independent routing tests
-        run: python -m unittest discover -s tests -v
+      - name: Run independently isolated category unit checks
+        run: python -m tools.category_test_runner --all --output-dir results/category-checks
+      - name: Upload independent category verdicts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: dmn-independent-category-tests
+          path: results/category-checks/
+          if-no-files-found: warn
+          retention-days: 30
       - name: GPS-002 frozen ambiguity fault and recovery batch
         run: python -m benchmarks.gps_fault_batch --output results/gps002-DMN.json
       - name: Upload GPS-002 per-event conformance evidence

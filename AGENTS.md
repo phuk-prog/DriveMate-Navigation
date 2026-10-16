@@ -8,6 +8,20 @@ repository unless separately authorized; production DriveMate stays unchanged.
 
 Follow [the full permanent testing policy](docs/DMN_PERMANENT_TESTING_POLICY.md) for all future trials: (1) separate rankings for every navigation behaviour; (2) combine executions only where independently accurate and fair; (3) rank by the relevant actual measured metric, with optional correctness scores; (4) keep complete and partial common-case cohorts separately; (5) separate independently verified from provisional/map-derived rankings; and (6) stop for owner approval before fixes, then freshly rerun DMN **and all applicable competitors** on the entire affected comparable cohort after each approved improvement. Every test report must give ranked comparisons, a separate exact-case issue register and proposed improvements. Historical completed case evidence and any original scoring formula remain as recorded; prospective policy governs the next experiments.
 
+## Later owner choice — separately execute all 23 category checks
+
+Use the [ordered independent test catalogue](docs/DMN_SEPARATE_TEST_CATEGORIES.md),
+[category register](config/dmn-separated-category-tests.json), and
+[isolated CI unit runner](tools/category_test_runner.py). Run one category
+at a time, not a combined test. One CI job may invoke independent processes
+sequentially to reduce cost. Mark missing tests NOT_RUN; unit PASS never
+implies real-road correctness or an external engine ranking. Publish separate
+actual multi-engine ranks only for identical valid cases, calculated route
+times only on comparable timing boundaries, per-case failures, then proposed
+DMN improvements at the end. The later preference for **separate execution**
+supersedes the earlier permission for multi-category collection. Preserve
+approval before behavioural fixes, full frozen retests and safety gates.
+
 ## Standing owner decision (2026-10-16)
 
 Use one named frozen category contract at a time; several categories may share one execution only when each remains accurately measured and independently ranked. Test DMN and every actually available,

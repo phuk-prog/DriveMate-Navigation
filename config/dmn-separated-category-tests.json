@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "status": "UNIT_TEST_CATEGORY_EXECUTION_ONLY",
+  "rules": "Each existing unit test file exactly once; zero-test categories NOT_RUN; separate category unit results never substitute for engine rankings or real-world truth.",
+  "categories": [
+    {
+      "id": "map_data",
+      "label": "Map data and road graph",
+      "scope": "OSM graph, import and provenance checks; no independently surveyed UK road law.",
+      "test_files": [
+        "test_osm_import.py",
+        "test_uk_archive_replay.py",
+        "test_public_osm_extract.py",
+        "test_public_network_coverage.py",
+        "test_public_network_sweep.py",
+        "test_public_diversity_study.py"
+      ],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "legal_routing",
+      "label": "Road legality and restrictions",
+      "scope": "Mapped one-way, access and turn restriction contract checks; legal truth provisional.",
+      "test_files": [
+        "test_routing_legality_batch.py",
+        "test_real_uk_turn_probe.py",
+        "test_real_map_legality_baseline.py",
+        "test_real_map_oneway.py"
+      ],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "gps_matching",
+      "label": "GPS positioning and road matching",
+      "scope": "Map-derived position/heading/candidate tests; no independent real GNSS accuracy.",
+      "test_files": [
+        "test_gps_matcher.py",
+        "test_gps_link_continuity.py",
+        "test_public_gps_matching.py",
+        "test_competing_link_evidence.py",
+        "test_match_geometry_truth.py"
+      ],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "gps_loss_recovery",
+      "label": "GPS signal loss and recovery",
+      "scope": "Simulated invalid GPS, missed fixes and reacquisition; no phone/tunnel field proof.",
+      "test_files": [
+        "test_gps_fix_quality.py",
+        "test_gps_fault_batch.py",
+        "test_gps_temporal.py",
+        "test_temporal_matcher.py",
+        "test_temporal_directed_progress.py",
+        "test_temporal_transition_distance.py",
+        "test_real_map_gps_recovery.py",
+        "test_public_temporal_gps.py"
+      ],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "route_computation",
+      "label": "Route computation and validity",
+      "scope": "Actual local route search and frozen input validation tests.",
+      "test_files": [
+        "test_routing.py",
+        "test_routing_trial.py",
+        "test_astar.py",
+        "test_real_map_route_baseline.py"
+      ],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "route_quality",
+      "label": "Route quality and preferences",
+      "scope": "Route length/time/cost and preference units, not independently optimal UK routes.",
+      "test_files": [
+        "test_route_alternatives.py",
+        "test_driver_policy.py",
+        "test_public_route_preferences.py",
+        "test_uk_neighborhood_detours.py",
+        "test_uk_preference_archive.py",
+        "test_uk_preference_case_register.py",
+        "test_uk_osrm_case_comparison.py",
+        "test_uk_osrm_interior_audit.py",
+        "test_public_uk_probe.py"
+      ],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "route_calculation_speed",
+      "label": "Route calculation speed",
+      "scope": "Timing-worker test methodology and algorithm units; no comparable cross-engine latency ranking.",
+      "test_files": [
+        "test_resource_trial.py"
+      ],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "junctions",
+      "label": "Junction turns and maneuvers",
+      "scope": "Junction scorer and instruction contract tests; not road-truth verified.",
+      "test_files": [
+        "test_junction_scorecard.py"
+      ],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "roundabouts",
+      "label": "Roundabout exits and paths",
+      "scope": "Synthetic roundabout exit/instruction controls only.",
+      "test_files": [
+        "test_maneuvers.py"
+      ],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "lanes",
+      "label": "Lane counts and next-turn guidance",
+      "scope": "Actual UK lane arrows, combined turn/through and best-lane advice not executed.",
+      "test_files": [],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "route_line_adherence",
+      "label": "Route line and turn-point road adherence",
+      "scope": "Full route-line drift, roundabout arc clipping, wrong-side turn point untested.",
+      "test_files": [],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "rerouting",
+      "label": "Wrong turns and rerouting",
+      "scope": "Rerouting controller state and wrong-turn policies; not full Android real drives.",
+      "test_files": [
+        "test_rerouting_controller.py",
+        "test_rerouting_lifecycle_trial.py",
+        "test_navigation_trial.py"
+      ],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "instruction_timing",
+      "label": "Navigation instructions and timing",
+      "scope": "No measured approach/at-turn/after-turn or adaptive spoken timing test.",
+      "test_files": [],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "live_traffic",
+      "label": "Traffic, closures and dynamic replanning",
+      "scope": "Live incident, closure and traffic response tests not executed.",
+      "test_files": [],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "speed_limits",
+      "label": "Road section speed limits and alerts",
+      "scope": "Speed-limit per-section, alert correctness and verified camera checks not executed.",
+      "test_files": [],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "arrival",
+      "label": "Correct arrival and approach side",
+      "scope": "Arrival state/controller units, not verified driveway/property approach.",
+      "test_files": [
+        "test_arrival_controller.py"
+      ],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "offline_reliability",
+      "label": "Offline routing, maps and updates",
+      "scope": "Host offline navigation package tests; Android downloads/updates not demonstrated.",
+      "test_files": [
+        "test_offline_package.py"
+      ],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "voice_audio",
+      "label": "Voice, Bluetooth and music ducking",
+      "scope": "Android voice/Bluetooth music ducking not tested.",
+      "test_files": [],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "failure_handling",
+      "label": "Failure handling, integrity and safety gates",
+      "scope": "Evidence integrity and readiness gate tests, not full app resilience.",
+      "test_files": [
+        "test_app_readiness.py",
+        "test_privacy_guard.py",
+        "test_validation_readiness.py",
+        "test_dmn_atomic_coverage.py",
+        "test_dmn_engine_first_inventory.py",
+        "test_dmn_navigation_modules.py",
+        "test_dmn_test_discovery.py",
+        "test_comparison.py",
+        "test_applicable_cohort.py",
+        "test_provider_summaries.py",
+        "test_category_test_runner.py"
+      ],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "performance_resources",
+      "label": "Memory, CPU, energy and map size",
+      "scope": "Synthetic benchmark controls; no equivalent device CPU/RAM/battery measurements.",
+      "test_files": [
+        "test_benchmarks.py"
+      ],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "integrated_end_to_end",
+      "label": "Complete press-navigate driving",
+      "scope": "No end-to-end full UK map-replay with actual Android navigation.",
+      "test_files": [],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "android_integration",
+      "label": "Android emulator and app integration",
+      "scope": "No Android emulator/device integration executed by this unit stage.",
+      "test_files": [],
+      "engine_rank": null,
+      "navigation_score": null
+    },
+    {
+      "id": "reference_adapters",
+      "label": "Competitor adapters and comparison integrity",
+      "scope": "Adapter contract checks are not live external engine comparisons.",
+      "test_files": [
+        "test_graphhopper_live_reference.py",
+        "test_osrm_live_reference.py",
+        "test_valhalla_live_reference.py",
+        "test_itinero_public_probe.py",
+        "test_routino_public_probe.py",
+        "test_routing_reference_adapters.py",
+        "test_graphhopper_match_reference.py",
+        "test_osrm_match_reference.py",
+        "test_valhalla_match_reference.py",
+        "test_ors_snap_reference.py"
+      ],
+      "engine_rank": null,
+      "navigation_score": null
+    }
+  ]
+}

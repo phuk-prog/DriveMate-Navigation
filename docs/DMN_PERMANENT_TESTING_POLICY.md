@@ -2,6 +2,10 @@
 
 **Owner approved:** 16 October 2026. **Scope:** DriveMate Navigation (DMN) research on the existing research branch. This policy applies to future trials and approved retests; it does not rewrite historical experiments, frozen acceptance criteria, artifacts, or recorded rankings. AGENTS.md is the entry point; this document gives the complete reporting contract.
 
+## Owner update — separate category execution (16 October 2026)
+
+A later owner decision overrides the earlier option to combine categories: **execute every category's checks independently**. Use the exhaustive [23-category register](../config/dmn-separated-category-tests.json), isolated [unit runner](../tools/category_test_runner.py) and [logical order](DMN_SEPARATE_TEST_CATEGORIES.md). Unit PASS is not navigation quality; real-road verification, competitor ranking, route calculation timing and missing tests remain distinct. Existing separate frozen road-trial scripts may still run as separate named experiments, with appropriate comparable engines. No weighted or overall ranking. Put proposed DMN improvements at the end, with explicit owner review before behavior changes.
+
 ## 1. Test and rank each navigation behaviour separately
 
 Maintain independent test identities, evidence, rankings and issue registers for GPS position accuracy; road/direction/map matching; GPS quality, outages and recovery; route computation correctness; route calculation latency; route quality and detours; lawful turn/one-way/access restrictions; junctions and roundabout paths/exits; lane guidance; instruction accuracy and timing; wrong-turn detection; reroute correctness; reroute trigger and calculation latency; traffic/closure response; arrival position/approach; online/offline behaviour; resource usage; and any newly established behaviour. New genuine failure modes become their own reproducible, frozen cases and may require a new category, subject to owner review.
