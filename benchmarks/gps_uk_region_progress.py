@@ -34,7 +34,8 @@ def sample_pairs(graph,limit=12):
             if same and a[3]!=b[3]:continue
             chosen.append((e,f))
             used.add(a[1])
-            if len(chosen)==limit:return chosen
+            if len(chosen)==limit or (same and len(chosen)>=limit//2):break
+        if len(chosen)==limit:break
     return chosen
 
 def run_pair(graph,xy,a,b):
