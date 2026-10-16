@@ -30,3 +30,25 @@ class ManeuverTests(unittest.TestCase):
         r=shortest_route(data.graph,'osm:10','osm:13')
         with self.assertRaises(ValueError):
             principal_maneuvers(data.graph,data.coordinates,r.edge_ids+('w:116:0:f',),ring)
+
+    def test_turn_restriction_excludes_first_spoke(self):
+        # Additional analytical control: removing first legal departure makes
+        # the geometrically second exit the first accessible exit. No road claim.
+        from engine.routing import RoadGraph
+        data, ring=load_map()
+        graph=RoadGraph(data.graph.vertices,data.graph.edges.values(), [('w:111:0:f','w:112:0:f')])
+        r=shortest_route(graph,'osm:10','osm:17')
+        self.assertEqual(principal_maneuvers(graph,data.coordinates,r.edge_ids,ring),[{'kind':'roundabout','exit':1}])
+
+    def test_unknown_spoke_does_not_count(self):
+        from engine.routing import RoadGraph
+        from dataclasses import replace
+        data,ring=load_map()
+        graph=RoadGraph(data.graph.vertices,[replace(e,access='unknown') if e.edge_id=='w:112:0:f' else e for e in data.graph.edges.values()])
+        r=shortest_route(graph,'osm:10','osm:18')
+        self.assertEqual(principal_maneuvers(graph,data.coordinates,r.edge_ids,ring),[{'kind':'roundabout','exit':2}])
+
+    def test_unknown_metadata_rejected(self):
+        data,ring=load_map()
+        with self.assertRaises(ValueError):
+            principal_maneuvers(data.graph,data.coordinates,(),ring|{'missing'})
