@@ -238,3 +238,19 @@ Generic server failures, timeouts and ambiguous provider errors are UNRESOLVED o
 unavailable, not passed no-route. Successful CI means execution/evidence checks
 passed; inspect case verdicts before claiming a quality result. No DMN engine
 policy has been changed to author this harness. Preserve the UK coverage block.
+
+ROUTE-002 completed: baseline run38839461917 at
+`061fe6187a389ba197c8d72b50506707ca85f0eb` executed all five permitted references
+sequentially and DMN. Shared static cohort: DMN/OSRM/Valhalla/GraphHopper/ORS5/5,
+BRouter3/5. Targeted BRouter retest38839878414 at
+`e47ea4586faf2a3f2cc0e3c453b08b63fab5e78d` confirms relocated endpoints248.6093m
+and78.6234m from unreachable exact destinations; it does not show prohibited-road
+traversal. Map/oracle/acceptance unchanged. DMN also passes three state controls,
+8/8 total. Full references remain unsupported for those state cases or not run
+with reasons; common score uses five cases, not eight. See ROUTE_002_RESULTS.md
+and route002-before/retest/scorecard-20261016.json. No DMN engine policy changed.
+381 tests pass; normal CI now gates/retains DMN's eight cases. Do not repeat the
+unchanged heavyweight cohort automatically. Next bounded stage: rerouting
+controller lifecycle (off-route corroboration, cooldown, stale/cancelled result
+suppression) before junction/roundabout/instruction/arrival/offline/resource work.
+The UK coverage tradeoff and promotion block remain open.

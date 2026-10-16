@@ -42,6 +42,15 @@ jobs:
           path: results/gps002-DMN.json
           if-no-files-found: error
           retention-days: 30
+      - name: ROUTE-002 access turn and recalculation safety batch
+        run: python -m benchmarks.routing_legality_batch --engine DMN --output results/route002-DMN.json
+      - name: Upload ROUTE-002 DMN contract evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: route002-dmn-contract
+          path: results/route002-DMN.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Measure synthetic routing latency (informational only)
         run: |
           python -m benchmarks.run --repeat 30

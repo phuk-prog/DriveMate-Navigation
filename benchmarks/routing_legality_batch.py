@@ -191,5 +191,7 @@ def main():
     if not a.output.resolve().is_relative_to((ROOT/'results').resolve()):raise ValueError('Ephemeral reports stay under results')
     result=(run_dmn() if a.engine=='DMN' else run_external(a.engine)) if a.engine else scorecard([json.loads(p.read_text()) for p in a.reports or []])
     a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))
+    if a.engine=='DMN' and any(c['outcome']!='PASS' for c in result['cases']):
+        raise SystemExit('ROUTE-002 DMN contract failed; preserve evidence and diagnose')
 
 if __name__=='__main__':main()

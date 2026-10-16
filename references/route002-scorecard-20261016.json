@@ -1,0 +1,1286 @@
+{
+  "trial": "ROUTE-002",
+  "classification": "Synthetic analytical route/destination contract, not independent real-road truth",
+  "execution_sources": [
+    {
+      "systems": [
+        "OSRM",
+        "Valhalla",
+        "GraphHopper",
+        "openrouteservice"
+      ],
+      "run_id": 38839461917,
+      "head_sha": "061fe6187a389ba197c8d72b50506707ca85f0eb"
+    },
+    {
+      "systems": [
+        "DMN",
+        "BRouter"
+      ],
+      "run_id": 38839878414,
+      "head_sha": "e47ea4586faf2a3f2cc0e3c453b08b63fab5e78d"
+    }
+  ],
+  "test_id": "ROUTE-002",
+  "formula": "10 * passed / five frozen shared-static cases; ties share rank; incomplete shared cohorts unranked",
+  "ranked_case_ids": [
+    "ROUTE-002-prohibited-turn-detour",
+    "ROUTE-002-fresh-origin-control",
+    "ROUTE-002-motor-access-bypass",
+    "ROUTE-002-disconnected-destination",
+    "ROUTE-002-prohibited-target"
+  ],
+  "state_cases_ranked_with_static": false,
+  "rows": [
+    {
+      "system": "DMN",
+      "rank": 1,
+      "passed_shared": 5,
+      "failed_shared": 0,
+      "judged_shared_cases": 5,
+      "score_out_of_ten": 10.0,
+      "all_cases_passed": 8,
+      "unsupported": 0,
+      "unresolved": 0,
+      "not_run": 0,
+      "cases": [
+        {
+          "case_id": "ROUTE-002-prohibited-turn-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.746,
+          "returned_length_m": 444.746,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "geometry_diagnostics": {
+            "returned_start": [
+              1,
+              1
+            ],
+            "returned_end": [
+              1,
+              1.002
+            ],
+            "start_error_m": 0,
+            "end_error_m": 0,
+            "returned_vertices": 5
+          },
+          "accepted_legal_variants": 2
+        },
+        {
+          "case_id": "ROUTE-002-fresh-origin-control",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 111.178,
+          "returned_length_m": 111.178,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "geometry_diagnostics": {
+            "returned_start": [
+              1,
+              1.001
+            ],
+            "returned_end": [
+              1,
+              1.002
+            ],
+            "start_error_m": 0,
+            "end_error_m": 0,
+            "returned_vertices": 2
+          },
+          "accepted_legal_variants": 3
+        },
+        {
+          "case_id": "ROUTE-002-motor-access-bypass",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 222.373,
+          "returned_length_m": 222.373,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "geometry_diagnostics": {
+            "returned_start": [
+              1,
+              1.001
+            ],
+            "returned_end": [
+              1.001,
+              1.002
+            ],
+            "start_error_m": 0,
+            "end_error_m": 0,
+            "returned_vertices": 3
+          },
+          "accepted_legal_variants": 2
+        },
+        {
+          "case_id": "ROUTE-002-disconnected-destination",
+          "cohort": "shared-static",
+          "expected": "NO_ROUTE",
+          "actual": "NO_ROUTE",
+          "outcome": "PASS",
+          "checks": {
+            "no_route_returned": true
+          },
+          "failures": []
+        },
+        {
+          "case_id": "ROUTE-002-prohibited-target",
+          "cohort": "shared-static",
+          "expected": "NO_ROUTE",
+          "actual": "NO_ROUTE",
+          "outcome": "PASS",
+          "checks": {
+            "no_route_returned": true
+          },
+          "failures": []
+        },
+        {
+          "case_id": "ROUTE-002-reroute-incoming-turn",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 333.568,
+          "returned_length_m": 333.568,
+          "cohort": "dmn-state",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "geometry_diagnostics": {
+            "returned_start": [
+              1,
+              1.001
+            ],
+            "returned_end": [
+              1,
+              1.002
+            ],
+            "start_error_m": 0,
+            "end_error_m": 0,
+            "returned_vertices": 4
+          },
+          "accepted_legal_variants": 2
+        },
+        {
+          "case_id": "ROUTE-002-reroute-blocked-link",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 379.632,
+          "returned_length_m": 379.632,
+          "cohort": "dmn-state",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "geometry_diagnostics": {
+            "returned_start": [
+              1.001,
+              1.001
+            ],
+            "returned_end": [
+              1,
+              1.002
+            ],
+            "start_error_m": 0,
+            "end_error_m": 0,
+            "returned_vertices": 4
+          },
+          "accepted_legal_variants": 1
+        },
+        {
+          "case_id": "ROUTE-002-reroute-no-legal-detour",
+          "cohort": "dmn-state",
+          "expected": "NO_ROUTE",
+          "actual": "NO_ROUTE",
+          "outcome": "PASS",
+          "checks": {
+            "no_route_returned": true
+          },
+          "failures": []
+        }
+      ]
+    },
+    {
+      "system": "GraphHopper",
+      "rank": 1,
+      "passed_shared": 5,
+      "failed_shared": 0,
+      "judged_shared_cases": 5,
+      "score_out_of_ten": 10.0,
+      "all_cases_passed": 5,
+      "unsupported": 3,
+      "unresolved": 0,
+      "not_run": 0,
+      "cases": [
+        {
+          "case_id": "ROUTE-002-prohibited-turn-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.746,
+          "returned_length_m": 444.746,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "accepted_legal_variants": 2
+        },
+        {
+          "case_id": "ROUTE-002-fresh-origin-control",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 111.178,
+          "returned_length_m": 111.178,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "accepted_legal_variants": 3
+        },
+        {
+          "case_id": "ROUTE-002-motor-access-bypass",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 222.373,
+          "returned_length_m": 222.373,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "accepted_legal_variants": 2
+        },
+        {
+          "case_id": "ROUTE-002-disconnected-destination",
+          "cohort": "shared-static",
+          "expected": "NO_ROUTE",
+          "actual": "NO_ROUTE",
+          "outcome": "PASS",
+          "checks": {
+            "no_route_returned": true
+          },
+          "failures": [],
+          "provider_reason": "ConnectionNotFoundException"
+        },
+        {
+          "case_id": "ROUTE-002-prohibited-target",
+          "cohort": "shared-static",
+          "expected": "NO_ROUTE",
+          "actual": "NO_ROUTE",
+          "outcome": "PASS",
+          "checks": {
+            "no_route_returned": true
+          },
+          "failures": [],
+          "provider_reason": "ConnectionNotFoundException"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-incoming-turn",
+          "cohort": "dmn-state",
+          "expected": "ROUTE",
+          "actual": "UNSUPPORTED",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated endpoint has no equivalent incoming-edge or arbitrary blocked-link state interface.",
+          "checks": {}
+        },
+        {
+          "case_id": "ROUTE-002-reroute-blocked-link",
+          "cohort": "dmn-state",
+          "expected": "ROUTE",
+          "actual": "UNSUPPORTED",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated endpoint has no equivalent incoming-edge or arbitrary blocked-link state interface.",
+          "checks": {}
+        },
+        {
+          "case_id": "ROUTE-002-reroute-no-legal-detour",
+          "cohort": "dmn-state",
+          "expected": "NO_ROUTE",
+          "actual": "UNSUPPORTED",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated endpoint has no equivalent incoming-edge or arbitrary blocked-link state interface.",
+          "checks": {}
+        }
+      ]
+    },
+    {
+      "system": "OSRM",
+      "rank": 1,
+      "passed_shared": 5,
+      "failed_shared": 0,
+      "judged_shared_cases": 5,
+      "score_out_of_ten": 10.0,
+      "all_cases_passed": 5,
+      "unsupported": 3,
+      "unresolved": 0,
+      "not_run": 0,
+      "cases": [
+        {
+          "case_id": "ROUTE-002-prohibited-turn-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.746,
+          "returned_length_m": 444.746,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "accepted_legal_variants": 2
+        },
+        {
+          "case_id": "ROUTE-002-fresh-origin-control",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 111.178,
+          "returned_length_m": 111.178,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "accepted_legal_variants": 3
+        },
+        {
+          "case_id": "ROUTE-002-motor-access-bypass",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 222.373,
+          "returned_length_m": 222.373,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "accepted_legal_variants": 2
+        },
+        {
+          "case_id": "ROUTE-002-disconnected-destination",
+          "cohort": "shared-static",
+          "expected": "NO_ROUTE",
+          "actual": "NO_ROUTE",
+          "outcome": "PASS",
+          "checks": {
+            "no_route_returned": true
+          },
+          "failures": [],
+          "provider_reason": "NoRoute"
+        },
+        {
+          "case_id": "ROUTE-002-prohibited-target",
+          "cohort": "shared-static",
+          "expected": "NO_ROUTE",
+          "actual": "NO_ROUTE",
+          "outcome": "PASS",
+          "checks": {
+            "no_route_returned": true
+          },
+          "failures": [],
+          "provider_reason": "NoRoute"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-incoming-turn",
+          "cohort": "dmn-state",
+          "expected": "ROUTE",
+          "actual": "UNSUPPORTED",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated endpoint has no equivalent incoming-edge or arbitrary blocked-link state interface.",
+          "checks": {}
+        },
+        {
+          "case_id": "ROUTE-002-reroute-blocked-link",
+          "cohort": "dmn-state",
+          "expected": "ROUTE",
+          "actual": "UNSUPPORTED",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated endpoint has no equivalent incoming-edge or arbitrary blocked-link state interface.",
+          "checks": {}
+        },
+        {
+          "case_id": "ROUTE-002-reroute-no-legal-detour",
+          "cohort": "dmn-state",
+          "expected": "NO_ROUTE",
+          "actual": "UNSUPPORTED",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated endpoint has no equivalent incoming-edge or arbitrary blocked-link state interface.",
+          "checks": {}
+        }
+      ]
+    },
+    {
+      "system": "Valhalla",
+      "rank": 1,
+      "passed_shared": 5,
+      "failed_shared": 0,
+      "judged_shared_cases": 5,
+      "score_out_of_ten": 10.0,
+      "all_cases_passed": 5,
+      "unsupported": 3,
+      "unresolved": 0,
+      "not_run": 0,
+      "cases": [
+        {
+          "case_id": "ROUTE-002-prohibited-turn-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.746,
+          "returned_length_m": 444.746,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "accepted_legal_variants": 2
+        },
+        {
+          "case_id": "ROUTE-002-fresh-origin-control",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 111.178,
+          "returned_length_m": 111.178,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "accepted_legal_variants": 3
+        },
+        {
+          "case_id": "ROUTE-002-motor-access-bypass",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 222.373,
+          "returned_length_m": 222.373,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "accepted_legal_variants": 2
+        },
+        {
+          "case_id": "ROUTE-002-disconnected-destination",
+          "cohort": "shared-static",
+          "expected": "NO_ROUTE",
+          "actual": "NO_ROUTE",
+          "outcome": "PASS",
+          "checks": {
+            "no_route_returned": true
+          },
+          "failures": [],
+          "provider_reason": "Valhalla442"
+        },
+        {
+          "case_id": "ROUTE-002-prohibited-target",
+          "cohort": "shared-static",
+          "expected": "NO_ROUTE",
+          "actual": "NO_ROUTE",
+          "outcome": "PASS",
+          "checks": {
+            "no_route_returned": true
+          },
+          "failures": [],
+          "provider_reason": "Valhalla442"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-incoming-turn",
+          "cohort": "dmn-state",
+          "expected": "ROUTE",
+          "actual": "UNSUPPORTED",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated endpoint has no equivalent incoming-edge or arbitrary blocked-link state interface.",
+          "checks": {}
+        },
+        {
+          "case_id": "ROUTE-002-reroute-blocked-link",
+          "cohort": "dmn-state",
+          "expected": "ROUTE",
+          "actual": "UNSUPPORTED",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated endpoint has no equivalent incoming-edge or arbitrary blocked-link state interface.",
+          "checks": {}
+        },
+        {
+          "case_id": "ROUTE-002-reroute-no-legal-detour",
+          "cohort": "dmn-state",
+          "expected": "NO_ROUTE",
+          "actual": "UNSUPPORTED",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated endpoint has no equivalent incoming-edge or arbitrary blocked-link state interface.",
+          "checks": {}
+        }
+      ]
+    },
+    {
+      "system": "openrouteservice",
+      "rank": 1,
+      "passed_shared": 5,
+      "failed_shared": 0,
+      "judged_shared_cases": 5,
+      "score_out_of_ten": 10.0,
+      "all_cases_passed": 5,
+      "unsupported": 3,
+      "unresolved": 0,
+      "not_run": 0,
+      "cases": [
+        {
+          "case_id": "ROUTE-002-prohibited-turn-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.746,
+          "returned_length_m": 444.746,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "accepted_legal_variants": 2
+        },
+        {
+          "case_id": "ROUTE-002-fresh-origin-control",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 111.178,
+          "returned_length_m": 111.178,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "accepted_legal_variants": 3
+        },
+        {
+          "case_id": "ROUTE-002-motor-access-bypass",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 222.373,
+          "returned_length_m": 222.373,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "accepted_legal_variants": 2
+        },
+        {
+          "case_id": "ROUTE-002-disconnected-destination",
+          "cohort": "shared-static",
+          "expected": "NO_ROUTE",
+          "actual": "NO_ROUTE",
+          "outcome": "PASS",
+          "checks": {
+            "no_route_returned": true
+          },
+          "failures": [],
+          "provider_reason": "ORS2009"
+        },
+        {
+          "case_id": "ROUTE-002-prohibited-target",
+          "cohort": "shared-static",
+          "expected": "NO_ROUTE",
+          "actual": "NO_ROUTE",
+          "outcome": "PASS",
+          "checks": {
+            "no_route_returned": true
+          },
+          "failures": [],
+          "provider_reason": "ORS2009"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-incoming-turn",
+          "cohort": "dmn-state",
+          "expected": "ROUTE",
+          "actual": "UNSUPPORTED",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated endpoint has no equivalent incoming-edge or arbitrary blocked-link state interface.",
+          "checks": {}
+        },
+        {
+          "case_id": "ROUTE-002-reroute-blocked-link",
+          "cohort": "dmn-state",
+          "expected": "ROUTE",
+          "actual": "UNSUPPORTED",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated endpoint has no equivalent incoming-edge or arbitrary blocked-link state interface.",
+          "checks": {}
+        },
+        {
+          "case_id": "ROUTE-002-reroute-no-legal-detour",
+          "cohort": "dmn-state",
+          "expected": "NO_ROUTE",
+          "actual": "UNSUPPORTED",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated endpoint has no equivalent incoming-edge or arbitrary blocked-link state interface.",
+          "checks": {}
+        }
+      ]
+    },
+    {
+      "system": "BRouter",
+      "rank": 6,
+      "passed_shared": 3,
+      "failed_shared": 2,
+      "judged_shared_cases": 5,
+      "score_out_of_ten": 6.0,
+      "all_cases_passed": 3,
+      "unsupported": 3,
+      "unresolved": 0,
+      "not_run": 0,
+      "cases": [
+        {
+          "case_id": "ROUTE-002-prohibited-turn-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.746,
+          "returned_length_m": 444.746,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "geometry_diagnostics": {
+            "returned_start": [
+              1,
+              1
+            ],
+            "returned_end": [
+              1,
+              1.002
+            ],
+            "start_error_m": 0,
+            "end_error_m": 0,
+            "returned_vertices": 5
+          },
+          "accepted_legal_variants": 2
+        },
+        {
+          "case_id": "ROUTE-002-fresh-origin-control",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 333.568,
+          "returned_length_m": 333.568,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "geometry_diagnostics": {
+            "returned_start": [
+              1,
+              1.001
+            ],
+            "returned_end": [
+              1,
+              1.002
+            ],
+            "start_error_m": 0,
+            "end_error_m": 0,
+            "returned_vertices": 4
+          },
+          "accepted_legal_variants": 3
+        },
+        {
+          "case_id": "ROUTE-002-motor-access-bypass",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 222.373,
+          "returned_length_m": 222.373,
+          "cohort": "shared-static",
+          "expected": "ROUTE",
+          "actual": "ROUTE",
+          "geometry_diagnostics": {
+            "returned_start": [
+              1,
+              1.001
+            ],
+            "returned_end": [
+              1.001,
+              1.002
+            ],
+            "start_error_m": 0,
+            "end_error_m": 0,
+            "returned_vertices": 3
+          },
+          "accepted_legal_variants": 2
+        },
+        {
+          "case_id": "ROUTE-002-disconnected-destination",
+          "cohort": "shared-static",
+          "expected": "NO_ROUTE",
+          "actual": "ROUTE",
+          "geometry_diagnostics": {
+            "returned_start": [
+              1,
+              1
+            ],
+            "returned_end": [
+              1.002,
+              1.002
+            ],
+            "start_error_m": 0,
+            "end_error_m": 248.6093,
+            "returned_vertices": 4
+          },
+          "returned_geometry": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1.001
+            ],
+            [
+              1.001,
+              1.001
+            ],
+            [
+              1.002,
+              1.002
+            ]
+          ],
+          "outcome": "FAIL",
+          "checks": {
+            "no_route_returned": false
+          },
+          "failures": [
+            "route_returned_for_unreachable_exact_destination"
+          ]
+        },
+        {
+          "case_id": "ROUTE-002-prohibited-target",
+          "cohort": "shared-static",
+          "expected": "NO_ROUTE",
+          "actual": "ROUTE",
+          "geometry_diagnostics": {
+            "returned_start": [
+              1.001,
+              1.001
+            ],
+            "returned_end": [
+              1.001496,
+              1.001496
+            ],
+            "start_error_m": 0,
+            "end_error_m": 78.6234,
+            "returned_vertices": 2
+          },
+          "returned_geometry": [
+            [
+              1.001,
+              1.001
+            ],
+            [
+              1.001496,
+              1.001496
+            ]
+          ],
+          "outcome": "FAIL",
+          "checks": {
+            "no_route_returned": false
+          },
+          "failures": [
+            "route_returned_for_unreachable_exact_destination"
+          ]
+        },
+        {
+          "case_id": "ROUTE-002-reroute-incoming-turn",
+          "cohort": "dmn-state",
+          "expected": "ROUTE",
+          "actual": "UNSUPPORTED",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated endpoint has no equivalent incoming-edge or arbitrary blocked-link state interface.",
+          "checks": {}
+        },
+        {
+          "case_id": "ROUTE-002-reroute-blocked-link",
+          "cohort": "dmn-state",
+          "expected": "ROUTE",
+          "actual": "UNSUPPORTED",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated endpoint has no equivalent incoming-edge or arbitrary blocked-link state interface.",
+          "checks": {}
+        },
+        {
+          "case_id": "ROUTE-002-reroute-no-legal-detour",
+          "cohort": "dmn-state",
+          "expected": "NO_ROUTE",
+          "actual": "UNSUPPORTED",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated endpoint has no equivalent incoming-edge or arbitrary blocked-link state interface.",
+          "checks": {}
+        }
+      ]
+    },
+    {
+      "system": "Google Maps",
+      "rank": null,
+      "passed_shared": 0,
+      "failed_shared": 0,
+      "judged_shared_cases": 0,
+      "score_out_of_ten": null,
+      "all_cases_passed": 0,
+      "unsupported": 0,
+      "unresolved": 0,
+      "not_run": 8,
+      "cases": [
+        {
+          "case_id": "ROUTE-002-prohibited-turn-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-fresh-origin-control",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-motor-access-bypass",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-disconnected-destination",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-prohibited-target",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-incoming-turn",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-blocked-link",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-no-legal-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        }
+      ]
+    },
+    {
+      "system": "HERE",
+      "rank": null,
+      "passed_shared": 0,
+      "failed_shared": 0,
+      "judged_shared_cases": 0,
+      "score_out_of_ten": null,
+      "all_cases_passed": 0,
+      "unsupported": 0,
+      "unresolved": 0,
+      "not_run": 8,
+      "cases": [
+        {
+          "case_id": "ROUTE-002-prohibited-turn-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-fresh-origin-control",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-motor-access-bypass",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-disconnected-destination",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-prohibited-target",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-incoming-turn",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-blocked-link",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-no-legal-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        }
+      ]
+    },
+    {
+      "system": "Mapbox",
+      "rank": null,
+      "passed_shared": 0,
+      "failed_shared": 0,
+      "judged_shared_cases": 0,
+      "score_out_of_ten": null,
+      "all_cases_passed": 0,
+      "unsupported": 0,
+      "unresolved": 0,
+      "not_run": 8,
+      "cases": [
+        {
+          "case_id": "ROUTE-002-prohibited-turn-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-fresh-origin-control",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-motor-access-bypass",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-disconnected-destination",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-prohibited-target",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-incoming-turn",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-blocked-link",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-no-legal-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        }
+      ]
+    },
+    {
+      "system": "Organic Maps",
+      "rank": null,
+      "passed_shared": 0,
+      "failed_shared": 0,
+      "judged_shared_cases": 0,
+      "score_out_of_ten": null,
+      "all_cases_passed": 0,
+      "unsupported": 0,
+      "unresolved": 0,
+      "not_run": 8,
+      "cases": [
+        {
+          "case_id": "ROUTE-002-prohibited-turn-detour",
+          "outcome": "NOT_RUN",
+          "reason": "Executable app/native routing harness not implemented"
+        },
+        {
+          "case_id": "ROUTE-002-fresh-origin-control",
+          "outcome": "NOT_RUN",
+          "reason": "Executable app/native routing harness not implemented"
+        },
+        {
+          "case_id": "ROUTE-002-motor-access-bypass",
+          "outcome": "NOT_RUN",
+          "reason": "Executable app/native routing harness not implemented"
+        },
+        {
+          "case_id": "ROUTE-002-disconnected-destination",
+          "outcome": "NOT_RUN",
+          "reason": "Executable app/native routing harness not implemented"
+        },
+        {
+          "case_id": "ROUTE-002-prohibited-target",
+          "outcome": "NOT_RUN",
+          "reason": "Executable app/native routing harness not implemented"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-incoming-turn",
+          "outcome": "NOT_RUN",
+          "reason": "Executable app/native routing harness not implemented"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-blocked-link",
+          "outcome": "NOT_RUN",
+          "reason": "Executable app/native routing harness not implemented"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-no-legal-detour",
+          "outcome": "NOT_RUN",
+          "reason": "Executable app/native routing harness not implemented"
+        }
+      ]
+    },
+    {
+      "system": "OsmAnd",
+      "rank": null,
+      "passed_shared": 0,
+      "failed_shared": 0,
+      "judged_shared_cases": 0,
+      "score_out_of_ten": null,
+      "all_cases_passed": 0,
+      "unsupported": 0,
+      "unresolved": 0,
+      "not_run": 8,
+      "cases": [
+        {
+          "case_id": "ROUTE-002-prohibited-turn-detour",
+          "outcome": "NOT_RUN",
+          "reason": "Executable app/native routing harness not implemented"
+        },
+        {
+          "case_id": "ROUTE-002-fresh-origin-control",
+          "outcome": "NOT_RUN",
+          "reason": "Executable app/native routing harness not implemented"
+        },
+        {
+          "case_id": "ROUTE-002-motor-access-bypass",
+          "outcome": "NOT_RUN",
+          "reason": "Executable app/native routing harness not implemented"
+        },
+        {
+          "case_id": "ROUTE-002-disconnected-destination",
+          "outcome": "NOT_RUN",
+          "reason": "Executable app/native routing harness not implemented"
+        },
+        {
+          "case_id": "ROUTE-002-prohibited-target",
+          "outcome": "NOT_RUN",
+          "reason": "Executable app/native routing harness not implemented"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-incoming-turn",
+          "outcome": "NOT_RUN",
+          "reason": "Executable app/native routing harness not implemented"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-blocked-link",
+          "outcome": "NOT_RUN",
+          "reason": "Executable app/native routing harness not implemented"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-no-legal-detour",
+          "outcome": "NOT_RUN",
+          "reason": "Executable app/native routing harness not implemented"
+        }
+      ]
+    },
+    {
+      "system": "TomTom",
+      "rank": null,
+      "passed_shared": 0,
+      "failed_shared": 0,
+      "judged_shared_cases": 0,
+      "score_out_of_ten": null,
+      "all_cases_passed": 0,
+      "unsupported": 0,
+      "unresolved": 0,
+      "not_run": 8,
+      "cases": [
+        {
+          "case_id": "ROUTE-002-prohibited-turn-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-fresh-origin-control",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-motor-access-bypass",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-disconnected-destination",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-prohibited-target",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-incoming-turn",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-blocked-link",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-no-legal-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted access and same-fixture interface"
+        }
+      ]
+    },
+    {
+      "system": "Waze",
+      "rank": null,
+      "passed_shared": 0,
+      "failed_shared": 0,
+      "judged_shared_cases": 0,
+      "score_out_of_ten": null,
+      "all_cases_passed": 0,
+      "unsupported": 0,
+      "unresolved": 0,
+      "not_run": 8,
+      "cases": [
+        {
+          "case_id": "ROUTE-002-prohibited-turn-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated routing interface established"
+        },
+        {
+          "case_id": "ROUTE-002-fresh-origin-control",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated routing interface established"
+        },
+        {
+          "case_id": "ROUTE-002-motor-access-bypass",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated routing interface established"
+        },
+        {
+          "case_id": "ROUTE-002-disconnected-destination",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated routing interface established"
+        },
+        {
+          "case_id": "ROUTE-002-prohibited-target",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated routing interface established"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-incoming-turn",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated routing interface established"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-blocked-link",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated routing interface established"
+        },
+        {
+          "case_id": "ROUTE-002-reroute-no-legal-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted automated routing interface established"
+        }
+      ]
+    }
+  ]
+}
