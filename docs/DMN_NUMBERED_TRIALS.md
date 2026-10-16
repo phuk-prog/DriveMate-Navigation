@@ -429,3 +429,27 @@ package conformance, not superiority. See OFFLINE_001_RESULTS.md and offline001
 before/first-scorer/after/scorecard JSON. Next bounded stage: frozen resource
 measurements (setup separate from requests), then integration/native offline
 proof. Keep UK17/0/23 ambiguity/promotion block and existing reference failures.
+
+## RESOURCE-001 frozen resource characterization
+
+Nine analytical cases cover8/16/32-square fabricated bidirectional grids,112m
+edges at40km/h, diagonal/reverse/row paths. Independently declared Manhattan
+edge counts, length and time must agree with every returned path; verify graph
+continuity/access as well. Compare three DMN configurations (one family):
+Dijkstra, raw-coordinate A* and prepared A*. Ten untraced timed requests after
+one warmup per case, with raw samples/median/nearest-rank p95; setup is separate.
+Measure memory in separate fresh processes so tracing cannot contaminate timing.
+Report Python allocation peaks and Linux process peak RSS with explicit units/
+scopes. Fresh worker per size/configuration/phase,40s each and180s total bound.
+Bind graph/source/oracle hashes, host/Python/clock metadata and actual run SHA.
+No speed or memory pass threshold is invented; correctness is required, resource
+values are informational and do not establish Android or country-scale readiness.
+
+The five static OSM directions adapters cannot consume the identical arbitrary
+112m/40km/h RoadGraph with these exact costs; no common resource adapter exists.
+Mark resource workloads NOT_RUN with this reason, never zero-quality or passed.
+Other seven retain explicit app/native/access blockers. Retain all12 plus DMN
+and per-case outcomes. No cross-family performance rank from different models,
+hardware or in-process versus HTTP timings. DMN variant timings may be compared
+within the recorded process/host protocol, but are not separate engine families.
+UK coverage/promotion block and all prior reference failures remain unchanged.

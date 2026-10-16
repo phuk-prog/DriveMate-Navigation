@@ -1,0 +1,102 @@
+{
+  "test_id": "RESOURCE-001",
+  "classification": "synthetic analytical weighted-grid resource characterization; not independent road truth or Android/native comparison",
+  "sizes": [
+    8,
+    16,
+    32
+  ],
+  "configurations": [
+    "Dijkstra",
+    "A*-raw",
+    "A*-prepared"
+  ],
+  "timed_repetitions": 10,
+  "warmup_repetitions": 1,
+  "memory_repetitions": 1,
+  "worker_timeout_s": 40,
+  "total_timeout_s": 180,
+  "cases": [
+    {
+      "id": "RESOURCE-001-8-diagonal",
+      "size": 8,
+      "source": "v-0-0",
+      "destination": "v-7-7",
+      "expected_edges": 14,
+      "expected_length_m": 1568,
+      "expected_seconds": 141.12
+    },
+    {
+      "id": "RESOURCE-001-8-reverse",
+      "size": 8,
+      "source": "v-7-7",
+      "destination": "v-0-0",
+      "expected_edges": 14,
+      "expected_length_m": 1568,
+      "expected_seconds": 141.12
+    },
+    {
+      "id": "RESOURCE-001-8-row",
+      "size": 8,
+      "source": "v-4-0",
+      "destination": "v-4-7",
+      "expected_edges": 7,
+      "expected_length_m": 784,
+      "expected_seconds": 70.56
+    },
+    {
+      "id": "RESOURCE-001-16-diagonal",
+      "size": 16,
+      "source": "v-0-0",
+      "destination": "v-15-15",
+      "expected_edges": 30,
+      "expected_length_m": 3360,
+      "expected_seconds": 302.4
+    },
+    {
+      "id": "RESOURCE-001-16-reverse",
+      "size": 16,
+      "source": "v-15-15",
+      "destination": "v-0-0",
+      "expected_edges": 30,
+      "expected_length_m": 3360,
+      "expected_seconds": 302.4
+    },
+    {
+      "id": "RESOURCE-001-16-row",
+      "size": 16,
+      "source": "v-8-0",
+      "destination": "v-8-15",
+      "expected_edges": 15,
+      "expected_length_m": 1680,
+      "expected_seconds": 151.2
+    },
+    {
+      "id": "RESOURCE-001-32-diagonal",
+      "size": 32,
+      "source": "v-0-0",
+      "destination": "v-31-31",
+      "expected_edges": 62,
+      "expected_length_m": 6944,
+      "expected_seconds": 624.96
+    },
+    {
+      "id": "RESOURCE-001-32-reverse",
+      "size": 32,
+      "source": "v-31-31",
+      "destination": "v-0-0",
+      "expected_edges": 62,
+      "expected_length_m": 6944,
+      "expected_seconds": 624.96
+    },
+    {
+      "id": "RESOURCE-001-32-row",
+      "size": 32,
+      "source": "v-16-0",
+      "destination": "v-16-31",
+      "expected_edges": 31,
+      "expected_length_m": 3472,
+      "expected_seconds": 312.48
+    }
+  ]
+}
