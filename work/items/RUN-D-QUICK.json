@@ -2,16 +2,22 @@
  "agent": "Claude",
  "branch": "ccr-005983df-g8r2zd",
  "created": "2026-10-17T13:08:38+00:00",
- "fingerprints": [],
+ "fingerprints": [
+  "0d56359"
+ ],
  "history": [
   "2026-10-17T13:08:38+00:00 next by unknown AI on ccr-195b89cb-2aaytg",
-  "2026-10-17T17:32:24+00:00 in_progress by Claude on ccr-005983df-g8r2zd"
+  "2026-10-17T17:32:24+00:00 in_progress by Claude on ccr-005983df-g8r2zd",
+  "2026-10-17T18:34:30+00:00 done by Claude on ccr-005983df-g8r2zd"
  ],
  "id": "RUN-D-QUICK",
- "runs": [],
- "state": "in_progress",
- "summary": "Owner chose run D before run C (17 Oct 2026). Building one harness: speed (7) and adapter checks (21) on one machine; closures (14) on JOURNEY-001; broken maps (17) and bad requests (18).",
+ "results": "docs/RUN_D_RESULTS.md",
+ "runs": [
+  "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39055768229"
+ ],
+ "state": "done",
+ "summary": "Run D (categories 7, 14, 17, 18, 21), 7 engines: DMN closures 24/24 (=1 with Valhalla), bad requests 12/12 (=1), speed 12.5 ms HTTP median (5th of 6; OSRM 1.2), damaged maps 16/18 (refuses 2 good real maps with :conditional tags), integrity 54/54. No engine seen driving a closed road or serving a damaged map. Harness line reading on 1-2 km routes partly unresolved.",
  "title": "Run D: quick targeted checks -> categories 7, 14, 17, 18, 21",
- "updated": "2026-10-17T17:32:24+00:00",
+ "updated": "2026-10-17T18:34:30+00:00",
  "why": "Owner-approved grouping (17 Oct 2026): runs share execution, each category keeps its own frozen cases, rules, score and ranking; no combined score; a failed shared step marks dependants NOT_RUN. Category 7 timed identically for every engine (DMN import excluded); category 14 closures injected into run B journeys."
 }

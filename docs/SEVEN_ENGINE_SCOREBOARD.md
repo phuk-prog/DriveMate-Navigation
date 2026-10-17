@@ -20,6 +20,17 @@ scores in [references](../references/seven-engines-20261017.json).
 | Route line on the road (11) | n/a (OSM points) | 0 over 5 m | 0 | 0 | 0 | 0 | 0 |
 | Lanes, judged (10) | **35/35 (1)** | 22/36 (3): 2 wrong, 12 none | n/a | n/a | n/a | n/a | 25/34 (2): 9 none |
 | Speed limits, judged (15) | **61/61** | n/a in 5.27 | n/a | 68/68 | n/a | n/a | 65/65 |
+| Speed, HTTP median ms, 7 common journeys (7) | 12.5 (5) | **1.2 (1)** | 3.5 (2) | 11.3 (4) | 9.3 (3) | 27.1 (6) | in-process 41.1 vs DMN 11.6 |
+| Closures: valid detour, 24 (14) | **24 (=1)** | 23 (3) | 24 (=1) | 14 (=4)* | 14 (=4)* | 7 (7)* | 11 (6)* |
+| Damaged maps, passed (17) | 16/18 (5): refuses 2 good real maps | 12/12 (=1) | 3/12 (=6)† | 3/12 (=6)† | 12/12 (=1) | 12/12 (=1) | 12/12 (=1) |
+| Bad requests, passed/judged (18) | **12/12 (=1)** | 9/15 (7) | 9/14 (6) | 14/14 (=1) | 14/14 (=1) | 12/15 (5) | 12/14 (4) |
+| Comparison integrity checks (21) | 54/54 | 53/54 | 54/54 | 48/54 | 48/54 | 45/54 | 48/54 |
+
+Run D ([39055768229](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39055768229),
+revision `0d56359`, [report](RUN_D_RESULTS.md)): no engine was seen to drive a closed road or serve a
+route from a damaged map. *Partly unresolved: the harness could not fully read some 1–2 km
+lines. †Never started on a damaged file within the wait; a quick error is unverified.
+Category 21 rates the test set-up, not the engines.
 
 Rule-breaking routes (Category 2 tests): DMN 0, OSRM 0, Valhalla 0, GraphHopper 1,
 openrouteservice 2 (one drove the tested one-way road the wrong way), BRouter 2,

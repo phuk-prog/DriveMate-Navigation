@@ -1,5 +1,14 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 — Run D done (Claude)
+- Owner chose run D before run C. [Report](RUN_D_RESULTS.md), run 39055768229, harness
+  `benchmarks/run_d.py` (cases frozen in `config/rund-prepared.json`).
+- DMN: closures 24/24 (live blocked_edges = map closure 24/24), bad requests 12/12,
+  speed 5th of 6 over HTTP (12.5 ms median), damaged maps refused 9/9 but its offline
+  store refuses real maps with `:conditional` tags (2 of 3 clips): proposed fix, needs approval.
+- Harness gaps (approval needed before a rerun): reading 1–2 km engine lines; GraphHopper/
+  Valhalla start failures seen only as time-outs. Run C still waits for the owner.
+
 ## 2026-10-17 — Seven engines; run B2 done (Claude)
 - Reference engines now: OSRM, Valhalla, GraphHopper, openrouteservice, BRouter, OsmAnd
   (all built per case from the same clip via `benchmarks/extra_engines.py`; yardsticks
