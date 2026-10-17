@@ -1,5 +1,12 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 (later still) — work register + BARRIER-001 baseline
+- Shared register for all AIs: `python3 -m tools.work_status --fetch` (done / in progress /
+  next, read-first list, `where <topic>`); rule at top of AGENTS.md.
+- BARRIER-001 v1.1 baseline: [docs/BARRIER_001_RESULTS.md](BARRIER_001_RESULTS.md), run
+  39022934914. Closed barriers: DMN 46 pass (ties OSRM), 0 crossed by any engine.
+- Stopped for owner review; proposed improvements listed in the results file.
+
 ## 2026-10-17 (later) — TURN-001 results written
 - Branch `claude/dmn-turn-restriction-debug-mhw7cw` (from the codex branch; not pushed there).
 - Results: [docs/TURN_001_RESULTS.md](TURN_001_RESULTS.md). Fresh run 39019749346:
