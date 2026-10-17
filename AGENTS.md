@@ -1,26 +1,16 @@
 # DriveMate Navigation research: owner-confirmed testing workflow
 
-## Every AI: check the shared work register first (owner, 2026-10-17)
+## Every AI: read REGISTER.md first (owner, 2026-10-17)
 
-Several AIs (Claude, Codex, others) work here. Before any work, run
-`python3 -m tools.work_status --fetch`. It lists what is done, in progress (which
-AI, which branch) and next, read from every branch, plus a READ FIRST list of
-where things are (repo files, GitHub job summaries, data branches, Google Drive),
-cheapest first. Use `python3 -m tools.work_status where <topic>` before searching
-files, and open only what your item needs. Then:
-
-1. Do not start an item another AI holds (unless STALE), or one already done with
-   the same inputs: `python3 -m tools.work_status seen "<fingerprint>"`.
-2. Claim your item: `python3 -m tools.work_status start <ID> --title "..." --agent <you>`.
-3. When finished: `finish <ID> --summary "..." --results <doc> --run <CI link>
-   --fingerprint "<test version>|<input hashes>|<revision>"`. Add follow-ups with `plan`.
-4. New data or evidence location? Register it once: `source "<what>" --where <place>
-   --cost tiny|small|large --topics a,b` (never personal data or private links: public repo).
-5. Commit and push `work/` with your work, and update docs/HANDOVER.md.
-
-Read live PR/head and active/queued jobs before experiments. Do not assume the
-workspace or scheduled head is current. Work only in this existing research
-repository unless separately authorized; production DriveMate stays unchanged.
+Several AIs (Claude, Codex, others) work here. **[REGISTER.md](REGISTER.md) is the one
+page to read first**: how to keep usage low, what is done (never repeat it), what is
+in progress (leave it to its holder), what is pending (start at the top), and where
+to find more, cheapest first. Open other files only if your task needs them.
+`python3 -m tools.work_status --fetch` gives the same view live across all branches;
+`where <topic>` points to a place. Claim work with `start <ID>`, record it with
+`finish <ID> --summary --results --run --fingerprint`, queue follow-ups with `plan`.
+These rewrite REGISTER.md; commit and push it and `work/` with your work. Register new
+data locations with `source` (never personal data or private links: public repo).
 
 ## Permanent six-rule policy — owner approved 2026-10-16
 

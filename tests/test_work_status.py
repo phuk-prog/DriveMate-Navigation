@@ -14,7 +14,9 @@ class WorkRegister(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         patches = [mock.patch.object(ws, "ITEMS", Path(self.tmp.name) / "items"),
                    mock.patch.object(ws, "_remote", return_value=[]),
-                   mock.patch.object(ws, "_branch", return_value="branch-a")]
+                   mock.patch.object(ws, "_branch", return_value="branch-a"),
+                   mock.patch.object(ws, "REGISTER", Path(self.tmp.name) / "REGISTER.md"),
+                   mock.patch.object(ws, "INDEX", Path(self.tmp.name) / "index.json")]
         for p in patches:
             p.start()
             self.addCleanup(p.stop)
@@ -49,12 +51,21 @@ class WorkRegister(unittest.TestCase):
             self.assertEqual(self.run_cli("start", "T-3", "--agent", "Claude")[0], 0)
 
     def test_where_lists_cheapest_pointer_first(self):
-        with mock.patch.object(ws, "INDEX", Path(self.tmp.name) / "index.json"):
+        if True:
             self.run_cli("source", "Big map", "--where", "branch data/x", "--cost", "large", "--topics", "map")
             self.run_cli("source", "Map notes", "--where", "docs/MAP.md", "--cost", "tiny", "--topics", "map")
             hits = ws.where(ws.load_index(), {}, "map")
             self.assertTrue(hits[0].startswith("[tiny]"))
             self.assertTrue(hits[1].startswith("[large]"))
+
+    def test_register_page_lists_done_pending_and_rules(self):
+        self.run_cli("finish", "T-4", "--title", "old test", "--results", "docs/T4.md")
+        self.run_cli("plan", "T-5", "--title", "new test", "--why", "owner asked")
+        page = ws.REGISTER.read_text()
+        self.assertIn("Keep usage low", page)
+        self.assertIn("**T-4** old test", page)
+        self.assertIn("docs/T4.md", page)
+        self.assertLess(page.index("## Start here"), page.index("**T-5**"))
 
 
 if __name__ == "__main__":

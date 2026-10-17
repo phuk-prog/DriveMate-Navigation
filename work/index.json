@@ -1,19 +1,6 @@
 {
  "read_first": [
   {
-   "what": "Work register: what is done, in progress, next",
-   "where": "python3 -m tools.work_status --fetch",
-   "cost": "tiny",
-   "topics": [
-    "status",
-    "todo",
-    "next",
-    "done",
-    "claim"
-   ],
-   "when": "always, first"
-  },
-  {
    "what": "Latest handover note (newest section only)",
    "where": "docs/HANDOVER.md (top section)",
    "cost": "tiny",
@@ -65,6 +52,19 @@
     "run"
    ],
    "when": "to see a CI outcome"
+  },
+  {
+   "what": "Live view across all branches (if REGISTER.md may be out of date)",
+   "where": "python3 -m tools.work_status --fetch",
+   "cost": "tiny",
+   "topics": [
+    "status",
+    "todo",
+    "next",
+    "done",
+    "claim"
+   ],
+   "when": "when another AI may have pushed since"
   }
  ],
  "sources": [
