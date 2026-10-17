@@ -1,5 +1,12 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 — Engines programme approved (Claude)
+- [Programme](ENGINES_PROGRAMME.md): own engine for every part of DriveMate (DMN, DMG, DMD, DML,
+  DMV, DMW, DMT, DMS, DMR, DMO, DMU, DMP), register items ENGINE-*.
+- Owner: after each engine is built and tested, put it into the app (Kotlin port + parity test,
+  behind a setting, app preflight and robot) before the next engine starts. DMN first.
+- GRAND-TOUR-001 running (run 39068256802); then unit suite on the untested DMN changes.
+
 ## 2026-10-17 — DMN improvements written, not tested (Claude)
 - Owner approved every recommendation in [ALL_TESTS_REVIEW.md](ALL_TESTS_REVIEW.md), asked for
   them to be implemented, and said: no test runs until told; only DMN for now (no app changes).

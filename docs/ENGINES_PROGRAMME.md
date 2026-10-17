@@ -35,6 +35,14 @@ one test run when the owner asks, never force-push, private code stays private.
 | 11 | **DMU – Driver screens & Android Auto** | at-a-glance screens, big buttons, safety rules, Android Auto | Google driver-distraction guidelines, OsmAnd/Organic Maps on Android Auto |
 | 12 | **DMP – Platform** | settings, backup/restore, sign-in, privacy, battery/start-up, crash safety | DataStore vs Room/SQLite/files, Android Auto Backup; Play Store technical checks |
 
+## Owner decision (17 Oct 2026): each engine goes into the app before the next one starts
+For every engine, in order: (1) build and test it here against the yardsticks; (2) owner
+reviews the results and approves; (3) write it in Kotlin for the phone with a parity test
+(same answers as the tested version on every frozen case); (4) put it into the DriveMate app
+(private repo) behind a setting, following the app's own rules (`scripts/unified_preflight.py`,
+emulator robot drive, no APK without passing checks); (5) compare against the app's current
+code on the same drives, then on the owner's Pixel; (6) only then start the next engine.
+
 ## Build order and why
 1. **DMN** – finish now: report GRAND-TOUR-001 (run 39068256802); run the unit suite on the
    untested changes and fix; one push re-running every DMN test; then make DMN fast

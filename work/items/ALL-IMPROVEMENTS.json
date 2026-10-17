@@ -6,7 +6,8 @@
  "history": [
   "2026-10-17T19:52:34+00:00 next by Claude on ccr-005983df-g8r2zd",
   "2026-10-17T19:52:36+00:00 in_progress by Claude on ccr-005983df-g8r2zd",
-  "2026-10-17T20:09:53+00:00 next by Claude on ccr-005983df-g8r2zd"
+  "2026-10-17T20:09:53+00:00 next by Claude on ccr-005983df-g8r2zd",
+  "2026-10-17T21:50:27+00:00 next by Claude on ccr-005983df-g8r2zd"
  ],
  "id": "ALL-IMPROVEMENTS",
  "results": "docs/ALL_TESTS_REVIEW.md",
@@ -14,6 +15,6 @@
  "state": "next",
  "summary": "DMN improvements implemented, NOT yet tested (owner: no test runs until told): GPS fix default, arrival when stopped, offline maps with time rules, clock-checked time rules, reroute after gap, confirm after gap, now call + lead by speed + 3 s bridge, route checker, destination side, no-route reason; harness: long-line reader, start-up watch. Owner (17 Oct 2026): only DMN is being improved for now, no DriveMate app changes. Local commits not pushed (a push starts CI).",
  "title": "Owner approved and asked to implement every recommendation in docs/ALL_TESTS_REVIEW.md (categories 1-21)",
- "updated": "2026-10-17T20:09:53+00:00",
- "why": "Owner, 17 Oct 2026: 'approve all and implement all'. Staged: (A) DMN engine changes here with tests and fresh reruns; (B) new/extended tests; (C) DriveMate app changes in the private app repo; (D) items needing the owner's phone, recordings or keys. Category items CAT1/CAT2/CAT3-* are part of this."
+ "updated": "2026-10-17T21:50:27+00:00",
+ "why": "Owner, 17 Oct 2026: after each engine is built and tested, implement it in the DriveMate app (Kotlin port with parity test, behind a setting, app preflight and robot checks) before starting the next engine; see docs/ENGINES_PROGRAMME.md."
 }
