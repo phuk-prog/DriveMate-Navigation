@@ -1,0 +1,14 @@
+{
+ "agent": "Claude",
+ "branch": "ccr-195b89cb-2aaytg",
+ "created": "2026-10-17T12:18:44+00:00",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T12:18:44+00:00 in_progress by Claude on ccr-195b89cb-2aaytg"
+ ],
+ "id": "ACCESS-001",
+ "runs": [],
+ "state": "in_progress",
+ "title": "Category 2: no-car roads (bus gates, busways, no-motor-vehicle roads), route-level, 4 engines",
+ "updated": "2026-10-17T12:18:44+00:00"
+}

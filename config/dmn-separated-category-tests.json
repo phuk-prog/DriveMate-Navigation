@@ -39,7 +39,8 @@
         "test_routing_legality_batch.py",
         "test_real_uk_turn_probe.py",
         "test_real_map_legality_baseline.py",
-        "test_real_map_oneway.py"
+        "test_real_map_oneway.py",
+        "test_access001.py"
       ],
       "engine_rank": null,
       "navigation_score": null
