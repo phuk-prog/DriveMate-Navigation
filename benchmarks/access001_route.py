@@ -102,9 +102,11 @@ QUOTAS = {
     ("closed", "pedestrian"): 30, ("restricted", "bus_private"): 15,
     ("restricted", "private"): 10, ("restricted", "destination"): 10,
 }
+# Tripled before any engine ran: the first draw (15/25/25/10) left only 32 of 75 testable,
+# because one-way roads often have no legal road arriving at their exit end.
 ONEWAY_QUOTAS = {
-    ("closed", "oneway_roundabout"): 15, ("closed", "oneway_major"): 25,
-    ("closed", "oneway_residential"): 25, ("closed", "oneway_service"): 10,
+    ("closed", "oneway_roundabout"): 45, ("closed", "oneway_major"): 75,
+    ("closed", "oneway_residential"): 75, ("closed", "oneway_service"): 30,
 }
 MAJOR = {"trunk", "trunk_link", "primary", "primary_link", "secondary", "secondary_link",
          "tertiary", "tertiary_link"}
