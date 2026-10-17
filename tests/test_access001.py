@@ -1,7 +1,9 @@
 """ACCESS-001 harness: road groups, test geometry and verdicts. Invented fixtures."""
 import unittest
 
-from benchmarks.access001_route import AccessClip, case_geometry, opened, road_class, uses_way, verdict
+import benchmarks.access001_route as harness
+from benchmarks.access001_route import (AccessClip, case_geometry, oneway_class, opened, road_class, uses_way,
+                                        verdict)
 
 #  1 - 2 = 3 = 4 = 5 - 6     roads 1-2 and 5-6 open to cars; way 20 (2-3-4-5) is the tested road
 #      |____ 8 ____|         detour 2-8-5 open to cars
@@ -102,6 +104,55 @@ class Verdicts(unittest.TestCase):
         result = verdict(c, self.geom, ["1", "2", "8", "5", "6"])
         self.assertEqual(result["route_legal"], "ILLEGAL")
         self.assertIn("road:40:no_cars", result["violations"])
+
+
+ONEWAY = {"way": 20, "stratum": ["closed", "oneway_residential"], "refs": [2, 3, 4, 5]}
+
+
+class OneWay(unittest.TestCase):
+    """ONEWAY-002 shares the harness: way 20 made a one-way residential road (2 -> 5)."""
+
+    def setUp(self):
+        harness.use("oneway002")
+        self.addCleanup(harness.use, "access001")
+        self.clip = clip('<tag k="highway" v="residential"/><tag k="oneway" v="yes"/>')
+        self.geom = case_geometry(ONEWAY, self.clip)
+
+    def test_groups(self):
+        self.assertEqual(oneway_class({"highway": "residential", "oneway": "yes"}), ("closed", "oneway_residential"))
+        self.assertEqual(oneway_class({"highway": "primary", "oneway": "-1"}), ("closed", "oneway_major"))
+        self.assertEqual(oneway_class({"highway": "secondary", "junction": "roundabout"}),
+                         ("closed", "oneway_roundabout"))
+        self.assertIsNone(oneway_class({"highway": "residential"}))
+        self.assertIsNone(oneway_class({"highway": "residential", "oneway": "no", "junction": "roundabout"}))
+        self.assertIsNone(oneway_class({"highway": "motorway", "oneway": "yes"}))
+        self.assertIsNone(oneway_class({"highway": "service", "oneway": "yes", "access": "private"}))
+        self.assertIsNone(oneway_class({"highway": "residential", "oneway": "yes",
+                                        "oneway:conditional": "no @ (19:00-07:00)"}))
+
+    def test_request_runs_against_the_one_way(self):
+        self.assertEqual(self.geom["status"], "TESTABLE")
+        self.assertTrue(self.geom["against_oneway"])
+        self.assertEqual(self.geom["way_nodes"], ["5", "4", "3", "2"])
+        self.assertEqual(self.geom["origin_segment"], ["6", "5"])
+        self.assertEqual(self.geom["destination_segment"], ["2", "1"])
+
+    def test_wrong_way_is_fail_right_way_or_detour_is_not(self):
+        self.assertEqual(verdict(self.clip, self.geom, ["6", "5", "4", "3", "2", "1"])["verdict"],
+                         "FAIL_AGAINST_ONEWAY")
+        self.assertEqual(verdict(self.clip, self.geom, ["6", "5", "8", "2", "1"])["verdict"], "PASS")
+        self.assertFalse(uses_way(["2", "3", "4"], ["5", "4", "3", "2"], directed=True))
+
+    def test_two_way_road_in_clip_is_not_testable(self):
+        self.assertEqual(case_geometry(ONEWAY, clip())["status"], "NOT_ONE_WAY_IN_CLIP")
+
+    def test_control_makes_the_road_two_way(self):
+        raw = (b'<osm version="0.6"><way id="20"><nd ref="2"/><tag k="highway" v="primary"/>'
+               b'<tag k="junction" v="roundabout"/><tag k="oneway" v="yes"/></way></osm>')
+        out = opened(raw, "20")
+        self.assertIn(b'<tag k="oneway" v="no"', out)
+        self.assertNotIn(b'v="roundabout"', out)
+        self.assertNotIn(b'v="yes" /><tag k="oneway" v="yes"', out)
 
 
 if __name__ == "__main__":

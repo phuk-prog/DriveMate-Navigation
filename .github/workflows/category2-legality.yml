@@ -1,6 +1,7 @@
-name: ACCESS-001 four-engine no-car road route check
-# Runs the frozen ACCESS-001 cohort on GitHub (public repo: free minutes). Engines run
-# in parallel; one short summary is written to the job page. The source map is pinned on
+name: Category 2 road legality (ACCESS-001 no-car roads, ONEWAY-002 one-way roads), four engines
+# Runs the frozen ACCESS-001 and ONEWAY-002 cohorts in one GitHub run (public repo: free
+# minutes). Each test x engine is its own parallel job and each test is scored and
+# summarised separately; there is no combined score. The source map is pinned on
 # data/turn001-snapshot; each job cuts the 5 km clips from it and every clip must match
 # its frozen hash in config/access001-prepared.json (osmium-tool 1.16, Ubuntu 24.04).
 on:
@@ -12,12 +13,13 @@ on:
     paths:
       - 'benchmarks/access001_route.py'
       - 'config/access001-*.json'
-      - '.github/workflows/access001.yml'
+      - 'config/oneway002-*.json'
+      - '.github/workflows/category2-legality.yml'
 permissions:
   contents: read
   actions: read
 concurrency:
-  group: access001-${{ github.ref }}
+  group: category2-legality-${{ github.ref }}
   cancel-in-progress: false
 env:
   GH_JAR_URL: https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/11.1/graphhopper-web-11.1.jar
@@ -29,6 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        test: [access001, oneway002]
         run: [DMN, OSRM, GraphHopper, Valhalla, OSRM-control]
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
@@ -42,7 +45,7 @@ jobs:
           set -euo pipefail
           sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq osmium-tool >/dev/null
           raw=https://raw.githubusercontent.com/${{ github.repository }}
-          mkdir -p results/turn001 results/access001
+          mkdir -p results/turn001 results/${{ matrix.test }}
           (cd results/turn001 && curl -fsSL -o SHA256SUMS "$raw/data/turn001-snapshot/SHA256SUMS" \
             && curl -fsSL -o gm.osm.pbf "$raw/data/turn001-snapshot/gm.osm.pbf" && sha256sum -c --ignore-missing SHA256SUMS)
       - name: Java and jar
@@ -58,15 +61,16 @@ jobs:
           set -euo pipefail
           engine=${{ matrix.run }}; extra=
           if [ "$engine" = OSRM-control ]; then engine=OSRM; extra=--control; fi
-          python -m benchmarks.access001_route run --engine "$engine" $extra > results/access001/run.log 2>&1 || { tail -20 results/access001/run.log; exit 1; }
-          awk '{print $2}' results/access001/run.log | sort | uniq -c
+          t=${{ matrix.test }}
+          python -m benchmarks.access001_route --test $t run --engine "$engine" $extra > results/$t/run.log 2>&1 || { tail -20 results/$t/run.log; exit 1; }
+          awk '{print $2}' results/$t/run.log | sort | uniq -c
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: access001-${{ matrix.run }}
+          name: ${{ matrix.test }}-${{ matrix.run }}
           path: |
-            results/access001/run-*.json
-            results/access001/run.log
+            results/${{ matrix.test }}/run-*.json
+            results/${{ matrix.test }}/run.log
           retention-days: 30
   score:
     needs: engine
@@ -85,16 +89,24 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          gh run download ${{ github.run_id }} -R ${{ github.repository }} -p 'access001-*' -D artifacts
-          mkdir -p results/access001 && cp artifacts/*/run-*.json results/access001/
+          gh run download ${{ github.run_id }} -R ${{ github.repository }} -D artifacts
+          for t in access001 oneway002; do
+            mkdir -p results/$t && cp artifacts/$t-*/run-*.json results/$t/ 2>/dev/null || true
+          done
       - name: Score and short summary
         run: |
           set -euo pipefail
-          python -m benchmarks.access001_route score > /dev/null
-          python -m benchmarks.access001_route brief | tee -a "$GITHUB_STEP_SUMMARY"
+          status=0
+          for t in access001 oneway002; do
+            { python -m benchmarks.access001_route --test $t score > /dev/null \
+              && python -m benchmarks.access001_route --test $t brief | tee -a "$GITHUB_STEP_SUMMARY"; } \
+              || { echo "$t: not scored (missing or failed engine results)" | tee -a "$GITHUB_STEP_SUMMARY"; status=1; }
+            echo >> "$GITHUB_STEP_SUMMARY"
+          done
+          exit $status
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: access001-summary
-          path: results/access001/summary.json
+          name: category2-summary
+          path: results/*/summary.json
           retention-days: 90

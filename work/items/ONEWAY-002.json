@@ -1,0 +1,14 @@
+{
+ "agent": "Claude",
+ "branch": "ccr-195b89cb-2aaytg",
+ "created": "2026-10-17T13:04:52+00:00",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T13:04:52+00:00 in_progress by Claude on ccr-195b89cb-2aaytg"
+ ],
+ "id": "ONEWAY-002",
+ "runs": [],
+ "state": "in_progress",
+ "title": "Category 2: wrong-way driving on 75 real one-way roads, route-level, 4 engines (shares the ACCESS-001 run, scored separately)",
+ "updated": "2026-10-17T13:04:52+00:00"
+}

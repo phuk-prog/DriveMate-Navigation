@@ -1,0 +1,2046 @@
+{
+ "available_by_stratum": {
+  "closed/oneway_major": 8526,
+  "closed/oneway_residential": 4347,
+  "closed/oneway_roundabout": 1115,
+  "closed/oneway_service": 4079
+ },
+ "cases": [
+  {
+   "lat": 53.5028198,
+   "length_m": 42.0,
+   "lon": -2.3099783,
+   "refs": [
+    25533190,
+    917139079,
+    11005779438,
+    25533191,
+    11005779439,
+    917138802,
+    25533194
+   ],
+   "stratum": [
+    "closed",
+    "oneway_roundabout"
+   ],
+   "tags": {
+    "destination:ref:lanes": "A6|B5228;A580;A6",
+    "highway": "primary",
+    "junction": "roundabout",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30 mph",
+    "ref": "A6"
+   },
+   "way": 246384927
+  },
+  {
+   "lat": 53.4699947,
+   "length_m": 40.8,
+   "lon": -2.3492335,
+   "refs": [
+    1685573949,
+    5339251142,
+    5339251141,
+    5339251143,
+    5339251150,
+    1685573938
+   ],
+   "stratum": [
+    "closed",
+    "oneway_roundabout"
+   ],
+   "tags": {
+    "highway": "secondary",
+    "junction": "roundabout",
+    "lit": "yes",
+    "maxspeed": "30 mph",
+    "name": "Ellesmere Circle",
+    "ref": "B5211;B5214",
+    "source": "Bing"
+   },
+   "way": 918340879
+  },
+  {
+   "lat": 53.4209059,
+   "length_m": 117.2,
+   "lon": -2.5289969,
+   "refs": [
+    9466931403,
+    9080283220,
+    1336673933,
+    417344674,
+    194200099,
+    17408934,
+    8762922638,
+    417344678,
+    17408933,
+    417347530,
+    11175683754,
+    8762922640,
+    9080283219,
+    9466931404
+   ],
+   "stratum": [
+    "closed",
+    "oneway_roundabout"
+   ],
+   "tags": {
+    "highway": "primary",
+    "junction": "roundabout",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "60 mph",
+    "maxspeed:type": "sign",
+    "name": "George Duckworth Island",
+    "oneway": "yes",
+    "ref": "A574",
+    "ref:GB:usrn": "42260456",
+    "roundabout": "dogbone",
+    "sidewalk": "no",
+    "surface": "asphalt",
+    "turn:lanes": "through;right|right"
+   },
+   "way": 699114560
+  },
+  {
+   "lat": 53.5397738,
+   "length_m": 54.6,
+   "lon": -2.2362701,
+   "refs": [
+    1694290377,
+    1694290364,
+    1694290439,
+    1694290114,
+    1694290444,
+    1694290339
+   ],
+   "stratum": [
+    "closed",
+    "oneway_roundabout"
+   ],
+   "tags": {
+    "alt_name": "Three Arrows Roundabout",
+    "bicycle": "yes",
+    "bridge": "yes",
+    "highway": "trunk",
+    "junction": "roundabout",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "30 mph",
+    "name": "Rhodes Interchange",
+    "oneway": "yes",
+    "ref": "A576",
+    "sidewalk:both": "no",
+    "surface": "asphalt"
+   },
+   "way": 157211348
+  },
+  {
+   "lat": 53.582239,
+   "length_m": 29.3,
+   "lon": -2.5296238,
+   "refs": [
+    1808529197,
+    280373769,
+    1808529220,
+    280373770,
+    1808529176
+   ],
+   "stratum": [
+    "closed",
+    "oneway_roundabout"
+   ],
+   "tags": {
+    "highway": "tertiary",
+    "junction": "roundabout",
+    "maxspeed": "30 mph",
+    "source": "survey"
+   },
+   "way": 1329691012
+  },
+  {
+   "lat": 53.6771561,
+   "length_m": 16.6,
+   "lon": -2.6563263,
+   "refs": [
+    554769581,
+    554769651,
+    4937073063,
+    4937073064,
+    554769592
+   ],
+   "stratum": [
+    "closed",
+    "oneway_roundabout"
+   ],
+   "tags": {
+    "highway": "tertiary",
+    "junction": "roundabout",
+    "maxspeed": "40 mph",
+    "oneway": "yes"
+   },
+   "way": 1416791021
+  },
+  {
+   "lat": 53.4522124,
+   "length_m": 22.6,
+   "lon": -2.3655667,
+   "refs": [
+    5111298179,
+    709287732,
+    5115114397,
+    5111298177,
+    9561319391,
+    709287726
+   ],
+   "stratum": [
+    "closed",
+    "oneway_roundabout"
+   ],
+   "tags": {
+    "highway": "secondary",
+    "junction": "roundabout",
+    "lane_markings": "no",
+    "maxspeed": "30 mph",
+    "ref": "B5158",
+    "surface": "asphalt"
+   },
+   "way": 1059346228
+  },
+  {
+   "lat": 53.6040929,
+   "length_m": 100.7,
+   "lon": -2.1082452,
+   "refs": [
+    30275913,
+    485288584,
+    485288582,
+    4253069737,
+    4253069743,
+    30275912,
+    30275910,
+    30275909,
+    4253069739,
+    4253069734,
+    10860958133,
+    485288585,
+    1390210358,
+    4253069738
+   ],
+   "stratum": [
+    "closed",
+    "oneway_roundabout"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "highway": "trunk",
+    "junction": "circular",
+    "maxspeed": "40 mph",
+    "name": "Milnrow Interchange",
+    "ref": "A640",
+    "sidewalk": "no"
+   },
+   "way": 347620473
+  },
+  {
+   "lat": 53.3860439,
+   "length_m": 42.5,
+   "lon": -2.5898575,
+   "refs": [
+    9329775047,
+    8776736001,
+    9329775046
+   ],
+   "stratum": [
+    "closed",
+    "oneway_roundabout"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "bridge": "yes",
+    "bridge:name": "Warrington New Bridge",
+    "destination:ref:lanes": "A5061|A49|A5060|A5061|A5061",
+    "highway": "trunk",
+    "junction": "circular",
+    "lanes": "5",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "30 mph",
+    "name": "Bridgefoot",
+    "oneway": "yes",
+    "ref": "A49",
+    "surface": "asphalt",
+    "turn:lanes": "left|through|through|right|right"
+   },
+   "way": 154191479
+  },
+  {
+   "lat": 53.3614074,
+   "length_m": 42.9,
+   "lon": -2.2940858,
+   "refs": [
+    21672222,
+    8911528210,
+    8911528211,
+    934825889,
+    8911528197
+   ],
+   "stratum": [
+    "closed",
+    "oneway_roundabout"
+   ],
+   "tags": {
+    "highway": "trunk",
+    "junction": "circular",
+    "maxspeed": "40 mph",
+    "name": "Hale Four Seasons Roundabout",
+    "oneway": "yes",
+    "ref": "A538",
+    "surface": "asphalt"
+   },
+   "way": 1026422768
+  },
+  {
+   "lat": 53.4365783,
+   "length_m": 37.2,
+   "lon": -2.722962,
+   "refs": [
+    8569704329,
+    1662386686,
+    1662386685,
+    1662386687,
+    1662386689,
+    1662386693
+   ],
+   "stratum": [
+    "closed",
+    "oneway_roundabout"
+   ],
+   "tags": {
+    "highway": "primary",
+    "junction": "roundabout",
+    "maxspeed": "30 mph",
+    "ref": "A569",
+    "source": "Bing"
+   },
+   "way": 1413783738
+  },
+  {
+   "lat": 53.4759249,
+   "length_m": 20.9,
+   "lon": -2.2864877,
+   "refs": [
+    27316837,
+    1277527008,
+    1751016657,
+    2606853587,
+    27316838
+   ],
+   "stratum": [
+    "closed",
+    "oneway_roundabout"
+   ],
+   "tags": {
+    "highway": "primary",
+    "junction": "roundabout",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30 mph",
+    "ref": "A5186",
+    "sidewalk:right": "no",
+    "surface": "asphalt"
+   },
+   "way": 4448268
+  },
+  {
+   "lat": 53.4862169,
+   "length_m": 34.7,
+   "lon": -2.331256,
+   "refs": [
+    1675470006,
+    1675470012
+   ],
+   "stratum": [
+    "closed",
+    "oneway_roundabout"
+   ],
+   "tags": {
+    "bridge": "yes",
+    "highway": "primary",
+    "junction": "roundabout",
+    "lanes": "3",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "30 mph",
+    "name": "Polygon West Bridge",
+    "ref": "A576",
+    "surface": "asphalt",
+    "turn:lanes": "through|through;right|right"
+   },
+   "way": 155111572
+  },
+  {
+   "lat": 53.3480213,
+   "length_m": 18.1,
+   "lon": -2.2031798,
+   "refs": [
+    21740191,
+    9690699218,
+    2285823479,
+    9690699217
+   ],
+   "stratum": [
+    "closed",
+    "oneway_roundabout"
+   ],
+   "tags": {
+    "highway": "tertiary",
+    "junction": "roundabout",
+    "maxspeed": "30 mph",
+    "surface": "asphalt"
+   },
+   "way": 1157947248
+  },
+  {
+   "lat": 53.5030986,
+   "length_m": 62.8,
+   "lon": -2.199949,
+   "refs": [
+    1685973822,
+    11296381391,
+    1685973503,
+    1685973504,
+    1685973506,
+    1797702804,
+    1685973508,
+    1685973509,
+    1685973507,
+    1685973505
+   ],
+   "stratum": [
+    "closed",
+    "oneway_roundabout"
+   ],
+   "tags": {
+    "cycleway:left": "no",
+    "highway": "tertiary",
+    "junction": "roundabout",
+    "lane_markings": "no",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30 mph",
+    "name": "Northampton Road",
+    "oneway": "yes",
+    "postal_code": "M40",
+    "ref:GB:usrn": "24505666",
+    "sidewalk:left": "separate",
+    "sidewalk:right": "no",
+    "surface": "asphalt"
+   },
+   "way": 1208752506
+  },
+  {
+   "lat": 53.5809918,
+   "length_m": 44.3,
+   "lon": -2.3866108,
+   "refs": [
+    22464956,
+    6837213877,
+    698828688
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "highway": "trunk",
+    "maxspeed": "30 mph",
+    "name": "Bury Road",
+    "oneway": "yes",
+    "ref": "A58"
+   },
+   "way": 76999069
+  },
+  {
+   "lat": 53.5900218,
+   "length_m": 121.7,
+   "lon": -2.6962578,
+   "refs": [
+    34147926,
+    255405611,
+    255405612,
+    255405613,
+    255405614,
+    9023920930,
+    2331987548,
+    255405615,
+    34488611,
+    255405616,
+    2331987560,
+    34488613
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "dual_carriageway": "yes",
+    "highway": "trunk",
+    "lanes": "2",
+    "maxspeed": "40 mph",
+    "name": "Crow Orchard Road",
+    "old_ref": "B5239",
+    "oneway": "yes",
+    "ref": "A5209",
+    "source": "yahoo aerial imagery",
+    "surface": "asphalt"
+   },
+   "way": 5078139
+  },
+  {
+   "lat": 53.5440013,
+   "length_m": 22.6,
+   "lon": -2.1190715,
+   "refs": [
+    783952131,
+    10067558244,
+    3407935232
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30 mph",
+    "name": "St Mary's Way",
+    "oneway": "yes",
+    "ref": "B6477",
+    "source": "OS_OpenData_StreetView",
+    "surface": "asphalt"
+   },
+   "way": 1194746615
+  },
+  {
+   "lat": 53.5726908,
+   "length_m": 22.6,
+   "lon": -2.6408527,
+   "refs": [
+    9272858194,
+    9592371424,
+    9592371458,
+    9592371423,
+    9592345313
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "highway": "trunk",
+    "lanes": "1",
+    "maxspeed": "30 mph",
+    "name": "Wigan Road",
+    "not:name": "Wigan Lane",
+    "oneway": "yes",
+    "ref": "A49",
+    "sidewalk": "both",
+    "source": "yahoo aerial imagery;ref - npe;ref - npe",
+    "surface": "asphalt"
+   },
+   "way": 1041990341
+  },
+  {
+   "lat": 53.3855745,
+   "length_m": 18.0,
+   "lon": -2.5625229,
+   "refs": [
+    31926649,
+    9425914875
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "highway": "primary",
+    "lanes": "1",
+    "maxspeed": "30 mph",
+    "name": "Kingsway South",
+    "oneway": "yes",
+    "ref": "A50",
+    "sidewalk:left": "separate",
+    "sidewalk:right": "no",
+    "surface": "asphalt"
+   },
+   "way": 1021994844
+  },
+  {
+   "lat": 53.5821892,
+   "length_m": 40.9,
+   "lon": -2.4239228,
+   "refs": [
+    10764345334,
+    5312757574,
+    10764345335,
+    702389041
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "cycleway:left": "lane",
+    "highway": "primary",
+    "lit": "yes",
+    "maxspeed": "30 mph",
+    "name": "Folds Road",
+    "oneway": "yes",
+    "ref": "A575"
+   },
+   "way": 1157490891
+  },
+  {
+   "lat": 53.5206345,
+   "length_m": 64.4,
+   "lon": -2.6525435,
+   "refs": [
+    403827520,
+    9217343567,
+    9216424368,
+    10296062443
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "cycleway:left": "lane",
+    "dual_carriageway": "yes",
+    "highway": "trunk",
+    "lanes": "2",
+    "maxspeed": "30 mph",
+    "name": "Warrington Road",
+    "oneway": "yes",
+    "ref": "A49",
+    "surface": "asphalt",
+    "turn:lanes": "through|through;slight_right"
+   },
+   "way": 1125949493
+  },
+  {
+   "lat": 53.4236935,
+   "length_m": 68.0,
+   "lon": -2.3150727,
+   "refs": [
+    13326327899,
+    4885997903,
+    1257267714,
+    21652799
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "maxspeed": "30 mph",
+    "name": "Woodlands Road",
+    "oneway": "yes",
+    "turn:lanes": "left;through|right"
+   },
+   "way": 1453114721
+  },
+  {
+   "lat": 53.3408578,
+   "length_m": 68.9,
+   "lon": -2.7205392,
+   "refs": [
+    1720578,
+    10174972180,
+    1720579,
+    2561417561,
+    307419683
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "expressway": "yes",
+    "highway": "primary",
+    "lanes": "2",
+    "maxspeed": "40 mph",
+    "name": "Bridgewater Expressway",
+    "old_ref": "A533",
+    "oneway": "yes",
+    "ref": "A558",
+    "sidewalk": "no"
+   },
+   "way": 970236861
+  },
+  {
+   "lat": 53.5797767,
+   "length_m": 375.2,
+   "lon": -2.531945,
+   "refs": [
+    1808533947,
+    31344851,
+    696973247,
+    4963619757,
+    31344853,
+    31344854,
+    31344855,
+    31344856
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "cycleway:left": "lane",
+    "highway": "trunk",
+    "maxspeed": "40 mph",
+    "name": "De Havilland Way",
+    "oneway": "yes",
+    "ref": "A6027",
+    "source": "OS_OpenData_StreetView"
+   },
+   "way": 506478319
+  },
+  {
+   "lat": 53.5264285,
+   "length_m": 48.4,
+   "lon": -2.1604379,
+   "refs": [
+    784869037,
+    1674541100,
+    1674541101,
+    5499192809,
+    5499192802,
+    1674541102,
+    10047903675,
+    784751359
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "destination:ref": "A663",
+    "highway": "trunk_link",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "40 mph",
+    "oneway": "yes",
+    "ref": "A6104",
+    "sidewalk": "left",
+    "surface": "asphalt"
+   },
+   "way": 63662324
+  },
+  {
+   "lat": 53.4707734,
+   "length_m": 24.7,
+   "lon": -2.2491387,
+   "refs": [
+    306911451,
+    2870365697
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "trunk_link",
+    "horse": "yes",
+    "lane_markings": "yes",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30 mph",
+    "motorway": "yes",
+    "name": "Mancunian Way",
+    "oneway": "yes",
+    "operator": "Manchester City Council",
+    "ref": "A57(M)",
+    "surface": "asphalt"
+   },
+   "way": 1560563849
+  },
+  {
+   "lat": 53.3676359,
+   "length_m": 51.6,
+   "lon": -2.2683145,
+   "refs": [
+    5261016935,
+    5230167597,
+    13096964046,
+    13096964016,
+    5230167596
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "cycleway:left": "track",
+    "cycleway:left:oneway": "no",
+    "dual_carriageway": "yes",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30 mph",
+    "maxspeed:type": "GB:nsl_restricted",
+    "name": "Enterprise Way",
+    "oneway": "yes",
+    "parking:left": "no",
+    "parking:left:restriction": "no_parking",
+    "parking:left:restriction:reason": "markings",
+    "postal_code": "M22",
+    "ref:GB:usrn": "24525583",
+    "sidewalk:left": "separate",
+    "sidewalk:right": "no",
+    "surface": "asphalt",
+    "turn:lanes": "through|right"
+   },
+   "way": 544240207
+  },
+  {
+   "lat": 53.4635546,
+   "length_m": 111.4,
+   "lon": -2.3571153,
+   "refs": [
+    20938398,
+    9461886274,
+    9461886273,
+    9461886272,
+    32098095,
+    5428918015,
+    32098097,
+    5425673660,
+    9461886275,
+    5425673659,
+    32098099
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30 mph",
+    "name": "Barton Road",
+    "oneway": "yes",
+    "ref": "B5214"
+   },
+   "way": 4910468
+  },
+  {
+   "lat": 53.576749,
+   "length_m": 363.6,
+   "lon": -2.4205189,
+   "refs": [
+    1667407914,
+    12589741119,
+    7701373348,
+    559966158,
+    1667407970,
+    1667407884,
+    1667407929,
+    1667407915,
+    1667407954,
+    4979776841
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "bicycle": "no",
+    "expressway": "yes",
+    "highway": "trunk_link",
+    "lit": "yes",
+    "maxspeed": "40 mph",
+    "motorroad": "yes",
+    "oneway": "yes",
+    "ref": "A666",
+    "source": "Bing"
+   },
+   "way": 542894844
+  },
+  {
+   "lat": 53.6019487,
+   "length_m": 36.4,
+   "lon": -2.1768681,
+   "refs": [
+    1349208758,
+    11453786993,
+    1349208761,
+    10767917549,
+    7470489382,
+    1349208762
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "highway": "trunk_link",
+    "maxspeed": "40 mph",
+    "oneway": "yes",
+    "surface": "asphalt"
+   },
+   "way": 120303762
+  },
+  {
+   "lat": 53.5318993,
+   "length_m": 206.9,
+   "lon": -2.6327498,
+   "refs": [
+    7673278843,
+    10809354640,
+    10809354643,
+    5353710162,
+    10809354637,
+    10809354633,
+    7673414620
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "abutters": "none",
+    "cycleway:left": "separate",
+    "dual_carriageway": "yes",
+    "highway": "trunk",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "40 mph",
+    "name": "Westwood Way",
+    "oneway": "yes",
+    "ref": "A49",
+    "sidewalk": "separate",
+    "smoothness": "good",
+    "start_date": "2020-06-26",
+    "surface": "asphalt"
+   },
+   "way": 821853511
+  },
+  {
+   "lat": 53.4570838,
+   "length_m": 37.7,
+   "lon": -2.1351847,
+   "refs": [
+    339150,
+    5185969555,
+    1776401669
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "destination": "Hyde",
+    "highway": "trunk",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "40 mph",
+    "name": "Hyde Road",
+    "oneway": "yes",
+    "ref": "A57",
+    "surface": "asphalt"
+   },
+   "way": 4259297
+  },
+  {
+   "lat": 53.5968688,
+   "length_m": 17.4,
+   "lon": -2.4104218,
+   "refs": [
+    10840245885,
+    243712238
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "highway": "trunk",
+    "maxspeed": "30 mph",
+    "name": "Crompton Way",
+    "oneway": "yes",
+    "ref": "A58",
+    "source": "survey"
+   },
+   "way": 1165461319
+  },
+  {
+   "lat": 53.5025639,
+   "length_m": 23.8,
+   "lon": -2.3222575,
+   "refs": [
+    25532994,
+    9779597785,
+    5010141124,
+    9779597787,
+    5010141123,
+    25532993
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "highway": "primary_link",
+    "lit": "yes",
+    "maxspeed": "40 mph",
+    "name": "Lancaster Road",
+    "oneway": "yes",
+    "ref": "A5185",
+    "source": "OS_OpenData_StreetView",
+    "surface": "asphalt"
+   },
+   "way": 512386821
+  },
+  {
+   "lat": 53.5719039,
+   "length_m": 26.2,
+   "lon": -2.4221181,
+   "refs": [
+    661102669,
+    4549925660,
+    4549925659,
+    4549925658,
+    661895234
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "cycleway:left": "lane",
+    "highway": "tertiary",
+    "maxspeed": "30 mph",
+    "name": "Orlando Street",
+    "oneway": "yes",
+    "surface": "asphalt"
+   },
+   "way": 683571448
+  },
+  {
+   "lat": 53.5325093,
+   "length_m": 134.5,
+   "lon": -2.1531778,
+   "refs": [
+    3841976999,
+    978336845,
+    784753628,
+    11180628049,
+    32055308
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "foot": "yes",
+    "hgv": "no",
+    "highway": "trunk",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "40 mph",
+    "name": "Broadway",
+    "national_highways:area": "10",
+    "oneway": "yes",
+    "operator": "National Highways",
+    "operator:wikidata": "Q5760006",
+    "ref": "A663",
+    "sidewalk:left": "separate",
+    "sidewalk:right": "no",
+    "source": "OS_OpenData_StreetView",
+    "surface": "asphalt"
+   },
+   "way": 380902657
+  },
+  {
+   "lat": 53.3997776,
+   "length_m": 179.1,
+   "lon": -2.6448166,
+   "refs": [
+    4530486050,
+    8745801522,
+    853169245,
+    8749719058,
+    340232397,
+    8745801527,
+    7019791654,
+    8920591440,
+    7019791670
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "cycleway:left": "share_busway",
+    "dual_carriageway": "yes",
+    "highway": "tertiary",
+    "lanes": "1",
+    "lanes:psv": "1",
+    "maxspeed": "20 mph",
+    "name": "Boston Boulevard",
+    "oneway": "yes",
+    "ref:GB:usrn": "42260268",
+    "surface": "asphalt"
+   },
+   "way": 460773111
+  },
+  {
+   "lat": 53.6775425,
+   "length_m": 29.0,
+   "lon": -2.6355081,
+   "refs": [
+    36662559,
+    592066674,
+    473462930
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "highway": "primary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "40 mph",
+    "name": "Preston Road",
+    "oneway": "yes",
+    "ref": "A6",
+    "smoothness": "good",
+    "surface": "asphalt"
+   },
+   "way": 503374589
+  },
+  {
+   "lat": 53.5192821,
+   "length_m": 34.7,
+   "lon": -2.0464087,
+   "refs": [
+    949997885,
+    13146145905,
+    534365307,
+    13146145903,
+    685961905
+   ],
+   "stratum": [
+    "closed",
+    "oneway_major"
+   ],
+   "tags": {
+    "highway": "primary",
+    "lit": "yes",
+    "maxspeed": "30 mph",
+    "name": "Arundel Street",
+    "oneway": "yes",
+    "ref": "A670",
+    "source:name": "NaPTAN",
+    "surface": "asphalt"
+   },
+   "way": 1456477717
+  },
+  {
+   "lat": 53.4559154,
+   "length_m": 143.6,
+   "lon": -2.2003808,
+   "refs": [
+    1677742817,
+    12491718012,
+    10118371032,
+    25932800
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "highway": "residential",
+    "maxspeed": "20 mph",
+    "name": "Rainforth Street",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "source": "OS_OpenData_StreetView"
+   },
+   "way": 155367896
+  },
+  {
+   "lat": 53.4830608,
+   "length_m": 189.7,
+   "lon": -2.0556758,
+   "refs": [
+    918034333,
+    955947606,
+    918034344,
+    10584217446,
+    2280305882,
+    918034340,
+    442554028
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "highway": "unclassified",
+    "maxspeed": "20 mph",
+    "name": "Dean Street",
+    "oneway": "yes",
+    "source": "OS_OpenData_StreetView"
+   },
+   "way": 155965486
+  },
+  {
+   "lat": 53.4891571,
+   "length_m": 57.3,
+   "lon": -2.2299622,
+   "refs": [
+    944514758,
+    11309243234,
+    11766454040,
+    1833608950
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "highway": "unclassified",
+    "name": "Moorhead Street",
+    "oneway": "yes",
+    "sidewalk:both": "separate"
+   },
+   "way": 172454783
+  },
+  {
+   "lat": 53.5364847,
+   "length_m": 67.9,
+   "lon": -2.2885533,
+   "refs": [
+    1780628466,
+    13274436542,
+    13376907343,
+    2394631267,
+    2394716661
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "highway": "unclassified",
+    "lit": "yes",
+    "maxspeed": "30 mph",
+    "oneway": "yes",
+    "surface": "asphalt"
+   },
+   "way": 231054799
+  },
+  {
+   "lat": 53.4749861,
+   "length_m": 30.8,
+   "lon": -2.2478492,
+   "refs": [
+    4453859984,
+    11518379585,
+    4453859986,
+    1585050002
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "highway": "residential",
+    "lit": "yes",
+    "maxspeed": "20 mph",
+    "name": "Albion Street",
+    "oneway": "yes",
+    "surface": "asphalt"
+   },
+   "way": 448614744
+  },
+  {
+   "lat": 53.4119159,
+   "length_m": 56.8,
+   "lon": -2.2665202,
+   "refs": [
+    3571404,
+    3571406,
+    9196411873,
+    9196411872
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "bicycle": "no",
+    "destination:ref": "M60",
+    "expressway": "yes",
+    "foot": "no",
+    "highway": "motorway_link",
+    "lane_markings": "yes",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "40 mph",
+    "motorway": "no",
+    "national_highways:area": "10",
+    "oneway": "yes",
+    "operator": "National Highways",
+    "operator:wikidata": "Q5760006",
+    "surface": "asphalt"
+   },
+   "way": 1035356558
+  },
+  {
+   "lat": 53.4150653,
+   "length_m": 60.9,
+   "lon": -2.1527713,
+   "refs": [
+    934790089,
+    9191799760,
+    3381978060
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "bicycle": "no",
+    "description": "Stockport East-West By-Pass",
+    "highway": "motorway_link",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "70 mph",
+    "national_highways:area": "10",
+    "old_ref": "M63",
+    "oneway": "yes",
+    "operator": "National Highways",
+    "operator:wikidata": "Q5760006",
+    "ref": "M60"
+   },
+   "way": 80129102
+  },
+  {
+   "lat": 53.502354,
+   "length_m": 37.2,
+   "lon": -2.524237,
+   "refs": [
+    274803337,
+    9552463093,
+    9552463100,
+    274803338,
+    9552463110,
+    9552463104,
+    11633645035
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "highway": "unclassified",
+    "maxspeed": "30 mph",
+    "name": "Priestners Way",
+    "oneway": "yes",
+    "source": "survey",
+    "surface": "asphalt"
+   },
+   "way": 1036892630
+  },
+  {
+   "lat": 53.374728,
+   "length_m": 34.3,
+   "lon": -2.5832534,
+   "refs": [
+    11671844309,
+    8757792392,
+    8757792390,
+    11671844307,
+    8757792381
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "highway": "unclassified",
+    "oneway": "yes"
+   },
+   "way": 946018651
+  },
+  {
+   "lat": 53.4740937,
+   "length_m": 59.0,
+   "lon": -2.2997648,
+   "refs": [
+    1496494920,
+    10082949482,
+    5975980129,
+    1607538982
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "cycleway:left": "no",
+    "highway": "unclassified",
+    "lane_markings": "yes",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "20 mph",
+    "name": "White",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+   },
+   "way": 147544655
+  },
+  {
+   "lat": 53.423595,
+   "length_m": 122.0,
+   "lon": -2.1842644,
+   "refs": [
+    207124095,
+    10304173004,
+    1297375628,
+    1297375645,
+    1149913738,
+    207124098
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "highway": "residential",
+    "lane_markings": "no",
+    "maxspeed": "30 mph",
+    "name": "Derby Range",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+   },
+   "way": 19831099
+  },
+  {
+   "lat": 53.452381,
+   "length_m": 66.7,
+   "lon": -2.0898711,
+   "refs": [
+    928010774,
+    13484513531,
+    13484513527,
+    13484513528,
+    928011555
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "highway": "residential",
+    "name": "Read Street",
+    "oneway": "yes",
+    "source": "OS_OpenData_StreetView"
+   },
+   "way": 780905592
+  },
+  {
+   "lat": 53.4675578,
+   "length_m": 40.1,
+   "lon": -2.3536005,
+   "refs": [
+    456187406,
+    119176323,
+    1685595661
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "highway": "unclassified",
+    "lit": "yes",
+    "maxspeed": "30 mph",
+    "oneway": "yes"
+   },
+   "way": 38542580
+  },
+  {
+   "lat": 53.4526966,
+   "length_m": 217.0,
+   "lon": -2.0746312,
+   "refs": [
+    339543,
+    926928103,
+    926928104,
+    926928105
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "bicycle": "no",
+    "description": "Hyde By-Pass",
+    "highway": "motorway_link",
+    "lit": "yes",
+    "maxspeed": "70 mph",
+    "national_highways:area": "10",
+    "oneway": "yes",
+    "operator": "National Highways",
+    "operator:wikidata": "Q5760006",
+    "ref": "M67"
+   },
+   "way": 22724314
+  },
+  {
+   "lat": 53.468771,
+   "length_m": 56.6,
+   "lon": -2.352822,
+   "refs": [
+    5124158264,
+    5124158388,
+    5124158387,
+    5124158265,
+    5124158278,
+    8533502873,
+    5124158277,
+    5124158293,
+    5124158279
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "destination": "T'cen West",
+    "highway": "unclassified",
+    "lanes": "2",
+    "oneway": "yes",
+    "turn": "right"
+   },
+   "way": 527018066
+  },
+  {
+   "lat": 53.4604733,
+   "length_m": 113.1,
+   "lon": -2.3550643,
+   "refs": [
+    718025928,
+    718025988,
+    718026163,
+    718025418
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "highway": "residential",
+    "name": "Kingsway Park",
+    "oneway": "yes"
+   },
+   "way": 57871202
+  },
+  {
+   "lat": 53.4805873,
+   "length_m": 48.0,
+   "lon": -2.2290368,
+   "refs": [
+    2918364675,
+    9240076605,
+    6417498062,
+    4838574,
+    6417498063,
+    6417498064,
+    6417498065,
+    2677414499
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "highway": "residential",
+    "lit": "yes",
+    "maxspeed": "20 mph",
+    "name": "Peak Street",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt",
+    "tfgmcitycentre": "yes"
+   },
+   "way": 301069589
+  },
+  {
+   "lat": 53.3495459,
+   "length_m": 88.2,
+   "lon": -2.5007399,
+   "refs": [
+    331320532,
+    331320531,
+    15748065
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "bicycle": "no",
+    "destination": "NORTH WALES;Chester;Runcorn;Warrington (South);Lymm",
+    "destination:ref": "M56;A50",
+    "destination:ref:lanes": "M56;A50|A50",
+    "highway": "motorway_link",
+    "lanes": "2",
+    "lit": "yes",
+    "maxheight": "below_default",
+    "maxspeed": "70 mph",
+    "maxspeed:type": "GB:motorway",
+    "national_highways:area": "10",
+    "oneway": "yes",
+    "operator": "National Highways",
+    "operator:wikidata": "Q5760006",
+    "surface": "asphalt"
+   },
+   "way": 1558942776
+  },
+  {
+   "lat": 53.4819269,
+   "length_m": 54.9,
+   "lon": -2.2319698,
+   "refs": [
+    1825278031,
+    9491094490,
+    5687745810,
+    4832552,
+    2003096198,
+    1752401207
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "cycleway:right": "opposite_lane",
+    "highway": "residential",
+    "lit": "yes",
+    "maxspeed": "20 mph",
+    "name": "Port Street",
+    "oneway": "yes",
+    "oneway:bicycle": "no",
+    "ref:GB:usrn": "24506065",
+    "sidewalk:both": "separate",
+    "surface": "asphalt",
+    "tfgmcitycentre": "yes"
+   },
+   "way": 1019236054
+  },
+  {
+   "lat": 53.6277053,
+   "length_m": 28.5,
+   "lon": -2.1475434,
+   "refs": [
+    13382149874,
+    778968564
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "highway": "residential",
+    "maxspeed": "20 mph",
+    "maxweightrating:goods": "3",
+    "name": "Foxholes Road",
+    "oneway": "yes"
+   },
+   "way": 1459138776
+  },
+  {
+   "lat": 53.3814288,
+   "length_m": 35.1,
+   "lon": -2.566062,
+   "refs": [
+    247791097,
+    8768379135,
+    9021154395,
+    8768379136,
+    341366979
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "maxspeed": "30 mph",
+    "name": "Grange Avenue",
+    "oneway": "yes",
+    "sidewalk:left": "separate",
+    "sidewalk:right": "no",
+    "surface": "asphalt",
+    "turn:lanes": "left"
+   },
+   "way": 30806963
+  },
+  {
+   "lat": 53.3985903,
+   "length_m": 81.3,
+   "lon": -2.2683024,
+   "refs": [
+    1943228363,
+    1943228329,
+    20910659,
+    9868164633
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "bicycle": "no",
+    "destination": "Birmingham;Chester;Manchester",
+    "destination:ref": "M56;(M6)",
+    "highway": "motorway_link",
+    "lit": "yes",
+    "maxspeed": "70 mph",
+    "national_highways:area": "10",
+    "oneway": "yes",
+    "operator": "National Highways",
+    "operator:wikidata": "Q5760006",
+    "ref": "M56",
+    "sidewalk:both": "no",
+    "surface": "asphalt"
+   },
+   "way": 1076056662
+  },
+  {
+   "lat": 53.5282967,
+   "length_m": 58.9,
+   "lon": -2.4779145,
+   "refs": [
+    757361739,
+    7940817016,
+    757361740
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "highway": "residential",
+    "maxspeed": "20 mph",
+    "name": "Stamford Street",
+    "oneway": "yes",
+    "source": "OS_OpenData_StreetView"
+   },
+   "way": 707365252
+  },
+  {
+   "lat": 53.5301572,
+   "length_m": 26.0,
+   "lon": -2.6541821,
+   "refs": [
+    10110212650,
+    14183889956,
+    8978828721,
+    6054544278
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "highway": "residential",
+    "maxspeed": "20 mph",
+    "name": "Manse Gardens",
+    "oneway": "yes"
+   },
+   "way": 970260363
+  },
+  {
+   "lat": 53.5841043,
+   "length_m": 23.8,
+   "lon": -2.5382787,
+   "refs": [
+    948329272,
+    9108216462,
+    948329289
+   ],
+   "stratum": [
+    "closed",
+    "oneway_residential"
+   ],
+   "tags": {
+    "highway": "unclassified",
+    "maxspeed": "30 mph",
+    "oneway": "yes",
+    "source": "GPS Survey"
+   },
+   "way": 81383677
+  },
+  {
+   "lat": 53.6481974,
+   "length_m": 34.3,
+   "lon": -2.6243099,
+   "refs": [
+    5602537583,
+    5602537582
+   ],
+   "stratum": [
+    "closed",
+    "oneway_service"
+   ],
+   "tags": {
+    "highway": "service",
+    "maxspeed": "5 mph",
+    "oneway": "yes"
+   },
+   "way": 586370295
+  },
+  {
+   "lat": 53.4788723,
+   "length_m": 86.0,
+   "lon": -2.3066277,
+   "refs": [
+    6318087477,
+    6318087483,
+    6318087484,
+    6318088585,
+    6318088586,
+    6318088587,
+    6318087465
+   ],
+   "stratum": [
+    "closed",
+    "oneway_service"
+   ],
+   "tags": {
+    "highway": "service",
+    "oneway": "yes"
+   },
+   "way": 674639909
+  },
+  {
+   "lat": 53.3502406,
+   "length_m": 34.1,
+   "lon": -2.215252,
+   "refs": [
+    306222665,
+    306222666,
+    306222667,
+    306222668,
+    306222669
+   ],
+   "stratum": [
+    "closed",
+    "oneway_service"
+   ],
+   "tags": {
+    "highway": "service",
+    "oneway": "yes",
+    "surface": "asphalt"
+   },
+   "way": 27890551
+  },
+  {
+   "lat": 53.4083447,
+   "length_m": 32.4,
+   "lon": -2.5975678,
+   "refs": [
+    256513895,
+    8901312534,
+    355021117,
+    8901220922,
+    8901220923,
+    8901220924
+   ],
+   "stratum": [
+    "closed",
+    "oneway_service"
+   ],
+   "tags": {
+    "highway": "service",
+    "maxspeed": "5 mph",
+    "oneway": "yes"
+   },
+   "way": 962278103
+  },
+  {
+   "lat": 53.5422464,
+   "length_m": 30.2,
+   "lon": -2.0943513,
+   "refs": [
+    12532722632,
+    12532722637,
+    12532722635
+   ],
+   "stratum": [
+    "closed",
+    "oneway_service"
+   ],
+   "tags": {
+    "highway": "service",
+    "oneway": "yes",
+    "service": "driveway"
+   },
+   "way": 1354279550
+  },
+  {
+   "lat": 53.4440908,
+   "length_m": 18.1,
+   "lon": -2.3089425,
+   "refs": [
+    11290636255,
+    11290636256,
+    11290636257,
+    11290636258,
+    11290636259,
+    11290636260
+   ],
+   "stratum": [
+    "closed",
+    "oneway_service"
+   ],
+   "tags": {
+    "highway": "service",
+    "oneway": "yes"
+   },
+   "way": 1218490050
+  },
+  {
+   "lat": 53.5357773,
+   "length_m": 69.9,
+   "lon": -2.2892104,
+   "refs": [
+    1574600408,
+    1574600388,
+    1574600355,
+    1574600339,
+    1574600332,
+    1574600329,
+    1574600294,
+    1574600291
+   ],
+   "stratum": [
+    "closed",
+    "oneway_service"
+   ],
+   "tags": {
+    "highway": "service",
+    "oneway": "yes"
+   },
+   "way": 143897007
+  },
+  {
+   "lat": 53.5819485,
+   "length_m": 26.9,
+   "lon": -2.4248541,
+   "refs": [
+    5570598945,
+    5570598946,
+    8220570484,
+    5570598947,
+    702389040
+   ],
+   "stratum": [
+    "closed",
+    "oneway_service"
+   ],
+   "tags": {
+    "highway": "service",
+    "oneway": "yes"
+   },
+   "way": 582475307
+  },
+  {
+   "lat": 53.4572681,
+   "length_m": 66.5,
+   "lon": -2.6491612,
+   "refs": [
+    7375206476,
+    9031551333,
+    8418812269,
+    9031551323,
+    8418812268,
+    7375206478,
+    7375206479,
+    7375206480,
+    9031551324,
+    7375206481
+   ],
+   "stratum": [
+    "closed",
+    "oneway_service"
+   ],
+   "tags": {
+    "highway": "service",
+    "oneway": "yes"
+   },
+   "way": 788853417
+  },
+  {
+   "lat": 53.3979688,
+   "length_m": 40.8,
+   "lon": -2.5984974,
+   "refs": [
+    6280211815,
+    12833298575,
+    12833298574,
+    6280211806
+   ],
+   "stratum": [
+    "closed",
+    "oneway_service"
+   ],
+   "tags": {
+    "highway": "service",
+    "oneway": "yes"
+   },
+   "way": 1386087113
+  }
+ ],
+ "contract": "ONEWAY-002 v1",
+ "frozen_before_engine_runs": true,
+ "quotas": {
+  "closed/oneway_major": 25,
+  "closed/oneway_residential": 25,
+  "closed/oneway_roundabout": 15,
+  "closed/oneway_service": 10
+ },
+ "selection_rule": "one-way car road, 15-400 m, not closed, not conditional, both end nodes on another road open to cars; per-stratum quota, ordered by sha256('ONEWAY-002:'+way_id)",
+ "source_sha256": "2a8ef8e1f2533cb009b1ce248a6bf4eaabdd47e03979e64e24cd844f3b22acba",
+ "source_snapshot": "gm.osm.pbf"
+}
