@@ -1,6 +1,8 @@
 import unittest
-from benchmarks.real_map_legality_baseline import forbidden_direct_traversal, judge, sanitize_supported_map
+from benchmarks.real_map_legality_baseline import (forbidden_direct_traversal, judge,
+        sanitize_supported_map, selected_edge_forward_traversal)
 from benchmarks.route004_detector_controls import execute
+from benchmarks.route004_selected_edge_controls import execute as execute_selected
 
 
 class LegalityBaselineTests(unittest.TestCase):
@@ -22,6 +24,19 @@ class LegalityBaselineTests(unittest.TestCase):
 
     def test_frozen_detector_contract(self):
         result=execute()
+        self.assertEqual((5,0,5),(result["passed"],result["failed"],result["total"]))
+        self.assertFalse(result["historical_route004_rescored"])
+
+    def test_allowed_route_must_use_selected_edge(self):
+        direct=[self.case["allowed_start"],[53.0005,-2],self.case["allowed_end"]]
+        detour=[self.case["allowed_start"],[53,-1.999],[53.001,-1.999],self.case["allowed_end"]]
+        self.assertTrue(selected_edge_forward_traversal(
+            direct,self.case["allowed_start"],self.case["allowed_end"]))
+        self.assertFalse(selected_edge_forward_traversal(
+            detour,self.case["allowed_start"],self.case["allowed_end"]))
+
+    def test_frozen_selected_edge_contract(self):
+        result=execute_selected()
         self.assertEqual((5,0,5),(result["passed"],result["failed"],result["total"]))
         self.assertFalse(result["historical_route004_rescored"])
 
