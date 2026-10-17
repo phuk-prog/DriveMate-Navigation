@@ -1,0 +1,16 @@
+{
+ "agent": "Claude",
+ "branch": "ccr-005983df-g8r2zd",
+ "created": "2026-10-17T19:46:15+00:00",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T19:46:15+00:00 next by Claude on ccr-005983df-g8r2zd"
+ ],
+ "id": "CAT2-ONEWAY-IMPROVEMENTS",
+ "results": "docs/ONEWAY_002_RESULTS.md",
+ "runs": [],
+ "state": "next",
+ "title": "Category 2 test 2 (one-way roads): owner-approved improvements (apply later)",
+ "updated": "2026-10-17T19:46:15+00:00",
+ "why": "Owner, 17 Oct 2026, approved to apply later: (1) any route from any engine or service that drives a one-way road the wrong way is marked FAIL, in test results and by the app's check of received routes; (2) add 'one way except cycles' and other vehicle-specific one-ways to the test cohort; (3) time-limited one-ways evaluated against the clock."
+}
