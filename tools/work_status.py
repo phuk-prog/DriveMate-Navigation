@@ -104,8 +104,23 @@ def _age_hours(item: dict) -> float:
         return float("inf")
 
 
-def load_index() -> dict:
-    return json.loads(INDEX.read_text()) if INDEX.exists() else {"read_first": [], "sources": []}
+def load_index(*, all_branches: bool = True) -> dict:
+    """This checkout's index, plus entries other branches added (matched by place)."""
+    index = json.loads(INDEX.read_text()) if INDEX.exists() else {"read_first": [], "sources": []}
+    if not all_branches:
+        return index
+    known = {e["where"] for key in ("read_first", "sources") for e in index.get(key, [])}
+    for ref in _git("for-each-ref", "--format=%(refname:short)", "refs/remotes/origin").split():
+        try:
+            other = json.loads(_git("show", f"{ref}:work/index.json") or "{}")
+        except json.JSONDecodeError:
+            continue
+        for key in ("read_first", "sources"):
+            for e in other.get(key, []):
+                if e.get("where") not in known:
+                    index.setdefault(key, []).append(e)
+                    known.add(e.get("where"))
+    return index
 
 
 def _cost_rank(entry: dict) -> int:
@@ -260,6 +275,7 @@ def main(argv: list[str] | None = None) -> int:
         print("\n".join(where(index, items, args.topic)) or f"Nothing registered for '{args.topic}'.")
         return 0
     if args.cmd == "source":
+        index = load_index(all_branches=False)  # never copy other branches' entries into this file
         entry = {"what": args.what, "where": args.where, "cost": args.cost,
                  "topics": [x.strip() for x in args.topics.split(",") if x.strip()]}
         if args.when:
