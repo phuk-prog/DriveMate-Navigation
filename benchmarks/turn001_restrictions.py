@@ -41,6 +41,7 @@ import hashlib
 import json
 import math
 import os
+import shutil
 import subprocess
 import time
 import xml.etree.ElementTree as ET
@@ -848,7 +849,8 @@ def _wait(url: str, seconds: float, body: bytes | None = None) -> None:
 
 def engine_case(engine: str, folder: Path, clip: Clip, geom: dict) -> dict:
     work = folder / engine.lower()
-    subprocess.run(["rm", "-rf", str(work)], check=False)
+    if work.exists():
+        _remove_engine_work(work, engine)
     work.mkdir(parents=True)
     subprocess.run(["cp", str(folder / "clip.osm.pbf"), str(work / "input.osm.pbf")], check=True)
     name = f"turn001-{engine.lower()}"
@@ -883,7 +885,8 @@ def engine_case(engine: str, folder: Path, clip: Clip, geom: dict) -> dict:
             config = work / "config.yml"
             config.write_text(graphhopper_config(work / "input.osm.pbf", work / "cache"))
             log = (work / "startup.log").open("w")
-            proc = subprocess.Popen(["/opt/jdk17/bin/java", "-Xmx1g", "-jar", str(jar), "server", str(config)],
+            java = os.environ.get("TURN001_JAVA_BIN", "/opt/jdk17/bin/java")
+            proc = subprocess.Popen([java, "-Xmx1g", "-jar", str(jar), "server", str(config)],
                                     stdout=log, stderr=subprocess.STDOUT)
             _wait("http://127.0.0.1:8989/health", 90)
             points, ms = graphhopper_query(geom, travel_headings(clip, geom))
@@ -896,7 +899,7 @@ def engine_case(engine: str, folder: Path, clip: Clip, geom: dict) -> dict:
         if proc is not None:
             proc.terminate()
             proc.wait(timeout=30)
-        subprocess.run(["sudo", "-n", "rm", "-rf", str(work)], capture_output=True)
+        _remove_engine_work(work, engine)
     if points is None:
         result = _verdict(clip, geom, None)
     else:
@@ -904,6 +907,34 @@ def engine_case(engine: str, folder: Path, clip: Clip, geom: dict) -> dict:
         result = {**_verdict(clip, geom, nodes), **snaps}
     result["warm_query_ms"] = round(ms, 1)
     return result
+
+
+def _remove_engine_work(work: Path, engine: str) -> None:
+    """Remove engine scratch files without assuming passwordless sudo exists.
+
+    Containerized engines may leave root-owned files in the bind mount.  Prefer
+    normal local cleanup, then use the already pinned engine image to clean its
+    own bind mount.  Cleanup must not hide a completed engine verdict merely
+    because a minimal runner has no ``sudo`` executable.
+    """
+    try:
+        shutil.rmtree(work)
+    except (OSError, PermissionError):
+        pass
+    if not work.exists():
+        return
+    image = IMAGES.get(engine)
+    if image is None:
+        raise RuntimeError(f"Cannot remove {engine} scratch directory: {work}")
+    completed = subprocess.run(
+        ["docker", "run", "--rm", "--entrypoint", "/bin/sh",
+         "-v", f"{work.parent}:/cleanup", image,
+         "-c", f"rm -rf /cleanup/{work.name}"],
+        capture_output=True, text=True,
+    )
+    if completed.returncode or work.exists():
+        detail = (completed.stderr or completed.stdout)[-300:]
+        raise RuntimeError(f"Cannot remove {engine} scratch directory: {detail}")
 
 
 def graphhopper_config(pbf: Path, cache: Path) -> str:

@@ -1,6 +1,7 @@
 """TURN-001 fresh-retet evidence integrity, not a real-road execution."""
 import json
 from pathlib import Path
+import subprocess
 from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import patch
@@ -103,6 +104,22 @@ class Turn001ProvenanceTests(unittest.TestCase):
     def test_frozen_cohort_cannot_be_reselected_in_place(self):
         with self.assertRaisesRegex(RuntimeError, "frozen cohort exists"):
             turn.select(self.work / "not-needed.osm.pbf")
+
+    def test_container_cleanup_does_not_require_sudo(self):
+        scratch = self.work / "osrm"
+        scratch.mkdir()
+
+        def container_cleanup(*args, **kwargs):
+            scratch.rmdir()
+            return subprocess.CompletedProcess(args[0], 0, "", "")
+
+        with patch.object(turn.shutil, "rmtree", side_effect=PermissionError), \
+                patch.object(turn.subprocess, "run", side_effect=container_cleanup) as run:
+            turn._remove_engine_work(scratch, "OSRM")
+        command = run.call_args.args[0]
+        self.assertNotIn("sudo", command)
+        self.assertIn("--entrypoint", command)
+        self.assertFalse(scratch.exists())
 
 
 if __name__ == "__main__":
