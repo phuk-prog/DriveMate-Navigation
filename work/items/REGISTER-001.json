@@ -1,0 +1,18 @@
+{
+ "agent": "Claude",
+ "branch": "claude/dmn-turn-restriction-debug-mhw7cw",
+ "created": "2026-10-17T10:48:52+00:00",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T10:48:52+00:00 done by Claude on claude/dmn-turn-restriction-debug-mhw7cw"
+ ],
+ "id": "REGISTER-001",
+ "results": "REGISTER.md",
+ "runs": [
+  "https://github.com/phuk-prog/DriveMate-Navigation/pull/5"
+ ],
+ "state": "done",
+ "summary": "One page every AI reads first; pointer files for Codex, Claude, Gemini, Copilot, Cursor; rebuilt on main by register.yml. Merged to main in PR #5.",
+ "title": "Shared work register for every AI (REGISTER.md first)",
+ "updated": "2026-10-17T10:48:52+00:00"
+}
