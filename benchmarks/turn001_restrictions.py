@@ -846,7 +846,9 @@ def _wait(url: str, seconds: float, body: bytes | None = None) -> None:
     raise RuntimeError(f"Local engine did not start: {url}")
 
 
-def engine_case(engine: str, folder: Path, clip: Clip, geom: dict) -> dict:
+def engine_case(engine: str, folder: Path, clip: Clip, geom: dict, judge=None) -> dict:
+    """Run one reference engine on one clip; `judge` (default TURN-001 _verdict) scores the path."""
+    judge = judge or _verdict
     work = folder / engine.lower()
     subprocess.run(["rm", "-rf", str(work)], check=False)
     work.mkdir(parents=True)
@@ -898,10 +900,10 @@ def engine_case(engine: str, folder: Path, clip: Clip, geom: dict) -> dict:
             proc.wait(timeout=30)
         subprocess.run(["sudo", "-n", "rm", "-rf", str(work)], capture_output=True)
     if points is None:
-        result = _verdict(clip, geom, None)
+        result = judge(clip, geom, None)
     else:
         nodes, snaps = engine_path(clip, geom, points)
-        result = {**_verdict(clip, geom, nodes), **snaps}
+        result = {**judge(clip, geom, nodes), **snaps}
     result["warm_query_ms"] = round(ms, 1)
     return result
 
