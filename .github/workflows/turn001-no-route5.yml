@@ -1,0 +1,57 @@
+name: TURN-001 five no-route graph diagnostic
+# Focused read-only investigation. One Python runner; no competitor rebuilds,
+# no navigation behaviour change, no production app.
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/chatgpt-turn001-no-route5-20261017']
+    paths:
+      - 'tools/turn001_no_route5_diagnostic.py'
+      - '.github/workflows/turn001-no-route5.yml'
+permissions:
+  contents: read
+concurrency:
+  group: turn001-no-route5-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Verify and unpack five frozen case clips
+        run: |
+          set -euo pipefail
+          mkdir -p results/turn001
+          base=https://raw.githubusercontent.com/${{ github.repository }}/data/turn001-snapshot
+          curl -fsSL -o results/turn001/SHA256SUMS "$base/SHA256SUMS"
+          curl -fsSL -o results/turn001/turn001-cases.tar.xz "$base/turn001-cases.tar.xz"
+          (cd results/turn001 && sha256sum -c SHA256SUMS --ignore-missing)
+          cd results/turn001
+          tar -xJf turn001-cases.tar.xz \
+            prepared.json \
+            cases/10558420/clip.osm \
+            cases/13613008/clip.osm \
+            cases/16644804/clip.osm \
+            cases/4853555/clip.osm \
+            cases/7615778/clip.osm
+          rm turn001-cases.tar.xz
+      - name: Compile and diagnose five cases
+        run: |
+          set -euo pipefail
+          python -m py_compile tools/turn001_no_route5_diagnostic.py
+          python -m tools.turn001_no_route5_diagnostic > /tmp/turn001-no-route5-brief.log
+          cat results/turn001-no-route5/brief.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: turn001-no-route5-diagnostic
+          path: |
+            results/turn001-no-route5/summary.json
+            results/turn001-no-route5/brief.md
+          retention-days: 90
