@@ -534,6 +534,9 @@ def final(entry: dict) -> dict:
     return entry
 
 
+ROUTED = {"PASS", "USED_RESTRICTED", "AVOIDED_RESTRICTED", "FAIL_THROUGH_NO_CAR_ROAD", "FAIL_AGAINST_ONEWAY"}
+
+
 def score() -> None:
     prepared = {str(r["way"]): r for r in json.loads(PREPARED.read_text())}
     runs = {e: json.loads((WORK / f"run-{e}.json").read_text()) for e in ENGINES if (WORK / f"run-{e}.json").exists()}
@@ -582,6 +585,13 @@ def score() -> None:
                 n: f["other_restricted_roads"] + f["other_uncertain_barriers"] for n, f in res.items()
                 if legal_pass(name, n) and (f.get("other_restricted_roads") or f.get("other_uncertain_barriers"))},
             "endpoint_withheld": sorted(n for n, f in res.items() if f["verdict"] == "ENDPOINT_WITHHELD_BY_POLICY"),
+            # Category 5 (route computation and validity), scored apart from the legality result:
+            # a route was returned and starts and finishes on the exact test segments.
+            "category5_route_validity": dict(Counter(
+                "valid_route" if f["verdict"] in ROUTED else
+                "no_route" if f["verdict"] == "SAFE_NO_ROUTE" else
+                "off_target" if f["verdict"] == "UNRESOLVED_SNAP" else "error_or_rejected"
+                for f in res.values())),
             "query_ms": b1._ms([runs[name][n][ms_key] for n in testable
                                 if runs[name].get(n, {}).get(ms_key) is not None]),
             "executed": len(res),
@@ -603,6 +613,9 @@ def brief() -> int:
                      f"other rule breaks {len(e['other_rule_violations'])}; "
                      f"no-route with a legal alternative {len(e['no_route_but_legal_route_exists'])}; "
                      f"median {e['query_ms']['median']} ms")
+    lines.append("Category 5 (separate): routes returned on the exact test segments — " + "; ".join(
+        f"{name} {e['category5_route_validity'].get('valid_route', 0)}/{e['executed']}"
+        for name, e in s["engines"].items()))
     bad = []
     if s["engines"].get("DMN", {}).get("fail_cases"):
         bad.append(f"DMN {TESTS[TEST]['broke']}")
