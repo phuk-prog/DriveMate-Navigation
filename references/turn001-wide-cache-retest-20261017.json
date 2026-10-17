@@ -1,0 +1,607 @@
+{
+  "case_ids": [
+    "10558420",
+    "13613008",
+    "13759623",
+    "14241462",
+    "14285234",
+    "16644804",
+    "16686773",
+    "2263040",
+    "4853555",
+    "7615778"
+  ],
+  "cases": {
+    "DMN": {
+      "10558420": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "9f72c0f83f320cb970d3147f2d871c96131660e26ec3bc87ce3ba226ed3d8fc0",
+        "timing_ms": 110.6,
+        "verdict": "SAFE_NO_ROUTE",
+        "wide_clip_used": true
+      },
+      "13613008": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "fff672095b6bb89659a8cb8aeb2e9571f669b6de78be2e2c66b6784588de2feb",
+        "timing_ms": 140.6,
+        "verdict": "SAFE_NO_ROUTE",
+        "wide_clip_used": true
+      },
+      "13759623": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "e4c64b5fa2acff40069c8a8a178c78a70bbaf07aacd0755b53cef333706e97ce",
+        "nodes": 86,
+        "not_judged": [],
+        "route_legal": "LEGAL",
+        "timing_ms": 67.9,
+        "verdict": "PASS",
+        "violations": [],
+        "wide_clip_used": true
+      },
+      "14241462": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "9fc4ccc771efeb967e0fc53f20fc75341b850960f7b5382471b7c7bc43f3c069",
+        "nodes": 69,
+        "not_judged": [
+          "14245850:only_multi"
+        ],
+        "route_legal": "LEGAL",
+        "timing_ms": 94.1,
+        "verdict": "PASS",
+        "violations": [],
+        "wide_clip_used": true
+      },
+      "14285234": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "6e1d3578a1a02c6224591005ed90ed29a8a724b9145c1ee2a2ce0383cdcd4e33",
+        "timing_ms": 70.7,
+        "verdict": "SAFE_NO_ROUTE",
+        "wide_clip_used": true
+      },
+      "16644804": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "86748643ef0f11ffe70919f52b6a3aec4b6625698d02b70bbb7424023ddfc830",
+        "timing_ms": 95.7,
+        "verdict": "SAFE_NO_ROUTE",
+        "wide_clip_used": true
+      },
+      "16686773": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "c826e9173da51cedf379d26e0850c5bfe1560e6cc158a43ba5672d6241366e5f",
+        "nodes": 133,
+        "not_judged": [
+          "15640419:structure",
+          "2087629:only_multi"
+        ],
+        "route_legal": "LEGAL",
+        "timing_ms": 504.7,
+        "verdict": "PASS",
+        "violations": [],
+        "wide_clip_used": true
+      },
+      "2263040": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "2da5ef3d51ece0365325dbe3f4293facd8f6d789a43d29b7be7a6150d42923b6",
+        "nodes": 87,
+        "not_judged": [
+          "10752370:only_multi",
+          "11036883:structure"
+        ],
+        "route_legal": "LEGAL",
+        "timing_ms": 98.3,
+        "verdict": "PASS",
+        "violations": [],
+        "wide_clip_used": true
+      },
+      "4853555": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "8f00542e78e77d58093fa0d797221294e4d657e8b9494273f070ad983f7973ab",
+        "timing_ms": 104.3,
+        "verdict": "SAFE_NO_ROUTE",
+        "wide_clip_used": true
+      },
+      "7615778": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "58f7f481a9f8d8328edc6c6c9049d928734d9fe6669ada857da399a2e35a7652",
+        "timing_ms": 402.7,
+        "verdict": "SAFE_NO_ROUTE",
+        "wide_clip_used": true
+      }
+    },
+    "GraphHopper": {
+      "10558420": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "9f72c0f83f320cb970d3147f2d871c96131660e26ec3bc87ce3ba226ed3d8fc0",
+        "timing_ms": 85.9,
+        "verdict": "SAFE_NO_ROUTE",
+        "wide_clip_used": true
+      },
+      "13613008": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "fff672095b6bb89659a8cb8aeb2e9571f669b6de78be2e2c66b6784588de2feb",
+        "timing_ms": 57.3,
+        "verdict": "SAFE_NO_ROUTE",
+        "wide_clip_used": true
+      },
+      "13759623": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "e4c64b5fa2acff40069c8a8a178c78a70bbaf07aacd0755b53cef333706e97ce",
+        "nodes": 86,
+        "not_judged": [],
+        "route_legal": "LEGAL",
+        "timing_ms": 120.6,
+        "verdict": "PASS",
+        "violations": [],
+        "wide_clip_used": true
+      },
+      "14241462": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "9fc4ccc771efeb967e0fc53f20fc75341b850960f7b5382471b7c7bc43f3c069",
+        "nodes": 72,
+        "not_judged": [
+          "14245850:only_multi"
+        ],
+        "route_legal": "LEGAL",
+        "timing_ms": 94.5,
+        "verdict": "PASS",
+        "violations": [],
+        "wide_clip_used": true
+      },
+      "14285234": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "6e1d3578a1a02c6224591005ed90ed29a8a724b9145c1ee2a2ce0383cdcd4e33",
+        "timing_ms": 78.0,
+        "verdict": "SAFE_NO_ROUTE",
+        "wide_clip_used": true
+      },
+      "16644804": {
+        "base_clip_verdict": "UNRESOLVED_SNAP",
+        "clip_sha256": "c3123488458a553b7bdbbd9cf2b4ae6895aff42e419d30bfa69c147bccf77e48",
+        "nodes": 35,
+        "not_judged": [],
+        "route_legal": "LEGAL",
+        "timing_ms": 90.3,
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": []
+      },
+      "16686773": {
+        "base_clip_verdict": "PASS",
+        "clip_sha256": "2a0a134ccdeafeccbed0f84be2522533d1f5f022bb1a077b003d319713384772",
+        "nodes": 19,
+        "not_judged": [],
+        "route_legal": "LEGAL",
+        "timing_ms": 101.8,
+        "verdict": "PASS",
+        "violations": []
+      },
+      "2263040": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "2da5ef3d51ece0365325dbe3f4293facd8f6d789a43d29b7be7a6150d42923b6",
+        "nodes": 100,
+        "not_judged": [
+          "10752370:only_multi",
+          "11036883:structure"
+        ],
+        "route_legal": "LEGAL",
+        "timing_ms": 90.3,
+        "verdict": "PASS",
+        "violations": [],
+        "wide_clip_used": true
+      },
+      "4853555": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "8f00542e78e77d58093fa0d797221294e4d657e8b9494273f070ad983f7973ab",
+        "timing_ms": 70.1,
+        "verdict": "SAFE_NO_ROUTE",
+        "wide_clip_used": true
+      },
+      "7615778": {
+        "base_clip_verdict": "UNRESOLVED_SNAP",
+        "clip_sha256": "9a4a125b5e7ea02e9b836ac7ff65b12078ffff03c8092dbe73de8cc33e2c574d",
+        "nodes": 2,
+        "not_judged": [],
+        "route_legal": "LEGAL",
+        "timing_ms": 159.9,
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": []
+      }
+    },
+    "OSRM": {
+      "10558420": {
+        "base_clip_verdict": "FAIL_PROHIBITED",
+        "clip_sha256": "45478d40ef9213de90bb4d595bddf2b8297aa1b6579add7ca01932d753b17049",
+        "nodes": 3,
+        "not_judged": [],
+        "route_legal": "ILLEGAL",
+        "timing_ms": 1.2,
+        "verdict": "FAIL_PROHIBITED",
+        "violations": [
+          "restriction:10558420:no_straight_on"
+        ]
+      },
+      "13613008": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "fff672095b6bb89659a8cb8aeb2e9571f669b6de78be2e2c66b6784588de2feb",
+        "nodes": 26,
+        "not_judged": [
+          "13613112:only_multi"
+        ],
+        "route_legal": "LEGAL",
+        "timing_ms": 1.4,
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": [],
+        "wide_clip_used": true
+      },
+      "13759623": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "e4c64b5fa2acff40069c8a8a178c78a70bbaf07aacd0755b53cef333706e97ce",
+        "nodes": 86,
+        "not_judged": [],
+        "route_legal": "LEGAL",
+        "timing_ms": 1.4,
+        "verdict": "PASS",
+        "violations": [],
+        "wide_clip_used": true
+      },
+      "14241462": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "9fc4ccc771efeb967e0fc53f20fc75341b850960f7b5382471b7c7bc43f3c069",
+        "nodes": 72,
+        "not_judged": [
+          "14245850:only_multi"
+        ],
+        "route_legal": "LEGAL",
+        "timing_ms": 1.1,
+        "verdict": "PASS",
+        "violations": [],
+        "wide_clip_used": true
+      },
+      "14285234": {
+        "base_clip_verdict": "PASS",
+        "clip_sha256": "8aedd461e3307128c6bb215886a76e2ed3b059bf4814baed5532df464fce0c75",
+        "nodes": 9,
+        "not_judged": [],
+        "route_legal": "LEGAL",
+        "timing_ms": 1.6,
+        "verdict": "PASS",
+        "violations": []
+      },
+      "16644804": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "86748643ef0f11ffe70919f52b6a3aec4b6625698d02b70bbb7424023ddfc830",
+        "timing_ms": 1.5,
+        "verdict": "SAFE_NO_ROUTE",
+        "wide_clip_used": true
+      },
+      "16686773": {
+        "base_clip_verdict": "PASS",
+        "clip_sha256": "2a0a134ccdeafeccbed0f84be2522533d1f5f022bb1a077b003d319713384772",
+        "nodes": 19,
+        "not_judged": [],
+        "route_legal": "LEGAL",
+        "timing_ms": 1.1,
+        "verdict": "PASS",
+        "violations": []
+      },
+      "2263040": {
+        "base_clip_verdict": "PASS",
+        "clip_sha256": "420fb8b6487baa635dd092f041b67cbe32c4c50d2d9d950971cb59613cc154bd",
+        "nodes": 121,
+        "not_judged": [
+          "11036883:structure"
+        ],
+        "route_legal": "LEGAL",
+        "timing_ms": 1.6,
+        "verdict": "PASS",
+        "violations": []
+      },
+      "4853555": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "clip_sha256": "8f00542e78e77d58093fa0d797221294e4d657e8b9494273f070ad983f7973ab",
+        "nodes": 4,
+        "not_judged": [],
+        "route_legal": "LEGAL",
+        "timing_ms": 1.2,
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": [],
+        "wide_clip_used": true
+      },
+      "7615778": {
+        "base_clip_verdict": "UNRESOLVED_SNAP",
+        "clip_sha256": "9a4a125b5e7ea02e9b836ac7ff65b12078ffff03c8092dbe73de8cc33e2c574d",
+        "nodes": 2,
+        "not_judged": [],
+        "route_legal": "LEGAL",
+        "timing_ms": 1.2,
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": []
+      }
+    },
+    "Valhalla": {
+      "10558420": {
+        "base_clip_verdict": "FAIL_PROHIBITED",
+        "clip_sha256": "45478d40ef9213de90bb4d595bddf2b8297aa1b6579add7ca01932d753b17049",
+        "nodes": 3,
+        "not_judged": [],
+        "route_legal": "ILLEGAL",
+        "timing_ms": 17.0,
+        "verdict": "FAIL_PROHIBITED",
+        "violations": [
+          "restriction:10558420:no_straight_on"
+        ]
+      },
+      "13613008": {
+        "base_clip_verdict": "FAIL_PROHIBITED",
+        "clip_sha256": "1cdc5da82162fe09f9ec174fc5a2afff83b2ab04d29062daccc83fd835c7a5fb",
+        "nodes": 5,
+        "not_judged": [],
+        "route_legal": "ILLEGAL",
+        "timing_ms": 15.2,
+        "verdict": "FAIL_PROHIBITED",
+        "violations": [
+          "restriction:13613008:only_u_turn"
+        ]
+      },
+      "13759623": {
+        "base_clip_verdict": "UNRESOLVED_SNAP",
+        "clip_sha256": "a504493e5a0477301414fb2d94aef47c031b25d3e26a097b9f9624cc51b9cd64",
+        "nodes": 16,
+        "not_judged": [],
+        "route_legal": "LEGAL",
+        "timing_ms": 17.5,
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": []
+      },
+      "14241462": {
+        "base_clip_verdict": "FAIL_PROHIBITED",
+        "clip_sha256": "0a79d1049e3a3d589633b844da56a9cfa0110267932524b7790ca1fc74b85d01",
+        "nodes": 4,
+        "not_judged": [],
+        "route_legal": "ILLEGAL",
+        "timing_ms": 19.9,
+        "verdict": "FAIL_PROHIBITED",
+        "violations": [
+          "restriction:14241462:no_u_turn"
+        ]
+      },
+      "14285234": {
+        "base_clip_verdict": "PASS",
+        "clip_sha256": "8aedd461e3307128c6bb215886a76e2ed3b059bf4814baed5532df464fce0c75",
+        "nodes": 9,
+        "not_judged": [],
+        "route_legal": "LEGAL",
+        "timing_ms": 9.0,
+        "verdict": "PASS",
+        "violations": []
+      },
+      "16644804": {
+        "base_clip_verdict": "UNRESOLVED_SNAP",
+        "clip_sha256": "c3123488458a553b7bdbbd9cf2b4ae6895aff42e419d30bfa69c147bccf77e48",
+        "nodes": 3,
+        "not_judged": [],
+        "route_legal": "LEGAL",
+        "timing_ms": 15.6,
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": []
+      },
+      "16686773": {
+        "base_clip_verdict": "PASS",
+        "clip_sha256": "2a0a134ccdeafeccbed0f84be2522533d1f5f022bb1a077b003d319713384772",
+        "nodes": 19,
+        "not_judged": [],
+        "route_legal": "LEGAL",
+        "timing_ms": 16.2,
+        "verdict": "PASS",
+        "violations": []
+      },
+      "2263040": {
+        "base_clip_verdict": "PASS",
+        "clip_sha256": "420fb8b6487baa635dd092f041b67cbe32c4c50d2d9d950971cb59613cc154bd",
+        "nodes": 121,
+        "not_judged": [
+          "11036883:structure"
+        ],
+        "route_legal": "LEGAL",
+        "timing_ms": 14.8,
+        "verdict": "PASS",
+        "violations": []
+      },
+      "4853555": {
+        "base_clip_verdict": "UNRESOLVED_SNAP",
+        "clip_sha256": "cac4230609674c4e5f57df814d0d19e06475793135afc58e6b04fe38a2608b67",
+        "nodes": 4,
+        "not_judged": [],
+        "route_legal": "LEGAL",
+        "timing_ms": 16.1,
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": []
+      },
+      "7615778": {
+        "base_clip_verdict": "UNRESOLVED_SNAP",
+        "clip_sha256": "9a4a125b5e7ea02e9b836ac7ff65b12078ffff03c8092dbe73de8cc33e2c574d",
+        "nodes": 2,
+        "not_judged": [],
+        "route_legal": "LEGAL",
+        "timing_ms": 17.5,
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": []
+      }
+    }
+  },
+  "classification": "PROVISIONAL_MAP_DERIVED",
+  "cohort_sha256": "f2949a8a9aab40b7f62bc658cf92778f440ab5cdcc7ffcc755e21dc1b83c391c",
+  "contract": "TURN-001 v1.3",
+  "correction": {
+    "after": {
+      "nodes": 133,
+      "route_legal": "LEGAL",
+      "verdict": "PASS",
+      "wide_clip_sha256": "c826e9173da51cedf379d26e0850c5bfe1560e6cc158a43ba5672d6241366e5f"
+    },
+    "before": {
+      "cause": "cached wide clip was a 92-byte empty OSM document from a failed setup attempt",
+      "verdict": "ENGINE_REJECTED_MAP"
+    },
+    "behavior_change": false,
+    "case_id": "16686773"
+  },
+  "family_audit": [
+    {
+      "reason": "same ten frozen clips and TURN-001 v1.3 contract",
+      "status": "EXECUTED",
+      "system": "DMN"
+    },
+    {
+      "reason": "same ten frozen clips and TURN-001 v1.3 contract",
+      "status": "EXECUTED",
+      "system": "OSRM"
+    },
+    {
+      "reason": "same ten frozen clips and TURN-001 v1.3 contract",
+      "status": "EXECUTED",
+      "system": "Valhalla"
+    },
+    {
+      "reason": "same ten frozen clips and TURN-001 v1.3 contract",
+      "status": "EXECUTED",
+      "system": "GraphHopper"
+    },
+    {
+      "reason": "no TURN-001 restriction-route adapter configured",
+      "status": "NOT_RUN",
+      "system": "openrouteservice"
+    },
+    {
+      "reason": "requires app/native replay harness; no permitted engine-only interface configured",
+      "status": "NOT_RUN",
+      "system": "OsmAnd"
+    },
+    {
+      "reason": "requires app/native replay harness; no permitted engine-only interface configured",
+      "status": "NOT_RUN",
+      "system": "Organic Maps"
+    },
+    {
+      "reason": "requires a frozen routing-profile/map-builder adapter for this contract",
+      "status": "NOT_RUN",
+      "system": "BRouter"
+    },
+    {
+      "reason": "no configured permitted credentials and same-fixture engine interface; paid access not authorised",
+      "status": "NOT_RUN",
+      "system": "HERE"
+    },
+    {
+      "reason": "no configured permitted credentials and same-fixture engine interface; paid access not authorised",
+      "status": "NOT_RUN",
+      "system": "Mapbox"
+    },
+    {
+      "reason": "no configured permitted credentials and same-fixture engine interface; paid access not authorised",
+      "status": "NOT_RUN",
+      "system": "TomTom"
+    },
+    {
+      "reason": "no configured permitted credentials and same-fixture engine interface; paid access not authorised",
+      "status": "NOT_RUN",
+      "system": "Google Maps"
+    },
+    {
+      "reason": "no permitted automated engine replay interface",
+      "status": "UNSUPPORTED",
+      "system": "Waze"
+    }
+  ],
+  "limitations": [
+    "Affected cohort selected from original DMN fallback cases, so it cannot establish general engine superiority.",
+    "Warm reference query time excludes graph build/import; DMN timing includes OSM import and route and is not ranked with it.",
+    "UNRESOLVED_SNAP routes are not passes even when their whole mapped route audit is legal.",
+    "Competitor and OSM source agreement are not independent legal truth.",
+    "Separate UK 40-case result remains 17 correct, 0 confidently wrong and 23 withheld."
+  ],
+  "oracle": "hashed OpenStreetMap restriction relations and tags; not independent UK legal truth",
+  "prepared_sha256": "8500d8f3d9cf99660fcc3267ad422134fce87cbb946fe25f6940763546707bf3",
+  "purpose": "fresh post-harness-fix retest of all ten original DMN base-clip no-route cases; not a general engine ranking",
+  "ranking_formulas": {
+    "coverage": "10 * exact legal endpoint-anchored PASS / 10; higher is better",
+    "safety": "10 * (10 - FAIL_PROHIBITED) / 10; higher is better; abstention/no-route is not coverage"
+  },
+  "revision": "a46574b888477a0785eb61fdb5e450b483ab145e",
+  "rows": [
+    {
+      "coverage_score_10": 4,
+      "engine": "DMN",
+      "exact_legal_pass": 4,
+      "executed": 10,
+      "fail_prohibited": 0,
+      "safe_no_route": 6,
+      "safety_score_10": 10,
+      "timing": {
+        "median_ms": 101.3,
+        "p95_ms": 504.7,
+        "samples": 10,
+        "scope": "OSM import plus route; not comparable to warm reference queries"
+      },
+      "unresolved_snap": 0,
+      "version_configuration": "a46574b888477a0785eb61fdb5e450b483ab145e"
+    },
+    {
+      "coverage_score_10": 5,
+      "engine": "OSRM",
+      "exact_legal_pass": 5,
+      "executed": 10,
+      "fail_prohibited": 1,
+      "safe_no_route": 1,
+      "safety_score_10": 9,
+      "timing": {
+        "median_ms": 1.3,
+        "p95_ms": 1.6,
+        "samples": 10,
+        "scope": "warm in-process query; excludes graph build/import"
+      },
+      "unresolved_snap": 3,
+      "version_configuration": "5.27.1 MLD, ghcr digest 855614a38f464b0558a2ad6eaa7cb8c139f39887da9b38b485ce453c6e6e6124"
+    },
+    {
+      "coverage_score_10": 4,
+      "engine": "GraphHopper",
+      "exact_legal_pass": 4,
+      "executed": 10,
+      "fail_prohibited": 0,
+      "safe_no_route": 4,
+      "safety_score_10": 10,
+      "timing": {
+        "median_ms": 90.3,
+        "p95_ms": 159.9,
+        "samples": 10,
+        "scope": "warm in-process query; excludes graph build/import"
+      },
+      "unresolved_snap": 2,
+      "version_configuration": "11.1 car, jar SHA-1 6e6c173c2b46cb0a3c1df124b2144d557931597e, OpenJDK 21.0.12.1"
+    },
+    {
+      "coverage_score_10": 3,
+      "engine": "Valhalla",
+      "exact_legal_pass": 3,
+      "executed": 10,
+      "fail_prohibited": 3,
+      "safe_no_route": 0,
+      "safety_score_10": 7,
+      "timing": {
+        "median_ms": 16.15,
+        "p95_ms": 19.9,
+        "samples": 10,
+        "scope": "warm in-process query; excludes graph build/import"
+      },
+      "unresolved_snap": 4,
+      "version_configuration": "3.9.1 auto, ghcr digest 6238809f9dc3057743d70a20efd3911ec38e458bfa13a0601909b58f68dfd956"
+    }
+  ],
+  "runner_sha256": "f1fd4ef6de38cf7f20f80d46fcc1ef14ac797f1c8da446057cd070bfd51b0b86",
+  "source_sha256": "2a8ef8e1f2533cb009b1ce248a6bf4eaabdd47e03979e64e24cd844f3b22acba",
+  "test_id": "TURN-001-WIDE-CACHE-RETEST-01",
+  "unresolved": {
+    "case_id": "14285234",
+    "reason": "competitor turnaround uses OSM way 684626149, unqualified highway=service with no access tag; no independent legal evidence supports relaxing DMN uncertain-through-road policy"
+  }
+}

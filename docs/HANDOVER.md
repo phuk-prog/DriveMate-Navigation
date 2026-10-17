@@ -1,5 +1,16 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 — TURN-001 wide-cache correction retest
+- Branch `codex/turn001-live-dmn-20261017`, run SHA `a46574b`: cached wide clips
+  now require both endpoint highway ways; `16686773` was a 92-byte empty-cache
+  artifact and now returns a legal DMN pass after regeneration.
+- Fresh complete ten-case affected-cohort results: OSRM 5 pass/1 prohibited,
+  DMN 4/0, GraphHopper 4/0, Valhalla 3/3. Evidence is provisional map-derived.
+- `14285234` remains withheld because the competing turnaround uses uncertain
+  service access. No routing behavior changed; UK40 remains 17/0/23 blocked.
+- Evidence: `docs/TURN_001_WIDE_CACHE_RETEST.md` and
+  `references/turn001-wide-cache-retest-20261017.json`.
+
 ## 2026-10-17 — TURN-001 focused four-engine diagnosis
 - Branch `codex/turn001-live-dmn-20261017`; committed harness SHA `3dd8d25`.
 - Seven DMN problem cases freshly rerun: exact legal passes OSRM 2, Valhalla 2, GraphHopper 1, DMN 0; prohibited failures DMN/GH 0, OSRM 1, Valhalla 2.

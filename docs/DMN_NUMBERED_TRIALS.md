@@ -452,3 +452,17 @@ GraphHopper had zero prohibited-turn failures; OSRM had one and Valhalla two.
 Cases `14285234` and `16686773` are evidence-backed DMN coverage gaps; the other
 five do not support loosening. See `TURN_001_COVERAGE_DIAGNOSIS.md` and
 `references/turn001-coverage-diagnosis-20261017.json`. No DMN behavior changed.
+
+### TURN-001 wide-cache correction and affected-cohort retest
+
+At `a46574b`, the runner rejects cached wide clips unless both frozen endpoint
+highway ways are present. This reproduced `16686773` as a 92-byte empty-cache
+artifact; regeneration changed DMN from map rejection to an endpoint-anchored
+legal pass. A fresh four-engine rerun covered all ten original DMN base-clip
+no-route cases. Exact legal coverage was OSRM 5/10, DMN 4/10, GraphHopper 4/10
+and Valhalla 3/10; prohibited failures were 1, 0, 0 and 3 respectively. Case
+`14285234` remains unresolved because the competing path uses an unqualified
+service road without independent legal evidence. No routing policy changed;
+the UK 40-case 17/0/23 promotion block remains. See
+`TURN_001_WIDE_CACHE_RETEST.md` and
+`references/turn001-wide-cache-retest-20261017.json`.

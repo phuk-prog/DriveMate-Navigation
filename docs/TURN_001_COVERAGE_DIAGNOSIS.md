@@ -2,6 +2,12 @@
 
 **Status:** completed four-engine focused baseline; stop before DMN behavior changes.
 
+> **Superseded finding:** the `16686773` DMN map rejection below was caused by a
+> cached 92-byte empty wide clip, not a valid-map import failure. The corrected
+> runner and fresh complete ten-case affected-cohort retest are recorded in
+> [TURN_001_WIDE_CACHE_RETEST.md](TURN_001_WIDE_CACHE_RETEST.md). This document
+> remains unchanged otherwise as historical baseline evidence.
+
 This diagnostic replays the seven coverage outcomes from DMN's 142-case
 TURN-001 v1.3 baseline. Every engine received the same frozen Greater Manchester
 clips, origin/destination, headings and route audit. The oracle is the hashed OSM
