@@ -64,7 +64,7 @@ Every PASS denotes only the five specific checks above; it is **not** independen
 | 1 | Independent one-way road-law truth missing on the six UK ways | **UNRESOLVED source-truth gap**: OSM tags cannot alone establish current lawful directions. | Check dated traffic orders, signed restrictions, roadworks/imagery as legally accessible; record source/date and conflicting facts. |
 | 2 | Reverse-direction detector could miss a route travelling backwards through **multiple small geometry segments** | **Harness defect corrected prospectively on 17 October 2026**: the original detector required one jump from projection ≥0.8 to ≤0.2. Frozen analytical controls now require detection across multiple contiguous in-corridor points while rejecting forward travel, an off-corridor detour and an incomplete fragment. All 5/5 controls pass at `9da6f6737daa91e41238dde177f7dd93226cb2da`. No historical route was rescored and no real engine failure was inferred. | Use the corrected detector in a future freshly authorized comparable route execution; preserve this run's original verdicts. |
 | 3 | Allowed-direction route could pass without using the nominated one-way edge | **Harness defect corrected prospectively on 17 October 2026**: the scorer now requires contiguous forward progress from ≤0.2 to ≥0.8 through the selected 8 m edge corridor. Frozen controls pass 5/5 at `3e53f725f9ec82a7e9a800c7ec9435d1ae7ebbc9`; reverse travel, an off-corridor detour and an incomplete fragment remain negative. Historical engine results were not rescored. | Apply the corrected prospective scorer only in a fresh comparable execution. |
-| 4 | Possible route-quality gap on York Street reverse direction | **PROVISIONAL, not an engine failure**: DMN 251.6 m and BRouter 251.0 m, against GraphHopper 170.9 m, OSRM 171.4 m, openrouteservice 170.8 m, Valhalla 184.0 m. Profiles differ and independent fastest-legal-route truth is absent. | In a **separate route-quality test**, verify that compared routes share legal constraints and independently assess shorter valid alternatives. |
+| 4 | Possible route-quality gap on York Street reverse direction | **PROVISIONAL, not an engine failure**: a fail-closed audit at `303203b` finds this is the only retained ROUTE-004 case with distance spread ≥20%. DMN 251.578 m and BRouter 251 m differ from GraphHopper 170.919 m, OSRM 171.4 m, openrouteservice 170.8 m and Valhalla 184 m; max/min is 1.473. Profiles differ, route geometry was not retained here and independent fastest-legal-route truth is absent. | Keep `UNRESOLVED_ROUTE_QUALITY_DIVERGENCE`; in a new route-quality execution retain geometry, normalize profiles and independently assess legal alternatives. |
 | 5 | Turn prohibitions, roundabouts, GPS matching, speed-limit/traffic and lane conditions were not checked | **NOT TESTED** by ROUTE-004. Conditional-tagged objects and dependants were excluded from map input. | Keep these as separate named categories, not hidden within a one-way score. |
 
 **Unsupported / not-run audit (not zero scores):** Itinero and Routino have different earlier 3-case real-map output probes, not this 12-case contract. OsmAnd and Organic Maps lack a completed equivalent native/app harness; HERE, Mapbox, TomTom and Google Maps lack permitted configured access for this common test; Waze has no established permitted automated interface. No competitor is silently substituted or assigned a synthetic verdict.
@@ -92,6 +92,15 @@ forward traversal and rejects reverse travel, an off-corridor endpoint detour
 and an incomplete forward fragment. Fixture SHA-256:
 `f7c464c3ccd445d9c2cf2327b4c064edd1d23c42d8c33e0357c1100a7a9addb4`.
 [Exact case evidence](../references/route004-selected-edge-controls-20261017.json).
+
+The retained-evidence route-quality audit reviewed all complete PASS distances
+and found exactly **one** case above its frozen 1.20 max/min review threshold:
+`ROUTE-004-005-reverse`, minimum **170.8 m**, median **177.7 m**, maximum
+**251.578 m**, ratio **1.473**. It deliberately assigns no quality ranking and
+does not call the longer route wrong because comparable geometry and an
+independent fastest-legal-route oracle are absent. Source evidence SHA-256:
+`955e655fdc8f731302dc7b280acbf3fe7b2ccf7a77c2cf6a35b224e3ee378c08`.
+[Exact diagnostic](../references/route004-quality-diagnostic-20261017.json).
 
 ## Run/measurement links
 

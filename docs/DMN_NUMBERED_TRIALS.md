@@ -234,6 +234,12 @@ of passing on matching endpoints alone. Its frozen forward/reverse/detour/
 incomplete controls pass 5/5 at `3e53f725f9ec82a7e9a800c7ec9435d1ae7ebbc9`;
 historical rankings remain unchanged. See
 `references/route004-selected-edge-controls-20261017.json`.
+A retained-evidence quality audit then checked every complete ROUTE-004 distance
+and surfaced one ≥20% spread: `ROUTE-004-005-reverse` ranged from 170.8 m to
+251.578 m across six systems. It remains unresolved rather than failed because
+equivalent route geometry and an independent legal optimum were not retained.
+No ranking or historical rescore was produced; see
+`references/route004-quality-diagnostic-20261017.json`.
 
 Eight hand-authored synthetic cases use a new explicit directed map and JSON
 oracle: prohibited-turn detour, unrestricted fresh-origin control, motor_vehicle=no
