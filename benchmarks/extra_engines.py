@@ -75,6 +75,21 @@ def _port_open(port: int) -> bool:
         return s.connect_ex(("127.0.0.1", port)) == 0
 
 
+def _wait_answer(url: str, seconds: float) -> None:
+    """Wait until the server answers HTTP at all (even 4xx): Docker opens a mapped port
+    before the engine inside is listening, so an open port alone is not readiness."""
+    deadline = time.time() + seconds
+    while time.time() < deadline:
+        try:
+            with urlopen(url, timeout=3):  # noqa: S310 - local engine only
+                return
+        except HTTPError:
+            return
+        except Exception:  # noqa: BLE001 - polling a starting local server
+            time.sleep(0.5)
+    raise RuntimeError(f"Local engine did not answer: {url}")
+
+
 def _wait_ok(url: str, seconds: float, proc: subprocess.Popen) -> None:
     deadline = time.time() + seconds
     while time.time() < deadline:
@@ -170,11 +185,7 @@ def _serve_turn001_engine(engine: str, pbf: Path, work: Path):
             subprocess.run(["docker", "run", "-d", "--rm", "--name", name, "-p", "127.0.0.1:5000:5000",
                             "-v", f"{work}:/data", image, "osrm-routed", "--algorithm", "mld", "/data/input.osrm"],
                            check=True, capture_output=True)
-            deadline = time.time() + 30
-            while not _port_open(5000):
-                if time.time() > deadline:
-                    raise RuntimeError("OSRM did not start")
-                time.sleep(0.5)
+            _wait_answer("http://127.0.0.1:5000/route/v1/driving/0,0;0,0", 60)
         elif engine == "Valhalla":
             subprocess.run(["docker", "run", "-d", "--rm", "--name", name, "-p", "127.0.0.1:8002:8002",
                             "-v", f"{work}:/custom_files", "-e", "build_admins=False", "-e", "build_time_zones=False",
@@ -413,3 +424,89 @@ def engine_path(clip, geom: dict, points):
     nodes = clip.match_nodes(seeded)
     return nodes, {"start_snap_m": None if not pts else round(t1.metres(pts[0], tuple(geom["origin"])), 1),
                    "end_snap_m": None if not pts else round(t1.metres(pts[-1], tuple(geom["destination"])), 1)}
+
+
+# --------------------------------------------------------------------------- run B2 details
+class NotAvailable(RuntimeError):
+    """The engine has no public output for this detail."""
+
+
+def query_details(engine: str, geom: dict, headings: tuple[int, int]):
+    """(points, details, ms): per-segment speed limits (km/h or None) and lane advice per step.
+
+    Only OSRM (speed limits and lanes) and GraphHopper (speed limits) expose these in
+    their route answers; the others raise NotAvailable.
+    """
+    o, d = geom["origin"], geom["destination"]
+    began = time.perf_counter()
+    if engine == "OSRM":
+        url = (f"http://127.0.0.1:5000/route/v1/driving/{o[1]:.7f},{o[0]:.7f};{d[1]:.7f},{d[0]:.7f}"
+               "?overview=full&geometries=geojson&continue_straight=true&steps=true&annotations=maxspeed"
+               f"&bearings={headings[0]},{t1.HEADING_TOLERANCE};{headings[1]},{t1.HEADING_TOLERANCE}")
+        try:
+            data = t1._http_json(url)
+        except HTTPError as exc:
+            data = json.loads(exc.read() or b"{}")
+        ms = (time.perf_counter() - began) * 1000
+        if data.get("code") == "NoRoute":
+            return None, {}, ms
+        if data.get("code") != "Ok":
+            raise RuntimeError(f"OSRM {data.get('code')}")
+        r = data["routes"][0]
+        points = [(lat, lon) for lon, lat in r["geometry"]["coordinates"]]
+        limits = []
+        for leg in r["legs"]:
+            for m in leg["annotation"]["maxspeed"]:
+                if m.get("unknown") or m.get("none"):
+                    limits.append(None)
+                else:
+                    limits.append(m["speed"] * (1.609344 if m.get("unit") == "mph" else 1.0))
+        lanes = []
+        for leg in r["legs"]:
+            for s in leg["steps"]:
+                for i in s.get("intersections", []):
+                    if i.get("lanes"):
+                        lanes.append({"at": (i["location"][1], i["location"][0]),
+                                      "valid": [k + 1 for k, ln in enumerate(i["lanes"]) if ln.get("valid")],
+                                      "count": len(i["lanes"])})
+        return points, {"segment_limits_kph": limits, "lanes": lanes}, ms
+    if engine == "GraphHopper":
+        url = (f"http://127.0.0.1:8989/route?point={o[0]:.7f},{o[1]:.7f}&point={d[0]:.7f},{d[1]:.7f}"
+               "&profile=car&points_encoded=false&instructions=false&ch.disable=true&way_point_max_distance=0"
+               f"&heading={headings[0]}&heading={headings[1]}&details=max_speed")
+        try:
+            data = t1._http_json(url)
+        except HTTPError as exc:
+            body = json.loads(exc.read() or b"{}")
+            if any("ConnectionNotFound" in str(h.get("details", "")) for h in body.get("hints", [])):
+                return None, {}, (time.perf_counter() - began) * 1000
+            raise RuntimeError(f"GraphHopper HTTP {exc.code}") from exc
+        ms = (time.perf_counter() - began) * 1000
+        path = data["paths"][0]
+        points = [(lat, lon) for lon, lat in path["points"]["coordinates"]]
+        limits = [None] * max(len(points) - 1, 0)
+        for start, end, value in path.get("details", {}).get("max_speed", []):
+            for k in range(start, min(end, len(limits))):
+                limits[k] = float(value) if value not in (None, "Infinity") and float(value) < 1000 else None
+        return points, {"segment_limits_kph": limits, "lanes": None}, ms
+    raise NotAvailable(engine)
+
+
+def route_details(engine: str, folder: Path, clip, geom: dict):
+    """Like route() but asking for speed limits and lanes; GraphHopper gets max_speed stored."""
+    if engine not in ("OSRM", "GraphHopper"):
+        return {"route": "NOT_AVAILABLE"}
+    saved = t1.graphhopper_config
+    if engine == "GraphHopper":  # store OSM maxspeed so the route answer can report it
+        t1.graphhopper_config = lambda pbf, cache: saved(pbf, cache).replace(
+            "graph.encoded_values: car_access,car_average_speed,road_access",
+            "graph.encoded_values: car_access,car_average_speed,road_access,max_speed")
+    try:
+        with serve(engine, folder / "clip.osm.pbf", folder / engine.lower()):
+            return query_details(engine, geom, t1.travel_headings(clip, geom))
+    except MapRejected as exc:
+        return {"route": "ENGINE_REJECTED_MAP", "detail": str(exc)[:300]}
+    except Exception as exc:  # noqa: BLE001 - recorded, never hidden
+        return {"route": "ERROR", "detail": f"{type(exc).__name__}: {exc}"[:300]}
+    finally:
+        t1.graphhopper_config = saved
