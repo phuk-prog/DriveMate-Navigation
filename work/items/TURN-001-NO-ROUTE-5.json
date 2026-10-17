@@ -1,0 +1,18 @@
+{
+ "agent": "Claude",
+ "branch": "claude/dmn-turn-restriction-debug-mhw7cw",
+ "created": "2026-10-17T10:06:34+00:00",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T10:06:34+00:00 next by Claude on claude/dmn-turn-restriction-debug-mhw7cw"
+ ],
+ "id": "TURN-001-NO-ROUTE-5",
+ "read_first": [
+  "docs/TURN_001_RESULTS.md: Reasons, DMN"
+ ],
+ "runs": [],
+ "state": "next",
+ "title": "Check by hand whether a legal way exists at TURN-001's 5 DMN no-route junctions",
+ "updated": "2026-10-17T10:06:34+00:00",
+ "why": "No engine found one; not proven either way"
+}

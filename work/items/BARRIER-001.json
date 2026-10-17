@@ -1,0 +1,31 @@
+{
+ "agent": "Claude",
+ "branch": "claude/dmn-turn-restriction-debug-mhw7cw",
+ "created": "2026-10-17T09:38:19+00:00",
+ "fingerprints": [
+  "BARRIER-001 v1.1|cohort 4dfa6379|revision b85e4f2"
+ ],
+ "history": [
+  "2026-10-17T09:38:19+00:00 in_progress by Claude on claude/dmn-turn-restriction-debug-mhw7cw",
+  "2026-10-17T09:45:57+00:00 in_progress by Claude on claude/dmn-turn-restriction-debug-mhw7cw",
+  "2026-10-17T09:55:12+00:00 in_progress by Claude on claude/dmn-turn-restriction-debug-mhw7cw",
+  "2026-10-17T10:06:34+00:00 done by Claude on claude/dmn-turn-restriction-debug-mhw7cw"
+ ],
+ "id": "BARRIER-001",
+ "read_first": [
+  "docs/TURN_001_RESULTS.md (same method)",
+  "benchmarks/barrier001_route.py docstring"
+ ],
+ "reason": "same holder, status update",
+ "results": "docs/BARRIER_001_RESULTS.md",
+ "runs": [
+  "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39022934914"
+ ],
+ "sources": [
+  "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39022261422"
+ ],
+ "state": "done",
+ "summary": "v1.1 baseline: judged 61 (closed 47, open 14): DMN 46 pass, 0 fail, 15 no route; OSRM 46; Valhalla 42; GraphHopper 9 (40 off-target). No engine crossed a closed barrier. Stopped for owner review.",
+ "title": "Route-level check of bollards and gates, 4 engines",
+ "updated": "2026-10-17T10:06:34+00:00"
+}

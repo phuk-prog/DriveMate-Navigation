@@ -1,0 +1,221 @@
+{
+ "read_first": [
+  {
+   "what": "Latest handover note (newest section only)",
+   "where": "docs/HANDOVER.md (top section)",
+   "cost": "tiny",
+   "topics": [
+    "handover",
+    "latest"
+   ],
+   "when": "always, second"
+  },
+  {
+   "what": "Find where a topic lives",
+   "where": "python3 -m tools.work_status where <topic>",
+   "cost": "tiny",
+   "topics": [
+    "search",
+    "where"
+   ],
+   "when": "before searching files"
+  },
+  {
+   "what": "Rules for this repo (read once per session)",
+   "where": "AGENTS.md",
+   "cost": "small",
+   "topics": [
+    "rules",
+    "policy",
+    "owner"
+   ],
+   "when": "before changing code or starting a test"
+  },
+  {
+   "what": "Result of a finished test",
+   "where": "docs/<TEST>_RESULTS.md (the item's results field)",
+   "cost": "small",
+   "topics": [
+    "results",
+    "report"
+   ],
+   "when": "only for the test you build on"
+  },
+  {
+   "what": "GitHub test result: job summary or summary.json artifact, never raw logs",
+   "where": "GitHub Actions run page of the item's run link",
+   "cost": "tiny",
+   "topics": [
+    "ci",
+    "github",
+    "summary",
+    "run"
+   ],
+   "when": "to see a CI outcome"
+  },
+  {
+   "what": "Live view across all branches (if REGISTER.md may be out of date)",
+   "where": "python3 -m tools.work_status --fetch",
+   "cost": "tiny",
+   "topics": [
+    "status",
+    "todo",
+    "next",
+    "done",
+    "claim"
+   ],
+   "when": "when another AI may have pushed since"
+  },
+  {
+   "what": "Main research branch and full owner rules (draft PR #4)",
+   "where": "branch codex/dmn-gps001-ranked-trial-20261015, its AGENTS.md",
+   "cost": "small",
+   "topics": [
+    "rules",
+    "research",
+    "branch",
+    "pr"
+   ],
+   "when": "before changing engine code or starting a test"
+  }
+ ],
+ "sources": [
+  {
+   "what": "TURN-001 test code",
+   "where": "benchmarks/turn001_restrictions.py, tools/turn001_brief.py, .github/workflows/turn001.yml",
+   "cost": "small",
+   "topics": [
+    "turn",
+    "restriction",
+    "turn-001"
+   ]
+  },
+  {
+   "what": "BARRIER-001 test code",
+   "where": "benchmarks/barrier001_route.py, .github/workflows/barrier001.yml",
+   "cost": "small",
+   "topics": [
+    "barrier",
+    "bollard",
+    "gate",
+    "barrier-001"
+   ]
+  },
+  {
+   "what": "Frozen case lists (large JSON: query with python/jq, do not read whole)",
+   "where": "config/turn001-cohort.json, config/barrier001-cohort.json, config/barrier001-prepared.json",
+   "cost": "large",
+   "topics": [
+    "cohort",
+    "cases",
+    "frozen",
+    "turn",
+    "barrier"
+   ]
+  },
+  {
+   "what": "Frozen Greater Manchester OSM map (76 MB) and TURN-001 clips",
+   "where": "git branch data/turn001-snapshot",
+   "cost": "large",
+   "topics": [
+    "map",
+    "osm",
+    "pbf",
+    "snapshot",
+    "turn"
+   ],
+   "when": "only to run locally; prefer the GitHub job"
+  },
+  {
+   "what": "BARRIER-001 frozen clips (26 MB)",
+   "where": "git branch data/barrier001-snapshot",
+   "cost": "large",
+   "topics": [
+    "barrier",
+    "snapshot",
+    "clips"
+   ],
+   "when": "only to run locally"
+  },
+  {
+   "what": "DMN routing engine",
+   "where": "engine/routing.py (shortest_route), engine/astar.py, engine/route_alternatives.py",
+   "cost": "small",
+   "topics": [
+    "dmn",
+    "engine",
+    "routing",
+    "route"
+   ]
+  },
+  {
+   "what": "DMN OSM importer (access, barriers, turn restrictions)",
+   "where": "map_data/osm_xml.py",
+   "cost": "small",
+   "topics": [
+    "dmn",
+    "import",
+    "access",
+    "barrier",
+    "restriction",
+    "osm"
+   ]
+  },
+  {
+   "what": "Unit test catalogue (21 categories; every new test file must be listed)",
+   "where": "config/dmn-separated-category-tests.json; run: python3 -m tools.category_test_runner --all",
+   "cost": "small",
+   "topics": [
+    "tests",
+    "unit",
+    "category"
+   ]
+  },
+  {
+   "what": "Owner testing policy (full)",
+   "where": "docs/DMN_PERMANENT_TESTING_POLICY.md",
+   "cost": "small",
+   "topics": [
+    "policy",
+    "ranking",
+    "owner"
+   ],
+   "when": "only if AGENTS.md summary is not enough"
+  },
+  {
+   "what": "Older history and decisions: PR #4 comments",
+   "where": "github.com/phuk-prog/DriveMate-Navigation/pull/4",
+   "cost": "large",
+   "topics": [
+    "history",
+    "map-001",
+    "pr"
+   ],
+   "when": "only if an item points there"
+  },
+  {
+   "what": "Production Android app (separate private repo; off-limits for engine research)",
+   "where": "github.com/phuk-prog/DriveMate",
+   "cost": "large",
+   "topics": [
+    "app",
+    "android",
+    "apk"
+   ],
+   "when": "never for engine research"
+  },
+  {
+   "what": "Owner's Google Drive (private): app APKs, backups, recorded drives",
+   "where": "owner's Google Drive, DriveMate files (no links here: repo is public)",
+   "cost": "small",
+   "topics": [
+    "google",
+    "drive",
+    "apk",
+    "recording",
+    "gps"
+   ],
+   "when": "never for engine research; personal GPS is not allowed in this repo"
+  }
+ ]
+}
