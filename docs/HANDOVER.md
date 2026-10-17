@@ -1,11 +1,15 @@
 # Handover (keep short; newest first)
 
-## 2026-10-17 — BARRIER-001 v1.2 scoring audit (ChatGPT)
-- Separate branch: `codex/chatgpt-barrier001-review-20261017`. Scoring-only commit `80056c0`.
-- Explicitly distinguish comparator routes using unknown-access gates from known-access alternatives.
-- Four-engine fresh frozen-cohort run: 39026846188 (read job summary, not logs).
-- DMN gate access and turn-round rules remain unchanged pending evidence/owner decision.
-
+## 2026-10-17 — BARRIER-001 v1.2 verified scoring result (ChatGPT)
+- Branch `codex/chatgpt-barrier001-review-20261017`; scoring-only revision `80056c0`, full run
+  [39026846188](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39026846188):
+  **all 6 jobs passed** (DMN, three competitors, OSRM control, score).
+- DMN 46 passes, 0 closed-barrier crossings, 15 no routes; **zero known-access**
+  alternatives, **two only-uncertain-gate** alternatives. Full reviewed
+  evidence in [docs/BARRIER_001_V12_REVIEW.md](BARRIER_001_V12_REVIEW.md).
+- REGISTER task marked blocked **only for owner gate-policy and turnaround
+  decisions**, not CI. No engine behaviour or Android change, no merge.
+- Next unclaimed work: TURN-001-NO-ROUTE-5 independent legality investigation.
 
 ## 2026-10-17 (later still) — work register + BARRIER-001 baseline
 - Shared register for all AIs: `python3 -m tools.work_status --fetch` (done / in progress /
