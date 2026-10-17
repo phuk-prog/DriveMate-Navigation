@@ -1,18 +1,22 @@
 {
- "agent": "Claude",
- "branch": "claude/dmn-turn-restriction-debug-mhw7cw",
+ "agent": "ChatGPT GPT-6",
+ "branch": "codex/chatgpt-barrier001-review-20261017",
  "created": "2026-10-17T10:06:34+00:00",
  "fingerprints": [],
  "history": [
-  "2026-10-17T10:06:34+00:00 next by Claude on claude/dmn-turn-restriction-debug-mhw7cw"
+  "2026-10-17T10:06:34+00:00 next by Claude on claude/dmn-turn-restriction-debug-mhw7cw",
+  "2026-10-17T10:57:57.499Z in_progress by ChatGPT GPT-6 on codex/chatgpt-barrier001-review-20261017"
  ],
  "id": "BARRIER-001-REVIEW",
  "read_first": [
   "docs/BARRIER_001_RESULTS.md: Proposed improvements"
  ],
- "runs": [],
- "state": "next",
+ "runs": [
+  "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39026846188"
+ ],
+ "state": "in_progress",
  "title": "Owner decisions from BARRIER-001",
- "updated": "2026-10-17T10:06:34+00:00",
- "why": "Gates on uncertain start/finish roads (30 cases); scoring v1.2 for routes through unmarked gates; DMN turn-round at a closed barrier"
+ "updated": "2026-10-17T10:57:57.499Z",
+ "why": "Gates on uncertain start/finish roads (30 cases); scoring v1.2 for routes through unmarked gates; DMN turn-round at a closed barrier",
+ "summary": "BARRIER-001 v1.2 scoring-only fix committed (80056c0); full four-engine frozen-cohort GitHub Actions run 39026846188 started. No DMN routing policy changed; gate access and legal turn-round remain owner review."
 }
