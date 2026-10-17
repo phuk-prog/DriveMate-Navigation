@@ -1,0 +1,727 @@
+{
+ "closure": [
+  {
+   "id": "turn-664643295",
+   "journey": {
+    "closed_clip_sha256": "500122df681dfeefbf32dd433315dc15abafdd3fce193cdc0150feb10cf62c53",
+    "closed_highway": "residential",
+    "closed_way": "586699097",
+    "destination": [
+     53.5665439,
+     -2.367265
+    ],
+    "destination_segment": [
+     "5026133397",
+     "6359905478"
+    ],
+    "map_detour_m": 1393.1,
+    "map_shortest_m": 1251.2,
+    "origin": [
+     53.56200305,
+     -2.3809154
+    ],
+    "origin_segment": [
+     "5239922152",
+     "664643295"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "turn-767841424",
+   "journey": {
+    "closed_clip_sha256": "058b0abfe38e552c85d12a21e04cce52118e1e693cb2759e7b28e8b6e747cfaf",
+    "closed_highway": "residential",
+    "closed_way": "214250499",
+    "destination": [
+     53.4066709,
+     -2.1528577
+    ],
+    "destination_segment": [
+     "9206309432",
+     "9196435289"
+    ],
+    "map_detour_m": 1354.2,
+    "map_shortest_m": 1299.2,
+    "origin": [
+     53.398221899999996,
+     -2.1576506
+    ],
+    "origin_segment": [
+     "10060654985",
+     "12264339105"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "turn-782230413",
+   "journey": {
+    "closed_clip_sha256": "a6afb5c7080c85e236412795e6cf46f88b970c666fd6df5a4c9053860ca0eaf7",
+    "closed_highway": "primary",
+    "closed_way": "926735901",
+    "destination": [
+     53.5327146,
+     -2.4167529
+    ],
+    "destination_segment": [
+     "781476912",
+     "8340660990"
+    ],
+    "map_detour_m": 1865.5,
+    "map_shortest_m": 1697.9,
+    "origin": [
+     53.526375900000005,
+     -2.4313724
+    ],
+    "origin_segment": [
+     "7981603453",
+     "782230413"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "turn-701277528",
+   "journey": {
+    "closed_clip_sha256": "7b2c2cb386a2b04c96e14a2286af5a709f132ace4b5a499a16adb7cdd441e180",
+    "closed_highway": "trunk",
+    "closed_way": "736859634",
+    "destination": [
+     53.5949555,
+     -2.4308556
+    ],
+    "destination_segment": [
+     "1428961488",
+     "722546156"
+    ],
+    "map_detour_m": 3568.1,
+    "map_shortest_m": 1210.5,
+    "origin": [
+     53.604717050000005,
+     -2.43188955
+    ],
+    "origin_segment": [
+     "768408694",
+     "701277528"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "turn-32695361",
+   "journey": {
+    "closed_clip_sha256": "284581dd8cb567a70f0cc267515db6d545fd3f46a428f01940411f556b6822e5",
+    "closed_highway": "residential",
+    "closed_way": "4947684",
+    "destination": [
+     53.5002025,
+     -2.2125978
+    ],
+    "destination_segment": [
+     "11139502286",
+     "32682357"
+    ],
+    "map_detour_m": 2371.0,
+    "map_shortest_m": 2273.7,
+    "origin": [
+     53.509667300000004,
+     -2.2033418
+    ],
+    "origin_segment": [
+     "32695362",
+     "32695361"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "turn-920573097",
+   "journey": {
+    "closed_clip_sha256": "8e75d83c5b405b304bd0c6de5e46d072d346529d76a92fd2041fd7158289bd77",
+    "closed_highway": "primary",
+    "closed_way": "144661286",
+    "destination": [
+     53.4775724,
+     -2.1595997
+    ],
+    "destination_segment": [
+     "13388725545",
+     "921602990"
+    ],
+    "map_detour_m": 1179.1,
+    "map_shortest_m": 1157.9,
+    "origin": [
+     53.484376999999995,
+     -2.1674593499999997
+    ],
+    "origin_segment": [
+     "920573095",
+     "920573097"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "turn-7944778532",
+   "journey": {
+    "closed_clip_sha256": "41fcc75653090fb1f8485069bbff8d4ed0b4ee0d46cd0d622ce0b901d41f91ee",
+    "closed_highway": "trunk",
+    "closed_way": "25536568",
+    "destination": [
+     53.458453,
+     -2.7080519
+    ],
+    "destination_segment": [
+     "1662446548",
+     "1662446539"
+    ],
+    "map_detour_m": 1956.9,
+    "map_shortest_m": 1401.6,
+    "origin": [
+     53.4524045,
+     -2.71924585
+    ],
+    "origin_segment": [
+     "13164900580",
+     "7944778532"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "turn-32611496",
+   "journey": {
+    "closed_clip_sha256": "9de922b348cf87f8639fc31e877fdde077c0ceb78c97bb0b964ffde59d034927",
+    "closed_highway": "residential",
+    "closed_way": "640013787",
+    "destination": [
+     53.6261265,
+     -2.2829239
+    ],
+    "destination_segment": [
+     "7668293257",
+     "7668293259"
+    ],
+    "map_detour_m": 2289.0,
+    "map_shortest_m": 2136.6,
+    "origin": [
+     53.6154986,
+     -2.28992095
+    ],
+    "origin_segment": [
+     "32611502",
+     "32611496"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "turn-282786422",
+   "journey": {
+    "closed_clip_sha256": "1ff2e751de68c25bae1f23920322243aec3b6d7c5164dd60e7b4b1dcd63db957",
+    "closed_highway": "trunk",
+    "closed_way": "23557926",
+    "destination": [
+     53.3782641,
+     -2.5864498
+    ],
+    "destination_segment": [
+     "9251005841",
+     "9251005842"
+    ],
+    "map_detour_m": 3233.4,
+    "map_shortest_m": 1635.9,
+    "origin": [
+     53.3869326,
+     -2.59523435
+    ],
+    "origin_segment": [
+     "8495841502",
+     "9382960256"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "turn-918297521",
+   "journey": {
+    "closed_clip_sha256": "b3dbe9a9088e07b9868901464142f1d01b2040e0f15a8c20a52cd48ef72a42e5",
+    "closed_highway": "secondary",
+    "closed_way": "197643604",
+    "destination": [
+     53.4918987,
+     -2.0864733
+    ],
+    "destination_segment": [
+     "7983627875",
+     "763219332"
+    ],
+    "map_detour_m": 1447.7,
+    "map_shortest_m": 1143.2,
+    "origin": [
+     53.4985477,
+     -2.0761378500000003
+    ],
+    "origin_segment": [
+     "918297523",
+     "918297521"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "turn-20920075",
+   "journey": {
+    "closed_clip_sha256": "9339f851593fb6b420c34aafb988abfcca2f8993654eb9004f9c3a12e20e416f",
+    "closed_highway": "tertiary",
+    "closed_way": "55728219",
+    "destination": [
+     53.3317028,
+     -2.2107125
+    ],
+    "destination_segment": [
+     "21719908",
+     "560155536"
+    ],
+    "map_detour_m": 3081.0,
+    "map_shortest_m": 2136.5,
+    "origin": [
+     53.3344123,
+     -2.22650155
+    ],
+    "origin_segment": [
+     "20920076",
+     "20920075"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "turn-307444490",
+   "journey": {
+    "closed_clip_sha256": "5b9e47adfa024ea4ec5a82e738473fcb8c737720da8f0a1b62efaf811ef74a97",
+    "closed_highway": "residential",
+    "closed_way": "1414913482",
+    "destination": [
+     53.3414622,
+     -2.7032457
+    ],
+    "destination_segment": [
+     "5187221039",
+     "8825168201"
+    ],
+    "map_detour_m": 2812.7,
+    "map_shortest_m": 2004.6,
+    "origin": [
+     53.3303475,
+     -2.7057260000000003
+    ],
+    "origin_segment": [
+     "1479547137",
+     "307444490"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "roundabout-1051188906-exit1",
+   "journey": {
+    "closed_clip_sha256": "c48a91b82948ed10ecfb747f5d02a8601f4f631e0a7e6a1af099da286930739f",
+    "closed_highway": "tertiary",
+    "closed_way": "27835975",
+    "destination": [
+     53.4049191,
+     -2.6448811
+    ],
+    "destination_segment": [
+     "9039136927",
+     "9039136928"
+    ],
+    "map_detour_m": 2679.1,
+    "map_shortest_m": 2253.8,
+    "origin": [
+     53.4116387,
+     -2.64009465
+    ],
+    "origin_segment": [
+     "307435411",
+     "305966171"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "roundabout-30912782-exit1",
+   "journey": {
+    "closed_clip_sha256": "b347119e4ce0d434b981d5b5f9f62b3f35474978bd5902aa7e10c10ffdc276a2",
+    "closed_highway": "primary",
+    "closed_way": "30742200",
+    "destination": [
+     53.4344777,
+     -2.5987902
+    ],
+    "destination_segment": [
+     "8496762050",
+     "8496762049"
+    ],
+    "map_detour_m": 1108.8,
+    "map_shortest_m": 980.9,
+    "origin": [
+     53.4277793,
+     -2.59830665
+    ],
+    "origin_segment": [
+     "343645738",
+     "343645739"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "roundabout-67136033-exit1",
+   "journey": {
+    "closed_clip_sha256": "65ef2ca066a0ea7297d0c28dde984238780725473a83894d04532ccae4500b18",
+    "closed_highway": "residential",
+    "closed_way": "38541730",
+    "destination": [
+     53.4100048,
+     -2.0929355
+    ],
+    "destination_segment": [
+     "454404061",
+     "454404062"
+    ],
+    "map_detour_m": 1905.0,
+    "map_shortest_m": 1291.3,
+    "origin": [
+     53.41767805,
+     -2.0871515499999997
+    ],
+    "origin_segment": [
+     "1110561484",
+     "810792402"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "roundabout-28331458-exit1",
+   "journey": {
+    "closed_clip_sha256": "09a8402b1bf752a83c5bc2c790a7d0d3a09a3fb926d4f597ed08c79597cc43e7",
+    "closed_highway": "tertiary",
+    "closed_way": "23756916",
+    "destination": [
+     53.3414109,
+     -2.6649228
+    ],
+    "destination_segment": [
+     "311122070",
+     "2940481686"
+    ],
+    "map_detour_m": 3067.5,
+    "map_shortest_m": 1770.5,
+    "origin": [
+     53.34982885,
+     -2.67480035
+    ],
+    "origin_segment": [
+     "311128516",
+     "311128517"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "roundabout-217678586-exit2",
+   "journey": {
+    "closed_clip_sha256": "979893e81018f4d41e92cc962bcf867128d5f9efe07fc14ba660ada3d56d1040",
+    "closed_highway": "residential",
+    "closed_way": "32262430",
+    "destination": [
+     53.3720028,
+     -2.1238691
+    ],
+    "destination_segment": [
+     "362802115",
+     "5221891732"
+    ],
+    "map_detour_m": 2370.7,
+    "map_shortest_m": 1660.4,
+    "origin": [
+     53.3796053,
+     -2.1334451
+    ],
+    "origin_segment": [
+     "310603180",
+     "2269904920"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "roundabout-4447725-exit2",
+   "journey": {
+    "closed_clip_sha256": "9c75b70c451067146261f13d6ae77d973a99dc37c7c0a308b842275c78c9509b",
+    "closed_highway": "service",
+    "closed_way": "23046287",
+    "destination": [
+     53.4273087,
+     -2.2637024
+    ],
+    "destination_segment": [
+     "26856635",
+     "26856636"
+    ],
+    "map_detour_m": 1646.9,
+    "map_shortest_m": 1539.2,
+    "origin": [
+     53.42978495,
+     -2.2495484
+    ],
+    "origin_segment": [
+     "3161555127",
+     "30962160"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "roundabout-58425651-exit2",
+   "journey": {
+    "closed_clip_sha256": "088839dc3cbd040f10cd1263ba16f8dc3992276a50f0e878cdb09909de051720",
+    "closed_highway": "tertiary",
+    "closed_way": "1363891994",
+    "destination": [
+     53.5438044,
+     -2.4357792
+    ],
+    "destination_segment": [
+     "7691653236",
+     "5335261608"
+    ],
+    "map_detour_m": 1838.3,
+    "map_shortest_m": 1736.3,
+    "origin": [
+     53.55268555,
+     -2.4309651499999996
+    ],
+    "origin_segment": [
+     "724316055",
+     "8237674389"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "roundabout-127572573-exit2",
+   "journey": {
+    "closed_clip_sha256": "dc29eb70a9d5e194812caaa7de7deb1df6d70cfca162bfc9c8a91086423975b6",
+    "closed_highway": "tertiary_link",
+    "closed_way": "998206308",
+    "destination": [
+     53.5354008,
+     -2.5840336
+    ],
+    "destination_segment": [
+     "8080825620",
+     "6569275474"
+    ],
+    "map_detour_m": 2136.7,
+    "map_shortest_m": 2123.2,
+    "origin": [
+     53.5461241,
+     -2.58855045
+    ],
+    "origin_segment": [
+     "1411593754",
+     "1411593759"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "roundabout-29228737-exit3",
+   "journey": {
+    "closed_clip_sha256": "3c1cd246867023f53cace3a95a40ad1569c273b53f8c60de455fffbab540dc2d",
+    "closed_highway": "tertiary",
+    "closed_way": "1197205810",
+    "destination": [
+     53.3980413,
+     -2.6339883
+    ],
+    "destination_segment": [
+     "320730122",
+     "320730105"
+    ],
+    "map_detour_m": 2087.4,
+    "map_shortest_m": 1918.3,
+    "origin": [
+     53.40054275,
+     -2.6527291
+    ],
+    "origin_segment": [
+     "321489158",
+     "8869898145"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "roundabout-503823187-exit3",
+   "journey": {
+    "closed_clip_sha256": "79135681ec0e72bb4e9c7ed8feb32f37653dbc77b5e706c9474fb47d6a688646",
+    "closed_highway": "secondary",
+    "closed_way": "157771830",
+    "destination": [
+     53.3702289,
+     -2.7271759
+    ],
+    "destination_segment": [
+     "12522750581",
+     "12522750583"
+    ],
+    "map_detour_m": 1980.4,
+    "map_shortest_m": 1907.4,
+    "origin": [
+     53.3661448,
+     -2.7170877
+    ],
+    "origin_segment": [
+     "9335178758",
+     "4940776917"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "roundabout-22701688-exit3",
+   "journey": {
+    "closed_clip_sha256": "50746834d9f9353d95a3c3444b5cd72a970510b5e279940158acea2f4b0bb19f",
+    "closed_highway": "primary",
+    "closed_way": "22701687",
+    "destination": [
+     53.4065747,
+     -2.6228357
+    ],
+    "destination_segment": [
+     "9032852160",
+     "302495943"
+    ],
+    "map_detour_m": 2371.4,
+    "map_shortest_m": 2194.2,
+    "origin": [
+     53.4149624,
+     -2.61454605
+    ],
+    "origin_segment": [
+     "8867001851",
+     "243513334"
+    ],
+    "status": "TESTABLE"
+   }
+  },
+  {
+   "id": "roundabout-3994228-exit3",
+   "journey": {
+    "closed_clip_sha256": "18f801290c95b6e6bdeda73cf4d1853f62333af856a95260eecc128b4e4e53fa",
+    "closed_highway": "service",
+    "closed_way": "217167667",
+    "destination": [
+     53.4208397,
+     -2.1124666
+    ],
+    "destination_segment": [
+     "8651673790",
+     "8651673789"
+    ],
+    "map_detour_m": 1367.0,
+    "map_shortest_m": 1346.1,
+    "origin": [
+     53.4264424,
+     -2.12141955
+    ],
+    "origin_segment": [
+     "1615728580",
+     "8751241113"
+    ],
+    "status": "TESTABLE"
+   }
+  }
+ ],
+ "contract": "RUN-D v1",
+ "frozen_before_engine_runs": true,
+ "journey001_prepared_sha256": "98ce97b6b4c1c6d2f022fe58a74c2fc6a8bee676a5f3c0891d0ac8da5bd2613c",
+ "robust": [
+  {
+   "id": "turn-664643295",
+   "island": {
+    "clear_of_origin_network_m": 294.5,
+    "destination": [
+     53.5731486,
+     -2.3765894
+    ],
+    "destination_segment": [
+     "5237592431",
+     "556194949"
+    ],
+    "way": "43837247"
+   }
+  },
+  {
+   "id": "turn-767841424",
+   "island": {
+    "clear_of_origin_network_m": 277.7,
+    "destination": [
+     53.3836079,
+     -2.1335352
+    ],
+    "destination_segment": [
+     "1492969289",
+     "2183751169"
+    ],
+    "way": "34348091"
+   }
+  },
+  {
+   "id": "turn-782230413",
+   "island": {
+    "clear_of_origin_network_m": 958.7,
+    "destination": [
+     53.5259791,
+     -2.4544375
+    ],
+    "destination_segment": [
+     "5340777048",
+     "6806037442"
+    ],
+    "way": "725907301"
+   }
+  }
+ ],
+ "rules": {
+  "closure": "first 4 testable cases per stratum; destination: first car segment by sha256 700-1300 m from the junction with a map path; closed way: the non-roundabout way carrying the middle of the length-shortest map path (not the start or finish way), detour <= 3.0x; closed by access=no in the clip given to every engine",
+  "robust": "first 3 testable cases with a car road the origin cannot reach >= 150 m from the origin's road network",
+  "speed": "the first 3 closure journeys per stratum on the OPEN map, 1 warm-up + 10 timed identical queries per engine, engines rotated per case, one machine"
+ },
+ "speed": [
+  "turn-664643295",
+  "turn-767841424",
+  "turn-782230413",
+  "turn-32695361",
+  "turn-920573097",
+  "turn-7944778532",
+  "turn-282786422",
+  "turn-918297521",
+  "turn-20920075",
+  "roundabout-1051188906-exit1",
+  "roundabout-30912782-exit1",
+  "roundabout-67136033-exit1",
+  "roundabout-217678586-exit2",
+  "roundabout-4447725-exit2",
+  "roundabout-58425651-exit2",
+  "roundabout-29228737-exit3",
+  "roundabout-503823187-exit3",
+  "roundabout-22701688-exit3"
+ ]
+}
