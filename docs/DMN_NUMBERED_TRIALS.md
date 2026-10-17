@@ -228,6 +228,12 @@ passes 5/5 frozen analytical controls, including forward, detour and incomplete
 negative controls, at source `9da6f6737daa91e41238dde177f7dd93226cb2da`.
 This is not a navigation-engine rerun and does not alter ROUTE-004's historical
 six-engine verdicts. See `references/route004-detector-controls-20261017.json`.
+The second recorded ROUTE-004 harness gap is also corrected prospectively:
+allowed-direction output must now traverse the nominated edge corridor instead
+of passing on matching endpoints alone. Its frozen forward/reverse/detour/
+incomplete controls pass 5/5 at `3e53f725f9ec82a7e9a800c7ec9435d1ae7ebbc9`;
+historical rankings remain unchanged. See
+`references/route004-selected-edge-controls-20261017.json`.
 
 Eight hand-authored synthetic cases use a new explicit directed map and JSON
 oracle: prohibited-turn detour, unrestricted fresh-origin control, motor_vehicle=no
