@@ -2,19 +2,24 @@
  "agent": "Claude",
  "branch": "ccr-005983df-g8r2zd",
  "created": "2026-10-17T19:52:34+00:00",
- "fingerprints": [],
+ "fingerprints": [
+  "5fe8000"
+ ],
  "history": [
   "2026-10-17T19:52:34+00:00 next by Claude on ccr-005983df-g8r2zd",
   "2026-10-17T19:52:36+00:00 in_progress by Claude on ccr-005983df-g8r2zd",
   "2026-10-17T20:09:53+00:00 next by Claude on ccr-005983df-g8r2zd",
-  "2026-10-17T21:50:27+00:00 next by Claude on ccr-005983df-g8r2zd"
+  "2026-10-17T21:50:27+00:00 next by Claude on ccr-005983df-g8r2zd",
+  "2026-10-17T22:29:11+00:00 done by Claude on ccr-005983df-g8r2zd"
  ],
  "id": "ALL-IMPROVEMENTS",
- "results": "docs/ALL_TESTS_REVIEW.md",
- "runs": [],
- "state": "next",
- "summary": "DMN improvements implemented, NOT yet tested (owner: no test runs until told): GPS fix default, arrival when stopped, offline maps with time rules, clock-checked time rules, reroute after gap, confirm after gap, now call + lead by speed + 3 s bridge, route checker, destination side, no-route reason; harness: long-line reader, start-up watch. Owner (17 Oct 2026): only DMN is being improved for now, no DriveMate app changes. Local commits not pushed (a push starts CI).",
+ "results": "docs/GRAND_TOUR_001_RESULTS.md",
+ "runs": [
+  "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39074389754"
+ ],
+ "state": "done",
+ "summary": "All owner-approved DMN improvements implemented, unit suite 825/825, and every DMN test re-run fresh with all 7 engines (A, B1, B2, C, D, Grand Tour): all passed. Run C: right road 78%/0 wrong, arrival 72/72, whole drive 70/72. Grand Tour: DMN 1st on route, wrong turns, traffic, GPS; last on route speed (2.9 s).",
  "title": "Owner approved and asked to implement every recommendation in docs/ALL_TESTS_REVIEW.md (categories 1-21)",
- "updated": "2026-10-17T21:50:27+00:00",
+ "updated": "2026-10-17T22:29:11+00:00",
  "why": "Owner, 17 Oct 2026: after each engine is built and tested, implement it in the DriveMate app (Kotlin port with parity test, behind a setting, app preflight and robot checks) before starting the next engine; see docs/ENGINES_PROGRAMME.md."
 }
