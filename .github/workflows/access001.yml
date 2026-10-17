@@ -1,8 +1,8 @@
 name: ACCESS-001 four-engine no-car road route check
 # Runs the frozen ACCESS-001 cohort on GitHub (public repo: free minutes). Engines run
 # in parallel; one short summary is written to the job page. The source map is pinned on
-# data/turn001-snapshot; the clips are cut from it once here and must match the frozen
-# hashes in config/access001-prepared.json byte for byte (osmium-tool 1.16, Ubuntu 24.04).
+# data/turn001-snapshot; each job cuts the 5 km clips from it and every clip must match
+# its frozen hash in config/access001-prepared.json (osmium-tool 1.16, Ubuntu 24.04).
 on:
   workflow_dispatch:
   # A new workflow can only be started by hand once it is on the default branch,
@@ -23,36 +23,9 @@ env:
   GH_JAR_URL: https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/11.1/graphhopper-web-11.1.jar
   GH_JAR_SHA1: 6e6c173c2b46cb0a3c1df124b2144d557931597e
 jobs:
-  clips:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 60
-    steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-        with:
-          persist-credentials: false
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
-        with:
-          python-version: '3.11'
-      - name: Cut clips from the pinned map and verify them against the frozen hashes
-        run: |
-          set -euo pipefail
-          sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq osmium-tool >/dev/null
-          raw=https://raw.githubusercontent.com/${{ github.repository }}
-          mkdir -p results/turn001
-          (cd results/turn001 && curl -fsSL -o SHA256SUMS "$raw/data/turn001-snapshot/SHA256SUMS" \
-            && curl -fsSL -o gm.osm.pbf "$raw/data/turn001-snapshot/gm.osm.pbf" && sha256sum -c --ignore-missing SHA256SUMS)
-          python -m benchmarks.access001_route prepare > results/prepare.log 2>&1 || { tail -5 results/prepare.log; exit 1; }
-          git diff --exit-code config/access001-prepared.json
-          tar -C results/access001 -cf clips.tar cases
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        with:
-          name: access001-clips
-          path: clips.tar
-          retention-days: 7
   engine:
-    needs: clips
     runs-on: ubuntu-24.04
-    timeout-minutes: 300
+    timeout-minutes: 350
     strategy:
       fail-fast: false
       matrix:
@@ -65,8 +38,6 @@ jobs:
         with:
           python-version: '3.11'
       - name: Pinned inputs (verified)
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq osmium-tool >/dev/null
@@ -74,8 +45,6 @@ jobs:
           mkdir -p results/turn001 results/access001
           (cd results/turn001 && curl -fsSL -o SHA256SUMS "$raw/data/turn001-snapshot/SHA256SUMS" \
             && curl -fsSL -o gm.osm.pbf "$raw/data/turn001-snapshot/gm.osm.pbf" && sha256sum -c --ignore-missing SHA256SUMS)
-          gh run download ${{ github.run_id }} -R ${{ github.repository }} -n access001-clips -D clips
-          tar -C results/access001 -xf clips/clips.tar && rm -rf clips
       - name: Java and jar
         if: matrix.run == 'GraphHopper'
         run: |
@@ -117,7 +86,6 @@ jobs:
         run: |
           set -euo pipefail
           gh run download ${{ github.run_id }} -R ${{ github.repository }} -p 'access001-*' -D artifacts
-          rm -rf artifacts/access001-clips
           mkdir -p results/access001 && cp artifacts/*/run-*.json results/access001/
       - name: Score and short summary
         run: |

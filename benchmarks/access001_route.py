@@ -52,7 +52,14 @@ WORK = ROOT / "results" / "access001"
 COHORT = ROOT / "config" / "access001-cohort.json"
 PREPARED = ROOT / "config" / "access001-prepared.json"
 SOURCE = t1.WORK / "gm.osm.pbf"  # pinned on data/turn001-snapshot
-CONTRACT = "ACCESS-001 v1"
+CONTRACT = "ACCESS-001 v1.1"
+# v1.1 (owner, before any result was reported): clips several miles wide so a real
+# detour fits. Each clip is a 5 km (about 3 miles) square of roads, turn restrictions
+# and barriers centred on the tested way; a no-route is re-asked on a 10 km square.
+CLIP_KM, WIDE_SCALE = 5.0, 2
+HALF_LAT = CLIP_KM / 2 * 1000 / 111_320
+HALF_LON = CLIP_KM / 2 * 1000 / 66_220  # metres per degree of longitude at 53.5N
+ROADS = WORK / "roads.osm.pbf"  # source filtered to roads, restrictions and barriers
 ACCESS_KEYS = ("motorcar", "motor_vehicle", "vehicle", "access")
 BUS_KEYS = ("bus", "psv")
 BUS_VALUES = {"yes", "designated"}
@@ -251,26 +258,46 @@ def select(source: Path) -> None:
     print(f"Frozen {len(chosen)} cases of {len(found)} candidate ways -> {COHORT}")
 
 
+def roads_source(source: Path = SOURCE) -> Path:
+    """The pinned source reduced to roads, turn restrictions and barriers (cut once)."""
+    if not ROADS.exists():
+        if t1.sha256_file(source) != json.loads(COHORT.read_text())["source_sha256"]:
+            raise SystemExit("Source snapshot does not match the frozen cohort")
+        WORK.mkdir(parents=True, exist_ok=True)
+        subprocess.run(["osmium", "tags-filter", "--overwrite", str(source), "w/highway", "r/type=restriction",
+                        "n/barrier", "-o", str(ROADS)], check=True)
+    return ROADS
+
+
+def bbox_around(lat: float, lon: float, scale: float = 1) -> str:
+    hy, hx = HALF_LAT * scale, HALF_LON * scale
+    return f"{lon-hx:.6f},{lat-hy:.6f},{lon+hx:.6f},{lat+hy:.6f}"
+
+
+def cut(folder: Path, bbox: str) -> bytes:
+    folder.mkdir(parents=True, exist_ok=True)
+    pbf = folder / "clip.osm.pbf"
+    subprocess.run(["osmium", "extract", "--overwrite", "--strategy", "complete_ways",
+                    f"--bbox={bbox}", str(roads_source()), "-o", str(pbf)], check=True)
+    subprocess.run(["osmium", "cat", "--overwrite", str(pbf), "-o", str(folder / "clip.osm"),
+                    "-f", "osm,add_metadata=false"], check=True)
+    return (folder / "clip.osm").read_bytes()
+
+
 def prepare(source: Path) -> None:
+    """Freeze each clip's hash and test geometry (clips are deleted again: they are large)."""
     cohort = json.loads(COHORT.read_text())
-    if t1.sha256_file(source) != cohort["source_sha256"]:
-        raise SystemExit("Source snapshot does not match the frozen cohort")
+    roads_source(source)
     out = []
     for case in cohort["cases"]:
         folder = WORK / "cases" / str(case["way"])
-        folder.mkdir(parents=True, exist_ok=True)
-        lat, lon = case["lat"], case["lon"]
-        bbox = f"{lon-t1.HALF_LON:.6f},{lat-t1.HALF_LAT:.6f},{lon+t1.HALF_LON:.6f},{lat+t1.HALF_LAT:.6f}"
-        pbf = folder / "clip.osm.pbf"
-        if not (folder / "clip.osm").exists():  # clips are cut once; their hashes are frozen below
-            subprocess.run(["osmium", "extract", "--overwrite", "--strategy", "complete_ways",
-                            f"--bbox={bbox}", str(source), "-o", str(pbf)], check=True)
-            subprocess.run(["osmium", "cat", "--overwrite", str(pbf), "-o", str(folder / "clip.osm"),
-                            "-f", "osm,add_metadata=false"], check=True)
-        raw = (folder / "clip.osm").read_bytes()
+        bbox = bbox_around(case["lat"], case["lon"])
+        raw = cut(folder, bbox)
         out.append({"way": case["way"], "node": case["way"], "stratum": case["stratum"], "bbox": bbox,
-                    "clip_sha256": hashlib.sha256(raw).hexdigest(), "clip_bytes": len(raw),
+                    "clip_km": CLIP_KM, "clip_sha256": hashlib.sha256(raw).hexdigest(), "clip_bytes": len(raw),
                     "geometry": case_geometry(case, AccessClip(raw))})
+        subprocess.run(["rm", "-rf", str(folder)], check=True)
+        print(case["way"], out[-1]["geometry"]["status"], flush=True)
     text = json.dumps(out, indent=1)
     if PREPARED.exists() and PREPARED.read_text() != text:
         raise SystemExit("Prepared clips differ from the frozen config/access001-prepared.json")
@@ -279,16 +306,22 @@ def prepare(source: Path) -> None:
     print(Counter("/".join(r["stratum"]) for r in out if r["geometry"]["status"] == "TESTABLE"))
 
 
+def case_clip(record: dict) -> bytes:
+    """Cut the case's clip from the pinned source; it must match the frozen hash."""
+    folder = WORK / "cases" / str(record["way"])
+    raw = (folder / "clip.osm").read_bytes() if (folder / "clip.osm").exists() else cut(folder, record["bbox"])
+    if hashlib.sha256(raw).hexdigest() != record["clip_sha256"]:
+        raise RuntimeError(f"ACCESS-001 {record['way']}: clip bytes differ from the frozen hash")
+    return raw
+
+
 def wide_clip(record: dict) -> Path:
-    """Same case on a clip three times wider (roads, restrictions and barriers)."""
+    """Same case on a clip WIDE_SCALE times wider."""
     folder = WORK / "cases" / str(record["way"]) / "wide"
-    if (folder / "clip.osm").exists():
-        return folder
-    saved, b1.WORK = b1.WORK, WORK
-    try:
-        return b1.wide_clip(record, SOURCE)
-    finally:
-        b1.WORK = saved
+    if not (folder / "clip.osm").exists():
+        w, s_, e, n = map(float, record["bbox"].split(","))
+        cut(folder, bbox_around((s_ + n) / 2, (w + e) / 2, WIDE_SCALE))
+    return folder
 
 
 def opened(raw: bytes, way: str) -> bytes:
@@ -377,9 +410,7 @@ def run(engine: str, *, control: bool = False, only: set[str] | None = None) -> 
         if geom["status"] != "TESTABLE" or (only and way not in only):
             continue
         folder = WORK / "cases" / way
-        raw = (folder / "clip.osm").read_bytes()
-        if hashlib.sha256(raw).hexdigest() != record["clip_sha256"]:
-            raise RuntimeError(f"ACCESS-001 {way}: prepared clip bytes changed")
+        raw = case_clip(record)
         clip = AccessClip(raw)
         entry: dict = {"clip_sha256": record["clip_sha256"]}
         if engine == "DMN":
@@ -411,10 +442,11 @@ def run(engine: str, *, control: bool = False, only: set[str] | None = None) -> 
                               else verdict(wclip, geom, nodes, error))
             else:
                 wide_entry = t1.engine_case(engine, wide, wclip, geom, judge=verdict)
-            entry["wide_clip"] = {"scale": b1.WIDE_SCALE, "clip_sha256": hashlib.sha256(wraw).hexdigest(),
+            entry["wide_clip"] = {"scale": WIDE_SCALE, "clip_sha256": hashlib.sha256(wraw).hexdigest(),
                                   **wide_entry}
         results[way] = entry
         out.write_text(json.dumps(results, indent=1, sort_keys=True))
+        subprocess.run(["rm", "-rf", str(folder), str(WORK / "control" / way)], check=False)
         print(way, entry.get("verdict"), entry.get("detail", "")[:100], flush=True)
 
 
