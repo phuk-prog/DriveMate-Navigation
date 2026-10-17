@@ -56,6 +56,23 @@ Exact frozen OSM relation IDs and case-specific statuses:
 milestone, not a five-case road-law clearance and not five proven navigation
 engine faults. No engine was benchmarked or modified as part of this review.
 
+## Owner decision — avoid registration-required evidence sources
+
+The owner directed on 17 October 2026: **if any evidence provider requires
+registration, do not sign up, do not seek credentials, and move on; leave
+the affected case recorded as DIAGNOSED but not VERIFIED.** Therefore:
+
+- No D-TRO account, signup, key or portal API request will be pursued.
+- Existing five-case OSM route/topology diagnoses remain valid *as map-derived
+  diagnostics only*. None of the five site restrictions is independently verified.
+- Freely viewable authoritative sources may still be used without accounts;
+  absence of public proof must not change the driving route rules.
+- Continue with another engine-only Category 1 task that needs no registration.
+
+This is a research workflow completion rule, **not permission to allow a
+prohibited turn or private road**, and it does not certify a road as legally
+impassable.
+
 ## Correct next evidence steps
 
 For each site, obtain the **actual operative legal order** or an authoritative
