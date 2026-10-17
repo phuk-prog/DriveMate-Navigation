@@ -36,7 +36,7 @@ jobs:
       fail-fast: false
       matrix:
         test: [access001, oneway002]
-        run: [DMN, OSRM, GraphHopper, Valhalla, openrouteservice, BRouter, OSRM-control]
+        run: [DMN, OSRM, GraphHopper, Valhalla, openrouteservice, BRouter, TomTom, OSRM-control]
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -67,7 +67,13 @@ jobs:
           distribution: temurin
           java-version: '25'
       - name: Run ${{ matrix.run }} (log kept as artifact, not printed)
+        env:
+          # TomTom is a yardstick only (verdicts kept, nothing of its data stored)
+          TOMTOM_KEY: ${{ matrix.run == 'TomTom' && secrets.TOMTOM_KEY || '' }}
         run: |
+          if [ "${{ matrix.run }}" = TomTom ] && [ -z "$TOMTOM_KEY" ]; then
+            echo "TomTom NOT_RUN: repository secret TOMTOM_KEY is not set" | tee -a "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
           set -euo pipefail
           engine=${{ matrix.run }}; extra=
           if [ "$engine" = OSRM-control ]; then engine=OSRM; extra=--control; fi

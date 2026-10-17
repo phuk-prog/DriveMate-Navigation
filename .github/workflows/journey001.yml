@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        run: [DMN, OSRM, GraphHopper, Valhalla, openrouteservice, BRouter]
+        run: [DMN, OSRM, GraphHopper, Valhalla, openrouteservice, BRouter, TomTom]
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -64,7 +64,13 @@ jobs:
           distribution: temurin
           java-version: '25'
       - name: Run ${{ matrix.run }} (log kept as artifact, not printed)
+        env:
+          # TomTom is a yardstick only (verdicts kept, nothing of its data stored)
+          TOMTOM_KEY: ${{ matrix.run == 'TomTom' && secrets.TOMTOM_KEY || '' }}
         run: |
+          if [ "${{ matrix.run }}" = TomTom ] && [ -z "$TOMTOM_KEY" ]; then
+            echo "TomTom NOT_RUN: repository secret TOMTOM_KEY is not set" | tee -a "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
           set -euo pipefail
           python -m benchmarks.journey001 run --engine ${{ matrix.run }} > results/journey001/run.log 2>&1 || { tail -20 results/journey001/run.log; exit 1; }
           awk '{print $2, $3}' results/journey001/run.log | sort | uniq -c

@@ -7,6 +7,13 @@ and profiles are the ones already used by JUNCTION-001 and ROUTE-001.
 
 Known difference: BRouter takes no start/finish heading, so it may start in the
 other direction; the harness then reports OFF_TARGET, never a rule break.
+
+TomTom (owner, 17 Oct 2026) is a yardstick only: the live TomTom Routing API on
+TomTom's own map, asked with the same start, finish and start heading. Nothing from
+it is copied into DriveMate. Its route is matched to the OSM clip within
+TOMTOM_MATCH_M (its geometry is not OSM's) and judged by the same OSM rules, so a
+TomTom "rule break" may be a map difference and is reported for review. TomTom's
+terms forbid storing its data: scrub() keeps only verdicts. Needs TOMTOM_KEY.
 """
 from __future__ import annotations
 
@@ -27,7 +34,14 @@ from urllib.request import Request, urlopen
 from benchmarks import turn001_restrictions as t1
 
 NEW = ("openrouteservice", "BRouter")
-ENGINES = ("OSRM", "GraphHopper", "Valhalla", *NEW)
+LIVE = ("TomTom",)  # commercial yardstick on its own map; verdicts only
+ENGINES = ("OSRM", "GraphHopper", "Valhalla", *NEW, *LIVE)
+TOMTOM_MATCH_M = 6.0
+TOMTOM_KEEP = {"coverage", "note", "verdict", "route", "result", "instruction", "uses_way", "through_barrier", "follows_movement",
+               "route_legal", "violations", "other_closed_roads", "other_restricted_roads",
+               "other_closed_barriers", "other_uncertain_barriers", "conditional_movements_used",
+               "start_snap_m", "end_snap_m", "warm_query_ms", "length_m", "detail", "line", "wide_clip",
+               "base_clip_verdict", "no_route", "clip_sha256", "nodes", "not_judged"}
 CACHE = t1.WORK / "engines"
 ORS_JAR = ("https://github.com/GIScience/openrouteservice/releases/download/v10.1.0/ors.jar",
            "46b83b353eaf8830a1b53cad91d027e00547cd9a00e86efddd64a45335bfb8e1")
@@ -396,6 +410,11 @@ def query(engine: str, geom: dict, headings: tuple[int, int]):
 
 def route(engine: str, folder: Path, clip, geom: dict):
     """Build the engine on this case's clip and ask once: (points, steps, ms), or an error dict."""
+    if engine in LIVE:
+        try:
+            return tomtom(geom, t1.travel_headings(clip, geom))[::2] + (tomtom.last_ms,)
+        except Exception as exc:  # noqa: BLE001 - recorded, never hidden
+            return {"verdict": "ERROR", "route": "ERROR", "detail": f"{type(exc).__name__}: {str(exc)[:200]}"}
     try:
         with serve(engine, folder / "clip.osm.pbf", folder / engine.lower()):
             return query(engine, geom, t1.travel_headings(clip, geom))
@@ -405,7 +424,7 @@ def route(engine: str, folder: Path, clip, geom: dict):
         return {"verdict": "ERROR", "route": "ERROR", "detail": f"{type(exc).__name__}: {exc}"[:300]}
 
 
-def engine_path(clip, geom: dict, points):
+def engine_path(clip, geom: dict, points, tolerance_m: float = 1.0):
     """OSM node path of an engine route (TURN-001 matching plus a start/finish fix).
 
     TURN-001's matcher only restores simplified-away nodes once it has matched one, so
@@ -421,7 +440,7 @@ def engine_path(clip, geom: dict, points):
     start_ok = bool(pts) and t1.metres(pts[0], tuple(geom["origin"])) <= t1.SNAP_TOLERANCE_M
     end_ok = bool(pts) and t1.metres(pts[-1], tuple(geom["destination"])) <= t1.SNAP_TOLERANCE_M
     seeded = ([clip.coords[o_seg[0]]] if start_ok else []) + pts + ([clip.coords[d_seg[1]]] if end_ok else [])
-    nodes = clip.match_nodes(seeded)
+    nodes = clip.match_nodes(seeded, tolerance_m)
     return nodes, {"start_snap_m": None if not pts else round(t1.metres(pts[0], tuple(geom["origin"])), 1),
                    "end_snap_m": None if not pts else round(t1.metres(pts[-1], tuple(geom["destination"])), 1)}
 
@@ -434,14 +453,14 @@ class NotAvailable(RuntimeError):
 def query_details(engine: str, geom: dict, headings: tuple[int, int]):
     """(points, details, ms): per-segment speed limits (km/h or None) and lane advice per step.
 
-    Only OSRM (speed limits and lanes) and GraphHopper (speed limits) expose these in
-    their route answers; the others raise NotAvailable.
+    Only OSRM (lanes) and GraphHopper (speed limits) expose these in their route
+    answers; the others raise NotAvailable.
     """
     o, d = geom["origin"], geom["destination"]
     began = time.perf_counter()
     if engine == "OSRM":
         url = (f"http://127.0.0.1:5000/route/v1/driving/{o[1]:.7f},{o[0]:.7f};{d[1]:.7f},{d[0]:.7f}"
-               "?overview=full&geometries=geojson&continue_straight=true&steps=true&annotations=maxspeed"
+               "?overview=full&geometries=geojson&continue_straight=true&steps=true"
                f"&bearings={headings[0]},{t1.HEADING_TOLERANCE};{headings[1]},{t1.HEADING_TOLERANCE}")
         try:
             data = t1._http_json(url)
@@ -454,13 +473,6 @@ def query_details(engine: str, geom: dict, headings: tuple[int, int]):
             raise RuntimeError(f"OSRM {data.get('code')}")
         r = data["routes"][0]
         points = [(lat, lon) for lon, lat in r["geometry"]["coordinates"]]
-        limits = []
-        for leg in r["legs"]:
-            for m in leg["annotation"]["maxspeed"]:
-                if m.get("unknown") or m.get("none"):
-                    limits.append(None)
-                else:
-                    limits.append(m["speed"] * (1.609344 if m.get("unit") == "mph" else 1.0))
         lanes = []
         for leg in r["legs"]:
             for s in leg["steps"]:
@@ -469,7 +481,8 @@ def query_details(engine: str, geom: dict, headings: tuple[int, int]):
                         lanes.append({"at": (i["location"][1], i["location"][0]),
                                       "valid": [k + 1 for k, ln in enumerate(i["lanes"]) if ln.get("valid")],
                                       "count": len(i["lanes"])})
-        return points, {"segment_limits_kph": limits, "lanes": lanes}, ms
+        # OSRM 5.27 has no speed-limit annotation (annotations=maxspeed is an InvalidQuery)
+        return points, {"segment_limits_kph": None, "lanes": lanes}, ms
     if engine == "GraphHopper":
         url = (f"http://127.0.0.1:8989/route?point={o[0]:.7f},{o[1]:.7f}&point={d[0]:.7f},{d[1]:.7f}"
                "&profile=car&points_encoded=false&instructions=false&ch.disable=true&way_point_max_distance=0"
@@ -494,6 +507,12 @@ def query_details(engine: str, geom: dict, headings: tuple[int, int]):
 
 def route_details(engine: str, folder: Path, clip, geom: dict):
     """Like route() but asking for speed limits and lanes; GraphHopper gets max_speed stored."""
+    if engine in LIVE:
+        try:
+            points, details, _ = tomtom(geom, t1.travel_headings(clip, geom))
+            return points, details, tomtom.last_ms
+        except Exception as exc:  # noqa: BLE001 - recorded, never hidden
+            return {"route": "ERROR", "detail": f"{type(exc).__name__}: {str(exc)[:200]}"}
     if engine not in ("OSRM", "GraphHopper"):
         return {"route": "NOT_AVAILABLE"}
     saved = t1.graphhopper_config
@@ -510,3 +529,114 @@ def route_details(engine: str, folder: Path, clip, geom: dict):
         return {"route": "ERROR", "detail": f"{type(exc).__name__}: {exc}"[:300]}
     finally:
         t1.graphhopper_config = saved
+
+
+# --------------------------------------------------------------------------- TomTom (live yardstick)
+TOMTOM_KIND_SLIGHT = ("BEAR_", "KEEP_")
+
+
+def _tomtom_kind(maneuver: str) -> tuple[str | None, bool]:
+    m = maneuver.upper()
+    if "UTURN" in m:
+        return "uturn", False
+    if "STRAIGHT" in m:
+        return "straight", False
+    if "LEFT" in m:
+        return "left", m.startswith(TOMTOM_KIND_SLIGHT)
+    if "RIGHT" in m:
+        return "right", m.startswith(TOMTOM_KIND_SLIGHT)
+    return None, False
+
+
+def tomtom(geom: dict, headings: tuple[int, int]):
+    """(points, details, steps) from the live TomTom Routing API; tomtom.last_ms is the time.
+
+    details carries per-segment speed limits and lane advice like query_details(); the
+    response itself is never written anywhere.
+    """
+    key = os.environ.get("TOMTOM_KEY")
+    if not key:
+        raise NotAvailable("TOMTOM_KEY not set")
+    o, d = geom["origin"], geom["destination"]
+    url = (f"https://api.tomtom.com/routing/1/calculateRoute/{o[0]:.7f},{o[1]:.7f}:{d[0]:.7f},{d[1]:.7f}/json?"
+           + urlencode({"key": key, "travelMode": "car", "traffic": "false", "routeType": "fastest",
+                        "instructionsType": "coded", "vehicleHeading": headings[0]})
+           + "&sectionType=lanes&sectionType=speedLimit")
+    time.sleep(0.25)  # stay well inside the free tier's request rate
+    began = time.perf_counter()
+    try:
+        with urlopen(url, timeout=30) as r:  # noqa: S310 - fixed public API host
+            data = json.load(r)
+    except HTTPError as exc:
+        text = (exc.read() or b"").decode(errors="replace")
+        tomtom.last_ms = (time.perf_counter() - began) * 1000
+        if "NO_ROUTE_FOUND" in text or "MAP_MATCHING_FAILURE" in text:
+            return None, {}, []
+        raise RuntimeError(f"TomTom HTTP {exc.code}") from None  # never echo the URL (it holds the key)
+    tomtom.last_ms = (time.perf_counter() - began) * 1000
+    route = data["routes"][0]
+    points = [(p["latitude"], p["longitude"]) for leg in route["legs"] for p in leg["points"]]
+    steps = []
+    for ins in route.get("guidance", {}).get("instructions", []):
+        at = (ins["point"]["latitude"], ins["point"]["longitude"])
+        if ins.get("roundaboutExitNumber"):
+            steps.append({"at": at, "kind": "roundabout", "exit": ins["roundaboutExitNumber"]})
+            continue
+        kind, slight = _tomtom_kind(ins.get("maneuver", ""))
+        if kind:
+            steps.append({"at": at, "kind": kind, "slight": slight})
+    limits = [None] * max(len(points) - 1, 0)
+    lanes = []
+    for sec in route.get("sections", []):
+        start, end = sec.get("startPointIndex", 0), sec.get("endPointIndex", 0)
+        if sec.get("sectionType") == "SPEED_LIMIT" and sec.get("maxSpeedLimitInKmh"):
+            for k in range(start, min(end, len(limits))):
+                limits[k] = float(sec["maxSpeedLimitInKmh"])
+        elif sec.get("sectionType") == "LANES" and sec.get("lanes"):
+            valid = [i + 1 for i, ln in enumerate(sec["lanes"]) if ln.get("follow")]
+            lanes.append({"at": points[min(start, len(points) - 1)], "valid": valid, "count": len(sec["lanes"])})
+    return points, {"segment_limits_kph": limits, "lanes": lanes}, steps
+
+
+tomtom.last_ms = 0.0
+
+
+def scrub(entry: dict) -> dict:
+    """Keep only verdict-level fields of a TomTom result (TomTom terms: no stored data)."""
+    out = {k: v for k, v in entry.items() if k in TOMTOM_KEEP}
+    for key in ("instruction", "result"):
+        if isinstance(out.get(key), dict):
+            out[key] = {"verdict": out[key].get("verdict")}
+    if isinstance(out.get("wide_clip"), dict):
+        out["wide_clip"] = scrub(out["wide_clip"])
+    out["data_note"] = "TomTom: verdicts only; route not stored (TomTom terms)"
+    return out
+
+
+TOMTOM_FULL_USE = 0.8  # share of the tested road TomTom's own line must run along to count as using it
+
+
+def line_coverage(clip, way_nodes: list[str], points) -> float:
+    """Share of the tested road's length that the engine's own line runs along (within 3 m)."""
+    from benchmarks.journey001 import _seg_dist
+    total = covered = 0.0
+    pts = [tuple(p) for p in points]
+    for a, b in zip(way_nodes, way_nodes[1:]):
+        pa, pb = clip.coords[a], clip.coords[b]
+        length = t1.metres(pa, pb)
+        total += length
+        mid = ((pa[0] + pb[0]) / 2, (pa[1] + pb[1]) / 2)
+        if pts and len(pts) > 1 and min(_seg_dist(mid, p, q) for p, q in zip(pts, pts[1:])) <= 3.0:
+            covered += length
+    return covered / total if total else 0.0
+
+
+def tomtom_rule_check(entry: dict, clip, geom: dict, points, fail_verdict: str) -> dict:
+    """TomTom draws its own map, so a rule break counts only if its line runs along most of the
+    tested road; a partial touch at a junction is an unclear match, not a fail."""
+    if entry.get("verdict") != fail_verdict:
+        return entry
+    share = line_coverage(clip, geom["way_nodes"], points)
+    if share < TOMTOM_FULL_USE:
+        return {**entry, "verdict": "UNCERTAIN_MAP_MATCH", "coverage": round(share, 2)}
+    return {**entry, "coverage": round(share, 2), "note": "may be a map difference (TomTom's own map)"}

@@ -537,7 +537,7 @@ def run(engine: str, *, control: bool = False, only: set[str] | None = None) -> 
                 wide_entry = extra_case(engine, wide, wclip, geom)
             entry["wide_clip"] = {"scale": WIDE_SCALE, "clip_sha256": hashlib.sha256(wraw).hexdigest(),
                                   **wide_entry}
-        results[way] = entry
+        results[way] = xe.scrub(entry) if engine in xe.LIVE else entry
         out.write_text(json.dumps(results, indent=1, sort_keys=True))
         subprocess.run(["rm", "-rf", str(folder), str(WORK / "control" / way)], check=False)
         print(way, entry.get("verdict"), entry.get("detail", "")[:100], flush=True)
@@ -551,8 +551,9 @@ def extra_case(engine: str, folder: Path, clip, geom: dict) -> dict:
     points, _, ms = result
     if points is None:
         return {**verdict(clip, geom, None), "warm_query_ms": round(ms, 1)}
-    nodes, snaps = xe.engine_path(clip, geom, points)
-    return {**verdict(clip, geom, nodes), **snaps, "warm_query_ms": round(ms, 1)}
+    nodes, snaps = xe.engine_path(clip, geom, points, xe.TOMTOM_MATCH_M if engine in xe.LIVE else 1.0)
+    entry = {**verdict(clip, geom, nodes), **snaps, "warm_query_ms": round(ms, 1)}
+    return xe.tomtom_rule_check(entry, clip, geom, points, FAIL) if engine in xe.LIVE else entry
 
 
 def final(entry: dict) -> dict:
