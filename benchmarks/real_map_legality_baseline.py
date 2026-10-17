@@ -114,7 +114,7 @@ def _xy(point, origin):
 
 
 def forbidden_direct_traversal(points, allowed_start, allowed_end):
-    """Detect a returned segment travelling directly along the mapped reverse edge."""
+    """Detect contiguous backward progress through the mapped edge corridor."""
     a = _xy(allowed_start, allowed_start); b = _xy(allowed_end, allowed_start)
     dx, dy = b[0] - a[0], b[1] - a[1]; length2 = dx * dx + dy * dy
     if length2 <= 0:
@@ -124,11 +124,18 @@ def forbidden_direct_traversal(points, allowed_start, allowed_end):
         t = ((x-a[0])*dx + (y-a[1])*dy) / length2
         nearest = (a[0] + max(0, min(1, t))*dx, a[1] + max(0, min(1, t))*dy)
         return t, hypot(x-nearest[0], y-nearest[1])
-    for first, second in zip(points, points[1:]):
-        t1, d1 = projection(first); t2, d2 = projection(second)
-        midpoint = [(first[0]+second[0])/2, (first[1]+second[1])/2]
-        _, dm = projection(midpoint)
-        if d1 <= 8 and d2 <= 8 and dm <= 8 and t1 >= .8 and t2 <= .2:
+    high_progress_seen = False
+    for point in points:
+        progress, distance = projection(point)
+        # Leaving the selected edge corridor breaks the direct traversal. This
+        # keeps a lawful detour that later returns to the road from being joined
+        # into one false reverse movement.
+        if distance > 8 or not -.1 <= progress <= 1.1:
+            high_progress_seen = False
+            continue
+        if progress >= .8:
+            high_progress_seen = True
+        elif high_progress_seen and progress <= .2:
             return True
     return False
 

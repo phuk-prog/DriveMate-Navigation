@@ -1,5 +1,6 @@
 import unittest
 from benchmarks.real_map_legality_baseline import forbidden_direct_traversal, judge, sanitize_supported_map
+from benchmarks.route004_detector_controls import execute
 
 
 class LegalityBaselineTests(unittest.TestCase):
@@ -13,6 +14,16 @@ class LegalityBaselineTests(unittest.TestCase):
     def test_detour_does_not_count_as_direct_reverse(self):
         points=[self.case["allowed_end"],[53.001,-1.999],[53.0,-1.999],self.case["allowed_start"]]
         self.assertFalse(forbidden_direct_traversal(points,self.case["allowed_start"],self.case["allowed_end"]))
+
+    def test_multi_vertex_reverse_is_detected(self):
+        points=[[53.001,-2],[53.00075,-2],[53.0005,-2],[53.00025,-2],[53,-2]]
+        self.assertTrue(forbidden_direct_traversal(points,self.case["allowed_start"],
+                                                   self.case["allowed_end"]))
+
+    def test_frozen_detector_contract(self):
+        result=execute()
+        self.assertEqual((5,0,5),(result["passed"],result["failed"],result["total"]))
+        self.assertFalse(result["historical_route004_rescored"])
 
     def test_reverse_no_route_is_safe_pass(self):
         self.assertEqual("PASS",judge(self.case,"reverse",{"status":"NO_ROUTE"},1)["outcome"])
