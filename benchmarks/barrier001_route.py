@@ -28,6 +28,11 @@ audit) and every other barrier node it crosses. A DMN control with the tested
 barrier's tags removed marks DISCRIMINATING cases (the unblocked route uses the
 barrier); an OSRM control run does the same as a harness check. Source OSM is not
 independent legal truth.
+
+v1.1 (harness fix before any baseline was reported): "through" means the route
+CROSSES the barrier (arrives from one side and leaves on the other). v1 also counted
+driving up to a barrier and turning round there, which is legal; run 39022261422
+showed every OSRM and Valhalla "fail" was such a turn-round.
 """
 from __future__ import annotations
 
@@ -49,7 +54,7 @@ WORK = ROOT / "results" / "barrier001"
 COHORT = ROOT / "config" / "barrier001-cohort.json"
 PREPARED = ROOT / "config" / "barrier001-prepared.json"
 SOURCE = ROOT / "results" / "turn001" / "gm.osm.pbf"  # pinned on data/turn001-snapshot
-CONTRACT = "BARRIER-001 v1"
+CONTRACT = "BARRIER-001 v1.1"
 ACCESS_KEYS = ("motorcar", "motor_vehicle", "vehicle", "access")
 OPEN_VALUES = {"yes", "permissive", "designated"}
 RESTRICTED_VALUES = {"private", "destination", "delivery", "customers", "permit", "agricultural",
@@ -312,10 +317,15 @@ def without_barrier(raw: bytes, node: str) -> bytes:
 
 
 # --------------------------------------------------------------------------- verdicts
+def crosses(nodes: list[str], node: str) -> bool:
+    """The route passes over `node`: different neighbours before and after it."""
+    return any(nodes[i - 1] != nodes[i + 1] for i in range(1, len(nodes) - 1) if nodes[i] == node)
+
+
 def audit_barriers(clip: BarrierClip, nodes: list[str], tested: str) -> dict:
     closed, uncertain = [], []
-    for n in nodes[1:-1]:
-        if n == tested or n not in clip.barriers:
+    for n in dict.fromkeys(nodes[1:-1]):
+        if n == tested or n not in clip.barriers or not crosses(nodes, n):
             continue
         group = barrier_class(clip.barriers[n])
         if group == "closed":
@@ -333,7 +343,7 @@ def verdict(clip: BarrierClip, geom: dict, nodes: list[str] | None, error: str |
     if nodes is None:
         return {"verdict": "SAFE_NO_ROUTE"}
     b = geom["barrier"]
-    through = b in nodes[1:-1]
+    through = crosses(nodes, b)
     rules = t1.audit_route(clip, nodes)
     extra = {"nodes": len(nodes), "path": nodes, "through_barrier": through, **rules,
              **audit_barriers(clip, nodes, b)}
@@ -400,7 +410,7 @@ def run(engine: str, *, control: bool = False, only: set[str] | None = None) -> 
                          else verdict(clip, geom, nodes, error))
             c_nodes, _, c_rejected = _dmn(without_barrier(raw, node), geom)
             entry["control_without_barrier"] = ("REJECTED" if c_rejected else "NO_ROUTE" if c_nodes is None else
-                                                "USES_BARRIER" if node in c_nodes[1:-1] else "AVOIDS_BARRIER")
+                                                "USES_BARRIER" if crosses(c_nodes, node) else "AVOIDS_BARRIER")
         elif control:
             ctrl = WORK / "control" / node
             ctrl.mkdir(parents=True, exist_ok=True)
@@ -410,7 +420,7 @@ def run(engine: str, *, control: bool = False, only: set[str] | None = None) -> 
                            check=True)
             entry.update(t1.engine_case(engine, ctrl, BarrierClip(craw), geom, judge=verdict))
             # judged against the real barrier: driving through it is what the control should show
-            entry["through_barrier"] = node in entry.get("path", [])[1:-1]
+            entry["through_barrier"] = crosses(entry.get("path", []), node)
         else:
             entry.update(t1.engine_case(engine, folder, clip, geom, judge=verdict))
         if entry.get("verdict") == "SAFE_NO_ROUTE" and not control:

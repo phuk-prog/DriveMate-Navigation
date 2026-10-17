@@ -63,6 +63,12 @@ class Verdicts(unittest.TestCase):
         self.assertEqual(detour["verdict"], "PASS")
         self.assertFalse(detour["through_barrier"])
 
+    def test_turning_round_at_a_closed_barrier_is_not_driving_through(self):
+        # drive up to the bollard, turn round, take the detour: legal
+        result = verdict(self.clip, self.geom, ["2", "3", "4", "3", "2", "8", "5", "6"])
+        self.assertFalse(result["through_barrier"])
+        self.assertNotEqual(result["verdict"], "FAIL_THROUGH_BARRIER")
+
     def test_open_barrier_avoided_is_reported(self):
         geom = {**self.geom, "group": "open"}
         self.assertEqual(verdict(self.clip, geom, ["2", "3", "4", "5", "6"])["verdict"], "PASS")
