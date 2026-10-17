@@ -39,6 +39,15 @@ benchmark exit, not an Android or real-road result. No behavior fix was applied.
 See `docs/INTEGRATED_004_RESULTS.md` and
 `references/integrated004-*-baseline-20261017.json`.
 
+## INTEGRATED-005 closure rerouting baseline (17 October 2026)
+
+DMN passes 4/4 synthetic cases. Only current verified closure evidence with an
+available legal detour proposes and calculates the declared replacement; stale
+and unverified evidence causes no search, and a fully blocked graph returns
+`NO_ROUTE`. External families remain unranked with interface reasons. This is
+not live traffic or UK closure truth. See `docs/INTEGRATED_005_RESULTS.md` and
+`references/integrated005-*.json`.
+
 **Owner-approved prospective policy (16 October 2026):**
 [DMN_PERMANENT_TESTING_POLICY.md](DMN_PERMANENT_TESTING_POLICY.md) supersedes
 any earlier recommendations here about universal score-first rankings, running
