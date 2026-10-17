@@ -88,6 +88,20 @@ class ViaWayRestrictions(unittest.TestCase):
         self.assertIn(("w:101:0:f", "w:102:0:f"), m.graph.prohibited_turns)
 
 
+    def test_unknown_rule_value_blocks_entry_not_the_map(self):
+        # Owner-approved (17 Oct 2026): a typo or unsupported scheme is blocked per relation.
+        m = import_osm_xml(osm(rel(9, '<tag k="restriction" v="noleftturn"/>', 101, 104, 2)), provenance=PROV)
+        self.assertEqual(m.metadata["restrictions_not_applied"], {"unsupported_rule_blocked": 1})
+        self.assertIn(("w:101:0:f", "w:104:0:f"), m.graph.prohibited_turns)
+        self.assertIn(("w:101:0:f", "w:102:0:f"), m.graph.prohibited_turns)
+
+    def test_only_rule_with_several_to_ways_blocks_entry_not_the_map(self):
+        m = import_osm_xml(osm(rel(9, '<tag k="restriction" v="only_straight_on"/>', 101, [102, 104], 2)),
+                           provenance=PROV)
+        self.assertEqual(m.metadata["restrictions_not_applied"], {"several_from_to_blocked": 1})
+        self.assertIn(("w:101:0:f", "w:102:0:f"), m.graph.prohibited_turns)
+        self.assertGreater(len(m.graph.edges), 0)
+
     def test_two_via_ways_in_a_chain(self):
         # from 104 (4->2) via 102 (2->3) and 107 (3->7)? no: via 102 then 103 (3->5), to 105 (5->4)
         rel_xml = ('<relation id="9"><member type="way" ref="104" role="from"/>'

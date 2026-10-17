@@ -441,8 +441,6 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
         if not rule:
             skip("not_a_car_restriction")
             continue
-        if not (rule.startswith("no_") or rule.startswith("only_")):
-            raise OSMImportError(f"Unsupported turn restriction: {rule}")
         members = relation.findall("member")
         frm = [m.get("ref") for m in members if m.get("role") == "from" and m.get("type") == "way"]
         to = [m.get("ref") for m in members if m.get("role") == "to" and m.get("type") == "way"]
@@ -458,12 +456,20 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
             # Uninterpretable structure: blocked per object, not fatal for the map.
             block_into_via(frm, via_nodes, via_ways, "uninterpretable_structure_blocked")
             continue
+        if not (rule.startswith("no_") or rule.startswith("only_")):
+            # Unknown rule value (typo or unsupported scheme): blocked per object like an
+            # uninterpretable structure; it no longer rejects the whole map (owner-approved).
+            block_into_via(frm, via_nodes, via_ways, "unsupported_rule_blocked")
+            continue
         if not to_present and rule.startswith("no_"):
             skip("member_outside_extract")
             continue
         to = to_present
         if (len(frm) > 1 or len(to) > 1) and (via_ways or rule.startswith("only_")):
-            raise OSMImportError("Only no_ restrictions may list several from/to ways")
+            # Several from/to ways are only interpretable for via-node no_ rules; others
+            # are blocked per object instead of rejecting the whole map (owner-approved).
+            block_into_via(frm, via_nodes, via_ways, "several_from_to_blocked")
+            continue
         if via_ways:
             if any(w not in ways for w in via_ways):
                 skip("member_outside_extract")
