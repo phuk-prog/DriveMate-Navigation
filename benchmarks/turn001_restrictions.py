@@ -502,6 +502,20 @@ def prepare(source: Path) -> None:
 WIDE_SCALE = 3
 
 
+def _wide_clip_valid(folder: Path, record: dict) -> bool:
+    """A cached wide clip must still contain both frozen endpoint roads."""
+    path = folder / "clip.osm"
+    if not path.exists():
+        return False
+    try:
+        clip = Clip(path.read_bytes())
+    except (OSError, ET.ParseError, ValueError):
+        return False
+    geom = record["geometry"]
+    return all(way in clip.ways and clip.drivable(clip.ways[way][1])
+               for way in (geom["from_way"], geom["exit_way"]))
+
+
 def wide_clip(record: dict, source: Path | None = None) -> Path:
     """v1.3: the same case on a clip WIDE_SCALE times wider (roads and restrictions only).
 
@@ -510,9 +524,11 @@ def wide_clip(record: dict, source: Path | None = None) -> Path:
     real dead end. Cached per case; hashed in the run record.
     """
     folder = WORK / "cases" / str(record["relation"]) / "wide"
-    if (folder / "clip.osm").exists():
+    if _wide_clip_valid(folder, record):
         return folder
     folder.mkdir(parents=True, exist_ok=True)
+    for stale in (folder / "all.osm.pbf", folder / "clip.osm.pbf", folder / "clip.osm"):
+        stale.unlink(missing_ok=True)
     w, so, e, n = map(float, record["bbox"].split(","))
     cx, cy, hx, hy = (w + e) / 2, (so + n) / 2, (e - w) / 2 * WIDE_SCALE, (n - so) / 2 * WIDE_SCALE
     raw_pbf = folder / "all.osm.pbf"
@@ -524,6 +540,8 @@ def wide_clip(record: dict, source: Path | None = None) -> Path:
     raw_pbf.unlink()
     subprocess.run(["osmium", "cat", "--overwrite", str(folder / "clip.osm.pbf"), "-o", str(folder / "clip.osm"),
                     "-f", "osm,add_metadata=false"], check=True)
+    if not _wide_clip_valid(folder, record):
+        raise RuntimeError(f"TURN-001 {record['relation']}: generated wide clip lacks frozen endpoint roads")
     return folder
 
 

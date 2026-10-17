@@ -121,6 +121,20 @@ class Turn001ProvenanceTests(unittest.TestCase):
         self.assertIn("--entrypoint", command)
         self.assertFalse(scratch.exists())
 
+    def test_wide_cache_requires_both_frozen_drivable_endpoint_ways(self):
+        folder = self.work / "wide"
+        folder.mkdir()
+        record = {"geometry": {"from_way": "10", "exit_way": "20"}}
+        folder.joinpath("clip.osm").write_text('<osm version="0.6"/>')
+        self.assertFalse(turn._wide_clip_valid(folder, record))
+        folder.joinpath("clip.osm").write_text('''<osm version="0.6">
+          <node id="1" lat="53" lon="-2"/><node id="2" lat="53.001" lon="-2"/>
+          <node id="3" lat="53.002" lon="-2"/>
+          <way id="10"><nd ref="1"/><nd ref="2"/><tag k="highway" v="secondary"/></way>
+          <way id="20"><nd ref="2"/><nd ref="3"/><tag k="highway" v="primary"/></way>
+        </osm>''')
+        self.assertTrue(turn._wide_clip_valid(folder, record))
+
 
 if __name__ == "__main__":
     unittest.main()
