@@ -1,5 +1,12 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 — Run C done; all-tests review (Claude)
+- [Run C report](RUN_C_RESULTS.md), run 39062533167. Owner-approved DMN matcher options
+  `same_road_pieces` and `route_aware_access` (opt-in, default off): right road 37% -> 78%, 0 wrong;
+  arrival 9 -> 60 of 72; whole drive 8 -> 57 of 72.
+- [Every test with recommendations](ALL_TESTS_REVIEW.md). Owner approved (implement later):
+  categories 1, 2 (both tests), 3; register items CAT*-IMPROVEMENTS. 4–21 awaiting the owner.
+
 ## 2026-10-17 — Run D done (Claude)
 - Owner chose run D before run C. [Report](RUN_D_RESULTS.md), run 39055768229, harness
   `benchmarks/run_d.py` (cases frozen in `config/rund-prepared.json`).

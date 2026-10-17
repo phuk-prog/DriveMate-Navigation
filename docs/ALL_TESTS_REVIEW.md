@@ -21,14 +21,17 @@ in the app's check of received routes; time-limited gates/one-ways by the clock;
 the only route is through a bus gate; add "one way except cycles" roads to the test.
 
 ## 3 Knowing which road the car is on (24 normal drives, 4,474 GPS points)
-Right / wrong: OSRM 96% / 4.3%, Valhalla 85% / 3.8%, GraphHopper 81% / 3.2%, DMN 37% / 0.07%;
-DMN with the fix (4-journey trial) about 80% / about 0%.
+Run C [39062533167](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39062533167), revision `3d93a47`: every engine rerun after the DMN change; same traces for all.
+Right / wrong road (run 39062533167; the next piece of the same road counted apart, not as wrong):
+OSRM 96% / 1.2%, Valhalla 85% / 1.0%, GraphHopper 81% / 1.0%, DMN before the fix 37% / 0.07%,
+**DMN with the fix 78% / 0%** (0 wrong roads in 4,474 points).
 Improve (approved): make the fix DMN's normal setting; keep the position moving when unsure;
 never use OSRM for the live position; private replay of real drives.
 
 ## 4 After losing GPS (24 drives, 25 s blackout, a 60 m jump reading, a vague reading)
-Right / wrong in the first 30 s: OSRM 91% / 7.5%, Valhalla 44% / 15%, GraphHopper 39% / 2.1%
-(matched nothing on 14 drives), DMN 42% / 0.14%. DMN back in 4 s (worst 19 s); 47 of 48 bad readings ignored.
+Right / wrong in the first 30 s: OSRM 91% / 5.8%, Valhalla 44% / 14%, GraphHopper 39% / 2.1%
+(matched nothing on 14 drives), DMN before 42% / 0.14%, **DMN with the fix 77% / 0.28%**.
+DMN with the fix back in 3 s (worst 5 s; before: 4 s, worst 19 s); 46 of 48 bad readings ignored (before 47).
 Improve: rerun with the fix; keep the car moving on the map and keep announcing during a blackout;
 use the Pixel's motion sensors and Android Auto car speed; tighten the jump check (1 got through).
 
@@ -68,16 +71,17 @@ the test could not read some lines (a test weakness).
 Improve: fix the test's line reading on long routes.
 
 ## 12 Wrong turns and re-planning (24 drives)
-DMN spotted 23 of 24 (median 8 s, worst 15 s), all new routes legal, 1 lost (fixed in trial);
-0 false re-plans in normal drives, 1 after a GPS blackout.
+Before the fix: 23 of 24 spotted (median 8 s, worst 15 s), 1 lost, 1 false re-plan after a blackout.
+**With the fix: 24 of 24 spotted (median 3 s, worst 13 s), all new routes legal, all reached the
+destination, 0 false re-plans.**
 Re-planning from the wrong road: DMN 24 valid and shortest; Valhalla 24 (30% longer); OSRM 23 (16% longer);
 GraphHopper 14; openrouteservice 14; OsmAnd 12; BRouter 4.
 Improve: require fresh good readings after a blackout before re-planning; spot wrong turns faster at
 speed (e.g. 5 s); a U-turn should only be offered where it is legal and safe.
 
 ## 13 Turn announcements (DMN only)
-308 of 316 on time, 7 late, 1 after the turn; 54 turns never announced in normal drives
-(position held back). With the fix (trial): every turn announced.
+Before the fix: 308 on time, 7 late, 1 after the turn; 54 turns never announced in normal drives.
+**With the fix: 451 on time, 12 late, 1 after the turn; 5 never announced.**
 Improve: the fix; announce from the estimated position when briefly unsure; a second "now" announcement
 close to the turn; time announcements by speed (motorways earlier).
 
@@ -93,7 +97,8 @@ Improve: add roads with different limits each way and time-limited 20 mph zones;
 rather than guess.
 
 ## 16 Arrival (DMN only, 72 drives)
-Correct 9; never said "you have arrived" 62; 1 not reached. With the fix (trial): 12 of 12 correct, 5–18 m away.
+Before the fix: correct 9, never said "you have arrived" 62, 1 not reached.
+**With the fix: correct 60 of 72, never said it 12, no early or wrong-place arrival.**
 Improve: the fix; also arrive when stopped near the destination; say which side the destination is on.
 
 ## 17 Damaged maps and updates
@@ -107,12 +112,14 @@ OSRM and Valhalla quietly route elsewhere (up to 31 km away) when a place is unr
 Improve: the app warns when a route from any service ends more than about 50 m from where you asked.
 
 ## 19 Memory and processor (DMN only)
-About 14 ms of work per GPS point, about 1 MB memory. Battery and map size not measured.
+About 18 ms of work per GPS point (same with the fix), about 1.2 MB memory (worst 3.3 MB). Battery and map size not measured.
 Improve: measure battery and memory on the Pixel with a whole-region map.
 
 ## 20 Whole journey (DMN only, 72 drives)
-8 of 72 fully passed (63 failed on arrival, 8 had a wrong position, 1 lost, 1 false re-plan).
-Improve: rerun after the fix (expected to pass most); then real recorded drives.
+Before the fix: 8 of 72 fully passed. **With the fix: 57 of 72** (12 no arrival, 2 had a wrong
+position, 1 late announcement after a turn).
+Improve: arrival when stopped near the destination (the 12 left); look at the 2 wrong positions;
+then real recorded drives.
 
 ## 21 Test fairness
 DMN 54/54, Valhalla 54/54, OSRM 53, GraphHopper 48, openrouteservice 48, OsmAnd 48, BRouter 45.
