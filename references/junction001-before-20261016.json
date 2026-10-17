@@ -1,0 +1,37 @@
+{
+  "test_id": "JUNCTION-001",
+  "classification": "synthetic analytical capability baseline; no maneuver execution",
+  "source_sha": "184f7e795526eebbb3897d6a6fab1e382445f8f1",
+  "map_sha256": "8b9d409865dd0b272456c2b99575c8dd29d3459602db7016377889b9b00ab465",
+  "oracle_sha256": "dd8e3c879b81c5199edf6ff95289638da19e535112b3694851b289ac27752f53",
+  "system": "DMN",
+  "execution": "UNAVAILABLE",
+  "reason": "No maneuver generator at inspected baseline; not an invented 0/5 failure score",
+  "cases": [
+    {
+      "case_id": "J001-L",
+      "outcome": "NOT_RUN",
+      "reason": "Maneuver capability absent at baseline"
+    },
+    {
+      "case_id": "J001-R",
+      "outcome": "NOT_RUN",
+      "reason": "Maneuver capability absent at baseline"
+    },
+    {
+      "case_id": "J001-E1",
+      "outcome": "NOT_RUN",
+      "reason": "Maneuver capability absent at baseline"
+    },
+    {
+      "case_id": "J001-E2",
+      "outcome": "NOT_RUN",
+      "reason": "Maneuver capability absent at baseline"
+    },
+    {
+      "case_id": "J001-E3",
+      "outcome": "NOT_RUN",
+      "reason": "Maneuver capability absent at baseline"
+    }
+  ]
+}

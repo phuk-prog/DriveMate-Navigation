@@ -1,0 +1,361 @@
+{
+  "trial": "ROUTE-001",
+  "phase": "expanded_actual_reference_cohort",
+  "run_id": 38818121643,
+  "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38818121643",
+  "head_sha": "4b5cc0a72c82c71bf26cf8ac5a643f2ebd7b6185",
+  "execution_conclusion": "success",
+  "jobs": [
+    {
+      "system": "OSRM",
+      "job_id": 116707784755
+    },
+    {
+      "system": "Valhalla",
+      "job_id": 116707784290
+    },
+    {
+      "system": "GraphHopper",
+      "job_id": 116707784686
+    },
+    {
+      "system": "openrouteservice",
+      "job_id": 116707784542
+    }
+  ],
+  "configuration": {
+    "OSRM": "5.27.1 car.lua MLD; pinned digest855614a38f464b0558a2ad6eaa7cb8c139f39887da9b38b485ce453c6e6e6124; full GeoJSON overview",
+    "Valhalla": "3.9.1 auto; pinned digest6238809f9dc3057743d70a20efd3911ec38e458bfa13a0601909b58f68dfd956; polyline6; no admin/timezone/elevation builds",
+    "GraphHopper": "11.1 official Maven JAR with published SHA1 verification; Java25; car.json CH; tiny-network threshold0; calc_points=true,points_encoded=false",
+    "openrouteservice": "10.1.0 official JAR sha25646b83b353eaf8830a1b53cad91d027e00547cd9a00e86efddd64a45335bfb8e1; Java25; driving-car fastest; GeoJSON; tiny-network0, no elevation/CH/LM/core"
+  },
+  "reports": [
+    {
+      "test_id": "ROUTE-001",
+      "system": "DMN",
+      "version": "repository shortest_route",
+      "execution": "actual_local_python",
+      "classification": "synthetic analytical one-way routing only",
+      "independent_real_road_truth": false,
+      "map_sha256": "4ed7819767ccd553a86e5a74f4184a905e5913c8088ad2020893a21e2a19ebc2",
+      "oracle_sha256": "bcee6b5700f6d29fc218b27b8aab2569cfbc9c9b4604a2df740c8715b72592e7",
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        }
+      ]
+    },
+    {
+      "test_id": "ROUTE-001",
+      "system": "OSRM",
+      "version": "5.27.1; car.lua MLD",
+      "execution": "actual_live_loopback",
+      "classification": "synthetic analytical one-way routing only",
+      "independent_real_road_truth": false,
+      "map_sha256": "4ed7819767ccd553a86e5a74f4184a905e5913c8088ad2020893a21e2a19ebc2",
+      "oracle_sha256": "bcee6b5700f6d29fc218b27b8aab2569cfbc9c9b4604a2df740c8715b72592e7",
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        }
+      ]
+    },
+    {
+      "test_id": "ROUTE-001",
+      "system": "Valhalla",
+      "version": "3.9.1; auto; polyline6",
+      "execution": "actual_live_loopback",
+      "classification": "synthetic analytical one-way routing only",
+      "independent_real_road_truth": false,
+      "map_sha256": "4ed7819767ccd553a86e5a74f4184a905e5913c8088ad2020893a21e2a19ebc2",
+      "oracle_sha256": "bcee6b5700f6d29fc218b27b8aab2569cfbc9c9b4604a2df740c8715b72592e7",
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        }
+      ]
+    },
+    {
+      "test_id": "ROUTE-001",
+      "system": "GraphHopper",
+      "version": "11.1 / Java25; car CH; full GeoJSON geometry",
+      "execution": "actual_live_loopback",
+      "classification": "synthetic analytical one-way routing only",
+      "independent_real_road_truth": false,
+      "map_sha256": "4ed7819767ccd553a86e5a74f4184a905e5913c8088ad2020893a21e2a19ebc2",
+      "oracle_sha256": "bcee6b5700f6d29fc218b27b8aab2569cfbc9c9b4604a2df740c8715b72592e7",
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        }
+      ]
+    },
+    {
+      "test_id": "ROUTE-001",
+      "system": "openrouteservice",
+      "version": "10.1.0 / Java25; driving-car; fastest; GeoJSON; no CH/LM/core",
+      "execution": "actual_live_loopback",
+      "classification": "synthetic analytical one-way routing only",
+      "independent_real_road_truth": false,
+      "map_sha256": "4ed7819767ccd553a86e5a74f4184a905e5913c8088ad2020893a21e2a19ebc2",
+      "oracle_sha256": "bcee6b5700f6d29fc218b27b8aab2569cfbc9c9b4604a2df740c8715b72592e7",
+      "cases": [
+        {
+          "case_id": "ROUTE-001-east-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-west-direct",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 444.712,
+          "returned_length_m": 444.712
+        },
+        {
+          "case_id": "ROUTE-001-bottom-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        },
+        {
+          "case_id": "ROUTE-001-top-reverse-detour",
+          "outcome": "PASS",
+          "checks": {
+            "endpoints_within_2m": true,
+            "geometry_on_declared_path": true,
+            "forward_progress": true,
+            "declared_path_length": true
+          },
+          "failures": [],
+          "expected_length_m": 956.142,
+          "returned_length_m": 956.142
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "unit_tests": 372,
+    "compile": "passed",
+    "privacy_guard": "passed",
+    "unified_preflight": "unavailable: scripts/unified_preflight.py absent"
+  },
+  "interpretation": "Every newly executed engine passed4/4. BRouter's prior4/4 evidence remains separate with its original SHA. Unique-path synthetic contract only; no general superiority or real-road legality claim. No DMN policy changed."
+}

@@ -1,0 +1,1681 @@
+{
+  "schema_version": 1,
+  "title": "DMN granular navigation test and replaceable component matrix",
+  "source": "Owner 2026-10-15: test all separate navigation behaviour and partition work into many isolated categories",
+  "scope": "Test contracts and proposed boundaries, NOT evidence that software exists or categories have been executed",
+  "evidence_status_default": "NOT_RUN",
+  "scoring_rule": "Do not score from inventory; numerical 0..10 category ranks need comparable judged scenario results and explicit scoring method",
+  "execution_pools": [
+    "unit_contract",
+    "real_public_road",
+    "gps_replay",
+    "android_emulator",
+    "reference_engine_comparison",
+    "later_physical_device"
+  ],
+  "summary_groups": [
+    {
+      "id": "legal_routing",
+      "modules": [
+        {
+          "id": "road_access",
+          "title": "Vehicle permissions and public-road access",
+          "contract_boundary": "dmn.road_access",
+          "checks": [
+            {
+              "id": "car_access",
+              "label": "car access",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "private_and_destination_access",
+              "label": "private and destination access",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "barriers",
+              "label": "barriers",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "oneway_and_reversed_oneway",
+              "label": "oneway and reversed oneway",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "turn_restrictions",
+          "title": "Allowed and prohibited turns",
+          "contract_boundary": "dmn.turn_restrictions",
+          "checks": [
+            {
+              "id": "no_turn",
+              "label": "no turn",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "only_turn",
+              "label": "only turn",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "via_way_restrictions",
+              "label": "via way restrictions",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "turn_from_incoming_edge",
+              "label": "turn from incoming edge",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "conditional_rules",
+          "title": "Time-dependent movement rules",
+          "contract_boundary": "dmn.conditional_rules",
+          "checks": [
+            {
+              "id": "timed_access",
+              "label": "timed access",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "bus_gates",
+              "label": "bus gates",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "school_streets",
+              "label": "school streets",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "temporary_closures",
+              "label": "temporary closures",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "uturn_legality",
+          "title": "U-turn legality and necessity",
+          "contract_boundary": "dmn.uturn_legality",
+          "checks": [
+            {
+              "id": "prohibited_uturn",
+              "label": "prohibited uturn",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "allowed_uturn",
+              "label": "allowed uturn",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "dead_end_recovery",
+              "label": "dead end recovery",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "divided_road_crossing",
+              "label": "divided road crossing",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "legal_oracles",
+          "title": "Independent legal evidence",
+          "contract_boundary": "dmn.legal_oracles",
+          "checks": [
+            {
+              "id": "sign_or_traffic_order_reference",
+              "label": "sign or traffic order reference",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "osm_conflict",
+              "label": "osm conflict",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "uncertain_rule_handling",
+              "label": "uncertain rule handling",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "rule_provenance",
+              "label": "rule provenance",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "route_quality",
+      "modules": [
+        {
+          "id": "shortest_fastest",
+          "title": "Alternative routing objectives",
+          "contract_boundary": "dmn.shortest_fastest",
+          "checks": [
+            {
+              "id": "shortest_legal_path",
+              "label": "shortest legal path",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "fastest_legal_path",
+              "label": "fastest legal path",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "route_cost_vs_length",
+              "label": "route cost vs length",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "detour_reason",
+              "label": "detour reason",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "route_preferences",
+          "title": "Driving preferences and profiles",
+          "contract_boundary": "dmn.route_preferences",
+          "checks": [
+            {
+              "id": "motorway_avoidance",
+              "label": "motorway avoidance",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "charges_and_tolls",
+              "label": "charges and tolls",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "low_emission_zone",
+              "label": "low emission zone",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "car_dimensions_profile",
+              "label": "car dimensions profile",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "traffic_eta",
+          "title": "Route cost and ETA",
+          "contract_boundary": "dmn.traffic_eta",
+          "checks": [
+            {
+              "id": "speed_cost",
+              "label": "speed cost",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "traffic_delay",
+              "label": "traffic delay",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "eta_error",
+              "label": "eta error",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "departure_time",
+              "label": "departure time",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "route_alternatives",
+          "title": "Alternative route quality",
+          "contract_boundary": "dmn.route_alternatives",
+          "checks": [
+            {
+              "id": "distinct_alternatives",
+              "label": "distinct alternatives",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "no_unsafe_shortcut",
+              "label": "no unsafe shortcut",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "repeatability",
+              "label": "repeatability",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "multi_stop",
+              "label": "multi stop",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "roundabouts",
+      "modules": [
+        {
+          "id": "roundabout_exits",
+          "title": "Exit counting and signed guidance",
+          "contract_boundary": "dmn.roundabout_exits",
+          "checks": [
+            {
+              "id": "exit_number",
+              "label": "exit number",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "skipped_restricted_exit",
+              "label": "skipped restricted exit",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "entry_numbering",
+              "label": "entry numbering",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "exit_instruction",
+              "label": "exit instruction",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "roundabout_geometry",
+          "title": "Road and carriageway geometry",
+          "contract_boundary": "dmn.roundabout_geometry",
+          "checks": [
+            {
+              "id": "mini_roundabout",
+              "label": "mini roundabout",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "single_lane",
+              "label": "single lane",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "multi_lane",
+              "label": "multi lane",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "spiral_roundabout",
+              "label": "spiral roundabout",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "roundabout_manoeuvres",
+          "title": "Roundabout legality and movement",
+          "contract_boundary": "dmn.roundabout_manoeuvres",
+          "checks": [
+            {
+              "id": "oneway_circulation",
+              "label": "oneway circulation",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "lane_transfer",
+              "label": "lane transfer",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "restricted_exit",
+              "label": "restricted exit",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "signalised_roundabout",
+              "label": "signalised roundabout",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "roundabout_navigation",
+          "title": "Position and instructions at exits",
+          "contract_boundary": "dmn.roundabout_navigation",
+          "checks": [
+            {
+              "id": "wrong_exit_detection",
+              "label": "wrong exit detection",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "advance_exit_notice",
+              "label": "advance exit notice",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "missed_exit_reroute",
+              "label": "missed exit reroute",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "exit_confirmation",
+              "label": "exit confirmation",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "junctions",
+      "modules": [
+        {
+          "id": "junction_geometry",
+          "title": "Junction topology and movement",
+          "contract_boundary": "dmn.junction_geometry",
+          "checks": [
+            {
+              "id": "crossroads",
+              "label": "crossroads",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "staggered",
+              "label": "staggered",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "offset_turn",
+              "label": "offset turn",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "grade_separation",
+              "label": "grade separation",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "motorway_interchanges",
+          "title": "Merges and diverges",
+          "contract_boundary": "dmn.motorway_interchanges",
+          "checks": [
+            {
+              "id": "slip_road_join",
+              "label": "slip road join",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "motorway_diverge",
+              "label": "motorway diverge",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "parallel_ramps",
+              "label": "parallel ramps",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "interchange_reentry",
+              "label": "interchange reentry",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "junction_guidance",
+          "title": "Turn instructions",
+          "contract_boundary": "dmn.junction_guidance",
+          "checks": [
+            {
+              "id": "straight_vs_turn",
+              "label": "straight vs turn",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "forbidden_turn",
+              "label": "forbidden turn",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "multi_turn_corridor",
+              "label": "multi turn corridor",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "turn_completion",
+              "label": "turn completion",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "complex_intersections",
+          "title": "Unusual road decisions",
+          "contract_boundary": "dmn.complex_intersections",
+          "checks": [
+            {
+              "id": "signalised_junction",
+              "label": "signalised junction",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "one_way_system",
+              "label": "one way system",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "multiple_close_junctions",
+              "label": "multiple close junctions",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "two_level_road",
+              "label": "two level road",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lanes",
+      "modules": [
+        {
+          "id": "lane_sources",
+          "title": "Lane-data evidence",
+          "contract_boundary": "dmn.lane_sources",
+          "checks": [
+            {
+              "id": "turn_lanes_osm",
+              "label": "turn lanes osm",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "lane_count",
+              "label": "lane count",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "destination_lanes",
+              "label": "destination lanes",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "lane_evidence_missing",
+              "label": "lane evidence missing",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "lane_movements",
+          "title": "Combined/individual lane legality",
+          "contract_boundary": "dmn.lane_movements",
+          "checks": [
+            {
+              "id": "left_and_straight",
+              "label": "left and straight",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "straight_and_right",
+              "label": "straight and right",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "exclusive_turn",
+              "label": "exclusive turn",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "bus_only",
+              "label": "bus only",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "lane_selection",
+          "title": "Recommended lane continuity",
+          "contract_boundary": "dmn.lane_selection",
+          "checks": [
+            {
+              "id": "best_lane_next_junction",
+              "label": "best lane next junction",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "mandatory_change",
+              "label": "mandatory change",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "lane_continuation",
+              "label": "lane continuation",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "no_forced_illegal_lane",
+              "label": "no forced illegal lane",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "lane_uncertainty",
+          "title": "Unknown/missing lane guidance",
+          "contract_boundary": "dmn.lane_uncertainty",
+          "checks": [
+            {
+              "id": "unknown_not_fail",
+              "label": "unknown not fail",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "verified_wrong_is_fail",
+              "label": "verified wrong is fail",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "withhold_unproven_lane",
+              "label": "withhold unproven lane",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "lane_coverage_reporting",
+              "label": "lane coverage reporting",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gps_matching",
+      "modules": [
+        {
+          "id": "gnss_ingest",
+          "title": "GNSS reading correctness",
+          "contract_boundary": "dmn.gnss_ingest",
+          "checks": [
+            {
+              "id": "timestamp_order",
+              "label": "timestamp order",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "accuracy_radius",
+              "label": "accuracy radius",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "stale_fix",
+              "label": "stale fix",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "duplicate_fix",
+              "label": "duplicate fix",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "speed_heading",
+          "title": "Vehicle speed and heading estimates",
+          "contract_boundary": "dmn.speed_heading",
+          "checks": [
+            {
+              "id": "gps_speed_vs_geometry",
+              "label": "gps speed vs geometry",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "stopped_vehicle",
+              "label": "stopped vehicle",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "course_heading",
+              "label": "course heading",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "speed_noise",
+              "label": "speed noise",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "sensor_fusion",
+          "title": "Multiple-position-source fusion",
+          "contract_boundary": "dmn.sensor_fusion",
+          "checks": [
+            {
+              "id": "imu_input",
+              "label": "imu input",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "fused_heading",
+              "label": "fused heading",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "inertial_drift",
+              "label": "inertial drift",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "source_conflicts",
+              "label": "source conflicts",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "position_filter",
+          "title": "Positioning filter and plausibility",
+          "contract_boundary": "dmn.position_filter",
+          "checks": [
+            {
+              "id": "jump_rejection",
+              "label": "jump rejection",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "urban_canyon",
+              "label": "urban canyon",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "low_accuracy",
+              "label": "low accuracy",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "latency_tracking",
+              "label": "latency tracking",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "road_matching",
+          "title": "Map matching and road choice",
+          "contract_boundary": "dmn.road_matching",
+          "checks": [
+            {
+              "id": "dual_carriageway_side",
+              "label": "dual carriageway side",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "service_vs_main",
+              "label": "service vs main",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "parallel_roads",
+              "label": "parallel roads",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "slip_vs_motorway",
+              "label": "slip vs motorway",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "match_confidence",
+          "title": "Uncertainty handling",
+          "contract_boundary": "dmn.match_confidence",
+          "checks": [
+            {
+              "id": "ambiguous_match",
+              "label": "ambiguous match",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "off_road_fix",
+              "label": "off road fix",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "bridge_and_tunnel_levels",
+              "label": "bridge and tunnel levels",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "confidence_decay",
+              "label": "confidence decay",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gps_loss_recovery",
+      "modules": [
+        {
+          "id": "signal_dropout",
+          "title": "GPS signal gaps",
+          "contract_boundary": "dmn.signal_dropout",
+          "checks": [
+            {
+              "id": "tunnel",
+              "label": "tunnel",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "underpass",
+              "label": "underpass",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "motorway_dropout",
+              "label": "motorway dropout",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "no_update",
+              "label": "no update",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "reacquisition",
+          "title": "Signal recovery behaviour",
+          "contract_boundary": "dmn.reacquisition",
+          "checks": [
+            {
+              "id": "recover_heading",
+              "label": "recover heading",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "rejoin_same_road",
+              "label": "rejoin same road",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "large_position_jump",
+              "label": "large position jump",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "long_gap",
+              "label": "long gap",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "stationary_and_startup",
+          "title": "Start and stop conditions",
+          "contract_boundary": "dmn.stationary_and_startup",
+          "checks": [
+            {
+              "id": "indoors_start",
+              "label": "indoors start",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "parking_structure",
+              "label": "parking structure",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "stopped_at_signals",
+              "label": "stopped at signals",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "restarted_while_offline",
+              "label": "restarted while offline",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "multiple_bad_fixes",
+          "title": "Sustained bad measurement sequences",
+          "contract_boundary": "dmn.multiple_bad_fixes",
+          "checks": [
+            {
+              "id": "repeated_false_jump",
+              "label": "repeated false jump",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "sustained_lateral_bias",
+              "label": "sustained lateral bias",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "tree_cover",
+              "label": "tree cover",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "noise_during_turn",
+              "label": "noise during turn",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rerouting",
+      "modules": [
+        {
+          "id": "deviation_detection",
+          "title": "Detect leaving planned route",
+          "contract_boundary": "dmn.deviation_detection",
+          "checks": [
+            {
+              "id": "wrong_turn",
+              "label": "wrong turn",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "missed_exit",
+              "label": "missed exit",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "false_offroute_prevention",
+              "label": "false offroute prevention",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "detection_delay",
+              "label": "detection delay",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "replanning",
+          "title": "Generate safe replacement route",
+          "contract_boundary": "dmn.replanning",
+          "checks": [
+            {
+              "id": "reroute_latency",
+              "label": "reroute latency",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "new_start_direction",
+              "label": "new start direction",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "incoming_edge_legal_history",
+              "label": "incoming edge legal history",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "avoid_illegal_shortcut",
+              "label": "avoid illegal shortcut",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "reroute_stability",
+          "title": "Replanning under repeated events",
+          "contract_boundary": "dmn.reroute_stability",
+          "checks": [
+            {
+              "id": "consecutive_wrong_turns",
+              "label": "consecutive wrong turns",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "route_flapping",
+              "label": "route flapping",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "rejoin_original_route",
+              "label": "rejoin original route",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "blocked_road",
+              "label": "blocked road",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "reroute_uncertainty",
+          "title": "Handling ambiguous departures",
+          "contract_boundary": "dmn.reroute_uncertainty",
+          "checks": [
+            {
+              "id": "no_false_manoeuvre",
+              "label": "no false manoeuvre",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "uncertain_map_match",
+              "label": "uncertain map match",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "offline_failure",
+              "label": "offline failure",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "route_unavailable",
+              "label": "route unavailable",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "instruction_timing",
+      "modules": [
+        {
+          "id": "maneuver_generation",
+          "title": "Generate driver maneuver events",
+          "contract_boundary": "dmn.maneuver_generation",
+          "checks": [
+            {
+              "id": "maneuver_direction",
+              "label": "maneuver direction",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "junction_order",
+              "label": "junction order",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "roundabout_exit_instruction",
+              "label": "roundabout exit instruction",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "missing_maneuver",
+              "label": "missing maneuver",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "trigger_timing",
+          "title": "Speed-aware timing and distances",
+          "contract_boundary": "dmn.trigger_timing",
+          "checks": [
+            {
+              "id": "motorway_advance_notice",
+              "label": "motorway advance notice",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "low_speed_notice",
+              "label": "low speed notice",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "high_speed_notice",
+              "label": "high speed notice",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "late_prompt",
+              "label": "late prompt",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "voice_output",
+          "title": "Navigation voice integration",
+          "contract_boundary": "dmn.voice_output",
+          "checks": [
+            {
+              "id": "tts_priority",
+              "label": "tts priority",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "bluetooth_ducking",
+              "label": "bluetooth ducking",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "music_recovery",
+              "label": "music recovery",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "no_double_prompt",
+              "label": "no double prompt",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "instruction_confidence",
+          "title": "Safe speech under uncertainty",
+          "contract_boundary": "dmn.instruction_confidence",
+          "checks": [
+            {
+              "id": "unknown_lane_withheld",
+              "label": "unknown lane withheld",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "ambiguous_position",
+              "label": "ambiguous position",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "reroute_instruction_cancel",
+              "label": "reroute instruction cancel",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "turn_confirmation",
+              "label": "turn confirmation",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "arrival",
+      "modules": [
+        {
+          "id": "destination_points",
+          "title": "Where driving can legally end",
+          "contract_boundary": "dmn.destination_points",
+          "checks": [
+            {
+              "id": "address_coordinate",
+              "label": "address coordinate",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "vehicle_entrance",
+              "label": "vehicle entrance",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "private_access",
+              "label": "private access",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "parking_approach",
+              "label": "parking approach",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "arrival_side",
+          "title": "Approach position and street side",
+          "contract_boundary": "dmn.arrival_side",
+          "checks": [
+            {
+              "id": "correct_carriageway",
+              "label": "correct carriageway",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "correct_side_of_road",
+              "label": "correct side of road",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "opposite_side_detection",
+              "label": "opposite side detection",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "dual_road_arrival",
+              "label": "dual road arrival",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "arrival_state",
+          "title": "Arrival state transitions",
+          "contract_boundary": "dmn.arrival_state",
+          "checks": [
+            {
+              "id": "early_arrival_prevent",
+              "label": "early arrival prevent",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "overshoot",
+              "label": "overshoot",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "arrival_once",
+              "label": "arrival once",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "reenter_destination",
+              "label": "reenter destination",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "route_line_adherence",
+      "modules": [
+        {
+          "id": "route_geometry",
+          "title": "Route shape on map",
+          "contract_boundary": "dmn.route_geometry",
+          "checks": [
+            {
+              "id": "roundabout_curve",
+              "label": "roundabout curve",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "turn_corner_cutting",
+              "label": "turn corner cutting",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "on_road_alignment",
+              "label": "on road alignment",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "route_segment_continuity",
+              "label": "route segment continuity",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "map_alignment",
+          "title": "Road graph and displayed-map agreement",
+          "contract_boundary": "dmn.map_alignment",
+          "checks": [
+            {
+              "id": "same_snapshot",
+              "label": "same snapshot",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "different_map_version",
+              "label": "different map version",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "bridge_tunnel_layers",
+              "label": "bridge tunnel layers",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "map_style_not_data",
+              "label": "map style not data",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "turn_point_geometry",
+          "title": "Maneuver positions",
+          "contract_boundary": "dmn.turn_point_geometry",
+          "checks": [
+            {
+              "id": "junction_entry_point",
+              "label": "junction entry point",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "lane_change_point",
+              "label": "lane change point",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "exit_point",
+              "label": "exit point",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "incorrect_offroad_turn_point",
+              "label": "incorrect offroad turn point",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "offline_reliability",
+      "modules": [
+        {
+          "id": "offline_graph",
+          "title": "Full offline core",
+          "contract_boundary": "dmn.offline_graph",
+          "checks": [
+            {
+              "id": "initial_route_no_network",
+              "label": "initial route no network",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "reroute_no_network",
+              "label": "reroute no network",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "gps_matching_no_network",
+              "label": "gps matching no network",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "guidance_no_network",
+              "label": "guidance no network",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "region_maps",
+          "title": "Offline region boundaries",
+          "contract_boundary": "dmn.region_maps",
+          "checks": [
+            {
+              "id": "cross_region_route",
+              "label": "cross region route",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "seam_connectivity",
+              "label": "seam connectivity",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "uk_full_coverage",
+              "label": "uk full coverage",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "missing_tiles",
+              "label": "missing tiles",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "map_updates",
+          "title": "Version consistency",
+          "contract_boundary": "dmn.map_updates",
+          "checks": [
+            {
+              "id": "daily_region_update",
+              "label": "daily region update",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "stale_graph",
+              "label": "stale graph",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "atomic_upgrade",
+              "label": "atomic upgrade",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "rollback_update",
+              "label": "rollback update",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "offline_search",
+          "title": "Destination lookup offline",
+          "contract_boundary": "dmn.offline_search",
+          "checks": [
+            {
+              "id": "postal_address_search",
+              "label": "postal address search",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "property_entrance_search",
+              "label": "property entrance search",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "offline_lookup_failure",
+              "label": "offline lookup failure",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "incomplete_address",
+              "label": "incomplete address",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "performance_and_resources",
+      "modules": [
+        {
+          "id": "compute_latency",
+          "title": "Navigation compute time",
+          "contract_boundary": "dmn.compute_latency",
+          "checks": [
+            {
+              "id": "cold_route_p50",
+              "label": "cold route p50",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "warm_route_p95",
+              "label": "warm route p95",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "warm_route_p99",
+              "label": "warm route p99",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "route_timeout",
+              "label": "route timeout",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "recovery_latency",
+          "title": "Time to recover navigation",
+          "contract_boundary": "dmn.recovery_latency",
+          "checks": [
+            {
+              "id": "gps_recovery_duration",
+              "label": "gps recovery duration",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "reroute_detection_time",
+              "label": "reroute detection time",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "reroute_compute_time",
+              "label": "reroute compute time",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "instruction_recovery_time",
+              "label": "instruction recovery time",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "runtime_resources",
+          "title": "Android and host resources",
+          "contract_boundary": "dmn.runtime_resources",
+          "checks": [
+            {
+              "id": "memory_peak",
+              "label": "memory peak",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "cpu_load",
+              "label": "cpu load",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "battery_energy",
+              "label": "battery energy",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "thermal_pressure",
+              "label": "thermal pressure",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "map_size",
+          "title": "Offline storage and data costs",
+          "contract_boundary": "dmn.map_size",
+          "checks": [
+            {
+              "id": "map_download_bytes",
+              "label": "map download bytes",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "graph_disk_bytes",
+              "label": "graph disk bytes",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "update_delta_bytes",
+              "label": "update delta bytes",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "startup_load_time",
+              "label": "startup load time",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "speed_handling",
+          "title": "Speed measurement and limits",
+          "contract_boundary": "dmn.speed_handling",
+          "checks": [
+            {
+              "id": "posted_speed_limit",
+              "label": "posted speed limit",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "mph_kph_conversion",
+              "label": "mph kph conversion",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "speed_zone_boundary",
+              "label": "speed zone boundary",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "overspeed_warning",
+              "label": "overspeed warning",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "failure_handling",
+      "modules": [
+        {
+          "id": "no_route",
+          "title": "Failure to find valid path",
+          "contract_boundary": "dmn.no_route",
+          "checks": [
+            {
+              "id": "disconnected_road",
+              "label": "disconnected road",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "blocked_all_routes",
+              "label": "blocked all routes",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "unknown_access",
+              "label": "unknown access",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "no_route_explained",
+              "label": "no route explained",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "corrupt_sources",
+          "title": "Invalid input and snapshot failure",
+          "contract_boundary": "dmn.corrupt_sources",
+          "checks": [
+            {
+              "id": "corrupt_map_file",
+              "label": "corrupt map file",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "malformed_osm",
+              "label": "malformed osm",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "unsupported_restriction",
+              "label": "unsupported restriction",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "graph_snapshot_mismatch",
+              "label": "graph snapshot mismatch",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "session_reliability",
+          "title": "Navigation journey lifecycle",
+          "contract_boundary": "dmn.session_reliability",
+          "checks": [
+            {
+              "id": "pause_resume",
+              "label": "pause resume",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "process_restart",
+              "label": "process restart",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "app_kill_restore",
+              "label": "app kill restore",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "session_consistency",
+              "label": "session consistency",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "external_errors",
+          "title": "Optional provider/service failure",
+          "contract_boundary": "dmn.external_errors",
+          "checks": [
+            {
+              "id": "network_timeout",
+              "label": "network timeout",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "provider_unavailable",
+              "label": "provider unavailable",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "offline_fallback",
+              "label": "offline fallback",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "untrusted_provider_output",
+              "label": "untrusted provider output",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        },
+        {
+          "id": "evaluation_integrity",
+          "title": "Fair scoring and reproducibility",
+          "contract_boundary": "dmn.evaluation_integrity",
+          "checks": [
+            {
+              "id": "same_inputs",
+              "label": "same inputs",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "heldout_no_leakage",
+              "label": "heldout no leakage",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "unknown_excluded_from_scored",
+              "label": "unknown excluded from scored",
+              "outcome": "NOT_RUN"
+            },
+            {
+              "id": "per_case_provenance",
+              "label": "per case provenance",
+              "outcome": "NOT_RUN"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

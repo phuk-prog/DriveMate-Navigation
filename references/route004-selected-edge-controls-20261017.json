@@ -1,0 +1,42 @@
+{
+  "test_id": "ROUTE-004-SELECTED-EDGE-1",
+  "classification": "synthetic analytical geometry controls; no route engine or road-law verdict",
+  "fixture_sha256": "f7c464c3ccd445d9c2cf2327b4c064edd1d23c42d8c33e0357c1100a7a9addb4",
+  "run_sha": "3e53f725f9ec82a7e9a800c7ec9435d1ae7ebbc9",
+  "historical_route004_rescored": false,
+  "passed": 5,
+  "failed": 0,
+  "total": 5,
+  "cases": [
+    {
+      "case_id": "single-segment-forward",
+      "expected_selected_forward": true,
+      "actual_selected_forward": true,
+      "outcome": "PASS"
+    },
+    {
+      "case_id": "multi-segment-forward",
+      "expected_selected_forward": true,
+      "actual_selected_forward": true,
+      "outcome": "PASS"
+    },
+    {
+      "case_id": "reverse-traversal",
+      "expected_selected_forward": false,
+      "actual_selected_forward": false,
+      "outcome": "PASS"
+    },
+    {
+      "case_id": "off-corridor-detour",
+      "expected_selected_forward": false,
+      "actual_selected_forward": false,
+      "outcome": "PASS"
+    },
+    {
+      "case_id": "incomplete-forward-fragment",
+      "expected_selected_forward": false,
+      "actual_selected_forward": false,
+      "outcome": "PASS"
+    }
+  ]
+}

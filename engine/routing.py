@@ -48,7 +48,7 @@ class Route:
 
 
 class RouteNotFound(ValueError):
-    """No route exists using explicitly accessible links and legal turns."""
+    """No route under current access evidence and mapped turn restrictions."""
 
 
 class RoadGraph:
@@ -57,10 +57,15 @@ class RoadGraph:
         vertices: Iterable[str],
         edges: Iterable[RoadEdge],
         prohibited_turns: Iterable[tuple[str, str]] = (),
+        *, journey_destination: str | None = None,
+        prohibited_sequences: Iterable[tuple[str, ...]] = (),
     ) -> None:
         self.vertices = frozenset(vertices)
         if not self.vertices or any(not v for v in self.vertices):
             raise ValueError("At least one valid vertex is required")
+        if journey_destination is not None and journey_destination not in self.vertices:
+            raise ValueError("Journey destination must be in the graph")
+        self.journey_destination = journey_destination
         self.edges: dict[str, RoadEdge] = {}
         adjacency: dict[str, list[RoadEdge]] = {vertex: [] for vertex in self.vertices}
         for edge in edges:
@@ -81,6 +86,35 @@ class RoadGraph:
                 raise ValueError("Prohibited turn references unknown edge")
             if self.edges[entering].target != self.edges[leaving].source:
                 raise ValueError("Prohibited turn connects unrelated edges")
+        # Via-way restrictions: a prohibited *sequence* of three or more
+        # consecutive edges (from, via..., to). Pairs stay in prohibited_turns.
+        self.prohibited_sequences = frozenset(tuple(q) for q in prohibited_sequences)
+        for sequence in self.prohibited_sequences:
+            if len(sequence) < 3 or any(e not in self.edges for e in sequence):
+                raise ValueError("Prohibited sequence needs three or more known edges")
+            if any(self.edges[a].target != self.edges[b].source for a, b in zip(sequence, sequence[1:])):
+                raise ValueError("Prohibited sequence is not a connected path")
+        self._sequence_prefixes = frozenset(q[:k] for q in self.prohibited_sequences for k in range(1, len(q)))
+
+    def transition(self, history: tuple[str, ...], edge_id: str) -> tuple[str, ...] | None:
+        """Turn-legality step shared by every router.
+
+        `history` is the minimal remembered tail of the path (its last edge, or
+        a longer tail while a via-way restriction could still complete). Returns
+        the new tail, or None when the move completes a prohibited turn/sequence.
+        """
+        if history and (history[-1], edge_id) in self.prohibited_turns:
+            return None
+        if not self.prohibited_sequences:
+            return (edge_id,)
+        path = history + (edge_id,)
+        for k in range(len(path) - 2):
+            if path[k:] in self.prohibited_sequences:
+                return None
+        for k in range(len(path)):
+            if path[k:] in self._sequence_prefixes:
+                return path[k:]
+        return (edge_id,)
 
 
 def shortest_route(
@@ -91,13 +125,24 @@ def shortest_route(
     incoming_edge_id: str | None = None,
     blocked_edges: Iterable[str] = (),
     time_penalties_s: Mapping[str, float] | None = None,
+    destination_edge_id: str | None = None,
+    endpoint_uncertain_access: bool = False,
 ) -> Route:
     """Dijkstra over (vertex, incoming-edge) states, respecting turn restrictions.
 
     Only edges explicitly tagged 'allowed' can be traversed; 'unknown' is not
     assumed legal. Penalties must be nonnegative; they never override access.
     Rerouting can pass the incoming edge so a prohibited turn stays prohibited.
+    `destination_edge_id` makes the route finish by travelling that edge (a
+    destination lies on a road, not at a junction), so the turn onto it is
+    checked like any other; `destination` must then be that edge's end vertex.
+    `endpoint_uncertain_access` lets 'unknown' (never 'prohibited') roads be used
+    only at the ends of a journey, as a driver already on them or going to them
+    would: from the start until the first 'allowed' road, and after the last
+    'allowed' road to the destination. They are never used to pass through.
     """
+    if graph.journey_destination is not None and destination != graph.journey_destination:
+        raise ValueError("Journey-scoped access cannot be reused for another destination")
     if source not in graph.vertices or destination not in graph.vertices:
         raise ValueError("Unknown origin or destination")
     if incoming_edge_id is not None:
@@ -111,30 +156,49 @@ def shortest_route(
     for edge_id, seconds in penalties.items():
         if edge_id not in graph.edges or not isfinite(seconds) or seconds < 0:
             raise ValueError("Invalid additional edge-time penalty")
-    if source == destination:
+    if destination_edge_id is not None:
+        final = graph.edges.get(destination_edge_id)
+        if final is None or final.target != destination:
+            raise ValueError("Destination edge must end at the routing destination")
+    elif source == destination:
         return Route((), 0.0, 0.0)
 
-    begin = (source, incoming_edge_id)
+    # Phase: 0 = leaving the start on uncertain roads, 1 = on allowed roads,
+    # 2 = final uncertain approach (only uncertain roads from then on).
+    # A car arriving on an allowed road has already left any uncertain start.
+    starts_uncertain = endpoint_uncertain_access and (
+        incoming_edge_id is None or graph.edges[incoming_edge_id].access != "allowed")
+    begin: tuple[str, tuple[str, ...], int] = (
+        source, (incoming_edge_id,) if incoming_edge_id else (), 0 if starts_uncertain else 1)
     best = {begin: 0.0}
-    previous: dict[tuple[str, str | None], tuple[tuple[str, str | None], str]] = {}
+    previous: dict[tuple[str, tuple[str, ...], int], tuple[tuple[str, tuple[str, ...], int], str]] = {}
     order = count()
     pending = [(0.0, next(order), begin)]
-    goal: tuple[str, str | None] | None = None
+    goal: tuple[str, tuple[str, ...], int] | None = None
 
     while pending:
         elapsed, _, state = heappop(pending)
         if elapsed > best[state]:
             continue
-        vertex, entering = state
-        if vertex == destination:
+        vertex, history, phase = state
+        if vertex == destination and (destination_edge_id is None or (history and history[-1] == destination_edge_id)):
             goal = state
             break
         for edge in graph.adjacency[vertex]:
-            if edge.access != "allowed" or edge.edge_id in blocked:
+            if edge.edge_id in blocked:
                 continue
-            if entering is not None and (entering, edge.edge_id) in graph.prohibited_turns:
+            if edge.access == "allowed":
+                if phase == 2:
+                    continue
+                next_phase = 1
+            elif edge.access == "unknown" and endpoint_uncertain_access:
+                next_phase = 0 if phase == 0 else 2
+            else:
                 continue
-            later = (edge.target, edge.edge_id)
+            tail = graph.transition(history, edge.edge_id)
+            if tail is None:
+                continue
+            later = (edge.target, tail, next_phase)
             candidate = elapsed + edge.estimated_seconds + penalties.get(edge.edge_id, 0.0)
             if candidate < best.get(later, float("inf")):
                 best[later] = candidate
@@ -142,7 +206,7 @@ def shortest_route(
                 heappush(pending, (candidate, next(order), later))
 
     if goal is None:
-        raise RouteNotFound("No route using available allowed roads and legal turns")
+        raise RouteNotFound("No route using allowed edges and mapped turn restrictions")
     ids: list[str] = []
     state = goal
     while state != begin:

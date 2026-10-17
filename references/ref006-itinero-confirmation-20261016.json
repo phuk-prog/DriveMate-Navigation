@@ -1,0 +1,147 @@
+{
+  "trial": "REF-006-CONFIRMATION",
+  "classification": "real public map; actual routing/output confirmation, not GPS-signal or independent one-way-law test",
+  "run_sha": "d38540e66aa175264e4534800a7d66a39ca47223",
+  "run_id": 38864551063,
+  "job_id": 116854270053,
+  "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38864551063",
+  "build_metadata": {
+    "sdk_version": "10.0.401",
+    "resolved_packages": {
+      "Microsoft.NETCore.Platforms": "2.1.0",
+      "OsmSharp": "7.0.0-pre018",
+      "protobuf-net": "2.4.6",
+      "Reminiscence": "1.4.0-pre004",
+      "System.Buffers": "4.5.0",
+      "System.Memory": "4.5.1",
+      "System.Private.ServiceModel": "4.5.3",
+      "System.Reflection.DispatchProxy": "4.5.0",
+      "System.Runtime.CompilerServices.Unsafe": "4.5.2",
+      "System.Security.Principal.Windows": "4.5.0",
+      "System.ServiceModel.Primitives": "4.5.3",
+      "System.Text.Json": "5.0.2"
+    }
+  },
+  "assembly_sha256": [
+    "68fc3e5a34acadf6ff38b4699422602ac042e75842d552e62fc5640275c9d8dc  benchmarks/itinero_reference/bin/Release/net8.0/Itinero.IO.Osm.dll",
+    "c15c6d741dc8b9efaff1ced57d6c5a3915717f4c8e57c638fec148321b2fe27c  benchmarks/itinero_reference/bin/Release/net8.0/Itinero.dll",
+    "11180079c45f2e6c82516673d45ddfdce379e1e1a52d9a4c4db3efad788dd7be  benchmarks/itinero_reference/bin/Release/net8.0/OsmSharp.dll",
+    "e889e58735e434ab441867ae523b732597dca8e5689ae97e4e2446554088ed38  benchmarks/itinero_reference/bin/Release/net8.0/Reference.dll",
+    "712c7cb52630627aaf63c3666d78d2fb5169eb82beeb8e57d261989d1edfb826  benchmarks/itinero_reference/bin/Release/net8.0/Reminiscence.dll",
+    "6bf7e009f104a70d01545e9ad8189a4a66f69a06c5d89dfe24bc1f04d0b8624a  benchmarks/itinero_reference/bin/Release/net8.0/System.ServiceModel.Primitives.dll",
+    "8bfdd56d33e98aa5fe9726cd41c589b6e8e8c67a072e9682139872068ed29133  benchmarks/itinero_reference/bin/Release/net8.0/System.ServiceModel.dll",
+    "12072369b8bdc176120d9ab41711aa927b6ef85ba02de292040295eac61d2f2c  benchmarks/itinero_reference/bin/Release/net8.0/protobuf-net.dll"
+  ],
+  "frozen_requests_unchanged": true,
+  "report": {
+    "test_id": "REF-006",
+    "system": "Itinero",
+    "classification": "real-map actual route/endpoint probe, not independently judged GPS/navigation quality",
+    "run_sha": "d38540e66aa175264e4534800a7d66a39ca47223",
+    "version": {
+      "source_sha": "b8a004a831d353565572c7ba41b5a40c29d79360",
+      "source_package_version": "1.6.0-pre037",
+      "assembly": "1.0.0.0",
+      "profile": "car; uncontracted"
+    },
+    "execution": "actual_dotnet_source_build_and_route_calculation",
+    "request_manifest": {
+      "classification": "real public map; synthetic selected GPS endpoints, not personal traces",
+      "source_url": "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf",
+      "source_archive_sha256": "b7188b22501b878fddba6e06a90bb44ce6c2d721333e0ca57e10a1a82b568807",
+      "expected_xml_sha256": "b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5",
+      "map_xml_sha256": "b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5",
+      "map_pbf_sha256": "0c695874255033cc8f6ed658422afc2d9e11b00443eea584b72206de39567adc",
+      "selection": "existing _scenarios; first3, before Itinero execution; no failed case discarded",
+      "case_expectation": "actual complete finite route; both exact endpoints within5m; no legal/GNSS-truth claim",
+      "cases": [
+        {
+          "id": "REF-006-001",
+          "start": [
+            53.3567653,
+            -2.2586629
+          ],
+          "end": [
+            53.3562105,
+            -2.2607331
+          ]
+        },
+        {
+          "id": "REF-006-002",
+          "start": [
+            53.3517289,
+            -2.2578447
+          ],
+          "end": [
+            53.352182,
+            -2.2580735
+          ]
+        },
+        {
+          "id": "REF-006-003",
+          "start": [
+            53.352182,
+            -2.2580735
+          ],
+          "end": [
+            53.3517289,
+            -2.2578447
+          ]
+        }
+      ]
+    },
+    "request_manifest_sha256": "b4348997ca109fb873c265179f1edb7d4aa0772bad26b5198ad207deea02f87d",
+    "cases": [
+      {
+        "case_id": "REF-006-001",
+        "outcome": "PASS",
+        "scope": "route output/endpoint contract only",
+        "checks": {
+          "start_within_5m": true,
+          "end_within_5m": true,
+          "nonzero_geometry": true
+        },
+        "start_error_m": 0.04977952916464546,
+        "end_error_m": 0.18889908698685767,
+        "returned_vertices": 4,
+        "independent_legality": "UNRESOLVED",
+        "gps_quality_tests_executed": 0
+      },
+      {
+        "case_id": "REF-006-002",
+        "outcome": "PASS",
+        "scope": "route output/endpoint contract only",
+        "checks": {
+          "start_within_5m": true,
+          "end_within_5m": true,
+          "nonzero_geometry": true
+        },
+        "start_error_m": 1.0442220555514272,
+        "end_error_m": 0.16897076940398076,
+        "returned_vertices": 3,
+        "independent_legality": "UNRESOLVED",
+        "gps_quality_tests_executed": 0
+      },
+      {
+        "case_id": "REF-006-003",
+        "outcome": "PASS",
+        "scope": "route output/endpoint contract only",
+        "checks": {
+          "start_within_5m": true,
+          "end_within_5m": true,
+          "nonzero_geometry": true
+        },
+        "start_error_m": 0.16897076940398076,
+        "end_error_m": 1.0442220555514272,
+        "returned_vertices": 3,
+        "independent_legality": "UNRESOLVED",
+        "gps_quality_tests_executed": 0
+      }
+    ],
+    "real_GNSS_measurements": 0,
+    "simulated_signal_quality_cases": 0,
+    "independent_legality_cases": 0,
+    "score_out_of_ten": null,
+    "rank": null
+  }
+}

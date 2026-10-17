@@ -1,0 +1,25 @@
+{
+  "test_id": "INTEGRATED-001",
+  "classification": "synthetic analytical engine-component integration; not real-road, GNSS, Android or app evidence",
+  "cases": [
+    {
+      "id": "INTEGRATED-001-clean-arrival",
+      "expected_route_edges": ["w:1:0:f", "w:1:1:f", "w:1:2:f"],
+      "expected_match_status": "MATCHED",
+      "expected_instruction_phase": "APPROACH",
+      "expected_arrival_states": ["CANDIDATE", "ARRIVED"]
+    },
+    {
+      "id": "INTEGRATED-001-corroborated-reroute",
+      "expected_first_request": false,
+      "expected_second_request": true,
+      "expected_replacement_edges": ["w:2:1:f", "w:2:2:f"],
+      "expected_replacement_installed": true
+    },
+    {
+      "id": "INTEGRATED-001-turn-restriction-detour",
+      "prohibited_turn": ["w:1:0:f", "w:1:1:f"],
+      "expected_route_edges": ["w:1:0:f", "w:2:0:f", "w:2:1:f", "w:2:2:f"]
+    }
+  ]
+}

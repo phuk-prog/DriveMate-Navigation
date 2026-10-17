@@ -1,0 +1,97 @@
+{
+  "test_id": "INTEGRATED-005",
+  "system": "DMN",
+  "classification": "synthetic analytical traffic-evidence and routing integration; not live traffic or real-road legality",
+  "run_sha": "579d67ccceb720cc9e2396b5a246dafce36562bc",
+  "oracle_sha256": "f22361414c4630ac8929f9a3a34ee80a3fd39d70e48721dfa2bb4a11491b3178",
+  "map_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+  "passed": 4,
+  "failed": 0,
+  "total": 4,
+  "cases": [
+    {
+      "case_id": "INTEGRATED-005-current-verified-closure",
+      "outcome": "PASS",
+      "checks": {
+        "status": true,
+        "proposal": true,
+        "route": true
+      },
+      "failures": [],
+      "actual": {
+        "traffic_decision": {
+          "status": "VERIFIED_CLOSURE",
+          "use_traffic_speed": false,
+          "propose_reroute": true
+        },
+        "route_status": "ROUTE",
+        "route_edges": [
+          "w:95:0:f",
+          "w:100:0:f",
+          "w:50:0:f"
+        ]
+      },
+      "calculation_ms": 0.029745
+    },
+    {
+      "case_id": "INTEGRATED-005-stale-closure",
+      "outcome": "PASS",
+      "checks": {
+        "status": true,
+        "proposal": true,
+        "no_untrusted_route_search": true
+      },
+      "failures": [],
+      "actual": {
+        "traffic_decision": {
+          "status": "STALE",
+          "use_traffic_speed": false,
+          "propose_reroute": false
+        },
+        "route_status": "NOT_REQUESTED",
+        "route_edges": null
+      },
+      "calculation_ms": 0.004117
+    },
+    {
+      "case_id": "INTEGRATED-005-unverified-closure",
+      "outcome": "PASS",
+      "checks": {
+        "status": true,
+        "proposal": true,
+        "no_untrusted_route_search": true
+      },
+      "failures": [],
+      "actual": {
+        "traffic_decision": {
+          "status": "UNVERIFIED_CLOSURE",
+          "use_traffic_speed": false,
+          "propose_reroute": false
+        },
+        "route_status": "NOT_REQUESTED",
+        "route_edges": null
+      },
+      "calculation_ms": 0.002754
+    },
+    {
+      "case_id": "INTEGRATED-005-no-legal-detour",
+      "outcome": "PASS",
+      "checks": {
+        "status": true,
+        "proposal": true,
+        "route": true
+      },
+      "failures": [],
+      "actual": {
+        "traffic_decision": {
+          "status": "VERIFIED_CLOSURE",
+          "use_traffic_speed": false,
+          "propose_reroute": false
+        },
+        "route_status": "NO_ROUTE",
+        "route_edges": null
+      },
+      "calculation_ms": 0.007371
+    }
+  ]
+}

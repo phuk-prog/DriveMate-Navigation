@@ -1,0 +1,15 @@
+{
+  "test_id": "REF-006",
+  "classification": "real-map setup failure; engine not executed and no quality score",
+  "run_sha": "626cee45397a77a88905174e7fa39d21c42f1b98",
+  "run_id": 38863763043,
+  "job_id": 116851775731,
+  "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38863763043",
+  "failure": "Known stripped XML subset SHA256 was incorrectly applied to full PBF archive",
+  "expected_xml_sha256": "b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5",
+  "root_cause_evidence": "benchmarks/public_temporal_gps.py:189 records sha256(raw XML), not full PBF archive",
+  "engine_executions": 0,
+  "route_cases_executed": 0,
+  "score_out_of_ten": null,
+  "fix": "Verify the known hash on extracted stripped XML; record separate full-archive and subset PBF hashes; keep all case/endpoint acceptance unchanged"
+}

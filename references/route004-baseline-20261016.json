@@ -1,0 +1,1583 @@
+{
+  "schema": "dmn-route004-existing-evidence-summary-v1",
+  "report_date": "2026-10-16",
+  "test_id": "ROUTE-004",
+  "classification": "PROVISIONAL public OSM one-way source-rule compliance, not independent current UK road law",
+  "original_run": {
+    "id": 38873690712,
+    "url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38873690712",
+    "head_sha": "9fa0e2a7ac71b25d597b664d7a8e9cbf1de30f04"
+  },
+  "source": {
+    "archive_sha256": "b7188b22501b878fddba6e06a90bb44ce6c2d721333e0ca57e10a1a82b568807",
+    "map_xml_sha256": "75701973da8551497229f091d142a4231420a22ef220ad165ec52534c3798727",
+    "manifest_sha256": "59876011741fc3c22b13d2075460659649e36659e6149aec2c6bf6a55af442a5",
+    "selection": "first six eligible ways numerically; first 20m..300m complete segment; before engine execution",
+    "required_cases": 6,
+    "selection_complete": true,
+    "independent_current_road_law": "UNRESOLVED",
+    "roads": [
+      {
+        "id": "ROUTE-004-001",
+        "way_id": "796758",
+        "segment": 1,
+        "road_class": "residential",
+        "name": "Cobourg Street",
+        "oneway_tag": "yes",
+        "junction": null,
+        "allowed_start": [
+          53.4760321,
+          -2.2332704
+        ],
+        "allowed_end": [
+          53.4766168,
+          -2.233654
+        ]
+      },
+      {
+        "id": "ROUTE-004-002",
+        "way_id": "3650028",
+        "segment": 2,
+        "road_class": "residential",
+        "name": "Port Street",
+        "oneway_tag": "yes",
+        "junction": null,
+        "allowed_start": [
+          53.4822326,
+          -2.2311913
+        ],
+        "allowed_end": [
+          53.4824271,
+          -2.2306348
+        ]
+      },
+      {
+        "id": "ROUTE-004-003",
+        "way_id": "3650076",
+        "segment": 0,
+        "road_class": "residential",
+        "name": "Spear Street",
+        "oneway_tag": "yes",
+        "junction": null,
+        "allowed_start": [
+          53.4827618,
+          -2.2344136
+        ],
+        "allowed_end": [
+          53.4823007,
+          -2.2350624
+        ]
+      },
+      {
+        "id": "ROUTE-004-004",
+        "way_id": "3650081",
+        "segment": 0,
+        "road_class": "tertiary",
+        "name": "Oldham Street",
+        "oneway_tag": "yes",
+        "junction": null,
+        "allowed_start": [
+          53.4845114,
+          -2.2329455
+        ],
+        "allowed_end": [
+          53.4843104,
+          -2.2332143
+        ]
+      },
+      {
+        "id": "ROUTE-004-005",
+        "way_id": "3663326",
+        "segment": 2,
+        "road_class": "tertiary",
+        "name": "York Street",
+        "oneway_tag": "yes",
+        "junction": null,
+        "allowed_start": [
+          53.4810361,
+          -2.2416019
+        ],
+        "allowed_end": [
+          53.4809068,
+          -2.2411734
+        ]
+      },
+      {
+        "id": "ROUTE-004-006",
+        "way_id": "3663335",
+        "segment": 2,
+        "road_class": "tertiary",
+        "name": "Fountain Street",
+        "oneway_tag": "yes",
+        "junction": null,
+        "allowed_start": [
+          53.4796944,
+          -2.2421907
+        ],
+        "allowed_end": [
+          53.47991,
+          -2.2419175
+        ]
+      }
+    ]
+  },
+  "scoring": {
+    "category": "one-way source-rule correctness",
+    "basis": "pass out of 12 judged source-map controls; 6-way tie; no independent legal-road truth",
+    "verified_ranking": [],
+    "partial_cohort": [],
+    "full_cohort": [
+      "DMN",
+      "OSRM",
+      "Valhalla",
+      "GraphHopper",
+      "openrouteservice",
+      "BRouter"
+    ]
+  },
+  "timing": {
+    "ranking": "UNAVAILABLE: mixed DMN in-process and external HTTP boundaries, distinct CI matrix hosts; p95 of n=12 is max, not a stable population p95",
+    "samples_per_engine": 12
+  },
+  "results": [
+    {
+      "engine": "DMN",
+      "version": "repository shortest_route",
+      "run_sha": "aa06262c800f3b48b142d1606ebf374fab8a145c",
+      "job_id": 116883572926,
+      "artifact_id": null,
+      "total": 12,
+      "passed": 12,
+      "failed": 0,
+      "unresolved": 0,
+      "timing_scope": "in-process Python shortest_route; sampled on OSRM matrix job",
+      "timing": {
+        "n": 12,
+        "median_ms": 0.1100505,
+        "p95_nearest_rank_ms": 0.695218,
+        "minimum_ms": 0.010389,
+        "maximum_ms": 0.695218
+      },
+      "cases": [
+        {
+          "case_id": "ROUTE-004-001-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 0.052217,
+          "distance_m": 69.79602256613894,
+          "duration_s": 8.375522707936673,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-001-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 0.409194,
+          "distance_m": 216.1130916698399,
+          "duration_s": 22.06441214479804,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-002-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 0.016771,
+          "distance_m": 42.70451176259305,
+          "duration_s": 5.124541411511165,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-002-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 0.313124,
+          "distance_m": 186.06589914042664,
+          "duration_s": 22.327907896851194,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-003-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 0.050905,
+          "distance_m": 66.87161474007752,
+          "duration_s": 8.024593768809302,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-003-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 0.695218,
+          "distance_m": 306.6794746203932,
+          "duration_s": 35.27965837336343,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-004-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 0.012654,
+          "distance_m": 28.563050692156246,
+          "duration_s": 3.1946862352536955,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-004-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 0.282157,
+          "distance_m": 291.9065365667008,
+          "duration_s": 32.095984766858564,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-005-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 0.030828,
+          "distance_m": 31.79113761050525,
+          "duration_s": 3.5557374743317425,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-005-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 0.167884,
+          "distance_m": 251.57813258548694,
+          "duration_s": 29.321653488515324,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-006-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 0.010389,
+          "distance_m": 30.026046078080416,
+          "duration_s": 3.3583176089477913,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-006-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 0.240119,
+          "distance_m": 249.2982696650357,
+          "duration_s": 29.18036428391992,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        }
+      ]
+    },
+    {
+      "engine": "OSRM",
+      "version": "5.27.1; car.lua; MLD",
+      "run_sha": "9fa0e2a7ac71b25d597b664d7a8e9cbf1de30f04",
+      "job_id": 116883572926,
+      "artifact_id": 12034248605,
+      "total": 12,
+      "passed": 12,
+      "failed": 0,
+      "unresolved": 0,
+      "timing_scope": "warm local HTTP request; includes endpoint/serialization overhead; no setup",
+      "timing": {
+        "n": 12,
+        "median_ms": 1.0389149999999998,
+        "p95_nearest_rank_ms": 2.274774,
+        "minimum_ms": 0.945329,
+        "maximum_ms": 2.274774
+      },
+      "cases": [
+        {
+          "case_id": "ROUTE-004-001-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 2.274774,
+          "distance_m": 69.9,
+          "duration_s": 6.5,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-001-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 1.162351,
+          "distance_m": 216.7,
+          "duration_s": 28.2,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-002-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 1.20226,
+          "distance_m": 42.8,
+          "duration_s": 6,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-002-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 1.073403,
+          "distance_m": 186.5,
+          "duration_s": 46.5,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-003-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 1.041316,
+          "distance_m": 67,
+          "duration_s": 9.4,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-003-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 1.049047,
+          "distance_m": 307.3,
+          "duration_s": 66.2,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-004-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 1.008218,
+          "distance_m": 28.6,
+          "duration_s": 4,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-004-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 1.026323,
+          "distance_m": 292.6,
+          "duration_s": 62.2,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-005-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 1.031349,
+          "distance_m": 31.9,
+          "duration_s": 4.5,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-005-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 0.969719,
+          "distance_m": 171.4,
+          "duration_s": 29.4,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-006-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 0.945329,
+          "distance_m": 30.1,
+          "duration_s": 4.2,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-006-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 1.036514,
+          "distance_m": 249.8,
+          "duration_s": 55.3,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        }
+      ]
+    },
+    {
+      "engine": "Valhalla",
+      "version": "3.9.1; auto",
+      "run_sha": "9fa0e2a7ac71b25d597b664d7a8e9cbf1de30f04",
+      "job_id": 116883572893,
+      "artifact_id": 12033763789,
+      "total": 12,
+      "passed": 12,
+      "failed": 0,
+      "unresolved": 0,
+      "timing_scope": "warm local HTTP request; includes endpoint/serialization overhead; no setup",
+      "timing": {
+        "n": 12,
+        "median_ms": 2.62708,
+        "p95_nearest_rank_ms": 52.682549,
+        "minimum_ms": 2.048682,
+        "maximum_ms": 52.682549
+      },
+      "cases": [
+        {
+          "case_id": "ROUTE-004-001-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 52.682549,
+          "distance_m": 69,
+          "duration_s": 5.233,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-001-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 4.040843,
+          "distance_m": 217,
+          "duration_s": 36.581,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-002-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 2.881785,
+          "distance_m": 43,
+          "duration_s": 4.837,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-002-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 2.785657,
+          "distance_m": 186,
+          "duration_s": 28.569,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-003-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 2.5657,
+          "distance_m": 67,
+          "duration_s": 7.537,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-003-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 2.650997,
+          "distance_m": 307,
+          "duration_s": 43.061,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-004-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 2.603163,
+          "distance_m": 29,
+          "duration_s": 3.262,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-004-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 2.735498,
+          "distance_m": 290,
+          "duration_s": 39.772,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-005-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 2.054328,
+          "distance_m": 31,
+          "duration_s": 3.539,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-005-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 2.197839,
+          "distance_m": 184,
+          "duration_s": 25.461,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-006-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 2.048682,
+          "distance_m": 30,
+          "duration_s": 3.381,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-006-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 2.310488,
+          "distance_m": 252,
+          "duration_s": 38.164,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        }
+      ]
+    },
+    {
+      "engine": "GraphHopper",
+      "version": "11.1; car; CH",
+      "run_sha": "9fa0e2a7ac71b25d597b664d7a8e9cbf1de30f04",
+      "job_id": 116883572685,
+      "artifact_id": 12034372075,
+      "total": 12,
+      "passed": 12,
+      "failed": 0,
+      "unresolved": 0,
+      "timing_scope": "warm local HTTP request; includes endpoint/serialization overhead; no setup",
+      "timing": {
+        "n": 12,
+        "median_ms": 7.937816,
+        "p95_nearest_rank_ms": 103.329042,
+        "minimum_ms": 6.072243,
+        "maximum_ms": 103.329042
+      },
+      "cases": [
+        {
+          "case_id": "ROUTE-004-001-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 103.329042,
+          "distance_m": 69.796,
+          "duration_s": 5.711,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-001-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 14.919452,
+          "distance_m": 216.053,
+          "duration_s": 17.677,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-002-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 9.877164,
+          "distance_m": 42.705,
+          "duration_s": 5.491,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-002-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 9.654422,
+          "distance_m": 186.063,
+          "duration_s": 23.921,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-003-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 7.672863,
+          "distance_m": 66.872,
+          "duration_s": 8.598,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-003-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 7.959227,
+          "distance_m": 306.665,
+          "duration_s": 39.428,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-004-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 7.916405,
+          "distance_m": 28.563,
+          "duration_s": 3.672,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-004-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 8.958403,
+          "distance_m": 291.901,
+          "duration_s": 35.214,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-005-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 6.623757,
+          "distance_m": 31.791,
+          "duration_s": 4.087,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-005-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 6.938541,
+          "distance_m": 170.919,
+          "duration_s": 21.975,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-006-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 6.072243,
+          "distance_m": 30.026,
+          "duration_s": 3.86,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-006-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 6.590339,
+          "distance_m": 249.242,
+          "duration_s": 32.044,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        }
+      ]
+    },
+    {
+      "engine": "openrouteservice",
+      "version": "10.1.0; driving-car; fastest",
+      "run_sha": "9fa0e2a7ac71b25d597b664d7a8e9cbf1de30f04",
+      "job_id": 116883572314,
+      "artifact_id": 12034567425,
+      "total": 12,
+      "passed": 12,
+      "failed": 0,
+      "unresolved": 0,
+      "timing_scope": "warm local HTTP request; includes endpoint/serialization overhead; no setup",
+      "timing": {
+        "n": 12,
+        "median_ms": 3.719882,
+        "p95_nearest_rank_ms": 103.507061,
+        "minimum_ms": 3.07529,
+        "maximum_ms": 103.507061
+      },
+      "cases": [
+        {
+          "case_id": "ROUTE-004-001-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 103.507061,
+          "distance_m": 69.8,
+          "duration_s": 12.6,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-001-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 8.503385,
+          "distance_m": 216.1,
+          "duration_s": 32.4,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-002-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 6.426032,
+          "distance_m": 42.7,
+          "duration_s": 10.2,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-002-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 4.07353,
+          "distance_m": 186,
+          "duration_s": 44.6,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-003-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 3.303402,
+          "distance_m": 66.9,
+          "duration_s": 16,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-003-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 4.507427,
+          "distance_m": 306.6,
+          "duration_s": 60.2,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-004-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 3.882643,
+          "distance_m": 28.6,
+          "duration_s": 4.1,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-004-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 3.557121,
+          "distance_m": 291.9,
+          "duration_s": 64,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-005-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 3.07529,
+          "distance_m": 31.8,
+          "duration_s": 4.6,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-005-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 3.274247,
+          "distance_m": 170.8,
+          "duration_s": 32.5,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-006-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 3.146396,
+          "distance_m": 30,
+          "duration_s": 4.3,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-006-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 3.221609,
+          "distance_m": 248.9,
+          "duration_s": 54.7,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        }
+      ]
+    },
+    {
+      "engine": "BRouter",
+      "version": "1.7.10; car-vario",
+      "run_sha": "9fa0e2a7ac71b25d597b664d7a8e9cbf1de30f04",
+      "job_id": 116883572691,
+      "artifact_id": 12034028626,
+      "total": 12,
+      "passed": 12,
+      "failed": 0,
+      "unresolved": 0,
+      "timing_scope": "warm local HTTP request; includes endpoint/serialization overhead; no setup",
+      "timing": {
+        "n": 12,
+        "median_ms": 31.5311875,
+        "p95_nearest_rank_ms": 325.732557,
+        "minimum_ms": 17.587711,
+        "maximum_ms": 325.732557
+      },
+      "cases": [
+        {
+          "case_id": "ROUTE-004-001-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 325.732557,
+          "distance_m": 70,
+          "duration_s": 17,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-001-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 41.720696,
+          "distance_m": 216,
+          "duration_s": 81,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-002-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 40.802548,
+          "distance_m": 43,
+          "duration_s": 15,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-002-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 47.49364,
+          "distance_m": 187,
+          "duration_s": 50,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-003-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 30.729948,
+          "distance_m": 67,
+          "duration_s": 19,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-003-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 32.332427,
+          "distance_m": 307,
+          "duration_s": 120,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-004-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 23.016022,
+          "distance_m": 29,
+          "duration_s": 12,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-004-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 33.270242,
+          "distance_m": 292,
+          "duration_s": 106,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-005-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 18.722349,
+          "distance_m": 32,
+          "duration_s": 11,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-005-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 21.070561,
+          "distance_m": 251,
+          "duration_s": 89,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-006-allowed",
+          "outcome": "PASS",
+          "calculation_ms": 17.587711,
+          "distance_m": 30,
+          "duration_s": 10,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        },
+        {
+          "case_id": "ROUTE-004-006-reverse",
+          "outcome": "PASS",
+          "calculation_ms": 20.49163,
+          "distance_m": 252,
+          "duration_s": 94,
+          "checks": {
+            "start_within_8m": true,
+            "end_within_8m": true,
+            "positive_distance": true,
+            "positive_duration": true,
+            "forbidden_direction_absent": true
+          },
+          "failures": [],
+          "reason": null
+        }
+      ]
+    }
+  ],
+  "dmn_repeats": [
+    {
+      "matrix_engine": "OSRM",
+      "job_id": 116883572926,
+      "timing": {
+        "n": 12,
+        "median_ms": 0.1100505,
+        "p95_nearest_rank_ms": 0.695218,
+        "minimum_ms": 0.010389,
+        "maximum_ms": 0.695218
+      },
+      "case_outcomes": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ]
+    },
+    {
+      "matrix_engine": "Valhalla",
+      "job_id": 116883572893,
+      "timing": {
+        "n": 12,
+        "median_ms": 0.0888285,
+        "p95_nearest_rank_ms": 0.479698,
+        "minimum_ms": 0.005698,
+        "maximum_ms": 0.479698
+      },
+      "case_outcomes": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ]
+    },
+    {
+      "matrix_engine": "GraphHopper",
+      "job_id": 116883572685,
+      "timing": {
+        "n": 12,
+        "median_ms": 0.09799050000000001,
+        "p95_nearest_rank_ms": 0.559371,
+        "minimum_ms": 0.008586,
+        "maximum_ms": 0.559371
+      },
+      "case_outcomes": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ]
+    },
+    {
+      "matrix_engine": "openrouteservice",
+      "job_id": 116883572314,
+      "timing": {
+        "n": 12,
+        "median_ms": 0.0699645,
+        "p95_nearest_rank_ms": 0.417626,
+        "minimum_ms": 0.004426,
+        "maximum_ms": 0.417626
+      },
+      "case_outcomes": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ]
+    },
+    {
+      "matrix_engine": "BRouter",
+      "job_id": 116883572691,
+      "timing": {
+        "n": 12,
+        "median_ms": 0.1040045,
+        "p95_nearest_rank_ms": 0.599191,
+        "minimum_ms": 0.009447,
+        "maximum_ms": 0.599191
+      },
+      "case_outcomes": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "issue": "Independent current UK one-way legality not verified",
+      "type": "evidence gap",
+      "scope": "all 12 cases",
+      "conclusion": "UNRESOLVED"
+    },
+    {
+      "issue": "Reverse-geometry checker tests one long jump, not every backwards-progress sequence",
+      "type": "test-harness sensitivity gap",
+      "scope": "forbidden_direct_traversal",
+      "conclusion": "NOT_A_DMN_FAILURE"
+    },
+    {
+      "issue": "Allowed-direction contract does not require using the nominated one-way segment",
+      "type": "test-harness coverage gap",
+      "scope": "allowed route cases",
+      "conclusion": "NOT_A_DMN_FAILURE"
+    },
+    {
+      "issue": "Route-004-005 reverse returned 251.578 m by DMN versus 170.8-184.0 m for four references (BRouter 251.0 m)",
+      "type": "profile-dependent route-quality discrepancy",
+      "scope": "ROUTE-004-005-reverse",
+      "conclusion": "PROVISIONAL; not judged route-quality failure"
+    },
+    {
+      "issue": "Conditional map objects removed, turns/lanes and closures not independently judged",
+      "type": "test scope limitation",
+      "scope": "all cases",
+      "conclusion": "NOT_TESTED"
+    }
+  ],
+  "other_refs": "Itinero, Routino, OsmAnd, Organic Maps, HERE, Mapbox, TomTom, Google Maps and Waze were not executed on this identical frozen cohort; no fabricated quality scores.",
+  "execution_note": "Compiled from existing GitHub job log JSON outputs and retained artifacts. No new navigation executions or changes in this documentation commit."
+}

@@ -1,5 +1,8 @@
 # DMN — DriveMate Navigation
 
+> **15 October 2026: the 22 spoken owner decisions are recorded; implementation and engine measurements are still pending.** The active programme is [DMN engine-first programme](docs/DMN_ENGINE_FIRST_PROGRAMME.md), with the [ten-reference test protocol](docs/DMN_TEN_REFERENCE_PROTOCOL.md), [record of 22 owner answers](docs/DMN_DECISION_QUESTIONS.md), and a [machine-readable not-run coverage inventory](config/dmn-engine-first-programme.json). The long README sections below document the **original initial prototype**, not the latest research results or settled new test thresholds. In particular, old claims that *no external engines or real UK road tests have ever run* have been superseded by later isolated-branch benchmarks; see the linked programme and original CI evidence. Do not use those historical statements as the active plan. No standalone app is being created.
+
+
 **This repository is the DMN navigation research and comparison programme for the existing DriveMate Android phone app; it is not a standalone DMN app project.**
 
 We compare our independent candidate routing/GPS/guidance implementations against other real engines, diagnose errors, rerun tests and select the best technically and legally suitable approach for the existing app. Android integration is a later approval-based stage, not implied by a host benchmark.

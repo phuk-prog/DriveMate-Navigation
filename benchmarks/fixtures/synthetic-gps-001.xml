@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Synthetic GPS-001 closed rectangular road, not a real place or personal journey. -->
+<osm version="0.6" generator="DMN synthetic GPS-001">
+<node id="1" lat="0.0000000" lon="0.0000000" version="1"/>
+<node id="2" lat="0.0000000" lon="0.0002000" version="1"/>
+<node id="3" lat="0.0000000" lon="0.0004000" version="1"/>
+<node id="4" lat="0.0000000" lon="0.0006000" version="1"/>
+<node id="5" lat="0.0000000" lon="0.0008000" version="1"/>
+<node id="6" lat="0.0000000" lon="0.0010000" version="1"/>
+<node id="7" lat="0.0000000" lon="0.0012000" version="1"/>
+<node id="8" lat="0.0000000" lon="0.0014000" version="1"/>
+<node id="9" lat="0.0000000" lon="0.0016000" version="1"/>
+<node id="10" lat="0.0000000" lon="0.0018000" version="1"/>
+<node id="11" lat="0.0000000" lon="0.0020000" version="1"/>
+<node id="12" lat="0.0000000" lon="0.0022000" version="1"/>
+<node id="13" lat="0.0000000" lon="0.0024000" version="1"/>
+<node id="14" lat="0.0000000" lon="0.0026000" version="1"/>
+<node id="15" lat="0.0000000" lon="0.0028000" version="1"/>
+<node id="16" lat="0.0000000" lon="0.0030000" version="1"/>
+<node id="17" lat="0.0000000" lon="0.0032000" version="1"/>
+<node id="18" lat="0.0000000" lon="0.0034000" version="1"/>
+<node id="19" lat="0.0000000" lon="0.0036000" version="1"/>
+<node id="20" lat="0.0000000" lon="0.0038000" version="1"/>
+<node id="21" lat="0.0000000" lon="0.0040000" version="1"/>
+<node id="22" lat="0.0000000" lon="0.0042000" version="1"/>
+<node id="23" lat="0.0000000" lon="0.0044000" version="1"/>
+<node id="24" lat="0.0000000" lon="0.0046000" version="1"/>
+<node id="25" lat="0.0000000" lon="0.0048000" version="1"/>
+<node id="26" lat="0.0000000" lon="0.0050000" version="1"/>
+<node id="27" lat="0.0000000" lon="0.0052000" version="1"/>
+<node id="28" lat="0.0000000" lon="0.0054000" version="1"/>
+<node id="29" lat="0.0000000" lon="0.0056000" version="1"/>
+<node id="30" lat="0.0000000" lon="0.0058000" version="1"/>
+<node id="31" lat="0.0000000" lon="0.0060000" version="1"/>
+<node id="101" lat="0.0003000" lon="0.0000000" version="1"/>
+<node id="102" lat="0.0003000" lon="0.0002000" version="1"/>
+<node id="103" lat="0.0003000" lon="0.0004000" version="1"/>
+<node id="104" lat="0.0003000" lon="0.0006000" version="1"/>
+<node id="105" lat="0.0003000" lon="0.0008000" version="1"/>
+<node id="106" lat="0.0003000" lon="0.0010000" version="1"/>
+<node id="107" lat="0.0003000" lon="0.0012000" version="1"/>
+<node id="108" lat="0.0003000" lon="0.0014000" version="1"/>
+<node id="109" lat="0.0003000" lon="0.0016000" version="1"/>
+<node id="110" lat="0.0003000" lon="0.0018000" version="1"/>
+<node id="111" lat="0.0003000" lon="0.0020000" version="1"/>
+<node id="112" lat="0.0003000" lon="0.0022000" version="1"/>
+<node id="113" lat="0.0003000" lon="0.0024000" version="1"/>
+<node id="114" lat="0.0003000" lon="0.0026000" version="1"/>
+<node id="115" lat="0.0003000" lon="0.0028000" version="1"/>
+<node id="116" lat="0.0003000" lon="0.0030000" version="1"/>
+<node id="117" lat="0.0003000" lon="0.0032000" version="1"/>
+<node id="118" lat="0.0003000" lon="0.0034000" version="1"/>
+<node id="119" lat="0.0003000" lon="0.0036000" version="1"/>
+<node id="120" lat="0.0003000" lon="0.0038000" version="1"/>
+<node id="121" lat="0.0003000" lon="0.0040000" version="1"/>
+<node id="122" lat="0.0003000" lon="0.0042000" version="1"/>
+<node id="123" lat="0.0003000" lon="0.0044000" version="1"/>
+<node id="124" lat="0.0003000" lon="0.0046000" version="1"/>
+<node id="125" lat="0.0003000" lon="0.0048000" version="1"/>
+<node id="126" lat="0.0003000" lon="0.0050000" version="1"/>
+<node id="127" lat="0.0003000" lon="0.0052000" version="1"/>
+<node id="128" lat="0.0003000" lon="0.0054000" version="1"/>
+<node id="129" lat="0.0003000" lon="0.0056000" version="1"/>
+<node id="130" lat="0.0003000" lon="0.0058000" version="1"/>
+<node id="131" lat="0.0003000" lon="0.0060000" version="1"/>
+<way id="10" version="1"><nd ref="1"/><nd ref="2"/><nd ref="3"/><nd ref="4"/><nd ref="5"/><nd ref="6"/><nd ref="7"/><nd ref="8"/><nd ref="9"/><nd ref="10"/><nd ref="11"/><nd ref="12"/><nd ref="13"/><nd ref="14"/><nd ref="15"/><nd ref="16"/><nd ref="17"/><nd ref="18"/><nd ref="19"/><nd ref="20"/><nd ref="21"/><nd ref="22"/><nd ref="23"/><nd ref="24"/><nd ref="25"/><nd ref="26"/><nd ref="27"/><nd ref="28"/><nd ref="29"/><nd ref="30"/><nd ref="31"/><tag k="highway" v="secondary"/><tag k="oneway" v="yes"/><tag k="motor_vehicle" v="yes"/><tag k="maxspeed" v="50"/></way>
+<way id="20" version="1"><nd ref="131"/><nd ref="130"/><nd ref="129"/><nd ref="128"/><nd ref="127"/><nd ref="126"/><nd ref="125"/><nd ref="124"/><nd ref="123"/><nd ref="122"/><nd ref="121"/><nd ref="120"/><nd ref="119"/><nd ref="118"/><nd ref="117"/><nd ref="116"/><nd ref="115"/><nd ref="114"/><nd ref="113"/><nd ref="112"/><nd ref="111"/><nd ref="110"/><nd ref="109"/><nd ref="108"/><nd ref="107"/><nd ref="106"/><nd ref="105"/><nd ref="104"/><nd ref="103"/><nd ref="102"/><nd ref="101"/><tag k="highway" v="secondary"/><tag k="oneway" v="yes"/><tag k="motor_vehicle" v="yes"/><tag k="maxspeed" v="50"/></way>
+<way id="30" version="1"><nd ref="31"/><nd ref="131"/><tag k="highway" v="secondary"/><tag k="oneway" v="yes"/><tag k="motor_vehicle" v="yes"/><tag k="maxspeed" v="50"/></way>
+<way id="40" version="1"><nd ref="101"/><nd ref="1"/><tag k="highway" v="secondary"/><tag k="oneway" v="yes"/><tag k="motor_vehicle" v="yes"/><tag k="maxspeed" v="50"/></way>
+</osm>

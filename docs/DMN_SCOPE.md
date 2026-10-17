@@ -2,6 +2,14 @@
 
 **DMN** abbreviates **DriveMate Navigation**. Use the abbreviation DMN in new research-facing work, scorecards and test labels. Legacy file paths, Git history and engine names remain intact to preserve existing tests and traceability.
 
+## Engine-first design clarification (15 October 2026; confirmed direction)
+
+The owner clarified that the **best complete DriveMate app** is the end goal, but **DMN navigation correctness and engine design lead the research programme**. Do not force DMN to fit existing app architecture. When navigation requirements reveal inadequate graph/map data, map matching, rendering, routing, offline updates or other software, investigate and improve/rebuild those dependencies where evidence justifies it. Follow dependent changes, validate independently, then use the isolated Android testing branch as a compatibility check. Retain production untouched, and do not release an APK.
+
+[Active engine-first proposal](DMN_ENGINE_FIRST_PROGRAMME.md) · [ten-reference test protocol](DMN_TEN_REFERENCE_PROTOCOL.md) · [owner's unsettled test decisions](DMN_DECISION_QUESTIONS.md).
+
+Older milestones and benchmark statements below are a **dated historical snapshot**, not proof that the later real-UK research never ran. Numeric thresholds and exact choice of ten references are pending questions, not confirmed assumptions.
+
 ## Goal
 
 Find the best reliable, accurate, efficient, legally redistributable navigation technology **for the existing DriveMate Android phone app**. DMN is the test, research and candidate-component project, **not** a separate standalone app and has **no standalone APK milestone**.

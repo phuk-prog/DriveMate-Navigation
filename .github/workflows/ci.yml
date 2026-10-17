@@ -14,6 +14,7 @@ concurrency:
 
 jobs:
   checks:
+    if: ${{ !contains(github.event.pull_request.title, '[map001-run]') && !contains(github.event.pull_request.title, '[map001-v2]') }}
     name: Unit tests and synthetic benchmark only
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -30,15 +31,174 @@ jobs:
       - name: Reject personal data and credentials in public repository
         run: python -m tools.privacy_guard
       - name: Compile source
-        run: python -m compileall -q engine map_data benchmarks tools tests
-      - name: Run independent routing tests
-        run: python -m unittest discover -s tests -v
+        run: python -m compileall -q engine map_data gps benchmarks tools tests
+      - name: Run independently isolated category unit checks
+        run: python -m tools.category_test_runner --all --output-dir results/category-checks
+      - name: Automatically record all 21 next-category decisions and evidence gaps
+        if: always()
+        run: |
+          python -m tools.dmn_auto_progress --output-dir results/category-checks
+      - name: Upload independent category verdicts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: dmn-independent-category-tests
+          path: results/category-checks/
+          if-no-files-found: warn
+          retention-days: 30
+      - name: GPS-002 frozen ambiguity fault and recovery batch
+        run: python -m benchmarks.gps_fault_batch --output results/gps002-DMN.json
+      - name: Upload GPS-002 per-event conformance evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: gps002-streaming-contract
+          path: results/gps002-DMN.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: ROUTE-002 access turn and recalculation safety batch
+        run: python -m benchmarks.routing_legality_batch --engine DMN --output results/route002-DMN.json
+      - name: Upload ROUTE-002 DMN contract evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: route002-dmn-contract
+          path: results/route002-DMN.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: REROUTE-001 frozen lifecycle and freshness counterexamples
+        run: python -m benchmarks.rerouting_lifecycle_trial --output results/reroute001-DMN.json
+      - name: Upload REROUTE-001 lifecycle evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: reroute001-lifecycle-contract
+          path: results/reroute001-DMN.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: JUNCTION-001 principal maneuver semantics
+        run: python -m benchmarks.junction_trial --engine DMN --output results/junction001-DMN.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: junction001-dmn-contract
+          path: results/junction001-DMN.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: ARRIVAL-001 frozen proximity progress and freshness lifecycle
+        env:
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python -m benchmarks.arrival_lifecycle_trial --output results/arrival001-DMN.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: arrival001-lifecycle-contract
+          path: results/arrival001-DMN.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: OFFLINE-001 actual routes in isolated Linux network namespace
+        env:
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          sudo unshare --net -- env GITHUB_HEAD_SHA="$GITHUB_HEAD_SHA" "$(command -v python)" -m benchmarks.offline_integrity_trial --require-isolated-network --output results/offline001-DMN.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: offline001-package-contract
+          path: results/offline001-DMN.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: RESOURCE-001 separate setup timing and memory workers
+        env:
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python -m benchmarks.resource_trial --output results/resource001-DMN.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: resource001-characterization
+          path: results/resource001-DMN.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Report engine comparison evidence readiness only
+        env:
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          python -m tools.validation_readiness --output results/comparison-readiness.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: dmn-engine-comparison-readiness
+          path: results/comparison-readiness.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Measure synthetic routing latency (informational only)
         run: |
           python -m benchmarks.run --repeat 30
           python -m benchmarks.search_comparison --size 14 --repeat 5
+      - name: Pinned public UK single-vs-temporal GPS replay (opt-in once)
+        if: contains(github.event.head_commit.message, '[temporal-gps-smoke]') || contains(github.event.pull_request.title, '[temporal-gps-smoke]')
+        timeout-minutes: 9
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output "${RUNNER_TEMP}/dmn-temporal-uk.osm.pbf" \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          osmium extract --strategy complete_ways \
+            --bbox=-2.270000,53.350000,-2.260000,53.360000 \
+            "${RUNNER_TEMP}/dmn-temporal-uk.osm.pbf" \
+            -o results/dmn-temporal-public.osm.pbf
+          osmium cat results/dmn-temporal-public.osm.pbf \
+            -o results/dmn-temporal-public.osm -f osm,add_metadata=false
+          python -m benchmarks.public_temporal_gps \
+            --input results/dmn-temporal-public.osm \
+            --snapshot geofabrik-260901 --limit 40 \
+            | tee results/dmn-temporal-gps-results.json
+      - name: Upload aggregate temporal matching results
+        if: always() && (contains(github.event.head_commit.message, '[temporal-gps-smoke]') || contains(github.event.pull_request.title, '[temporal-gps-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-public-uk-temporal-gps-comparison
+          path: results/dmn-temporal-gps-results.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Delete ephemeral public UK temporal GPS data
+        if: always()
+        run: |
+          rm -f "${RUNNER_TEMP}/dmn-temporal-uk.osm.pbf"
+          rm -f results/dmn-temporal-public.osm.pbf results/dmn-temporal-public.osm
+      - name: Public UK road geometry GPS matching replay (single opt-in)
+        if: contains(github.event.head_commit.message, '[gps-match-smoke]') || contains(github.event.pull_request.title, '[gps-match-smoke]')
+        timeout-minutes: 9
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output "${RUNNER_TEMP}/public-uk-gps-source.osm.pbf" \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          osmium extract --strategy complete_ways \
+            --bbox=-2.270000,53.350000,-2.260000,53.360000 \
+            "${RUNNER_TEMP}/public-uk-gps-source.osm.pbf" -o results/dmn-gps-public-road-subset.osm.pbf
+          osmium cat results/dmn-gps-public-road-subset.osm.pbf \
+            -o results/dmn-gps-public-road-subset.osm -f osm,add_metadata=false
+          python -m benchmarks.public_gps_matching \
+            --input results/dmn-gps-public-road-subset.osm \
+            --snapshot geofabrik-260901 --limit 30 | tee results/dmn-gps-matching-smoke.json
+      - name: Upload simulated UK geometry GPS matching report
+        if: always() && (contains(github.event.head_commit.message, '[gps-match-smoke]') || contains(github.event.pull_request.title, '[gps-match-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-public-uk-simulated-gps-matching
+          path: results/dmn-gps-matching-smoke.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Delete temporary public GPS map inputs
+        if: always()
+        run: |
+          rm -f "${RUNNER_TEMP}/public-uk-gps-source.osm.pbf"
+          rm -f results/dmn-gps-public-road-subset.osm.pbf results/dmn-gps-public-road-subset.osm
       - name: Public UK road import and dual-engine smoke (explicit marker only)
-        if: contains(github.event.head_commit.message, '[uk-road-smoke]')
+        if: contains(github.event.head_commit.message, '[uk-road-smoke]') || contains(github.event.pull_request.title, '[uk-road-smoke]')
         timeout-minutes: 9
         shell: bash
         run: |
@@ -55,9 +215,200 @@ jobs:
             --snapshot "geofabrik-260901" \
             --region "independent public UK test area" --execute
           python -m benchmarks.public_uk_probe --input results/public-road-subset.osm \
-            --snapshot "geofabrik-260901" --samples 8
+            --snapshot "geofabrik-260901" --samples 8 | tee results/public-road-smoke.json
+      - name: Propose new regression cases from public-road evidence
+        if: success() && (contains(github.event.head_commit.message, '[uk-road-smoke]') || contains(github.event.pull_request.title, '[uk-road-smoke]'))
+        run: python -m tools.dmn_test_discovery --input results/public-road-smoke.json --public-smoke --output results/dmn-discovery-proposals.json
+      - name: Real UK public OSM turn-rule exercise (explicit once only)
+        if: (contains(github.event.head_commit.message, '[turn-restriction-smoke]') || contains(github.event.pull_request.title, '[turn-restriction-smoke]'))
+        timeout-minutes: 11
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output "${RUNNER_TEMP}/public-uk-turn-source.osm.pbf" \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          osmium tags-filter "${RUNNER_TEMP}/public-uk-turn-source.osm.pbf" \
+            r/type=restriction -o results/public-turn-relations.osm.pbf
+          osmium cat results/public-turn-relations.osm.pbf \
+            -o results/public-turn-candidates.osm -f osm,add_metadata=false
+          python -m benchmarks.real_uk_turn_probe \
+            --input results/public-turn-candidates.osm \
+            --snapshot geofabrik-260901 --limit 12 | tee results/public-turn-smoke.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("results/public-turn-smoke.json").read_text())
+          if not report["cases_with_judged_map_rule"]:
+              raise SystemExit("INCOMPLETE coverage: no actual public motorcar turn restriction case exercised")
+          PY
+      - name: Propose real UK legal-detour coverage regression
+        if: success() && (contains(github.event.head_commit.message, '[turn-restriction-smoke]') || contains(github.event.pull_request.title, '[turn-restriction-smoke]'))
+        run: python -m tools.dmn_test_discovery --input results/public-turn-smoke.json --public-turn-smoke --output results/dmn-turn-discovery-proposals.json
+      - name: Bounded real UK complete-road-neighborhood detours (one opt-in)
+        if: contains(github.event.head_commit.message, '[neighborhood-detour-smoke]') || contains(github.event.pull_request.title, '[neighborhood-detour-smoke]')
+        timeout-minutes: 11
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output "${RUNNER_TEMP}/dmn-uk-neighborhood-source.osm.pbf" \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          osmium tags-filter "${RUNNER_TEMP}/dmn-uk-neighborhood-source.osm.pbf" \
+            r/type=restriction -o results/dmn-neighborhood-turn-restrictions.osm.pbf
+          osmium cat results/dmn-neighborhood-turn-restrictions.osm.pbf \
+            -o results/dmn-neighborhood-turn-restrictions.osm -f osm,add_metadata=false
+          python -m benchmarks.uk_neighborhood_detours \
+            --pbf "${RUNNER_TEMP}/dmn-uk-neighborhood-source.osm.pbf" \
+            --restriction-source results/dmn-neighborhood-turn-restrictions.osm \
+            --snapshot geofabrik-260901 --limit 4 \
+            | tee results/dmn-uk-neighborhood-detours.json
+      - name: Replay exact pinned UK preference cases against audited archive
+        if: success() && (contains(github.event.head_commit.message, '[neighborhood-detour-smoke]') || contains(github.event.pull_request.title, '[neighborhood-detour-smoke]'))
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m benchmarks.uk_archive_replay \
+            --actual results/dmn-uk-neighborhood-detours.json \
+            --archive references/uk-route-preference-map-cases-20261015.json \
+            | tee results/dmn-uk-route-case-replay.json
+      - name: Upload bounded detour evidence
+        if: always() && (contains(github.event.head_commit.message, '[neighborhood-detour-smoke]') || contains(github.event.pull_request.title, '[neighborhood-detour-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-uk-neighborhood-detours
+          path: |
+            results/dmn-uk-neighborhood-detours.json
+            results/dmn-uk-route-case-replay.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Same pinned UK map cases versus local OSRM MLD (one opt-in)
+        if: contains(github.event.head_commit.message, '[uk-case-osrm-smoke]') || contains(github.event.pull_request.title, '[uk-case-osrm-smoke]')
+        timeout-minutes: 14
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output results/dmn-pinned-manchester.osm.pbf \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          osmium tags-filter results/dmn-pinned-manchester.osm.pbf \
+            r/type=restriction -o results/dmn-case-relations.osm.pbf
+          osmium cat results/dmn-case-relations.osm.pbf \
+            -o results/dmn-case-relations.osm -f osm,add_metadata=false
+          IMAGE="ghcr.io/project-osrm/osrm-backend:v5.27.1@sha256:855614a38f464b0558a2ad6eaa7cb8c139f39887da9b38b485ce453c6e6e6124"
+          docker pull "$IMAGE"
+          docker run --rm -v "$PWD/results:/data" "$IMAGE" osrm-extract \
+            -p /opt/car.lua /data/dmn-pinned-manchester.osm.pbf
+          docker run --rm -v "$PWD/results:/data" "$IMAGE" osrm-partition \
+            /data/dmn-pinned-manchester.osrm
+          docker run --rm -v "$PWD/results:/data" "$IMAGE" osrm-customize \
+            /data/dmn-pinned-manchester.osrm
+          docker run -d --rm --name drivemate-nav-uk-cases-osrm \
+            --network host -v "$PWD/results:/data" "$IMAGE" \
+            osrm-routed --algorithm mld /data/dmn-pinned-manchester.osrm
+          python -m benchmarks.uk_neighborhood_detours \
+            --pbf results/dmn-pinned-manchester.osm.pbf \
+            --restriction-source results/dmn-case-relations.osm \
+            --snapshot geofabrik-260901 --limit 4 --compare-osrm \
+            | tee results/dmn-uk-osrm-same-cases.json
+          python -m benchmarks.uk_archive_replay \
+            --actual results/dmn-uk-osrm-same-cases.json \
+            --archive references/uk-route-preference-map-cases-20261015.json \
+            | tee results/dmn-uk-osrm-replay.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("results/dmn-uk-osrm-same-cases.json").read_text())
+          compared = report["osrm_case_comparison"]
+          if (report["external_engines_executed"] != 1 or
+                  compared["case_count"] != 25 or
+                  not compared["complete_same_case_execution"] or
+                  compared["route_quality_ranking_valid"]):
+              raise SystemExit("Missing 25 matched-case OSRM evidence or false quality ranking")
+          PY
+      - name: Upload bounded same-case OSRM comparisons
+        if: always() && (contains(github.event.head_commit.message, '[uk-case-osrm-smoke]') || contains(github.event.pull_request.title, '[uk-case-osrm-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-uk-25-mapcase-osrm-paired-evidence
+          path: |
+            results/dmn-uk-osrm-same-cases.json
+            results/dmn-uk-osrm-replay.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Delete ephemeral UK OSRM case-map source and router
+        if: always()
+        shell: bash
+        run: |
+          docker rm -f drivemate-nav-uk-cases-osrm >/dev/null 2>&1 || true
+          find results -maxdepth 1 -type f \( -name 'dmn-pinned-manchester*' -o -name 'dmn-case-relations*' \) -delete 2>/dev/null || true
+      - name: Remove temporary buffered road source and contributor-anonymized extracts
+        if: always()
+        shell: bash
+        run: |
+          rm -f "${RUNNER_TEMP}/dmn-uk-neighborhood-source.osm.pbf"
+          rm -f results/dmn-neighborhood-turn-restrictions.osm.pbf results/dmn-neighborhood-turn-restrictions.osm
+      - name: Upload real UK turn-rule evidence
+        if: always() && (contains(github.event.head_commit.message, '[turn-restriction-smoke]') || contains(github.event.pull_request.title, '[turn-restriction-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-uk-real-turn-rule-evidence
+          path: |
+            results/public-turn-smoke.json
+            results/dmn-turn-discovery-proposals.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Clean public UK turn-rule intermediate files
+        if: always()
+        shell: bash
+        run: |
+          rm -f "${RUNNER_TEMP}/public-uk-turn-source.osm.pbf"
+          rm -f results/public-turn-relations.osm.pbf results/public-turn-candidates.osm
+      - name: Publish honest real-road smoke counts
+        if: always() && (contains(github.event.head_commit.message, '[uk-road-smoke]') || contains(github.event.pull_request.title, '[uk-road-smoke]'))
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          p = Path('results/public-road-smoke.json')
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as out:
+              if not p.exists():
+                  out.write('### Public road smoke: NO EXECUTION EVIDENCE\\nNo navigation score can be assigned.\\n')
+              else:
+                  d = json.loads(p.read_text())
+                  out.write(
+                      '### Public road smoke (algorithm agreement, not independent legality)\\n'
+                      f'- Road source: {d["source_snapshot"]}\\n'
+                      f'- Routable road scenarios run: {d["scenario_count"]}\\n'
+                      f'- Directed graph edges: {d["road_graph_directed_edges"]}\\n'
+                      f'- Imported prohibited turn pairs: {d["node_via_forbidden_turn_pairs"]}\\n'
+                      f'- External reference engines in this step: {d["external_engines_executed"]}\\n'
+                      '- GPS, speed-limit correctness, sensor fusion, lane guidance, voice and arrival: NOT TESTED by this smoke.\\n'
+                  )
+          PY
+      - name: Upload first public-road test evidence
+        if: always() && (contains(github.event.head_commit.message, '[uk-road-smoke]') || contains(github.event.pull_request.title, '[uk-road-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: first-dmn-road-smoke
+          path: |
+            results/public-road-smoke.json
+            results/dmn-discovery-proposals.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: OSRM MLD public reference smoke (single explicit run only)
-        if: contains(github.event.head_commit.message, '[osrm-reference-smoke]')
+        if: contains(github.event.head_commit.message, '[osrm-reference-smoke]') || contains(github.event.pull_request.title, '[osrm-reference-smoke]')
         timeout-minutes: 12
         shell: bash
         run: |
@@ -87,8 +438,18 @@ jobs:
             osrm-routed --algorithm mld /data/osrm-public-subset.osrm
           python -m benchmarks.osrm_live_reference --input results/public-road-subset.osm \
             --snapshot "geofabrik-260901" --samples 8 --repeats 5
+          python -m benchmarks.osrm_match_reference --input results/public-road-subset.osm \
+            --snapshot geofabrik-260901 --samples 12 | tee results/dmn-osrm-public-gps-comparison.json
+      - name: Upload actual OSRM Match UK GPS comparison
+        if: always() && (contains(github.event.head_commit.message, '[osrm-reference-smoke]') || contains(github.event.pull_request.title, '[osrm-reference-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-vs-osrm-match-public-uk
+          path: results/dmn-osrm-public-gps-comparison.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: Valhalla 3.9.1 public UK routing smoke (explicit once only)
-        if: contains(github.event.head_commit.message, '[valhalla-reference-smoke]')
+        if: contains(github.event.head_commit.message, '[valhalla-reference-smoke]') || contains(github.event.pull_request.title, '[valhalla-reference-smoke]')
         timeout-minutes: 12
         shell: bash
         run: |
@@ -126,8 +487,18 @@ jobs:
               tail -n 35 || true
             exit 1
           fi
+          python -m benchmarks.valhalla_match_reference --input results/public-road-subset.osm \
+            --snapshot geofabrik-260901 --samples 12 | tee results/dmn-valhalla-match-public-uk.json
+      - name: Upload live Valhalla GPS matching diagnostic
+        if: always() && (contains(github.event.head_commit.message, '[valhalla-reference-smoke]') || contains(github.event.pull_request.title, '[valhalla-reference-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-vs-valhalla-map-match-uk
+          path: results/dmn-valhalla-match-public-uk.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: Java 25 for official GraphHopper JAR (explicit once only)
-        if: contains(github.event.head_commit.message, '[graphhopper-reference-smoke]')
+        if: contains(github.event.head_commit.message, '[graphhopper-reference-smoke]') || contains(github.event.pull_request.title, '[graphhopper-match-smoke]')
         uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # v5.0.0
         with:
           distribution: temurin
@@ -165,6 +536,48 @@ jobs:
               "${RUNNER_TEMP}/graphhopper-run.log" | tail -n 45 || true
             exit 1
           fi
+      - name: GraphHopper 11.1 real public UK GPS map matching (explicit once)
+        if: contains(github.event.pull_request.title, '[graphhopper-match-smoke]')
+        timeout-minutes: 12
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output "${RUNNER_TEMP}/public-uk-geofabrik.osm.pbf" \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          osmium extract --strategy complete_ways --bbox=-2.270000,53.350000,-2.260000,53.360000 \
+            "${RUNNER_TEMP}/public-uk-geofabrik.osm.pbf" -o results/public-graphhopper-subset.osm.pbf
+          osmium cat results/public-graphhopper-subset.osm.pbf -o results/public-road-subset.osm \
+            -f osm,add_metadata=false
+          python -m map_data --input results/public-road-subset.osm \
+            --region "independent public UK test area" --snapshot geofabrik-260901
+          BASE="https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/11.1/graphhopper-web-11.1.jar"
+          curl -fsSL --retry 2 --max-time 180 "$BASE" -o "${RUNNER_TEMP}/graphhopper-web-11.1.jar"
+          curl -fsSL --retry 2 --max-time 30 "$BASE.sha1" -o "${RUNNER_TEMP}/graphhopper-web-11.1.jar.sha1"
+          printf '%s  %s\n' "$(cat "${RUNNER_TEMP}/graphhopper-web-11.1.jar.sha1")" "${RUNNER_TEMP}/graphhopper-web-11.1.jar" | sha1sum --check --status
+          java -Xms128m -Xmx1536m -jar "${RUNNER_TEMP}/graphhopper-web-11.1.jar" \
+            server config/graphhopper-public-smoke.yml > "${RUNNER_TEMP}/graphhopper-run.log" 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" >/dev/null 2>&1 || true' EXIT
+          if ! python -m benchmarks.graphhopper_match_reference \
+              --input results/public-road-subset.osm --snapshot geofabrik-260901 --samples 12 \
+              | tee results/dmn-vs-graphhopper-map-match-uk.json; then
+            echo "GraphHopper GPS map-matching run failed; redacted diagnostics follow."
+            sed -E 's/(-?[0-9]{1,3}\.[0-9]{4,})/[public-coordinate-redacted]/g' \
+              "${RUNNER_TEMP}/graphhopper-run.log" | tail -n 35 || true
+            exit 1
+          fi
+      - name: Upload GraphHopper actual GPS matching evidence
+        if: always() && contains(github.event.pull_request.title, '[graphhopper-match-smoke]')
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-vs-graphhopper-match-public-uk
+          path: results/dmn-vs-graphhopper-map-match-uk.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: Cleanup temporary public GraphHopper data
         if: always()
         shell: bash
@@ -195,5 +608,63 @@ jobs:
         run: |
           rm -f "${RUNNER_TEMP}/greater-manchester-260901.osm.pbf"
           rm -f results/public-road-subset.osm
+      - name: Compare three bounded public UK test networks (single explicit opt-in)
+        if: contains(github.event.head_commit.message, '[uk-network-coverage-smoke]') || contains(github.event.pull_request.title, '[uk-network-coverage-smoke]')
+        timeout-minutes: 12
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output "${RUNNER_TEMP}/dmn-network-public-source.osm.pbf" \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          python -m benchmarks.public_network_sweep \
+            --pbf "${RUNNER_TEMP}/dmn-network-public-source.osm.pbf" \
+            --snapshot geofabrik-260901 | tee results/dmn-network-coverage-sweep.json
+      - name: Upload public network coverage counts (never source maps)
+        if: always() && (contains(github.event.head_commit.message, '[uk-network-coverage-smoke]') || contains(github.event.pull_request.title, '[uk-network-coverage-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-public-uk-network-coverage
+          path: results/dmn-network-coverage-sweep.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Remove ephemeral public-network candidate extracts
+        if: always()
+        shell: bash
+        run: |
+          rm -f "${RUNNER_TEMP}/dmn-network-public-source.osm.pbf"
+          rm -f results/dmn-network-*.osm
+      - name: Expanded public UK area preference and access coverage (one opt-in)
+        if: contains(github.event.head_commit.message, '[uk-route-diversity-smoke]') || contains(github.event.pull_request.title, '[uk-route-diversity-smoke]')
+        timeout-minutes: 11
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 180 \
+            --output "${RUNNER_TEMP}/public-route-diversity.osm.pbf" \
+            "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf"
+          python -m benchmarks.public_diversity_study \
+            --pbf "${RUNNER_TEMP}/public-route-diversity.osm.pbf" \
+            --snapshot geofabrik-260901 --samples 8 | tee results/dmn-uk-route-diversity.json
+      - name: Upload expanded UK route preference evidence
+        if: always() && (contains(github.event.head_commit.message, '[uk-route-diversity-smoke]') || contains(github.event.pull_request.title, '[uk-route-diversity-smoke]'))
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dmn-uk-route-diversity
+          path: results/dmn-uk-route-diversity.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Cleanup ephemeral UK route-area map input
+        if: always()
+        shell: bash
+        run: |
+          rm -f "${RUNNER_TEMP}/public-route-diversity.osm.pbf"
+          rm -f results/dmn-public-diversity-*.osm
       - name: Verify opt-in public-road extraction CLI without using a real map
         run: python -m tools.public_osm_extract --help >/dev/null

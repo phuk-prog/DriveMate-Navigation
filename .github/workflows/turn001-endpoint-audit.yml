@@ -1,0 +1,49 @@
+name: TURN-001 archived reference endpoint audit
+# Reuses original four-engine result artifacts; no rerouting, setup or signup.
+on:
+  push:
+    branches: ['codex/chatgpt-turn001-endpoint-analysis-20261017']
+    paths:
+      - 'tools/turn001_endpoint_audit.py'
+      - '.github/workflows/turn001-endpoint-audit.yml'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: turn001-endpoint-audit-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  endpoint-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Check diagnostic and fetch archived JSON only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python -m py_compile tools/turn001_endpoint_audit.py
+          python -m tools.turn001_endpoint_audit --self-test
+          gh run download 39019749346 -R "${{ github.repository }}" \
+            -p 'turn001-DMN' -p 'turn001-OSRM' \
+            -p 'turn001-Valhalla' -p 'turn001-GraphHopper' \
+            -D artifacts
+      - name: Produce bounded read-only evidence
+        run: |
+          set -euo pipefail
+          python -m tools.turn001_endpoint_audit --artifacts-dir artifacts > /tmp/endpoint-audit.txt
+          cat results/turn001-endpoint-audit/brief.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: turn001-endpoint-diagnostic
+          path: |
+            results/turn001-endpoint-audit/summary.json
+            results/turn001-endpoint-audit/brief.md
+          retention-days: 60

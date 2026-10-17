@@ -1,0 +1,24 @@
+{
+ "id": "TURN-001-OFFICIAL-SOURCE-AUDIT",
+ "state": "done",
+ "title": "Official UK road-restriction evidence source audit for five TURN-001 junctions",
+ "agent": "ChatGPT GPT-6",
+ "branch": "codex/chatgpt-turn001-legal-evidence-20261017",
+ "created": "2026-10-17T11:21:15.946Z",
+ "updated": "2026-10-17T11:21:15.946Z",
+ "summary": "Reviewed official DfT D-TRO, Manchester/Salford/Trafford/Rochdale TRO directories and case-related Salford Chesterfield Close notice. D-TRO data OGL v3 and consumer signup required; 2019 Salford order concerns speed and waiting, not disputed turn. None of five exact legal movements independently verified. Implemented fail-closed 5-case evidence manifest and integrity guard; one lightweight CI job passed. No engine or app change.",
+ "results": "docs/TURN_001_OFFICIAL_EVIDENCE_AUDIT.md",
+ "runs": [
+  "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39028307800"
+ ],
+ "fingerprints": [
+  "TURN-001 official source audit 2026-10-17|five-case evidence manifest|guard success 39028307800"
+ ],
+ "history": [
+  "2026-10-17T11:21:15.946Z done by ChatGPT GPT-6 on codex/chatgpt-turn001-legal-evidence-20261017"
+ ],
+ "read_first": [
+  "docs/TURN_001_OFFICIAL_EVIDENCE_AUDIT.md"
+ ],
+ "why": "Separate finished source-audit milestone. Source collection does not resolve the blocked independent legal verification task."
+}

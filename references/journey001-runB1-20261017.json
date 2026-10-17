@@ -1,0 +1,335 @@
+{
+ "revision": "17e84a4a998e33fce33bc463ec901a195f7984c9",
+ "run": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39043457966",
+ "summary": {
+  "categories": {
+   "11_route_line": {
+    "DMN": {
+     "status": "NOT_APPLICABLE_NODE_PATH"
+    },
+    "GraphHopper": {
+     "cases_over_5m": 11,
+     "measured": 57,
+     "median_max_off_road_m": 0.05
+    },
+    "OSRM": {
+     "cases_over_5m": 0,
+     "measured": 57,
+     "median_max_off_road_m": 0.04
+    },
+    "Valhalla": {
+     "cases_over_5m": 0,
+     "measured": 57,
+     "median_max_off_road_m": 0.04
+    }
+   },
+   "5_route_validity": {
+    "DMN": {
+     "VALID": 57
+    },
+    "GraphHopper": {
+     "OFF_TARGET": 11,
+     "VALID": 46
+    },
+    "OSRM": {
+     "VALID": 57
+    },
+    "Valhalla": {
+     "VALID": 57
+    }
+   },
+   "6_route_quality": {
+    "DMN": {
+     "longer_than_1_2x_shortest": [],
+     "median_length_vs_shortest": 1.0,
+     "valid_routes": 57
+    },
+    "GraphHopper": {
+     "longer_than_1_2x_shortest": [],
+     "median_length_vs_shortest": 1.0,
+     "valid_routes": 46
+    },
+    "OSRM": {
+     "longer_than_1_2x_shortest": [],
+     "median_length_vs_shortest": 1.0,
+     "valid_routes": 57
+    },
+    "Valhalla": {
+     "longer_than_1_2x_shortest": [],
+     "median_length_vs_shortest": 1.0,
+     "valid_routes": 57
+    }
+   },
+   "8_junction_turns": {
+    "DMN": {
+     "by_kind": {
+      "left": {
+       "CORRECT": 12
+      },
+      "right": {
+       "CORRECT": 12
+      },
+      "straight": {
+       "CORRECT": 12
+      }
+     },
+     "correct": 36,
+     "judged": 36,
+     "unclear_minor_exit": 0,
+     "wrong_cases": {}
+    },
+    "GraphHopper": {
+     "by_kind": {
+      "left": {
+       "CORRECT": 8,
+       "NOT_JUDGED_ROUTE_DIFFERS": 2,
+       "WRONG": 2
+      },
+      "right": {
+       "CORRECT": 7,
+       "NOT_JUDGED_ROUTE_DIFFERS": 3,
+       "WRONG": 2
+      },
+      "straight": {
+       "CORRECT": 11,
+       "NOT_JUDGED_ROUTE_DIFFERS": 1
+      }
+     },
+     "correct": 26,
+     "judged": 30,
+     "unclear_minor_exit": 0,
+     "wrong_cases": {
+      "turn-570762018": {
+       "said": {
+        "at": [
+         53.663667,
+         -2.631044
+        ],
+        "kind": "straight",
+        "raw": "0",
+        "slight": false
+       },
+       "verdict": "WRONG"
+      },
+      "turn-664643295": {
+       "said": {
+        "at": [
+         53.562003,
+         -2.380914
+        ],
+        "kind": "straight",
+        "raw": "0",
+        "slight": false
+       },
+       "verdict": "WRONG"
+      },
+      "turn-717881623": {
+       "said": {
+        "at": [
+         53.455298,
+         -2.341508
+        ],
+        "kind": "straight",
+        "raw": "0",
+        "slight": false
+       },
+       "verdict": "WRONG"
+      },
+      "turn-7944778532": {
+       "said": {
+        "at": [
+         53.452404,
+         -2.719246
+        ],
+        "kind": "straight",
+        "raw": "0",
+        "slight": false
+       },
+       "verdict": "WRONG"
+      }
+     }
+    },
+    "OSRM": {
+     "by_kind": {
+      "left": {
+       "CORRECT": 12
+      },
+      "right": {
+       "CORRECT": 12
+      },
+      "straight": {
+       "CORRECT": 12
+      }
+     },
+     "correct": 36,
+     "judged": 36,
+     "unclear_minor_exit": 0,
+     "wrong_cases": {}
+    },
+    "Valhalla": {
+     "by_kind": {
+      "left": {
+       "CORRECT": 12
+      },
+      "right": {
+       "CORRECT": 12
+      },
+      "straight": {
+       "CORRECT": 11,
+       "WRONG": 1
+      }
+     },
+     "correct": 35,
+     "judged": 36,
+     "unclear_minor_exit": 0,
+     "wrong_cases": {
+      "turn-7839680152": {
+       "said": {
+        "at": [
+         53.396874,
+         -2.226592
+        ],
+        "kind": "right",
+        "raw": "20",
+        "slight": false
+       },
+       "verdict": "WRONG"
+      }
+     }
+    }
+   },
+   "9_roundabout_exits": {
+    "DMN": {
+     "by_kind": {
+      "exit1": {
+       "CORRECT": 8
+      },
+      "exit2": {
+       "AMBIGUOUS_MINOR_EXIT": 1,
+       "CORRECT": 4,
+       "REFUSED": 1
+      },
+      "exit3": {
+       "AMBIGUOUS_MINOR_EXIT": 1,
+       "CORRECT": 6
+      }
+     },
+     "correct": 18,
+     "judged": 19,
+     "unclear_minor_exit": 2,
+     "wrong_cases": {
+      "roundabout-127572573-exit2": {
+       "detail": "Non-allowed route edge",
+       "verdict": "REFUSED"
+      }
+     }
+    },
+    "GraphHopper": {
+     "by_kind": {
+      "exit1": {
+       "CORRECT": 5,
+       "NOT_JUDGED_ROUTE_DIFFERS": 3
+      },
+      "exit2": {
+       "CORRECT": 5,
+       "NOT_JUDGED_ROUTE_DIFFERS": 1
+      },
+      "exit3": {
+       "CORRECT": 5,
+       "NOT_JUDGED_ROUTE_DIFFERS": 2
+      }
+     },
+     "correct": 15,
+     "judged": 15,
+     "unclear_minor_exit": 0,
+     "wrong_cases": {}
+    },
+    "OSRM": {
+     "by_kind": {
+      "exit1": {
+       "CORRECT": 7,
+       "NOT_JUDGED_ROUTE_DIFFERS": 1
+      },
+      "exit2": {
+       "AMBIGUOUS_MINOR_EXIT": 1,
+       "CORRECT": 4,
+       "WRONG": 1
+      },
+      "exit3": {
+       "AMBIGUOUS_MINOR_EXIT": 1,
+       "CORRECT": 6
+      }
+     },
+     "correct": 17,
+     "judged": 18,
+     "unclear_minor_exit": 2,
+     "wrong_cases": {
+      "roundabout-127572573-exit2": {
+       "said": {
+        "at": [
+         53.546213,
+         -2.588667
+        ],
+        "exit": 1,
+        "kind": "roundabout"
+       },
+       "verdict": "WRONG"
+      }
+     }
+    },
+    "Valhalla": {
+     "by_kind": {
+      "exit1": {
+       "CORRECT": 7,
+       "NOT_JUDGED_ROUTE_DIFFERS": 1
+      },
+      "exit2": {
+       "CORRECT": 6
+      },
+      "exit3": {
+       "CORRECT": 7
+      }
+     },
+     "correct": 20,
+     "judged": 20,
+     "unclear_minor_exit": 0,
+     "wrong_cases": {}
+    }
+   },
+   "timing_not_ranked": {
+    "DMN": {
+     "median": 205.0,
+     "p95": 629.9,
+     "samples": 57
+    },
+    "GraphHopper": {
+     "median": 92.3,
+     "p95": 107.9,
+     "samples": 57
+    },
+    "OSRM": {
+     "median": 1.1,
+     "p95": 1.3,
+     "samples": 57
+    },
+    "Valhalla": {
+     "median": 19.2,
+     "p95": 22.8,
+     "samples": 57
+    }
+   }
+  },
+  "contract": "JOURNEY-001 v1",
+  "prepared_sha256": "98ce97b6b4c1c6d2f022fe58a74c2fc6a8bee676a5f3c0891d0ac8da5bd2613c",
+  "revision": "17e84a4a998e33fce33bc463ec901a195f7984c9",
+  "testable_by_stratum": {
+   "roundabout/exit1": 8,
+   "roundabout/exit2": 6,
+   "roundabout/exit3": 7,
+   "turn/left": 12,
+   "turn/right": 12,
+   "turn/straight": 12
+  },
+  "truth": "OpenStreetMap geometry and tags in the hashed snapshot; not independent UK road law"
+ }
+}

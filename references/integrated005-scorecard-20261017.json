@@ -1,0 +1,448 @@
+{
+  "test_id": "INTEGRATED-005",
+  "classification": "DMN-only synthetic lifecycle conformance; no competitive ranking",
+  "formula": "10 * passed / 4 only for a complete judged cohort",
+  "rows": [
+    {
+      "system": "DMN",
+      "rank": 1,
+      "score_out_of_ten": 10.0,
+      "passed": 4,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-005-current-verified-closure",
+          "outcome": "PASS",
+          "checks": {
+            "status": true,
+            "proposal": true,
+            "route": true
+          },
+          "failures": [],
+          "actual": {
+            "traffic_decision": {
+              "status": "VERIFIED_CLOSURE",
+              "use_traffic_speed": false,
+              "propose_reroute": true
+            },
+            "route_status": "ROUTE",
+            "route_edges": [
+              "w:95:0:f",
+              "w:100:0:f",
+              "w:50:0:f"
+            ]
+          },
+          "calculation_ms": 0.029745
+        },
+        {
+          "case_id": "INTEGRATED-005-stale-closure",
+          "outcome": "PASS",
+          "checks": {
+            "status": true,
+            "proposal": true,
+            "no_untrusted_route_search": true
+          },
+          "failures": [],
+          "actual": {
+            "traffic_decision": {
+              "status": "STALE",
+              "use_traffic_speed": false,
+              "propose_reroute": false
+            },
+            "route_status": "NOT_REQUESTED",
+            "route_edges": null
+          },
+          "calculation_ms": 0.004117
+        },
+        {
+          "case_id": "INTEGRATED-005-unverified-closure",
+          "outcome": "PASS",
+          "checks": {
+            "status": true,
+            "proposal": true,
+            "no_untrusted_route_search": true
+          },
+          "failures": [],
+          "actual": {
+            "traffic_decision": {
+              "status": "UNVERIFIED_CLOSURE",
+              "use_traffic_speed": false,
+              "propose_reroute": false
+            },
+            "route_status": "NOT_REQUESTED",
+            "route_edges": null
+          },
+          "calculation_ms": 0.002754
+        },
+        {
+          "case_id": "INTEGRATED-005-no-legal-detour",
+          "outcome": "PASS",
+          "checks": {
+            "status": true,
+            "proposal": true,
+            "route": true
+          },
+          "failures": [],
+          "actual": {
+            "traffic_decision": {
+              "status": "VERIFIED_CLOSURE",
+              "use_traffic_speed": false,
+              "propose_reroute": false
+            },
+            "route_status": "NO_ROUTE",
+            "route_edges": null
+          },
+          "calculation_ms": 0.007371
+        }
+      ]
+    },
+    {
+      "system": "Valhalla",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-005-current-verified-closure",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-005-stale-closure",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-005-unverified-closure",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-005-no-legal-detour",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "OSRM",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-005-current-verified-closure",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-005-stale-closure",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-005-unverified-closure",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-005-no-legal-detour",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "GraphHopper",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-005-current-verified-closure",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-005-stale-closure",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-005-unverified-closure",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-005-no-legal-detour",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "OsmAnd",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-005-current-verified-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-stale-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-unverified-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-no-legal-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "Organic Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-005-current-verified-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-stale-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-unverified-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-no-legal-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "BRouter",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-005-current-verified-closure",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-005-stale-closure",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-005-unverified-closure",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-005-no-legal-detour",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "HERE",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-005-current-verified-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-stale-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-unverified-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-no-legal-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "Mapbox",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-005-current-verified-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-stale-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-unverified-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-no-legal-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "TomTom",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-005-current-verified-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-stale-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-unverified-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-no-legal-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "openrouteservice",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-005-current-verified-closure",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-005-stale-closure",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-005-unverified-closure",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-005-no-legal-detour",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "Google Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-005-current-verified-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-stale-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-unverified-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-no-legal-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "Waze",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-005-current-verified-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-stale-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-unverified-closure",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-005-no-legal-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    }
+  ]
+}

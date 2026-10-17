@@ -1,0 +1,115 @@
+name: Category 2 road legality (ACCESS-001 no-car roads, ONEWAY-002 one-way roads), four engines
+# Runs the frozen ACCESS-001 and ONEWAY-002 cohorts in one GitHub run (public repo: free
+# minutes). Each test x engine is its own parallel job and each test is scored and
+# summarised separately; there is no combined score. The source map is pinned on
+# data/turn001-snapshot; each job cuts the 3 km clips from it and every clip must match
+# its frozen hash in config/access001-prepared.json (osmium-tool 1.16, Ubuntu 24.04).
+on:
+  workflow_dispatch:
+  # A new workflow can only be started by hand once it is on the default branch,
+  # so a push that changes the test itself also runs it (research branches only).
+  push:
+    branches: ['claude/**', 'codex/**', 'ccr-**']
+    paths:
+      - 'benchmarks/access001_route.py'
+      - 'config/access001-*.json'
+      - 'config/oneway002-*.json'
+      - '.github/workflows/category2-legality.yml'
+      # an engine or importer change re-runs the whole test for every engine (owner rule 6)
+      - 'engine/**'
+      - 'map_data/**'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: category2-legality-${{ github.ref }}
+  cancel-in-progress: false
+env:
+  GH_JAR_URL: https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/11.1/graphhopper-web-11.1.jar
+  GH_JAR_SHA1: 6e6c173c2b46cb0a3c1df124b2144d557931597e
+jobs:
+  engine:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        test: [access001, oneway002]
+        run: [DMN, OSRM, GraphHopper, Valhalla, OSRM-control]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Pinned inputs (verified)
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq osmium-tool >/dev/null
+          raw=https://raw.githubusercontent.com/${{ github.repository }}
+          mkdir -p results/turn001 results/${{ matrix.test }}
+          (cd results/turn001 && curl -fsSL -o SHA256SUMS "$raw/data/turn001-snapshot/SHA256SUMS" \
+            && curl -fsSL -o gm.osm.pbf "$raw/data/turn001-snapshot/gm.osm.pbf" && sha256sum -c --ignore-missing SHA256SUMS)
+      - name: Java and jar
+        if: matrix.run == 'GraphHopper'
+        run: |
+          set -euo pipefail
+          mkdir -p results/turn001/engines
+          curl -fsSL -o results/turn001/engines/gh.jar "$GH_JAR_URL"
+          echo "$GH_JAR_SHA1  results/turn001/engines/gh.jar" | sha1sum -c -
+          sudo mkdir -p /opt/jdk17/bin && sudo ln -sf "$JAVA_HOME_17_X64/bin/java" /opt/jdk17/bin/java
+      - name: Run ${{ matrix.run }} (log kept as artifact, not printed)
+        run: |
+          set -euo pipefail
+          engine=${{ matrix.run }}; extra=
+          if [ "$engine" = OSRM-control ]; then engine=OSRM; extra=--control; fi
+          t=${{ matrix.test }}
+          python -m benchmarks.access001_route --test $t run --engine "$engine" $extra > results/$t/run.log 2>&1 || { tail -20 results/$t/run.log; exit 1; }
+          awk '{print $2}' results/$t/run.log | sort | uniq -c
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: ${{ matrix.test }}-${{ matrix.run }}
+          path: |
+            results/${{ matrix.test }}/run-*.json
+            results/${{ matrix.test }}/run.log
+          retention-days: 30
+  score:
+    needs: engine
+    if: always() && needs.engine.result != 'skipped'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Collect engine results of this run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh run download ${{ github.run_id }} -R ${{ github.repository }} -D artifacts
+          for t in access001 oneway002; do
+            mkdir -p results/$t && cp artifacts/$t-*/run-*.json results/$t/ 2>/dev/null || true
+          done
+      - name: Score and short summary
+        run: |
+          set -euo pipefail
+          status=0
+          for t in access001 oneway002; do
+            { python -m benchmarks.access001_route --test $t score > /dev/null \
+              && python -m benchmarks.access001_route --test $t brief | tee -a "$GITHUB_STEP_SUMMARY"; } \
+              || { echo "$t: not scored (missing or failed engine results)" | tee -a "$GITHUB_STEP_SUMMARY"; status=1; }
+            echo >> "$GITHUB_STEP_SUMMARY"
+          done
+          exit $status
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: category2-summary
+          path: results/*/summary.json
+          retention-days: 90

@@ -1,0 +1,27 @@
+{
+  "test_id": "INTEGRATED-003",
+  "classification": "synthetic analytical offline-package and route-context integration; not disk, crash, Android or real-road evidence",
+  "cases": [
+    {
+      "id": "INTEGRATED-003-valid-replacement-invalidates-old-route-context",
+      "activation_sequence": ["A", "B"],
+      "expected_old_route_matches_active": false,
+      "expected_active_map": "B"
+    },
+    {
+      "id": "INTEGRATED-003-corrupt-update-retains-route-context",
+      "activation_sequence": ["A", "checksum"],
+      "expected_second_activation": "REJECTED",
+      "expected_old_route_matches_active": true,
+      "expected_active_map": "A"
+    },
+    {
+      "id": "INTEGRATED-003-new-route-binds-replacement",
+      "activation_sequence": ["A", "B"],
+      "expected_new_route_matches_active": true,
+      "expected_active_map": "B",
+      "source": "osm:1",
+      "target": "osm:3"
+    }
+  ]
+}

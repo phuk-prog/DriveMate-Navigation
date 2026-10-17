@@ -1,0 +1,15 @@
+{
+ "agent": "unknown AI",
+ "branch": "ccr-195b89cb-2aaytg",
+ "created": "2026-10-17T13:08:36+00:00",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T13:08:36+00:00 next by unknown AI on ccr-195b89cb-2aaytg"
+ ],
+ "id": "RUN-C-SIM-DRIVES",
+ "runs": [],
+ "state": "next",
+ "title": "Run C: DMN simulated drives of run B routes -> categories 3, 4, 12, 13, 16, 20 (+19 memory)",
+ "updated": "2026-10-17T13:08:39+00:00",
+ "why": "Owner-approved grouping (17 Oct 2026): runs share execution, each category keeps its own frozen cases, rules, score and ranking; no combined score; a failed shared step marks dependants NOT_RUN. Simulated GPS incl. dropouts and deliberate wrong turns; needs run B frozen routes."
+}

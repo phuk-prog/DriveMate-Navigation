@@ -1,0 +1,136 @@
+# Handover (keep short; newest first)
+
+## 2026-10-17 — Run B1 done: JOURNEY-001 junctions and roundabouts (Claude)
+- [Run 39043457966](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39043457966), ~5 min,
+  `benchmarks/journey001.py`, `.github/workflows/journey001.yml`. Report:
+  [JOURNEY-001](JOURNEY_001_RESULTS.md). v1.1 (run 39044116917): DMN 57/57 valid,
+  36/36 turns, 21/21 exits after owner-approved `4abf5bf` (count every exit a car may
+  leave by, service roads included; instruct on uncertain-access roads).
+- Importer fixes `2d9c3f9` + `436d548` (owner-approved): one bad turn rule never
+  rejects a whole map; Category 2 rerun unchanged.
+- Times: GitHub/UTC is one hour behind UK time (BST) — quote UK time to the owner.
+- Owner approved merging this branch into main (17 Oct 2026). Next: run B2 (lanes 10,
+  speed limits 15; drivemate-data lanes/limits pinned to one release).
+
+## 2026-10-17 — Category 2 run A done: ACCESS-001 + ONEWAY-002 (Claude)
+- One shared run, two separate scores ([run 39039633092](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39039633092),
+  ~8 min). Harness `benchmarks/access001_route.py --test access001|oneway002`,
+  workflow `category2-legality.yml` (also re-runs on `engine/**`, `map_data/**`).
+- DMN 44/44 closed roads and 48/48 one-way roads legal, 0 rule breaks. Reports:
+  [ACCESS-001](ACCESS_001_RESULTS.md), [ONEWAY-002](ONEWAY_002_RESULTS.md).
+- Owner-approved DMN fix `2d9c3f9`: a via-way turn rule whose members are not joined
+  no longer rejects the whole map (blocked per relation, fail closed).
+- Owner decisions: categories unchanged (21); runs grouped A-D (register items
+  RUN-B/C/D), each category separately scored. Right-size tests: catch every issue
+  type without long runs (3 km clips, 12 cases per kind). Never put the owner's own
+  postcodes/home in this public repo (use public junctions instead).
+- Next: RUN-B-JOURNEYS. DMN refuses maps over 32 MB (whole-area loading would need an
+  owner-approved limit change); use per-junction clips. Use drivemate-data lanes,
+  limits and cameras files pinned to one release for categories 10 and 15.
+- Pending owner choices: proposed importer fixes in ACCESS-001 report; merging the
+  consolidated research branch into main.
+
+## 2026-10-17 — Category 2 started: ACCESS-001 no-car roads (Claude)
+- Owner approved: consolidate the stacked draft PRs, then start Category 2.
+- Branch `ccr-195b89cb-2aaytg` = PR #10 branch + main (register) + PR #7 and #8
+  leftovers; all 21 unit categories 754/754 PASS, privacy guard PASS. Nothing
+  merged to main: that waits for the owner.
+- ACCESS-001 (`benchmarks/access001_route.py`, `.github/workflows/access001.yml`):
+  139 frozen real road ways cars may not use (bus gate, busway, no cars,
+  pedestrian; private/destination reported only), 103 testable, 45 discriminating.
+  Clips are cut in CI from the pinned turn001 map and must match frozen hashes.
+- Local DMN pre-check (not the result of record): 71/82 closed-road cases legal
+  pass, 0 drove a closed road, 11 no route. Four-engine result: see the run.
+
+## 2026-10-17 — approved Category 1 completion, green integrated retest
+- Owner approved remaining Category 1 engine/map graph work together; no
+  registration, no Android/app/APK and no Category 2 execution.
+- Research branch `codex/dmn-category1-completion-20261017`, draft PR #10 (unmerged).
+- [MAP-001 v3 six-region graph evidence](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39018620653)
+  retained; native partial DMN=Valhalla 78/78 ways, 714 common segments.
+- [GraphHopper heading trial](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39029550716)
+  PASS: 0/9 wrong-endpoint cases corrected, 3/3 unchanged controls PASS;
+  no arbitrary competitor changes.
+- [Frozen overall Category 1 scorecard](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39029966922)
+  PASS; source, turn, barrier separately ranked and signed-law gaps withheld.
+- [Fresh combined-branch BARRIER v1.2 four-engine retest](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39029643326)
+  six jobs PASS, exact same results as before (DMN=OSRM 46).
+- [Full research safety regression](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39030191491)
+  PASS after fixing public OSM coordinate-key false alarm **without**
+  weakening privacy checks.
+- Results and remaining unverified facts: [Category 1 final report](DMN_CATEGORY1_FINAL_REVIEW.md).
+  Category 1 research finish is not independently verified UK-road law
+  or a full cross-engine graph certificate.
+
+
+## 2026-10-17 — no-registration policy and TURN-001 reference endpoint audit
+- Owner: do not sign up for research sources; leave inaccessible legal
+  evidence DIAGNOSED/UNVERIFIED and move to registration-free tasks. Shared
+  [rule](DMN_NO_REGISTRATION_RULE.md) indexed in the REGISTER read-first map.
+- TURN-001 five missing-route cases: completed map-based diagnosis, NOT
+  independent legal proof; do not pursue D-TRO consumer registration.
+- [Run 39028874337](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39028874337)
+  successfully analysed existing 142-case v1.3 engine artifacts only.
+  GraphHopper 67 raw base-clip off-target, 54 with DMN exact-anchored
+  comparison: 41 start-only mismatch, 11 finish-only, 2 both; see
+  [endpoint report](TURN_001_ENDPOINT_AUDIT.md). Original final total 68
+  remains unchanged. No engine code changed or expensive competitor reruns.
+- Next: determine cause of mismatch from small, already accessible
+  GraphHopper geometry/adapters; no Category 2 or Android app changes.
+## 2026-10-17 — TURN-001 five no-route junctions: focused diagnostic
+- Own branch: `codex/chatgpt-turn001-no-route5-20261017`; read-only diagnostic in
+  `tools/turn001_no_route5_diagnostic.py`.
+- [Run 39027815145](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39027815145):
+  one focused job PASS, pinned clips/hashes verified. All 5 have a direct
+  route if turn rules are ignored, none has a via-node-rule-compliant route
+  within the base clip. Four recover when the tested relation is removed;
+  7615778 has a private-access destination.
+- [Five-case report](TURN_001_NO_ROUTE5_RESULTS.md); no engine modifications or
+  fresh competitive claim. Work item held pending independent dated
+  signage/TRO/access evidence; no inferred real-world legal conclusions.
+## 2026-10-17 — TURN-001 official road-rule evidence source audit (ChatGPT)
+- Branch `codex/chatgpt-turn001-legal-evidence-20261017`; evidence work only (no DMN or app code changes).
+- Official DfT D-TRO service: free/OGL v3 data, consumer signup required,
+  **digital extract not itself legal order**, variable geometry precision.
+- Manchester/Trafford/Salford/Rochdale council TRO portals identified; Salford
+  Chesterfield Close 2019 order is about 20mph/no-waiting, **not** target turn.
+- Five case statuses all **UNVERIFIED**; cases and precise source scope in
+  [TURN_001_OFFICIAL_EVIDENCE_AUDIT.md](TURN_001_OFFICIAL_EVIDENCE_AUDIT.md).
+- Evidence guard CI [39028307800](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39028307800)
+  PASS; work item TURN-001-OFFICIAL-SOURCE-AUDIT recorded DONE.
+- Previous TURN-001-NO-ROUTE-5 remains blocked on actual operative TRO,
+  dated site signage and access proof. No fabricated evidence promoted.
+
+
+## 2026-10-17 (later still) — work register + BARRIER-001 baseline
+- Shared register for all AIs: `python3 -m tools.work_status --fetch` (done / in progress /
+  next, read-first list, `where <topic>`); rule at top of AGENTS.md.
+- BARRIER-001 v1.1 baseline: [docs/BARRIER_001_RESULTS.md](BARRIER_001_RESULTS.md), run
+  39022934914. Closed barriers: DMN 46 pass (ties OSRM), 0 crossed by any engine.
+- Stopped for owner review; proposed improvements listed in the results file.
+- REGISTER.md (one page every AI reads first) + pointer files for Codex, Claude, Gemini,
+  Copilot, Cursor; PR #5 puts it on main (tests green, waiting for the owner to merge).
+
+## 2026-10-17 (later) — TURN-001 results written
+- Branch `claude/dmn-turn-restriction-debug-mhw7cw` (from the codex branch; not pushed there).
+- Results: [docs/TURN_001_RESULTS.md](TURN_001_RESULTS.md). Fresh run 39019749346:
+  DMN 131 pass / 0 fail / 5 no route / 0 off-target / 6 closed start-finish.
+- DMN fix `0668fce`: an untagged service road that an only_* ban sends cars onto is open
+  to cars (case 14285234); start allowance for uncertain roads ends on a normal road.
+- None of DMN's 5 remaining no-routes has a full-rule-check route from another engine.
+- Next: route-level bollard and gate test (not started).
+
+## 2026-10-17 — Category 1, TURN-001 turn-restriction comparison
+- Branch `codex/dmn-gps001-ranked-trial-20261015` (PR #4). Harness contract
+  TURN-001 v1.3: real-journey test (direction of travel given to every engine,
+  partial first/last segments kept, whole-route audit of all one-ways and
+  restrictions, no-route re-asked on a 3x wider clip, OSRM control run).
+- DMN change: `shortest_route(..., endpoint_uncertain_access=True)` lets an
+  uncertain road be the start/finish of a journey, never a through route.
+- Frozen inputs: branch `data/turn001-snapshot` (OSM, ODbL; hashes checked).
+- Get results: run workflow "TURN-001 four-engine turn-restriction comparison"
+  (`.github/workflows/turn001.yml`, manual or PR). Read its job summary only.
+- Early local DMN result (not final evidence): 130/142 legal routes, 6 endpoints
+  OSM closes to cars (correctly refused), 6 no route even on the wider clip.
+- Next: read the CI summary; check any DMN no-route where another engine has a
+  legal route; write docs/TURN_001_RESULTS.md; then node-barrier route test.

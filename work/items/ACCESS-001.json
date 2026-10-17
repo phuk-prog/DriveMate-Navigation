@@ -1,0 +1,21 @@
+{
+ "agent": "Claude",
+ "branch": "ccr-195b89cb-2aaytg",
+ "created": "2026-10-17T12:18:44+00:00",
+ "fingerprints": [
+  "ACCESS-001 v1.2|source 2a8ef8e1|rev 2d9c3f9"
+ ],
+ "history": [
+  "2026-10-17T12:18:44+00:00 in_progress by Claude on ccr-195b89cb-2aaytg",
+  "2026-10-17T14:20:51+00:00 done by Claude on ccr-195b89cb-2aaytg"
+ ],
+ "id": "ACCESS-001",
+ "results": "docs/ACCESS_001_RESULTS.md",
+ "runs": [
+  "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39039633092"
+ ],
+ "state": "done",
+ "summary": "DMN 44/44 judged closed-road cases legal (bus gate 12, busway 8, no cars 12, pedestrian 12), 0 drove a closed road; Valhalla 42, OSRM 41, GraphHopper 27 (17 off target). Owner-approved DMN fix 2d9c3f9: one wrongly mapped via-way turn rule no longer rejects the whole map. Private/access-only reported, not judged.",
+ "title": "Category 2: no-car roads (bus gates, busways, no-motor-vehicle roads), route-level, 4 engines",
+ "updated": "2026-10-17T14:20:51+00:00"
+}

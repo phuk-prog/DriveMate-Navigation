@@ -1,0 +1,403 @@
+{
+  "classification": "synthetic analytical motorcar access/turn/rerouting contract; not independent real-world legality",
+  "frozen_before_tuning": true,
+  "oracle_basis": "Hand-declared invented directed graph, explicit motor_vehicle tags and no_straight_on relation; analytical reachability and enumeration of all legal simple paths. No engine output supplies the expected result. All legal declared path variants accepted, not a cross-profile optimality test.",
+  "cases": [
+    {
+      "id": "ROUTE-002-prohibited-turn-detour",
+      "source_node": 1,
+      "target_node": 3,
+      "start": [
+        1,
+        1
+      ],
+      "end": [
+        1,
+        1.002
+      ],
+      "expected": "ROUTE",
+      "oracle_rationale": "Relation1000 prohibits way10 to way20 via node2. The allowed shortest simple detour is ways10,30,40,50; alternative through node7 is longer at identical declared speeds. All declared legal simple paths are accepted; longer allowed detours are not failed for differing provider turn costs. No shortest-time ranking.",
+      "cohort": "shared-static",
+      "path": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1.001
+        ],
+        [
+          1.001,
+          1.001
+        ],
+        [
+          1.001,
+          1.002
+        ],
+        [
+          1,
+          1.002
+        ]
+      ],
+      "accepted_paths": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1.001
+          ],
+          [
+            1.001,
+            1.001
+          ],
+          [
+            1.001,
+            1.002
+          ],
+          [
+            1,
+            1.002
+          ]
+        ],
+        [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1.001
+          ],
+          [
+            1.001,
+            1.001
+          ],
+          [
+            1.002,
+            1.002
+          ],
+          [
+            1.001,
+            1.002
+          ],
+          [
+            1,
+            1.002
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "ROUTE-002-fresh-origin-control",
+      "source_node": 2,
+      "target_node": 3,
+      "start": [
+        1,
+        1.001
+      ],
+      "end": [
+        1,
+        1.002
+      ],
+      "expected": "ROUTE",
+      "oracle_rationale": "The prohibited turn requires an incoming way10. A fresh origin at node2 may take way20; forbidding the whole outgoing road would be wrong. All declared legal simple paths are accepted; longer allowed detours are not failed for differing provider turn costs. No shortest-time ranking.",
+      "cohort": "shared-static",
+      "path": [
+        [
+          1,
+          1.001
+        ],
+        [
+          1,
+          1.002
+        ]
+      ],
+      "accepted_paths": [
+        [
+          [
+            1,
+            1.001
+          ],
+          [
+            1,
+            1.002
+          ]
+        ],
+        [
+          [
+            1,
+            1.001
+          ],
+          [
+            1.001,
+            1.001
+          ],
+          [
+            1.001,
+            1.002
+          ],
+          [
+            1,
+            1.002
+          ]
+        ],
+        [
+          [
+            1,
+            1.001
+          ],
+          [
+            1.001,
+            1.001
+          ],
+          [
+            1.002,
+            1.002
+          ],
+          [
+            1.001,
+            1.002
+          ],
+          [
+            1,
+            1.002
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "ROUTE-002-motor-access-bypass",
+      "source_node": 2,
+      "target_node": 5,
+      "start": [
+        1,
+        1.001
+      ],
+      "end": [
+        1.001,
+        1.002
+      ],
+      "expected": "ROUTE",
+      "oracle_rationale": "Direct way60 explicitly prohibits motor vehicles. Allowed ways30,40 form the shortest detour; all allowed roads have equal declared speed. All declared legal simple paths are accepted; longer allowed detours are not failed for differing provider turn costs. No shortest-time ranking.",
+      "cohort": "shared-static",
+      "path": [
+        [
+          1,
+          1.001
+        ],
+        [
+          1.001,
+          1.001
+        ],
+        [
+          1.001,
+          1.002
+        ]
+      ],
+      "accepted_paths": [
+        [
+          [
+            1,
+            1.001
+          ],
+          [
+            1.001,
+            1.001
+          ],
+          [
+            1.001,
+            1.002
+          ]
+        ],
+        [
+          [
+            1,
+            1.001
+          ],
+          [
+            1.001,
+            1.001
+          ],
+          [
+            1.002,
+            1.002
+          ],
+          [
+            1.001,
+            1.002
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "ROUTE-002-disconnected-destination",
+      "source_node": 1,
+      "target_node": 9,
+      "start": [
+        1,
+        1
+      ],
+      "end": [
+        1.003,
+        1.004
+      ],
+      "expected": "NO_ROUTE",
+      "oracle_rationale": "Nodes8,9 are disconnected from nodes1..7. Both endpoints lie exactly on declared allowed roads; do not manufacture connectivity or relocate endpoints.",
+      "cohort": "shared-static"
+    },
+    {
+      "id": "ROUTE-002-prohibited-target",
+      "source_node": 4,
+      "target_node": 6,
+      "start": [
+        1.001,
+        1.001
+      ],
+      "end": [
+        1.002,
+        1.001
+      ],
+      "expected": "NO_ROUTE",
+      "oracle_rationale": "The only incoming link to node6 is motor_vehicle=no way70. Its allowed outgoing way80 does not make node6 reachable from node4.",
+      "cohort": "shared-static"
+    },
+    {
+      "id": "ROUTE-002-reroute-incoming-turn",
+      "source_node": 2,
+      "target_node": 3,
+      "start": [
+        1,
+        1.001
+      ],
+      "end": [
+        1,
+        1.002
+      ],
+      "expected": "ROUTE",
+      "oracle_rationale": "Rerouting at node2 must retain incoming way10 and therefore avoid prohibited way20. All declared legal simple paths are accepted; longer allowed detours are not failed for differing provider turn costs. No shortest-time ranking.",
+      "cohort": "dmn-state",
+      "path": [
+        [
+          1,
+          1.001
+        ],
+        [
+          1.001,
+          1.001
+        ],
+        [
+          1.001,
+          1.002
+        ],
+        [
+          1,
+          1.002
+        ]
+      ],
+      "incoming_edge": "w:10:0:f",
+      "accepted_paths": [
+        [
+          [
+            1,
+            1.001
+          ],
+          [
+            1.001,
+            1.001
+          ],
+          [
+            1.001,
+            1.002
+          ],
+          [
+            1,
+            1.002
+          ]
+        ],
+        [
+          [
+            1,
+            1.001
+          ],
+          [
+            1.001,
+            1.001
+          ],
+          [
+            1.002,
+            1.002
+          ],
+          [
+            1.001,
+            1.002
+          ],
+          [
+            1,
+            1.002
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "ROUTE-002-reroute-blocked-link",
+      "source_node": 4,
+      "target_node": 3,
+      "start": [
+        1.001,
+        1.001
+      ],
+      "end": [
+        1,
+        1.002
+      ],
+      "expected": "ROUTE",
+      "oracle_rationale": "With way40 blocked, allowed ways95,100,50 provide the only remaining legal detour. Way70 stays prohibited.",
+      "cohort": "dmn-state",
+      "path": [
+        [
+          1.001,
+          1.001
+        ],
+        [
+          1.002,
+          1.002
+        ],
+        [
+          1.001,
+          1.002
+        ],
+        [
+          1,
+          1.002
+        ]
+      ],
+      "blocked_edges": [
+        "w:40:0:f"
+      ]
+    },
+    {
+      "id": "ROUTE-002-reroute-no-legal-detour",
+      "source_node": 4,
+      "target_node": 3,
+      "start": [
+        1.001,
+        1.001
+      ],
+      "end": [
+        1,
+        1.002
+      ],
+      "expected": "NO_ROUTE",
+      "oracle_rationale": "Block ways40 and95: the only remaining outgoing road is motor_vehicle=no way70. No valid detour remains.",
+      "cohort": "dmn-state",
+      "blocked_edges": [
+        "w:40:0:f",
+        "w:95:0:f"
+      ]
+    }
+  ]
+}

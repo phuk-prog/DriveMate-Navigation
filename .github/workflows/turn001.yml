@@ -1,0 +1,105 @@
+name: TURN-001 four-engine turn-restriction comparison
+# Runs the frozen TURN-001 cohort on GitHub (public repo: free minutes) so no
+# agent session has to drive or watch it. Engines run in parallel; one short
+# summary is written to the job page. Inputs are pinned on data/turn001-snapshot.
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'benchmarks/turn001_restrictions.py'
+      - 'tools/turn001_brief.py'
+      - 'engine/routing.py'
+      - 'map_data/osm_xml.py'
+      - '.github/workflows/turn001.yml'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: turn001-${{ github.ref }}
+  cancel-in-progress: false
+env:
+  GH_JAR_URL: https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/11.1/graphhopper-web-11.1.jar
+  GH_JAR_SHA1: 6e6c173c2b46cb0a3c1df124b2144d557931597e
+jobs:
+  engine:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.title, '[map001-facts]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        run: [DMN, OSRM, GraphHopper, Valhalla, OSRM-control]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Pinned inputs (verified)
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq osmium-tool >/dev/null
+          mkdir -p results/turn001 && cd results/turn001
+          base=https://raw.githubusercontent.com/${{ github.repository }}/data/turn001-snapshot
+          curl -fsSL -o SHA256SUMS "$base/SHA256SUMS"
+          curl -fsSL -o gm.osm.pbf "$base/gm.osm.pbf"
+          curl -fsSL -o turn001-cases.tar.xz "$base/turn001-cases.tar.xz"
+          sha256sum -c SHA256SUMS
+          tar -xJf turn001-cases.tar.xz && rm turn001-cases.tar.xz
+      - name: Java and jar
+        if: matrix.run == 'GraphHopper'
+        run: |
+          set -euo pipefail
+          mkdir -p results/turn001/engines
+          [ -f results/turn001/engines/gh.jar ] || curl -fsSL -o results/turn001/engines/gh.jar "$GH_JAR_URL"
+          echo "$GH_JAR_SHA1  results/turn001/engines/gh.jar" | sha1sum -c -
+          sudo mkdir -p /opt/jdk17/bin && sudo ln -sf "$JAVA_HOME_17_X64/bin/java" /opt/jdk17/bin/java
+      - name: Run ${{ matrix.run }} (log kept as artifact, not printed)
+        run: |
+          set -euo pipefail
+          engine=${{ matrix.run }}; extra=
+          if [ "$engine" = OSRM-control ]; then engine=OSRM; extra=--control; fi
+          python -m benchmarks.turn001_restrictions run --engine "$engine" $extra --fresh > results/turn001/run.log 2>&1 || { tail -20 results/turn001/run.log; exit 1; }
+          awk '{print $2}' results/turn001/run.log | sort | uniq -c
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: turn001-${{ matrix.run }}
+          path: |
+            results/turn001/run-*.json
+            results/turn001/run.log
+          retention-days: 30
+  score:
+    needs: engine
+    if: always() && needs.engine.result != 'skipped'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Collect engine results of this run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh run download ${{ github.run_id }} -R ${{ github.repository }} -p 'turn001-*' -D artifacts
+          mkdir -p results/turn001 && cp artifacts/*/run-*.json results/turn001/
+      - name: Score and short summary
+        run: |
+          set -euo pipefail
+          cd results/turn001
+          curl -fsSL "https://raw.githubusercontent.com/${{ github.repository }}/data/turn001-snapshot/turn001-cases.tar.xz" | tar -xJ prepared.json
+          cd ../..
+          python -m benchmarks.turn001_restrictions score > /dev/null
+          python -m tools.turn001_brief | tee -a "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: turn001-summary
+          path: results/turn001/summary.json
+          retention-days: 90

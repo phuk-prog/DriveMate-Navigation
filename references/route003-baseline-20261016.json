@@ -1,0 +1,152 @@
+{
+  "test_id": "ROUTE-003",
+  "classification": "real public OSM map; three synthetic endpoint pairs; route-output contract",
+  "map": {
+    "source": "Geofabrik Greater Manchester 260901",
+    "bbox": "-2.270000,53.350000,-2.260000,53.360000",
+    "archive_sha256": "b7188b22501b878fddba6e06a90bb44ce6c2d721333e0ca57e10a1a82b568807",
+    "xml_sha256": "b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5",
+    "manifest_sha256": "b4348997ca109fb873c265179f1edb7d4aa0772bad26b5198ad207deea02f87d",
+    "attribution": "OpenStreetMap contributors; ODbL"
+  },
+  "formula": "10 * passed / 3 frozen cases; incomplete cohorts unranked; timing excluded from score",
+  "executed_system_count": 6,
+  "external_engine_count": 5,
+  "baseline_run": {
+    "run_id": 38870925774,
+    "run_sha": "0170416b7f2a6597f841ddeba7a2b5bbd8cdc459",
+    "url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38870925774"
+  },
+  "brouter_setup_failures": [
+    {
+      "run_id": 38870925774,
+      "reason": "Pinned BRouter release archive lacked required all.brf profile; no route call executed"
+    },
+    {
+      "run_id": 38871396349,
+      "reason": "BRouter returned numeric distance/time JSON strings; first parser expected native JSON numbers"
+    }
+  ],
+  "brouter_corrected_run": {
+    "run_id": 38871562075,
+    "run_sha": "32fbcf10c60179d3ce18bdfbb6674bb748ad8fbd",
+    "url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38871562075"
+  },
+  "ranked_results": [
+    {
+      "rank": 1,
+      "system": "DMN",
+      "version": "32fbcf10c60179d3ce18bdfbb6674bb748ad8fbd; repository shortest_route",
+      "passed": 3,
+      "failed": 0,
+      "unresolved": 0,
+      "score_out_of_ten": 10.0,
+      "median_calculation_ms": 0.02719,
+      "timing_scope": "in-process route search",
+      "cases": [
+        {"id":"REF-006-001","outcome":"PASS","calculation_ms":0.063228,"distance_m":150.635,"eta_s":15.494,"start_error_m":0.0,"end_error_m":0.0},
+        {"id":"REF-006-002","outcome":"PASS","calculation_ms":0.025778,"distance_m":52.642,"eta_s":5.415,"start_error_m":0.0,"end_error_m":0.0},
+        {"id":"REF-006-003","outcome":"PASS","calculation_ms":0.02719,"distance_m":52.642,"eta_s":5.415,"start_error_m":0.0,"end_error_m":0.0}
+      ]
+    },
+    {
+      "rank": 1,
+      "system": "OSRM",
+      "version": "5.27.1; car.lua; MLD",
+      "passed": 3,
+      "failed": 0,
+      "unresolved": 0,
+      "score_out_of_ten": 10.0,
+      "median_calculation_ms": 1.075801,
+      "timing_scope": "warm loopback HTTP request including serialization",
+      "cases": [
+        {"id":"REF-006-001","outcome":"PASS","calculation_ms":2.314548,"distance_m":151.0,"eta_s":21.8,"start_error_m":0.034012,"end_error_m":0.055992},
+        {"id":"REF-006-002","outcome":"PASS","calculation_ms":1.075801,"distance_m":52.7,"eta_s":7.6,"start_error_m":0.022806,"end_error_m":0.033186},
+        {"id":"REF-006-003","outcome":"PASS","calculation_ms":1.052403,"distance_m":52.7,"eta_s":7.6,"start_error_m":0.033186,"end_error_m":0.022806}
+      ]
+    },
+    {
+      "rank": 1,
+      "system": "Valhalla",
+      "version": "3.9.1; auto",
+      "passed": 3,
+      "failed": 0,
+      "unresolved": 0,
+      "score_out_of_ten": 10.0,
+      "median_calculation_ms": 5.181559,
+      "timing_scope": "warm loopback HTTP request including serialization",
+      "cases": [
+        {"id":"REF-006-001","outcome":"PASS","calculation_ms":45.418472,"distance_m":150.0,"eta_s":13.572,"start_error_m":0.034012,"end_error_m":0.055992},
+        {"id":"REF-006-002","outcome":"PASS","calculation_ms":5.181559,"distance_m":52.0,"eta_s":4.741,"start_error_m":0.022806,"end_error_m":0.033186},
+        {"id":"REF-006-003","outcome":"PASS","calculation_ms":4.815397,"distance_m":52.0,"eta_s":4.741,"start_error_m":0.033186,"end_error_m":0.022806}
+      ]
+    },
+    {
+      "rank": 1,
+      "system": "GraphHopper",
+      "version": "11.1; car; CH",
+      "passed": 3,
+      "failed": 0,
+      "unresolved": 0,
+      "score_out_of_ten": 10.0,
+      "median_calculation_ms": 8.694816,
+      "timing_scope": "warm loopback HTTP request including serialization",
+      "cases": [
+        {"id":"REF-006-001","outcome":"PASS","calculation_ms":87.845523,"distance_m":150.629,"eta_s":18.076,"start_error_m":0.034012,"end_error_m":0.055992},
+        {"id":"REF-006-002","outcome":"PASS","calculation_ms":8.694816,"distance_m":52.63,"eta_s":6.316,"start_error_m":0.022806,"end_error_m":0.033186},
+        {"id":"REF-006-003","outcome":"PASS","calculation_ms":7.721144,"distance_m":52.63,"eta_s":6.316,"start_error_m":0.033186,"end_error_m":0.022806}
+      ]
+    },
+    {
+      "rank": 1,
+      "system": "openrouteservice",
+      "version": "10.1.0; driving-car; fastest",
+      "passed": 3,
+      "failed": 0,
+      "unresolved": 0,
+      "score_out_of_ten": 10.0,
+      "median_calculation_ms": 8.812027,
+      "timing_scope": "warm loopback HTTP request including serialization",
+      "cases": [
+        {"id":"REF-006-001","outcome":"PASS","calculation_ms":212.549679,"distance_m":150.6,"eta_s":18.1,"start_error_m":0.034012,"end_error_m":0.055992},
+        {"id":"REF-006-002","outcome":"PASS","calculation_ms":8.812027,"distance_m":52.6,"eta_s":6.3,"start_error_m":0.022806,"end_error_m":0.545206},
+        {"id":"REF-006-003","outcome":"PASS","calculation_ms":7.851867,"distance_m":52.6,"eta_s":6.3,"start_error_m":0.545206,"end_error_m":0.022806}
+      ]
+    },
+    {
+      "rank": 1,
+      "system": "BRouter",
+      "version": "1.7.10; car-vario",
+      "passed": 3,
+      "failed": 0,
+      "unresolved": 0,
+      "score_out_of_ten": 10.0,
+      "median_calculation_ms": 7.272329,
+      "timing_scope": "warm loopback HTTP request including serialization",
+      "cases": [
+        {"id":"REF-006-001","outcome":"PASS","calculation_ms":164.492697,"distance_m":151.0,"eta_s":26.0,"start_error_m":0.034012,"end_error_m":0.055992},
+        {"id":"REF-006-002","outcome":"PASS","calculation_ms":7.272329,"distance_m":53.0,"eta_s":17.0,"start_error_m":0.022806,"end_error_m":0.033186},
+        {"id":"REF-006-003","outcome":"PASS","calculation_ms":6.720823,"distance_m":53.0,"eta_s":15.0,"start_error_m":0.033186,"end_error_m":0.022806}
+      ]
+    }
+  ],
+  "unranked": [
+    {"system":"Itinero","reason":"Retained adapter lacks the full shared distance, ETA and comparable timing contract"},
+    {"system":"Routino","reason":"Retained adapter lacks the full shared distance and ETA contract"},
+    {"system":"OsmAnd","reason":"No runnable native same-cohort adapter"},
+    {"system":"Organic Maps","reason":"No runnable native same-cohort adapter"},
+    {"system":"HERE","reason":"No configured permitted free same-map interface"},
+    {"system":"Mapbox","reason":"No configured permitted free same-map interface"},
+    {"system":"TomTom","reason":"No configured permitted free same-map interface"},
+    {"system":"Google Maps","reason":"Paid/keyed interface not authorized and cannot share the pinned OSM snapshot"},
+    {"system":"Waze","reason":"Automated access not permitted"}
+  ],
+  "verdict_limits": {
+    "independent_current_road_legality": "UNRESOLVED",
+    "fastest_route_truth": "UNRESOLVED",
+    "traffic": "NOT_TESTED",
+    "wrong_turn_safety": "NOT_TESTED",
+    "android_or_device_performance": "NOT_TESTED",
+    "general_navigation_superiority": false
+  }
+}

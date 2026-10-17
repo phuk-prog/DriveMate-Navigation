@@ -1,0 +1,1876 @@
+{
+ "available_by_stratum": {
+  "closed/block": 16,
+  "closed/bollard": 138,
+  "closed/cycle_barrier": 5,
+  "closed/other": 29,
+  "open/*": 47,
+  "restricted/*": 149,
+  "untagged_gate/gate": 934,
+  "untagged_gate/lift_gate": 84,
+  "untagged_gate/swing_gate": 12
+ },
+ "barrier_nodes_in_source": 39654,
+ "cases": [
+  {
+   "lat": 53.4614754,
+   "lon": -2.1705689,
+   "node": 6504193902,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard"
+   },
+   "ways": [
+    95099364
+   ]
+  },
+  {
+   "lat": 53.4294317,
+   "lon": -2.341288,
+   "node": 8576764348,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard"
+   },
+   "ways": [
+    923947005
+   ]
+  },
+  {
+   "lat": 53.4827957,
+   "lon": -2.0514398,
+   "node": 12584428178,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard"
+   },
+   "ways": [
+    131912528
+   ]
+  },
+  {
+   "lat": 53.5968774,
+   "lon": -2.3132889,
+   "node": 967731308,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    4992968
+   ]
+  },
+  {
+   "lat": 53.5658095,
+   "lon": -2.4533193,
+   "node": 6771345319,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard"
+   },
+   "ways": [
+    721817017
+   ]
+  },
+  {
+   "lat": 53.532989,
+   "lon": -2.1170471,
+   "node": 12809076676,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    668325596
+   ]
+  },
+  {
+   "lat": 53.6525014,
+   "lon": -2.3048901,
+   "node": 33754801,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard",
+    "bollard": "removable",
+    "horse": "yes",
+    "material": "metal",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    5043598
+   ]
+  },
+  {
+   "lat": 53.6616422,
+   "lon": -2.6253758,
+   "node": 6831061898,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard",
+    "bicycle": "yes",
+    "bollard": "fixed",
+    "foot": "yes",
+    "horse": "yes",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    729121242
+   ]
+  },
+  {
+   "lat": 53.4529707,
+   "lon": -2.631336,
+   "node": 7300833370,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard",
+    "bicycle": "yes",
+    "foot": "yes",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    885546276,
+    885546277
+   ]
+  },
+  {
+   "lat": 53.5108888,
+   "lon": -2.2870682,
+   "node": 7608299408,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard"
+   },
+   "ways": [
+    814504128
+   ]
+  },
+  {
+   "lat": 53.546884,
+   "lon": -2.1306772,
+   "node": 7864171506,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard",
+    "bicycle": "yes",
+    "bollard": "fixed",
+    "foot": "yes",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    64047822,
+    922284623
+   ]
+  },
+  {
+   "lat": 53.4240878,
+   "lon": -2.4352437,
+   "node": 8496509817,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard",
+    "bollard": "fixed"
+   },
+   "ways": [
+    194502849,
+    914644717
+   ]
+  },
+  {
+   "lat": 53.4262316,
+   "lon": -2.1734862,
+   "node": 395730394,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard",
+    "bollard": "fixed",
+    "material": "metal",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    32824910,
+    244560870
+   ]
+  },
+  {
+   "lat": 53.4606987,
+   "lon": -1.9709563,
+   "node": 243748015,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    22724571,
+    22724572
+   ]
+  },
+  {
+   "lat": 53.6081756,
+   "lon": -2.3290263,
+   "node": 7872356486,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard"
+   },
+   "ways": [
+    4995375
+   ]
+  },
+  {
+   "lat": 53.5350858,
+   "lon": -2.4194516,
+   "node": 10226956288,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard"
+   },
+   "ways": [
+    62817990
+   ]
+  },
+  {
+   "lat": 53.4126307,
+   "lon": -2.2995461,
+   "node": 1268079159,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard"
+   },
+   "ways": [
+    111263893,
+    111263901
+   ]
+  },
+  {
+   "lat": 53.481428,
+   "lon": -2.2627622,
+   "node": 2235776110,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard",
+    "bicycle": "yes",
+    "bollard": "removable",
+    "foot": "yes",
+    "horse": "yes",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    159131987,
+    824491856
+   ]
+  },
+  {
+   "lat": 53.5462279,
+   "lon": -2.1375637,
+   "node": 12312818461,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    922284611
+   ]
+  },
+  {
+   "lat": 53.4270881,
+   "lon": -2.1751034,
+   "node": 395738023,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard",
+    "bollard": "fixed",
+    "material": "concrete",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    32824871,
+    927704930
+   ]
+  },
+  {
+   "lat": 53.4474959,
+   "lon": -2.2433669,
+   "node": 9685868282,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard"
+   },
+   "ways": [
+    4795536
+   ]
+  },
+  {
+   "lat": 53.5059458,
+   "lon": -2.3614493,
+   "node": 8509717747,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    23961688
+   ]
+  },
+  {
+   "lat": 53.5582023,
+   "lon": -2.4654631,
+   "node": 2247330897,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard"
+   },
+   "ways": [
+    136615260
+   ]
+  },
+  {
+   "lat": 53.5898315,
+   "lon": -2.6460006,
+   "node": 6164651300,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard",
+    "bollard": "concrete",
+    "check_date": "2025-12-16",
+    "horse": "yes",
+    "material": "concrete",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    971600796,
+    1265556121
+   ]
+  },
+  {
+   "lat": 53.4904671,
+   "lon": -2.2747087,
+   "node": 8692176483,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard"
+   },
+   "ways": [
+    83809617
+   ]
+  },
+  {
+   "lat": 53.5461796,
+   "lon": -2.1825192,
+   "node": 11989562996,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    5015432
+   ]
+  },
+  {
+   "lat": 53.5439113,
+   "lon": -2.6649417,
+   "node": 8860636448,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard"
+   },
+   "ways": [
+    23319139
+   ]
+  },
+  {
+   "lat": 53.5581976,
+   "lon": -2.4653974,
+   "node": 2438064736,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard"
+   },
+   "ways": [
+    136615260
+   ]
+  },
+  {
+   "lat": 53.46074,
+   "lon": -2.2505953,
+   "node": 9897621438,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard",
+    "bicycle": "yes",
+    "bollard": "fixed",
+    "foot": "yes",
+    "horse": "yes",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    172544006
+   ]
+  },
+  {
+   "lat": 53.4769701,
+   "lon": -2.150061,
+   "node": 6374996674,
+   "stratum": [
+    "closed",
+    "bollard"
+   ],
+   "tags": {
+    "barrier": "bollard"
+   },
+   "ways": [
+    125613586
+   ]
+  },
+  {
+   "lat": 53.5893321,
+   "lon": -2.2223972,
+   "node": 13144868566,
+   "stratum": [
+    "closed",
+    "cycle_barrier"
+   ],
+   "tags": {
+    "barrier": "cycle_barrier",
+    "cycle_barrier": "double"
+   },
+   "ways": [
+    1430012886
+   ]
+  },
+  {
+   "lat": 53.580254,
+   "lon": -2.3114748,
+   "node": 11511308566,
+   "stratum": [
+    "closed",
+    "cycle_barrier"
+   ],
+   "tags": {
+    "barrier": "cycle_barrier",
+    "foot": "yes",
+    "wheelchair": "no"
+   },
+   "ways": [
+    419672283
+   ]
+  },
+  {
+   "lat": 53.4442457,
+   "lon": -2.4089522,
+   "node": 705611646,
+   "stratum": [
+    "closed",
+    "cycle_barrier"
+   ],
+   "tags": {
+    "barrier": "cycle_barrier",
+    "colour": "yellow"
+   },
+   "ways": [
+    56227265
+   ]
+  },
+  {
+   "lat": 53.5326482,
+   "lon": -2.2278244,
+   "node": 13228260776,
+   "stratum": [
+    "closed",
+    "cycle_barrier"
+   ],
+   "tags": {
+    "barrier": "cycle_barrier",
+    "bicycle": "yes",
+    "cycle_barrier": "double",
+    "foot": "yes",
+    "wheelchair": "limited"
+   },
+   "ways": [
+    1441694083
+   ]
+  },
+  {
+   "lat": 53.4877097,
+   "lon": -2.1897433,
+   "node": 307822875,
+   "stratum": [
+    "closed",
+    "cycle_barrier"
+   ],
+   "tags": {
+    "barrier": "cycle_barrier",
+    "bicycle": "yes",
+    "cycle_barrier": "tilted",
+    "foot": "yes",
+    "wheelchair": "limited"
+   },
+   "ways": [
+    89695964
+   ]
+  },
+  {
+   "lat": 53.4467506,
+   "lon": -2.3875628,
+   "node": 12162429533,
+   "stratum": [
+    "closed",
+    "block"
+   ],
+   "tags": {
+    "barrier": "block",
+    "bicycle": "yes",
+    "foot": "yes",
+    "horse": "yes",
+    "material": "concrete",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    56706918,
+    1314038947
+   ]
+  },
+  {
+   "lat": 53.5545156,
+   "lon": -2.126156,
+   "node": 13370482541,
+   "stratum": [
+    "closed",
+    "block"
+   ],
+   "tags": {
+    "barrier": "block",
+    "bicycle": "no",
+    "material": "stone",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    830761238
+   ]
+  },
+  {
+   "lat": 53.3910093,
+   "lon": -2.5709274,
+   "node": 9447866159,
+   "stratum": [
+    "closed",
+    "block"
+   ],
+   "tags": {
+    "barrier": "block"
+   },
+   "ways": [
+    693454174
+   ]
+  },
+  {
+   "lat": 53.4816694,
+   "lon": -2.3623574,
+   "node": 7358709626,
+   "stratum": [
+    "closed",
+    "block"
+   ],
+   "tags": {
+    "barrier": "block",
+    "fixme": "There are multiple driver feedbacks that he could not drive in this place. Esri (Clarity) images show that there is an obstacle on the road. Please specify the type of obstacle?"
+   },
+   "ways": [
+    28056645
+   ]
+  },
+  {
+   "lat": 53.4919638,
+   "lon": -2.233072,
+   "node": 9837877519,
+   "stratum": [
+    "closed",
+    "block"
+   ],
+   "tags": {
+    "access": "no",
+    "barrier": "block",
+    "material": "concrete"
+   },
+   "ways": [
+    170804972
+   ]
+  },
+  {
+   "lat": 53.48485,
+   "lon": -2.0658679,
+   "node": 7984624397,
+   "stratum": [
+    "closed",
+    "block"
+   ],
+   "tags": {
+    "barrier": "block",
+    "bicycle": "yes",
+    "foot": "yes",
+    "horse": "yes",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    78167612
+   ]
+  },
+  {
+   "lat": 53.5316597,
+   "lon": -2.1272219,
+   "node": 6258772029,
+   "stratum": [
+    "closed",
+    "block"
+   ],
+   "tags": {
+    "barrier": "block",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    1307530026
+   ]
+  },
+  {
+   "lat": 53.4918868,
+   "lon": -2.2065379,
+   "node": 5952649890,
+   "stratum": [
+    "closed",
+    "block"
+   ],
+   "tags": {
+    "barrier": "block",
+    "bicycle": "yes",
+    "foot": "yes",
+    "horse": "yes",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    630379130
+   ]
+  },
+  {
+   "lat": 53.4865591,
+   "lon": -2.6494712,
+   "node": 7809877894,
+   "stratum": [
+    "closed",
+    "block"
+   ],
+   "tags": {
+    "barrier": "block",
+    "bicycle": "no",
+    "horse": "no",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    836784721
+   ]
+  },
+  {
+   "lat": 53.4941612,
+   "lon": -2.1517651,
+   "node": 416565753,
+   "stratum": [
+    "closed",
+    "block"
+   ],
+   "tags": {
+    "barrier": "block"
+   },
+   "ways": [
+    35552165,
+    35552298
+   ]
+  },
+  {
+   "lat": 53.4719591,
+   "lon": -2.5265055,
+   "node": 9688945500,
+   "stratum": [
+    "closed",
+    "other"
+   ],
+   "tags": {
+    "access": "no",
+    "barrier": "gate",
+    "wheelchair": "no"
+   },
+   "ways": [
+    61123004
+   ]
+  },
+  {
+   "lat": 53.476001,
+   "lon": -2.2277158,
+   "node": 1649076539,
+   "stratum": [
+    "closed",
+    "other"
+   ],
+   "tags": {
+    "access": "no",
+    "barrier": "gate"
+   },
+   "ways": [
+    152076261
+   ]
+  },
+  {
+   "lat": 53.6574478,
+   "lon": -2.5844777,
+   "node": 252967323,
+   "stratum": [
+    "closed",
+    "other"
+   ],
+   "tags": {
+    "access": "no",
+    "barrier": "gate",
+    "material": "harras_fence",
+    "opening_hours": "24/7",
+    "wheelchair": "no"
+   },
+   "ways": [
+    190511014
+   ]
+  },
+  {
+   "lat": 53.6175769,
+   "lon": -2.176149,
+   "node": 779064410,
+   "stratum": [
+    "closed",
+    "other"
+   ],
+   "tags": {
+    "barrier": "lift_gate",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    62365136,
+    62365138
+   ]
+  },
+  {
+   "lat": 53.5270797,
+   "lon": -2.4931363,
+   "node": 6513818029,
+   "stratum": [
+    "closed",
+    "other"
+   ],
+   "tags": {
+    "access": "no",
+    "barrier": "gate"
+   },
+   "ways": [
+    693788446
+   ]
+  },
+  {
+   "lat": 53.3684538,
+   "lon": -2.2426558,
+   "node": 6820393140,
+   "stratum": [
+    "closed",
+    "other"
+   ],
+   "tags": {
+    "access": "no",
+    "barrier": "gate",
+    "locked": "yes",
+    "wheelchair": "no"
+   },
+   "ways": [
+    727811507
+   ]
+  },
+  {
+   "lat": 53.6119344,
+   "lon": -2.2769691,
+   "node": 33179215,
+   "stratum": [
+    "closed",
+    "other"
+   ],
+   "tags": {
+    "barrier": "gate",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    4997169
+   ]
+  },
+  {
+   "lat": 53.5715981,
+   "lon": -2.2672845,
+   "node": 2092919405,
+   "stratum": [
+    "closed",
+    "other"
+   ],
+   "tags": {
+    "access": "no",
+    "barrier": "lift_gate",
+    "bicycle": "yes",
+    "foot": "yes",
+    "horse": "yes"
+   },
+   "ways": [
+    177532214
+   ]
+  },
+  {
+   "lat": 53.642214,
+   "lon": -2.3091047,
+   "node": 2321336426,
+   "stratum": [
+    "closed",
+    "other"
+   ],
+   "tags": {
+    "barrier": "gate",
+    "bicycle": "yes",
+    "foot": "yes",
+    "material": "metal",
+    "motor_vehicle": "no",
+    "wheelchair": "limited"
+   },
+   "ways": [
+    4947476,
+    636812296
+   ]
+  },
+  {
+   "lat": 53.5681783,
+   "lon": -2.4052886,
+   "node": 1794829566,
+   "stratum": [
+    "closed",
+    "other"
+   ],
+   "tags": {
+    "barrier": "yes",
+    "fixme": "access, barrier type",
+    "motor_vehicle": "no"
+   },
+   "ways": [
+    121113754
+   ]
+  },
+  {
+   "lat": 53.4697047,
+   "lon": -2.3875147,
+   "node": 1066142650,
+   "stratum": [
+    "open",
+    "*"
+   ],
+   "tags": {
+    "barrier": "gate",
+    "bicycle": "no",
+    "foot": "no",
+    "motorcar": "yes"
+   },
+   "ways": [
+    72047695
+   ]
+  },
+  {
+   "lat": 53.4332196,
+   "lon": -2.1827638,
+   "node": 3281743372,
+   "stratum": [
+    "open",
+    "*"
+   ],
+   "tags": {
+    "access": "permissive",
+    "barrier": "gate",
+    "name": "United Biscuits Site Access"
+   },
+   "ways": [
+    252747320
+   ]
+  },
+  {
+   "lat": 53.5830698,
+   "lon": -2.1765865,
+   "node": 33305864,
+   "stratum": [
+    "open",
+    "*"
+   ],
+   "tags": {
+    "access": "yes",
+    "barrier": "cattle_grid"
+   },
+   "ways": [
+    174798826
+   ]
+  },
+  {
+   "lat": 53.4113275,
+   "lon": -2.6317665,
+   "node": 354695430,
+   "stratum": [
+    "open",
+    "*"
+   ],
+   "tags": {
+    "barrier": "lift_gate",
+    "bicycle": "yes",
+    "foot": "yes",
+    "horse": "permissive",
+    "motor_vehicle": "yes"
+   },
+   "ways": [
+    31697123
+   ]
+  },
+  {
+   "lat": 53.5266845,
+   "lon": -2.4908076,
+   "node": 6450783908,
+   "stratum": [
+    "open",
+    "*"
+   ],
+   "tags": {
+    "access": "permissive",
+    "barrier": "gate"
+   },
+   "ways": [
+    688047825
+   ]
+  },
+  {
+   "lat": 53.4740348,
+   "lon": -2.2439442,
+   "node": 1163494701,
+   "stratum": [
+    "open",
+    "*"
+   ],
+   "tags": {
+    "barrier": "lift_gate",
+    "bicycle": "no",
+    "foot": "no",
+    "motorcar": "yes",
+    "motorcycle": "yes"
+   },
+   "ways": [
+    100646639,
+    1423359053
+   ]
+  },
+  {
+   "lat": 53.4732341,
+   "lon": -2.2702078,
+   "node": 7392840163,
+   "stratum": [
+    "open",
+    "*"
+   ],
+   "tags": {
+    "access": "customers",
+    "barrier": "gate",
+    "bicycle": "yes",
+    "foot": "no",
+    "horse": "no",
+    "motorcar": "yes",
+    "motorcycle": "yes"
+   },
+   "ways": [
+    256274595
+   ]
+  },
+  {
+   "lat": 53.444591,
+   "lon": -2.2178741,
+   "node": 8851480532,
+   "stratum": [
+    "open",
+    "*"
+   ],
+   "tags": {
+    "barrier": "lift_gate",
+    "foot": "no",
+    "motor_vehicle": "yes"
+   },
+   "ways": [
+    956421398
+   ]
+  },
+  {
+   "lat": 53.4239311,
+   "lon": -2.5177428,
+   "node": 3712583769,
+   "stratum": [
+    "open",
+    "*"
+   ],
+   "tags": {
+    "barrier": "lift_gate",
+    "bicycle": "yes",
+    "motor_vehicle": "yes"
+   },
+   "ways": [
+    367320500
+   ]
+  },
+  {
+   "lat": 53.3851117,
+   "lon": -2.4044666,
+   "node": 10778305851,
+   "stratum": [
+    "open",
+    "*"
+   ],
+   "tags": {
+    "access": "permissive",
+    "barrier": "gate"
+   },
+   "ways": [
+    1159018242
+   ]
+  },
+  {
+   "lat": 53.3582504,
+   "lon": -2.1556914,
+   "node": 336272610,
+   "stratum": [
+    "open",
+    "*"
+   ],
+   "tags": {
+    "barrier": "gate",
+    "horse": "yes",
+    "motorcar": "yes",
+    "motorcycle": "yes"
+   },
+   "ways": [
+    37090322
+   ]
+  },
+  {
+   "lat": 53.4703973,
+   "lon": -2.2750899,
+   "node": 7274980488,
+   "stratum": [
+    "open",
+    "*"
+   ],
+   "tags": {
+    "access": "permit",
+    "barrier": "gate",
+    "bicycle": "yes",
+    "foot": "yes",
+    "height": "2",
+    "horse": "no",
+    "material": "metal",
+    "motorcar": "yes",
+    "motorcycle": "yes",
+    "opening_hours": "24/7",
+    "wheelchair": "limited"
+   },
+   "ways": [
+    256274616
+   ]
+  },
+  {
+   "lat": 53.3639104,
+   "lon": -2.2745636,
+   "node": 10024866250,
+   "stratum": [
+    "open",
+    "*"
+   ],
+   "tags": {
+    "barrier": "toll_booth",
+    "currency:GBP": "yes",
+    "foot": "no",
+    "motor_vehicle": "yes",
+    "payment:cash": "yes",
+    "payment:coins": "yes",
+    "payment:credit_cards": "yes"
+   },
+   "ways": [
+    80504906
+   ]
+  },
+  {
+   "lat": 53.5129125,
+   "lon": -2.4674064,
+   "node": 12633142766,
+   "stratum": [
+    "open",
+    "*"
+   ],
+   "tags": {
+    "access": "yes",
+    "barrier": "height_restrictor",
+    "material": "metal",
+    "maxheight": "2.1"
+   },
+   "ways": [
+    445042570
+   ]
+  },
+  {
+   "lat": 53.5746856,
+   "lon": -2.6160354,
+   "node": 10749607529,
+   "stratum": [
+    "open",
+    "*"
+   ],
+   "tags": {
+    "barrier": "gate",
+    "bicycle": "no",
+    "foot": "permissive",
+    "horse": "no",
+    "motor_vehicle": "permissive"
+   },
+   "ways": [
+    1155917416
+   ]
+  },
+  {
+   "lat": 53.4837409,
+   "lon": -2.2621615,
+   "node": 8404585205,
+   "stratum": [
+    "untagged_gate",
+    "gate"
+   ],
+   "tags": {
+    "barrier": "gate"
+   },
+   "ways": [
+    905002370,
+    1075605380
+   ]
+  },
+  {
+   "lat": 53.4413186,
+   "lon": -2.2171702,
+   "node": 8228912270,
+   "stratum": [
+    "untagged_gate",
+    "gate"
+   ],
+   "tags": {
+    "barrier": "gate"
+   },
+   "ways": [
+    289948360
+   ]
+  },
+  {
+   "lat": 53.5491834,
+   "lon": -2.5270593,
+   "node": 8882754434,
+   "stratum": [
+    "untagged_gate",
+    "gate"
+   ],
+   "tags": {
+    "barrier": "gate"
+   },
+   "ways": [
+    697834215
+   ]
+  },
+  {
+   "lat": 53.6436289,
+   "lon": -2.4905912,
+   "node": 3647340826,
+   "stratum": [
+    "untagged_gate",
+    "gate"
+   ],
+   "tags": {
+    "barrier": "gate"
+   },
+   "ways": [
+    360132733
+   ]
+  },
+  {
+   "lat": 53.5078818,
+   "lon": -2.1452599,
+   "node": 11891702209,
+   "stratum": [
+    "untagged_gate",
+    "gate"
+   ],
+   "tags": {
+    "barrier": "gate"
+   },
+   "ways": [
+    313668328
+   ]
+  },
+  {
+   "lat": 53.4954009,
+   "lon": -2.521474,
+   "node": 12558498020,
+   "stratum": [
+    "untagged_gate",
+    "gate"
+   ],
+   "tags": {
+    "barrier": "gate",
+    "height": "2",
+    "material": "metal",
+    "source": "survey"
+   },
+   "ways": [
+    1255467239
+   ]
+  },
+  {
+   "lat": 53.6174621,
+   "lon": -2.1846682,
+   "node": 462008346,
+   "stratum": [
+    "untagged_gate",
+    "gate"
+   ],
+   "tags": {
+    "barrier": "gate"
+   },
+   "ways": [
+    38893517,
+    406437075
+   ]
+  },
+  {
+   "lat": 53.3504157,
+   "lon": -2.2102241,
+   "node": 6300541519,
+   "stratum": [
+    "untagged_gate",
+    "gate"
+   ],
+   "tags": {
+    "barrier": "gate"
+   },
+   "ways": [
+    672805968
+   ]
+  },
+  {
+   "lat": 53.4083292,
+   "lon": -2.5920947,
+   "node": 11349445991,
+   "stratum": [
+    "untagged_gate",
+    "gate"
+   ],
+   "tags": {
+    "barrier": "gate"
+   },
+   "ways": [
+    528443971
+   ]
+  },
+  {
+   "lat": 53.4091578,
+   "lon": -2.6012845,
+   "node": 6563098929,
+   "stratum": [
+    "untagged_gate",
+    "gate"
+   ],
+   "tags": {
+    "barrier": "gate"
+   },
+   "ways": [
+    698912863
+   ]
+  },
+  {
+   "lat": 53.5311537,
+   "lon": -2.147182,
+   "node": 11100071329,
+   "stratum": [
+    "untagged_gate",
+    "gate"
+   ],
+   "tags": {
+    "barrier": "gate"
+   },
+   "ways": [
+    1226442331
+   ]
+  },
+  {
+   "lat": 53.5550915,
+   "lon": -2.498939,
+   "node": 11181245648,
+   "stratum": [
+    "untagged_gate",
+    "gate"
+   ],
+   "tags": {
+    "barrier": "gate"
+   },
+   "ways": [
+    458649975
+   ]
+  },
+  {
+   "lat": 53.5105993,
+   "lon": -2.6498305,
+   "node": 6683463894,
+   "stratum": [
+    "untagged_gate",
+    "gate"
+   ],
+   "tags": {
+    "barrier": "gate"
+   },
+   "ways": [
+    710885178
+   ]
+  },
+  {
+   "lat": 53.3720288,
+   "lon": -2.558586,
+   "node": 13955208928,
+   "stratum": [
+    "untagged_gate",
+    "gate"
+   ],
+   "tags": {
+    "barrier": "gate"
+   },
+   "ways": [
+    323846394
+   ]
+  },
+  {
+   "lat": 53.4267387,
+   "lon": -2.2502435,
+   "node": 7537772058,
+   "stratum": [
+    "untagged_gate",
+    "gate"
+   ],
+   "tags": {
+    "barrier": "gate"
+   },
+   "ways": [
+    806048660
+   ]
+  },
+  {
+   "lat": 53.5245016,
+   "lon": -2.701269,
+   "node": 12165451247,
+   "stratum": [
+    "untagged_gate",
+    "lift_gate"
+   ],
+   "tags": {
+    "barrier": "lift_gate"
+   },
+   "ways": [
+    402967496
+   ]
+  },
+  {
+   "lat": 53.63673,
+   "lon": -2.4092028,
+   "node": 7505864531,
+   "stratum": [
+    "untagged_gate",
+    "lift_gate"
+   ],
+   "tags": {
+    "barrier": "lift_gate"
+   },
+   "ways": [
+    689917006,
+    803298497
+   ]
+  },
+  {
+   "lat": 53.3654374,
+   "lon": -2.7202228,
+   "node": 6318477893,
+   "stratum": [
+    "untagged_gate",
+    "lift_gate"
+   ],
+   "tags": {
+    "barrier": "lift_gate"
+   },
+   "ways": [
+    674679512
+   ]
+  },
+  {
+   "lat": 53.5860831,
+   "lon": -2.5270801,
+   "node": 6202710731,
+   "stratum": [
+    "untagged_gate",
+    "lift_gate"
+   ],
+   "tags": {
+    "barrier": "lift_gate"
+   },
+   "ways": [
+    126273669
+   ]
+  },
+  {
+   "lat": 53.3545004,
+   "lon": -2.2844239,
+   "node": 4729235021,
+   "stratum": [
+    "untagged_gate",
+    "lift_gate"
+   ],
+   "tags": {
+    "barrier": "lift_gate"
+   },
+   "ways": [
+    233759646
+   ]
+  },
+  {
+   "lat": 53.3707853,
+   "lon": -2.3158552,
+   "node": 11039316564,
+   "stratum": [
+    "untagged_gate",
+    "lift_gate"
+   ],
+   "tags": {
+    "barrier": "lift_gate"
+   },
+   "ways": [
+    406599009
+   ]
+  },
+  {
+   "lat": 53.433552,
+   "lon": -2.1893912,
+   "node": 13247988197,
+   "stratum": [
+    "untagged_gate",
+    "lift_gate"
+   ],
+   "tags": {
+    "barrier": "lift_gate"
+   },
+   "ways": [
+    947569861
+   ]
+  },
+  {
+   "lat": 53.5818681,
+   "lon": -2.2306942,
+   "node": 6331476432,
+   "stratum": [
+    "untagged_gate",
+    "lift_gate"
+   ],
+   "tags": {
+    "barrier": "lift_gate"
+   },
+   "ways": [
+    676071088
+   ]
+  },
+  {
+   "lat": 53.4247666,
+   "lon": -2.2590422,
+   "node": 11137320809,
+   "stratum": [
+    "untagged_gate",
+    "lift_gate"
+   ],
+   "tags": {
+    "barrier": "lift_gate"
+   },
+   "ways": [
+    674865034
+   ]
+  },
+  {
+   "lat": 53.6727501,
+   "lon": -2.659973,
+   "node": 13259199378,
+   "stratum": [
+    "untagged_gate",
+    "lift_gate"
+   ],
+   "tags": {
+    "barrier": "lift_gate",
+    "lift_gate:type": "single"
+   },
+   "ways": [
+    32475451,
+    1445135000
+   ]
+  },
+  {
+   "lat": 53.382439,
+   "lon": -2.5992882,
+   "node": 9450845879,
+   "stratum": [
+    "untagged_gate",
+    "swing_gate"
+   ],
+   "tags": {
+    "barrier": "swing_gate"
+   },
+   "ways": [
+    733275405
+   ]
+  },
+  {
+   "lat": 53.5463937,
+   "lon": -2.0999078,
+   "node": 12532877222,
+   "stratum": [
+    "untagged_gate",
+    "swing_gate"
+   ],
+   "tags": {
+    "barrier": "swing_gate"
+   },
+   "ways": [
+    1348592871
+   ]
+  },
+  {
+   "lat": 53.3966245,
+   "lon": -2.3458826,
+   "node": 6386317779,
+   "stratum": [
+    "untagged_gate",
+    "swing_gate"
+   ],
+   "tags": {
+    "barrier": "swing_gate"
+   },
+   "ways": [
+    681934910
+   ]
+  },
+  {
+   "lat": 53.3709836,
+   "lon": -2.3252518,
+   "node": 8940781837,
+   "stratum": [
+    "untagged_gate",
+    "swing_gate"
+   ],
+   "tags": {
+    "barrier": "swing_gate",
+    "fixme": "added a barrier on the base on Bing. Please specify the type of barrier."
+   },
+   "ways": [
+    5155889
+   ]
+  },
+  {
+   "lat": 53.5411827,
+   "lon": -2.7010303,
+   "node": 7769493458,
+   "stratum": [
+    "untagged_gate",
+    "swing_gate"
+   ],
+   "tags": {
+    "barrier": "swing_gate"
+   },
+   "ways": [
+    831156250
+   ]
+  },
+  {
+   "lat": 53.4878881,
+   "lon": -2.2226772,
+   "node": 12814861761,
+   "stratum": [
+    "restricted",
+    "*"
+   ],
+   "tags": {
+    "access": "private",
+    "barrier": "gate"
+   },
+   "ways": [
+    28038932,
+    1553369532
+   ]
+  },
+  {
+   "lat": 53.431098,
+   "lon": -2.4258864,
+   "node": 6558358543,
+   "stratum": [
+    "restricted",
+    "*"
+   ],
+   "tags": {
+    "access": "private",
+    "barrier": "gate"
+   },
+   "ways": [
+    223260280
+   ]
+  },
+  {
+   "lat": 53.4757047,
+   "lon": -2.2823305,
+   "node": 7714924076,
+   "stratum": [
+    "restricted",
+    "*"
+   ],
+   "tags": {
+    "access": "private",
+    "barrier": "gate"
+   },
+   "ways": [
+    826304293,
+    826304294
+   ]
+  },
+  {
+   "lat": 53.4680629,
+   "lon": -2.2437018,
+   "node": 11594016579,
+   "stratum": [
+    "restricted",
+    "*"
+   ],
+   "tags": {
+    "access": "private",
+    "barrier": "gate"
+   },
+   "ways": [
+    1247117175
+   ]
+  },
+  {
+   "lat": 53.5507602,
+   "lon": -2.123778,
+   "node": 13041745377,
+   "stratum": [
+    "restricted",
+    "*"
+   ],
+   "tags": {
+    "access": "private",
+    "barrier": "gate"
+   },
+   "ways": [
+    1419235838
+   ]
+  },
+  {
+   "lat": 53.5249095,
+   "lon": -2.3201131,
+   "node": 2021373969,
+   "stratum": [
+    "restricted",
+    "*"
+   ],
+   "tags": {
+    "access": "destination",
+    "barrier": "lift_gate",
+    "bicycle": "destination",
+    "foot": "destination"
+   },
+   "ways": [
+    191552880
+   ]
+  },
+  {
+   "lat": 53.4922968,
+   "lon": -2.2439501,
+   "node": 9627299604,
+   "stratum": [
+    "restricted",
+    "*"
+   ],
+   "tags": {
+    "access": "private",
+    "barrier": "gate"
+   },
+   "ways": [
+    27927984
+   ]
+  },
+  {
+   "lat": 53.3878316,
+   "lon": -2.2334363,
+   "node": 3412104551,
+   "stratum": [
+    "restricted",
+    "*"
+   ],
+   "tags": {
+    "access": "private",
+    "barrier": "gate"
+   },
+   "ways": [
+    334118761,
+    334118762
+   ]
+  },
+  {
+   "lat": 53.4732942,
+   "lon": -2.213972,
+   "node": 12037486380,
+   "stratum": [
+    "restricted",
+    "*"
+   ],
+   "tags": {
+    "access": "private",
+    "barrier": "gate"
+   },
+   "ways": [
+    28022555,
+    1299492443
+   ]
+  },
+  {
+   "lat": 53.519735,
+   "lon": -2.1457699,
+   "node": 13011296311,
+   "stratum": [
+    "restricted",
+    "*"
+   ],
+   "tags": {
+    "access": "private",
+    "barrier": "gate"
+   },
+   "ways": [
+    209434763
+   ]
+  }
+ ],
+ "contract": "BARRIER-001 v1",
+ "frozen_before_engine_runs": true,
+ "quotas": {
+  "closed/block": 10,
+  "closed/bollard": 30,
+  "closed/cycle_barrier": 10,
+  "closed/other": 10,
+  "open/*": 15,
+  "restricted/*": 10,
+  "untagged_gate/gate": 15,
+  "untagged_gate/lift_gate": 10,
+  "untagged_gate/swing_gate": 5
+ },
+ "selection_rule": "barrier node inside one car road (or joining two) with 2+ segments each side; per-stratum quota, ordered by sha256('BARRIER-001:'+node_id)",
+ "source_sha256": "2a8ef8e1f2533cb009b1ce248a6bf4eaabdd47e03979e64e24cd844f3b22acba",
+ "source_snapshot": "gm.osm.pbf"
+}

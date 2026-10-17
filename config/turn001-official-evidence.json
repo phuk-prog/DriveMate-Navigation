@@ -1,0 +1,170 @@
+{
+  "schema": 1,
+  "reviewed_utc": "2026-10-17",
+  "purpose": "TURN-001: five unresolved Greater Manchester no-route locations — independent road-authority evidence audit; no driving-rules change",
+  "baseline": {
+    "frozen_map_sha256": "2a8ef8e1f2533cb009b1ce248a6bf4eaabdd47e03979e64e24cd844f3b22acba",
+    "frozen_cohort_sha256": "f2949a8a9aab40b7f62bc658cf92778f440ab5cdcc7ffcc755e21dc1b83c391c",
+    "prepared_cases_sha256": "8500d8f3d9cf99660fcc3267ad422134fce87cbb946fe25f6940763546707bf3",
+    "prior_diagnostic": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39027815145"
+  },
+  "source_catalog": [
+    {
+      "id": "dft-dtro-guidance",
+      "url": "https://www.gov.uk/guidance/digital-traffic-regulation-orders-d-tro-service",
+      "authority": "Department for Transport",
+      "type": "general_service_guidance",
+      "coverage": "National D-TRO data access, not a case-specific order",
+      "exact_case_proof": false
+    },
+    {
+      "id": "dft-dtro-licence",
+      "url": "https://d-tro.dft.gov.uk/terms_and_conditions",
+      "authority": "Department for Transport",
+      "type": "licensing_information",
+      "coverage": "OGL v3 reuse for D-TRO data; portal terms distinct",
+      "exact_case_proof": false
+    },
+    {
+      "id": "manchester-tro",
+      "url": "https://www.manchester.gov.uk/online-directories/consultations-and-surveys-directories/traffic-regulation-order-notices",
+      "authority": "Manchester City Council",
+      "type": "official_portal",
+      "coverage": "Proposed Manchester orders only; not site-specific proof",
+      "exact_case_proof": false
+    },
+    {
+      "id": "trafford-tro",
+      "url": "https://www.trafford.gov.uk/streets-roads-and-transport/roads-highways-and-pavements/road-closures-regulations-and-permits/traffic-regulation-orders-tros",
+      "authority": "Trafford Council",
+      "type": "official_portal",
+      "coverage": "TRO register information only",
+      "exact_case_proof": false
+    },
+    {
+      "id": "salford-tro",
+      "url": "https://www.salford.gov.uk/parking-roads-and-travel/roads/traffic-orders/",
+      "authority": "Salford City Council",
+      "type": "official_portal",
+      "coverage": "Current/proposed TRO listings, not exhaustive sign evidence",
+      "exact_case_proof": false
+    },
+    {
+      "id": "salford-chesterfield-2019",
+      "url": "https://www.salford.gov.uk/parking-roads-and-travel/roads/traffic-orders/chesterfield-close-area/",
+      "authority": "Salford City Council",
+      "type": "related_order_notice",
+      "coverage": "2019 proposed 20mph and no-waiting restrictions for Chesterfield Close area; does NOT establish a no-straight-on restriction",
+      "exact_case_proof": false
+    },
+    {
+      "id": "rochdale-tro",
+      "url": "https://www.rochdale.gov.uk/roadworks-repairs-restrictions/proposed-permanent-restrictions-highways-traffic-regulation-orders",
+      "authority": "Rochdale Borough Council",
+      "type": "official_portal",
+      "coverage": "Proposed and recently made TROs; not site-specific proof",
+      "exact_case_proof": false
+    }
+  ],
+  "cases": [
+    {
+      "relation_id": 10558420,
+      "osm_public_junction_lat": 53.5048025,
+      "osm_public_junction_lon": -2.2567149,
+      "road_label": "Devonshire Street",
+      "osm_rule": "no_straight_on",
+      "osm_graph_finding": "No route with via-node bans on tested clips",
+      "verification_status": "UNVERIFIED",
+      "jurisdiction": "UNCONFIRMED",
+      "candidate_sources": [
+        "manchester-tro",
+        "salford-tro",
+        "dft-dtro-guidance"
+      ],
+      "specific_legal_order_found": false,
+      "dated_site_signage_found": false,
+      "policy_change_authorized": false,
+      "site_evidence": [],
+      "notes": "Confirm road authority and exact affected approaches first; a generic TRO directory is not direct restriction evidence."
+    },
+    {
+      "relation_id": 13613008,
+      "osm_public_junction_lat": 53.4525815,
+      "osm_public_junction_lon": -2.2995611,
+      "road_label": "Talbot Road",
+      "osm_rule": "only_u_turn",
+      "osm_graph_finding": "No route with via-node bans on tested clips",
+      "verification_status": "UNVERIFIED",
+      "jurisdiction": "UNCONFIRMED",
+      "candidate_sources": [
+        "trafford-tro",
+        "dft-dtro-guidance"
+      ],
+      "specific_legal_order_found": false,
+      "dated_site_signage_found": false,
+      "policy_change_authorized": false,
+      "site_evidence": [],
+      "notes": "High-priority: exact only-U-turn legal signing and geometry/vehicle feasible turnaround need independent confirmation."
+    },
+    {
+      "relation_id": 16644804,
+      "osm_public_junction_lat": 53.6023943,
+      "osm_public_junction_lon": -2.1703982,
+      "road_label": "Unnamed service-road junction",
+      "osm_rule": "only_left_turn",
+      "osm_graph_finding": "No route with via-node bans on tested clips",
+      "verification_status": "UNVERIFIED",
+      "jurisdiction": "UNCONFIRMED",
+      "candidate_sources": [
+        "rochdale-tro",
+        "dft-dtro-guidance"
+      ],
+      "specific_legal_order_found": false,
+      "dated_site_signage_found": false,
+      "policy_change_authorized": false,
+      "site_evidence": [],
+      "notes": "Check ownership, permissive public vehicle access and exact highway authority before deciding."
+    },
+    {
+      "relation_id": 4853555,
+      "osm_public_junction_lat": 53.4849465,
+      "osm_public_junction_lon": -2.3631244,
+      "road_label": "Chesterfield Close",
+      "osm_rule": "no_straight_on",
+      "osm_graph_finding": "No route with via-node bans on tested clips",
+      "verification_status": "UNVERIFIED",
+      "jurisdiction": "UNCONFIRMED",
+      "candidate_sources": [
+        "salford-chesterfield-2019",
+        "salford-tro",
+        "dft-dtro-guidance"
+      ],
+      "specific_legal_order_found": false,
+      "dated_site_signage_found": false,
+      "policy_change_authorized": false,
+      "site_evidence": [],
+      "notes": "Salford Council 2019 document concerns 20mph/no waiting, NOT the specified no-straight-on manoeuvre. Do not infer turn validity."
+    },
+    {
+      "relation_id": 7615778,
+      "osm_public_junction_lat": 53.4826549,
+      "osm_public_junction_lon": -2.2254736,
+      "road_label": "Unnamed service road with private-access destination in frozen OSM",
+      "osm_rule": "no_straight_on",
+      "osm_graph_finding": "Destination withheld by access=private; no route with via-node bans on tested clips",
+      "verification_status": "UNVERIFIED",
+      "jurisdiction": "UNCONFIRMED",
+      "candidate_sources": [
+        "manchester-tro",
+        "dft-dtro-guidance"
+      ],
+      "specific_legal_order_found": false,
+      "dated_site_signage_found": false,
+      "policy_change_authorized": false,
+      "site_evidence": [],
+      "notes": "Private-access permission may vary by driver; public routing cannot assume a right of way."
+    }
+  ],
+  "verified_cases": 0,
+  "permission_to_modify_engine": false
+}

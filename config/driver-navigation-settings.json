@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "feature": "Driver-controlled DMN routing, reroute and countdown preferences",
+  "status": "research contract, not a finished Android UI or live navigation controller",
+  "defaults": {
+    "route_mode": "balanced",
+    "reroute_mode": "intelligent",
+    "threshold_mode": "adaptive",
+    "fixed_benefit_seconds": 180,
+    "countdown_mode": "adaptive",
+    "countdown_seconds": 5,
+    "auto_switch_if_unanswered": true,
+    "avoid_complex_maneuvers": true
+  },
+  "controls": [
+    {
+      "id": "route_mode",
+      "label": "Preferred route",
+      "values": [
+        "fastest",
+        "shortest",
+        "balanced"
+      ],
+      "description": "Fastest uses reliable ETA, shortest uses distance, balanced evaluates both and maneuver complexity."
+    },
+    {
+      "id": "reroute_mode",
+      "label": "Automatic alternative proposals",
+      "values": [
+        "always_faster",
+        "blocked_only",
+        "intelligent"
+      ],
+      "description": "Always faster means any reliably faster travel-time alternative, even when Shortest is the preferred search mode; blocked only means verified closure; intelligent is default."
+    },
+    {
+      "id": "threshold_mode",
+      "label": "When to offer alternatives",
+      "values": [
+        "any_saving",
+        "fixed",
+        "adaptive"
+      ],
+      "description": "Any measured benefit, fixed threshold, or adaptive benefit considering journey time and maneuver complexity."
+    },
+    {
+      "id": "fixed_benefit_seconds",
+      "label": "Fixed improvement threshold",
+      "values": null,
+      "description": "1 to 3600 estimated time-equivalent seconds; user-configurable."
+    },
+    {
+      "id": "countdown_mode",
+      "label": "Switch countdown",
+      "values": [
+        "fixed",
+        "adaptive"
+      ],
+      "description": "Fixed driver-specified delay or adaptive countdown, subject to safe maneuver lead time."
+    },
+    {
+      "id": "countdown_seconds",
+      "label": "Fixed countdown seconds",
+      "values": null,
+      "description": "Integer 3 through 7; five-second default."
+    },
+    {
+      "id": "auto_switch_if_unanswered",
+      "label": "Automatically switch after countdown",
+      "values": [
+        true,
+        false
+      ],
+      "description": "Enabled by default; only when the candidate remains legal, current and safe."
+    },
+    {
+      "id": "avoid_complex_maneuvers",
+      "label": "Reduce unnecessary difficult maneuvers",
+      "values": [
+        true,
+        false
+      ],
+      "description": "Balanced route preference and intelligent rerouting consider verified maneuver complexity."
+    }
+  ],
+  "safety_rules_user_configurable": false,
+  "non_overrideable_rules": [
+    "verified legal road movement",
+    "source freshness and conflict handling",
+    "never force prohibited turns or U-turns",
+    "lane/vehicle position confidence",
+    "safe maneuver lead and revalidation at switch time",
+    "unknown legality cannot be treated as confirmed legal"
+  ],
+  "future_android_integration": "existing DriveMate Android application, isolated integration branch, subject to owner approval and full robot/CI gates",
+  "thresholds_notice": "The thresholds and objective weights are provisional research defaults, not independently measured optimal values."
+}

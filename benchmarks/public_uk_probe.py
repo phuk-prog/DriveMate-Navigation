@@ -10,10 +10,14 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+from collections import Counter
 from statistics import median
+import xml.etree.ElementTree as ET
 from time import perf_counter_ns
 
 from engine import RouteNotFound, shortest_route
+from engine.route_alternatives import generate_route_candidates
+from benchmarks.public_route_preferences import probe_preference_diversity
 from engine.astar import astar_route, prepare_astar
 from map_data import Provenance, import_osm_xml
 from map_data.osm_xml import MAX_INPUT_BYTES
@@ -59,6 +63,25 @@ def _scenarios(graph, *, limit: int) -> list[tuple[str, str]]:
     return scenarios
 
 
+def _source_access_breakdown(raw: bytes, graph) -> dict[str, dict[str, int]]:
+    """Explain routed vs unknown/prohibited edges by actual OSM road class.
+
+    Graph access tags are map-source semantics; no classes certify legal truth.
+    """
+    root = ET.fromstring(raw)
+    roads = {}
+    for way in root.findall("way"):
+        tags = {tag.get("k"): tag.get("v") for tag in way.findall("tag")}
+        if "highway" in tags:
+            roads[way.get("id")] = tags["highway"]
+    counts = {"allowed": Counter(), "unknown": Counter(), "prohibited": Counter()}
+    for edge in graph.edges.values():
+        way_id = edge.edge_id.split(":")[1]
+        counts[edge.access][roads.get(way_id, "unknown_road_class")] += 1
+    return {status: dict(sorted(group.items(), key=lambda pair: (-pair[1], pair[0])))
+            for status, group in counts.items()}
+
+
 def check_public_graph(raw: bytes, *, snapshot: str, region: str, samples: int = 8) -> dict[str, object]:
     if not 1 <= samples <= 100:
         raise ValueError("Sample count must be 1..100")
@@ -74,6 +97,8 @@ def check_public_graph(raw: bytes, *, snapshot: str, region: str, samples: int =
     tested = 0
     d_ms, a_ms, cold_ms = [], [], []
     heuristic_count = 0
+    route_profiles_checked = 0
+    distinct_candidate_cases = 0
     for source, target in _scenarios(graph, limit=samples):
         if tested >= samples:
             break
@@ -101,11 +126,34 @@ def check_public_graph(raw: bytes, *, snapshot: str, region: str, samples: int =
             if edge.access != "allowed" or (previous, eid) in graph.prohibited_turns:
                 raise AssertionError("Candidate used a prohibited movement")
             previous = eid
+        new_routes = generate_route_candidates(
+            graph, source, target, snapshot_id=imported.metadata["source_sha256"],
+            max_candidates=4, max_detour_searches=4)
+        if not new_routes:
+            raise AssertionError("Routable public graph produced no profile candidates")
+        expected_seconds = min(r.route.estimated_seconds for r in new_routes)
+        if abs(expected_seconds - baseline.estimated_seconds) > 1e-7:
+            raise AssertionError("Fastest route generator disagreed with Dijkstra")
+        for proposal in new_routes:
+            if proposal.as_unverified_option().independently_verified_legal:
+                raise AssertionError("Map-only route cannot self-certify legality")
+            entering = None
+            for edge_id in proposal.route.edge_ids:
+                edge = graph.edges[edge_id]
+                if edge.access != "allowed" or (entering, edge_id) in graph.prohibited_turns:
+                    raise AssertionError("Route preference bypassed mapped access/turn rule")
+                entering = edge_id
+        route_profiles_checked += 1
+        distinct_candidate_cases += int(len(new_routes) > 1)
         tested += 1
         heuristic_count += int(candidate.geographic_heuristic_used)
     if tested < min(3, samples):
         raise AssertionError("Not enough independently generated routable public-road scenarios")
+    discovery = probe_preference_diversity(
+        graph, snapshot_id=imported.metadata["source_sha256"], maximum_pairs=96)
     return {
+        **discovery,
+        "source_road_access_by_class": _source_access_breakdown(raw, graph),
         "classification": "public-road-experimental-not-legality-verified",
         "source_sha256": imported.metadata["source_sha256"],
         "source_snapshot": snapshot,
@@ -120,6 +168,10 @@ def check_public_graph(raw: bytes, *, snapshot: str, region: str, samples: int =
         "median_ms_astar_unprepared": round(median(cold_ms), 5),
         "one_time_astar_prepare_ms": round(prepare_ms, 5),
         "external_engines_executed": 0,
+        "route_preference_profiles_checked": route_profiles_checked,
+        "route_preference_distinct_path_scenarios": distinct_candidate_cases,
+        "route_preference_graph_rules_consistent": True,
+        "driver_route_legality_independently_verified": False,
         "source_road_data_public": True,
         "user_location_information_used": False,
         "verified_safe_for_live_navigation": False,

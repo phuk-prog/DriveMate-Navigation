@@ -1,0 +1,1965 @@
+{
+  "test_id": "RESOURCE-001",
+  "system": "DMN",
+  "classification": "synthetic analytical weighted-grid resource characterization; not independent road truth or Android/native comparison",
+  "run_sha": null,
+  "oracle_sha256": "53146d2087ed204f01d870291df17898b1f5e27ff69039b01e02a642126a6dd5",
+  "source_sha256": {
+    "benchmarks/resource_trial.py": "0fbc13bbcc39a1251c32bd9857526e97e33a1f9022c51979220888a394d0e881",
+    "benchmarks/synthetic_grid.py": "a8a4b36730fc9a8269540b2868423e0c7c42917117e1a8a16da3846393c24be0",
+    "engine/routing.py": "b91f839917532a9f6ec5cb349468fb8d79d95a25a2a24f76d93d0f236de4418b",
+    "engine/astar.py": "fb6c68bbc350a9f63a441e968497012d0a8efa8632cd405ad0367231e4df5a1d"
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "system": "Linux",
+    "release": "6.18.44",
+    "machine": "x86_64",
+    "logical_cpus": 3,
+    "clock": "perf_counter_ns",
+    "clock_resolution_s": 1e-09
+  },
+  "actual_search_calls": 324,
+  "external_engine_executions": 0,
+  "android_device_tests": 0,
+  "workers": [
+    {
+      "size": 8,
+      "configuration": "Dijkstra",
+      "phase": "timing",
+      "graph_sha256": "df0ec9f3aac9ea3e40dcd8a27a15ff98656362fdbd65ed9da606630a1e99831d",
+      "vertices": 64,
+      "edges": 224,
+      "graph_build_ns": 725040,
+      "prepare_ns": 0,
+      "setup_python_peak_bytes": null,
+      "process_peak_rss_kib": 14720,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 33,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            451860,
+            345049,
+            342866,
+            594444,
+            344018,
+            373732,
+            337227,
+            395724,
+            385409,
+            348624
+          ],
+          "median_ns": 361178.0,
+          "p95_ns": 594444
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            343726,
+            349305,
+            427312,
+            335775,
+            334493,
+            452410,
+            399931,
+            371188,
+            334503,
+            626252
+          ],
+          "median_ns": 360246.5,
+          "p95_ns": 626252
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            218869,
+            215965,
+            325890,
+            215855,
+            214152,
+            213030,
+            308674,
+            303707,
+            300001,
+            246771
+          ],
+          "median_ns": 232820.0,
+          "p95_ns": 325890
+        }
+      ]
+    },
+    {
+      "size": 8,
+      "configuration": "Dijkstra",
+      "phase": "memory",
+      "graph_sha256": "df0ec9f3aac9ea3e40dcd8a27a15ff98656362fdbd65ed9da606630a1e99831d",
+      "vertices": 64,
+      "edges": 224,
+      "graph_build_ns": null,
+      "prepare_ns": null,
+      "setup_python_peak_bytes": 84024,
+      "process_peak_rss_kib": 14976,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 3,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 47640
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 25640
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 12192
+        }
+      ]
+    },
+    {
+      "size": 8,
+      "configuration": "A*-raw",
+      "phase": "timing",
+      "graph_sha256": "df0ec9f3aac9ea3e40dcd8a27a15ff98656362fdbd65ed9da606630a1e99831d",
+      "vertices": 64,
+      "edges": 224,
+      "graph_build_ns": 431478,
+      "prepare_ns": 0,
+      "setup_python_peak_bytes": null,
+      "process_peak_rss_kib": 14848,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 33,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            689536,
+            910699,
+            804640,
+            856287,
+            1000985,
+            779541,
+            761654,
+            2468410,
+            1050689,
+            775065
+          ],
+          "median_ns": 830463.5,
+          "p95_ns": 2468410
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            1254856,
+            1192493,
+            751540,
+            936428,
+            863799,
+            856347,
+            680954,
+            684840,
+            1008476,
+            737709
+          ],
+          "median_ns": 860073.0,
+          "p95_ns": 1254856
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            243866,
+            341694,
+            293952,
+            284248,
+            252339,
+            289565,
+            240081,
+            249345,
+            254913,
+            303796
+          ],
+          "median_ns": 269580.5,
+          "p95_ns": 341694
+        }
+      ]
+    },
+    {
+      "size": 8,
+      "configuration": "A*-raw",
+      "phase": "memory",
+      "graph_sha256": "df0ec9f3aac9ea3e40dcd8a27a15ff98656362fdbd65ed9da606630a1e99831d",
+      "vertices": 64,
+      "edges": 224,
+      "graph_build_ns": null,
+      "prepare_ns": null,
+      "setup_python_peak_bytes": 84024,
+      "process_peak_rss_kib": 14976,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 3,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 53976
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 28328
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 3872
+        }
+      ]
+    },
+    {
+      "size": 8,
+      "configuration": "A*-prepared",
+      "phase": "timing",
+      "graph_sha256": "df0ec9f3aac9ea3e40dcd8a27a15ff98656362fdbd65ed9da606630a1e99831d",
+      "vertices": 64,
+      "edges": 224,
+      "graph_build_ns": 360322,
+      "prepare_ns": 320041,
+      "setup_python_peak_bytes": null,
+      "process_peak_rss_kib": 14848,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 33,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            554474,
+            526912,
+            475815,
+            494253,
+            474593,
+            516206,
+            476386,
+            488405,
+            546251,
+            559341
+          ],
+          "median_ns": 505229.5,
+          "p95_ns": 559341
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            493251,
+            473903,
+            508665,
+            478809,
+            487193,
+            475435,
+            488545,
+            469466,
+            488904,
+            471349
+          ],
+          "median_ns": 483001.0,
+          "p95_ns": 508665
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            44037,
+            43205,
+            43345,
+            42764,
+            42865,
+            79960,
+            45037,
+            42835,
+            42484,
+            43165
+          ],
+          "median_ns": 43185.0,
+          "p95_ns": 79960
+        }
+      ]
+    },
+    {
+      "size": 8,
+      "configuration": "A*-prepared",
+      "phase": "memory",
+      "graph_sha256": "df0ec9f3aac9ea3e40dcd8a27a15ff98656362fdbd65ed9da606630a1e99831d",
+      "vertices": 64,
+      "edges": 224,
+      "graph_build_ns": null,
+      "prepare_ns": null,
+      "setup_python_peak_bytes": 84024,
+      "process_peak_rss_kib": 14976,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 3,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 53672
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 28304
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 3872
+        }
+      ]
+    },
+    {
+      "size": 16,
+      "configuration": "A*-raw",
+      "phase": "timing",
+      "graph_sha256": "81b341fe215a60fbae1cc7d691adcb33ee1a38a0b18c4d286bf46cf7a45e01d6",
+      "vertices": 256,
+      "edges": 960,
+      "graph_build_ns": 1735318,
+      "prepare_ns": 0,
+      "setup_python_peak_bytes": null,
+      "process_peak_rss_kib": 15232,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 33,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            3452479,
+            4135897,
+            3783707,
+            3932611,
+            4388015,
+            4854657,
+            3962376,
+            4024009,
+            4397050,
+            3922916
+          ],
+          "median_ns": 3993192.5,
+          "p95_ns": 4854657
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            3840262,
+            3757939,
+            3764939,
+            3680021,
+            4364211,
+            4136919,
+            4532003,
+            4115967,
+            3538379,
+            3588404
+          ],
+          "median_ns": 3802600.5,
+          "p95_ns": 4532003
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            1051200,
+            1018741,
+            1190981,
+            1192352,
+            960765,
+            1009187,
+            1367295,
+            1034535,
+            1167855,
+            1199373
+          ],
+          "median_ns": 1109527.5,
+          "p95_ns": 1367295
+        }
+      ]
+    },
+    {
+      "size": 16,
+      "configuration": "A*-raw",
+      "phase": "memory",
+      "graph_sha256": "81b341fe215a60fbae1cc7d691adcb33ee1a38a0b18c4d286bf46cf7a45e01d6",
+      "vertices": 256,
+      "edges": 960,
+      "graph_build_ns": null,
+      "prepare_ns": null,
+      "setup_python_peak_bytes": 354972,
+      "process_peak_rss_kib": 15360,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 3,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 212688
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 115748
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 6688
+        }
+      ]
+    },
+    {
+      "size": 16,
+      "configuration": "A*-prepared",
+      "phase": "timing",
+      "graph_sha256": "81b341fe215a60fbae1cc7d691adcb33ee1a38a0b18c4d286bf46cf7a45e01d6",
+      "vertices": 256,
+      "edges": 960,
+      "graph_build_ns": 1765393,
+      "prepare_ns": 901635,
+      "setup_python_peak_bytes": null,
+      "process_peak_rss_kib": 15232,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 33,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            3018196,
+            2528952,
+            3147161,
+            3105548,
+            2747860,
+            3169674,
+            2519588,
+            2870044,
+            2689002,
+            2933860
+          ],
+          "median_ns": 2901952.0,
+          "p95_ns": 3169674
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            3115283,
+            3456095,
+            3067101,
+            2926960,
+            2834310,
+            2766659,
+            2822723,
+            2838376,
+            3158799,
+            2741571
+          ],
+          "median_ns": 2882668.0,
+          "p95_ns": 3456095
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            94242,
+            92299,
+            97726,
+            154052,
+            94282,
+            143706,
+            91388,
+            89375,
+            89034,
+            98489
+          ],
+          "median_ns": 94262.0,
+          "p95_ns": 154052
+        }
+      ]
+    },
+    {
+      "size": 16,
+      "configuration": "A*-prepared",
+      "phase": "memory",
+      "graph_sha256": "81b341fe215a60fbae1cc7d691adcb33ee1a38a0b18c4d286bf46cf7a45e01d6",
+      "vertices": 256,
+      "edges": 960,
+      "graph_build_ns": null,
+      "prepare_ns": null,
+      "setup_python_peak_bytes": 354972,
+      "process_peak_rss_kib": 15360,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 3,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 212384
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 115724
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 6664
+        }
+      ]
+    },
+    {
+      "size": 16,
+      "configuration": "Dijkstra",
+      "phase": "timing",
+      "graph_sha256": "81b341fe215a60fbae1cc7d691adcb33ee1a38a0b18c4d286bf46cf7a45e01d6",
+      "vertices": 256,
+      "edges": 960,
+      "graph_build_ns": 1438603,
+      "prepare_ns": 0,
+      "setup_python_peak_bytes": null,
+      "process_peak_rss_kib": 15104,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 33,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            1979856,
+            1626175,
+            1713666,
+            1692494,
+            1695288,
+            1691442,
+            1704072,
+            1631402,
+            1768719,
+            1676250
+          ],
+          "median_ns": 1693891.0,
+          "p95_ns": 1979856
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            1829470,
+            1966215,
+            1659645,
+            1967097,
+            1800506,
+            1801408,
+            2050192,
+            1929961,
+            1794237,
+            1728768
+          ],
+          "median_ns": 1815439.0,
+          "p95_ns": 2050192
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            1333635,
+            1311601,
+            1206173,
+            1294135,
+            1500745,
+            1261416,
+            1241146,
+            1261636,
+            1181736,
+            1198732
+          ],
+          "median_ns": 1261526.0,
+          "p95_ns": 1500745
+        }
+      ]
+    },
+    {
+      "size": 16,
+      "configuration": "Dijkstra",
+      "phase": "memory",
+      "graph_sha256": "81b341fe215a60fbae1cc7d691adcb33ee1a38a0b18c4d286bf46cf7a45e01d6",
+      "vertices": 256,
+      "edges": 960,
+      "graph_build_ns": null,
+      "prepare_ns": null,
+      "setup_python_peak_bytes": 354972,
+      "process_peak_rss_kib": 15360,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 3,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 195040
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 109004
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 109136
+        }
+      ]
+    },
+    {
+      "size": 32,
+      "configuration": "A*-prepared",
+      "phase": "timing",
+      "graph_sha256": "25782bfe82ef6471a9a392bcd747df49a46f56577335e9c8b9115f5763d95b85",
+      "vertices": 1024,
+      "edges": 3968,
+      "graph_build_ns": 6309214,
+      "prepare_ns": 3486891,
+      "setup_python_peak_bytes": null,
+      "process_peak_rss_kib": 17152,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 33,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            14800949,
+            15364014,
+            15516744,
+            15368731,
+            14607046,
+            14683863,
+            14179093,
+            13566603,
+            13765201,
+            17252022
+          ],
+          "median_ns": 14742406.0,
+          "p95_ns": 17252022
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            13738101,
+            13930140,
+            13820915,
+            13938883,
+            12859220,
+            12775413,
+            12735203,
+            13906775,
+            14050020,
+            14014416
+          ],
+          "median_ns": 13863845.0,
+          "p95_ns": 14050020
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            195414,
+            189454,
+            188283,
+            189014,
+            202735,
+            188924,
+            186090,
+            186871,
+            187352,
+            198659
+          ],
+          "median_ns": 188969.0,
+          "p95_ns": 202735
+        }
+      ]
+    },
+    {
+      "size": 32,
+      "configuration": "A*-prepared",
+      "phase": "memory",
+      "graph_sha256": "25782bfe82ef6471a9a392bcd747df49a46f56577335e9c8b9115f5763d95b85",
+      "vertices": 1024,
+      "edges": 3968,
+      "graph_build_ns": null,
+      "prepare_ns": null,
+      "setup_python_peak_bytes": 1457980,
+      "process_peak_rss_kib": 18236,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 3,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 817840
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 738576
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 15064
+        }
+      ]
+    },
+    {
+      "size": 32,
+      "configuration": "Dijkstra",
+      "phase": "timing",
+      "graph_sha256": "25782bfe82ef6471a9a392bcd747df49a46f56577335e9c8b9115f5763d95b85",
+      "vertices": 1024,
+      "edges": 3968,
+      "graph_build_ns": 8549121,
+      "prepare_ns": 0,
+      "setup_python_peak_bytes": null,
+      "process_peak_rss_kib": 17152,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 33,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            10133522,
+            12781983,
+            8765295,
+            8622711,
+            9005346,
+            9057495,
+            9744027,
+            8421539,
+            7966134,
+            8313787
+          ],
+          "median_ns": 8885320.5,
+          "p95_ns": 12781983
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            8659638,
+            8106035,
+            8174768,
+            8019444,
+            8602881,
+            8916623,
+            11703222,
+            9516435,
+            10048264,
+            9874393
+          ],
+          "median_ns": 8788130.5,
+          "p95_ns": 11703222
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            10926154,
+            9441362,
+            7534566,
+            13280112,
+            9415574,
+            7046752,
+            6934023,
+            6682015,
+            6972250,
+            6524487
+          ],
+          "median_ns": 7290659.0,
+          "p95_ns": 13280112
+        }
+      ]
+    },
+    {
+      "size": 32,
+      "configuration": "Dijkstra",
+      "phase": "memory",
+      "graph_sha256": "25782bfe82ef6471a9a392bcd747df49a46f56577335e9c8b9115f5763d95b85",
+      "vertices": 1024,
+      "edges": 3968,
+      "graph_build_ns": null,
+      "prepare_ns": null,
+      "setup_python_peak_bytes": 1457980,
+      "process_peak_rss_kib": 18752,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 3,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 786912
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 722440
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 631148
+        }
+      ]
+    },
+    {
+      "size": 32,
+      "configuration": "A*-raw",
+      "phase": "timing",
+      "graph_sha256": "25782bfe82ef6471a9a392bcd747df49a46f56577335e9c8b9115f5763d95b85",
+      "vertices": 1024,
+      "edges": 3968,
+      "graph_build_ns": 6709785,
+      "prepare_ns": 0,
+      "setup_python_peak_bytes": null,
+      "process_peak_rss_kib": 17152,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 33,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            25986211,
+            20039833,
+            19710428,
+            19548935,
+            17332353,
+            16807575,
+            17809611,
+            17394898,
+            18046757,
+            21406017
+          ],
+          "median_ns": 18797846.0,
+          "p95_ns": 25986211
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            17035387,
+            16872783,
+            17005843,
+            17605323,
+            16196857,
+            16568275,
+            16666092,
+            17375358,
+            17219945,
+            17517792
+          ],
+          "median_ns": 17020615.0,
+          "p95_ns": 17605323
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "samples_ns": [
+            4133843,
+            4036518,
+            4109668,
+            4075877,
+            3826482,
+            4297850,
+            3782306,
+            3766102,
+            3719020,
+            4271020
+          ],
+          "median_ns": 4056197.5,
+          "p95_ns": 4297850
+        }
+      ]
+    },
+    {
+      "size": 32,
+      "configuration": "A*-raw",
+      "phase": "memory",
+      "graph_sha256": "25782bfe82ef6471a9a392bcd747df49a46f56577335e9c8b9115f5763d95b85",
+      "vertices": 1024,
+      "edges": 3968,
+      "graph_build_ns": null,
+      "prepare_ns": null,
+      "setup_python_peak_bytes": 1457980,
+      "process_peak_rss_kib": 18496,
+      "peak_rss_scope": "fresh Linux worker lifetime, including interpreter/setup/all requests; not per-request RSS",
+      "actual_search_calls": 3,
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 818144
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 738600
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "PASS",
+          "checks": {
+            "connected_allowed_path": true,
+            "manhattan_edge_count": true,
+            "analytical_length": true,
+            "analytical_time": true
+          },
+          "query_incremental_python_peak_bytes": 15088
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "system": "DMN",
+      "rank": null,
+      "score_out_of_ten": null,
+      "reason": "Resource values informational; no performance quality threshold or cross-family ranking",
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "PASS",
+          "reason": "All three DMN configurations checked against analytical route oracle in both phases"
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "PASS",
+          "reason": "All three DMN configurations checked against analytical route oracle in both phases"
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "PASS",
+          "reason": "All three DMN configurations checked against analytical route oracle in both phases"
+        },
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "PASS",
+          "reason": "All three DMN configurations checked against analytical route oracle in both phases"
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "PASS",
+          "reason": "All three DMN configurations checked against analytical route oracle in both phases"
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "PASS",
+          "reason": "All three DMN configurations checked against analytical route oracle in both phases"
+        },
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "PASS",
+          "reason": "All three DMN configurations checked against analytical route oracle in both phases"
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "PASS",
+          "reason": "All three DMN configurations checked against analytical route oracle in both phases"
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "PASS",
+          "reason": "All three DMN configurations checked against analytical route oracle in both phases"
+        }
+      ]
+    },
+    {
+      "system": "Valhalla",
+      "rank": null,
+      "score_out_of_ten": null,
+      "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted",
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        }
+      ]
+    },
+    {
+      "system": "OSRM",
+      "rank": null,
+      "score_out_of_ten": null,
+      "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted",
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        }
+      ]
+    },
+    {
+      "system": "GraphHopper",
+      "rank": null,
+      "score_out_of_ten": null,
+      "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted",
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        }
+      ]
+    },
+    {
+      "system": "OsmAnd",
+      "rank": null,
+      "score_out_of_ten": null,
+      "reason": "No executable native/app resource replay harness",
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        },
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        },
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        }
+      ]
+    },
+    {
+      "system": "Organic Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "reason": "No executable native/app resource replay harness",
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        },
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        },
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "NOT_RUN",
+          "reason": "No executable native/app resource replay harness"
+        }
+      ]
+    },
+    {
+      "system": "BRouter",
+      "rank": null,
+      "score_out_of_ten": null,
+      "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted",
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        }
+      ]
+    },
+    {
+      "system": "HERE",
+      "rank": null,
+      "score_out_of_ten": null,
+      "reason": "No configured permitted same-workload access; paid calls unauthorized",
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        }
+      ]
+    },
+    {
+      "system": "Mapbox",
+      "rank": null,
+      "score_out_of_ten": null,
+      "reason": "No configured permitted same-workload access; paid calls unauthorized",
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        }
+      ]
+    },
+    {
+      "system": "TomTom",
+      "rank": null,
+      "score_out_of_ten": null,
+      "reason": "No configured permitted same-workload access; paid calls unauthorized",
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        }
+      ]
+    },
+    {
+      "system": "openrouteservice",
+      "rank": null,
+      "score_out_of_ten": null,
+      "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted",
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "NOT_RUN",
+          "reason": "No identical weighted-RoadGraph resource adapter; existing OSM HTTP runs are a different cost/workload/transport and are not substituted"
+        }
+      ]
+    },
+    {
+      "system": "Google Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "reason": "No configured permitted same-workload access; paid calls unauthorized",
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "NOT_RUN",
+          "reason": "No configured permitted same-workload access; paid calls unauthorized"
+        }
+      ]
+    },
+    {
+      "system": "Waze",
+      "rank": null,
+      "score_out_of_ten": null,
+      "reason": "No established permitted automated resource replay interface",
+      "cases": [
+        {
+          "case_id": "RESOURCE-001-8-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated resource replay interface"
+        },
+        {
+          "case_id": "RESOURCE-001-8-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated resource replay interface"
+        },
+        {
+          "case_id": "RESOURCE-001-8-row",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated resource replay interface"
+        },
+        {
+          "case_id": "RESOURCE-001-16-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated resource replay interface"
+        },
+        {
+          "case_id": "RESOURCE-001-16-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated resource replay interface"
+        },
+        {
+          "case_id": "RESOURCE-001-16-row",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated resource replay interface"
+        },
+        {
+          "case_id": "RESOURCE-001-32-diagonal",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated resource replay interface"
+        },
+        {
+          "case_id": "RESOURCE-001-32-reverse",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated resource replay interface"
+        },
+        {
+          "case_id": "RESOURCE-001-32-row",
+          "outcome": "NOT_RUN",
+          "reason": "No established permitted automated resource replay interface"
+        }
+      ]
+    }
+  ],
+  "interpretation": "Timing requests are untraced; memory uses different fresh workers. RSS includes interpreter/setup and is not Python allocation peak. No battery/thermal/device or native-family ranking.",
+  "source_status": "actual local working-tree run before per-request heuristic cache; no CI run claimed",
+  "base_sha": "9dd63134411b9562519d7bd6cf5abfe1a4b19ea6",
+  "heuristic_work_control": {
+    "size": 8,
+    "configuration": "A*-prepared",
+    "source": "v-0-0",
+    "destination": "v-7-7",
+    "vertices": 64,
+    "real_distance_function_calls": 223,
+    "expected_maximum_calls": 64,
+    "passed": false,
+    "method": "unit-test spy delegates all calls to real geodesic function; actual route calculated, no mocked route or reference result"
+  }
+}

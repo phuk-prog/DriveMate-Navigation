@@ -1,0 +1,34 @@
+{
+  "test_id": "ROUTE-004-SELECTED-EDGE-1",
+  "classification": "synthetic analytical geometry controls; no route engine or road-law verdict",
+  "allowed_start": [53.0, -2.0],
+  "allowed_end": [53.001, -2.0],
+  "corridor_m": 8,
+  "cases": [
+    {
+      "id": "single-segment-forward",
+      "points": [[53.0, -2.0], [53.001, -2.0]],
+      "expected_selected_forward": true
+    },
+    {
+      "id": "multi-segment-forward",
+      "points": [[53.0, -2.0], [53.00025, -2.0], [53.0005, -2.0], [53.00075, -2.0], [53.001, -2.0]],
+      "expected_selected_forward": true
+    },
+    {
+      "id": "reverse-traversal",
+      "points": [[53.001, -2.0], [53.0005, -2.0], [53.0, -2.0]],
+      "expected_selected_forward": false
+    },
+    {
+      "id": "off-corridor-detour",
+      "points": [[53.0, -2.0], [53.0, -1.999], [53.001, -1.999], [53.001, -2.0]],
+      "expected_selected_forward": false
+    },
+    {
+      "id": "incomplete-forward-fragment",
+      "points": [[53.0, -2.0], [53.0003, -2.0], [53.0007, -2.0]],
+      "expected_selected_forward": false
+    }
+  ]
+}

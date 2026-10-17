@@ -1,0 +1,376 @@
+{
+  "trial": "GPS-003-CANDIDATE-DIAGNOSTIC",
+  "classification": "actual diagnostic-only reexecution of frozen map-derived positions",
+  "run_id": 38880782913,
+  "job_id": 116906738401,
+  "run_sha": "5086fc32e95060f3b19fc965cc88a58da0396020",
+  "url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38880782913",
+  "artifact_id": 12037441640,
+  "map_xml_sha256": "b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5",
+  "archive_sha256": "b7188b22501b878fddba6e06a90bb44ce6c2d721333e0ca57e10a1a82b568807",
+  "oracle_sha256": "612f2469facbc4e02fd8233a78d3cb2aa9f1bb40a892efb88e9bf91d116b80b0",
+  "source": "Executed GitHub Actions job log JSON; a byte-for-byte output artifact is retained by GitHub Actions separately.",
+  "gps003": [
+    {
+      "base": "GPS-003-B1",
+      "case_id": "GPS-003-B1-clear",
+      "repeat_count": 8,
+      "fix": [
+        1000,
+        53.35224308,
+        -2.2581133700000002,
+        3,
+        10,
+        338.7129990483153
+      ],
+      "required_edge": "w:32113418:4:f",
+      "status": "AMBIGUOUS",
+      "reason": "nearby_parallel_or_overlapping_roads",
+      "candidates": [
+        {
+          "edge_id": "w:32113418:4:f",
+          "from_vertex": "osm:360418875",
+          "to_vertex": "osm:360418879",
+          "access": "allowed",
+          "length_m": 24.297,
+          "distance_m": 0,
+          "heading_deg": 338.713,
+          "heading_error_deg": 0,
+          "score": 0
+        },
+        {
+          "edge_id": "w:32113418:3:f",
+          "from_vertex": "osm:360418871",
+          "to_vertex": "osm:360418875",
+          "access": "allowed",
+          "length_m": 17.536,
+          "distance_m": 7.2891,
+          "heading_deg": 341.7822,
+          "heading_error_deg": 3.0692,
+          "score": 2.128496
+        }
+      ],
+      "relationship": {
+        "relationship": "backward_adjacent",
+        "same_osm_way": true,
+        "same_direction": true,
+        "forward_turn_permitted_on_imported_map": false,
+        "independent_road_law": "UNVERIFIED"
+      },
+      "score_gap": 2.128496
+    },
+    {
+      "base": "GPS-003-B2",
+      "case_id": "GPS-003-B2-clear",
+      "repeat_count": 8,
+      "fix": [
+        1000,
+        53.3525589,
+        -2.2583745399999997,
+        3,
+        10,
+        325.44001486210016
+      ],
+      "required_edge": "w:32113418:6:f",
+      "status": "AMBIGUOUS",
+      "reason": "nearby_parallel_or_overlapping_roads",
+      "candidates": [
+        {
+          "edge_id": "w:32113418:6:f",
+          "from_vertex": "osm:360418882",
+          "to_vertex": "osm:360418885",
+          "access": "allowed",
+          "length_m": 23.4938,
+          "distance_m": 0,
+          "heading_deg": 325.44,
+          "heading_error_deg": 0,
+          "score": 0
+        },
+        {
+          "edge_id": "w:32113418:5:f",
+          "from_vertex": "osm:360418879",
+          "to_vertex": "osm:360418882",
+          "access": "allowed",
+          "length_m": 15.2516,
+          "distance_m": 7.0481,
+          "heading_deg": 331.9947,
+          "heading_error_deg": 6.5547,
+          "score": 2.001907
+        }
+      ],
+      "relationship": {
+        "relationship": "backward_adjacent",
+        "same_osm_way": true,
+        "same_direction": true,
+        "forward_turn_permitted_on_imported_map": false,
+        "independent_road_law": "UNVERIFIED"
+      },
+      "score_gap": 2.001907
+    }
+  ],
+  "uk40": [
+    {
+      "case_id": "TGP-006",
+      "anchor_edge": "w:32113418:18:f",
+      "expected_edge": "w:32113418:18:r",
+      "status": "AMBIGUOUS",
+      "direct_candidate": {
+        "edge_id": "w:32113418:18:r",
+        "from_vertex": "osm:360418932",
+        "to_vertex": "osm:360418928",
+        "access": "allowed",
+        "length_m": 31.3134,
+        "distance_m": 0,
+        "heading_deg": 155.1333,
+        "heading_error_deg": 0,
+        "score": 0
+      },
+      "alternative": {
+        "edge_id": "w:32113418:19:r",
+        "from_vertex": "osm:503669630",
+        "to_vertex": "osm:360418932",
+        "access": "allowed",
+        "length_m": 15.3307,
+        "distance_m": 6.2627,
+        "heading_deg": 155.1428,
+        "heading_error_deg": 0.0095,
+        "score": 1.56885
+      },
+      "relationship": {
+        "relationship": "backward_adjacent",
+        "same_osm_way": true,
+        "same_direction": true,
+        "forward_turn_permitted_on_imported_map": false,
+        "independent_road_law": "UNVERIFIED"
+      },
+      "connector_m": 46.64416489738194,
+      "matches_historical_metrics": true
+    },
+    {
+      "case_id": "TGP-008",
+      "anchor_edge": "w:32113418:18:r",
+      "expected_edge": "w:32113418:18:f",
+      "status": "AMBIGUOUS",
+      "direct_candidate": {
+        "edge_id": "w:32113418:18:f",
+        "from_vertex": "osm:360418928",
+        "to_vertex": "osm:360418932",
+        "access": "allowed",
+        "length_m": 31.3134,
+        "distance_m": 0,
+        "heading_deg": 335.1332,
+        "heading_error_deg": 0,
+        "score": 0
+      },
+      "alternative": {
+        "edge_id": "w:32113418:17:f",
+        "from_vertex": "osm:360418924",
+        "to_vertex": "osm:360418928",
+        "access": "allowed",
+        "length_m": 11.0844,
+        "distance_m": 6.2627,
+        "heading_deg": 334.8039,
+        "heading_error_deg": 0.3294,
+        "score": 1.568889
+      },
+      "relationship": {
+        "relationship": "backward_adjacent",
+        "same_osm_way": true,
+        "same_direction": true,
+        "forward_turn_permitted_on_imported_map": false,
+        "independent_road_law": "UNVERIFIED"
+      },
+      "connector_m": 42.39782557004284,
+      "matches_historical_metrics": true
+    },
+    {
+      "case_id": "TGP-013",
+      "anchor_edge": "w:32113418:21:f",
+      "expected_edge": "w:32113418:21:r",
+      "status": "AMBIGUOUS",
+      "direct_candidate": {
+        "edge_id": "w:32113418:21:r",
+        "from_vertex": "osm:360418940",
+        "to_vertex": "osm:360418936",
+        "access": "allowed",
+        "length_m": 29.6147,
+        "distance_m": 0,
+        "heading_deg": 157.4112,
+        "heading_error_deg": 0,
+        "score": 0
+      },
+      "alternative": {
+        "edge_id": "w:32113418:22:r",
+        "from_vertex": "osm:360418944",
+        "to_vertex": "osm:360418940",
+        "access": "allowed",
+        "length_m": 12.2073,
+        "distance_m": 5.9229,
+        "heading_deg": 163.0251,
+        "heading_error_deg": 5.6139,
+        "score": 1.414146
+      },
+      "relationship": {
+        "relationship": "backward_adjacent",
+        "same_osm_way": true,
+        "same_direction": true,
+        "forward_turn_permitted_on_imported_map": false,
+        "independent_road_law": "UNVERIFIED"
+      },
+      "connector_m": 41.82202327088706,
+      "matches_historical_metrics": true
+    },
+    {
+      "case_id": "TGP-015",
+      "anchor_edge": "w:32113418:21:r",
+      "expected_edge": "w:32113418:21:f",
+      "status": "AMBIGUOUS",
+      "direct_candidate": {
+        "edge_id": "w:32113418:21:f",
+        "from_vertex": "osm:360418936",
+        "to_vertex": "osm:360418940",
+        "access": "allowed",
+        "length_m": 29.6147,
+        "distance_m": 0,
+        "heading_deg": 337.4111,
+        "heading_error_deg": 0,
+        "score": 0
+      },
+      "alternative": {
+        "edge_id": "w:32113418:20:f",
+        "from_vertex": "osm:503669630",
+        "to_vertex": "osm:360418936",
+        "access": "allowed",
+        "length_m": 23.6554,
+        "distance_m": 5.9229,
+        "heading_deg": 333.8116,
+        "heading_error_deg": 3.5996,
+        "score": 1.407732
+      },
+      "relationship": {
+        "relationship": "backward_adjacent",
+        "same_osm_way": true,
+        "same_direction": true,
+        "forward_turn_permitted_on_imported_map": false,
+        "independent_road_law": "UNVERIFIED"
+      },
+      "connector_m": 53.270126971535234,
+      "matches_historical_metrics": true
+    },
+    {
+      "case_id": "TGP-016",
+      "anchor_edge": "w:32113418:26:f",
+      "expected_edge": "w:32113418:26:r",
+      "status": "AMBIGUOUS",
+      "direct_candidate": {
+        "edge_id": "w:32113418:26:r",
+        "from_vertex": "osm:360418967",
+        "to_vertex": "osm:360418964",
+        "access": "allowed",
+        "length_m": 29.6533,
+        "distance_m": 0,
+        "heading_deg": 172.6708,
+        "heading_error_deg": 0,
+        "score": 0
+      },
+      "alternative": {
+        "edge_id": "w:32113418:27:r",
+        "from_vertex": "osm:360418970",
+        "to_vertex": "osm:360418967",
+        "access": "allowed",
+        "length_m": 48.1372,
+        "distance_m": 5.9307,
+        "heading_deg": 172.3943,
+        "heading_error_deg": 0.2764,
+        "score": 1.406941
+      },
+      "relationship": {
+        "relationship": "backward_adjacent",
+        "same_osm_way": true,
+        "same_direction": true,
+        "forward_turn_permitted_on_imported_map": false,
+        "independent_road_law": "UNVERIFIED"
+      },
+      "connector_m": 77.79057445941889,
+      "matches_historical_metrics": true
+    },
+    {
+      "case_id": "TGP-019",
+      "anchor_edge": "w:32113418:26:r",
+      "expected_edge": "w:32113418:26:f",
+      "status": "AMBIGUOUS",
+      "direct_candidate": {
+        "edge_id": "w:32113418:26:f",
+        "from_vertex": "osm:360418964",
+        "to_vertex": "osm:360418967",
+        "access": "allowed",
+        "length_m": 29.6533,
+        "distance_m": 0,
+        "heading_deg": 352.6707,
+        "heading_error_deg": 0,
+        "score": 0
+      },
+      "alternative": {
+        "edge_id": "w:32113418:25:f",
+        "from_vertex": "osm:360418960",
+        "to_vertex": "osm:360418964",
+        "access": "allowed",
+        "length_m": 16.3211,
+        "distance_m": 5.9307,
+        "heading_deg": 349.6696,
+        "heading_error_deg": 3.0012,
+        "score": 1.410029
+      },
+      "relationship": {
+        "relationship": "backward_adjacent",
+        "same_osm_way": true,
+        "same_direction": true,
+        "forward_turn_permitted_on_imported_map": false,
+        "independent_road_law": "UNVERIFIED"
+      },
+      "connector_m": 45.974459180964374,
+      "matches_historical_metrics": true
+    },
+    {
+      "case_id": "TGP-039",
+      "anchor_edge": "w:32113418:40:f",
+      "expected_edge": "w:32113418:40:r",
+      "status": "AMBIGUOUS",
+      "direct_candidate": {
+        "edge_id": "w:32113418:40:r",
+        "from_vertex": "osm:360419036",
+        "to_vertex": "osm:360419034",
+        "access": "allowed",
+        "length_m": 37.1368,
+        "distance_m": 0,
+        "heading_deg": 240.5117,
+        "heading_error_deg": 0,
+        "score": 0
+      },
+      "alternative": {
+        "edge_id": "w:32113418:41:r",
+        "from_vertex": "osm:360419038",
+        "to_vertex": "osm:360419036",
+        "access": "allowed",
+        "length_m": 25.2551,
+        "distance_m": 7.4274,
+        "heading_deg": 248.0225,
+        "heading_error_deg": 7.5108,
+        "score": 2.226128
+      },
+      "relationship": {
+        "relationship": "backward_adjacent",
+        "same_osm_way": true,
+        "same_direction": true,
+        "forward_turn_permitted_on_imported_map": false,
+        "independent_road_law": "UNVERIFIED"
+      },
+      "connector_m": 62.39192340378824,
+      "matches_historical_metrics": true
+    }
+  ],
+  "no_behavior_change": true,
+  "original_statuses_preserved": true,
+  "independent_current_road_truth": false,
+  "engine_code_changes": 0
+}

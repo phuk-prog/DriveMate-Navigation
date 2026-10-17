@@ -1,0 +1,15 @@
+{
+  "test_id": "REAL-ONEWAY-001",
+  "run_sha": "ad2a149df06298f55e07a7ab71bb01210b14edfc",
+  "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38866570406",
+  "job_id": 116860670673,
+  "outcome": "INCOMPLETE_CASE_INVENTORY",
+  "navigation_cases_executed": 0,
+  "archive_and_xml_fingerprint_checks": "PASS",
+  "failure": "Frozen six-way selection unavailable; preserve failure",
+  "required_distinct_ways": 6,
+  "selected_distinct_ways": null,
+  "diagnostic_limitation": "Original selector raised before printing selected count; do not infer it.",
+  "next_step": "Retain original requirement; print raw inventory and execute available candidates as explicitly incomplete diagnostics. No substitute maps/roads or lower acceptance.",
+  "dmn_navigation_failure_demonstrated": false
+}

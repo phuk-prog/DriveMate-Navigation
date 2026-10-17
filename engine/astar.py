@@ -88,6 +88,8 @@ def astar_route(
     With no fully validated geometry, reverts automatically to a zero heuristic.
     The caller is responsible for separately verifying road-data completeness.
     """
+    if graph.journey_destination is not None and destination != graph.journey_destination:
+        raise ValueError("Journey-scoped access cannot be reused for another destination")
     if source not in graph.vertices or destination not in graph.vertices:
         raise ValueError("Unknown source or destination")
     if incoming_edge_id is not None:
@@ -114,16 +116,21 @@ def astar_route(
         maximum_mps = max((e.estimated_kph for e in graph.edges.values()), default=1.0) / 3.6
     if source == destination:
         return AStarResult(Route((), 0.0, 0.0), 0, bool(can_heuristic))
+    # Incoming-edge search states share one destination-dependent value per
+    # vertex. Keep this cache local to the request, never in prepared map state.
+    heuristic_values: dict[str, float] = {}
     def heuristic(vertex: str) -> float:
         if not can_heuristic:
             return 0.0
         assert coordinates is not None
         # Subtract tolerance: avoid slight rounding making h larger than truth.
-        return max(0.0, metres(coordinates[vertex], coordinates[destination]) - 0.02) / maximum_mps
+        if vertex not in heuristic_values:
+            heuristic_values[vertex] = max(0.0, metres(coordinates[vertex], coordinates[destination]) - 0.02) / maximum_mps
+        return heuristic_values[vertex]
 
-    start = (source, incoming_edge_id)
+    start = (source, (incoming_edge_id,) if incoming_edge_id else ())
     distances = {start: 0.0}
-    predecessor: dict[tuple[str, str | None], tuple[tuple[str, str | None], str]] = {}
+    predecessor: dict[tuple[str, tuple[str, ...]], tuple[tuple[str, tuple[str, ...]], str]] = {}
     sequence = count()
     heap = [(heuristic(source), next(sequence), 0.0, start)]
     goal = None
@@ -140,16 +147,17 @@ def astar_route(
         for edge in graph.adjacency[vertex]:
             if edge.access != "allowed" or edge.edge_id in blocked:
                 continue
-            if previous is not None and (previous, edge.edge_id) in graph.prohibited_turns:
+            tail = graph.transition(previous, edge.edge_id)
+            if tail is None:
                 continue
-            next_state = (edge.target, edge.edge_id)
+            next_state = (edge.target, tail)
             new_cost = cost + edge.estimated_seconds + penalties.get(edge.edge_id, 0)
             if new_cost < distances.get(next_state, float("inf")):
                 distances[next_state] = new_cost
                 predecessor[next_state] = (state, edge.edge_id)
                 heappush(heap, (new_cost + heuristic(edge.target), next(sequence), new_cost, next_state))
     if goal is None:
-        raise RouteNotFound("No legal route under current graph")
+        raise RouteNotFound("No route using allowed edges under current graph")
     ids = []
     state = goal
     while state != start:

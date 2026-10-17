@@ -1,0 +1,48 @@
+{
+  "test_id": "INTEGRATED-005",
+  "classification": "synthetic analytical traffic-evidence and routing integration; not live traffic or real-road legality",
+  "cases": [
+    {
+      "id": "INTEGRATED-005-current-verified-closure",
+      "age_seconds": 30,
+      "closure_state": "CLOSED",
+      "verified_closure": true,
+      "blocked_edges": ["w:40:0:f"],
+      "legal_detour_available": true,
+      "expected_status": "VERIFIED_CLOSURE",
+      "expected_propose_reroute": true,
+      "expected_route_edges": ["w:95:0:f", "w:100:0:f", "w:50:0:f"]
+    },
+    {
+      "id": "INTEGRATED-005-stale-closure",
+      "age_seconds": 301,
+      "closure_state": "CLOSED",
+      "verified_closure": true,
+      "blocked_edges": ["w:40:0:f"],
+      "legal_detour_available": true,
+      "expected_status": "STALE",
+      "expected_propose_reroute": false
+    },
+    {
+      "id": "INTEGRATED-005-unverified-closure",
+      "age_seconds": 30,
+      "closure_state": "CLOSED",
+      "verified_closure": false,
+      "blocked_edges": ["w:40:0:f"],
+      "legal_detour_available": true,
+      "expected_status": "UNVERIFIED_CLOSURE",
+      "expected_propose_reroute": false
+    },
+    {
+      "id": "INTEGRATED-005-no-legal-detour",
+      "age_seconds": 30,
+      "closure_state": "CLOSED",
+      "verified_closure": true,
+      "blocked_edges": ["w:40:0:f", "w:95:0:f"],
+      "legal_detour_available": false,
+      "expected_status": "VERIFIED_CLOSURE",
+      "expected_propose_reroute": false,
+      "expected_route": "NO_ROUTE"
+    }
+  ]
+}

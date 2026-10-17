@@ -1,0 +1,14 @@
+{
+  "test_id": "GPS-003",
+  "run_sha": "9791160c1137d59f5b577ac653d2966d3299dea0",
+  "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38869088303",
+  "job_id": 116868668884,
+  "outcome": "HARNESS_SETUP_FAILURE",
+  "matcher_updates_executed": 0,
+  "map_and_archive_checks": "PASS",
+  "failure": "ValueError: Frozen cases changed",
+  "cause": "Raw-map coordinates stored as Python tuples compare unequal to the identical JSON-decoded lists. Matcher was never called.",
+  "correction": "Compare canonical serialized manifest bytes, preserving the same coordinates, signals, selection and acceptance.",
+  "prevention": "Roundtrip-coordinate regression plus tampered-manifest rejection control",
+  "dmn_policy_changed": false
+}

@@ -1,0 +1,98 @@
+{
+  "classification": "synthetic analytical oracle; not real-road legality",
+  "justification": "Invented rectangular directed cycle: bottom east, right north, top west, left south. Every case has exactly one simple directed path. Expected geometry declared before executing BRouter or tuning DMN.",
+  "cases": [
+    {
+      "id": "ROUTE-001-east-direct",
+      "source_node": 6,
+      "target_node": 26,
+      "path": [
+        [
+          1,
+          1.001
+        ],
+        [
+          1,
+          1.005
+        ]
+      ]
+    },
+    {
+      "id": "ROUTE-001-west-direct",
+      "source_node": 126,
+      "target_node": 106,
+      "path": [
+        [
+          1.0003,
+          1.005
+        ],
+        [
+          1.0003,
+          1.001
+        ]
+      ]
+    },
+    {
+      "id": "ROUTE-001-bottom-reverse-detour",
+      "source_node": 26,
+      "target_node": 6,
+      "path": [
+        [
+          1,
+          1.005
+        ],
+        [
+          1,
+          1.006
+        ],
+        [
+          1.0003,
+          1.006
+        ],
+        [
+          1.0003,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1.001
+        ]
+      ]
+    },
+    {
+      "id": "ROUTE-001-top-reverse-detour",
+      "source_node": 106,
+      "target_node": 126,
+      "path": [
+        [
+          1.0003,
+          1.001
+        ],
+        [
+          1.0003,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1.006
+        ],
+        [
+          1.0003,
+          1.006
+        ],
+        [
+          1.0003,
+          1.005
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1938 @@
+{
+  "schema_version": 1,
+  "title": "DMN atomic navigation engine test register",
+  "generated_date": "2026-10-15",
+  "scope": "Engine and necessary dependencies, not application appearance",
+  "historical_evidence": "Preserved elsewhere; no new engine claims",
+  "new_suite_execution": "not_run",
+  "domains": [
+    {
+      "name": "Road data and graph",
+      "proposed_module_boundary": "proposed/road-data"
+    },
+    {
+      "name": "Legal movements and restrictions",
+      "proposed_module_boundary": "proposed/legality"
+    },
+    {
+      "name": "Route search and preferences",
+      "proposed_module_boundary": "proposed/routing"
+    },
+    {
+      "name": "Route geometry and progress",
+      "proposed_module_boundary": "proposed/geometry"
+    },
+    {
+      "name": "GPS signals and sensors",
+      "proposed_module_boundary": "proposed/positioning"
+    },
+    {
+      "name": "Road matching and position confidence",
+      "proposed_module_boundary": "proposed/matching"
+    },
+    {
+      "name": "Rerouting and signal recovery",
+      "proposed_module_boundary": "proposed/recovery"
+    },
+    {
+      "name": "Speed limits, traffic and ETA",
+      "proposed_module_boundary": "proposed/speed"
+    },
+    {
+      "name": "Turn, roundabout and voice guidance",
+      "proposed_module_boundary": "proposed/guidance"
+    },
+    {
+      "name": "Lane-level guidance",
+      "proposed_module_boundary": "proposed/lanes"
+    },
+    {
+      "name": "Destination search and arrival",
+      "proposed_module_boundary": "proposed/arrival"
+    },
+    {
+      "name": "Offline operation, efficiency and resilience",
+      "proposed_module_boundary": "proposed/runtime"
+    }
+  ],
+  "categories": [
+    {
+      "id": "NAV-001",
+      "group": "Road data and graph",
+      "module_boundary": "proposed/road-data",
+      "name": "OSM provenance and freshness",
+      "checks": [
+        {
+          "id": "NAV-001-A",
+          "assertion": "Reject missing map version or checksum",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-001-B",
+          "assertion": "Compare dated public extracts reproducibly",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-001-C",
+          "assertion": "Flag stale or conflicting road evidence",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-002",
+      "group": "Road data and graph",
+      "module_boundary": "proposed/road-data",
+      "name": "Road geometry continuity",
+      "checks": [
+        {
+          "id": "NAV-002-A",
+          "assertion": "Detect broken public-road segments",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-002-B",
+          "assertion": "Detect spur and disconnected network errors",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-002-C",
+          "assertion": "Check segment lengths against source geometry",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-003",
+      "group": "Road data and graph",
+      "module_boundary": "proposed/road-data",
+      "name": "Junction graph topology",
+      "checks": [
+        {
+          "id": "NAV-003-A",
+          "assertion": "Preserve every mapped road junction link",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-003-B",
+          "assertion": "Detect false joins at crossing roads",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-003-C",
+          "assertion": "Preserve correct incoming and outgoing connections",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-004",
+      "group": "Road data and graph",
+      "module_boundary": "proposed/road-data",
+      "name": "Carriageway representation",
+      "checks": [
+        {
+          "id": "NAV-004-A",
+          "assertion": "Distinguish two directions on dual roads",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-004-B",
+          "assertion": "Preserve separate parallel carriageways",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-004-C",
+          "assertion": "Reject virtual crossing between physically separate roads",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-005",
+      "group": "Road data and graph",
+      "module_boundary": "proposed/road-data",
+      "name": "Motorcar access permissions",
+      "checks": [
+        {
+          "id": "NAV-005-A",
+          "assertion": "Apply explicit motorcar access tags",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-005-B",
+          "assertion": "Reject unverified private restricted links",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-005-C",
+          "assertion": "Differentiate destination-permitted and through access",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-006",
+      "group": "Road data and graph",
+      "module_boundary": "proposed/road-data",
+      "name": "Physical barriers",
+      "checks": [
+        {
+          "id": "NAV-006-A",
+          "assertion": "Block confirmed bollards and bus traps",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-006-B",
+          "assertion": "Mark unknown gates as uncertain",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-006-C",
+          "assertion": "Retain a valid detour around confirmed barriers",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-007",
+      "group": "Legal movements and restrictions",
+      "module_boundary": "proposed/legality",
+      "name": "One-way direction",
+      "checks": [
+        {
+          "id": "NAV-007-A",
+          "assertion": "Reject the wrong way on one-way streets",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-007-B",
+          "assertion": "Handle reversed one-way ways",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-007-C",
+          "assertion": "Check carriageway legality after a missed turn",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-008",
+      "group": "Legal movements and restrictions",
+      "module_boundary": "proposed/legality",
+      "name": "Node-based turn restrictions",
+      "checks": [
+        {
+          "id": "NAV-008-A",
+          "assertion": "Reject confirmed no-left and no-right turns",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-008-B",
+          "assertion": "Honor only-turn restrictions",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-008-C",
+          "assertion": "Retain restrictions when route starts mid-junction",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-009",
+      "group": "Legal movements and restrictions",
+      "module_boundary": "proposed/legality",
+      "name": "Via-way and multi-link turns",
+      "checks": [
+        {
+          "id": "NAV-009-A",
+          "assertion": "Check restrictions traversing multiple links",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-009-B",
+          "assertion": "Avoid bypass through a split junction edge",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-009-C",
+          "assertion": "Mark unsupported via-way rules unknown",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-010",
+      "group": "Legal movements and restrictions",
+      "module_boundary": "proposed/legality",
+      "name": "Legal U-turn decisions",
+      "checks": [
+        {
+          "id": "NAV-010-A",
+          "assertion": "Allow independently confirmed lawful dead-end U-turn",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-010-B",
+          "assertion": "Reject independently confirmed prohibited U-turn",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-010-C",
+          "assertion": "Reroute without inventing permission when alternatives are absent",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-011",
+      "group": "Legal movements and restrictions",
+      "module_boundary": "proposed/legality",
+      "name": "Roundabout legal circulation",
+      "checks": [
+        {
+          "id": "NAV-011-A",
+          "assertion": "Follow UK permitted direction",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-011-B",
+          "assertion": "Reject prohibited entry and exit maneuvers",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-011-C",
+          "assertion": "Check complex nested and spiral movement permissions",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-012",
+      "group": "Legal movements and restrictions",
+      "module_boundary": "proposed/legality",
+      "name": "Conditional vehicle and time rules",
+      "checks": [
+        {
+          "id": "NAV-012-A",
+          "assertion": "Evaluate bus gates and school-street schedules",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-012-B",
+          "assertion": "Check time-bound turns and closures",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-012-C",
+          "assertion": "Flag uncertain vehicle, holiday or time exceptions",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-013",
+      "group": "Route search and preferences",
+      "module_boundary": "proposed/routing",
+      "name": "Shortest legal path",
+      "checks": [
+        {
+          "id": "NAV-013-A",
+          "assertion": "Measure distance against independently shortest legal route",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-013-B",
+          "assertion": "Exclude illegal shortcuts from shortest path",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-013-C",
+          "assertion": "Test ties and disconnected destination",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-014",
+      "group": "Route search and preferences",
+      "module_boundary": "proposed/routing",
+      "name": "Fastest legal path",
+      "checks": [
+        {
+          "id": "NAV-014-A",
+          "assertion": "Compare estimated travel time against legal alternatives",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-014-B",
+          "assertion": "Handle different road classes and speed assumptions",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-014-C",
+          "assertion": "Never optimize time through illegal movements",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-015",
+      "group": "Route search and preferences",
+      "module_boundary": "proposed/routing",
+      "name": "Preference and avoidance routing",
+      "checks": [
+        {
+          "id": "NAV-015-A",
+          "assertion": "Check avoid-motorway option",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-015-B",
+          "assertion": "Check toll, charge and restricted-zone avoidance",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-015-C",
+          "assertion": "Explain and report when requested avoidance is impossible",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-016",
+      "group": "Route search and preferences",
+      "module_boundary": "proposed/routing",
+      "name": "Alternative route generation",
+      "checks": [
+        {
+          "id": "NAV-016-A",
+          "assertion": "Return materially distinct legal alternatives",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-016-B",
+          "assertion": "Avoid duplicate geometry disguised as alternatives",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-016-C",
+          "assertion": "Report no alternative when none exists",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-017",
+      "group": "Route search and preferences",
+      "module_boundary": "proposed/routing",
+      "name": "Dynamic route costs and traffic",
+      "checks": [
+        {
+          "id": "NAV-017-A",
+          "assertion": "Update costs without changing legal access",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-017-B",
+          "assertion": "Compare fresh vs stale traffic decisions",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-017-C",
+          "assertion": "Keep useful route when traffic information is offline",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-018",
+      "group": "Route search and preferences",
+      "module_boundary": "proposed/routing",
+      "name": "Multi-stop routing and profiles",
+      "checks": [
+        {
+          "id": "NAV-018-A",
+          "assertion": "Preserve waypoint order and arrival behavior",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-018-B",
+          "assertion": "Check passenger-car restrictions and controls",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-018-C",
+          "assertion": "Reroute while retaining remaining stops",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-019",
+      "group": "Route geometry and progress",
+      "module_boundary": "proposed/geometry",
+      "name": "Route line road adherence",
+      "checks": [
+        {
+          "id": "NAV-019-A",
+          "assertion": "Keep route polyline on verified road centerline",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-019-B",
+          "assertion": "Check route drift at complex roundabouts",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-019-C",
+          "assertion": "Reject off-network turn-point coordinates",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-020",
+      "group": "Route geometry and progress",
+      "module_boundary": "proposed/geometry",
+      "name": "Curved and spiral connectors",
+      "checks": [
+        {
+          "id": "NAV-020-A",
+          "assertion": "Follow mapped roundabout arcs",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-020-B",
+          "assertion": "Preserve curved slip-road alignments",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-020-C",
+          "assertion": "Avoid cutting corners between legal road links",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-021",
+      "group": "Route geometry and progress",
+      "module_boundary": "proposed/geometry",
+      "name": "Grade-separated road geometry",
+      "checks": [
+        {
+          "id": "NAV-021-A",
+          "assertion": "Separate bridges from underpasses",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-021-B",
+          "assertion": "Reject shortcuts across different levels",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-021-C",
+          "assertion": "Keep approach and exit line on correct level",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-022",
+      "group": "Route geometry and progress",
+      "module_boundary": "proposed/geometry",
+      "name": "Junction transition geometry",
+      "checks": [
+        {
+          "id": "NAV-022-A",
+          "assertion": "Place turn anchors at actual connection",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-022-B",
+          "assertion": "Do not create nonexistent lane connectors",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-022-C",
+          "assertion": "Maintain path continuity through junction",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-023",
+      "group": "Route geometry and progress",
+      "module_boundary": "proposed/geometry",
+      "name": "Progress along route",
+      "checks": [
+        {
+          "id": "NAV-023-A",
+          "assertion": "Track distance remaining monotonically when on course",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-023-B",
+          "assertion": "Avoid progress jumping to adjacent parallel road",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-023-C",
+          "assertion": "Recalculate distance after permitted detour",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-024",
+      "group": "Route geometry and progress",
+      "module_boundary": "proposed/geometry",
+      "name": "Route versus displayed map version",
+      "checks": [
+        {
+          "id": "NAV-024-A",
+          "assertion": "Detect routing-versus-renderer map mismatch",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-024-B",
+          "assertion": "Keep instructions aligned with route geometry",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-024-C",
+          "assertion": "Fail visibly when map lacks required geometry",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-025",
+      "group": "GPS signals and sensors",
+      "module_boundary": "proposed/positioning",
+      "name": "Raw GNSS validity",
+      "checks": [
+        {
+          "id": "NAV-025-A",
+          "assertion": "Reject invalid latitude, longitude and fix values",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-025-B",
+          "assertion": "Record GNSS quality and location uncertainty",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-025-C",
+          "assertion": "Handle intermittent satellite visibility",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-026",
+      "group": "GPS signals and sensors",
+      "module_boundary": "proposed/positioning",
+      "name": "Heading and orientation",
+      "checks": [
+        {
+          "id": "NAV-026-A",
+          "assertion": "Compare motion heading with road travel direction",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-026-B",
+          "assertion": "Handle compass reversal and magnetic interference",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-026-C",
+          "assertion": "Avoid unstable headings while stopped",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-027",
+      "group": "GPS signals and sensors",
+      "module_boundary": "proposed/positioning",
+      "name": "Movement speed measurement",
+      "checks": [
+        {
+          "id": "NAV-027-A",
+          "assertion": "Check GNSS speed against replay truth",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-027-B",
+          "assertion": "Reject extreme speed spikes",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-027-C",
+          "assertion": "Handle near-zero and stop-start speeds",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-028",
+      "group": "GPS signals and sensors",
+      "module_boundary": "proposed/positioning",
+      "name": "IMU dead reckoning",
+      "checks": [
+        {
+          "id": "NAV-028-A",
+          "assertion": "Propagate position during short GNSS loss",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-028-B",
+          "assertion": "Bound drift without map evidence",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-028-C",
+          "assertion": "Reject false motion from sensor noise",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-029",
+      "group": "GPS signals and sensors",
+      "module_boundary": "proposed/positioning",
+      "name": "Sensor fusion and source selection",
+      "checks": [
+        {
+          "id": "NAV-029-A",
+          "assertion": "Compare GNSS-only versus valid fused output",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-029-B",
+          "assertion": "Handle disagreement between GNSS and IMU",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-029-C",
+          "assertion": "Switch sensor sources without location jumps",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-030",
+      "group": "GPS signals and sensors",
+      "module_boundary": "proposed/positioning",
+      "name": "Fix timestamps and ordering",
+      "checks": [
+        {
+          "id": "NAV-030-A",
+          "assertion": "Drop stale and out-of-order fixes",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-030-B",
+          "assertion": "Handle duplicate timestamps",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-030-C",
+          "assertion": "Recover cleanly after a sudden time discontinuity",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-031",
+      "group": "Road matching and position confidence",
+      "module_boundary": "proposed/matching",
+      "name": "Parallel road selection",
+      "checks": [
+        {
+          "id": "NAV-031-A",
+          "assertion": "Distinguish frontage road from main road",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-031-B",
+          "assertion": "Remain on correct close parallel road",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-031-C",
+          "assertion": "Express unknown rather than confidently choosing wrong link",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-032",
+      "group": "Road matching and position confidence",
+      "module_boundary": "proposed/matching",
+      "name": "Dual carriageway side",
+      "checks": [
+        {
+          "id": "NAV-032-A",
+          "assertion": "Choose correct side of divided road",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-032-B",
+          "assertion": "Stay on side through bends",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-032-C",
+          "assertion": "Reject across-median snap without legal connection",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-033",
+      "group": "Road matching and position confidence",
+      "module_boundary": "proposed/matching",
+      "name": "Slip road and service road matching",
+      "checks": [
+        {
+          "id": "NAV-033-A",
+          "assertion": "Switch correctly onto true slip road",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-033-B",
+          "assertion": "Do not snap service road traffic to motorway",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-033-C",
+          "assertion": "Keep vehicle on correct merge path",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-034",
+      "group": "Road matching and position confidence",
+      "module_boundary": "proposed/matching",
+      "name": "Bridges and stacked roads",
+      "checks": [
+        {
+          "id": "NAV-034-A",
+          "assertion": "Disambiguate bridge versus road underneath",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-034-B",
+          "assertion": "Use trajectory to retain level context",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-034-C",
+          "assertion": "Avoid false motorway position beneath flyover",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-035",
+      "group": "Road matching and position confidence",
+      "module_boundary": "proposed/matching",
+      "name": "Roundabout position matching",
+      "checks": [
+        {
+          "id": "NAV-035-A",
+          "assertion": "Track actual circular path without shortcut",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-035-B",
+          "assertion": "Resolve close entry and exit links",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-035-C",
+          "assertion": "Retain exit count while GPS jitters",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-036",
+      "group": "Road matching and position confidence",
+      "module_boundary": "proposed/matching",
+      "name": "Stationary urban and indoor starts",
+      "checks": [
+        {
+          "id": "NAV-036-A",
+          "assertion": "Stay fixed at traffic lights during GPS scatter",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-036-B",
+          "assertion": "Handle urban canyon multipath",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-036-C",
+          "assertion": "Initialize from car park or indoor weak fix conservatively",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-037",
+      "group": "Rerouting and signal recovery",
+      "module_boundary": "proposed/recovery",
+      "name": "Off-route detection",
+      "checks": [
+        {
+          "id": "NAV-037-A",
+          "assertion": "Detect genuine missed turns",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-037-B",
+          "assertion": "Ignore single noisy false deviations",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-037-C",
+          "assertion": "Time off-route detection separately from computation",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-038",
+      "group": "Rerouting and signal recovery",
+      "module_boundary": "proposed/recovery",
+      "name": "Single wrong-turn recovery",
+      "checks": [
+        {
+          "id": "NAV-038-A",
+          "assertion": "Generate new legal route after wrong exit",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-038-B",
+          "assertion": "Avoid old instruction replay",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-038-C",
+          "assertion": "Check reroute from true current incoming road",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-039",
+      "group": "Rerouting and signal recovery",
+      "module_boundary": "proposed/recovery",
+      "name": "Repeated missed turns",
+      "checks": [
+        {
+          "id": "NAV-039-A",
+          "assertion": "Reroute after rapid successive wrong turns",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-039-B",
+          "assertion": "Cancel obsolete queued reroutes",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-039-C",
+          "assertion": "Maintain legal state and arrival target",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-040",
+      "group": "Rerouting and signal recovery",
+      "module_boundary": "proposed/recovery",
+      "name": "Tunnel and long GPS outages",
+      "checks": [
+        {
+          "id": "NAV-040-A",
+          "assertion": "Continue conservatively in tunnel",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-040-B",
+          "assertion": "Stop certainty from increasing during long loss",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-040-C",
+          "assertion": "Reacquire correct road after signal returns",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-041",
+      "group": "Rerouting and signal recovery",
+      "module_boundary": "proposed/recovery",
+      "name": "Rejoining an existing route",
+      "checks": [
+        {
+          "id": "NAV-041-A",
+          "assertion": "Rejoin when legal and genuinely beneficial",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-041-B",
+          "assertion": "Avoid oscillating between alternative paths",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-041-C",
+          "assertion": "Do not recommend impossible backtracking",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-042",
+      "group": "Rerouting and signal recovery",
+      "module_boundary": "proposed/recovery",
+      "name": "No-route and blocked-road fallback",
+      "checks": [
+        {
+          "id": "NAV-042-A",
+          "assertion": "Report truly unreachable destination",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-042-B",
+          "assertion": "Avoid illegal detour when blocked",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-042-C",
+          "assertion": "Recover once road graph or evidence returns",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-043",
+      "group": "Speed limits, traffic and ETA",
+      "module_boundary": "proposed/speed",
+      "name": "Signed speed limit by section",
+      "checks": [
+        {
+          "id": "NAV-043-A",
+          "assertion": "Compare limit per verified road section",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-043-B",
+          "assertion": "Distinguish posted limit from routing speed estimate",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-043-C",
+          "assertion": "Mark missing or contradictory limit unknown",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-044",
+      "group": "Speed limits, traffic and ETA",
+      "module_boundary": "proposed/speed",
+      "name": "Variable speed and conditional limits",
+      "checks": [
+        {
+          "id": "NAV-044-A",
+          "assertion": "Handle motorway variable limit inputs",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-044-B",
+          "assertion": "Handle temporary limits only when supported",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-044-C",
+          "assertion": "Do not invent a limit from average speed",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-045",
+      "group": "Speed limits, traffic and ETA",
+      "module_boundary": "proposed/speed",
+      "name": "Live driving speed display",
+      "checks": [
+        {
+          "id": "NAV-045-A",
+          "assertion": "Update speed at realistic cadence",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-045-B",
+          "assertion": "Filter sudden noisy speed spikes",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-045-C",
+          "assertion": "Keep units consistent in mph and km/h",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-046",
+      "group": "Speed limits, traffic and ETA",
+      "module_boundary": "proposed/speed",
+      "name": "Overspeed warning behavior",
+      "checks": [
+        {
+          "id": "NAV-046-A",
+          "assertion": "Warn only against supported applicable limit",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-046-B",
+          "assertion": "Apply tested hysteresis around threshold",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-046-C",
+          "assertion": "Suppress warning with unknown legal limit",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-047",
+      "group": "Speed limits, traffic and ETA",
+      "module_boundary": "proposed/speed",
+      "name": "ETA and distance-to-arrival",
+      "checks": [
+        {
+          "id": "NAV-047-A",
+          "assertion": "Compare ETA with replay arrival time",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-047-B",
+          "assertion": "Recompute ETA after wrong turn and traffic",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-047-C",
+          "assertion": "Keep ETA stable when stopped",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-048",
+      "group": "Speed limits, traffic and ETA",
+      "module_boundary": "proposed/speed",
+      "name": "Traffic and delay quality",
+      "checks": [
+        {
+          "id": "NAV-048-A",
+          "assertion": "Check time-dependent travel cost input",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-048-B",
+          "assertion": "Separate offline baseline from live traffic",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-048-C",
+          "assertion": "Avoid false congestion changes from GPS noise",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-049",
+      "group": "Turn, roundabout and voice guidance",
+      "module_boundary": "proposed/guidance",
+      "name": "Turn direction and maneuver labeling",
+      "checks": [
+        {
+          "id": "NAV-049-A",
+          "assertion": "Identify left right straight and keep maneuvers",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-049-B",
+          "assertion": "Detect complex staggered junction wording",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-049-C",
+          "assertion": "Avoid suggesting nonexistent maneuver",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-050",
+      "group": "Turn, roundabout and voice guidance",
+      "module_boundary": "proposed/guidance",
+      "name": "Advance instruction timing",
+      "checks": [
+        {
+          "id": "NAV-050-A",
+          "assertion": "Check warnings at varied driving speeds",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-050-B",
+          "assertion": "Do not warn after passing a turn",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-050-C",
+          "assertion": "Scale approach notice to complex junctions",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-051",
+      "group": "Turn, roundabout and voice guidance",
+      "module_boundary": "proposed/guidance",
+      "name": "At-turn and post-turn instructions",
+      "checks": [
+        {
+          "id": "NAV-051-A",
+          "assertion": "Confirm instruction at actual maneuver",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-051-B",
+          "assertion": "Clear stale prompt immediately after turn",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-051-C",
+          "assertion": "Prepare next instruction without repetition",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-052",
+      "group": "Turn, roundabout and voice guidance",
+      "module_boundary": "proposed/guidance",
+      "name": "Roundabout exits and wording",
+      "checks": [
+        {
+          "id": "NAV-052-A",
+          "assertion": "Count traversed usable roundabout exits correctly",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-052-B",
+          "assertion": "Check mini and spiral roundabout wording",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-052-C",
+          "assertion": "Avoid nonexistent exit number",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-053",
+      "group": "Turn, roundabout and voice guidance",
+      "module_boundary": "proposed/guidance",
+      "name": "Uncertainty-aware instructions",
+      "checks": [
+        {
+          "id": "NAV-053-A",
+          "assertion": "Withhold unsupported exit and lane precision",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-053-B",
+          "assertion": "Issue simpler supported direction instead",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-053-C",
+          "assertion": "Never present low-confidence guidance as fact",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-054",
+      "group": "Turn, roundabout and voice guidance",
+      "module_boundary": "proposed/guidance",
+      "name": "Voice and Bluetooth audio",
+      "checks": [
+        {
+          "id": "NAV-054-A",
+          "assertion": "Duck music rather than cut it off",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-054-B",
+          "assertion": "Restore music without overlapping prompts",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-054-C",
+          "assertion": "Prevent duplicate or truncated spoken prompts",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-055",
+      "group": "Lane-level guidance",
+      "module_boundary": "proposed/lanes",
+      "name": "Lane count detection",
+      "checks": [
+        {
+          "id": "NAV-055-A",
+          "assertion": "Match mapped count against independent lane evidence",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-055-B",
+          "assertion": "Handle lane changes across a junction",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-055-C",
+          "assertion": "Report unknown when lane-count evidence absent",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-056",
+      "group": "Lane-level guidance",
+      "module_boundary": "proposed/lanes",
+      "name": "Lane arrows and turn legality",
+      "checks": [
+        {
+          "id": "NAV-056-A",
+          "assertion": "Check straight left and right arrow meaning",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-056-B",
+          "assertion": "Do not recommend lane with illegal movement",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-056-C",
+          "assertion": "Support lane-specific permitted exits",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-057",
+      "group": "Lane-level guidance",
+      "module_boundary": "proposed/lanes",
+      "name": "Combined and shared lanes",
+      "checks": [
+        {
+          "id": "NAV-057-A",
+          "assertion": "Represent lanes that go straight and turn",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-057-B",
+          "assertion": "Avoid reducing combined arrow to one direction",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-057-C",
+          "assertion": "Check shared turns across multiple lanes",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-058",
+      "group": "Lane-level guidance",
+      "module_boundary": "proposed/lanes",
+      "name": "Recommended lane choice",
+      "checks": [
+        {
+          "id": "NAV-058-A",
+          "assertion": "Choose lane appropriate for upcoming maneuver",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-058-B",
+          "assertion": "Handle approach lane changes at correct distance",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-058-C",
+          "assertion": "Avoid unnecessary weaving before exits",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-059",
+      "group": "Lane-level guidance",
+      "module_boundary": "proposed/lanes",
+      "name": "Special and restricted lanes",
+      "checks": [
+        {
+          "id": "NAV-059-A",
+          "assertion": "Exclude bus-only lane when not permitted",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-059-B",
+          "assertion": "Respect conditional lane restrictions",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-059-C",
+          "assertion": "Distinguish hard shoulder from running lane",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-060",
+      "group": "Lane-level guidance",
+      "module_boundary": "proposed/lanes",
+      "name": "Lane evidence gaps",
+      "checks": [
+        {
+          "id": "NAV-060-A",
+          "assertion": "Classify missing lane tags as unknown not failure",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-060-B",
+          "assertion": "Fail verifiably incorrect lane instruction",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-060-C",
+          "assertion": "Use direction-only guidance when precise lane unknown",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-061",
+      "group": "Destination search and arrival",
+      "module_boundary": "proposed/arrival",
+      "name": "Address and destination resolution",
+      "checks": [
+        {
+          "id": "NAV-061-A",
+          "assertion": "Select intended property not neighboring postcode center",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-061-B",
+          "assertion": "Handle multiple buildings sharing address",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-061-C",
+          "assertion": "Flag uncertain search match before navigation",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-062",
+      "group": "Destination search and arrival",
+      "module_boundary": "proposed/arrival",
+      "name": "Vehicle-accessible entrance",
+      "checks": [
+        {
+          "id": "NAV-062-A",
+          "assertion": "Target drivable entrance not rear pedestrian door",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-062-B",
+          "assertion": "Reject unreachable private path",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-062-C",
+          "assertion": "Mark absent vehicle entrance evidence unknown",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-063",
+      "group": "Destination search and arrival",
+      "module_boundary": "proposed/arrival",
+      "name": "Correct side and approach",
+      "checks": [
+        {
+          "id": "NAV-063-A",
+          "assertion": "Approach destination from legal carriageway side",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-063-B",
+          "assertion": "Avoid wrong-side dual carriageway arrival",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-063-C",
+          "assertion": "Check permitted final turn into approach",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-064",
+      "group": "Destination search and arrival",
+      "module_boundary": "proposed/arrival",
+      "name": "Arrival trigger confidence",
+      "checks": [
+        {
+          "id": "NAV-064-A",
+          "assertion": "Do not finish on adjacent street",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-064-B",
+          "assertion": "Require appropriate progress and distance",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-064-C",
+          "assertion": "Avoid premature or repeated arrival alerts",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-065",
+      "group": "Destination search and arrival",
+      "module_boundary": "proposed/arrival",
+      "name": "Overshoot and missed entrance",
+      "checks": [
+        {
+          "id": "NAV-065-A",
+          "assertion": "Continue navigation after overshoot",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-065-B",
+          "assertion": "Calculate legal return maneuver",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-065-C",
+          "assertion": "Recognize corrected final arrival",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-066",
+      "group": "Destination search and arrival",
+      "module_boundary": "proposed/arrival",
+      "name": "Stop and waypoint completion",
+      "checks": [
+        {
+          "id": "NAV-066-A",
+          "assertion": "Complete stops in planned sequence",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-066-B",
+          "assertion": "Do not skip stop due to GPS jitter",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-066-C",
+          "assertion": "Resume final destination after intermediate stop",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-067",
+      "group": "Offline operation, efficiency and resilience",
+      "module_boundary": "proposed/runtime",
+      "name": "Fully disconnected navigation",
+      "checks": [
+        {
+          "id": "NAV-067-A",
+          "assertion": "Compute valid offline route in airplane mode",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-067-B",
+          "assertion": "Reroute offline during signal loss",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-067-C",
+          "assertion": "Issue usable offline instructions to arrival",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-068",
+      "group": "Offline operation, efficiency and resilience",
+      "module_boundary": "proposed/runtime",
+      "name": "Map download and update integrity",
+      "checks": [
+        {
+          "id": "NAV-068-A",
+          "assertion": "Verify offline dataset checksum",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-068-B",
+          "assertion": "Rollback incomplete map update",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-068-C",
+          "assertion": "Reject graph/map snapshot mismatch",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-069",
+      "group": "Offline operation, efficiency and resilience",
+      "module_boundary": "proposed/runtime",
+      "name": "Regional edges and missing data",
+      "checks": [
+        {
+          "id": "NAV-069-A",
+          "assertion": "Route through downloaded region seams",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-069-B",
+          "assertion": "Warn before offline map boundary",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-069-C",
+          "assertion": "Do not invent roads outside loaded graph",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-070",
+      "group": "Offline operation, efficiency and resilience",
+      "module_boundary": "proposed/runtime",
+      "name": "Startup and journey persistence",
+      "checks": [
+        {
+          "id": "NAV-070-A",
+          "assertion": "Start navigation without network",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-070-B",
+          "assertion": "Restore route after process restart",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-070-C",
+          "assertion": "Recover state after app background and wake",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-071",
+      "group": "Offline operation, efficiency and resilience",
+      "module_boundary": "proposed/runtime",
+      "name": "Performance, memory and battery",
+      "checks": [
+        {
+          "id": "NAV-071-A",
+          "assertion": "Measure route compute warm and cold p50 p95",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-071-B",
+          "assertion": "Measure reroute response and peak memory",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-071-C",
+          "assertion": "Measure CPU and battery proxy on identical host",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": "NAV-072",
+      "group": "Offline operation, efficiency and resilience",
+      "module_boundary": "proposed/runtime",
+      "name": "Crashes, concurrency and rollback",
+      "checks": [
+        {
+          "id": "NAV-072-A",
+          "assertion": "Handle corrupt map and malformed fixes without crash",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-072-B",
+          "assertion": "Check overlapping route requests and cancellation",
+          "status": "not_run",
+          "evidence": null
+        },
+        {
+          "id": "NAV-072-C",
+          "assertion": "Keep baseline engine rollback available in isolated app integration",
+          "status": "not_run",
+          "evidence": null
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "An assertion is a planned atomic check, not a completed run or a distinct road case.",
+    "No automatic score when an oracle, capability, or fair comparator is missing.",
+    "Physical road instrumentation is deferred; simulated sensor data cannot prove field accuracy.",
+    "Legally unverified movements and absent lane data are unknown, never automatic pass."
+  ]
+}

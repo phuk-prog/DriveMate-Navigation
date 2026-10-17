@@ -1,0 +1,57 @@
+{
+  "schema": "map001-category-report-v1",
+  "date": "2026-10-16",
+  "research_sha": "8880b6109cf3886dbe9e81ca54c38b57e0d4aff4",
+  "run_id": 38936452842,
+  "artifact_id": 12060209997,
+  "run_conclusion": "success",
+  "category": "map_data",
+  "area_cases": {
+    "manchester": {
+      "pass": 14,
+      "not_judged": 6
+    },
+    "birmingham": {
+      "pass": 15,
+      "not_judged": 5
+    },
+    "carlisle": {
+      "pass": 18,
+      "not_judged": 2
+    },
+    "cardiff": {
+      "pass": 20,
+      "not_judged": 0
+    },
+    "glasgow": {
+      "pass": 16,
+      "not_judged": 4
+    },
+    "belfast": {
+      "pass": 13,
+      "not_judged": 7
+    }
+  },
+  "selected_cases": 120,
+  "judged_pass": 96,
+  "judged_fail": 0,
+  "not_judged": 24,
+  "unjudged_reasons": {
+    "attached_turn_relation_omitted_from_isolated_case": 18,
+    "conservative_source_rejection_conditional": 6
+  },
+  "verified_real_road_law": false,
+  "external_graph_comparators_executed": 0,
+  "full_category_ranking": null,
+  "scope": "source graph orientation/connectivity only, source-generated oracle",
+  "test_harness_issues": [
+    "missing turn relation context",
+    "no graph-fact competitor adapters",
+    "no roundabout explicit samples",
+    "access attribute not independently asserted"
+  ],
+  "dmn_coverage_issue": [
+    "conditional tag support withheld fail closed"
+  ],
+  "recommended_action": "owner review before any fixes, retests or category 2"
+}

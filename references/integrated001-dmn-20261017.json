@@ -1,0 +1,83 @@
+{
+  "test_id": "INTEGRATED-001",
+  "system": "DMN",
+  "classification": "synthetic analytical engine-component integration; not real-road, GNSS, Android or app evidence",
+  "run_sha": "d12af5cb0ef597985c56793e3e930ace78bffc2e",
+  "oracle_sha256": "95c6732bee26b6fe1bebda40f8ffa085ce7d4a39839e61f088d7576fb405208b",
+  "graph_definition_sha256": "935b7a8d0daa7153c28f45625dc2c514867d7976b154a261d32694739834f4b5",
+  "passed": 3,
+  "failed": 0,
+  "total": 3,
+  "cases": [
+    {
+      "case_id": "INTEGRATED-001-clean-arrival",
+      "outcome": "PASS",
+      "checks": {
+        "route": true,
+        "route_line": true,
+        "match": true,
+        "instruction": true,
+        "arrival": true
+      },
+      "failures": [],
+      "actual": {
+        "route_edges": [
+          "w:1:0:f",
+          "w:1:1:f",
+          "w:1:2:f"
+        ],
+        "route_line": "PASS",
+        "match_status": "MATCHED",
+        "instruction_phase": "APPROACH",
+        "arrival_states": [
+          "CANDIDATE",
+          "ARRIVED"
+        ]
+      },
+      "calculation_ms": 0.300141
+    },
+    {
+      "case_id": "INTEGRATED-001-corroborated-reroute",
+      "outcome": "PASS",
+      "checks": {
+        "first_request": true,
+        "second_request": true,
+        "replacement": true,
+        "installed": true,
+        "installed_route": true
+      },
+      "failures": [],
+      "actual": {
+        "first_request": false,
+        "second_request": true,
+        "replacement_edges": [
+          "w:2:1:f",
+          "w:2:2:f"
+        ],
+        "replacement_installed": true,
+        "installed_edges": [
+          "w:2:1:f",
+          "w:2:2:f"
+        ]
+      },
+      "calculation_ms": 0.058578
+    },
+    {
+      "case_id": "INTEGRATED-001-turn-restriction-detour",
+      "outcome": "PASS",
+      "checks": {
+        "restricted_detour": true
+      },
+      "failures": [],
+      "actual": {
+        "route_edges": [
+          "w:1:0:f",
+          "w:2:0:f",
+          "w:2:1:f",
+          "w:2:2:f"
+        ]
+      },
+      "calculation_ms": 0.022974
+    }
+  ]
+}

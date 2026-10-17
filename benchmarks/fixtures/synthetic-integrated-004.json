@@ -1,0 +1,28 @@
+{
+  "test_id": "INTEGRATED-004",
+  "classification": "synthetic analytical active-route/map-package lifecycle; not Android, disk, crash or real-road evidence",
+  "cases": [
+    {
+      "id": "INTEGRATED-004-valid-replacement-invalidates-active-route",
+      "update_variant": "B",
+      "explicit_stop_after_update": false,
+      "expected_controller_active": false,
+      "expected_installed_route": false
+    },
+    {
+      "id": "INTEGRATED-004-rejected-update-retains-active-route",
+      "update_variant": "checksum",
+      "explicit_stop_after_update": false,
+      "expected_update_status": "REJECTED",
+      "expected_controller_active": true,
+      "expected_installed_route": true
+    },
+    {
+      "id": "INTEGRATED-004-explicit-stop-fallback",
+      "update_variant": "B",
+      "explicit_stop_after_update": true,
+      "expected_controller_active": false,
+      "expected_installed_route": false
+    }
+  ]
+}

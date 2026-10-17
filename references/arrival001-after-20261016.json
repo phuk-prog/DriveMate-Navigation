@@ -1,0 +1,1021 @@
+{
+  "trial": "ARRIVAL-001",
+  "classification": "synthetic analytical conformance only; no measured real-GNSS or independent road/legal truth",
+  "fixture_freeze_sha": "fb3f152ef75f8131c2e869f906f2a8300dd6fc6d",
+  "run_sha": "3057a28c3dc50a9ecaa10f6ad0452832e1a29ea0",
+  "run_id": 38857319048,
+  "job_id": 116831599535,
+  "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38857319048",
+  "verification": {
+    "full_suite_tests": 417,
+    "conclusion": "success",
+    "arrival_test_log_lines": [
+      "test_backward_clock_rejected (test_arrival_controller.ArrivalTests.test_backward_clock_rejected) ... ok",
+      "test_exact_age_boundary_can_corroborate (test_arrival_controller.ArrivalTests.test_exact_age_boundary_can_corroborate) ... ok",
+      "test_frozen_twenty_cases (test_arrival_controller.ArrivalTests.test_frozen_twenty_cases) ... ok",
+      "test_invalid_begin_is_atomic (test_arrival_controller.ArrivalTests.test_invalid_begin_is_atomic) ... ok",
+      "test_invalid_configuration (test_arrival_controller.ArrivalTests.test_invalid_configuration) ... ok",
+      "test_invalid_position_clears_candidate (test_arrival_controller.ArrivalTests.test_invalid_position_clears_candidate) ... ok",
+      "test_invalid_progress_and_accuracy_clear_candidate (test_arrival_controller.ArrivalTests.test_invalid_progress_and_accuracy_clear_candidate) ... ok",
+      "test_longitude_wrap_proximity (test_arrival_controller.ArrivalTests.test_longitude_wrap_proximity) ... ok",
+      "test_old_context_cannot_complete_arrival (test_arrival_controller.ArrivalTests.test_old_context_cannot_complete_arrival) ... ok",
+      "test_pre_context_sample_rejected (test_arrival_controller.ArrivalTests.test_pre_context_sample_rejected) ... ok",
+      "test_scorecard_includes_all_families_and_rejects_partial (test_arrival_controller.ArrivalTests.test_scorecard_includes_all_families_and_rejects_partial) ... ok",
+      "test_two_reliable_observations_required (test_arrival_controller.ArrivalTests.test_two_reliable_observations_required) ... ok"
+    ],
+    "canonical_unified_preflight": "UNAVAILABLE: scripts/unified_preflight.py absent; never passed"
+  },
+  "report": {
+    "test_id": "ARRIVAL-001",
+    "system": "DMN",
+    "version": "repository isolated ArrivalController and shortest_route",
+    "execution": "actual_local_python_with_declared_synthetic_assessments",
+    "classification": "synthetic analytical only; no surveyed real-road truth",
+    "configuration": {
+      "radius_m": 20,
+      "max_remaining_m": 25,
+      "max_accuracy_m": 15,
+      "max_observation_age_ms": 10000,
+      "minimum_sample_gap_ms": 1000
+    },
+    "map_sha256": "8b9d409865dd0b272456c2b99575c8dd29d3459602db7016377889b9b00ab465",
+    "oracle_sha256": "c6b95ec811aef34ee1910a1d4d314141d63250190f8d9ec09434a990dd2bcc71",
+    "controller_sha256": "fe30804eadfcf07109ddf476a7047148a22990fad23a90075cc6b00776fc8a1c",
+    "harness_sha256": "c6f8b3632438d287fb91ade6f1023d00e8ef6d45385283308bcbb21e479d9ad3",
+    "run_sha": "3057a28c3dc50a9ecaa10f6ad0452832e1a29ea0",
+    "actual_core_route_calculations": 21,
+    "real_GNSS_measurements": 0,
+    "android_device_tests": 0,
+    "external_engine_executions": 0,
+    "cases": [
+      {
+        "case_id": "ARRIVAL-001-corroborated",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "ARRIVED",
+            "actual_status": "ARRIVED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": true,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-near-destination-early-progress",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "WITHHELD",
+            "actual_status": "WITHHELD",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "WITHHELD",
+            "actual_status": "WITHHELD",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-parallel-road",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "WITHHELD",
+            "actual_status": "WITHHELD",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "WITHHELD",
+            "actual_status": "WITHHELD",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-outside-radius",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "WITHHELD",
+            "actual_status": "WITHHELD",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "WITHHELD",
+            "actual_status": "WITHHELD",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-weak-accuracy-recovery",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "WITHHELD",
+            "actual_status": "WITHHELD",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "expected_status": "ARRIVED",
+            "actual_status": "ARRIVED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": true,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-unreliable-recovery",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "WITHHELD",
+            "actual_status": "WITHHELD",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "expected_status": "ARRIVED",
+            "actual_status": "ARRIVED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": true,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-stale-interrupts",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "REJECTED",
+            "actual_status": "REJECTED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "expected_status": "ARRIVED",
+            "actual_status": "ARRIVED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": true,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-future-interrupts",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "REJECTED",
+            "actual_status": "REJECTED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "expected_status": "ARRIVED",
+            "actual_status": "ARRIVED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": true,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-duplicate-interrupts",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "REJECTED",
+            "actual_status": "REJECTED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "expected_status": "ARRIVED",
+            "actual_status": "ARRIVED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": true,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-out-of-order-interrupts",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "REJECTED",
+            "actual_status": "REJECTED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "expected_status": "ARRIVED",
+            "actual_status": "ARRIVED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": true,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-overshoot",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "WITHHELD",
+            "actual_status": "WITHHELD",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "WITHHELD",
+            "actual_status": "WITHHELD",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-unknown-progress",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "WITHHELD",
+            "actual_status": "WITHHELD",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "WITHHELD",
+            "actual_status": "WITHHELD",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-signal-gap",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_status": "ARRIVED",
+            "actual_status": "ARRIVED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": true,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-stop",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "stop",
+            "checks": {
+              "arrival_state": true,
+              "at_most_one_arrival_in_context": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 2
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_status": "INACTIVE",
+            "actual_status": "INACTIVE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 2
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-context-change",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "begin",
+            "checks": {
+              "arrival_state": true,
+              "at_most_one_arrival_in_context": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 2
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_status": "WITHHELD",
+            "actual_status": "WITHHELD",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 2
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 2
+          },
+          {
+            "event": 4,
+            "action": "observe",
+            "expected_status": "ARRIVED",
+            "actual_status": "ARRIVED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": true,
+            "context_revision": 2
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-latched-once",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "ARRIVED",
+            "actual_status": "ARRIVED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": true,
+            "context_revision": 1
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_status": "ALREADY_ARRIVED",
+            "actual_status": "ALREADY_ARRIVED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": true,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-accuracy-boundary",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "ARRIVED",
+            "actual_status": "ARRIVED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": true,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-remaining-boundary",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "ARRIVED",
+            "actual_status": "ARRIVED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": true,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-minimum-time-separation",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_status": "ARRIVED",
+            "actual_status": "ARRIVED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": true,
+            "context_revision": 1
+          }
+        ]
+      },
+      {
+        "case_id": "ARRIVAL-001-delayed-history-expiration",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_status": "CANDIDATE",
+            "actual_status": "CANDIDATE",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": false,
+            "context_revision": 1
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "expected_status": "ARRIVED",
+            "actual_status": "ARRIVED",
+            "checks": {
+              "expected_status": true,
+              "at_most_one_arrival_in_context": true,
+              "arrival_latch_matches_status": true
+            },
+            "passed": true,
+            "actual_arrived": true,
+            "context_revision": 1
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,3 +1,5 @@
+> **Historical benchmark-protocol snapshot (15 October 2026).** Statements below such as "no actual external engines have been executed yet" describe the *initial prototype*, not the subsequently executed real-UK benchmarks on isolated branches. The [engine-first programme](DMN_ENGINE_FIRST_PROGRAMME.md) and [ten-reference protocol](DMN_TEN_REFERENCE_PROTOCOL.md) define the proposed future evaluation; reference count and thresholds remain pending owner decisions. Do not delete or relabel past measurements as if they were performed under the new programme.
+
 # Benchmark and validation protocol
 
 ## Four independent kinds of evidence

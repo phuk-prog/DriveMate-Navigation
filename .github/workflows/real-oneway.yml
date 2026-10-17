@@ -1,0 +1,54 @@
+name: REAL-ONEWAY-001 pinned public map direction contract
+on:
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: real-oneway-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  probe:
+    if: contains(github.event.pull_request.title, '[real-oneway]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Prepare real map and freeze cases before engine execution
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          curl -fLsS --retry 2 --connect-timeout 20 --max-time 180 https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf -o "${RUNNER_TEMP}/ref006-source.osm.pbf"
+          python - <<'PYCODE'
+          from hashlib import sha256
+          import json,os
+          from pathlib import Path
+          raw=(Path(os.environ['RUNNER_TEMP'])/'ref006-source.osm.pbf').read_bytes()
+          from benchmarks.itinero_public_probe import EXPECTED_ARCHIVE_HASH
+          assert sha256(raw).hexdigest()==EXPECTED_ARCHIVE_HASH, 'Pinned archive mismatch'
+          Path('results/real-oneway-source-hashes.json').write_text(json.dumps({'archive_sha256':sha256(raw).hexdigest()}))
+          PYCODE
+          osmium extract --strategy complete_ways --bbox=-2.270000,53.350000,-2.260000,53.360000 "${RUNNER_TEMP}/ref006-source.osm.pbf" -o results/real-oneway-map.osm.pbf
+          osmium cat results/real-oneway-map.osm.pbf -o results/real-oneway-map.osm -f osm,add_metadata=false
+          python -m benchmarks.real_map_oneway --prepare
+          cat results/real-oneway-cases.json
+      - name: Execute DMN independently on frozen cases
+        env:
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python -m benchmarks.real_map_oneway
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: real-oneway-map-contract
+          path: results/real-oneway-*.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Remove ephemeral maps
+        if: always()
+        run: rm -f "${RUNNER_TEMP}/ref006-source.osm.pbf" results/real-oneway-map.osm results/real-oneway-map.osm.pbf

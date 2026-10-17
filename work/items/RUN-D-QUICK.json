@@ -1,0 +1,15 @@
+{
+ "agent": "unknown AI",
+ "branch": "ccr-195b89cb-2aaytg",
+ "created": "2026-10-17T13:08:38+00:00",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T13:08:38+00:00 next by unknown AI on ccr-195b89cb-2aaytg"
+ ],
+ "id": "RUN-D-QUICK",
+ "runs": [],
+ "state": "next",
+ "title": "Run D: quick targeted checks -> categories 7, 14, 17, 18, 21",
+ "updated": "2026-10-17T13:08:38+00:00",
+ "why": "Owner-approved grouping (17 Oct 2026): runs share execution, each category keeps its own frozen cases, rules, score and ranking; no combined score; a failed shared step marks dependants NOT_RUN. Category 7 timed identically for every engine (DMN import excluded); category 14 closures injected into run B journeys."
+}

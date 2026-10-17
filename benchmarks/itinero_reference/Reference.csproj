@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../results/itinero-source/src/Itinero/Itinero.csproj" />
+    <ProjectReference Include="../../results/itinero-source/src/Itinero.IO.Osm/Itinero.IO.Osm.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,13 @@
+{
+  "test_id": "REAL-ONEWAY-001",
+  "run_sha": "8256dffaba03f0375b52413ea74a6b3ecf9085b2",
+  "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38866454548",
+  "job_id": 116860302949,
+  "outcome": "SETUP_FAILURE",
+  "navigation_cases_executed": 0,
+  "map_archive_fingerprint_check": "PASS",
+  "failure": "FileNotFoundError: results/ref006-source-hashes.json",
+  "cause": "Fresh checkout lacks ignored results directory; copied preparation step had depended on another step creating it.",
+  "correction": "Explicit mkdir -p results before output creation; rename source hash evidence to real-oneway scope.",
+  "map_oracle_acceptance_changed": false
+}

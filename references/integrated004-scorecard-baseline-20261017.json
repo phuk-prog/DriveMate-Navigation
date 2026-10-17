@@ -1,0 +1,362 @@
+{
+  "test_id": "INTEGRATED-004",
+  "classification": "DMN-only synthetic lifecycle conformance; no competitive ranking",
+  "formula": "10 * passed / 3 only for a complete judged cohort",
+  "rows": [
+    {
+      "system": "DMN",
+      "rank": null,
+      "score_out_of_ten": 6.666666666666667,
+      "passed": 2,
+      "failed": 1,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-004-valid-replacement-invalidates-active-route",
+          "outcome": "FAIL",
+          "checks": {
+            "controller_active": false,
+            "installed_route": false
+          },
+          "failures": [
+            "controller_active",
+            "installed_route"
+          ],
+          "actual": {
+            "update_status": "ACTIVE",
+            "controller_active": true,
+            "installed_route": true,
+            "route_package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+            "active_package_sha256": "8b9d409865dd0b272456c2b99575c8dd29d3459602db7016377889b9b00ab465",
+            "package_context_changed": true
+          },
+          "calculation_ms": 1.2172
+        },
+        {
+          "case_id": "INTEGRATED-004-rejected-update-retains-active-route",
+          "outcome": "PASS",
+          "checks": {
+            "controller_active": true,
+            "installed_route": true,
+            "update_status": true
+          },
+          "failures": [],
+          "actual": {
+            "update_status": "REJECTED",
+            "controller_active": true,
+            "installed_route": true,
+            "route_package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+            "active_package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+            "package_context_changed": false
+          },
+          "calculation_ms": 0.733722
+        },
+        {
+          "case_id": "INTEGRATED-004-explicit-stop-fallback",
+          "outcome": "PASS",
+          "checks": {
+            "controller_active": true,
+            "installed_route": true
+          },
+          "failures": [],
+          "actual": {
+            "update_status": "ACTIVE",
+            "controller_active": false,
+            "installed_route": false,
+            "route_package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+            "active_package_sha256": "8b9d409865dd0b272456c2b99575c8dd29d3459602db7016377889b9b00ab465",
+            "package_context_changed": true
+          },
+          "calculation_ms": 0.743317
+        }
+      ]
+    },
+    {
+      "system": "Valhalla",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-004-valid-replacement-invalidates-active-route",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-004-rejected-update-retains-active-route",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-004-explicit-stop-fallback",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "OSRM",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-004-valid-replacement-invalidates-active-route",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-004-rejected-update-retains-active-route",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-004-explicit-stop-fallback",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "GraphHopper",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-004-valid-replacement-invalidates-active-route",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-004-rejected-update-retains-active-route",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-004-explicit-stop-fallback",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "OsmAnd",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-004-valid-replacement-invalidates-active-route",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-004-rejected-update-retains-active-route",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-004-explicit-stop-fallback",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "Organic Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-004-valid-replacement-invalidates-active-route",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-004-rejected-update-retains-active-route",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-004-explicit-stop-fallback",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "BRouter",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-004-valid-replacement-invalidates-active-route",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-004-rejected-update-retains-active-route",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-004-explicit-stop-fallback",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "HERE",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-004-valid-replacement-invalidates-active-route",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-004-rejected-update-retains-active-route",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-004-explicit-stop-fallback",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "Mapbox",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-004-valid-replacement-invalidates-active-route",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-004-rejected-update-retains-active-route",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-004-explicit-stop-fallback",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "TomTom",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-004-valid-replacement-invalidates-active-route",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-004-rejected-update-retains-active-route",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-004-explicit-stop-fallback",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "openrouteservice",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-004-valid-replacement-invalidates-active-route",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-004-rejected-update-retains-active-route",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-004-explicit-stop-fallback",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "Google Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-004-valid-replacement-invalidates-active-route",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-004-rejected-update-retains-active-route",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-004-explicit-stop-fallback",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "Waze",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-004-valid-replacement-invalidates-active-route",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-004-rejected-update-retains-active-route",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-004-explicit-stop-fallback",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,541 @@
+{
+  "trial": "GPS-001",
+  "phase": "after_DMN_improvements_and_OSRM_adapter_configuration_test",
+  "run_id": 38807314302,
+  "head_sha": "3581693e66c8854bc3a9cba6d6b2692a2454c0bd",
+  "execution_conclusion": "success",
+  "reports": [
+    {
+      "test_id": "GPS-001",
+      "classification": "synthetic-analytical-correctness-only",
+      "system": "DMN",
+      "version": "repository temporal matcher",
+      "execution": "actual_local_python",
+      "map_sha256": "778318d85ff26e4b40eef055e93c06f855f19d10e1f454ca4b2e9354c501c9cc",
+      "oracle_sha256": "195b9cb00922135a4a778e683102e06b786f2241f1594dad5c4d48fe238b623e",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "decision_reasons": [
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate"
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "decision_reasons": [
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate"
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "decision_reasons": [
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate"
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "decision_reasons": [
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate"
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "decision_reasons": [
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate"
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "split": "held_out",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "decision_reasons": [
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate",
+            "directed_road_candidate"
+          ]
+        }
+      ],
+      "independent_real_road_truth": false,
+      "real_device_tests": 0,
+      "configuration": "streaming directed temporal matcher; no location lookahead"
+    },
+    {
+      "test_id": "GPS-001",
+      "classification": "synthetic-analytical-correctness-only",
+      "system": "OSRM",
+      "version": "5.27.1",
+      "execution": "actual_live_loopback",
+      "map_sha256": "778318d85ff26e4b40eef055e93c06f855f19d10e1f454ca4b2e9354c501c9cc",
+      "oracle_sha256": "195b9cb00922135a4a778e683102e06b786f2241f1594dad5c4d48fe238b623e",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "split": "held_out",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "independent_real_road_truth": false,
+      "real_device_tests": 0,
+      "configuration": "car.lua MLD; radiuses=6m; tidy=false; four original tracepoint slots"
+    },
+    {
+      "test_id": "GPS-001",
+      "classification": "synthetic-analytical-correctness-only",
+      "system": "Valhalla",
+      "version": "3.9.1",
+      "execution": "actual_live_loopback",
+      "map_sha256": "778318d85ff26e4b40eef055e93c06f855f19d10e1f454ca4b2e9354c501c9cc",
+      "oracle_sha256": "195b9cb00922135a4a778e683102e06b786f2241f1594dad5c4d48fe238b623e",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "split": "held_out",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "independent_real_road_truth": false,
+      "real_device_tests": 0,
+      "configuration": "auto; map_snap; search_radius=20m; matched_points alignment"
+    },
+    {
+      "test_id": "GPS-001",
+      "classification": "synthetic-analytical-correctness-only",
+      "system": "GraphHopper",
+      "version": "11.1 / Java 25",
+      "execution": "actual_live_loopback",
+      "map_sha256": "778318d85ff26e4b40eef055e93c06f855f19d10e1f454ca4b2e9354c501c9cc",
+      "oracle_sha256": "195b9cb00922135a4a778e683102e06b786f2241f1594dad5c4d48fe238b623e",
+      "cases": [
+        {
+          "case_id": "GPS-001-east-clean",
+          "split": "development",
+          "outcome": "FAIL",
+          "checks": {
+            "complete_four_observations": false,
+            "positions_within_5m": false,
+            "forward_direction": false
+          },
+          "failures": [
+            "missing_required_match"
+          ],
+          "matched_observations": 0,
+          "position_errors_m": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-clean",
+          "split": "development",
+          "outcome": "FAIL",
+          "checks": {
+            "complete_four_observations": false,
+            "positions_within_5m": false,
+            "forward_direction": false
+          },
+          "failures": [
+            "missing_required_match"
+          ],
+          "matched_observations": 0,
+          "position_errors_m": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-noise",
+          "split": "development",
+          "outcome": "FAIL",
+          "checks": {
+            "complete_four_observations": false,
+            "positions_within_5m": false,
+            "forward_direction": false
+          },
+          "failures": [
+            "missing_required_match"
+          ],
+          "matched_observations": 0,
+          "position_errors_m": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-noise",
+          "split": "development",
+          "outcome": "FAIL",
+          "checks": {
+            "complete_four_observations": false,
+            "positions_within_5m": false,
+            "forward_direction": false
+          },
+          "failures": [
+            "missing_required_match"
+          ],
+          "matched_observations": 0,
+          "position_errors_m": [
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "case_id": "GPS-001-east-multilink",
+          "split": "development",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "case_id": "GPS-001-west-multilink",
+          "split": "held_out",
+          "outcome": "PASS",
+          "checks": {
+            "complete_four_observations": true,
+            "positions_within_5m": true,
+            "forward_direction": true
+          },
+          "failures": [],
+          "matched_observations": 4,
+          "position_errors_m": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "independent_real_road_truth": false,
+      "real_device_tests": 0,
+      "configuration": "car; gps_accuracy=10m; extended_json; exact four-point alignment"
+    }
+  ]
+}

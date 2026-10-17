@@ -1,0 +1,1046 @@
+{
+  "trial": "REROUTE-001",
+  "phase": "first_implementation_before_freshness_fix",
+  "fixture_freeze_sha": "50236e5eb5e40c17aa30502d002e82565c03ef7a",
+  "execution": "actual_local_python_worktree_before_engine_commit",
+  "report": {
+    "test_id": "REROUTE-001",
+    "system": "DMN",
+    "version": "repository isolated ReroutingController and shortest_route",
+    "execution": "actual_local_python_with_declared_synthetic_delivery",
+    "classification": "synthetic analytical lifecycle conformance only",
+    "configuration": {
+      "minimum_off_route_samples": 2,
+      "minimum_sample_gap_ms": 1000,
+      "max_observation_age_ms": 10000,
+      "cooldown_ms": 30000,
+      "max_request_age_ms": 15000
+    },
+    "map_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+    "oracle_sha256": "467f51d173abb37b34d0485b3bed4cccd2c09c287d18763b5489292d87a64cee",
+    "controller_sha256": "17aedad04d8cd0338786d1c0409e6edfa3c0dbcee5ad0e4d68690db42160dcee",
+    "harness_sha256": "dd04dfb4dc592639f6c8e8f1affe9c54be605adef40c2834eb7a095dec77249c",
+    "actual_core_route_calculations": 35,
+    "cases": [
+      {
+        "case_id": "REROUTE-001-corroborated-install",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-on-route-resets",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 1,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-weak-sample-resets",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 4,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-timestamp-rejection",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 4,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 5,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 6,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-independent-spacing",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 4,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-one-pending-request",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-cooldown-and-recovery",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 3,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 4,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 5,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 6,
+            "action": "observe",
+            "request_id": 2,
+            "expected_request_alias": "b",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 7,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-on-route-cancels",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "initial",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-weak-sample-cancels",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "initial",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-context-change",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 4,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "begin",
+            "actual_route": "replacement",
+            "checks": {
+              "expected_installed_route": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "replacement",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          },
+          {
+            "event": 4,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 5,
+            "action": "observe",
+            "request_id": 2,
+            "expected_request_alias": "b",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 6,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-stop-cancels",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "stop",
+            "actual_route": "NONE",
+            "checks": {
+              "expected_installed_route": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "NONE",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          },
+          {
+            "event": 4,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-stale-evidence-result",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "initial",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-request-timeout",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "initial",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-request-age-boundary",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-failed-route-preserves",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "initial",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 4,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-unknown-callback",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 3,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "initial",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      }
+    ],
+    "real_GNSS_measurements": 0,
+    "android_device_tests": 0,
+    "external_engine_executions": 0,
+    "physical_computation_cancellation_implemented": false
+  },
+  "additional_report": {
+    "test_id": "REROUTE-001-ADDITIONAL",
+    "system": "DMN",
+    "version": "repository isolated ReroutingController and shortest_route",
+    "execution": "actual_local_python_with_declared_synthetic_delivery",
+    "classification": "synthetic analytical lifecycle conformance only",
+    "configuration": {
+      "minimum_off_route_samples": 2,
+      "minimum_sample_gap_ms": 1000,
+      "max_observation_age_ms": 10000,
+      "cooldown_ms": 30000,
+      "max_request_age_ms": 15000
+    },
+    "map_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+    "oracle_sha256": "389d2eb25dd4a13e050dba56f582e7858175c8892dbd9c58ec3b4e8ad6e63fa4",
+    "controller_sha256": "17aedad04d8cd0338786d1c0409e6edfa3c0dbcee5ad0e4d68690db42160dcee",
+    "harness_sha256": "dd04dfb4dc592639f6c8e8f1affe9c54be605adef40c2834eb7a095dec77249c",
+    "actual_core_route_calculations": 6,
+    "cases": [
+      {
+        "case_id": "REROUTE-001-ADDITIONAL-expired-first-sample",
+        "outcome": "FAIL",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": false,
+              "request_id_unique": true
+            },
+            "passed": false
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": false
+            },
+            "passed": false
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "initial",
+            "checks": {
+              "expected_install_decision": false,
+              "expected_installed_route": false
+            },
+            "passed": false
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-ADDITIONAL-first-sample-age-boundary",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "complete",
+            "actual_accepted": true,
+            "actual_route": "detour",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "REROUTE-001-ADDITIONAL-unknown-progress-cancels",
+        "outcome": "PASS",
+        "actual_core_route_calculations": 2,
+        "events": [
+          {
+            "event": 0,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "observe",
+            "request_id": 1,
+            "expected_request_alias": "a",
+            "checks": {
+              "expected_request_creation": true,
+              "request_id_unique": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "action": "observe",
+            "expected_request_alias": null,
+            "checks": {
+              "expected_request_creation": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "action": "complete",
+            "actual_accepted": false,
+            "actual_route": "initial",
+            "checks": {
+              "expected_install_decision": true,
+              "expected_installed_route": true
+            },
+            "passed": true
+          }
+        ]
+      }
+    ],
+    "real_GNSS_measurements": 0,
+    "android_device_tests": 0,
+    "external_engine_executions": 0,
+    "physical_computation_cancellation_implemented": false
+  },
+  "diagnosis": "Controller expired corroborating history by separation between sample timestamps instead of age at request time. A delayed second packet could use an already-stale first sample. Additional adversarial cases are not blind holdouts."
+}

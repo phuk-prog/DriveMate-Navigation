@@ -1,0 +1,56 @@
+import unittest
+from benchmarks.real_map_legality_baseline import (forbidden_direct_traversal, judge,
+        sanitize_supported_map, selected_edge_forward_traversal)
+from benchmarks.route004_detector_controls import execute
+from benchmarks.route004_selected_edge_controls import execute as execute_selected
+
+
+class LegalityBaselineTests(unittest.TestCase):
+    def setUp(self):
+        self.case={"id":"X","allowed_start":[53.0,-2.0],"allowed_end":[53.001,-2.0]}
+
+    def test_detects_direct_reverse_use(self):
+        self.assertTrue(forbidden_direct_traversal([self.case["allowed_end"],self.case["allowed_start"]],
+                                                   self.case["allowed_start"],self.case["allowed_end"]))
+
+    def test_detour_does_not_count_as_direct_reverse(self):
+        points=[self.case["allowed_end"],[53.001,-1.999],[53.0,-1.999],self.case["allowed_start"]]
+        self.assertFalse(forbidden_direct_traversal(points,self.case["allowed_start"],self.case["allowed_end"]))
+
+    def test_multi_vertex_reverse_is_detected(self):
+        points=[[53.001,-2],[53.00075,-2],[53.0005,-2],[53.00025,-2],[53,-2]]
+        self.assertTrue(forbidden_direct_traversal(points,self.case["allowed_start"],
+                                                   self.case["allowed_end"]))
+
+    def test_frozen_detector_contract(self):
+        result=execute()
+        self.assertEqual((5,0,5),(result["passed"],result["failed"],result["total"]))
+        self.assertFalse(result["historical_route004_rescored"])
+
+    def test_allowed_route_must_use_selected_edge(self):
+        direct=[self.case["allowed_start"],[53.0005,-2],self.case["allowed_end"]]
+        detour=[self.case["allowed_start"],[53,-1.999],[53.001,-1.999],self.case["allowed_end"]]
+        self.assertTrue(selected_edge_forward_traversal(
+            direct,self.case["allowed_start"],self.case["allowed_end"]))
+        self.assertFalse(selected_edge_forward_traversal(
+            detour,self.case["allowed_start"],self.case["allowed_end"]))
+
+    def test_frozen_selected_edge_contract(self):
+        result=execute_selected()
+        self.assertEqual((5,0,5),(result["passed"],result["failed"],result["total"]))
+        self.assertFalse(result["historical_route004_rescored"])
+
+    def test_reverse_no_route_is_safe_pass(self):
+        self.assertEqual("PASS",judge(self.case,"reverse",{"status":"NO_ROUTE"},1)["outcome"])
+
+    def test_allowed_no_route_fails(self):
+        self.assertEqual("FAIL",judge(self.case,"allowed",{"status":"NO_ROUTE"},1)["outcome"])
+
+    def test_sanitizer_removes_conditional_node_and_dependent_way(self):
+        raw=b'''<osm version="0.6"><node id="1" lat="53" lon="-2"><tag k="access:conditional" v="no @ (Mo)"/></node><node id="2" lat="53.001" lon="-2"/><way id="3"><nd ref="1"/><nd ref="2"/><tag k="highway" v="residential"/></way></osm>'''
+        clean,summary=sanitize_supported_map(raw)
+        self.assertNotIn(b'<way',clean)
+        self.assertNotIn(b'id="1"',clean)
+        self.assertEqual(1,summary["removed_conditional_or_dependent_ways"])
+
+if __name__=="__main__":unittest.main()

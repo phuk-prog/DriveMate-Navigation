@@ -1,0 +1,29 @@
+name: TURN-001 official evidence integrity
+on:
+  push:
+    branches: ['codex/chatgpt-turn001-legal-evidence-20261017']
+    paths:
+      - 'config/turn001-official-evidence.json'
+      - 'tools/turn001_official_evidence_guard.py'
+      - '.github/workflows/turn001-official-evidence.yml'
+permissions:
+  contents: read
+concurrency:
+  group: turn001-official-evidence-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Validate verified status cannot be fabricated
+        run: |
+          set -euo pipefail
+          python -m py_compile tools/turn001_official_evidence_guard.py
+          python -m tools.turn001_official_evidence_guard --self-test | tee -a "$GITHUB_STEP_SUMMARY"

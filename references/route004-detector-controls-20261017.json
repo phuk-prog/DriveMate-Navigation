@@ -1,0 +1,42 @@
+{
+  "test_id": "ROUTE-004-DETECTOR-1",
+  "classification": "synthetic analytical geometry controls; no route engine or road-law verdict",
+  "fixture_sha256": "3b2661d82a45f2751a6141dd68ea2b2b0d8a07f60e3326f2a088228514950791",
+  "run_sha": "9da6f6737daa91e41238dde177f7dd93226cb2da",
+  "historical_route004_rescored": false,
+  "passed": 5,
+  "failed": 0,
+  "total": 5,
+  "cases": [
+    {
+      "case_id": "single-segment-reverse",
+      "expected_forbidden": true,
+      "actual_forbidden": true,
+      "outcome": "PASS"
+    },
+    {
+      "case_id": "multi-segment-reverse",
+      "expected_forbidden": true,
+      "actual_forbidden": true,
+      "outcome": "PASS"
+    },
+    {
+      "case_id": "multi-segment-forward",
+      "expected_forbidden": false,
+      "actual_forbidden": false,
+      "outcome": "PASS"
+    },
+    {
+      "case_id": "off-corridor-detour",
+      "expected_forbidden": false,
+      "actual_forbidden": false,
+      "outcome": "PASS"
+    },
+    {
+      "case_id": "incomplete-reverse-fragment",
+      "expected_forbidden": false,
+      "actual_forbidden": false,
+      "outcome": "PASS"
+    }
+  ]
+}

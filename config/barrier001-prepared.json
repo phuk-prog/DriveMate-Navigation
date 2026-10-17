@@ -1,0 +1,4014 @@
+[
+ {
+  "node": 6504193902,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.177569,53.457275,-2.163569,53.465675",
+  "clip_sha256": "34205bca01f614cf70d1c58fb4dbb3e48e2cab8d0f0cce5a0d2e38af9eec1483",
+  "clip_bytes": 1547825,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "6504193902",
+   "kind": "bollard",
+   "origin": [
+    53.461506299999996,
+    -2.1699148
+   ],
+   "destination": [
+    53.461454450000005,
+    -2.1710138499999996
+   ],
+   "origin_segment": [
+    "1103255488",
+    "1103255619"
+   ],
+   "destination_segment": [
+    "12431013236",
+    "926543279"
+   ],
+   "direct_path": [
+    "1103255488",
+    "1103255619",
+    "6504193902",
+    "12431013236",
+    "926543279"
+   ]
+  }
+ },
+ {
+  "node": 8576764348,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.348288,53.425232,-2.334288,53.433632",
+  "clip_sha256": "b9b1010423b558f3886f54539ef11a825ea38f5a1d522b26f8983ee27c263f0b",
+  "clip_bytes": 1250414,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "8576764348",
+   "kind": "bollard",
+   "origin": [
+    53.42954915,
+    -2.34093835
+   ],
+   "destination": [
+    53.429288650000004,
+    -2.3411964999999997
+   ],
+   "origin_segment": [
+    "8576764345",
+    "8576764347"
+   ],
+   "destination_segment": [
+    "8576764349",
+    "8576764350"
+   ],
+   "direct_path": [
+    "8576764345",
+    "8576764347",
+    "8580940235",
+    "8576764348",
+    "8576764349",
+    "8576764350"
+   ]
+  }
+ },
+ {
+  "node": 12584428178,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.058440,53.478596,-2.044440,53.486996",
+  "clip_sha256": "6e10d7dd3afd22f77362f334d3cfbb2f5c5809a00e2864602950618ee88806fa",
+  "clip_bytes": 1196213,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "12584428178",
+   "kind": "bollard",
+   "origin": [
+    53.4825666,
+    -2.05124885
+   ],
+   "destination": [
+    53.483003249999996,
+    -2.0514379
+   ],
+   "origin_segment": [
+    "5320066971",
+    "5320066970"
+   ],
+   "destination_segment": [
+    "955954974",
+    "955954978"
+   ],
+   "direct_path": [
+    "5320066971",
+    "5320066970",
+    "12584428178",
+    "955954974",
+    "955954978"
+   ]
+  }
+ },
+ {
+  "node": 967731308,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.320289,53.592677,-2.306289,53.601077",
+  "clip_sha256": "8a6470bc6cc3ac25f4960992623964f696b448cad9cd1bb6669766deae5840e6",
+  "clip_bytes": 670220,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "967731308",
+   "kind": "bollard",
+   "origin": [
+    53.5965729,
+    -2.3135721499999997
+   ],
+   "destination": [
+    53.5972501,
+    -2.312941
+   ],
+   "origin_segment": [
+    "967731362",
+    "7934288246"
+   ],
+   "destination_segment": [
+    "7930912504",
+    "1860819789"
+   ],
+   "direct_path": [
+    "967731362",
+    "7934288246",
+    "12658402836",
+    "967731308",
+    "12658402837",
+    "7930912504",
+    "1860819789"
+   ]
+  }
+ },
+ {
+  "node": 6771345319,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.460319,53.561610,-2.446319,53.570009",
+  "clip_sha256": "0c1c136b5625ddd294d5d300877daea5583506fcda1d034cdb87fcf39e566ce6",
+  "clip_bytes": 1965550,
+  "geometry": {
+   "status": "OTHER_BARRIER_ON_LINE",
+   "group": "closed",
+   "other_barriers": [
+    "6771345318"
+   ]
+  }
+ },
+ {
+  "node": 12809076676,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.124047,53.528789,-2.110047,53.537189",
+  "clip_sha256": "c12383c103f1a0f0f8ccc8d93aa3f75f6f01301b49fc5e541b92d7ff9b5c3794",
+  "clip_bytes": 4813787,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "12809076676",
+   "kind": "bollard",
+   "origin": [
+    53.5330176,
+    -2.1170011
+   ],
+   "destination": [
+    53.5328476,
+    -2.11728335
+   ],
+   "origin_segment": [
+    "6258541790",
+    "12532254985"
+   ],
+   "destination_segment": [
+    "6258541791",
+    "6258541789"
+   ],
+   "direct_path": [
+    "6258541790",
+    "12532254985",
+    "12809076676",
+    "6258541791",
+    "6258541789"
+   ]
+  }
+ },
+ {
+  "node": 33754801,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.311890,53.648301,-2.297890,53.656701",
+  "clip_sha256": "e762eb9e0c51826fe3abc322ba879dad23ad7d306d914865be0249842e13150d",
+  "clip_bytes": 495343,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "33754801",
+   "kind": "bollard",
+   "origin": [
+    53.652317350000004,
+    -2.3045922
+   ],
+   "destination": [
+    53.65253265,
+    -2.30523635
+   ],
+   "origin_segment": [
+    "1857498451",
+    "6026694978"
+   ],
+   "destination_segment": [
+    "9048181697",
+    "33754802"
+   ],
+   "direct_path": [
+    "1857498451",
+    "6026694978",
+    "9048181693",
+    "33754800",
+    "9048181692",
+    "9048181695",
+    "9048181696",
+    "33754801",
+    "9048181698",
+    "9048181697",
+    "33754802"
+   ]
+  }
+ },
+ {
+  "node": 6831061898,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.632376,53.657442,-2.618376,53.665842",
+  "clip_sha256": "83794075dff49841ae58900ce37387533f32a6ad2215a7eed152e1d8716061f4",
+  "clip_bytes": 2499117,
+  "geometry": {
+   "status": "OTHER_BARRIER_ON_LINE",
+   "group": "closed",
+   "other_barriers": [
+    "9980242570"
+   ]
+  }
+ },
+ {
+  "node": 7300833370,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.638336,53.448771,-2.624336,53.457171",
+  "clip_sha256": "b479884942633237b50ebccd35871da6f29544110543fc328a984c82fc57923c",
+  "clip_bytes": 2226342,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "7300833370",
+   "kind": "bollard",
+   "origin": [
+    53.45291895,
+    -2.63169575
+   ],
+   "destination": [
+    53.45295595,
+    -2.63101285
+   ],
+   "origin_segment": [
+    "8234654954",
+    "259008794"
+   ],
+   "destination_segment": [
+    "359916612",
+    "8234654956"
+   ],
+   "direct_path": [
+    "8234654954",
+    "259008794",
+    "7300833370",
+    "8516102925",
+    "8516102924",
+    "359916612",
+    "8234654956"
+   ]
+  }
+ },
+ {
+  "node": 7608299408,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.294068,53.506689,-2.280068,53.515089",
+  "clip_sha256": "4aa311ff22468e284afd0395e52c335cbb44427639186e3a2c294ca93edf38c6",
+  "clip_bytes": 996591,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "7608299408",
+   "kind": "bollard",
+   "origin": [
+    53.5108425,
+    -2.28719695
+   ],
+   "destination": [
+    53.51099565,
+    -2.2867869499999998
+   ],
+   "origin_segment": [
+    "7608299402",
+    "7608299403"
+   ],
+   "destination_segment": [
+    "7608299404",
+    "14220644450"
+   ],
+   "direct_path": [
+    "7608299402",
+    "7608299403",
+    "7608299408",
+    "7608299404",
+    "14220644450"
+   ]
+  }
+ },
+ {
+  "node": 7864171506,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.137677,53.542684,-2.123677,53.551084",
+  "clip_sha256": "99ee0619075d04969b755ae323d0db0347bd26e59aa1fbfaf272dd5a845d6119",
+  "clip_bytes": 4781491,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "7864171506",
+   "kind": "bollard",
+   "origin": [
+    53.54677795,
+    -2.1303635
+   ],
+   "destination": [
+    53.5469925,
+    -2.131001
+   ],
+   "origin_segment": [
+    "12299206714",
+    "12299206717"
+   ],
+   "destination_segment": [
+    "12296302485",
+    "2172136311"
+   ],
+   "direct_path": [
+    "12299206714",
+    "12299206717",
+    "790042312",
+    "12299206722",
+    "7864171506",
+    "784753856",
+    "12296302485",
+    "2172136311"
+   ]
+  }
+ },
+ {
+  "node": 8496509817,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.442244,53.419888,-2.428244,53.428288",
+  "clip_sha256": "3d5e8a696b7e1b95c926be96f2ad540e012915c54e26de14c4bf19aab4235f25",
+  "clip_bytes": 790383,
+  "geometry": {
+   "status": "OTHER_BARRIER_ON_LINE",
+   "group": "closed",
+   "other_barriers": [
+    "8496491716"
+   ]
+  }
+ },
+ {
+  "node": 395730394,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.180486,53.422032,-2.166486,53.430432",
+  "clip_sha256": "f4db57d45fb237e55de5b27c8b6457242103bdb3d03fbaaabd6c4367fceda056",
+  "clip_bytes": 2903331,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "395730394",
+   "kind": "bollard",
+   "origin": [
+    53.426022700000004,
+    -2.17446225
+   ],
+   "destination": [
+    53.4263758,
+    -2.1728089500000003
+   ],
+   "origin_segment": [
+    "7790340125",
+    "13500721625"
+   ],
+   "destination_segment": [
+    "13500721656",
+    "13500721659"
+   ],
+   "direct_path": [
+    "7790340125",
+    "13500721625",
+    "13500721629",
+    "395730394",
+    "13500721656",
+    "13500721659"
+   ]
+  }
+ },
+ {
+  "node": 243748015,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-1.977956,53.456499,-1.963956,53.464899",
+  "clip_sha256": "cb2e8f876b8b47b795c2097cf78dac5ab3c4a1f78f8eeae3baaf99b37f96bb95",
+  "clip_bytes": 941028,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "243748015",
+   "kind": "bollard",
+   "origin": [
+    53.460623299999995,
+    -1.9710630999999998
+   ],
+   "destination": [
+    53.4608219,
+    -1.9708785500000001
+   ],
+   "origin_segment": [
+    "243748003",
+    "243748014"
+   ],
+   "destination_segment": [
+    "243748016",
+    "243748017"
+   ],
+   "direct_path": [
+    "243748003",
+    "243748014",
+    "243748015",
+    "243748016",
+    "243748017"
+   ]
+  }
+ },
+ {
+  "node": 7872356486,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.336026,53.603976,-2.322026,53.612376",
+  "clip_sha256": "665b1fd65e9e2fc291d76d09bd709707a72f059580c5ffbec537dcbce4be0460",
+  "clip_bytes": 577618,
+  "geometry": {
+   "status": "OTHER_BARRIER_ON_LINE",
+   "group": "closed",
+   "other_barriers": [
+    "7872356487"
+   ]
+  }
+ },
+ {
+  "node": 10226956288,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.426452,53.530886,-2.412452,53.539286",
+  "clip_sha256": "32fb17330dc17677f4c344fc32d3d1b83c513aceb97d44ef40d86128dee93f2e",
+  "clip_bytes": 2021329,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "10226956288",
+   "kind": "bollard",
+   "origin": [
+    53.535275600000006,
+    -2.4189917
+   ],
+   "destination": [
+    53.5348953,
+    -2.4194364000000004
+   ],
+   "origin_segment": [
+    "1808581350",
+    "8302078606"
+   ],
+   "destination_segment": [
+    "782231397",
+    "782231400"
+   ],
+   "direct_path": [
+    "1808581350",
+    "8302078606",
+    "1808581330",
+    "10226956288",
+    "782231397",
+    "782231400"
+   ]
+  }
+ },
+ {
+  "node": 1268079159,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.306546,53.408431,-2.292546,53.416831",
+  "clip_sha256": "74ab761e99218dcecc70287c197a28f6df9b47fb26a1cc7a13bca6189a670646",
+  "clip_bytes": 472650,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "1268079159",
+   "kind": "bollard",
+   "origin": [
+    53.41215435,
+    -2.29937535
+   ],
+   "destination": [
+    53.41449165,
+    -2.2999182
+   ],
+   "origin_segment": [
+    "1268078879",
+    "1268079075"
+   ],
+   "destination_segment": [
+    "1268079041",
+    "25346490"
+   ],
+   "direct_path": [
+    "1268078879",
+    "1268079075",
+    "1268079196",
+    "1268079159",
+    "1268079041",
+    "25346490"
+   ]
+  }
+ },
+ {
+  "node": 2235776110,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.269762,53.477228,-2.255762,53.485628",
+  "clip_sha256": "a6b8139bb7f043f3b6745300c724209c516f3fdbcfa3610046a9f0936a4adac5",
+  "clip_bytes": 3981544,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "2235776110",
+   "kind": "bollard",
+   "origin": [
+    53.48138305,
+    -2.26275555
+   ],
+   "destination": [
+    53.48174805,
+    -2.2626264000000003
+   ],
+   "origin_segment": [
+    "1164766587",
+    "9875425354"
+   ],
+   "destination_segment": [
+    "2620740708",
+    "9875425336"
+   ],
+   "direct_path": [
+    "1164766587",
+    "9875425354",
+    "2235776110",
+    "2620740708",
+    "9875425336"
+   ]
+  }
+ },
+ {
+  "node": 12312818461,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.144564,53.542028,-2.130564,53.550428",
+  "clip_sha256": "29d6712976e4e4a880cae73f75679d4528acf1aea882bbf958cc814a9c428ec3",
+  "clip_bytes": 4278323,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "12312818461",
+   "kind": "bollard",
+   "origin": [
+    53.5462671,
+    -2.137538
+   ],
+   "destination": [
+    53.54606065,
+    -2.1376729
+   ],
+   "origin_segment": [
+    "8561993324",
+    "12304469420"
+   ],
+   "destination_segment": [
+    "12312818494",
+    "12312818468"
+   ],
+   "direct_path": [
+    "8561993324",
+    "12304469420",
+    "12312818461",
+    "12312818494",
+    "12312818468"
+   ]
+  }
+ },
+ {
+  "node": 395738023,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.182103,53.422888,-2.168103,53.431288",
+  "clip_sha256": "63a8b8ea60d3f7ef64849398f94c6312b061eb13b750199943847d4212b2d7fe",
+  "clip_bytes": 2997180,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "395738023",
+   "kind": "bollard",
+   "origin": [
+    53.42732865000001,
+    -2.1742562999999997
+   ],
+   "destination": [
+    53.42688495,
+    -2.1758293
+   ],
+   "origin_segment": [
+    "13520870179",
+    "13504433841"
+   ],
+   "destination_segment": [
+    "7790340123",
+    "13504546449"
+   ],
+   "direct_path": [
+    "13520870179",
+    "13504433841",
+    "395738023",
+    "7790340123",
+    "13504546449"
+   ]
+  }
+ },
+ {
+  "node": 9685868282,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.250367,53.443296,-2.236367,53.451696",
+  "clip_sha256": "efda76332c2fa4a0c8ed71744f815bb7babd3c9bb42eeeade151f89f3b6dca84",
+  "clip_bytes": 2344968,
+  "geometry": {
+   "status": "OTHER_BARRIER_ON_LINE",
+   "group": "closed",
+   "other_barriers": [
+    "9685868281"
+   ]
+  }
+ },
+ {
+  "node": 8509717747,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.368449,53.501746,-2.354449,53.510146",
+  "clip_sha256": "49dd7828aa6536e088b85e539f5eb714ef1220b91def4190075f2806f572fcdc",
+  "clip_bytes": 406036,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "8509717747",
+   "kind": "bollard",
+   "origin": [
+    53.50565545,
+    -2.3617053500000003
+   ],
+   "destination": [
+    53.507110999999995,
+    -2.360395
+   ],
+   "origin_segment": [
+    "259766243",
+    "259766244"
+   ],
+   "destination_segment": [
+    "259766245",
+    "12361990201"
+   ],
+   "direct_path": [
+    "259766243",
+    "259766244",
+    "8509717747",
+    "259766245",
+    "12361990201"
+   ]
+  }
+ },
+ {
+  "node": 2247330897,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.472463,53.554002,-2.458463,53.562402",
+  "clip_sha256": "c77545a55d529d50f02d18f961f302fe32da1bf2c3f8f421776925d8e9e3b4ef",
+  "clip_bytes": 1517242,
+  "geometry": {
+   "status": "OTHER_BARRIER_ON_LINE",
+   "group": "closed",
+   "other_barriers": [
+    "2438064736"
+   ]
+  }
+ },
+ {
+  "node": 6164651300,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.653001,53.585632,-2.639001,53.594031",
+  "clip_sha256": "9734fae9a002e5ec00bdb9b49c1201260d699d2d4938d49b7ac087d20e7e8289",
+  "clip_bytes": 2350234,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "6164651300",
+   "kind": "bollard",
+   "origin": [
+    53.58975305,
+    -2.6467116
+   ],
+   "destination": [
+    53.58991805,
+    -2.6452571
+   ],
+   "origin_segment": [
+    "6164651299",
+    "6164651301"
+   ],
+   "destination_segment": [
+    "11755755443",
+    "13381759355"
+   ],
+   "direct_path": [
+    "6164651299",
+    "6164651301",
+    "6164651300",
+    "11755755443",
+    "13381759355"
+   ]
+  }
+ },
+ {
+  "node": 8692176483,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.281709,53.486267,-2.267709,53.494667",
+  "clip_sha256": "76d2e7d692976b40d743d5bec62666a4fcda6db957b4f3999d4fce3823d32015",
+  "clip_bytes": 2175586,
+  "geometry": {
+   "status": "OTHER_BARRIER_ON_LINE",
+   "group": "closed",
+   "other_barriers": [
+    "259420963"
+   ]
+  }
+ },
+ {
+  "node": 11989562996,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.189519,53.541980,-2.175519,53.550380",
+  "clip_sha256": "673558be51f9f96179127f247fee8a768b7916509a988247cd5b36d5dd38c529",
+  "clip_bytes": 671916,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "11989562996",
+   "kind": "bollard",
+   "origin": [
+    53.54619825,
+    -2.18256525
+   ],
+   "destination": [
+    53.54588125,
+    -2.181819
+   ],
+   "origin_segment": [
+    "33406786",
+    "13705354235"
+   ],
+   "destination_segment": [
+    "6347942858",
+    "6347942859"
+   ],
+   "direct_path": [
+    "33406786",
+    "13705354235",
+    "11989562996",
+    "6347942858",
+    "6347942859"
+   ]
+  }
+ },
+ {
+  "node": 8860636448,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.671942,53.539711,-2.657942,53.548111",
+  "clip_sha256": "0394569eb67e12f309a2641ede792e336aa909bab109d60a6b55d32094d151d4",
+  "clip_bytes": 716730,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "8860636448",
+   "kind": "bollard",
+   "origin": [
+    53.54385485,
+    -2.6651949999999998
+   ],
+   "destination": [
+    53.5437146,
+    -2.6639746
+   ],
+   "origin_segment": [
+    "252490173",
+    "252490174"
+   ],
+   "destination_segment": [
+    "252490267",
+    "252490126"
+   ],
+   "direct_path": [
+    "252490173",
+    "252490174",
+    "8860636448",
+    "252490267",
+    "252490126"
+   ]
+  }
+ },
+ {
+  "node": 2438064736,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.472397,53.553998,-2.458397,53.562398",
+  "clip_sha256": "fa10541c299528b43bcd6bb0b920777afdfee03d2397795b31186d6fa8223685",
+  "clip_bytes": 1516763,
+  "geometry": {
+   "status": "OTHER_BARRIER_ON_LINE",
+   "group": "closed",
+   "other_barriers": [
+    "2247330897"
+   ]
+  }
+ },
+ {
+  "node": 9897621438,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.257595,53.456540,-2.243595,53.464940",
+  "clip_sha256": "c71599109e2ae0de795069fa9f507c9ac492647eae2faf6789ea6cf92f5298b5",
+  "clip_bytes": 2479068,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "9897621438",
+   "kind": "bollard",
+   "origin": [
+    53.46094565,
+    -2.25058425
+   ],
+   "destination": [
+    53.46052415,
+    -2.2506146
+   ],
+   "origin_segment": [
+    "6167250830",
+    "1834377584"
+   ],
+   "destination_segment": [
+    "6170210128",
+    "31884314"
+   ],
+   "direct_path": [
+    "6167250830",
+    "1834377584",
+    "1834383422",
+    "9897621438",
+    "6170210128",
+    "31884314"
+   ]
+  }
+ },
+ {
+  "node": 6374996674,
+  "stratum": [
+   "closed",
+   "bollard"
+  ],
+  "bbox": "-2.157061,53.472770,-2.143061,53.481170",
+  "clip_sha256": "1affa4f47532928c493292eebc779c24ab8e9f82f28b7f02cbba023b22502008",
+  "clip_bytes": 890865,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "6374996674",
+   "kind": "bollard",
+   "origin": [
+    53.47705635,
+    -2.1503626000000002
+   ],
+   "destination": [
+    53.4767562,
+    -2.1500078
+   ],
+   "origin_segment": [
+    "11882314376",
+    "1394786957"
+   ],
+   "destination_segment": [
+    "1394786937",
+    "11882314379"
+   ],
+   "direct_path": [
+    "11882314376",
+    "1394786957",
+    "1425465238",
+    "1394786958",
+    "6374996674",
+    "1394786940",
+    "1394780759",
+    "11882314378",
+    "1394786937",
+    "11882314379"
+   ]
+  }
+ },
+ {
+  "node": 13144868566,
+  "stratum": [
+   "closed",
+   "cycle_barrier"
+  ],
+  "bbox": "-2.229397,53.585132,-2.215397,53.593532",
+  "clip_sha256": "7f167893d7efc692a360f0b09ef767602086e9b58c3102cc383c0f855430ad8d",
+  "clip_bytes": 513530,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "13144868566",
+   "kind": "cycle_barrier",
+   "origin": [
+    53.5887905,
+    -2.22292575
+   ],
+   "destination": [
+    53.5893901,
+    -2.2223741
+   ],
+   "origin_segment": [
+    "11530320893",
+    "6965678024"
+   ],
+   "destination_segment": [
+    "13144868564",
+    "13144868563"
+   ],
+   "direct_path": [
+    "11530320893",
+    "6965678024",
+    "13144868566",
+    "13144868564",
+    "13144868563"
+   ]
+  }
+ },
+ {
+  "node": 11511308566,
+  "stratum": [
+   "closed",
+   "cycle_barrier"
+  ],
+  "bbox": "-2.318475,53.576054,-2.304475,53.584454",
+  "clip_sha256": "fb557b6bec5388d8d80eaddaa7ffa6879789d02e75f69c2db14dea068b5bcd33",
+  "clip_bytes": 729352,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "11511308566",
+   "kind": "cycle_barrier",
+   "origin": [
+    53.58040935,
+    -2.3121581
+   ],
+   "destination": [
+    53.5801831,
+    -2.3112294
+   ],
+   "origin_segment": [
+    "4196883420",
+    "10095392993"
+   ],
+   "destination_segment": [
+    "7992723381",
+    "32946084"
+   ],
+   "direct_path": [
+    "4196883420",
+    "10095392993",
+    "11511308566",
+    "4996625356",
+    "7992723381",
+    "32946084"
+   ]
+  }
+ },
+ {
+  "node": 705611646,
+  "stratum": [
+   "closed",
+   "cycle_barrier"
+  ],
+  "bbox": "-2.415952,53.440046,-2.401952,53.448446",
+  "clip_sha256": "dc6ae5d72ac978713d87f9a34f112326926d6948f9cf7b04a72290c78f6d76f0",
+  "clip_bytes": 918667,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "705611646",
+   "kind": "cycle_barrier",
+   "origin": [
+    53.4445246,
+    -2.4089725
+   ],
+   "destination": [
+    53.443898399999995,
+    -2.40895715
+   ],
+   "origin_segment": [
+    "705611666",
+    "10915929362"
+   ],
+   "destination_segment": [
+    "705611647",
+    "705611648"
+   ],
+   "direct_path": [
+    "705611666",
+    "10915929362",
+    "705611646",
+    "705611647",
+    "705611648"
+   ]
+  }
+ },
+ {
+  "node": 13228260776,
+  "stratum": [
+   "closed",
+   "cycle_barrier"
+  ],
+  "bbox": "-2.234824,53.528448,-2.220824,53.536848",
+  "clip_sha256": "c78baed1a971e2149c058ad22b298832c313ab9005d2a57339a236fdf5c8332b",
+  "clip_bytes": 445892,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "13228260776",
+   "kind": "cycle_barrier",
+   "origin": [
+    53.5326173,
+    -2.2278220500000003
+   ],
+   "destination": [
+    53.53285655,
+    -2.2277544000000002
+   ],
+   "origin_segment": [
+    "13228260772",
+    "13228260773"
+   ],
+   "destination_segment": [
+    "13228260774",
+    "13228260775"
+   ],
+   "direct_path": [
+    "13228260772",
+    "13228260773",
+    "13228260776",
+    "13228260774",
+    "13228260775"
+   ]
+  }
+ },
+ {
+  "node": 307822875,
+  "stratum": [
+   "closed",
+   "cycle_barrier"
+  ],
+  "bbox": "-2.196743,53.483510,-2.182743,53.491910",
+  "clip_sha256": "dcf5421faf5fcbae26b441abf937efa68940fa69c0d1d32a1ee80fdd883e4edd",
+  "clip_bytes": 811109,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "307822875",
+   "kind": "cycle_barrier",
+   "origin": [
+    53.4878667,
+    -2.1895592500000003
+   ],
+   "destination": [
+    53.487647300000006,
+    -2.18992215
+   ],
+   "origin_segment": [
+    "307822862",
+    "307822870"
+   ],
+   "destination_segment": [
+    "13361557785",
+    "31336128"
+   ],
+   "direct_path": [
+    "307822862",
+    "307822870",
+    "307822875",
+    "307823032",
+    "13361557785",
+    "31336128"
+   ]
+  }
+ },
+ {
+  "node": 12162429533,
+  "stratum": [
+   "closed",
+   "block"
+  ],
+  "bbox": "-2.394563,53.442551,-2.380563,53.450951",
+  "clip_sha256": "d961c6c919a3cd1b4808a1b50bfa57ec147ac731e06b0d3bc5e2e3a4c286a3b3",
+  "clip_bytes": 1283410,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "12162429533",
+   "kind": "block",
+   "origin": [
+    53.44676295,
+    -2.3870013500000002
+   ],
+   "destination": [
+    53.4467226,
+    -2.38889595
+   ],
+   "origin_segment": [
+    "709287346",
+    "709287343"
+   ],
+   "destination_segment": [
+    "709287342",
+    "11139891631"
+   ],
+   "direct_path": [
+    "709287346",
+    "709287343",
+    "12162429533",
+    "709287342",
+    "11139891631"
+   ]
+  }
+ },
+ {
+  "node": 13370482541,
+  "stratum": [
+   "closed",
+   "block"
+  ],
+  "bbox": "-2.133156,53.550316,-2.119156,53.558716",
+  "clip_sha256": "338a39231303a3fa41e80778fc4b33c0fba311757e3611df85142dac4577a56e",
+  "clip_bytes": 2116786,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "13370482541",
+   "kind": "block",
+   "origin": [
+    53.55499975,
+    -2.12618805
+   ],
+   "destination": [
+    53.55447545,
+    -2.12615795
+   ],
+   "origin_segment": [
+    "7756807394",
+    "13370482577"
+   ],
+   "destination_segment": [
+    "13370461854",
+    "7756807395"
+   ],
+   "direct_path": [
+    "7756807394",
+    "13370482577",
+    "13370482541",
+    "13370461854",
+    "7756807395"
+   ]
+  }
+ },
+ {
+  "node": 9447866159,
+  "stratum": [
+   "closed",
+   "block"
+  ],
+  "bbox": "-2.577927,53.386809,-2.563927,53.395209",
+  "clip_sha256": "162a0bae1283542a59ad14d621472939b627dffacae473c24db771538ab9f8d3",
+  "clip_bytes": 946186,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "9447866159",
+   "kind": "block",
+   "origin": [
+    53.3910178,
+    -2.5711643000000004
+   ],
+   "destination": [
+    53.39107455,
+    -2.57086255
+   ],
+   "origin_segment": [
+    "6510354874",
+    "6510354875"
+   ],
+   "destination_segment": [
+    "9273059927",
+    "6510354876"
+   ],
+   "direct_path": [
+    "6510354874",
+    "6510354875",
+    "9447866159",
+    "9273059927",
+    "6510354876"
+   ]
+  }
+ },
+ {
+  "node": 7358709626,
+  "stratum": [
+   "closed",
+   "block"
+  ],
+  "bbox": "-2.369357,53.477469,-2.355357,53.485869",
+  "clip_sha256": "f31b235ba0faaa428f18729ec37ba0f8ecc803d60ad4cd2a08898e160a6c1f1f",
+  "clip_bytes": 1186707,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "7358709626",
+   "kind": "block",
+   "origin": [
+    53.481941649999996,
+    -2.362824
+   ],
+   "destination": [
+    53.4815441,
+    -2.3621382000000004
+   ],
+   "origin_segment": [
+    "9282972481",
+    "1933330767"
+   ],
+   "destination_segment": [
+    "1933330757",
+    "308075266"
+   ],
+   "direct_path": [
+    "9282972481",
+    "1933330767",
+    "7358709626",
+    "1933330757",
+    "308075266"
+   ]
+  }
+ },
+ {
+  "node": 9837877519,
+  "stratum": [
+   "closed",
+   "block"
+  ],
+  "bbox": "-2.240072,53.487764,-2.226072,53.496164",
+  "clip_sha256": "fdf550c2eaf4b573c0c71415d500d816c50fdd47e9bc00a405ec1dde5f86a237",
+  "clip_bytes": 2042348,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "9837877519",
+   "kind": "block",
+   "origin": [
+    53.4919196,
+    -2.2330269
+   ],
+   "destination": [
+    53.492218550000004,
+    -2.2333240500000002
+   ],
+   "origin_segment": [
+    "1819449220",
+    "11738767487"
+   ],
+   "destination_segment": [
+    "3115229272",
+    "1819449219"
+   ],
+   "direct_path": [
+    "1819449220",
+    "11738767487",
+    "9837877519",
+    "3115229272",
+    "1819449219"
+   ]
+  }
+ },
+ {
+  "node": 7984624397,
+  "stratum": [
+   "closed",
+   "block"
+  ],
+  "bbox": "-2.072868,53.480650,-2.058868,53.489050",
+  "clip_sha256": "8222984a097e6da78040c41b15eae0a6408c5bf724360763da3a7fa494dc1f0d",
+  "clip_bytes": 1057861,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "7984624397",
+   "kind": "block",
+   "origin": [
+    53.48490645,
+    -2.0655408499999997
+   ],
+   "destination": [
+    53.4847684,
+    -2.06648035
+   ],
+   "origin_segment": [
+    "7984605369",
+    "7984605368"
+   ],
+   "destination_segment": [
+    "7984605367",
+    "13766364891"
+   ],
+   "direct_path": [
+    "7984605369",
+    "7984605368",
+    "918202912",
+    "7984624397",
+    "7984605367",
+    "13766364891"
+   ]
+  }
+ },
+ {
+  "node": 6258772029,
+  "stratum": [
+   "closed",
+   "block"
+  ],
+  "bbox": "-2.134222,53.527460,-2.120222,53.535860",
+  "clip_sha256": "d0fc7f0650d164ca361ec52685c5cbbc4b9443c6cd2808a8024969c5a4b8539b",
+  "clip_bytes": 4560215,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "6258772029",
+   "kind": "block",
+   "origin": [
+    53.53172455000001,
+    -2.12715035
+   ],
+   "destination": [
+    53.5313182,
+    -2.12748525
+   ],
+   "origin_segment": [
+    "6258772028",
+    "12108581588"
+   ],
+   "destination_segment": [
+    "8636595205",
+    "6258772030"
+   ],
+   "direct_path": [
+    "6258772028",
+    "12108581588",
+    "6258772029",
+    "8636595205",
+    "6258772030"
+   ]
+  }
+ },
+ {
+  "node": 5952649890,
+  "stratum": [
+   "closed",
+   "block"
+  ],
+  "bbox": "-2.213538,53.487687,-2.199538,53.496087",
+  "clip_sha256": "d82697672d073f96a22b652b4cbc26a04652aef8ca0244acdad485a9a61aeda3",
+  "clip_bytes": 1176125,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "5952649890",
+   "kind": "block",
+   "origin": [
+    53.491796300000004,
+    -2.20693105
+   ],
+   "destination": [
+    53.491941600000004,
+    -2.20641385
+   ],
+   "origin_segment": [
+    "5952648383",
+    "5952649889"
+   ],
+   "destination_segment": [
+    "13300259708",
+    "31335439"
+   ],
+   "direct_path": [
+    "5952648383",
+    "5952649889",
+    "5952648384",
+    "5952649890",
+    "13300259708",
+    "31335439"
+   ]
+  }
+ },
+ {
+  "node": 7809877894,
+  "stratum": [
+   "closed",
+   "block"
+  ],
+  "bbox": "-2.656471,53.482359,-2.642471,53.490759",
+  "clip_sha256": "54d347d5a28d1111ad904a5855fbb597a04427741c5b828bfeaa55a95d8963c0",
+  "clip_bytes": 1154949,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "7809877894",
+   "kind": "block",
+   "origin": [
+    53.486623,
+    -2.64986705
+   ],
+   "destination": [
+    53.48646875,
+    -2.6489395499999997
+   ],
+   "origin_segment": [
+    "7809877892",
+    "7809877893"
+   ],
+   "destination_segment": [
+    "7809877895",
+    "7809877896"
+   ],
+   "direct_path": [
+    "7809877892",
+    "7809877893",
+    "7809877894",
+    "7809877895",
+    "7809877896"
+   ]
+  }
+ },
+ {
+  "node": 416565753,
+  "stratum": [
+   "closed",
+   "block"
+  ],
+  "bbox": "-2.158765,53.489961,-2.144765,53.498361",
+  "clip_sha256": "8b9de5178bd4c44d321694e2b7f0310d198027ab2bf2f5334a1b18ce94ea9243",
+  "clip_bytes": 691282,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "416565753",
+   "kind": "block",
+   "origin": [
+    53.494451749999996,
+    -2.1497425
+   ],
+   "destination": [
+    53.494021399999994,
+    -2.15243145
+   ],
+   "origin_segment": [
+    "430960711",
+    "430960709"
+   ],
+   "destination_segment": [
+    "416565756",
+    "431208398"
+   ],
+   "direct_path": [
+    "430960711",
+    "430960709",
+    "416565753",
+    "416565756",
+    "431208398"
+   ]
+  }
+ },
+ {
+  "node": 9688945500,
+  "stratum": [
+   "closed",
+   "other"
+  ],
+  "bbox": "-2.533505,53.467759,-2.519505,53.476159",
+  "clip_sha256": "4b24d0657b83ef0336e974053ecf2d06bc3283a9a9c9d669142a2daed6cb78c2",
+  "clip_bytes": 258021,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "9688945500",
+   "kind": "gate",
+   "origin": [
+    53.4701664,
+    -2.5240766
+   ],
+   "destination": [
+    53.47319875,
+    -2.5270406
+   ],
+   "origin_segment": [
+    "764666380",
+    "764666385"
+   ],
+   "destination_segment": [
+    "3439335602",
+    "764666390"
+   ],
+   "direct_path": [
+    "764666380",
+    "764666385",
+    "9688945500",
+    "3439335602",
+    "764666390"
+   ]
+  }
+ },
+ {
+  "node": 1649076539,
+  "stratum": [
+   "closed",
+   "other"
+  ],
+  "bbox": "-2.234716,53.471801,-2.220716,53.480201",
+  "clip_sha256": "1eaa582e484b32eb127c6f3432c5fa039c8be9bb1c889f9fc558ac6657c3ebe4",
+  "clip_bytes": 4989118,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "1649076539",
+   "kind": "gate",
+   "origin": [
+    53.47606705,
+    -2.2277685
+   ],
+   "destination": [
+    53.4758172,
+    -2.2274986
+   ],
+   "origin_segment": [
+    "1983745960",
+    "12446886787"
+   ],
+   "destination_segment": [
+    "1649076647",
+    "1649076656"
+   ],
+   "direct_path": [
+    "1983745960",
+    "12446886787",
+    "1649076539",
+    "1649076654",
+    "1649076585",
+    "1649076647",
+    "1649076656"
+   ]
+  }
+ },
+ {
+  "node": 252967323,
+  "stratum": [
+   "closed",
+   "other"
+  ],
+  "bbox": "-2.591478,53.653248,-2.577478,53.661648",
+  "clip_sha256": "0b32c9733604d644ff37702f11d8896993c1be6c05a3585ca58308a670f2f057",
+  "clip_bytes": 177235,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "252967323",
+   "kind": "gate",
+   "origin": [
+    53.6574326,
+    -2.58525625
+   ],
+   "destination": [
+    53.657074,
+    -2.58386805
+   ],
+   "origin_segment": [
+    "252967321",
+    "252967322"
+   ],
+   "destination_segment": [
+    "252967324",
+    "252967325"
+   ],
+   "direct_path": [
+    "252967321",
+    "252967322",
+    "5203208996",
+    "5203208995",
+    "5203208997",
+    "252967323",
+    "252967324",
+    "252967325"
+   ]
+  }
+ },
+ {
+  "node": 779064410,
+  "stratum": [
+   "closed",
+   "other"
+  ],
+  "bbox": "-2.183149,53.613377,-2.169149,53.621777",
+  "clip_sha256": "003c62ffa75f7528b23f3cc662d38fccf9133a35f0bb86bcde6594c9c4961432",
+  "clip_bytes": 623195,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "779064410",
+   "kind": "lift_gate",
+   "origin": [
+    53.61774885,
+    -2.1759151
+   ],
+   "destination": [
+    53.61739875,
+    -2.17654595
+   ],
+   "origin_segment": [
+    "3311668720",
+    "3311668705"
+   ],
+   "destination_segment": [
+    "779064413",
+    "779064414"
+   ],
+   "direct_path": [
+    "3311668720",
+    "3311668705",
+    "779064410",
+    "779064413",
+    "779064414"
+   ]
+  }
+ },
+ {
+  "node": 6513818029,
+  "stratum": [
+   "closed",
+   "other"
+  ],
+  "bbox": "-2.500136,53.522880,-2.486136,53.531280",
+  "clip_sha256": "ecdea6e2648f5aefdbbb5251ebdd4204e09fd668d4ab7e7af22f4b85890cb288",
+  "clip_bytes": 1400417,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "6513818029",
+   "kind": "gate",
+   "origin": [
+    53.5270893,
+    -2.49306025
+   ],
+   "destination": [
+    53.52708235,
+    -2.4931876
+   ],
+   "origin_segment": [
+    "6513818023",
+    "6513818025"
+   ],
+   "destination_segment": [
+    "6513818024",
+    "6504570903"
+   ],
+   "direct_path": [
+    "6513818023",
+    "6513818025",
+    "6513818029",
+    "6513818024",
+    "6504570903"
+   ]
+  }
+ },
+ {
+  "node": 6820393140,
+  "stratum": [
+   "closed",
+   "other"
+  ],
+  "bbox": "-2.249656,53.364254,-2.235656,53.372654",
+  "clip_sha256": "ddde381e10b69862f8afa18ac52d8a9e37548e28f7f57717544a6e5b8b7aa09d",
+  "clip_bytes": 1101099,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "6820393140",
+   "kind": "gate",
+   "origin": [
+    53.368459650000005,
+    -2.2430760999999997
+   ],
+   "destination": [
+    53.36845125,
+    -2.2423409000000003
+   ],
+   "origin_segment": [
+    "6820415629",
+    "6820393138"
+   ],
+   "destination_segment": [
+    "9641411668",
+    "6820415610"
+   ],
+   "direct_path": [
+    "6820415629",
+    "6820393138",
+    "6820393140",
+    "9641411668",
+    "6820415610"
+   ]
+  }
+ },
+ {
+  "node": 33179215,
+  "stratum": [
+   "closed",
+   "other"
+  ],
+  "bbox": "-2.283969,53.607734,-2.269969,53.616134",
+  "clip_sha256": "c851c30182457a46a023ee72ff1bd3c3376672a964ba4572f3290610a8851524",
+  "clip_bytes": 598086,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "33179215",
+   "kind": "gate",
+   "origin": [
+    53.6116595,
+    -2.27770295
+   ],
+   "destination": [
+    53.6121347,
+    -2.2766783
+   ],
+   "origin_segment": [
+    "33179213",
+    "33179214"
+   ],
+   "destination_segment": [
+    "5091145974",
+    "33179216"
+   ],
+   "direct_path": [
+    "33179213",
+    "33179214",
+    "33179215",
+    "5091145975",
+    "5091145973",
+    "5091145974",
+    "33179216"
+   ]
+  }
+ },
+ {
+  "node": 2092919405,
+  "stratum": [
+   "closed",
+   "other"
+  ],
+  "bbox": "-2.274285,53.567398,-2.260285,53.575798",
+  "clip_sha256": "40700e325585e3744780965b5cffbba2fa1afbaa8af7fe57ee892bca818a6641",
+  "clip_bytes": 308055,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "2092919405",
+   "kind": "lift_gate",
+   "origin": [
+    53.5720079,
+    -2.2689651
+   ],
+   "destination": [
+    53.5715414,
+    -2.26679825
+   ],
+   "origin_segment": [
+    "32917358",
+    "32917359"
+   ],
+   "destination_segment": [
+    "32917360",
+    "5100224267"
+   ],
+   "direct_path": [
+    "32917358",
+    "32917359",
+    "2092919405",
+    "32917360",
+    "5100224267"
+   ]
+  }
+ },
+ {
+  "node": 2321336426,
+  "stratum": [
+   "closed",
+   "other"
+  ],
+  "bbox": "-2.316105,53.638014,-2.302105,53.646414",
+  "clip_sha256": "2f84b3611195cc3c3919bd63500388052dc09abf25574b96315d53f112cd2577",
+  "clip_bytes": 865456,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "2321336426",
+   "kind": "gate",
+   "origin": [
+    53.64264505,
+    -2.30921205
+   ],
+   "destination": [
+    53.642209,
+    -2.30950945
+   ],
+   "origin_segment": [
+    "1715965595",
+    "2321336444"
+   ],
+   "destination_segment": [
+    "6004627427",
+    "6004627421"
+   ],
+   "direct_path": [
+    "1715965595",
+    "2321336444",
+    "2321336426",
+    "6004627427",
+    "6004627421"
+   ]
+  }
+ },
+ {
+  "node": 1794829566,
+  "stratum": [
+   "closed",
+   "other"
+  ],
+  "bbox": "-2.412289,53.563978,-2.398289,53.572378",
+  "clip_sha256": "fef3d56997c4bcc08d62b80445c0dcffc4acef13920b883484178d23fee0d3f1",
+  "clip_bytes": 658382,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "barrier": "1794829566",
+   "kind": "yes",
+   "origin": [
+    53.568480199999996,
+    -2.4053291999999997
+   ],
+   "destination": [
+    53.5679808,
+    -2.4055412
+   ],
+   "origin_segment": [
+    "1794829575",
+    "1794829574"
+   ],
+   "destination_segment": [
+    "1794829559",
+    "1794829578"
+   ],
+   "direct_path": [
+    "1794829575",
+    "1794829574",
+    "1794829571",
+    "1794829566",
+    "1794829559",
+    "1794829578"
+   ]
+  }
+ },
+ {
+  "node": 1066142650,
+  "stratum": [
+   "open",
+   "*"
+  ],
+  "bbox": "-2.394515,53.465505,-2.380515,53.473905",
+  "clip_sha256": "90d99db8b3a53b7ed071787762f2f85315b95a7b96be93e3e813f91d167a391d",
+  "clip_bytes": 364998,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "open",
+   "barrier": "1066142650",
+   "kind": "gate",
+   "origin": [
+    53.47046905,
+    -2.3864379
+   ],
+   "destination": [
+    53.4695396,
+    -2.38768945
+   ],
+   "origin_segment": [
+    "856523619",
+    "1066142733"
+   ],
+   "destination_segment": [
+    "856523626",
+    "856523631"
+   ],
+   "direct_path": [
+    "856523619",
+    "1066142733",
+    "1066142650",
+    "856523622",
+    "856523626",
+    "856523631"
+   ]
+  }
+ },
+ {
+  "node": 3281743372,
+  "stratum": [
+   "open",
+   "*"
+  ],
+  "bbox": "-2.189764,53.429020,-2.175764,53.437420",
+  "clip_sha256": "d52e35fbfa3d33b72581706f2d14dfaf04a3ec0059f23ce8f4e450143b4363fc",
+  "clip_bytes": 2191095,
+  "geometry": {
+   "status": "OTHER_BARRIER_ON_LINE",
+   "group": "open",
+   "other_barriers": [
+    "2587799681"
+   ]
+  }
+ },
+ {
+  "node": 33305864,
+  "stratum": [
+   "open",
+   "*"
+  ],
+  "bbox": "-2.183587,53.578870,-2.169586,53.587270",
+  "clip_sha256": "cb97956cc2fdc19fd10f95cf827e3d23205ed844662c601120b99c271e36df4e",
+  "clip_bytes": 759808,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "open",
+   "barrier": "33305864",
+   "kind": "cattle_grid",
+   "origin": [
+    53.5829807,
+    -2.1757423
+   ],
+   "destination": [
+    53.583193550000004,
+    -2.1769591999999998
+   ],
+   "origin_segment": [
+    "33305861",
+    "33305863"
+   ],
+   "destination_segment": [
+    "33305865",
+    "33305866"
+   ],
+   "direct_path": [
+    "33305861",
+    "33305863",
+    "33305864",
+    "33305865",
+    "33305866"
+   ]
+  }
+ },
+ {
+  "node": 354695430,
+  "stratum": [
+   "open",
+   "*"
+  ],
+  "bbox": "-2.638767,53.407128,-2.624766,53.415527",
+  "clip_sha256": "06e3b155cc0bb978d509e8b8aa173304f41d751796019d91542ae1156ff41650",
+  "clip_bytes": 1877669,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "open",
+   "barrier": "354695430",
+   "kind": "lift_gate",
+   "origin": [
+    53.411186799999996,
+    -2.6319676999999997
+   ],
+   "destination": [
+    53.411479150000005,
+    -2.63157935
+   ],
+   "origin_segment": [
+    "305933796",
+    "14121034409"
+   ],
+   "destination_segment": [
+    "7920034663",
+    "8033006090"
+   ],
+   "direct_path": [
+    "305933796",
+    "14121034409",
+    "14121034408",
+    "8740712869",
+    "354695430",
+    "7920034663",
+    "8033006090"
+   ]
+  }
+ },
+ {
+  "node": 6450783908,
+  "stratum": [
+   "open",
+   "*"
+  ],
+  "bbox": "-2.497808,53.522485,-2.483808,53.530884",
+  "clip_sha256": "6ba06365fdd6f6998bb8c9a2800cf64418e297a115e70efafc54247a14821eb4",
+  "clip_bytes": 1248301,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "open",
+   "barrier": "6450783908",
+   "kind": "gate",
+   "origin": [
+    53.52674265,
+    -2.4908194999999997
+   ],
+   "destination": [
+    53.52639045,
+    -2.49070735
+   ],
+   "origin_segment": [
+    "6450783571",
+    "6482461003"
+   ],
+   "destination_segment": [
+    "6450783892",
+    "6450783885"
+   ],
+   "direct_path": [
+    "6450783571",
+    "6482461003",
+    "6450783908",
+    "6450783892",
+    "6450783885"
+   ]
+  }
+ },
+ {
+  "node": 1163494701,
+  "stratum": [
+   "open",
+   "*"
+  ],
+  "bbox": "-2.250944,53.469835,-2.236944,53.478235",
+  "clip_sha256": "ccd44db5abf94f052d3b72a4ce4623aef4720f1006e094b76edc33ce41c9c292",
+  "clip_bytes": 4680224,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "open",
+   "barrier": "1163494701",
+   "kind": "lift_gate",
+   "origin": [
+    53.47412555,
+    -2.24400785
+   ],
+   "destination": [
+    53.473983,
+    -2.24391435
+   ],
+   "origin_segment": [
+    "6629586064",
+    "6629586063"
+   ],
+   "destination_segment": [
+    "13082260961",
+    "1163495287"
+   ],
+   "direct_path": [
+    "6629586064",
+    "6629586063",
+    "1163494940",
+    "1163494701",
+    "13082260961",
+    "1163495287"
+   ]
+  }
+ },
+ {
+  "node": 7392840163,
+  "stratum": [
+   "open",
+   "*"
+  ],
+  "bbox": "-2.277208,53.469034,-2.263208,53.477434",
+  "clip_sha256": "05d81b883b633c2852279f656289d778a7cf88ca48336f6856ee479169671b00",
+  "clip_bytes": 4980247,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "open",
+   "barrier": "7392840163",
+   "kind": "gate",
+   "origin": [
+    53.47324865,
+    -2.27026495
+   ],
+   "destination": [
+    53.473141600000005,
+    -2.26995705
+   ],
+   "origin_segment": [
+    "2619483081",
+    "8400918457"
+   ],
+   "destination_segment": [
+    "8892522945",
+    "7841186645"
+   ],
+   "direct_path": [
+    "2619483081",
+    "8400918457",
+    "7392840163",
+    "8892522945",
+    "7841186645"
+   ]
+  }
+ },
+ {
+  "node": 8851480532,
+  "stratum": [
+   "open",
+   "*"
+  ],
+  "bbox": "-2.224874,53.440391,-2.210874,53.448791",
+  "clip_sha256": "05b9888a91f9cfd8ed16e7bdab9487ab303440d315f8ff2763798e8eacbd8663",
+  "clip_bytes": 2142476,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "open",
+   "barrier": "8851480532",
+   "kind": "lift_gate",
+   "origin": [
+    53.444594249999994,
+    -2.217766
+   ],
+   "destination": [
+    53.4446216,
+    -2.21813105
+   ],
+   "origin_segment": [
+    "8851480523",
+    "8851480531"
+   ],
+   "destination_segment": [
+    "8851480534",
+    "8851480536"
+   ],
+   "direct_path": [
+    "8851480523",
+    "8851480531",
+    "8851480537",
+    "8851480532",
+    "8851480533",
+    "8851480534",
+    "8851480536"
+   ]
+  }
+ },
+ {
+  "node": 3712583769,
+  "stratum": [
+   "open",
+   "*"
+  ],
+  "bbox": "-2.524743,53.419731,-2.510743,53.428131",
+  "clip_sha256": "79d633875a4b3e5ccac1880631d1d3ba92c3264d3a6df0ec23ed08990ebc9db4",
+  "clip_bytes": 648249,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "open",
+   "barrier": "3712583769",
+   "kind": "lift_gate",
+   "origin": [
+    53.423786899999996,
+    -2.5183031
+   ],
+   "destination": [
+    53.424051500000004,
+    -2.5175212499999997
+   ],
+   "origin_segment": [
+    "250760779",
+    "6317874197"
+   ],
+   "destination_segment": [
+    "9393194408",
+    "749955416"
+   ],
+   "direct_path": [
+    "250760779",
+    "6317874197",
+    "3712583769",
+    "3712583768",
+    "9393194407",
+    "9393194408",
+    "749955416"
+   ]
+  }
+ },
+ {
+  "node": 10778305851,
+  "stratum": [
+   "open",
+   "*"
+  ],
+  "bbox": "-2.411467,53.380912,-2.397467,53.389312",
+  "clip_sha256": "4b64de13b3be67a5784943d8f85702f817af7c8ffcbee8a5bfde6bf1d44f1e59",
+  "clip_bytes": 776410,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "open",
+   "barrier": "10778305851",
+   "kind": "gate",
+   "origin": [
+    53.3847534,
+    -2.4045789
+   ],
+   "destination": [
+    53.385173550000005,
+    -2.4043989
+   ],
+   "origin_segment": [
+    "176624586",
+    "10778305852"
+   ],
+   "destination_segment": [
+    "12905817788",
+    "6750223278"
+   ],
+   "direct_path": [
+    "176624586",
+    "10778305852",
+    "10778305851",
+    "12905817788",
+    "6750223278"
+   ]
+  }
+ },
+ {
+  "node": 336272610,
+  "stratum": [
+   "open",
+   "*"
+  ],
+  "bbox": "-2.162691,53.354050,-2.148691,53.362450",
+  "clip_sha256": "508a7f62a6396db6fa0af6a0b5a0d07f72f6d7d81c873583051a4e8718be7f40",
+  "clip_bytes": 1065892,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "open",
+   "barrier": "336272610",
+   "kind": "gate",
+   "origin": [
+    53.3582829,
+    -2.1559549
+   ],
+   "destination": [
+    53.3582064,
+    -2.1550604499999997
+   ],
+   "origin_segment": [
+    "336272606",
+    "336272608"
+   ],
+   "destination_segment": [
+    "11514449834",
+    "336272611"
+   ],
+   "direct_path": [
+    "336272606",
+    "336272608",
+    "336272610",
+    "11514449834",
+    "336272611"
+   ]
+  }
+ },
+ {
+  "node": 7274980488,
+  "stratum": [
+   "open",
+   "*"
+  ],
+  "bbox": "-2.282090,53.466197,-2.268090,53.474597",
+  "clip_sha256": "c85066e4d257e7121ff3359cc55a56d1a4bd4be36e94b71ea461adf815b441e9",
+  "clip_bytes": 4633886,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "open",
+   "barrier": "7274980488",
+   "kind": "gate",
+   "origin": [
+    53.4703639,
+    -2.27514515
+   ],
+   "destination": [
+    53.47065865,
+    -2.27447225
+   ],
+   "origin_segment": [
+    "2619483214",
+    "8329422218"
+   ],
+   "destination_segment": [
+    "2619483215",
+    "2619483216"
+   ],
+   "direct_path": [
+    "2619483214",
+    "8329422218",
+    "7274980488",
+    "2619483215",
+    "2619483216"
+   ]
+  }
+ },
+ {
+  "node": 10024866250,
+  "stratum": [
+   "open",
+   "*"
+  ],
+  "bbox": "-2.281564,53.359710,-2.267564,53.368110",
+  "clip_sha256": "c1278a3ff392cf4a250cb8896aaf0f9c599546d2c52bc765f966f27e8d55bb71",
+  "clip_bytes": 1763007,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "open",
+   "barrier": "10024866250",
+   "kind": "toll_booth",
+   "origin": [
+    53.3636183,
+    -2.2746393
+   ],
+   "destination": [
+    53.36413195,
+    -2.2745430000000004
+   ],
+   "origin_segment": [
+    "937824819",
+    "937826664"
+   ],
+   "destination_segment": [
+    "937826419",
+    "1511634375"
+   ],
+   "direct_path": [
+    "937824819",
+    "937826664",
+    "10024866250",
+    "937826419",
+    "1511634375"
+   ]
+  }
+ },
+ {
+  "node": 12633142766,
+  "stratum": [
+   "open",
+   "*"
+  ],
+  "bbox": "-2.474406,53.508713,-2.460406,53.517112",
+  "clip_sha256": "f29efa9698b8aaf209f0ea85076c51f2ee158ba362764ce18ce7b5ddc64e9391",
+  "clip_bytes": 793977,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "open",
+   "barrier": "12633142766",
+   "kind": "height_restrictor",
+   "origin": [
+    53.512888700000005,
+    -2.46747735
+   ],
+   "destination": [
+    53.5129237,
+    -2.46728615
+   ],
+   "origin_segment": [
+    "5598565628",
+    "8942664697"
+   ],
+   "destination_segment": [
+    "4424949378",
+    "4424949377"
+   ],
+   "direct_path": [
+    "5598565628",
+    "8942664697",
+    "12633142766",
+    "4424949378",
+    "4424949377"
+   ]
+  }
+ },
+ {
+  "node": 10749607529,
+  "stratum": [
+   "open",
+   "*"
+  ],
+  "bbox": "-2.623035,53.570486,-2.609035,53.578886",
+  "clip_sha256": "8964775689c5534022e747ad190d7f373eb28deb05c244fa88bc538da102b201",
+  "clip_bytes": 517815,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "open",
+   "barrier": "10749607529",
+   "kind": "gate",
+   "origin": [
+    53.57445025,
+    -2.61586785
+   ],
+   "destination": [
+    53.5748406,
+    -2.61601735
+   ],
+   "origin_segment": [
+    "10749540802",
+    "10749540803"
+   ],
+   "destination_segment": [
+    "10749607530",
+    "3886606897"
+   ],
+   "direct_path": [
+    "10749540802",
+    "10749540803",
+    "10749540804",
+    "10749607505",
+    "10749607529",
+    "10749607530",
+    "3886606897"
+   ]
+  }
+ },
+ {
+  "node": 8404585205,
+  "stratum": [
+   "untagged_gate",
+   "gate"
+  ],
+  "bbox": "-2.269162,53.479541,-2.255161,53.487941",
+  "clip_sha256": "c20c33dd616096be3c824d52d2cada3b6f8e80789f77aea1f5b29c50b0d52fbd",
+  "clip_bytes": 4019358,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "8404585205",
+   "kind": "gate",
+   "origin": [
+    53.48352905,
+    -2.2620860499999997
+   ],
+   "destination": [
+    53.4837754,
+    -2.26216355
+   ],
+   "origin_segment": [
+    "8404585207",
+    "8404585206"
+   ],
+   "destination_segment": [
+    "9864616470",
+    "8404585204"
+   ],
+   "direct_path": [
+    "8404585207",
+    "8404585206",
+    "8404585208",
+    "8404585205",
+    "9864616470",
+    "8404585204"
+   ]
+  }
+ },
+ {
+  "node": 8228912270,
+  "stratum": [
+   "untagged_gate",
+   "gate"
+  ],
+  "bbox": "-2.224170,53.437119,-2.210170,53.445519",
+  "clip_sha256": "aa50174b75e903b58ed353d8bc2a5a77583e1271c6d0b9126fc11823ccda6fab",
+  "clip_bytes": 2283721,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "8228912270",
+   "kind": "gate",
+   "origin": [
+    53.44128345,
+    -2.2171708
+   ],
+   "destination": [
+    53.44151225,
+    -2.2171663
+   ],
+   "origin_segment": [
+    "2934798426",
+    "13203694682"
+   ],
+   "destination_segment": [
+    "8228911174",
+    "8228911173"
+   ],
+   "direct_path": [
+    "2934798426",
+    "13203694682",
+    "8228912270",
+    "8228911174",
+    "8228911173"
+   ]
+  }
+ },
+ {
+  "node": 8882754434,
+  "stratum": [
+   "untagged_gate",
+   "gate"
+  ],
+  "bbox": "-2.534059,53.544983,-2.520059,53.553383",
+  "clip_sha256": "04e1e78aa1803018c86265342c3348737d0717d7c15577500527fa12dc119c50",
+  "clip_bytes": 1825058,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "8882754434",
+   "kind": "gate",
+   "origin": [
+    53.54939135,
+    -2.5269670499999997
+   ],
+   "destination": [
+    53.54915035,
+    -2.52708045
+   ],
+   "origin_segment": [
+    "593430081",
+    "8928392000"
+   ],
+   "destination_segment": [
+    "11212348477",
+    "593430010"
+   ],
+   "direct_path": [
+    "593430081",
+    "8928392000",
+    "593430008",
+    "8882754434",
+    "11212348477",
+    "593430010"
+   ]
+  }
+ },
+ {
+  "node": 3647340826,
+  "stratum": [
+   "untagged_gate",
+   "gate"
+  ],
+  "bbox": "-2.497591,53.639429,-2.483591,53.647829",
+  "clip_sha256": "6747562c46c6fa66c98ee12b2cbf79bf7445eb8ed997d3aac0f993f2b9ccc119",
+  "clip_bytes": 296070,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "3647340826",
+   "kind": "gate",
+   "origin": [
+    53.643175400000004,
+    -2.49056495
+   ],
+   "destination": [
+    53.644054249999996,
+    -2.49064415
+   ],
+   "origin_segment": [
+    "29295842",
+    "7572029009"
+   ],
+   "destination_segment": [
+    "7536642750",
+    "3647340827"
+   ],
+   "direct_path": [
+    "29295842",
+    "7572029009",
+    "3647340826",
+    "7536642750",
+    "3647340827"
+   ]
+  }
+ },
+ {
+  "node": 11891702209,
+  "stratum": [
+   "untagged_gate",
+   "gate"
+  ],
+  "bbox": "-2.152260,53.503682,-2.138260,53.512082",
+  "clip_sha256": "22002c4538bf60bb1e14d1d1af7095be7b240a82a810e97609fe1c3d1f0d11d7",
+  "clip_bytes": 464622,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "11891702209",
+   "kind": "gate",
+   "origin": [
+    53.5076515,
+    -2.14504815
+   ],
+   "destination": [
+    53.50805925,
+    -2.1454902000000002
+   ],
+   "origin_segment": [
+    "3196774614",
+    "11107365157"
+   ],
+   "destination_segment": [
+    "3851263632",
+    "3196774617"
+   ],
+   "direct_path": [
+    "3196774614",
+    "11107365157",
+    "11891702209",
+    "3196774615",
+    "3196774616",
+    "11107365180",
+    "3851263632",
+    "3196774617"
+   ]
+  }
+ },
+ {
+  "node": 12558498020,
+  "stratum": [
+   "untagged_gate",
+   "gate"
+  ],
+  "bbox": "-2.528474,53.491201,-2.514474,53.499601",
+  "clip_sha256": "73c5439f5a38af123367ce5a0a9c576231e472681b805aa9e6c9439939ce9461",
+  "clip_bytes": 3010350,
+  "geometry": {
+   "status": "OTHER_BARRIER_ON_LINE",
+   "group": "untagged_gate",
+   "other_barriers": [
+    "12558498021",
+    "12558488925"
+   ]
+  }
+ },
+ {
+  "node": 462008346,
+  "stratum": [
+   "untagged_gate",
+   "gate"
+  ],
+  "bbox": "-2.191668,53.613262,-2.177668,53.621662",
+  "clip_sha256": "0e86fc6a7f26d16c9e912304e5a8ae812b4f021743db17a67900974bb5281e1d",
+  "clip_bytes": 496084,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "462008346",
+   "kind": "gate",
+   "origin": [
+    53.61730265,
+    -2.1842829
+   ],
+   "destination": [
+    53.61760375,
+    -2.1850833
+   ],
+   "origin_segment": [
+    "7933149898",
+    "462008345"
+   ],
+   "destination_segment": [
+    "6934281409",
+    "6934281406"
+   ],
+   "direct_path": [
+    "7933149898",
+    "462008345",
+    "462008346",
+    "4085035351",
+    "6934281409",
+    "6934281406"
+   ]
+  }
+ },
+ {
+  "node": 6300541519,
+  "stratum": [
+   "untagged_gate",
+   "gate"
+  ],
+  "bbox": "-2.217224,53.346216,-2.203224,53.354616",
+  "clip_sha256": "8c1c4234d5572995947b56a5dcfb67b59ee4f19a0347362a1872a0e32bc4c9b8",
+  "clip_bytes": 1160867,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "6300541519",
+   "kind": "gate",
+   "origin": [
+    53.35027015,
+    -2.20993525
+   ],
+   "destination": [
+    53.35034125,
+    -2.2103769
+   ],
+   "origin_segment": [
+    "21740689",
+    "10871743195"
+   ],
+   "destination_segment": [
+    "6300541497",
+    "6300541498"
+   ],
+   "direct_path": [
+    "21740689",
+    "10871743195",
+    "6300541496",
+    "6300541519",
+    "6300541497",
+    "6300541498"
+   ]
+  }
+ },
+ {
+  "node": 11349445991,
+  "stratum": [
+   "untagged_gate",
+   "gate"
+  ],
+  "bbox": "-2.599095,53.404129,-2.585095,53.412529",
+  "clip_sha256": "37e524e111eaca7077589c5188d1024f5746abb4674c7da2f85bf11967ac3139",
+  "clip_bytes": 2304072,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "11349445991",
+   "kind": "gate",
+   "origin": [
+    53.40842085,
+    -2.59207755
+   ],
+   "destination": [
+    53.40809085,
+    -2.5921509499999997
+   ],
+   "origin_segment": [
+    "5135376141",
+    "8972351221"
+   ],
+   "destination_segment": [
+    "5135376144",
+    "11251809410"
+   ],
+   "direct_path": [
+    "5135376141",
+    "8972351221",
+    "11349445991",
+    "5135376142",
+    "5135376144",
+    "11251809410"
+   ]
+  }
+ },
+ {
+  "node": 6563098929,
+  "stratum": [
+   "untagged_gate",
+   "gate"
+  ],
+  "bbox": "-2.608285,53.404958,-2.594285,53.413358",
+  "clip_sha256": "b6b1c6ed9cc55c0ff28e1778cb315b2aa87334af779982620026563bfd24617f",
+  "clip_bytes": 3486279,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "6563098929",
+   "kind": "gate",
+   "origin": [
+    53.40891685,
+    -2.6012446999999996
+   ],
+   "destination": [
+    53.40939615,
+    -2.6013586
+   ],
+   "origin_segment": [
+    "9436725414",
+    "9436725393"
+   ],
+   "destination_segment": [
+    "6563098928",
+    "6563098930"
+   ],
+   "direct_path": [
+    "9436725414",
+    "9436725393",
+    "8643144262",
+    "6563098929",
+    "6563098928",
+    "6563098930"
+   ]
+  }
+ },
+ {
+  "node": 11100071329,
+  "stratum": [
+   "untagged_gate",
+   "gate"
+  ],
+  "bbox": "-2.154182,53.526954,-2.140182,53.535354",
+  "clip_sha256": "43ae2791ad03995a839338601770bd41b85a82ea93bac635b4691ad0f3d3a958",
+  "clip_bytes": 5585820,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "11100071329",
+   "kind": "gate",
+   "origin": [
+    53.531215700000004,
+    -2.1471634
+   ],
+   "destination": [
+    53.531087850000006,
+    -2.1471854500000003
+   ],
+   "origin_segment": [
+    "11005336633",
+    "11005336634"
+   ],
+   "destination_segment": [
+    "11005336635",
+    "11005336636"
+   ],
+   "direct_path": [
+    "11005336633",
+    "11005336634",
+    "11100071329",
+    "11005336635",
+    "11005336636"
+   ]
+  }
+ },
+ {
+  "node": 11181245648,
+  "stratum": [
+   "untagged_gate",
+   "gate"
+  ],
+  "bbox": "-2.505939,53.550892,-2.491939,53.559292",
+  "clip_sha256": "eb8286f7f10e94c279d38b792f05c4d79dea760636f98d1202042f883f70b0de",
+  "clip_bytes": 817159,
+  "geometry": {
+   "status": "OTHER_BARRIER_ON_LINE",
+   "group": "untagged_gate",
+   "other_barriers": [
+    "11181245647"
+   ]
+  }
+ },
+ {
+  "node": 6683463894,
+  "stratum": [
+   "untagged_gate",
+   "gate"
+  ],
+  "bbox": "-2.656831,53.506399,-2.642831,53.514799",
+  "clip_sha256": "bdb2d29b2be60be7ccbe843a600a1821d2411ab33273f9fd4913ca0034909aae",
+  "clip_bytes": 764665,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "6683463894",
+   "kind": "gate",
+   "origin": [
+    53.5105134,
+    -2.65000125
+   ],
+   "destination": [
+    53.51086155,
+    -2.6497030500000003
+   ],
+   "origin_segment": [
+    "6683463887",
+    "6683463888"
+   ],
+   "destination_segment": [
+    "6683463892",
+    "6683463893"
+   ],
+   "direct_path": [
+    "6683463887",
+    "6683463888",
+    "6683463889",
+    "6683463894",
+    "6683463890",
+    "6683463891",
+    "6683463892",
+    "6683463893"
+   ]
+  }
+ },
+ {
+  "node": 13955208928,
+  "stratum": [
+   "untagged_gate",
+   "gate"
+  ],
+  "bbox": "-2.565586,53.367829,-2.551586,53.376229",
+  "clip_sha256": "b6746545cd17dc75926e59809ffd8d54dfd60f5a33537371d6c6ab5b99527148",
+  "clip_bytes": 586338,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "13955208928",
+   "kind": "gate",
+   "origin": [
+    53.37193925,
+    -2.55900215
+   ],
+   "destination": [
+    53.372288749999996,
+    -2.5573441499999996
+   ],
+   "origin_segment": [
+    "3306168024",
+    "3306167966"
+   ],
+   "destination_segment": [
+    "3306167991",
+    "3306168002"
+   ],
+   "direct_path": [
+    "3306168024",
+    "3306167966",
+    "13955208928",
+    "3306167991",
+    "3306168002"
+   ]
+  }
+ },
+ {
+  "node": 7537772058,
+  "stratum": [
+   "untagged_gate",
+   "gate"
+  ],
+  "bbox": "-2.257243,53.422539,-2.243243,53.430939",
+  "clip_sha256": "88343d0a43712efeaa75dc9d283eaab7393439d0b1a83045360ef9f1e388036c",
+  "clip_bytes": 1124791,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "7537772058",
+   "kind": "gate",
+   "origin": [
+    53.4266962,
+    -2.25016095
+   ],
+   "destination": [
+    53.4269314,
+    -2.2504220999999998
+   ],
+   "origin_segment": [
+    "7537772053",
+    "11289800473"
+   ],
+   "destination_segment": [
+    "7537772059",
+    "11289744344"
+   ],
+   "direct_path": [
+    "7537772053",
+    "11289800473",
+    "7537772058",
+    "11829245853",
+    "7537772059",
+    "11289744344"
+   ]
+  }
+ },
+ {
+  "node": 12165451247,
+  "stratum": [
+   "untagged_gate",
+   "lift_gate"
+  ],
+  "bbox": "-2.708269,53.520302,-2.694269,53.528702",
+  "clip_sha256": "68b1d3940b18244863072064180e1cb2a1ff40b8b0815139c6474b971264e4a5",
+  "clip_bytes": 463092,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "12165451247",
+   "kind": "lift_gate",
+   "origin": [
+    53.52450305,
+    -2.70119195
+   ],
+   "destination": [
+    53.5244802,
+    -2.7016584999999997
+   ],
+   "origin_segment": [
+    "3769165552",
+    "4053639009"
+   ],
+   "destination_segment": [
+    "4053638998",
+    "4053639005"
+   ],
+   "direct_path": [
+    "3769165552",
+    "4053639009",
+    "12165451247",
+    "4053638997",
+    "4053638998",
+    "4053639005"
+   ]
+  }
+ },
+ {
+  "node": 7505864531,
+  "stratum": [
+   "untagged_gate",
+   "lift_gate"
+  ],
+  "bbox": "-2.416203,53.632530,-2.402203,53.640930",
+  "clip_sha256": "2688de8ffb62a4b5c040685e35ba3bb74e952dd54f70a102a5e075f18bf98b0f",
+  "clip_bytes": 425107,
+  "geometry": {
+   "status": "OTHER_BARRIER_ON_LINE",
+   "group": "untagged_gate",
+   "other_barriers": [
+    "7505864533"
+   ]
+  }
+ },
+ {
+  "node": 6318477893,
+  "stratum": [
+   "untagged_gate",
+   "lift_gate"
+  ],
+  "bbox": "-2.727223,53.361237,-2.713223,53.369637",
+  "clip_sha256": "ef0370b9af2cb68e05e715029e3a09611008f3748272ebfa3801c74daaded530",
+  "clip_bytes": 764961,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "6318477893",
+   "kind": "lift_gate",
+   "origin": [
+    53.365615,
+    -2.7204774
+   ],
+   "destination": [
+    53.36539205,
+    -2.719926
+   ],
+   "origin_segment": [
+    "5589325472",
+    "6318477885"
+   ],
+   "destination_segment": [
+    "6318477887",
+    "6318477888"
+   ],
+   "direct_path": [
+    "5589325472",
+    "6318477885",
+    "6318477893",
+    "6318477886",
+    "6318477887",
+    "6318477888"
+   ]
+  }
+ },
+ {
+  "node": 6202710731,
+  "stratum": [
+   "untagged_gate",
+   "lift_gate"
+  ],
+  "bbox": "-2.534080,53.581883,-2.520080,53.590283",
+  "clip_sha256": "d524bd627f75ea029c34c11b2f437daf5141b62bf074b10bcee66f0cc7f26a1f",
+  "clip_bytes": 1402081,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "6202710731",
+   "kind": "lift_gate",
+   "origin": [
+    53.58562425,
+    -2.5276605
+   ],
+   "destination": [
+    53.5862255,
+    -2.52690015
+   ],
+   "origin_segment": [
+    "4012969625",
+    "4248809216"
+   ],
+   "destination_segment": [
+    "6202710733",
+    "1400293398"
+   ],
+   "direct_path": [
+    "4012969625",
+    "4248809216",
+    "6202710731",
+    "6202710733",
+    "1400293398"
+   ]
+  }
+ },
+ {
+  "node": 4729235021,
+  "stratum": [
+   "untagged_gate",
+   "lift_gate"
+  ],
+  "bbox": "-2.291424,53.350300,-2.277424,53.358700",
+  "clip_sha256": "78fec1afa907fd522344601f0a79dcffefe147d72978546a3ae33f39eb4f9f6c",
+  "clip_bytes": 417773,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "4729235021",
+   "kind": "lift_gate",
+   "origin": [
+    53.354588250000006,
+    -2.28436425
+   ],
+   "destination": [
+    53.35432135,
+    -2.28459375
+   ],
+   "origin_segment": [
+    "360913188",
+    "4729235020"
+   ],
+   "destination_segment": [
+    "9547169737",
+    "2420974786"
+   ],
+   "direct_path": [
+    "360913188",
+    "4729235020",
+    "9547337591",
+    "4729235021",
+    "9547169737",
+    "2420974786"
+   ]
+  }
+ },
+ {
+  "node": 11039316564,
+  "stratum": [
+   "untagged_gate",
+   "lift_gate"
+  ],
+  "bbox": "-2.322855,53.366585,-2.308855,53.374985",
+  "clip_sha256": "dc1e7d3002da5c2ee4646620cf316b1722c0d61484727df331ad0c0a3f43c302",
+  "clip_bytes": 605555,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "11039316564",
+   "kind": "lift_gate",
+   "origin": [
+    53.3704355,
+    -2.3156212
+   ],
+   "destination": [
+    53.370840799999996,
+    -2.3159081500000003
+   ],
+   "origin_segment": [
+    "4163816139",
+    "10677151181"
+   ],
+   "destination_segment": [
+    "4086527586",
+    "4086527585"
+   ],
+   "direct_path": [
+    "4163816139",
+    "10677151181",
+    "11039316564",
+    "4086527590",
+    "4086527586",
+    "4086527585"
+   ]
+  }
+ },
+ {
+  "node": 13247988197,
+  "stratum": [
+   "untagged_gate",
+   "lift_gate"
+  ],
+  "bbox": "-2.196391,53.429352,-2.182391,53.437752",
+  "clip_sha256": "cf477c996c2977ce728165a7cf24afc80496506234332f655a815076f48f45c5",
+  "clip_bytes": 1951023,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "13247988197",
+   "kind": "lift_gate",
+   "origin": [
+    53.4337679,
+    -2.18925805
+   ],
+   "destination": [
+    53.4330078,
+    -2.18973995
+   ],
+   "origin_segment": [
+    "391348028",
+    "8770845190"
+   ],
+   "destination_segment": [
+    "12684228327",
+    "8770845191"
+   ],
+   "direct_path": [
+    "391348028",
+    "8770845190",
+    "13247988197",
+    "12684228327",
+    "8770845191"
+   ]
+  }
+ },
+ {
+  "node": 6331476432,
+  "stratum": [
+   "untagged_gate",
+   "lift_gate"
+  ],
+  "bbox": "-2.237694,53.577668,-2.223694,53.586068",
+  "clip_sha256": "f746f2f069f6945a4f17bb0ff8685bbaf075a37c7f2316e368cbe425c4c47a5c",
+  "clip_bytes": 215411,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "6331476432",
+   "kind": "lift_gate",
+   "origin": [
+    53.581702,
+    -2.2305018
+   ],
+   "destination": [
+    53.5818567,
+    -2.2310234500000004
+   ],
+   "origin_segment": [
+    "6331476408",
+    "6331476409"
+   ],
+   "destination_segment": [
+    "6331476412",
+    "6331476413"
+   ],
+   "direct_path": [
+    "6331476408",
+    "6331476409",
+    "6331476430",
+    "6331476410",
+    "6331476432",
+    "6331476411",
+    "6331476412",
+    "6331476413"
+   ]
+  }
+ },
+ {
+  "node": 11137320809,
+  "stratum": [
+   "untagged_gate",
+   "lift_gate"
+  ],
+  "bbox": "-2.266042,53.420567,-2.252042,53.428967",
+  "clip_sha256": "1d797c06b1b359a7db6297d589b38c74c8b0e4bc6a7d779693a184234d4e2cec",
+  "clip_bytes": 1474643,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "11137320809",
+   "kind": "lift_gate",
+   "origin": [
+    53.424659649999995,
+    -2.2587751999999996
+   ],
+   "destination": [
+    53.42484555,
+    -2.25923255
+   ],
+   "origin_segment": [
+    "5931384265",
+    "11137320810"
+   ],
+   "destination_segment": [
+    "6320151454",
+    "6320151449"
+   ],
+   "direct_path": [
+    "5931384265",
+    "11137320810",
+    "6320151455",
+    "11137320809",
+    "6320151454",
+    "6320151449"
+   ]
+  }
+ },
+ {
+  "node": 13259199378,
+  "stratum": [
+   "untagged_gate",
+   "lift_gate"
+  ],
+  "bbox": "-2.666973,53.668550,-2.652973,53.676950",
+  "clip_sha256": "5dbb586eba7a17c581cb7ab6e0484298d116ab3209e1dbe06e04b92955ce3f59",
+  "clip_bytes": 1168924,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "13259199378",
+   "kind": "lift_gate",
+   "origin": [
+    53.672883999999996,
+    -2.6609981
+   ],
+   "destination": [
+    53.6726828,
+    -2.65947705
+   ],
+   "origin_segment": [
+    "275331672",
+    "275331674"
+   ],
+   "destination_segment": [
+    "13818377426",
+    "13818377425"
+   ],
+   "direct_path": [
+    "275331672",
+    "275331674",
+    "13259199378",
+    "13818377426",
+    "13818377425"
+   ]
+  }
+ },
+ {
+  "node": 9450845879,
+  "stratum": [
+   "untagged_gate",
+   "swing_gate"
+  ],
+  "bbox": "-2.606288,53.378239,-2.592288,53.386639",
+  "clip_sha256": "f08846cf4dc35ff4db25ca0157cbdbd211e3a150473ab1a16f6fcb21b646c93b",
+  "clip_bytes": 2906831,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "9450845879",
+   "kind": "swing_gate",
+   "origin": [
+    53.38246135,
+    -2.59943985
+   ],
+   "destination": [
+    53.382416,
+    -2.59913935
+   ],
+   "origin_segment": [
+    "6866917370",
+    "9450845868"
+   ],
+   "destination_segment": [
+    "9450845878",
+    "6866917371"
+   ],
+   "direct_path": [
+    "6866917370",
+    "9450845868",
+    "9450845879",
+    "9450845878",
+    "6866917371"
+   ]
+  }
+ },
+ {
+  "node": 12532877222,
+  "stratum": [
+   "untagged_gate",
+   "swing_gate"
+  ],
+  "bbox": "-2.106908,53.542194,-2.092908,53.550594",
+  "clip_sha256": "9fa6c267128daa6edb928177ce0fca53e3c645b6517b13af1984309a369f07ed",
+  "clip_bytes": 3142427,
+  "geometry": {
+   "status": "OTHER_BARRIER_ON_LINE",
+   "group": "untagged_gate",
+   "other_barriers": [
+    "12532877223"
+   ]
+  }
+ },
+ {
+  "node": 6386317779,
+  "stratum": [
+   "untagged_gate",
+   "swing_gate"
+  ],
+  "bbox": "-2.352883,53.392425,-2.338883,53.400824",
+  "clip_sha256": "f47755204803c37e158c05f17f3f0876bd09e4b1701aa0ea81e399372bc70831",
+  "clip_bytes": 1038797,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "6386317779",
+   "kind": "swing_gate",
+   "origin": [
+    53.39649815,
+    -2.3459436499999997
+   ],
+   "destination": [
+    53.39679665,
+    -2.3457732
+   ],
+   "origin_segment": [
+    "6386317765",
+    "11385994614"
+   ],
+   "destination_segment": [
+    "6386317769",
+    "6386317761"
+   ],
+   "direct_path": [
+    "6386317765",
+    "11385994614",
+    "6386317779",
+    "6386317769",
+    "6386317761"
+   ]
+  }
+ },
+ {
+  "node": 8940781837,
+  "stratum": [
+   "untagged_gate",
+   "swing_gate"
+  ],
+  "bbox": "-2.332252,53.366784,-2.318252,53.375184",
+  "clip_sha256": "1ee6e980bad202dd25518149cc934d03a7ae93600410efe3269b5be7a84f2296",
+  "clip_bytes": 213012,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "untagged_gate",
+   "barrier": "8940781837",
+   "kind": "swing_gate",
+   "origin": [
+    53.370493350000004,
+    -2.3253594
+   ],
+   "destination": [
+    53.371326,
+    -2.32509715
+   ],
+   "origin_segment": [
+    "7205818341",
+    "35826858"
+   ],
+   "destination_segment": [
+    "35826859",
+    "35826860"
+   ],
+   "direct_path": [
+    "7205818341",
+    "35826858",
+    "8940781837",
+    "35826859",
+    "35826860"
+   ]
+  }
+ },
+ {
+  "node": 7769493458,
+  "stratum": [
+   "untagged_gate",
+   "swing_gate"
+  ],
+  "bbox": "-2.708030,53.536983,-2.694030,53.545383",
+  "clip_sha256": "6acf6ef25da9578a0065e0a9856e3cab77e70705aae9dbc6e6ce03a2eab4acb2",
+  "clip_bytes": 443495,
+  "geometry": {
+   "status": "OTHER_BARRIER_ON_LINE",
+   "group": "untagged_gate",
+   "other_barriers": [
+    "7769493459"
+   ]
+  }
+ },
+ {
+  "node": 12814861761,
+  "stratum": [
+   "restricted",
+   "*"
+  ],
+  "bbox": "-2.229677,53.483688,-2.215677,53.492088",
+  "clip_sha256": "d3ccb6ab1003b39d8a0eedaf9a0dd46107573413220daf588bc63ea0903e2ec7",
+  "clip_bytes": 3841304,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "restricted",
+   "barrier": "12814861761",
+   "kind": "gate",
+   "origin": [
+    53.48777435,
+    -2.22296395
+   ],
+   "destination": [
+    53.48807705,
+    -2.2225770999999996
+   ],
+   "origin_segment": [
+    "307872342",
+    "11942420762"
+   ],
+   "destination_segment": [
+    "14132771098",
+    "14132771100"
+   ],
+   "direct_path": [
+    "307872342",
+    "11942420762",
+    "11942420976",
+    "12814861761",
+    "14132771094",
+    "14132771095",
+    "14132771096",
+    "14132771097",
+    "14132771098",
+    "14132771100"
+   ]
+  }
+ },
+ {
+  "node": 6558358543,
+  "stratum": [
+   "restricted",
+   "*"
+  ],
+  "bbox": "-2.432886,53.426898,-2.418886,53.435298",
+  "clip_sha256": "e99329f45989eeb1cd7384aed345fa63ee653c5ba0248f1133f2255ad8f073f5",
+  "clip_bytes": 752813,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "restricted",
+   "barrier": "6558358543",
+   "kind": "gate",
+   "origin": [
+    53.4312756,
+    -2.42557715
+   ],
+   "destination": [
+    53.43098535,
+    -2.4260745999999997
+   ],
+   "origin_segment": [
+    "2321784162",
+    "2321784160"
+   ],
+   "destination_segment": [
+    "6558358542",
+    "3813642568"
+   ],
+   "direct_path": [
+    "2321784162",
+    "2321784160",
+    "2321784156",
+    "6558358543",
+    "6558358542",
+    "3813642568"
+   ]
+  }
+ },
+ {
+  "node": 7714924076,
+  "stratum": [
+   "restricted",
+   "*"
+  ],
+  "bbox": "-2.289331,53.471505,-2.275330,53.479905",
+  "clip_sha256": "806e76b604225cc895ce1da3d0f806c7675d3680e802b6ef018a616688d30dbc",
+  "clip_bytes": 3688483,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "restricted",
+   "barrier": "7714924076",
+   "kind": "gate",
+   "origin": [
+    53.4762039,
+    -2.2820948
+   ],
+   "destination": [
+    53.475629600000005,
+    -2.2823662999999996
+   ],
+   "origin_segment": [
+    "7714924075",
+    "8821419852"
+   ],
+   "destination_segment": [
+    "8821419980",
+    "7714924077"
+   ],
+   "direct_path": [
+    "7714924075",
+    "8821419852",
+    "7714924076",
+    "8821419980",
+    "7714924077"
+   ]
+  }
+ },
+ {
+  "node": 11594016579,
+  "stratum": [
+   "restricted",
+   "*"
+  ],
+  "bbox": "-2.250702,53.463863,-2.236702,53.472263",
+  "clip_sha256": "8c4e82ce17ee2f108ed64d3700e4b25ec2207f7684901dcd751e57fec8806368",
+  "clip_bytes": 3799058,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "restricted",
+   "barrier": "11594016579",
+   "kind": "gate",
+   "origin": [
+    53.468124450000005,
+    -2.2437367
+   ],
+   "destination": [
+    53.4679717,
+    -2.2436492
+   ],
+   "origin_segment": [
+    "11593991646",
+    "11593991662"
+   ],
+   "destination_segment": [
+    "11593991648",
+    "11593991647"
+   ],
+   "direct_path": [
+    "11593991646",
+    "11593991662",
+    "11594016579",
+    "11593991648",
+    "11593991647"
+   ]
+  }
+ },
+ {
+  "node": 13041745377,
+  "stratum": [
+   "restricted",
+   "*"
+  ],
+  "bbox": "-2.130778,53.546560,-2.116778,53.554960",
+  "clip_sha256": "09036402c1cb909131048f05ebe41c9efd8cd36125d90460ce7dc264cf2da008",
+  "clip_bytes": 3682013,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "restricted",
+   "barrier": "13041745377",
+   "kind": "gate",
+   "origin": [
+    53.550740000000005,
+    -2.12381375
+   ],
+   "destination": [
+    53.550906,
+    -2.12341845
+   ],
+   "origin_segment": [
+    "13041745335",
+    "13041799851"
+   ],
+   "destination_segment": [
+    "13041745336",
+    "2151505520"
+   ],
+   "direct_path": [
+    "13041745335",
+    "13041799851",
+    "13041745377",
+    "13041745336",
+    "2151505520"
+   ]
+  }
+ },
+ {
+  "node": 2021373969,
+  "stratum": [
+   "restricted",
+   "*"
+  ],
+  "bbox": "-2.327113,53.520710,-2.313113,53.529109",
+  "clip_sha256": "f930e72fb92d28d56a7c14208f2f4505f4a3ef0519c7b8ecb17a6cfab9fb682a",
+  "clip_bytes": 1228146,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "restricted",
+   "barrier": "2021373969",
+   "kind": "lift_gate",
+   "origin": [
+    53.524750299999994,
+    -2.3197633
+   ],
+   "destination": [
+    53.52512835,
+    -2.32068245
+   ],
+   "origin_segment": [
+    "2021374007",
+    "2212017133"
+   ],
+   "destination_segment": [
+    "2021373913",
+    "6746415981"
+   ],
+   "direct_path": [
+    "2021374007",
+    "2212017133",
+    "2021373969",
+    "2021373913",
+    "6746415981"
+   ]
+  }
+ },
+ {
+  "node": 9627299604,
+  "stratum": [
+   "restricted",
+   "*"
+  ],
+  "bbox": "-2.250950,53.488097,-2.236950,53.496497",
+  "clip_sha256": "006a771ad632690b0228de0ebd735cd34274afe787bd0e4938d790310f4c6d70",
+  "clip_bytes": 2777236,
+  "geometry": {
+   "status": "OTHER_BARRIER_ON_LINE",
+   "group": "restricted",
+   "other_barriers": [
+    "9627299603"
+   ]
+  }
+ },
+ {
+  "node": 3412104551,
+  "stratum": [
+   "restricted",
+   "*"
+  ],
+  "bbox": "-2.240436,53.383632,-2.226436,53.392032",
+  "clip_sha256": "f31a2945cb3b67b72309ab0f7fc4781fdcb0f465597834ee3c3dc4bb10d97c2f",
+  "clip_bytes": 1489142,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "restricted",
+   "barrier": "3412104551",
+   "kind": "gate",
+   "origin": [
+    53.3878932,
+    -2.2337313500000002
+   ],
+   "destination": [
+    53.3879074,
+    -2.2333484500000003
+   ],
+   "origin_segment": [
+    "3412104548",
+    "3412104549"
+   ],
+   "destination_segment": [
+    "3412104552",
+    "3412090616"
+   ],
+   "direct_path": [
+    "3412104548",
+    "3412104549",
+    "3412104550",
+    "3412104551",
+    "3412104552",
+    "3412090616"
+   ]
+  }
+ },
+ {
+  "node": 12037486380,
+  "stratum": [
+   "restricted",
+   "*"
+  ],
+  "bbox": "-2.220972,53.469094,-2.206972,53.477494",
+  "clip_sha256": "68fb1d0f4ccb997bebfc555896dbcb20b90ed885517bc4ab6cef806079513304",
+  "clip_bytes": 3253330,
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "restricted",
+   "barrier": "12037486380",
+   "kind": "gate",
+   "origin": [
+    53.4732747,
+    -2.2143962999999998
+   ],
+   "destination": [
+    53.47332165,
+    -2.213545
+   ],
+   "origin_segment": [
+    "12454451839",
+    "12037486377"
+   ],
+   "destination_segment": [
+    "2921198800",
+    "12037486541"
+   ],
+   "direct_path": [
+    "12454451839",
+    "12037486377",
+    "12037486380",
+    "2921198800",
+    "12037486541"
+   ]
+  }
+ },
+ {
+  "node": 13011296311,
+  "stratum": [
+   "restricted",
+   "*"
+  ],
+  "bbox": "-2.152770,53.515535,-2.138770,53.523935",
+  "clip_sha256": "08b8ef5972e64913b8524b15f0408c234e2dd0f22ca300f967fc9da460d27110",
+  "clip_bytes": 2096881,
+  "geometry": {
+   "status": "OTHER_BARRIER_ON_LINE",
+   "group": "restricted",
+   "other_barriers": [
+    "13011296310"
+   ]
+  }
+ }
+]

@@ -1,0 +1,378 @@
+name: MAP-001 v3 Manchester diagnosis and Valhalla graph facts
+on:
+  pull_request:
+    paths:
+      - 'tools/reference/valhalla_graph_probe.cc'
+      - 'benchmarks/map001_native_reference.py'
+      - 'benchmarks/map001_access_review.py'
+      - 'map_data/osm_xml.py'
+      - 'map_data/offline.py'
+      - 'engine/routing.py'
+      - 'engine/astar.py'
+      - 'engine/route_alternatives.py'
+      - 'benchmarks/map001_context_access.py'
+      - 'benchmarks/map001_profile_trial.py'
+      - 'benchmarks/map001_additional_profiles.py'
+      - 'tests/test_map001_additional_profiles.py'
+      - 'benchmarks/map001_category1_closure.py'
+      - 'benchmarks/map001_native_six_region.py'
+      - 'benchmarks/map001_native_reference.py'
+      - 'tests/test_map001_category1_closure.py'
+      - 'benchmarks/map001_authority_crosscheck.py'
+      - 'tests/test_map001_authority_crosscheck.py'
+      - 'benchmarks/map001_conditional_research.py'
+      - 'tests/test_map001_conditional_research.py'
+      - 'benchmarks/map001_remaining_access.py'
+      - 'benchmarks/map001_native_turn_barrier.py'
+      - 'tests/test_map001_remaining_category1.py'
+      - 'tests/test_osm_import.py'
+      - 'benchmarks/map001_direction_contract.py'
+      - 'tests/test_map001_direction_contract.py'
+      - 'benchmarks/map001_v3_restriction_diagnostics.py'
+      - 'benchmarks/map001_valhalla_graph_facts.py'
+      - 'tests/test_map001_v3_fact_extensions.py'
+      - '.github/workflows/map001-v3-facts.yml'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: map001-v3-facts
+  cancel-in-progress: false
+jobs:
+  facts:
+    if: contains(github.event.pull_request.title, '[map001-facts]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 58
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Test Category 1 diagnosis and graph facts only
+        run: |
+          set -euo pipefail
+          python -m tools.privacy_guard
+          python -m tools.category_test_runner --category map_data --output-dir results/map001-unit-checks
+      - name: Reuse exactly frozen Category 1 v3 source files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          gh run download 38945058272 --repo phuk-prog/DriveMate-Navigation -n map001-v3-frozen-osm-closure-and-valhalla -D results
+          test -s results/map001-manchester.osm
+          test -s results/map001-v3-manifest.json
+      - name: Independently audit all 120 original frozen UK road ways
+        run: |
+          set -euo pipefail
+          for AREA in manchester birmingham carlisle cardiff glasgow belfast; do
+            test -s "results/map001-$AREA.osm"
+          done
+          python -m benchmarks.map001_category1_closure
+          python -m benchmarks.map001_authority_crosscheck
+          python -m benchmarks.map001_conditional_research
+          python -m benchmarks.map001_remaining_access
+      - name: Investigate Manchester cases on archived Manchester map
+        run: |
+          python -m benchmarks.map001_v3_restriction_diagnostics
+          python -m benchmarks.map001_direction_contract
+          python -m benchmarks.map001_context_access
+      - name: Build bounded local Valhalla 3.9.1 reference graph
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          osmium cat results/map001-manchester.osm -o results/map001-facts.osm.pbf
+          IMAGE='ghcr.io/valhalla/valhalla-scripted:3.9.1@sha256:6238809f9dc3057743d70a20efd3911ec38e458bfa13a0601909b58f68dfd956'
+          docker pull "$IMAGE"
+          mkdir -p results/valhalla
+          cp results/map001-facts.osm.pbf results/valhalla/
+          docker run -d --rm --name map001-facts -p 127.0.0.1:8002:8002 -v "$PWD/results/valhalla:/custom_files" -e build_admins=False -e build_time_zones=False -e build_elevation=False -e build_tar=False -e server_threads=2 "$IMAGE"
+          python - <<'PY'
+          from benchmarks.valhalla_live_reference import wait_for_local_router
+          wait_for_local_router(150)
+          PY
+          python -m benchmarks.map001_valhalla_graph_facts
+          python -m benchmarks.map001_access_review
+      - name: Compile read-only native graph probe against unchanged Valhalla installation
+        timeout-minutes: 7
+        run: |
+          set -euo pipefail
+          docker cp tools/reference/valhalla_graph_probe.cc map001-facts:/tmp/reference_probe.cc
+          docker exec -u 0 map001-facts bash -lc '
+            set -euo pipefail
+            export DEBIAN_FRONTEND=noninteractive
+            apt-get update -qq >/dev/null
+            apt-get install -y -qq g++ pkg-config libboost-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-date-time-dev libboost-regex-dev libboost-program-options-dev libprotobuf-dev libsqlite3-dev libcurl4-openssl-dev zlib1g-dev libzmq3-dev libczmq-dev libluajit-5.1-dev libgeotiff-dev liblz4-dev rapidjson-dev libspatialite-dev libgeos-dev libssl-dev >/dev/null
+            pkg-config --modversion libvalhalla
+            DMN_REFERENCE_FLAGS=$(pkg-config --cflags --libs libvalhalla spatialite sqlite3 luajit geos openssl libcurl libtiff-4 liblz4)
+            c++ -std=c++20 -O2 /tmp/reference_probe.cc -o /tmp/reference_probe $DMN_REFERENCE_FLAGS -pthread
+          '
+          python - <<'PYCODE'
+          import hashlib,json
+          from pathlib import Path
+          files=sorted(Path('results/valhalla').rglob('*.gph'))
+          assert files, 'No native graph tiles'
+          manifest={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
+          Path('results/map001-native-tile-hashes.json').write_text(json.dumps(manifest,sort_keys=True))
+          PYCODE
+          docker exec map001-facts /tmp/reference_probe /custom_files/valhalla.json > results/map001-valhalla-native.jsonl
+          python - <<'PYCODE'
+          import hashlib,json
+          from pathlib import Path
+          manifest=json.loads(Path('results/map001-native-tile-hashes.json').read_text())
+          assert all(hashlib.sha256(Path(p).read_bytes()).hexdigest()==h for p,h in manifest.items()), 'Reference graph changed during inspection'
+          PYCODE
+          python -m benchmarks.map001_native_reference
+          # Preserve read-only instrumentation and its runtime dependencies;
+          # Valhalla engine files and pinned base binary remain unchanged.
+          docker commit map001-facts dmn-map001-inspector:valhalla-3.9.1 >/dev/null
+      - name: Gate approved directional fix on frozen cohort
+        run: |
+          python - <<'PYCODE'
+          import json
+          r=json.load(open('results/map001-direction-contract.json'))
+          assert len(r['cases']) == 20, 'Frozen Manchester cohort incomplete'
+          assert r['counts'].get('FAIL', 0) == 0, 'DMN source mismatch remains'
+          assert r['runtime_changed'], 'Approved importer correction not present'
+          v=json.load(open('results/map001-v3-valhalla-graph-facts.json'))
+          assert v['source_sha256'] == r['source_sha256'], 'Engine input mismatch'
+          assert v['cases_total'] == 20, 'Valhalla cohort incomplete'
+          PYCODE
+      - name: Run isolated real-way access profiles through both engines
+        timeout-minutes: 7
+        run: |
+          set -euo pipefail
+          python -m benchmarks.map001_profile_trial prepare
+          docker rm -f map001-facts >/dev/null
+          IMAGE='ghcr.io/valhalla/valhalla-scripted:3.9.1@sha256:6238809f9dc3057743d70a20efd3911ec38e458bfa13a0601909b58f68dfd956'
+          for WAY in 4816180 4857542 553071025 553071026 553071028 4721486 8777654 27255314 155729945 115559329 548694371 35277147; do
+            mkdir -p "results/profile-engine-$WAY"
+            osmium sort "results/map001-profiles/$WAY.osm" -o "results/profile-engine-$WAY/input.osm.pbf"
+            sha256sum "results/profile-engine-$WAY/input.osm.pbf" >> results/map001-profiles/derived-pbf-sha256.txt
+            docker run -d --rm --name map001-profile -p 127.0.0.1:8002:8002 -v "$PWD/results/profile-engine-$WAY:/custom_files" -e build_admins=False -e build_time_zones=False -e build_elevation=False -e build_tar=False -e server_threads=2 "$IMAGE"
+            python - <<'PYCODE'
+          from benchmarks.valhalla_live_reference import wait_for_local_router
+          wait_for_local_router(60)
+          PYCODE
+            python -m benchmarks.map001_profile_trial probe --way "$WAY"
+            docker rm -f map001-profile >/dev/null
+            sudo rm -rf "results/profile-engine-$WAY"
+          done
+          python -m benchmarks.map001_profile_trial score
+      - name: Add local open-source reference profile unit contract
+        run: |
+          python -m unittest discover -s tests -p 'test_map001_additional_profiles.py' -v
+      - name: Fresh OSRM MLD 5.27.1 on four identical frozen binary ways
+        timeout-minutes: 12
+        run: |
+          set -euo pipefail
+          IMAGE='ghcr.io/project-osrm/osrm-backend:v5.27.1@sha256:855614a38f464b0558a2ad6eaa7cb8c139f39887da9b38b485ce453c6e6e6124'
+          docker pull "$IMAGE"
+          for WAY in 155729945 115559329 548694371 35277147; do
+            mkdir -p "results/map001-osrm-$WAY"
+            osmium sort "results/map001-profiles/$WAY.osm" -o "results/map001-osrm-$WAY/input.osm.pbf"
+            docker run --rm -v "$PWD/results/map001-osrm-$WAY:/data" "$IMAGE" osrm-extract -p /opt/car.lua /data/input.osm.pbf
+            docker run --rm -v "$PWD/results/map001-osrm-$WAY:/data" "$IMAGE" osrm-partition /data/input.osrm
+            docker run --rm -v "$PWD/results/map001-osrm-$WAY:/data" "$IMAGE" osrm-customize /data/input.osrm
+            docker run -d --rm --name map001-osrm -p 127.0.0.1:5000:5000 -v "$PWD/results/map001-osrm-$WAY:/data" "$IMAGE" osrm-routed --algorithm mld /data/input.osrm
+            python - <<'PYCODE'
+          from benchmarks.osrm_live_reference import wait_for_local_router
+          wait_for_local_router(40)
+          PYCODE
+            python -m benchmarks.map001_additional_profiles probe --engine OSRM --way "$WAY"
+            docker rm -f map001-osrm >/dev/null
+            sudo rm -rf "results/map001-osrm-$WAY"
+          done
+      - uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Fresh GraphHopper 11.1 on four identical frozen binary ways
+        timeout-minutes: 13
+        run: |
+          set -euo pipefail
+          MAVEN_PATH='com/graphhopper/graphhopper-web/11.1/graphhopper-web-11.1.jar'
+          SOURCE=''
+          # Identical Maven Central 11.1 artifact, two official endpoints;
+          # preserve checksum validation rather than replacing a missing JAR.
+          for HOST in https://repo1.maven.org/maven2 https://repo.maven.apache.org/maven2; do
+            if curl -fsSL --retry 1 --max-time 180 "$HOST/$MAVEN_PATH" -o "$RUNNER_TEMP/map001-graphhopper.jar" &&
+               curl -fsSL --retry 1 --max-time 30 "$HOST/$MAVEN_PATH.sha1" -o "$RUNNER_TEMP/map001-graphhopper.sha1"; then
+              SOURCE="$HOST"
+              break
+            fi
+            rm -f "$RUNNER_TEMP/map001-graphhopper.jar" "$RUNNER_TEMP/map001-graphhopper.sha1"
+          done
+          test -n "$SOURCE" || { echo "Pinned GraphHopper 11.1 unavailable from Maven Central"; exit 1; }
+          echo "Pinned GraphHopper 11.1 Maven source: $SOURCE"
+          printf '%s  %s\n' "$(cat "$RUNNER_TEMP/map001-graphhopper.sha1")" "$RUNNER_TEMP/map001-graphhopper.jar" | sha1sum --check --status
+          GH_PID=''
+          trap 'if [ -n "$GH_PID" ]; then kill "$GH_PID" 2>/dev/null || true; fi' EXIT
+          for WAY in 155729945 115559329 548694371 35277147; do
+            mkdir -p "results/map001-gh-$WAY"
+            osmium sort "results/map001-profiles/$WAY.osm" -o "results/map001-gh-$WAY/input.osm.pbf"
+            sed -e "s@results/public-graphhopper-subset.osm.pbf@results/map001-gh-$WAY/input.osm.pbf@" -e "s@results/graphhopper-cache@results/map001-gh-$WAY/cache@" -e 's/prepare.min_network_size: 10/prepare.min_network_size: 0/' config/graphhopper-public-smoke.yml > "results/map001-gh-$WAY/config.yml"
+            java -Xms128m -Xmx1024m -jar "$RUNNER_TEMP/map001-graphhopper.jar" server "results/map001-gh-$WAY/config.yml" > "results/map001-gh-$WAY/startup.log" 2>&1 &
+            GH_PID=$!
+            python - <<'PYCODE'
+          from benchmarks.graphhopper_live_reference import wait_for_graphhopper
+          wait_for_graphhopper(75)
+          PYCODE
+            python -m benchmarks.map001_additional_profiles probe --engine GraphHopper --way "$WAY"
+            kill "$GH_PID" 2>/dev/null || true
+            wait "$GH_PID" 2>/dev/null || true
+            GH_PID=''
+            sudo rm -rf "results/map001-gh-$WAY"
+          done
+      - name: Score all four fresh reference/API profiles on their exact shared cases
+        run: |
+          set -euo pipefail
+          python -m benchmarks.map001_additional_profiles score
+      - name: Inspect remaining five frozen UK native graphs sequentially
+        timeout-minutes: 25
+        run: |
+          set -euo pipefail
+          IMAGE='dmn-map001-inspector:valhalla-3.9.1'
+          docker image inspect "$IMAGE" >/dev/null
+          test "$(docker run --rm --entrypoint pkg-config "$IMAGE" --modversion libvalhalla)" = "3.9.1"
+          for AREA in birmingham carlisle cardiff glasgow belfast; do
+            export AREA
+            # Frozen map, fresh graph. The native inspector is independent of
+            # HTTP /status, which may fail on small disconnected extracts.
+            PBF="results/map001-native-region-$AREA.osm.pbf"
+            # Sort objects for Valhalla PBF importer; do not alter frozen OSM source bytes.
+            osmium sort "results/map001-$AREA.osm" -o "$PBF"
+            sha256sum "$PBF" >> results/map001-native-derived-pbf-sha256.txt
+            sudo rm -rf results/valhalla
+            mkdir -p results/valhalla
+            cp "$PBF" results/valhalla/
+            docker run -d --name map001-region -p 127.0.0.1:8002:8002 -v "$PWD/results/valhalla:/custom_files" -e build_admins=False -e build_time_zones=False -e build_elevation=False -e build_tar=False -e server_threads=2 "$IMAGE"
+            python - <<'PYCODE'
+          import hashlib
+          from pathlib import Path
+          import subprocess
+          from time import monotonic,sleep
+          from urllib.request import urlopen
+          root=Path('results/valhalla')
+          end=monotonic()+175
+          previous=None
+          stable=0
+          while monotonic()<end:
+              files=sorted(root.rglob('*.gph'))
+              config=root/'valhalla.json'
+              sha=tuple((str(p),hashlib.sha256(p.read_bytes()).hexdigest()) for p in files)
+              if files and config.is_file() and sha==previous:
+                  stable+=1
+              else:
+                  stable=0
+              previous=sha
+              running=subprocess.run(['docker','inspect','--format','{{.State.Running}}','map001-region'],
+                                     capture_output=True,text=True,check=True).stdout.strip()=='true'
+              ready=False
+              if running:
+                  try:
+                      with urlopen('http://127.0.0.1:8002/status',timeout=1) as response:
+                          ready=response.status==200
+                  except (OSError,ValueError):
+                      pass
+              if stable>=3 and (ready or not running):
+                  print('Stable native graph: tiles=',len(files),'server_ready=',ready,
+                        'server_running=',running,flush=True)
+                  break
+              if not running and not files:
+                  print('Reference terminated before writing native tiles',flush=True)
+                  break
+              sleep(2)
+          else:
+              if list(root.rglob('*.gph')):
+                  raise RuntimeError('Native graph tiles remained unstable; do not score')
+              print('Native graph build timed out without tiles',flush=True)
+          PYCODE
+            if ! find results/valhalla -name '*.gph' -print -quit | grep -q .; then
+              docker logs map001-region > "results/map001-$AREA-reference-startup.log" 2>&1 || true
+              python - <<'PYCODE'
+          import hashlib,json,os,subprocess
+          from pathlib import Path
+          name=os.environ['AREA']
+          manifest=json.loads(Path('results/map001-v3-manifest.json').read_text())
+          source_sha=next(x['source_sha256'] for x in manifest['areas'] if x['area']==name)
+          check=subprocess.run(['docker','inspect','--format','{{.State.ExitCode}}','map001-region'],
+                              capture_output=True,text=True)
+          report={'area':name,'source_sha256':source_sha,
+                  'status':'REFERENCE_GRAPH_BUILD_UNAVAILABLE',
+                  'reason':'PINNED_VALHALLA_BUILD_NO_NATIVE_TILES',
+                  'container_exit_code':check.stdout.strip() or 'UNKNOWN',
+                  'engine_version':'3.9.1','reference_rank':None,
+                  'not_a_dmn_navigation_fault':True,
+                  'log_sha256':hashlib.sha256(Path('results/map001-'+name+'-reference-startup.log').read_bytes()).hexdigest()}
+          Path('results/map001-native-unavailable-'+name+'.json').write_text(json.dumps(report,indent=2)+'\n')
+          print(json.dumps(report),flush=True)
+          PYCODE
+              docker rm -f map001-region >/dev/null
+              sudo rm -rf results/valhalla
+              rm -f "$PBF"
+              continue
+            fi
+            # Use the read-only native tile reader, not HTTP route responses.
+            docker run --rm --entrypoint /tmp/reference_probe -v "$PWD/results/valhalla:/custom_files:ro" "$IMAGE" /custom_files/valhalla.json > "results/map001-valhalla-native-$AREA.jsonl"
+            python -m benchmarks.map001_native_reference --area "$AREA" --native "results/map001-valhalla-native-$AREA.jsonl" --output "results/map001-native-$AREA-comparison.json"
+            docker logs map001-region > "results/map001-$AREA-reference-startup.log" 2>&1 || true
+            docker rm -f map001-region >/dev/null
+            sudo rm -rf results/valhalla
+            rm -f "$PBF"
+          done
+          python -m benchmarks.map001_native_six_region
+          python -m benchmarks.map001_native_turn_barrier
+      - name: Publish small case-level evidence, not duplicate map files
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: map001-v3-manchester-and-valhalla-graph-facts
+          path: |
+            results/map001-v3-manchester-diagnostics.json
+            results/map001-direction-contract.json
+            results/map001-category1-closure.json
+            results/map001-official-manchester.json
+            results/map001-conditional-syntax.json
+            results/map001-remaining-access.json
+            results/map001-native-turn-barrier.json
+            results/map001-contextual-access.json
+            results/map001-profiles/*.json
+            results/map001-additional-profiles/*.json
+            results/map001-profiles/derived-pbf-sha256.txt
+            results/map001-unit-checks/
+            results/map001-native-comparison.json
+            results/map001-native-*-comparison.json
+            results/map001-native-six-region-summary.json
+            results/map001-native-unavailable-*.json
+            results/map001-native-derived-pbf-sha256.txt
+            results/map001-*-reference-startup.log
+            results/map001-valhalla-native.jsonl
+            results/map001-valhalla-native-*.jsonl
+            results/map001-native-tile-hashes.json
+            results/map001-access-applicability.json
+            results/map001-valhalla-fresh-candidates.json
+            results/map001-v3-valhalla-graph-facts.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Diagnostics on failed reference
+        if: failure()
+        run: |
+          docker logs map001-facts 2>/dev/null | tail -60 || true
+          docker logs map001-profile 2>/dev/null | tail -60 || true
+          docker logs map001-osrm 2>/dev/null | tail -60 || true
+          docker logs map001-region 2>/dev/null | tail -60 || true
+          find results -path '*/startup.log' -exec tail -40 {} \; 2>/dev/null || true
+      - name: Cleanup
+        if: always()
+        run: |
+          docker rm -f map001-facts >/dev/null 2>&1 || true
+          docker rm -f map001-profile >/dev/null 2>&1 || true
+          docker rm -f map001-osrm >/dev/null 2>&1 || true
+          docker rm -f map001-region >/dev/null 2>&1 || true
+          sudo rm -rf results/profile-engine-* results/map001-osrm-* results/map001-gh-*
+          sudo rm -rf results/valhalla results/map001-facts.osm.pbf
+          sudo rm -rf results/map001-native-region-*.osm.pbf

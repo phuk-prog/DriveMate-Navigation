@@ -1,0 +1,3674 @@
+{
+ "available_by_stratum": {
+  "closed/bus_gate": 48,
+  "closed/busway": 8,
+  "closed/no_cars": 182,
+  "closed/pedestrian": 221,
+  "restricted/bus_private": 11,
+  "restricted/destination": 85,
+  "restricted/private": 1425
+ },
+ "cases": [
+  {
+   "lat": 53.4122873,
+   "length_m": 234.1,
+   "lon": -2.2672586,
+   "refs": [
+    3571404,
+    9537102372,
+    365200461,
+    25319547,
+    9537102373,
+    25319548,
+    9537102374,
+    25319549,
+    9537102375,
+    9537102376,
+    25319490
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "bus": "yes",
+    "highway": "service",
+    "maxspeed": "30 mph",
+    "motor_vehicle": "no",
+    "oneway": "yes"
+   },
+   "way": 7993379
+  },
+  {
+   "lat": 53.4091422,
+   "length_m": 84.6,
+   "lon": -2.1596035,
+   "refs": [
+    429838037,
+    5457437047,
+    5457442429,
+    429838035,
+    9045048239,
+    9045048240,
+    9045048234,
+    429838034,
+    9045048235,
+    1982029214,
+    429838033,
+    9045048227,
+    9045048228,
+    5457442425,
+    9045048225,
+    5457442431,
+    429838032
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "bus": "yes",
+    "foot": "yes",
+    "highway": "residential",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "permissive",
+    "motorcar": "no",
+    "motorcycle": "no",
+    "name": "St. Petersgate",
+    "oneway": "yes"
+   },
+   "way": 36966050
+  },
+  {
+   "lat": 53.4635607,
+   "length_m": 92.3,
+   "lon": -2.2807516,
+   "refs": [
+    259428492,
+    5359608933,
+    5837224196,
+    5359608934,
+    5837224197,
+    5359608935,
+    5837224198,
+    5359608936,
+    5837224199,
+    5837224195,
+    5359608937
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "bicycle": "designated",
+    "cycleway": "share_busway",
+    "highway": "primary_link",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30 mph",
+    "motor_vehicle": "no",
+    "oneway": "yes",
+    "psv": "yes"
+   },
+   "way": 555520887
+  },
+  {
+   "lat": 53.4529117,
+   "length_m": 45.5,
+   "lon": -2.7253032,
+   "refs": [
+    1662386937,
+    1662386948,
+    1662386936,
+    1662386947
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "access": "no",
+    "bus": "designated",
+    "highway": "unclassified",
+    "lanes": "1",
+    "maxspeed": "30 mph",
+    "motor_vehicle": "no",
+    "old_ref": "A58",
+    "oneway": "yes",
+    "source": "Bing",
+    "surface": "asphalt"
+   },
+   "way": 153587578
+  },
+  {
+   "lat": 53.4522938,
+   "length_m": 93.4,
+   "lon": -2.0768202,
+   "refs": [
+    926948623,
+    3710452385,
+    3710452386,
+    3710452387,
+    3710452388
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "access": "no",
+    "bicycle": "yes",
+    "cycleway": "share_busway",
+    "highway": "residential",
+    "psv": "yes"
+   },
+   "way": 367086127
+  },
+  {
+   "lat": 53.4455367,
+   "length_m": 116.8,
+   "lon": -2.2180394,
+   "refs": [
+    25539061,
+    2105399701,
+    9844039327,
+    8874983401,
+    2105399703,
+    2105399700,
+    2105399704,
+    3192742
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "bicycle": "designated",
+    "bus": "yes",
+    "foot": "yes",
+    "highway": "service",
+    "motor_vehicle": "no",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "asphalt",
+    "taxi": "yes"
+   },
+   "way": 200570552
+  },
+  {
+   "lat": 53.3658286,
+   "length_m": 49.9,
+   "lon": -2.7302149,
+   "refs": [
+    2418863685,
+    2418863689,
+    2418863686,
+    2485316458,
+    2418863687
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "access": "no",
+    "bicycle": "yes",
+    "bus": "designated",
+    "foot": "yes",
+    "highway": "service",
+    "maxspeed": "30 mph",
+    "oneway": "yes",
+    "sidewalk": "left"
+   },
+   "way": 233509460
+  },
+  {
+   "lat": 53.5429841,
+   "length_m": 56.5,
+   "lon": -2.1009988,
+   "refs": [
+    784011096,
+    9812876065,
+    8365396340,
+    10050835704,
+    9812876068,
+    10577285273,
+    10577285266,
+    1660588656
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "bus": "yes",
+    "highway": "service",
+    "motor_vehicle": "no",
+    "oneway": "yes"
+   },
+   "way": 900510022
+  },
+  {
+   "lat": 53.3904592,
+   "length_m": 53.8,
+   "lon": -2.5921422,
+   "refs": [
+    340894384,
+    9001857127,
+    9001857128,
+    9001857129,
+    9001857130,
+    9001857138,
+    9001857132,
+    8872682395
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "access": "no",
+    "bicycle": "designated",
+    "bus": "designated",
+    "busway": "designated",
+    "cycleway": "share_busway",
+    "foot": "yes",
+    "highway": "unclassified",
+    "lanes": "1",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "no",
+    "name": "Scotland Road",
+    "note": "Recently been converted to busways with a central median; don't edit based on map imagery.",
+    "oneway": "yes",
+    "oneway:bicycle": "yes",
+    "psv": "designated",
+    "surface": "asphalt"
+   },
+   "way": 972620685
+  },
+  {
+   "lat": 53.4134253,
+   "length_m": 62.4,
+   "lon": -2.2624784,
+   "refs": [
+    364844210,
+    365203674,
+    365203676,
+    4096004470,
+    960853660,
+    365203673
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "access": "no",
+    "bus": "yes",
+    "busway": "highway",
+    "highway": "service",
+    "maxspeed": "70 mph",
+    "motor_vehicle": "no",
+    "oneway": "yes"
+   },
+   "way": 32481659
+  },
+  {
+   "lat": 53.5021453,
+   "length_m": 94.0,
+   "lon": -2.1992907,
+   "refs": [
+    1582599448,
+    1582599458,
+    13087155744,
+    1582599462,
+    1582599464,
+    1582599465,
+    1582599466,
+    1582599467,
+    1582599475,
+    1582599477,
+    1582599479,
+    1582599481,
+    1582599483,
+    13087155745,
+    13087155746,
+    1582599485
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "bus": "yes",
+    "cycleway:left": "separate",
+    "highway": "service",
+    "maxspeed": "30 mph",
+    "motor_vehicle": "no",
+    "name": "The Gateway",
+    "oneway": "yes",
+    "postal_code": "M40",
+    "ref:GB:usrn": "24525394",
+    "sidewalk:left": "separate",
+    "sidewalk:right": "no",
+    "vehicle": "no"
+   },
+   "way": 144734174
+  },
+  {
+   "lat": 53.4158463,
+   "length_m": 184.8,
+   "lon": -2.1484156,
+   "refs": [
+    9146496764,
+    1527580818,
+    1527580820,
+    9603803084,
+    1527580823,
+    1527580825,
+    1527580830,
+    9146496532,
+    1527580831,
+    9146496533,
+    1527580835,
+    9146496534,
+    8751265393,
+    1527580832,
+    9146496535,
+    1527580834,
+    9146496536,
+    1527580836,
+    9603803086,
+    1527580837,
+    9146496537,
+    1527580838,
+    431972908,
+    1527580839,
+    1527580843,
+    1527580845
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "access": "no",
+    "bus": "yes",
+    "highway": "service",
+    "oneway": "yes"
+   },
+   "way": 139321463
+  },
+  {
+   "lat": 53.5141885,
+   "length_m": 43.6,
+   "lon": -2.4677411,
+   "refs": [
+    794358811,
+    6903569625,
+    6903569627
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "bus": "yes",
+    "highway": "unclassified",
+    "lanes": "1",
+    "name": "Stanley Street",
+    "oneway": "yes",
+    "surface": "paved",
+    "vehicle": "no"
+   },
+   "way": 737373216
+  },
+  {
+   "lat": 53.481279,
+   "length_m": 55.2,
+   "lon": -2.233613,
+   "refs": [
+    4830027,
+    6363525824,
+    6363525825,
+    6363525823,
+    6405139644,
+    6363525822,
+    6363525821,
+    6363525820
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "bus": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "no",
+    "name": "Newton Street",
+    "oneway": "yes",
+    "surface": "asphalt",
+    "tfgmcitycentre": "yes"
+   },
+   "way": 679593641
+  },
+  {
+   "lat": 53.4265411,
+   "length_m": 66.6,
+   "lon": -2.2356099,
+   "refs": [
+    3652970678,
+    3652970674,
+    3652970681,
+    3652970673,
+    3652970677,
+    3652970684,
+    3652970675
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "access": "no",
+    "bus": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "maxspeed": "20 mph",
+    "oneway": "yes"
+   },
+   "way": 360741796
+  },
+  {
+   "lat": 53.5375067,
+   "length_m": 34.7,
+   "lon": -2.0544661,
+   "refs": [
+    785419292,
+    785419283
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "bus": "designated",
+    "highway": "residential",
+    "motor_vehicle": "no",
+    "oneway": "yes",
+    "surface": "asphalt"
+   },
+   "way": 63329669
+  },
+  {
+   "lat": 53.4124457,
+   "length_m": 44.2,
+   "lon": -2.1580904,
+   "refs": [
+    9063837916,
+    9174950214,
+    9196056410,
+    9063837913,
+    9063837914,
+    2268381598,
+    9174950210,
+    9174950229,
+    8759446581,
+    9174950211,
+    270480105
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "cycleway:right": "lane",
+    "highway": "living_street",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "no",
+    "name": "Lancashire Bridge",
+    "oneway": "yes",
+    "oneway:bicycle": "no",
+    "psv": "yes"
+   },
+   "way": 24893646
+  },
+  {
+   "lat": 53.4442448,
+   "length_m": 69.8,
+   "lon": -2.3093624,
+   "refs": [
+    2918472553,
+    5401543779,
+    5401543783,
+    5401543780,
+    5401543781,
+    5401543782,
+    265653475
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "access": "no",
+    "bicycle": "designated",
+    "bus": "yes",
+    "cycleway": "share_busway",
+    "highway": "service",
+    "maxspeed": "30 mph",
+    "oneway": "yes"
+   },
+   "way": 560119114
+  },
+  {
+   "lat": 53.4673575,
+   "length_m": 61.4,
+   "lon": -2.2452082,
+   "refs": [
+    25423457,
+    11592260673,
+    2108621844
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "bicycle": "designated",
+    "bridge": "yes",
+    "bus": "designated",
+    "foot": "yes",
+    "highway": "residential",
+    "lanes": "1",
+    "layer": "1",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "no",
+    "name": "Bonsall Street",
+    "oneway": "no",
+    "surface": "asphalt"
+   },
+   "way": 200899063
+  },
+  {
+   "lat": 53.3456931,
+   "length_m": 15.8,
+   "lon": -2.6901789,
+   "refs": [
+    8765526898,
+    8765526899
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "bus": "designated",
+    "busway": "designated",
+    "highway": "unclassified",
+    "lane_markings": "no",
+    "maxspeed": "40 mph",
+    "motor_vehicle": "no",
+    "oneway": "yes",
+    "surface": "asphalt",
+    "width": "6"
+   },
+   "way": 1112183567
+  },
+  {
+   "lat": 53.4827104,
+   "length_m": 169.7,
+   "lon": -2.2467503,
+   "refs": [
+    1680891328,
+    12131012807,
+    324671115,
+    3616032006,
+    3616032009,
+    9438235965,
+    9438235964,
+    2063517110
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "cycleway:left": "no",
+    "cycleway:right": "track",
+    "highway": "tertiary",
+    "lit": "yes",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "no",
+    "name": "Deansgate",
+    "oneway": "yes",
+    "oneway:bicycle": "no",
+    "psv": "designated",
+    "ref": "A56",
+    "sidewalk:both": "separate",
+    "surface": "asphalt",
+    "tfgmcitycentre": "yes"
+   },
+   "way": 119862628
+  },
+  {
+   "lat": 53.6514452,
+   "length_m": 37.9,
+   "lon": -2.3164997,
+   "refs": [
+    2531983205,
+    2531983208,
+    2531983210,
+    2531983212,
+    2929674659,
+    2929674660,
+    2531983215
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "access": "no",
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "service",
+    "lanes": "1",
+    "maxspeed": "30 mph",
+    "oneway": "yes",
+    "psv": "yes"
+   },
+   "way": 246118454
+  },
+  {
+   "lat": 53.3779266,
+   "length_m": 46.1,
+   "lon": -2.4788328,
+   "refs": [
+    349333664,
+    349333665,
+    5465557697,
+    349333666,
+    349333667,
+    5465557698,
+    349333668,
+    349333669
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "access": "no",
+    "bus": "designated",
+    "busway": "designated",
+    "highway": "service",
+    "oneway": "yes",
+    "psv": "yes"
+   },
+   "way": 31366441
+  },
+  {
+   "lat": 53.3904927,
+   "length_m": 54.3,
+   "lon": -2.5920986,
+   "refs": [
+    8872682395,
+    9001830776,
+    442863248,
+    9001857137,
+    8872682517,
+    9450401847,
+    8872682416,
+    8928831927,
+    340894384
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "access": "no",
+    "bicycle": "designated",
+    "bus": "designated",
+    "busway": "designated",
+    "cycleway": "share_busway",
+    "foot": "yes",
+    "highway": "unclassified",
+    "lanes": "1",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "no",
+    "name": "Scotland Road",
+    "note": "Recently been converted to busways with a central median; don't edit based on map imagery.",
+    "oneway": "yes",
+    "oneway:bicycle": "yes",
+    "psv": "designated",
+    "surface": "asphalt"
+   },
+   "way": 944729113
+  },
+  {
+   "lat": 53.4551037,
+   "length_m": 42.3,
+   "lon": -2.1304011,
+   "refs": [
+    5651539641,
+    10296935017,
+    5651539643,
+    5651539662
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "access": "no",
+    "bus": "yes",
+    "foot": "no",
+    "highway": "service",
+    "oneway": "yes"
+   },
+   "way": 592066937
+  },
+  {
+   "lat": 53.4619628,
+   "length_m": 19.1,
+   "lon": -2.2856073,
+   "refs": [
+    1559477673,
+    8565955281,
+    24554242
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "access": "no",
+    "bicycle": "yes",
+    "bus": "yes",
+    "foot": "yes",
+    "highway": "unclassified",
+    "horse": "yes",
+    "oneway": "yes",
+    "service": "bus"
+   },
+   "way": 922755436
+  },
+  {
+   "lat": 53.4952112,
+   "length_m": 58.8,
+   "lon": -2.3717575,
+   "refs": [
+    869074576,
+    987022108,
+    987022112,
+    1094851754
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "bus": "designated",
+    "highway": "residential",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "no",
+    "name": "Walnut Road",
+    "oneway": "no",
+    "source": "OS StreetView"
+   },
+   "way": 85070661
+  },
+  {
+   "lat": 53.5332626,
+   "length_m": 32.7,
+   "lon": -2.4421937,
+   "refs": [
+    13072312371,
+    13072312372
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "bus": "designated",
+    "highway": "service",
+    "motor_vehicle": "no",
+    "oneway": "yes"
+   },
+   "way": 1422453676
+  },
+  {
+   "lat": 53.4906311,
+   "length_m": 89.8,
+   "lon": -2.0945519,
+   "refs": [
+    2151981070,
+    9061275545,
+    13075846052,
+    13075846051,
+    13075846050,
+    8840164696,
+    6814142812,
+    13075846054,
+    1631995880
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "bus": "yes",
+    "highway": "unclassified",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "no",
+    "name": "Wellington Road",
+    "oneway": "yes",
+    "source:maxspeed": "TAMESIDE METROPOLITAN BOROUGH (WELLINGTON ROAD AREA, ASHTON-UNDER-LYNE) (TEMPORARY 20 MILE PER HOUR SPEED LIMIT) ORDER 2016"
+   },
+   "way": 205224939
+  },
+  {
+   "lat": 53.4396546,
+   "length_m": 26.2,
+   "lon": -2.6248857,
+   "refs": [
+    9921735204,
+    7824837154
+   ],
+   "stratum": [
+    "closed",
+    "bus_gate"
+   ],
+   "tags": {
+    "access": "no",
+    "bus": "designated",
+    "foot": "yes",
+    "highway": "service",
+    "oneway": "yes"
+   },
+   "way": 1082609347
+  },
+  {
+   "lat": 53.4768785,
+   "length_m": 47.3,
+   "lon": -2.2338045,
+   "refs": [
+    3450925,
+    9229731113,
+    889326336
+   ],
+   "stratum": [
+    "closed",
+    "busway"
+   ],
+   "tags": {
+    "bus": "yes",
+    "busway": "lane",
+    "highway": "busway",
+    "lit": "yes",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "no",
+    "oneway": "yes",
+    "sidewalk:both": "separate",
+    "surface": "asphalt"
+   },
+   "way": 266869181
+  },
+  {
+   "lat": 53.4071335,
+   "length_m": 55.5,
+   "lon": -2.65126,
+   "refs": [
+    11957213595,
+    9563054996,
+    9563054998,
+    11957213596
+   ],
+   "stratum": [
+    "closed",
+    "busway"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "bus": "designated",
+    "foot": "yes",
+    "highway": "busway",
+    "maxspeed": "30 mph",
+    "motor_vehicle": "no",
+    "surface": "asphalt"
+   },
+   "way": 1214606772
+  },
+  {
+   "lat": 53.4217139,
+   "length_m": 71.4,
+   "lon": -2.521777,
+   "refs": [
+    8917641738,
+    13605144250,
+    3770785413,
+    8762808576,
+    8762808577,
+    5830968310,
+    8762808578,
+    8762808579,
+    1876568625,
+    13605144249,
+    3770785412
+   ],
+   "stratum": [
+    "closed",
+    "busway"
+   ],
+   "tags": {
+    "bus": "yes",
+    "busway": "designated",
+    "foot": "discouraged",
+    "highway": "busway",
+    "horse": "no",
+    "maxspeed": "30 mph",
+    "name": "Bus Gate",
+    "oneway": "no",
+    "sidewalk": "no",
+    "surface": "asphalt",
+    "vehicle": "no"
+   },
+   "way": 373638647
+  },
+  {
+   "lat": 53.4098295,
+   "length_m": 22.2,
+   "lon": -2.1754201,
+   "refs": [
+    1528975595,
+    9610294
+   ],
+   "stratum": [
+    "closed",
+    "busway"
+   ],
+   "tags": {
+    "bicycle": "no",
+    "bus": "designated",
+    "cycleway": "separate",
+    "foot": "yes",
+    "highway": "busway",
+    "motor_vehicle": "no",
+    "oneway": "yes",
+    "surface": "asphalt"
+   },
+   "way": 1037245784
+  },
+  {
+   "lat": 53.5512689,
+   "length_m": 37.4,
+   "lon": -2.1202489,
+   "refs": [
+    784044628,
+    12865478914,
+    12865478921,
+    12865478913,
+    3449642130
+   ],
+   "stratum": [
+    "closed",
+    "busway"
+   ],
+   "tags": {
+    "highway": "busway",
+    "lanes": "1",
+    "maxspeed": "30 mph",
+    "oneway": "yes",
+    "surface": "asphalt"
+   },
+   "way": 1389924587
+  },
+  {
+   "lat": 53.3419513,
+   "length_m": 129.3,
+   "lon": -2.7257318,
+   "refs": [
+    9137768114,
+    10596684432,
+    9137768112,
+    2931554155,
+    346941670,
+    294014788,
+    294014801,
+    9137768116,
+    9482370660,
+    9137774218
+   ],
+   "stratum": [
+    "closed",
+    "busway"
+   ],
+   "tags": {
+    "busway": "designated",
+    "highway": "busway",
+    "motor_vehicle": "no",
+    "motorcar": "no",
+    "motorcycle": "no",
+    "psv": "designated"
+   },
+   "way": 31240131
+  },
+  {
+   "lat": 53.3408806,
+   "length_m": 214.9,
+   "lon": -2.7273095,
+   "refs": [
+    293957046,
+    2931554150,
+    293957047,
+    293957048,
+    2931554152,
+    293957049,
+    2931554154,
+    293956968,
+    346941698,
+    9137768114
+   ],
+   "stratum": [
+    "closed",
+    "busway"
+   ],
+   "tags": {
+    "busway": "designated",
+    "highway": "busway",
+    "maxspeed": "30 mph",
+    "motor_vehicle": "no",
+    "motorcar": "no",
+    "motorcycle": "no",
+    "psv": "designated",
+    "sidewalk": "no"
+   },
+   "way": 26796411
+  },
+  {
+   "lat": 53.4884668,
+   "length_m": 169.9,
+   "lon": -2.2806276,
+   "refs": [
+    10926910601,
+    10926910590,
+    10926910600,
+    14197348655,
+    10926910592,
+    10926910599,
+    10926910598,
+    13318230520,
+    13318230519,
+    13318230518,
+    13318230523,
+    8742701186,
+    10926910596
+   ],
+   "stratum": [
+    "closed",
+    "busway"
+   ],
+   "tags": {
+    "bus": "yes",
+    "highway": "busway",
+    "lane_markings": "no",
+    "oneway": "yes",
+    "surface": "asphalt",
+    "taxi": "yes"
+   },
+   "way": 1175986944
+  },
+  {
+   "lat": 53.4591583,
+   "length_m": 55.8,
+   "lon": -2.2707046,
+   "refs": [
+    1317963258,
+    1317963249,
+    1317963240
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "permissive",
+    "highway": "service",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "no",
+    "service": "alley",
+    "surface": "asphalt"
+   },
+   "way": 117014124
+  },
+  {
+   "lat": 53.4855879,
+   "length_m": 50.6,
+   "lon": -2.3772588,
+   "refs": [
+    1592003860,
+    3005064154,
+    1592003929
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "no",
+    "highway": "service",
+    "service": "emergency_access"
+   },
+   "way": 296694116
+  },
+  {
+   "lat": 53.5206076,
+   "length_m": 41.6,
+   "lon": -2.1313408,
+   "refs": [
+    13239559929,
+    13239559930,
+    14172985945,
+    13239559931
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "no",
+    "highway": "service",
+    "motor_vehicle": "no",
+    "service": "alley"
+   },
+   "way": 1442882333
+  },
+  {
+   "lat": 53.3910654,
+   "length_m": 131.3,
+   "lon": -2.3287724,
+   "refs": [
+    7719489469,
+    13951319933,
+    7719489470,
+    7719489471,
+    7719489472,
+    7719489473,
+    7719489474,
+    7719489475,
+    7719489476,
+    7719489477,
+    7719489478,
+    7719489479,
+    7719489480,
+    7719489481,
+    13951319934,
+    9341069294,
+    7719489482
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "no",
+    "bicycle": "no",
+    "foot": "no",
+    "highway": "service",
+    "horse": "no",
+    "motor_vehicle": "no",
+    "oneway": "yes"
+   },
+   "way": 826848931
+  },
+  {
+   "lat": 53.4108921,
+   "length_m": 20.8,
+   "lon": -2.5979806,
+   "refs": [
+    14101954036,
+    14101954043,
+    14101954038,
+    14101954039,
+    12495857482
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "no",
+    "highway": "service",
+    "maxspeed": "5 mph",
+    "oneway": "yes",
+    "surface": "asphalt"
+   },
+   "way": 1550445612
+  },
+  {
+   "lat": 53.4287256,
+   "length_m": 46.5,
+   "lon": -2.4526746,
+   "refs": [
+    1843248262,
+    5081610203,
+    5081610204,
+    5081610205,
+    5081610206,
+    5081610207,
+    11812262142,
+    5081610208
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "bicycle": "no",
+    "highway": "unclassified",
+    "horse": "no",
+    "lane_markings": "yes",
+    "lanes": "2",
+    "maxspeed": "30 mph",
+    "motor_vehicle": "no",
+    "oneway": "yes",
+    "surface": "asphalt"
+   },
+   "way": 521554816
+  },
+  {
+   "lat": 53.4696151,
+   "length_m": 162.9,
+   "lon": -2.3498046,
+   "refs": [
+    1685573876,
+    9461878671,
+    9461878670,
+    9461878669,
+    5124158319,
+    9461878666,
+    9461878667,
+    9461878668,
+    5124158320,
+    5124158321,
+    5124158322,
+    9461878665,
+    5124158323,
+    9461878664,
+    30822575
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "bicycle": "designated",
+    "highway": "service",
+    "motor_vehicle": "no",
+    "oneway": "yes",
+    "service": "bus"
+   },
+   "way": 527018073
+  },
+  {
+   "lat": 53.4216533,
+   "length_m": 86.5,
+   "lon": -2.3234202,
+   "refs": [
+    1264090726,
+    8732248246,
+    1264124324,
+    8732248249,
+    1264124280
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "highway": "service",
+    "motorcar": "no",
+    "service": "alley",
+    "surface": "cobblestone"
+   },
+   "way": 110777808
+  },
+  {
+   "lat": 53.4111674,
+   "length_m": 64.2,
+   "lon": -2.2982253,
+   "refs": [
+    25346401,
+    1268079054,
+    1268079215,
+    1268079094,
+    1268078896,
+    25346396
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "designation": "public_footpath",
+    "highway": "service",
+    "motorcar": "no"
+   },
+   "way": 111263899
+  },
+  {
+   "lat": 53.4536765,
+   "length_m": 29.2,
+   "lon": -2.307718,
+   "refs": [
+    739097050,
+    8567490574,
+    739097200,
+    8567490575,
+    739096946,
+    8567490572,
+    739097070,
+    8567490573,
+    739097058,
+    739096921
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "highway": "service",
+    "maxspeed": "30 mph",
+    "motorcar": "no",
+    "service": "emergency_access"
+   },
+   "way": 59582991
+  },
+  {
+   "lat": 53.575641,
+   "length_m": 142.1,
+   "lon": -2.5482706,
+   "refs": [
+    5340436239,
+    5340436240,
+    5340436241
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "no",
+    "highway": "service"
+   },
+   "way": 553217545
+  },
+  {
+   "lat": 53.3940109,
+   "length_m": 28.6,
+   "lon": -2.3552593,
+   "refs": [
+    9008550112,
+    9379591989,
+    9008550115
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "highway": "service",
+    "motor_vehicle": "no",
+    "service": "alley",
+    "surface": "grass"
+   },
+   "way": 973330094
+  },
+  {
+   "lat": 53.4539327,
+   "length_m": 60.7,
+   "lon": -2.3006494,
+   "refs": [
+    1273393617,
+    1273393751,
+    1273393677
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "highway": "service",
+    "maxspeed": "20 mph",
+    "motorcar": "no",
+    "service": "alley"
+   },
+   "way": 111848545
+  },
+  {
+   "lat": 53.4967068,
+   "length_m": 95.1,
+   "lon": -2.5209704,
+   "refs": [
+    11178580645,
+    11178580648,
+    11198493349,
+    11178580647,
+    11178580646
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "no",
+    "highway": "service",
+    "name": "Back Railway Road",
+    "note": "Name as appears on 19th century mapping",
+    "service": "alley",
+    "source": "survey",
+    "surface": "asphalt"
+   },
+   "way": 1206357133
+  },
+  {
+   "lat": 53.3841156,
+   "length_m": 18.4,
+   "lon": -2.5872856,
+   "refs": [
+    340937159,
+    8423462430,
+    5026720465
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "no",
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "residential",
+    "horse": "yes",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "no",
+    "name": "New Road"
+   },
+   "way": 514548608
+  },
+  {
+   "lat": 53.5424326,
+   "length_m": 30.6,
+   "lon": -2.1513022,
+   "refs": [
+    9727016009,
+    12670174076,
+    12675934292,
+    12384149323,
+    12384149322,
+    12675934266,
+    12384149324,
+    12118278884
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "highway": "service",
+    "motor_vehicle": "no",
+    "service": "emergency_access",
+    "surface": "asphalt"
+   },
+   "way": 1116631876
+  },
+  {
+   "lat": 53.5481574,
+   "length_m": 113.7,
+   "lon": -2.3920393,
+   "refs": [
+    13314089897,
+    13314089896,
+    13314089898,
+    13314089895,
+    1424355690,
+    13314089899,
+    13314111302,
+    13314089894,
+    13314089900,
+    13314111301
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "highway": "service",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "no",
+    "service": "alley"
+   },
+   "way": 1451709041
+  },
+  {
+   "lat": 53.456386,
+   "length_m": 228.8,
+   "lon": -2.2993449,
+   "refs": [
+    1273393693,
+    1273393655,
+    1273393523,
+    1273393792,
+    1273393632,
+    1273393512
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "highway": "service",
+    "maxspeed": "20 mph",
+    "motorcar": "no",
+    "service": "alley"
+   },
+   "way": 111848554
+  },
+  {
+   "lat": 53.5534591,
+   "length_m": 23.1,
+   "lon": -2.618298,
+   "refs": [
+    7173425313,
+    7173425314
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "bicycle": "no",
+    "covered": "no",
+    "foot": "yes",
+    "highway": "service",
+    "horse": "no",
+    "motor_vehicle": "no",
+    "oneway": "no",
+    "service": "alley",
+    "surface": "earth"
+   },
+   "way": 768343573
+  },
+  {
+   "lat": 53.5135656,
+   "length_m": 218.0,
+   "lon": -2.0965663,
+   "refs": [
+    14131423041,
+    331315755,
+    331315756,
+    331315757,
+    6260674161,
+    331315758,
+    331315759,
+    14131423040
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "hgv": "discouraged",
+    "highway": "unclassified",
+    "lanes": "1",
+    "motor_vehicle": "no",
+    "name": "Alt Hill Lane",
+    "source": "https://www.tameside.gov.uk/TamesideMBC/media/trafficregulationorders/Alt-Hill-Road-Alt-Hill-Lane,-Ashton-Experimental-POD.pdf"
+   },
+   "way": 668545787
+  },
+  {
+   "lat": 53.6132499,
+   "length_m": 51.6,
+   "lon": -2.4275552,
+   "refs": [
+    6140872177,
+    6140872178,
+    6140872176,
+    6140872175
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "highway": "service",
+    "motor_vehicle": "no",
+    "name": "Eagley Brow",
+    "source": "OS_OpenData_StreetView",
+    "surface": "cobblestone"
+   },
+   "way": 61983043
+  },
+  {
+   "lat": 53.4808987,
+   "length_m": 234.8,
+   "lon": -2.3522901,
+   "refs": [
+    8751265783,
+    3224004838,
+    8751265785,
+    8750759371,
+    3224004806
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "no",
+    "highway": "service",
+    "maxspeed": "20 mph",
+    "service": "alley"
+   },
+   "way": 316291230
+  },
+  {
+   "lat": 53.5072812,
+   "length_m": 126.9,
+   "lon": -2.2461277,
+   "refs": [
+    991049274,
+    991049276,
+    991049285,
+    13295409643,
+    991049221,
+    13295409642,
+    13295409639,
+    991049294,
+    13295409638,
+    32852848
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "service",
+    "motor_vehicle": "no",
+    "name": "Bent Lane",
+    "service": "alley"
+   },
+   "way": 85476283
+  },
+  {
+   "lat": 53.4477444,
+   "length_m": 43.2,
+   "lon": -2.2951787,
+   "refs": [
+    13521070288,
+    13521070279,
+    13521070280
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "highway": "service",
+    "motor_vehicle": "no",
+    "name": "Kenwood Close",
+    "official_name": "Kenwood Close",
+    "surface": "asphalt"
+   },
+   "way": 1473788948
+  },
+  {
+   "lat": 53.4944337,
+   "length_m": 33.9,
+   "lon": -2.1630226,
+   "refs": [
+    787628316,
+    787628318,
+    787628322
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "hgv": "discouraged",
+    "highway": "residential",
+    "lanes": "1",
+    "motor_vehicle": "no",
+    "name": "Rose Hey Lane",
+    "surface": "gravel"
+   },
+   "way": 1446853566
+  },
+  {
+   "lat": 53.4804968,
+   "length_m": 117.1,
+   "lon": -2.3491289,
+   "refs": [
+    3224004817,
+    5017576798,
+    3224004820,
+    3224004832,
+    5017576797,
+    3224004831
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "no",
+    "highway": "service",
+    "maxspeed": "20 mph",
+    "service": "alley"
+   },
+   "way": 316291238
+  },
+  {
+   "lat": 53.4977747,
+   "length_m": 69.7,
+   "lon": -2.3003551,
+   "refs": [
+    5351138648,
+    14135943328,
+    5351138675,
+    5351138649
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "bicycle": "designated",
+    "foot": "designated",
+    "highway": "service",
+    "horse": "designated",
+    "motor_vehicle": "no"
+   },
+   "way": 554505577
+  },
+  {
+   "lat": 53.4670241,
+   "length_m": 136.0,
+   "lon": -2.1613676,
+   "refs": [
+    1382746374,
+    11862433198,
+    11877092013,
+    11862433199,
+    11877092016,
+    11862433196,
+    11862433197
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "highway": "service",
+    "lit": "no",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "no",
+    "service": "alley",
+    "smoothness": "intermediate",
+    "surface": "asphalt"
+   },
+   "way": 1277845323
+  },
+  {
+   "lat": 53.4966187,
+   "length_m": 88.7,
+   "lon": -2.2063596,
+   "refs": [
+    307902623,
+    12662736063
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "highway": "unclassified",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "no",
+    "name": "Irlam Street",
+    "source": "bing",
+    "source:name": "OS_OpenData_Locator"
+   },
+   "way": 1367331138
+  },
+  {
+   "lat": 53.5746319,
+   "length_m": 97.0,
+   "lon": -2.4168879,
+   "refs": [
+    664780513,
+    5434910248,
+    5434910247,
+    664780515
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "no",
+    "highway": "service",
+    "maxspeed": "20 mph",
+    "name": "Back Hilden Street",
+    "service": "alley"
+   },
+   "way": 52199404
+  },
+  {
+   "lat": 53.473143,
+   "length_m": 74.5,
+   "lon": -2.2985501,
+   "refs": [
+    6199279501,
+    6199279502,
+    6199279500,
+    6199279498,
+    1497100102,
+    1496494907
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "foot": "designated",
+    "highway": "service",
+    "motor_vehicle": "no",
+    "surface": "asphalt"
+   },
+   "way": 662173403
+  },
+  {
+   "lat": 53.5590414,
+   "length_m": 86.7,
+   "lon": -2.3337855,
+   "refs": [
+    1897011702,
+    5820462434,
+    5820462435,
+    5820462436,
+    979742395
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "highway": "service",
+    "motor_vehicle": "no",
+    "service": "emergency_access",
+    "surface": "paved"
+   },
+   "way": 615533576
+  },
+  {
+   "lat": 53.4594767,
+   "length_m": 58.1,
+   "lon": -2.2695678,
+   "refs": [
+    494879279,
+    1317963262,
+    494879271
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "no",
+    "highway": "residential",
+    "lanes": "1",
+    "maxspeed": "20 mph",
+    "name": "Walter Street",
+    "note": "roads are not straight",
+    "oneway": "yes"
+   },
+   "way": 1468986332
+  },
+  {
+   "lat": 53.3985292,
+   "length_m": 143.2,
+   "lon": -2.2105005,
+   "refs": [
+    11738861613,
+    1109187132,
+    11009936688,
+    11010205770,
+    1109187135,
+    11009936693,
+    11010205755,
+    11009936694,
+    4663550885
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "highway": "unclassified",
+    "lane_markings": "no",
+    "motor_vehicle": "no",
+    "name": "Newland Road",
+    "source": "GPS survey",
+    "surface": "asphalt"
+   },
+   "way": 182429527
+  },
+  {
+   "lat": 53.4807634,
+   "length_m": 80.3,
+   "lon": -2.3466684,
+   "refs": [
+    3224004827,
+    8750759263,
+    8750759256,
+    8750759254
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "no",
+    "footway": "alley",
+    "highway": "service",
+    "service": "alley"
+   },
+   "way": 945221736
+  },
+  {
+   "lat": 53.5492364,
+   "length_m": 22.9,
+   "lon": -2.4053633,
+   "refs": [
+    743046561,
+    12768612383,
+    743046900
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "no",
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "service",
+    "horse": "no",
+    "motor_vehicle": "no",
+    "name": "Westminster Avenue"
+   },
+   "way": 59853970
+  },
+  {
+   "lat": 53.4859266,
+   "length_m": 159.4,
+   "lon": -2.2633357,
+   "refs": [
+    18153853,
+    9196097765,
+    9739938098,
+    3169028714,
+    9739968253,
+    3170049205,
+    13982375166,
+    9739968305,
+    9737826905,
+    1828904558
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "no",
+    "end_date": "20/07/2026",
+    "highway": "residential",
+    "maxspeed": "20 mph",
+    "name": "Peru Street",
+    "source:name": "OS_OpenData_Locator",
+    "surface": "asphalt"
+   },
+   "way": 171932877
+  },
+  {
+   "lat": 53.3586753,
+   "length_m": 28.3,
+   "lon": -2.6116462,
+   "refs": [
+    417819896,
+    315060708
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "no",
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "unclassified",
+    "horse": "yes",
+    "motor_vehicle": "no",
+    "name": "Underbridge Lane",
+    "surface": "asphalt",
+    "width": "6"
+   },
+   "way": 459588369
+  },
+  {
+   "lat": 53.4874043,
+   "length_m": 29.1,
+   "lon": -2.3796199,
+   "refs": [
+    1591971535,
+    3005116320
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "access": "no",
+    "highway": "service"
+   },
+   "way": 296694124
+  },
+  {
+   "lat": 53.455221,
+   "length_m": 58.7,
+   "lon": -2.3004267,
+   "refs": [
+    1273393798,
+    1273393672,
+    1273393622
+   ],
+   "stratum": [
+    "closed",
+    "no_cars"
+   ],
+   "tags": {
+    "highway": "service",
+    "maxspeed": "20 mph",
+    "motorcar": "no",
+    "service": "alley"
+   },
+   "way": 111848592
+  },
+  {
+   "lat": 53.4695736,
+   "length_m": 139.9,
+   "lon": -2.2780599,
+   "refs": [
+    306917515,
+    8623670206,
+    5009515630,
+    8121980429,
+    2619483254,
+    8623691477,
+    8127235825,
+    1847065533
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "lane_markings": "no",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "20 mph",
+    "name": "Taylorson Street",
+    "oneway": "no",
+    "smoothness": "excellent",
+    "source:name": "OS_OpenData_Locator",
+    "surface": "asphalt",
+    "toll": "no"
+   },
+   "way": 512319143
+  },
+  {
+   "lat": 53.5803802,
+   "length_m": 84.4,
+   "lon": -2.0985127,
+   "refs": [
+    8707048012,
+    10911566980,
+    8707048032,
+    10886181044,
+    8707048025,
+    10911567011,
+    8707048026
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "name": "Christine Street"
+   },
+   "way": 940039967
+  },
+  {
+   "lat": 53.5898813,
+   "length_m": 40.7,
+   "lon": -2.4336498,
+   "refs": [
+    1436574440,
+    5363818506,
+    6881172238,
+    6881094337
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "name": "St Ann Street"
+   },
+   "way": 556025313
+  },
+  {
+   "lat": 53.4686745,
+   "length_m": 38.4,
+   "lon": -2.1120922,
+   "refs": [
+    1279255066,
+    5612399038,
+    1198862865
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "surface": "asphalt"
+   },
+   "way": 587569068
+  },
+  {
+   "lat": 53.484327,
+   "length_m": 26.5,
+   "lon": -2.2346894,
+   "refs": [
+    412844447,
+    11286565667,
+    12003596201,
+    12003596202
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "name": "Brightwell Walk"
+   },
+   "way": 198727381
+  },
+  {
+   "lat": 53.4870502,
+   "length_m": 154.1,
+   "lon": -2.2927436,
+   "refs": [
+    2040574059,
+    11778498756,
+    11778498755,
+    811752933,
+    11778498772,
+    11778498771,
+    811756057,
+    11778498802,
+    11778498803,
+    811762030,
+    11778498822,
+    11778498788,
+    11778498787,
+    2589745834
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "foot": "yes",
+    "highway": "pedestrian"
+   },
+   "way": 67222771
+  },
+  {
+   "lat": 53.567907,
+   "length_m": 46.1,
+   "lon": -2.4310599,
+   "refs": [
+    5578294678,
+    5578712000,
+    5578294679
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "name": "Somersby Walk",
+    "surface": "asphalt"
+   },
+   "way": 583476670
+  },
+  {
+   "lat": 53.60323,
+   "length_m": 43.8,
+   "lon": -2.2891861,
+   "refs": [
+    7731113320,
+    967838045
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "highway": "pedestrian",
+    "name": "St Anne's Street"
+   },
+   "way": 452939868
+  },
+  {
+   "lat": 53.5923268,
+   "length_m": 39.6,
+   "lon": -2.2769406,
+   "refs": [
+    13268314427,
+    13268314429,
+    13268314428
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "highway": "pedestrian",
+    "maxspeed": "20 mph",
+    "surface": "paving_stones"
+   },
+   "way": 1446106226
+  },
+  {
+   "lat": 53.4451526,
+   "length_m": 17.7,
+   "lon": -2.3004032,
+   "refs": [
+    25003924,
+    8087421442,
+    8090909357
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "pedestrian",
+    "horse": "yes",
+    "maxspeed": "30 mph",
+    "motor_vehicle": "no",
+    "name": "Hillingdon Road",
+    "oneway": "no",
+    "segregated": "no",
+    "surface": "asphalt"
+   },
+   "way": 868019400
+  },
+  {
+   "lat": 53.4161565,
+   "length_m": 42.2,
+   "lon": -2.2299556,
+   "refs": [
+    26528107,
+    26291956
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Elm Grove",
+    "surface": "paving_stones"
+   },
+   "way": 4968694
+  },
+  {
+   "lat": 53.5793229,
+   "length_m": 60.4,
+   "lon": -2.4307794,
+   "refs": [
+    702383976,
+    8118418777,
+    5235026822,
+    5235025612,
+    702381897
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "name": "Old Hall Street"
+   },
+   "way": 55952922
+  },
+  {
+   "lat": 53.4854258,
+   "length_m": 91.2,
+   "lon": -2.2300353,
+   "refs": [
+    2088252528,
+    11293701330,
+    2088252530,
+    2088252529,
+    12006526475,
+    2088252531
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "foot": "designated",
+    "highway": "pedestrian",
+    "name": "Anita Street",
+    "source": "survey",
+    "surface": "paving_stones"
+   },
+   "way": 198724042
+  },
+  {
+   "lat": 53.4861846,
+   "length_m": 45.3,
+   "lon": -2.2409672,
+   "refs": [
+    889327160,
+    12398835857,
+    2061913903,
+    5248359716,
+    3588432308
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Balloon Street",
+    "surface": "sett"
+   },
+   "way": 195773698
+  },
+  {
+   "lat": 53.4056564,
+   "length_m": 76.5,
+   "lon": -2.1455632,
+   "refs": [
+    443125005,
+    9434720785,
+    9527899903,
+    1323368881
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "pedestrian",
+    "name": "Dona Street"
+   },
+   "way": 207346293
+  },
+  {
+   "lat": 53.4609941,
+   "length_m": 29.2,
+   "lon": -2.2655455,
+   "refs": [
+    1320725045,
+    1323016291,
+    1320725020
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "name": "Prestage Street"
+   },
+   "way": 117253135
+  },
+  {
+   "lat": 53.4019773,
+   "length_m": 18.6,
+   "lon": -2.166606,
+   "refs": [
+    461966831,
+    461966837
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Bulkeley Street",
+    "surface": "paving_stones"
+   },
+   "way": 40526597
+  },
+  {
+   "lat": 53.4806152,
+   "length_m": 102.7,
+   "lon": -2.2541832,
+   "refs": [
+    1117073252,
+    8748967626,
+    3758438754,
+    324233337,
+    8748967638,
+    12409792401,
+    8748967620,
+    1175816598
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "foot": "yes",
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Leftbank",
+    "surface": "paving_stones"
+   },
+   "way": 30342931
+  },
+  {
+   "lat": 53.4597859,
+   "length_m": 20.5,
+   "lon": -2.2659806,
+   "refs": [
+    1320724998,
+    1320725015
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "name": "Fir Street",
+    "surface": "paving_stones"
+   },
+   "way": 117253137
+  },
+  {
+   "lat": 53.4867685,
+   "length_m": 28.4,
+   "lon": -2.2644074,
+   "refs": [
+    6960160763,
+    9739968288,
+    9735596523,
+    18153831
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "highway": "pedestrian",
+    "name": "Cannon Street",
+    "surface": "asphalt"
+   },
+   "way": 743659137
+  },
+  {
+   "lat": 53.5087312,
+   "length_m": 64.2,
+   "lon": -2.3450095,
+   "refs": [
+    11765241393,
+    11765241391,
+    1007091652
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "maxspeed": "20 mph"
+   },
+   "way": 1266682095
+  },
+  {
+   "lat": 53.4870843,
+   "length_m": 85.2,
+   "lon": -2.2334836,
+   "refs": [
+    4707376175,
+    11283982828,
+    11262512801,
+    11262512800,
+    8895589527,
+    11262512796,
+    14206839250
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "access": "destination",
+    "bicycle": "destination",
+    "foot": "destination",
+    "highway": "pedestrian",
+    "lit": "no",
+    "motor_vehicle": "no",
+    "name": "Goulden Street",
+    "oneway": "no",
+    "surface": "paved",
+    "width": "4"
+   },
+   "way": 961668720
+  },
+  {
+   "lat": 53.4607047,
+   "length_m": 16.9,
+   "lon": -2.2650536,
+   "refs": [
+    1320725064,
+    1320725006,
+    1320725035
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "name": "Prestage Street",
+    "surface": "asphalt"
+   },
+   "way": 117253082
+  },
+  {
+   "lat": 53.5974087,
+   "length_m": 30.0,
+   "lon": -2.2795221,
+   "refs": [
+    33177544,
+    13267495249,
+    4467061597
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "surface": "paved"
+   },
+   "way": 449770563
+  },
+  {
+   "lat": 53.5940508,
+   "length_m": 29.8,
+   "lon": -2.2797031,
+   "refs": [
+    1515515732,
+    25595164
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian"
+   },
+   "way": 561045974
+  },
+  {
+   "lat": 53.4051995,
+   "length_m": 46.4,
+   "lon": -2.3636952,
+   "refs": [
+    1297490803,
+    5887832744,
+    1297490820,
+    1297490809,
+    1297490744,
+    14249405726,
+    258544971
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "surface": "paving_stones"
+   },
+   "way": 891891341
+  },
+  {
+   "lat": 53.4554526,
+   "length_m": 49.6,
+   "lon": -2.1144127,
+   "refs": [
+    510397434,
+    13321863106,
+    13321826640,
+    13321863113,
+    510397444
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "highway": "pedestrian"
+   },
+   "way": 588229249
+  },
+  {
+   "lat": 53.6521127,
+   "length_m": 16.2,
+   "lon": -2.6191916,
+   "refs": [
+    6609631772,
+    307375828
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Brighton Street",
+    "smoothness": "good",
+    "surface": "paved",
+    "width": "5"
+   },
+   "way": 703892287
+  },
+  {
+   "lat": 53.3927306,
+   "length_m": 24.9,
+   "lon": -2.5819357,
+   "refs": [
+    340160872,
+    9262334727,
+    8416272765,
+    340160873
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "pedestrian",
+    "horse": "yes",
+    "maxspeed": "20 mph",
+    "name": "Dalton Bank"
+   },
+   "way": 906509828
+  },
+  {
+   "lat": 53.619173,
+   "length_m": 23.1,
+   "lon": -2.1465788,
+   "refs": [
+    1669908490,
+    6827972958,
+    1885530166
+   ],
+   "stratum": [
+    "closed",
+    "pedestrian"
+   ],
+   "tags": {
+    "highway": "pedestrian",
+    "name": "Trafalgar Street",
+    "surface": "paved"
+   },
+   "way": 728795355
+  },
+  {
+   "lat": 53.3670108,
+   "length_m": 88.5,
+   "lon": -2.1546613,
+   "refs": [
+    336279128,
+    336279131,
+    336279133,
+    336279136,
+    10130558556,
+    336279165,
+    336279167,
+    336279170,
+    336279172,
+    336279175,
+    336279178
+   ],
+   "stratum": [
+    "restricted",
+    "bus_private"
+   ],
+   "tags": {
+    "access": "private",
+    "bus": "designated",
+    "highway": "service",
+    "oneway": "yes"
+   },
+   "way": 30478025
+  },
+  {
+   "lat": 53.3965168,
+   "length_m": 48.6,
+   "lon": -2.311525,
+   "refs": [
+    25475154,
+    1460476636,
+    25475155,
+    1460476630,
+    1460476626,
+    1460476623,
+    1460476621,
+    1460476614,
+    25475156,
+    1460476622,
+    1460476625,
+    1460476627,
+    25475153
+   ],
+   "stratum": [
+    "restricted",
+    "bus_private"
+   ],
+   "tags": {
+    "access": "private",
+    "highway": "unclassified",
+    "psv": "yes"
+   },
+   "way": 7993521
+  },
+  {
+   "lat": 53.4658188,
+   "length_m": 82.3,
+   "lon": -2.6647878,
+   "refs": [
+    275306808,
+    8750856195,
+    8750856208,
+    8750856207,
+    8750856196,
+    275306809
+   ],
+   "stratum": [
+    "restricted",
+    "bus_private"
+   ],
+   "tags": {
+    "access": "destination",
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "residential",
+    "horse": "yes",
+    "maxspeed": "30 mph",
+    "motor_vehicle": "destination",
+    "name": "Church Road",
+    "oneway": "no",
+    "psv": "designated",
+    "ref": "A599"
+   },
+   "way": 945233439
+  },
+  {
+   "lat": 53.3633343,
+   "length_m": 231.8,
+   "lon": -2.2732403,
+   "refs": [
+    939142509,
+    1511634864,
+    1511634670,
+    1511635007,
+    1511634879,
+    939142511,
+    1680589090,
+    1511634331,
+    1511634461,
+    939142512,
+    1511634751,
+    1511634598,
+    1511634510,
+    4936397913,
+    939142513,
+    1832552499,
+    939142514,
+    1511634426
+   ],
+   "stratum": [
+    "restricted",
+    "bus_private"
+   ],
+   "tags": {
+    "access": "private",
+    "highway": "unclassified",
+    "name": "Arrivals Way",
+    "oneway": "yes",
+    "postal_code": "M90",
+    "psv": "yes",
+    "ref:GB:usrn": "24503095",
+    "sidewalk:both": "separate",
+    "source:name": "OS Open Names;OS Open Roads",
+    "taxi": "yes"
+   },
+   "way": 80504907
+  },
+  {
+   "lat": 53.4674294,
+   "length_m": 32.7,
+   "lon": -2.352323,
+   "refs": [
+    456187399,
+    11233476990,
+    1685595664,
+    5124158251,
+    9222081318,
+    9222081320
+   ],
+   "stratum": [
+    "restricted",
+    "bus_private"
+   ],
+   "tags": {
+    "access": "no",
+    "bus": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "maxspeed": "5 mph",
+    "motor_vehicle": "private",
+    "oneway": "yes"
+   },
+   "way": 38541677
+  },
+  {
+   "lat": 53.5236873,
+   "length_m": 55.7,
+   "lon": -2.4950302,
+   "refs": [
+    354687777,
+    6533925422,
+    6565192006,
+    354687776,
+    6533925423,
+    693738043
+   ],
+   "stratum": [
+    "restricted",
+    "bus_private"
+   ],
+   "tags": {
+    "access": "private",
+    "bicycle": "yes",
+    "bus": "designated",
+    "busway": "designated",
+    "foot": "yes",
+    "highway": "unclassified",
+    "lanes": "1",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "private",
+    "name": "Market Street",
+    "old_ref": "A577",
+    "oneway": "yes",
+    "surface": "asphalt"
+   },
+   "way": 288214966
+  },
+  {
+   "lat": 53.3885916,
+   "length_m": 45.0,
+   "lon": -2.589962,
+   "refs": [
+    5395669333,
+    8736286898,
+    5395669334,
+    9004946920,
+    4542189018
+   ],
+   "stratum": [
+    "restricted",
+    "bus_private"
+   ],
+   "tags": {
+    "access": "private",
+    "bicycle": "yes",
+    "bus": "designated",
+    "busway": "designated",
+    "foot": "yes",
+    "highway": "unclassified",
+    "horse": "yes",
+    "lane_markings": "yes",
+    "lanes": "1",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "private",
+    "name": "Academy Street",
+    "oneway": "yes",
+    "psv": "designated",
+    "service": "busway",
+    "source": "yahoo, area knowledge",
+    "surface": "asphalt"
+   },
+   "way": 559432689
+  },
+  {
+   "lat": 53.4526766,
+   "length_m": 17.3,
+   "lon": -2.082197,
+   "refs": [
+    9244127088,
+    9244127087,
+    9244127085
+   ],
+   "stratum": [
+    "restricted",
+    "bus_private"
+   ],
+   "tags": {
+    "access": "no",
+    "bicycle": "no",
+    "bus": "yes",
+    "highway": "service",
+    "maxspeed": "30 mph",
+    "motor_vehicle": "private",
+    "oneway": "yes",
+    "service": "bus"
+   },
+   "way": 1001531167
+  },
+  {
+   "lat": 53.5485529,
+   "length_m": 60.2,
+   "lon": -2.3947814,
+   "refs": [
+    4647160236,
+    6305565662,
+    6305565661,
+    6305565663,
+    4647160237,
+    6305565660,
+    6305565659,
+    4647160238,
+    6305565658,
+    6305295753,
+    4647160239
+   ],
+   "stratum": [
+    "restricted",
+    "bus_private"
+   ],
+   "tags": {
+    "access": "no",
+    "bus": "yes",
+    "highway": "service",
+    "maxspeed": "5 mph",
+    "motor_vehicle": "private",
+    "oneway": "yes",
+    "service": "bus"
+   },
+   "way": 470545907
+  },
+  {
+   "lat": 53.4527834,
+   "length_m": 87.3,
+   "lon": -2.0813691,
+   "refs": [
+    9244127085,
+    1714564053,
+    1714564061,
+    7746610871,
+    1714564059,
+    1764003466,
+    9244127089,
+    9244127093,
+    9244127094,
+    1714433007
+   ],
+   "stratum": [
+    "restricted",
+    "bus_private"
+   ],
+   "tags": {
+    "access": "no",
+    "bicycle": "no",
+    "bus": "yes",
+    "highway": "service",
+    "maxspeed": "5 mph",
+    "motor_vehicle": "private",
+    "oneway": "yes",
+    "service": "bus"
+   },
+   "way": 159334170
+  },
+  {
+   "lat": 53.5941436,
+   "length_m": 45.5,
+   "lon": -2.2208131,
+   "refs": [
+    33198054,
+    11532528217,
+    11532528218,
+    11532528219,
+    11532528221,
+    11532528222,
+    11532528223,
+    11532528224
+   ],
+   "stratum": [
+    "restricted",
+    "bus_private"
+   ],
+   "tags": {
+    "access": "no",
+    "bus": "yes",
+    "highway": "service",
+    "motor_vehicle": "private"
+   },
+   "way": 1241218618
+  },
+  {
+   "lat": 53.4978526,
+   "length_m": 110.6,
+   "lon": -2.2801064,
+   "refs": [
+    7731927223,
+    7731927197
+   ],
+   "stratum": [
+    "restricted",
+    "private"
+   ],
+   "tags": {
+    "access": "private",
+    "highway": "service",
+    "service": "alley"
+   },
+   "way": 828213480
+  },
+  {
+   "lat": 53.4808295,
+   "length_m": 150.8,
+   "lon": -2.0987215,
+   "refs": [
+    917958522,
+    7930235439,
+    7930235438,
+    7930235435,
+    7930235434,
+    7930235433,
+    7930235432,
+    7930235431,
+    7930235430,
+    7116444443,
+    7116444444,
+    7116444445
+   ],
+   "stratum": [
+    "restricted",
+    "private"
+   ],
+   "tags": {
+    "access": "private",
+    "highway": "service"
+   },
+   "way": 761678096
+  },
+  {
+   "lat": 53.3373483,
+   "length_m": 34.9,
+   "lon": -2.073448,
+   "refs": [
+    2200452358,
+    366066186,
+    9880766969
+   ],
+   "stratum": [
+    "restricted",
+    "private"
+   ],
+   "tags": {
+    "access": "private",
+    "highway": "service",
+    "service": "driveway"
+   },
+   "way": 32550156
+  },
+  {
+   "lat": 53.5252693,
+   "length_m": 386.7,
+   "lon": -2.3139649,
+   "refs": [
+    2212017180,
+    9517190518,
+    5067560174,
+    2212017171,
+    2212017159,
+    7690178446,
+    9509305112,
+    6850977062,
+    373802586
+   ],
+   "stratum": [
+    "restricted",
+    "private"
+   ],
+   "tags": {
+    "access": "private",
+    "highway": "service"
+   },
+   "way": 211189590
+  },
+  {
+   "lat": 53.481265,
+   "length_m": 99.1,
+   "lon": -2.2220603,
+   "refs": [
+    10584375760,
+    10584508616,
+    10584375759,
+    10584375758,
+    10584375757,
+    10584375756,
+    10584508617,
+    10584375755
+   ],
+   "stratum": [
+    "restricted",
+    "private"
+   ],
+   "tags": {
+    "access": "private",
+    "highway": "service",
+    "oneway": "yes"
+   },
+   "way": 1135461207
+  },
+  {
+   "lat": 53.5619454,
+   "length_m": 272.5,
+   "lon": -2.6446647,
+   "refs": [
+    6847824962,
+    6847824961,
+    6847824960,
+    6847824959,
+    6847824958,
+    6847824957,
+    6847824956,
+    6847824955,
+    6847824954,
+    6847824953,
+    6847824952,
+    6847824951
+   ],
+   "stratum": [
+    "restricted",
+    "private"
+   ],
+   "tags": {
+    "access": "private",
+    "highway": "service",
+    "oneway": "yes"
+   },
+   "way": 731104455
+  },
+  {
+   "lat": 53.6512499,
+   "length_m": 126.1,
+   "lon": -2.6410758,
+   "refs": [
+    5608928868,
+    5608928867,
+    6354883448,
+    5608928866
+   ],
+   "stratum": [
+    "restricted",
+    "private"
+   ],
+   "tags": {
+    "access": "private",
+    "highway": "service",
+    "maxspeed": "20 mph"
+   },
+   "way": 587156722
+  },
+  {
+   "lat": 53.415895,
+   "length_m": 51.8,
+   "lon": -2.1437566,
+   "refs": [
+    9146496360,
+    9156435790,
+    9146496361,
+    9146496362,
+    9146496363
+   ],
+   "stratum": [
+    "restricted",
+    "private"
+   ],
+   "tags": {
+    "access": "private",
+    "highway": "service",
+    "service": "alley",
+    "surface": "unpaved"
+   },
+   "way": 989704124
+  },
+  {
+   "lat": 53.4405932,
+   "length_m": 99.1,
+   "lon": -2.3130951,
+   "refs": [
+    7148067501,
+    7148067502,
+    7148067503,
+    7148067504,
+    7148067505,
+    7148067506,
+    7148067507,
+    7148067508,
+    7148067509,
+    7148067510,
+    7148067511,
+    7148067512,
+    7148067513,
+    7148067514,
+    7148067515,
+    7148067516,
+    7148067517,
+    7148067518,
+    7148067519,
+    7148067520,
+    7148067521
+   ],
+   "stratum": [
+    "restricted",
+    "private"
+   ],
+   "tags": {
+    "access": "private",
+    "highway": "service",
+    "oneway": "yes"
+   },
+   "way": 765322434
+  },
+  {
+   "lat": 53.5226124,
+   "length_m": 90.5,
+   "lon": -2.1098042,
+   "refs": [
+    1395011573,
+    13203064431,
+    7934116275,
+    7934116279,
+    13203064423,
+    2567319059
+   ],
+   "stratum": [
+    "restricted",
+    "private"
+   ],
+   "tags": {
+    "access": "private",
+    "highway": "service",
+    "service": "alley"
+   },
+   "way": 850445445
+  },
+  {
+   "lat": 53.6432006,
+   "length_m": 96.4,
+   "lon": -2.588546,
+   "refs": [
+    367688876,
+    5256151555
+   ],
+   "stratum": [
+    "restricted",
+    "destination"
+   ],
+   "tags": {
+    "bicycle": "designated",
+    "designation": "public_bridleway",
+    "foot": "designated",
+    "highway": "service",
+    "horse": "designated",
+    "lit": "no",
+    "name": "Heapey Fold Lane",
+    "prow_ref": "Heath Charnock BW 22",
+    "surface": "concrete",
+    "vehicle": "destination",
+    "width": "4"
+   },
+   "way": 32727104
+  },
+  {
+   "lat": 53.4852611,
+   "length_m": 90.8,
+   "lon": -2.2298768,
+   "refs": [
+    5437720685,
+    12006526476,
+    12007177100,
+    12007177098,
+    12007177096,
+    12007177094,
+    12007177092,
+    12007177090,
+    12007177088,
+    12007177086,
+    12007177084,
+    12007177082,
+    12007177080,
+    12007177078,
+    12007177076,
+    12007177074,
+    12007177072,
+    12007177070,
+    11293701329,
+    5437720682
+   ],
+   "stratum": [
+    "restricted",
+    "destination"
+   ],
+   "tags": {
+    "highway": "service",
+    "motor_vehicle": "destination",
+    "oneway": "yes",
+    "service": "alley",
+    "surface": "asphalt"
+   },
+   "way": 564372488
+  },
+  {
+   "lat": 53.4163377,
+   "length_m": 99.4,
+   "lon": -2.1044116,
+   "refs": [
+    274818275,
+    1110324234,
+    2307037070,
+    2307037044,
+    1110323687
+   ],
+   "stratum": [
+    "restricted",
+    "destination"
+   ],
+   "tags": {
+    "highway": "residential",
+    "motor_vehicle": "destination",
+    "name": "Ruskin Grove"
+   },
+   "way": 95801585
+  },
+  {
+   "lat": 53.4011148,
+   "length_m": 222.1,
+   "lon": -2.5789094,
+   "refs": [
+    340159331,
+    340159332,
+    10761689408,
+    10761689399,
+    9273210049,
+    340159376,
+    5135491277,
+    340159405,
+    340159400
+   ],
+   "stratum": [
+    "restricted",
+    "destination"
+   ],
+   "tags": {
+    "highway": "service",
+    "maxspeed": "20 mph",
+    "motor_vehicle": "destination",
+    "name": "Gorsey Lane Backs",
+    "service": "alley"
+   },
+   "way": 528458907
+  },
+  {
+   "lat": 53.6340049,
+   "length_m": 299.1,
+   "lon": -2.1277913,
+   "refs": [
+    6847831072,
+    787071632,
+    787071638,
+    787071272,
+    787071640,
+    787071644
+   ],
+   "stratum": [
+    "restricted",
+    "destination"
+   ],
+   "tags": {
+    "highway": "unclassified",
+    "motor_vehicle": "destination",
+    "name": "Greenfield Lane",
+    "source": "OS_OpenData_StreetView"
+   },
+   "way": 841383468
+  },
+  {
+   "lat": 53.5538179,
+   "length_m": 158.1,
+   "lon": -2.1310292,
+   "refs": [
+    8484971947,
+    8484971948,
+    8484971949,
+    8484971950,
+    8484971951,
+    8484971952,
+    8484971953,
+    8484971954,
+    8484971955,
+    14089386843,
+    13367435274
+   ],
+   "stratum": [
+    "restricted",
+    "destination"
+   ],
+   "tags": {
+    "highway": "service",
+    "motor_vehicle": "destination",
+    "service": "alley"
+   },
+   "way": 913405878
+  },
+  {
+   "lat": 53.4629458,
+   "length_m": 127.6,
+   "lon": -1.976295,
+   "refs": [
+    2385885001,
+    7685393513,
+    7685393514,
+    7685393515,
+    7685393516,
+    7685393517,
+    6499478720
+   ],
+   "stratum": [
+    "restricted",
+    "destination"
+   ],
+   "tags": {
+    "access": "destination",
+    "foot": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "surface": "asphalt"
+   },
+   "way": 823182860
+  },
+  {
+   "lat": 53.44067,
+   "length_m": 125.9,
+   "lon": -2.5517632,
+   "refs": [
+    5569321026,
+    9971194885,
+    5569321024,
+    5569321022,
+    9971194888,
+    5569321036
+   ],
+   "stratum": [
+    "restricted",
+    "destination"
+   ],
+   "tags": {
+    "bicycle": "destination",
+    "foot": "destination",
+    "highway": "service",
+    "horse": "no",
+    "maxspeed": "10 mph",
+    "motor_vehicle": "destination",
+    "oneway": "yes",
+    "surface": "gravel"
+   },
+   "way": 582290932
+  },
+  {
+   "lat": 53.5308971,
+   "length_m": 82.4,
+   "lon": -2.2828545,
+   "refs": [
+    13755344650,
+    13755344649,
+    992500418,
+    992500405
+   ],
+   "stratum": [
+    "restricted",
+    "destination"
+   ],
+   "tags": {
+    "bicycle": "yes",
+    "highway": "service",
+    "motor_vehicle": "destination",
+    "surface": "asphalt"
+   },
+   "way": 85552293
+  },
+  {
+   "lat": 53.5080434,
+   "length_m": 367.8,
+   "lon": -2.3155143,
+   "refs": [
+    28094521,
+    28094530,
+    28094532,
+    28094534,
+    8391896745,
+    259029005,
+    259029006,
+    917152224,
+    14278098077,
+    14278098078,
+    259028998
+   ],
+   "stratum": [
+    "restricted",
+    "destination"
+   ],
+   "tags": {
+    "highway": "residential",
+    "lit": "yes",
+    "motor_vehicle": "destination",
+    "name": "Ranelagh Road",
+    "source:name": "OS_OpenData_Locator"
+   },
+   "way": 4525931
+  }
+ ],
+ "contract": "ACCESS-001 v1",
+ "frozen_before_engine_runs": true,
+ "quotas": {
+  "closed/bus_gate": 30,
+  "closed/busway": 20,
+  "closed/no_cars": 40,
+  "closed/pedestrian": 30,
+  "restricted/bus_private": 15,
+  "restricted/destination": 10,
+  "restricted/private": 10
+ },
+ "selection_rule": "road way cars may not use, 15-400 m, not closed, not conditional, both end nodes on a road open to cars; per-stratum quota, ordered by sha256('ACCESS-001:'+way_id)",
+ "source_sha256": "2a8ef8e1f2533cb009b1ce248a6bf4eaabdd47e03979e64e24cd844f3b22acba",
+ "source_snapshot": "gm.osm.pbf"
+}

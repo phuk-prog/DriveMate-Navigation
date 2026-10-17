@@ -1,0 +1,197 @@
+{
+  "trial": "GPS-001",
+  "scope": "Synthetic complete-output, 5m position, observed-direction contract only",
+  "formula": "10 * passed / 6; competition ranks with ties",
+  "before_run": 38806731805,
+  "after_run": 38807314302,
+  "rows": [
+    {
+      "system": "DMN",
+      "rank": 1,
+      "score_out_of_ten": 10.0,
+      "passed": 6,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "not_run": 0,
+      "reason": "Synthetic closed-world output contract only"
+    },
+    {
+      "system": "OSRM",
+      "rank": 1,
+      "score_out_of_ten": 10.0,
+      "passed": 6,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "not_run": 0,
+      "reason": "Synthetic closed-world output contract only"
+    },
+    {
+      "system": "Valhalla",
+      "rank": 1,
+      "score_out_of_ten": 10.0,
+      "passed": 6,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "not_run": 0,
+      "reason": "Synthetic closed-world output contract only"
+    },
+    {
+      "system": "GraphHopper",
+      "rank": 4,
+      "score_out_of_ten": 3.333,
+      "passed": 2,
+      "failed": 4,
+      "planned": 6,
+      "unresolved": 0,
+      "not_run": 0,
+      "reason": "Synthetic closed-world output contract only"
+    },
+    {
+      "system": "BRouter",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "not_run": 6,
+      "reason": "Routing reference has no integrated observation-matching interface for GPS-001."
+    },
+    {
+      "system": "Google Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "not_run": 6,
+      "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+    },
+    {
+      "system": "HERE",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "not_run": 6,
+      "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+    },
+    {
+      "system": "Mapbox",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "not_run": 6,
+      "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+    },
+    {
+      "system": "Organic Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "not_run": 6,
+      "reason": "No executable GPS-replay adapter integrated; app behaviour is not a batch matching API."
+    },
+    {
+      "system": "OsmAnd",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "not_run": 6,
+      "reason": "No executable GPS-replay adapter integrated; app behaviour is not a batch matching API."
+    },
+    {
+      "system": "TomTom",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "not_run": 6,
+      "reason": "No configured permitted credentials or synthetic-map GPS adapter; paid access not authorised."
+    },
+    {
+      "system": "Waze",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "not_run": 6,
+      "reason": "No permitted automated replay interface; no scraping or automated consumer-app collection."
+    },
+    {
+      "system": "openrouteservice",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "planned": 6,
+      "unresolved": 0,
+      "not_run": 6,
+      "reason": "No integrated supported GPS-matching adapter for GPS-001."
+    }
+  ],
+  "case_matrix": [
+    {
+      "case_id": "GPS-001-east-clean",
+      "DMN": "PASS",
+      "OSRM": "PASS",
+      "Valhalla": "PASS",
+      "GraphHopper": "FAIL"
+    },
+    {
+      "case_id": "GPS-001-west-clean",
+      "DMN": "PASS",
+      "OSRM": "PASS",
+      "Valhalla": "PASS",
+      "GraphHopper": "FAIL"
+    },
+    {
+      "case_id": "GPS-001-east-noise",
+      "DMN": "PASS",
+      "OSRM": "PASS",
+      "Valhalla": "PASS",
+      "GraphHopper": "FAIL"
+    },
+    {
+      "case_id": "GPS-001-west-noise",
+      "DMN": "PASS",
+      "OSRM": "PASS",
+      "Valhalla": "PASS",
+      "GraphHopper": "FAIL"
+    },
+    {
+      "case_id": "GPS-001-east-multilink",
+      "DMN": "PASS",
+      "OSRM": "PASS",
+      "Valhalla": "PASS",
+      "GraphHopper": "PASS"
+    },
+    {
+      "case_id": "GPS-001-west-multilink",
+      "DMN": "PASS",
+      "OSRM": "PASS",
+      "Valhalla": "PASS",
+      "GraphHopper": "PASS"
+    }
+  ],
+  "independent_real_road_accuracy_proven": false
+}

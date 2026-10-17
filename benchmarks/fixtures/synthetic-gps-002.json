@@ -1,0 +1,681 @@
+{
+  "classification": "synthetic analytical streaming GPS safety contract",
+  "frozen_before_tuning": true,
+  "expectation_basis": "Declared invented directed topology and explicit default engineering quality/history limits, not survey, provider consensus or outputs. Non-MATCHED results must contain no edge identity.",
+  "parameters": {
+    "max_anchor_age_ms": 20000,
+    "max_unresolved_fixes": 2,
+    "max_fix_age_ms": 10000,
+    "max_plausible_speed_mps": 90,
+    "weak_accuracy_threshold_m": 35
+  },
+  "cases": [
+    {
+      "id": "GPS-002-parallel-first",
+      "category": "ambiguity",
+      "events": [
+        {
+          "fix": [
+            1000,
+            2.25e-05,
+            0.0002,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "AMBIGUOUS",
+          "justification": "Equal fit to two disconnected parallel ways; no fresh identifying history"
+        }
+      ],
+      "oracle_rationale": "A point equidistant from the two eastbound roads cannot identify one."
+    },
+    {
+      "id": "GPS-002-parallel-repeat",
+      "category": "ambiguity",
+      "events": [
+        {
+          "fix": [
+            1000,
+            2.25e-05,
+            0.0002,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "AMBIGUOUS",
+          "justification": "Equal fit to two disconnected parallel ways; no fresh identifying history"
+        },
+        {
+          "fix": [
+            3000,
+            2.25e-05,
+            0.0002,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "AMBIGUOUS",
+          "justification": "Equal fit to two disconnected parallel ways; no fresh identifying history"
+        }
+      ],
+      "oracle_rationale": "Repeated equally ambiguous observations add no identifying evidence."
+    },
+    {
+      "id": "GPS-002-anchor-resolves",
+      "category": "recovery",
+      "events": [
+        {
+          "fix": [
+            1000,
+            4.5e-05,
+            -0.0005,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Unique eastbound feeder",
+          "expected_way": 10
+        },
+        {
+          "fix": [
+            7000,
+            4.5e-05,
+            0.0002,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Only northern parallel road connects to fresh feeder anchor",
+          "expected_way": 20
+        }
+      ],
+      "oracle_rationale": "Unique feeder reaches only the north road within plausible time/displacement."
+    },
+    {
+      "id": "GPS-002-speed-spike-recovery",
+      "category": "fault-recovery",
+      "events": [
+        {
+          "fix": [
+            1000,
+            4.5e-05,
+            -0.0005,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Unique eastbound feeder",
+          "expected_way": 10
+        },
+        {
+          "fix": [
+            2000,
+            4.5e-05,
+            -0.00045,
+            3,
+            150,
+            90
+          ],
+          "expected_status": "REJECTED",
+          "justification": "Bad reported speed",
+          "preserve_trusted_fix": true
+        },
+        {
+          "fix": [
+            7000,
+            4.5e-05,
+            0.0002,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Only northern parallel road connects to fresh feeder anchor",
+          "expected_way": 20
+        }
+      ],
+      "oracle_rationale": "One rejected speed report cannot replace trusted history; a later good observation can recover."
+    },
+    {
+      "id": "GPS-002-weak-fix-recovery",
+      "category": "fault-recovery",
+      "events": [
+        {
+          "fix": [
+            1000,
+            4.5e-05,
+            -0.0005,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Unique eastbound feeder",
+          "expected_way": 10
+        },
+        {
+          "fix": [
+            2000,
+            4.5e-05,
+            -0.00045,
+            80,
+            10,
+            90
+          ],
+          "expected_status": "UNKNOWN",
+          "justification": "Accuracy too weak to identify a road"
+        },
+        {
+          "fix": [
+            7000,
+            4.5e-05,
+            0.0002,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Only northern parallel road connects to fresh feeder anchor",
+          "expected_way": 20
+        }
+      ],
+      "oracle_rationale": "Weak accuracy suppresses the output; one weak sample must not permanently prevent recovery."
+    },
+    {
+      "id": "GPS-002-bad-burst-expires",
+      "category": "fault-recovery",
+      "events": [
+        {
+          "fix": [
+            1000,
+            4.5e-05,
+            -0.0005,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Unique eastbound feeder",
+          "expected_way": 10
+        },
+        {
+          "fix": [
+            2000,
+            4.5e-05,
+            -0.00045,
+            3,
+            150,
+            90
+          ],
+          "expected_status": "REJECTED",
+          "justification": "Bad reported speed",
+          "preserve_trusted_fix": true
+        },
+        {
+          "fix": [
+            3000,
+            4.5e-05,
+            -0.00045,
+            3,
+            150,
+            90
+          ],
+          "expected_status": "REJECTED",
+          "justification": "Bad reported speed",
+          "preserve_trusted_fix": true
+        },
+        {
+          "fix": [
+            4000,
+            4.5e-05,
+            -0.00045,
+            3,
+            150,
+            90
+          ],
+          "expected_status": "REJECTED",
+          "justification": "Bad reported speed",
+          "preserve_trusted_fix": true
+        },
+        {
+          "fix": [
+            7000,
+            2.25e-05,
+            0.0002,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "AMBIGUOUS",
+          "justification": "Equal fit to two disconnected parallel ways; no fresh identifying history"
+        }
+      ],
+      "oracle_rationale": "Default history budget permits two unresolved samples; the third expires its road anchor."
+    },
+    {
+      "id": "GPS-002-gap-withholds",
+      "category": "signal-gap",
+      "events": [
+        {
+          "fix": [
+            1000,
+            4.5e-05,
+            -0.0005,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Unique eastbound feeder",
+          "expected_way": 10
+        },
+        {
+          "fix": [
+            30000,
+            2.25e-05,
+            0.0002,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "AMBIGUOUS",
+          "justification": "Equal fit to two disconnected parallel ways; no fresh identifying history"
+        }
+      ],
+      "oracle_rationale": "No observations for 29 seconds exceeds the declared 20-second anchor lifetime; there is no tunnel positioning evidence."
+    },
+    {
+      "id": "GPS-002-gap-reacquires",
+      "category": "signal-gap",
+      "events": [
+        {
+          "fix": [
+            1000,
+            4.5e-05,
+            -0.0005,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Unique eastbound feeder",
+          "expected_way": 10
+        },
+        {
+          "fix": [
+            30000,
+            2.25e-05,
+            0.0002,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "AMBIGUOUS",
+          "justification": "Equal fit to two disconnected parallel ways; no fresh identifying history"
+        },
+        {
+          "fix": [
+            36000,
+            4.5e-05,
+            -0.0004,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Fresh unique feeder observation reacquires independently",
+          "expected_way": 10
+        },
+        {
+          "fix": [
+            42000,
+            4.5e-05,
+            0.0002,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Only northern parallel road connects to fresh feeder anchor",
+          "expected_way": 20
+        }
+      ],
+      "oracle_rationale": "Fresh unique evidence after an expired anchor permits subsequent topological recovery."
+    },
+    {
+      "id": "GPS-002-duplicate-recovery",
+      "category": "timestamp",
+      "events": [
+        {
+          "fix": [
+            1000,
+            4.5e-05,
+            -0.0005,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Unique eastbound feeder",
+          "expected_way": 10
+        },
+        {
+          "fix": [
+            1000,
+            4.5e-05,
+            -0.00045,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "REJECTED",
+          "justification": "Duplicate timestamp",
+          "preserve_trusted_fix": true
+        },
+        {
+          "fix": [
+            7000,
+            4.5e-05,
+            0.0002,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Only northern parallel road connects to fresh feeder anchor",
+          "expected_way": 20
+        }
+      ],
+      "oracle_rationale": "Duplicate packet cannot replace the accepted timestamp or position."
+    },
+    {
+      "id": "GPS-002-out-of-order-recovery",
+      "category": "timestamp",
+      "events": [
+        {
+          "fix": [
+            1000,
+            4.5e-05,
+            -0.0005,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Unique eastbound feeder",
+          "expected_way": 10
+        },
+        {
+          "fix": [
+            500,
+            4.5e-05,
+            -0.00045,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "REJECTED",
+          "justification": "Timestamp precedes trusted fix",
+          "preserve_trusted_fix": true
+        },
+        {
+          "fix": [
+            7000,
+            4.5e-05,
+            0.0002,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Only northern parallel road connects to fresh feeder anchor",
+          "expected_way": 20
+        }
+      ],
+      "oracle_rationale": "Out-of-order packet cannot move trusted history backwards."
+    },
+    {
+      "id": "GPS-002-stale-recovery",
+      "category": "timestamp",
+      "events": [
+        {
+          "fix": [
+            1000,
+            4.5e-05,
+            -0.0005,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Unique eastbound feeder",
+          "expected_way": 10
+        },
+        {
+          "fix": [
+            2000,
+            4.5e-05,
+            -0.00045,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "REJECTED",
+          "justification": "Older than 10000ms quality limit",
+          "now_ms": 13000,
+          "preserve_trusted_fix": true
+        },
+        {
+          "fix": [
+            14000,
+            4.5e-05,
+            0.0002,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Only northern parallel road connects to fresh feeder anchor",
+          "expected_way": 20
+        }
+      ],
+      "oracle_rationale": "Delayed packet is rejected against explicit monotonic reception time; fresh packet can recover."
+    },
+    {
+      "id": "GPS-002-future-recovery",
+      "category": "timestamp",
+      "events": [
+        {
+          "fix": [
+            1000,
+            4.5e-05,
+            -0.0005,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Unique eastbound feeder",
+          "expected_way": 10
+        },
+        {
+          "fix": [
+            5000,
+            4.5e-05,
+            -0.00045,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "REJECTED",
+          "justification": "Packet time is after reception time",
+          "now_ms": 2000,
+          "preserve_trusted_fix": true
+        },
+        {
+          "fix": [
+            7000,
+            4.5e-05,
+            0.0002,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Only northern parallel road connects to fresh feeder anchor",
+          "expected_way": 20
+        }
+      ],
+      "oracle_rationale": "Future packet cannot advance trusted history."
+    },
+    {
+      "id": "GPS-002-position-jump-recovery",
+      "category": "fault-recovery",
+      "events": [
+        {
+          "fix": [
+            1000,
+            4.5e-05,
+            -0.0005,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Unique eastbound feeder",
+          "expected_way": 10
+        },
+        {
+          "fix": [
+            2000,
+            4.5e-05,
+            0.01,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "REJECTED",
+          "justification": "Over one kilometre in one second exceeds 90m/s analytical plausibility gate",
+          "preserve_trusted_fix": true
+        },
+        {
+          "fix": [
+            7000,
+            4.5e-05,
+            0.0002,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Only northern parallel road connects to fresh feeder anchor",
+          "expected_way": 20
+        }
+      ],
+      "oracle_rationale": "An impossible teleport is rejected; no map inference is allowed to legitimise it."
+    },
+    {
+      "id": "GPS-002-missing-heading",
+      "category": "ambiguity",
+      "events": [
+        {
+          "fix": [
+            1000,
+            4.5e-05,
+            -0.0005,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Unique eastbound feeder",
+          "expected_way": 10
+        },
+        {
+          "fix": [
+            7000,
+            2.25e-05,
+            0.0002,
+            3,
+            10,
+            null
+          ],
+          "expected_status": "AMBIGUOUS",
+          "justification": "No movement bearing corroboration for parallel-road temporal resolution"
+        }
+      ],
+      "oracle_rationale": "Topology alone must not resolve the equal-fit pair when movement heading is unavailable."
+    },
+    {
+      "id": "GPS-002-zero-speed",
+      "category": "ambiguity",
+      "events": [
+        {
+          "fix": [
+            1000,
+            4.5e-05,
+            -0.0005,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Unique eastbound feeder",
+          "expected_way": 10
+        },
+        {
+          "fix": [
+            7000,
+            2.25e-05,
+            0.0002,
+            3,
+            0,
+            90
+          ],
+          "expected_status": "AMBIGUOUS",
+          "justification": "Stationary observation cannot use movement-bearing resolution"
+        }
+      ],
+      "oracle_rationale": "A stationary fix does not establish directed movement."
+    },
+    {
+      "id": "GPS-002-reset-isolation",
+      "category": "lifecycle",
+      "events": [
+        {
+          "fix": [
+            1000,
+            4.5e-05,
+            -0.0005,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "MATCHED",
+          "justification": "Unique eastbound feeder",
+          "expected_way": 10
+        },
+        {
+          "action": "reset",
+          "justification": "New replay/session must not retain the previous road anchor"
+        },
+        {
+          "fix": [
+            7000,
+            2.25e-05,
+            0.0002,
+            3,
+            10,
+            90
+          ],
+          "expected_status": "AMBIGUOUS",
+          "justification": "Equal fit to two disconnected parallel ways; no fresh identifying history"
+        }
+      ],
+      "oracle_rationale": "Explicit reset removes both positional and road history."
+    }
+  ]
+}

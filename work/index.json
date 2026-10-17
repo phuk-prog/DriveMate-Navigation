@@ -1,6 +1,18 @@
 {
  "read_first": [
   {
+   "what": "Owner rule: do not register; leave inaccessible evidence diagnosed/unverified and move on",
+   "where": "docs/DMN_NO_REGISTRATION_RULE.md",
+   "cost": "tiny",
+   "topics": [
+    "registration",
+    "no-registration",
+    "access",
+    "evidence"
+   ],
+   "when": "before any external account or signup"
+  },
+  {
    "what": "Latest handover note (newest section only)",
    "where": "docs/HANDOVER.md (top section)",
    "cost": "tiny",
@@ -65,18 +77,6 @@
     "claim"
    ],
    "when": "when another AI may have pushed since"
-  },
-  {
-   "what": "Main research branch and full owner rules (draft PR #4)",
-   "where": "branch codex/dmn-gps001-ranked-trial-20261015, its AGENTS.md",
-   "cost": "small",
-   "topics": [
-    "rules",
-    "research",
-    "branch",
-    "pr"
-   ],
-   "when": "before changing engine code or starting a test"
   }
  ],
  "sources": [

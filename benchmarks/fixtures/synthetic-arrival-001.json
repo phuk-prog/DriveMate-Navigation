@@ -1,0 +1,966 @@
+{
+  "test_id": "ARRIVAL-001",
+  "classification": "synthetic analytical arrival lifecycle; no independently surveyed roads or GNSS; progress/reliability/on-route are explicit synthetic assessments",
+  "parameters": {
+    "radius_m": 20,
+    "max_remaining_m": 25,
+    "max_accuracy_m": 15,
+    "max_observation_age_ms": 10000,
+    "minimum_sample_gap_ms": 1000
+  },
+  "destinations": {
+    "north": {
+      "node": 3,
+      "position": [
+        1.001,
+        1
+      ]
+    },
+    "south": {
+      "node": 4,
+      "position": [
+        0.999,
+        1
+      ]
+    }
+  },
+  "cases": [
+    {
+      "id": "ARRIVAL-001-corroborated",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "ARRIVED"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-near-destination-early-progress",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 100,
+          "expect_status": "WITHHELD"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 100,
+          "expect_status": "WITHHELD"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-parallel-road",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1.00005
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": false,
+          "remaining_m": 0,
+          "expect_status": "WITHHELD"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "position": [
+            1.001,
+            1.00005
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": false,
+          "remaining_m": 0,
+          "expect_status": "WITHHELD"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-outside-radius",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "WITHHELD"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "position": [
+            1,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "WITHHELD"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-weak-accuracy-recovery",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 16,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "WITHHELD"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 3000,
+          "now_ms": 3000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 4000,
+          "now_ms": 4000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "ARRIVED"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-unreliable-recovery",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": false,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "WITHHELD"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 3000,
+          "now_ms": 3000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 4000,
+          "now_ms": 4000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "ARRIVED"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-stale-interrupts",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 1500,
+          "now_ms": 12000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "REJECTED"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 13000,
+          "now_ms": 13000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 14000,
+          "now_ms": 14000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "ARRIVED"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-future-interrupts",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2500,
+          "now_ms": 2000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "REJECTED"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 3000,
+          "now_ms": 3000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 4000,
+          "now_ms": 4000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "ARRIVED"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-duplicate-interrupts",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 2000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "REJECTED"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 3000,
+          "now_ms": 3000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 4000,
+          "now_ms": 4000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "ARRIVED"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-out-of-order-interrupts",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 3000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "REJECTED"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 4000,
+          "now_ms": 4000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 5000,
+          "now_ms": 5000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "ARRIVED"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-overshoot",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": -1,
+          "expect_status": "WITHHELD"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": -1,
+          "expect_status": "WITHHELD"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-unknown-progress",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": null,
+          "expect_status": "WITHHELD"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": null,
+          "expect_status": "WITHHELD"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-signal-gap",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 12000,
+          "now_ms": 12000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 13000,
+          "now_ms": 13000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "ARRIVED"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-stop",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "stop",
+          "now_ms": 1500,
+          "expect_arrived": false
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "INACTIVE"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-context-change",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "begin",
+          "now_ms": 1500,
+          "destination": "south",
+          "expect_arrived": false
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "WITHHELD"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 3000,
+          "now_ms": 3000,
+          "position": [
+            0.999,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 4000,
+          "now_ms": 4000,
+          "position": [
+            0.999,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "ARRIVED"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-latched-once",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "ARRIVED"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 3000,
+          "now_ms": 3000,
+          "position": [
+            1,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": false,
+          "remaining_m": 0,
+          "expect_status": "ALREADY_ARRIVED"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-accuracy-boundary",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 15,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 15,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "ARRIVED"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-remaining-boundary",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.00095,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 25,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "position": [
+            1.00095,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 25,
+          "expect_status": "ARRIVED"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-minimum-time-separation",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 1500,
+          "now_ms": 1500,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "ARRIVED"
+        }
+      ]
+    },
+    {
+      "id": "ARRIVAL-001-delayed-history-expiration",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 12000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 13000,
+          "now_ms": 13000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "CANDIDATE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 14000,
+          "now_ms": 14000,
+          "position": [
+            1.001,
+            1
+          ],
+          "accuracy_m": 5,
+          "reliable": true,
+          "on_route": true,
+          "remaining_m": 0,
+          "expect_status": "ARRIVED"
+        }
+      ]
+    }
+  ]
+}

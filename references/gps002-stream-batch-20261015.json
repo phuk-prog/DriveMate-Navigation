@@ -1,0 +1,2393 @@
+{
+  "trial": "GPS-002",
+  "run_id": 38816950211,
+  "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38816950211",
+  "head_sha": "38933527cb80ff09e0c756bb8717fdd6fe2945e2",
+  "job_id": 116703918285,
+  "execution_conclusion": "success",
+  "engine_policy_changed": false,
+  "independent_real_road_truth": false,
+  "verification": {
+    "unit_tests": 367,
+    "compile": "passed",
+    "privacy_guard": "passed",
+    "unified_preflight": "unavailable: scripts/unified_preflight.py is absent in research repository"
+  },
+  "report": {
+    "test_id": "GPS-002",
+    "classification": "synthetic analytical streaming safety contract",
+    "system": "DMN",
+    "version": "repository TemporalRoadMatcher / default limits",
+    "execution": "actual_local_python",
+    "map_sha256": "e3b376ed40705599fa3c8ad2c9b88e239b24cddb040dc676702fee49ba4c5bb9",
+    "oracle_sha256": "f1e2e87788a953a105d9f6daad30441c037c4a5cac37cfd4d205e6362cd82442",
+    "cases": [
+      {
+        "case_id": "GPS-002-parallel-first",
+        "category": "ambiguity",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected_status": "AMBIGUOUS",
+            "actual_status": "AMBIGUOUS",
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-002-parallel-repeat",
+        "category": "ambiguity",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected_status": "AMBIGUOUS",
+            "actual_status": "AMBIGUOUS",
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "expected_status": "AMBIGUOUS",
+            "actual_status": "AMBIGUOUS",
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-002-anchor-resolves",
+        "category": "recovery",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "directed_road_candidate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "unique_legal_temporal_connection",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-002-speed-spike-recovery",
+        "category": "fault-recovery",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "directed_road_candidate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "expected_status": "REJECTED",
+            "actual_status": "REJECTED",
+            "reason": "implausible_reported_speed",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "trusted_fix_unchanged": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "unique_legal_temporal_connection",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-002-weak-fix-recovery",
+        "category": "fault-recovery",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "directed_road_candidate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "expected_status": "UNKNOWN",
+            "actual_status": "UNKNOWN",
+            "reason": "weak_position_accuracy",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "unique_legal_temporal_connection",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-002-bad-burst-expires",
+        "category": "fault-recovery",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "directed_road_candidate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "expected_status": "REJECTED",
+            "actual_status": "REJECTED",
+            "reason": "implausible_reported_speed",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "trusted_fix_unchanged": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "expected_status": "REJECTED",
+            "actual_status": "REJECTED",
+            "reason": "implausible_reported_speed",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "trusted_fix_unchanged": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "expected_status": "REJECTED",
+            "actual_status": "REJECTED",
+            "reason": "implausible_reported_speed",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "trusted_fix_unchanged": true
+            },
+            "passed": true
+          },
+          {
+            "event": 4,
+            "expected_status": "AMBIGUOUS",
+            "actual_status": "AMBIGUOUS",
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-002-gap-withholds",
+        "category": "signal-gap",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "directed_road_candidate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "expected_status": "AMBIGUOUS",
+            "actual_status": "AMBIGUOUS",
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-002-gap-reacquires",
+        "category": "signal-gap",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "directed_road_candidate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "expected_status": "AMBIGUOUS",
+            "actual_status": "AMBIGUOUS",
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "directed_road_candidate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          },
+          {
+            "event": 3,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "unique_legal_temporal_connection",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-002-duplicate-recovery",
+        "category": "timestamp",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "directed_road_candidate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "expected_status": "REJECTED",
+            "actual_status": "REJECTED",
+            "reason": "duplicate_or_out_of_order",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "trusted_fix_unchanged": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "unique_legal_temporal_connection",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-002-out-of-order-recovery",
+        "category": "timestamp",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "directed_road_candidate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "expected_status": "REJECTED",
+            "actual_status": "REJECTED",
+            "reason": "duplicate_or_out_of_order",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "trusted_fix_unchanged": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "unique_legal_temporal_connection",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-002-stale-recovery",
+        "category": "timestamp",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "directed_road_candidate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "expected_status": "REJECTED",
+            "actual_status": "REJECTED",
+            "reason": "stale_timestamp",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "trusted_fix_unchanged": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "unique_legal_temporal_connection",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-002-future-recovery",
+        "category": "timestamp",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "directed_road_candidate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "expected_status": "REJECTED",
+            "actual_status": "REJECTED",
+            "reason": "future_timestamp",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "trusted_fix_unchanged": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "unique_legal_temporal_connection",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-002-position-jump-recovery",
+        "category": "fault-recovery",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "directed_road_candidate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "expected_status": "REJECTED",
+            "actual_status": "REJECTED",
+            "reason": "implausible_position_jump",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "trusted_fix_unchanged": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "unique_legal_temporal_connection",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-002-missing-heading",
+        "category": "ambiguity",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "directed_road_candidate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "expected_status": "AMBIGUOUS",
+            "actual_status": "AMBIGUOUS",
+            "reason": "insufficient_motion_to_disambiguate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-002-zero-speed",
+        "category": "ambiguity",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "directed_road_candidate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "expected_status": "AMBIGUOUS",
+            "actual_status": "AMBIGUOUS",
+            "reason": "insufficient_motion_to_disambiguate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true
+            },
+            "passed": true
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-002-reset-isolation",
+        "category": "lifecycle",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected_status": "MATCHED",
+            "actual_status": "MATCHED",
+            "reason": "directed_road_candidate",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true,
+              "expected_directed_way": true
+            },
+            "passed": true
+          },
+          {
+            "event": 1,
+            "action": "reset",
+            "checks": {
+              "anchor_cleared": true,
+              "history_cleared": true
+            },
+            "passed": true
+          },
+          {
+            "event": 2,
+            "expected_status": "AMBIGUOUS",
+            "actual_status": "AMBIGUOUS",
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "checks": {
+              "expected_status": true,
+              "no_road_claim_when_withheld": true
+            },
+            "passed": true
+          }
+        ]
+      }
+    ],
+    "independent_real_road_truth": false,
+    "physical_tunnel_or_GNSS_measurements": 0
+  },
+  "coverage": {
+    "test_id": "GPS-002",
+    "formula": "10 * fully passing cases / 16 frozen cases; ties share rank",
+    "ranking_scope": "Only DMN has a judged stream contract here; no competitor quality comparison is possible.",
+    "rows": [
+      {
+        "system": "DMN",
+        "rank": 1,
+        "passed": 16,
+        "failed": 0,
+        "unsupported": 0,
+        "not_run": 0,
+        "score_out_of_ten": 10,
+        "cases": [
+          {
+            "case_id": "GPS-002-parallel-first",
+            "category": "ambiguity",
+            "outcome": "PASS",
+            "events": [
+              {
+                "event": 0,
+                "expected_status": "AMBIGUOUS",
+                "actual_status": "AMBIGUOUS",
+                "reason": "nearby_parallel_or_overlapping_roads",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "GPS-002-parallel-repeat",
+            "category": "ambiguity",
+            "outcome": "PASS",
+            "events": [
+              {
+                "event": 0,
+                "expected_status": "AMBIGUOUS",
+                "actual_status": "AMBIGUOUS",
+                "reason": "nearby_parallel_or_overlapping_roads",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "expected_status": "AMBIGUOUS",
+                "actual_status": "AMBIGUOUS",
+                "reason": "nearby_parallel_or_overlapping_roads",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "GPS-002-anchor-resolves",
+            "category": "recovery",
+            "outcome": "PASS",
+            "events": [
+              {
+                "event": 0,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "directed_road_candidate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "unique_legal_temporal_connection",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "GPS-002-speed-spike-recovery",
+            "category": "fault-recovery",
+            "outcome": "PASS",
+            "events": [
+              {
+                "event": 0,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "directed_road_candidate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "expected_status": "REJECTED",
+                "actual_status": "REJECTED",
+                "reason": "implausible_reported_speed",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "trusted_fix_unchanged": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "unique_legal_temporal_connection",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "GPS-002-weak-fix-recovery",
+            "category": "fault-recovery",
+            "outcome": "PASS",
+            "events": [
+              {
+                "event": 0,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "directed_road_candidate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "expected_status": "UNKNOWN",
+                "actual_status": "UNKNOWN",
+                "reason": "weak_position_accuracy",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "unique_legal_temporal_connection",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "GPS-002-bad-burst-expires",
+            "category": "fault-recovery",
+            "outcome": "PASS",
+            "events": [
+              {
+                "event": 0,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "directed_road_candidate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "expected_status": "REJECTED",
+                "actual_status": "REJECTED",
+                "reason": "implausible_reported_speed",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "trusted_fix_unchanged": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "expected_status": "REJECTED",
+                "actual_status": "REJECTED",
+                "reason": "implausible_reported_speed",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "trusted_fix_unchanged": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "expected_status": "REJECTED",
+                "actual_status": "REJECTED",
+                "reason": "implausible_reported_speed",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "trusted_fix_unchanged": true
+                },
+                "passed": true
+              },
+              {
+                "event": 4,
+                "expected_status": "AMBIGUOUS",
+                "actual_status": "AMBIGUOUS",
+                "reason": "nearby_parallel_or_overlapping_roads",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "GPS-002-gap-withholds",
+            "category": "signal-gap",
+            "outcome": "PASS",
+            "events": [
+              {
+                "event": 0,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "directed_road_candidate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "expected_status": "AMBIGUOUS",
+                "actual_status": "AMBIGUOUS",
+                "reason": "nearby_parallel_or_overlapping_roads",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "GPS-002-gap-reacquires",
+            "category": "signal-gap",
+            "outcome": "PASS",
+            "events": [
+              {
+                "event": 0,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "directed_road_candidate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "expected_status": "AMBIGUOUS",
+                "actual_status": "AMBIGUOUS",
+                "reason": "nearby_parallel_or_overlapping_roads",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "directed_road_candidate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              },
+              {
+                "event": 3,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "unique_legal_temporal_connection",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "GPS-002-duplicate-recovery",
+            "category": "timestamp",
+            "outcome": "PASS",
+            "events": [
+              {
+                "event": 0,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "directed_road_candidate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "expected_status": "REJECTED",
+                "actual_status": "REJECTED",
+                "reason": "duplicate_or_out_of_order",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "trusted_fix_unchanged": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "unique_legal_temporal_connection",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "GPS-002-out-of-order-recovery",
+            "category": "timestamp",
+            "outcome": "PASS",
+            "events": [
+              {
+                "event": 0,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "directed_road_candidate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "expected_status": "REJECTED",
+                "actual_status": "REJECTED",
+                "reason": "duplicate_or_out_of_order",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "trusted_fix_unchanged": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "unique_legal_temporal_connection",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "GPS-002-stale-recovery",
+            "category": "timestamp",
+            "outcome": "PASS",
+            "events": [
+              {
+                "event": 0,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "directed_road_candidate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "expected_status": "REJECTED",
+                "actual_status": "REJECTED",
+                "reason": "stale_timestamp",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "trusted_fix_unchanged": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "unique_legal_temporal_connection",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "GPS-002-future-recovery",
+            "category": "timestamp",
+            "outcome": "PASS",
+            "events": [
+              {
+                "event": 0,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "directed_road_candidate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "expected_status": "REJECTED",
+                "actual_status": "REJECTED",
+                "reason": "future_timestamp",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "trusted_fix_unchanged": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "unique_legal_temporal_connection",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "GPS-002-position-jump-recovery",
+            "category": "fault-recovery",
+            "outcome": "PASS",
+            "events": [
+              {
+                "event": 0,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "directed_road_candidate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "expected_status": "REJECTED",
+                "actual_status": "REJECTED",
+                "reason": "implausible_position_jump",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "trusted_fix_unchanged": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "unique_legal_temporal_connection",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "GPS-002-missing-heading",
+            "category": "ambiguity",
+            "outcome": "PASS",
+            "events": [
+              {
+                "event": 0,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "directed_road_candidate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "expected_status": "AMBIGUOUS",
+                "actual_status": "AMBIGUOUS",
+                "reason": "insufficient_motion_to_disambiguate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "GPS-002-zero-speed",
+            "category": "ambiguity",
+            "outcome": "PASS",
+            "events": [
+              {
+                "event": 0,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "directed_road_candidate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "expected_status": "AMBIGUOUS",
+                "actual_status": "AMBIGUOUS",
+                "reason": "insufficient_motion_to_disambiguate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true
+                },
+                "passed": true
+              }
+            ]
+          },
+          {
+            "case_id": "GPS-002-reset-isolation",
+            "category": "lifecycle",
+            "outcome": "PASS",
+            "events": [
+              {
+                "event": 0,
+                "expected_status": "MATCHED",
+                "actual_status": "MATCHED",
+                "reason": "directed_road_candidate",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true,
+                  "expected_directed_way": true
+                },
+                "passed": true
+              },
+              {
+                "event": 1,
+                "action": "reset",
+                "checks": {
+                  "anchor_cleared": true,
+                  "history_cleared": true
+                },
+                "passed": true
+              },
+              {
+                "event": 2,
+                "expected_status": "AMBIGUOUS",
+                "actual_status": "AMBIGUOUS",
+                "reason": "nearby_parallel_or_overlapping_roads",
+                "checks": {
+                  "expected_status": true,
+                  "no_road_claim_when_withheld": true
+                },
+                "passed": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "system": "Valhalla",
+        "rank": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 16,
+        "not_run": 0,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "GPS-002-parallel-first",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated trace_attributes API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-parallel-repeat",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated trace_attributes API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-anchor-resolves",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated trace_attributes API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-speed-spike-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated trace_attributes API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-weak-fix-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated trace_attributes API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-bad-burst-expires",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated trace_attributes API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-gap-withholds",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated trace_attributes API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-gap-reacquires",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated trace_attributes API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-duplicate-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated trace_attributes API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-out-of-order-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated trace_attributes API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-stale-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated trace_attributes API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-future-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated trace_attributes API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-position-jump-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated trace_attributes API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-missing-heading",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated trace_attributes API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-zero-speed",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated trace_attributes API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-reset-isolation",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated trace_attributes API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          }
+        ]
+      },
+      {
+        "system": "OSRM",
+        "rank": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 16,
+        "not_run": 0,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "GPS-002-parallel-first",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated Match API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-parallel-repeat",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated Match API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-anchor-resolves",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated Match API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-speed-spike-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated Match API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-weak-fix-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated Match API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-bad-burst-expires",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated Match API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-gap-withholds",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated Match API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-gap-reacquires",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated Match API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-duplicate-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated Match API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-out-of-order-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated Match API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-stale-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated Match API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-future-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated Match API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-position-jump-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated Match API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-missing-heading",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated Match API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-zero-speed",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated Match API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-reset-isolation",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated Match API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          }
+        ]
+      },
+      {
+        "system": "GraphHopper",
+        "rank": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 16,
+        "not_run": 0,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "GPS-002-parallel-first",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated map-matching API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-parallel-repeat",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated map-matching API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-anchor-resolves",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated map-matching API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-speed-spike-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated map-matching API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-weak-fix-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated map-matching API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-bad-burst-expires",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated map-matching API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-gap-withholds",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated map-matching API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-gap-reacquires",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated map-matching API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-duplicate-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated map-matching API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-out-of-order-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated map-matching API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-stale-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated map-matching API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-future-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated map-matching API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-position-jump-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated map-matching API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-missing-heading",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated map-matching API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-zero-speed",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated map-matching API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          },
+          {
+            "case_id": "GPS-002-reset-isolation",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated map-matching API is batch geometry; no equivalent reception-clock, reset and trusted-stream-history contract."
+          }
+        ]
+      },
+      {
+        "system": "OsmAnd",
+        "rank": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 0,
+        "not_run": 16,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "GPS-002-parallel-first",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-parallel-repeat",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-anchor-resolves",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-speed-spike-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-weak-fix-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-bad-burst-expires",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-gap-withholds",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-gap-reacquires",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-duplicate-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-out-of-order-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-stale-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-future-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-position-jump-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-missing-heading",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-zero-speed",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-reset-isolation",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          }
+        ]
+      },
+      {
+        "system": "Organic Maps",
+        "rank": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 0,
+        "not_run": 16,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "GPS-002-parallel-first",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-parallel-repeat",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-anchor-resolves",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-speed-spike-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-weak-fix-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-bad-burst-expires",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-gap-withholds",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-gap-reacquires",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-duplicate-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-out-of-order-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-stale-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-future-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-position-jump-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-missing-heading",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-zero-speed",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          },
+          {
+            "case_id": "GPS-002-reset-isolation",
+            "outcome": "NOT_RUN",
+            "reason": "Executable app/native GPS lifecycle replay harness not implemented."
+          }
+        ]
+      },
+      {
+        "system": "BRouter",
+        "rank": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 16,
+        "not_run": 0,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "GPS-002-parallel-first",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated routing API does not consume a GPS observation stream."
+          },
+          {
+            "case_id": "GPS-002-parallel-repeat",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated routing API does not consume a GPS observation stream."
+          },
+          {
+            "case_id": "GPS-002-anchor-resolves",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated routing API does not consume a GPS observation stream."
+          },
+          {
+            "case_id": "GPS-002-speed-spike-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated routing API does not consume a GPS observation stream."
+          },
+          {
+            "case_id": "GPS-002-weak-fix-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated routing API does not consume a GPS observation stream."
+          },
+          {
+            "case_id": "GPS-002-bad-burst-expires",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated routing API does not consume a GPS observation stream."
+          },
+          {
+            "case_id": "GPS-002-gap-withholds",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated routing API does not consume a GPS observation stream."
+          },
+          {
+            "case_id": "GPS-002-gap-reacquires",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated routing API does not consume a GPS observation stream."
+          },
+          {
+            "case_id": "GPS-002-duplicate-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated routing API does not consume a GPS observation stream."
+          },
+          {
+            "case_id": "GPS-002-out-of-order-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated routing API does not consume a GPS observation stream."
+          },
+          {
+            "case_id": "GPS-002-stale-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated routing API does not consume a GPS observation stream."
+          },
+          {
+            "case_id": "GPS-002-future-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated routing API does not consume a GPS observation stream."
+          },
+          {
+            "case_id": "GPS-002-position-jump-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated routing API does not consume a GPS observation stream."
+          },
+          {
+            "case_id": "GPS-002-missing-heading",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated routing API does not consume a GPS observation stream."
+          },
+          {
+            "case_id": "GPS-002-zero-speed",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated routing API does not consume a GPS observation stream."
+          },
+          {
+            "case_id": "GPS-002-reset-isolation",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated routing API does not consume a GPS observation stream."
+          }
+        ]
+      },
+      {
+        "system": "HERE",
+        "rank": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 0,
+        "not_run": 16,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "GPS-002-parallel-first",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-parallel-repeat",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-anchor-resolves",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-speed-spike-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-weak-fix-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-bad-burst-expires",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-gap-withholds",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-gap-reacquires",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-duplicate-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-out-of-order-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-stale-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-future-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-position-jump-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-missing-heading",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-zero-speed",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-reset-isolation",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          }
+        ]
+      },
+      {
+        "system": "Mapbox",
+        "rank": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 0,
+        "not_run": 16,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "GPS-002-parallel-first",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-parallel-repeat",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-anchor-resolves",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-speed-spike-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-weak-fix-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-bad-burst-expires",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-gap-withholds",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-gap-reacquires",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-duplicate-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-out-of-order-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-stale-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-future-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-position-jump-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-missing-heading",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-zero-speed",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-reset-isolation",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          }
+        ]
+      },
+      {
+        "system": "TomTom",
+        "rank": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 0,
+        "not_run": 16,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "GPS-002-parallel-first",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-parallel-repeat",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-anchor-resolves",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-speed-spike-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-weak-fix-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-bad-burst-expires",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-gap-withholds",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-gap-reacquires",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-duplicate-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-out-of-order-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-stale-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-future-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-position-jump-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-missing-heading",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-zero-speed",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-reset-isolation",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          }
+        ]
+      },
+      {
+        "system": "openrouteservice",
+        "rank": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 16,
+        "not_run": 0,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "GPS-002-parallel-first",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated pointwise snap API has no streaming quality/reset/history contract."
+          },
+          {
+            "case_id": "GPS-002-parallel-repeat",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated pointwise snap API has no streaming quality/reset/history contract."
+          },
+          {
+            "case_id": "GPS-002-anchor-resolves",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated pointwise snap API has no streaming quality/reset/history contract."
+          },
+          {
+            "case_id": "GPS-002-speed-spike-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated pointwise snap API has no streaming quality/reset/history contract."
+          },
+          {
+            "case_id": "GPS-002-weak-fix-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated pointwise snap API has no streaming quality/reset/history contract."
+          },
+          {
+            "case_id": "GPS-002-bad-burst-expires",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated pointwise snap API has no streaming quality/reset/history contract."
+          },
+          {
+            "case_id": "GPS-002-gap-withholds",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated pointwise snap API has no streaming quality/reset/history contract."
+          },
+          {
+            "case_id": "GPS-002-gap-reacquires",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated pointwise snap API has no streaming quality/reset/history contract."
+          },
+          {
+            "case_id": "GPS-002-duplicate-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated pointwise snap API has no streaming quality/reset/history contract."
+          },
+          {
+            "case_id": "GPS-002-out-of-order-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated pointwise snap API has no streaming quality/reset/history contract."
+          },
+          {
+            "case_id": "GPS-002-stale-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated pointwise snap API has no streaming quality/reset/history contract."
+          },
+          {
+            "case_id": "GPS-002-future-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated pointwise snap API has no streaming quality/reset/history contract."
+          },
+          {
+            "case_id": "GPS-002-position-jump-recovery",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated pointwise snap API has no streaming quality/reset/history contract."
+          },
+          {
+            "case_id": "GPS-002-missing-heading",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated pointwise snap API has no streaming quality/reset/history contract."
+          },
+          {
+            "case_id": "GPS-002-zero-speed",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated pointwise snap API has no streaming quality/reset/history contract."
+          },
+          {
+            "case_id": "GPS-002-reset-isolation",
+            "outcome": "UNSUPPORTED",
+            "reason": "Integrated pointwise snap API has no streaming quality/reset/history contract."
+          }
+        ]
+      },
+      {
+        "system": "Google Maps",
+        "rank": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 0,
+        "not_run": 16,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "GPS-002-parallel-first",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-parallel-repeat",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-anchor-resolves",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-speed-spike-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-weak-fix-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-bad-burst-expires",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-gap-withholds",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-gap-reacquires",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-duplicate-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-out-of-order-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-stale-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-future-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-position-jump-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-missing-heading",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-zero-speed",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          },
+          {
+            "case_id": "GPS-002-reset-isolation",
+            "outcome": "NOT_RUN",
+            "reason": "No configured permitted access and equivalent GPS lifecycle interface."
+          }
+        ]
+      },
+      {
+        "system": "Waze",
+        "rank": null,
+        "passed": 0,
+        "failed": 0,
+        "unsupported": 0,
+        "not_run": 16,
+        "score_out_of_ten": null,
+        "cases": [
+          {
+            "case_id": "GPS-002-parallel-first",
+            "outcome": "NOT_RUN",
+            "reason": "No permitted automated GPS lifecycle replay interface established."
+          },
+          {
+            "case_id": "GPS-002-parallel-repeat",
+            "outcome": "NOT_RUN",
+            "reason": "No permitted automated GPS lifecycle replay interface established."
+          },
+          {
+            "case_id": "GPS-002-anchor-resolves",
+            "outcome": "NOT_RUN",
+            "reason": "No permitted automated GPS lifecycle replay interface established."
+          },
+          {
+            "case_id": "GPS-002-speed-spike-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No permitted automated GPS lifecycle replay interface established."
+          },
+          {
+            "case_id": "GPS-002-weak-fix-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No permitted automated GPS lifecycle replay interface established."
+          },
+          {
+            "case_id": "GPS-002-bad-burst-expires",
+            "outcome": "NOT_RUN",
+            "reason": "No permitted automated GPS lifecycle replay interface established."
+          },
+          {
+            "case_id": "GPS-002-gap-withholds",
+            "outcome": "NOT_RUN",
+            "reason": "No permitted automated GPS lifecycle replay interface established."
+          },
+          {
+            "case_id": "GPS-002-gap-reacquires",
+            "outcome": "NOT_RUN",
+            "reason": "No permitted automated GPS lifecycle replay interface established."
+          },
+          {
+            "case_id": "GPS-002-duplicate-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No permitted automated GPS lifecycle replay interface established."
+          },
+          {
+            "case_id": "GPS-002-out-of-order-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No permitted automated GPS lifecycle replay interface established."
+          },
+          {
+            "case_id": "GPS-002-stale-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No permitted automated GPS lifecycle replay interface established."
+          },
+          {
+            "case_id": "GPS-002-future-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No permitted automated GPS lifecycle replay interface established."
+          },
+          {
+            "case_id": "GPS-002-position-jump-recovery",
+            "outcome": "NOT_RUN",
+            "reason": "No permitted automated GPS lifecycle replay interface established."
+          },
+          {
+            "case_id": "GPS-002-missing-heading",
+            "outcome": "NOT_RUN",
+            "reason": "No permitted automated GPS lifecycle replay interface established."
+          },
+          {
+            "case_id": "GPS-002-zero-speed",
+            "outcome": "NOT_RUN",
+            "reason": "No permitted automated GPS lifecycle replay interface established."
+          },
+          {
+            "case_id": "GPS-002-reset-isolation",
+            "outcome": "NOT_RUN",
+            "reason": "No permitted automated GPS lifecycle replay interface established."
+          }
+        ]
+      }
+    ]
+  }
+}

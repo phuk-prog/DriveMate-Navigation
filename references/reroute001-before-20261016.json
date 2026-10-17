@@ -1,0 +1,12 @@
+{
+  "trial": "REROUTE-001",
+  "phase": "preimplementation_capability_check",
+  "source_base_sha": "ac3668c35418cce92e7d1ed5c1d0befcc3a2a64e",
+  "execution": "local_module_availability_check",
+  "status": "UNAVAILABLE",
+  "reason": "No engine.rerouting_controller module exists at live base; shortest_route is not a lifecycle controller. No cases scored.",
+  "score_out_of_ten": null,
+  "oracle_sha256": "467f51d173abb37b34d0485b3bed4cccd2c09c287d18763b5489292d87a64cee",
+  "map_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+  "independent_real_world_evidence": false
+}

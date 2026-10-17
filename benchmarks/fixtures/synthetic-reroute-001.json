@@ -1,0 +1,706 @@
+{
+  "classification": "synthetic analytical rerouting-controller lifecycle; not real GNSS or device evidence",
+  "frozen_before_implementation": true,
+  "parameters": {
+    "minimum_off_route_samples": 2,
+    "minimum_sample_gap_ms": 1000,
+    "max_observation_age_ms": 10000,
+    "cooldown_ms": 30000,
+    "max_request_age_ms": 15000
+  },
+  "map_fixture": "synthetic-route-002.xml",
+  "planner_basis": "Actual imported DMN graph and shortest_route: initial4->3; detour4->3 with way40 blocked; replacement2->3; unreachable4->3 with ways40 and95 blocked. Clock and reliability/on-route decisions are declared synthetic inputs, not derived from a sensor or mocked reference engine.",
+  "cases": [
+    {
+      "id": "REROUTE-001-corroborated-install",
+      "oracle_rationale": "Two reliable off-route samples at least1s apart permit one request; a fresh current successful result replaces the route.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "a"
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 2500,
+          "planner": "detour",
+          "expect_accepted": true,
+          "expect_route": "detour"
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-on-route-resets",
+      "oracle_rationale": "An intervening reliable on-route observation breaks consecutive off-route evidence.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "on_route": true,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 3000,
+          "now_ms": 3000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-weak-sample-resets",
+      "oracle_rationale": "An uncertain observation breaks corroboration; two subsequent reliable samples recover.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "on_route": false,
+          "reliable": false,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 3000,
+          "now_ms": 3000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 4000,
+          "now_ms": 4000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "a"
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 4500,
+          "planner": "detour",
+          "expect_accepted": true,
+          "expect_route": "detour"
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-timestamp-rejection",
+      "oracle_rationale": "Stale, future, duplicate and backwards packets do not count or advance trusted ordering.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 0,
+          "now_ms": 11000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 13000,
+          "now_ms": 12000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 12000,
+          "now_ms": 12000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 12000,
+          "now_ms": 12500,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 11900,
+          "now_ms": 12600,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 13000,
+          "now_ms": 13000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "a"
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 13500,
+          "planner": "detour",
+          "expect_accepted": true,
+          "expect_route": "detour"
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-independent-spacing",
+      "oracle_rationale": "Rapid samples within1s do not provide independent off-route corroboration.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 1500,
+          "now_ms": 1500,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 1900,
+          "now_ms": 1900,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "a"
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 2500,
+          "planner": "detour",
+          "expect_accepted": true,
+          "expect_route": "detour"
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-one-pending-request",
+      "oracle_rationale": "Additional off-route samples must not launch concurrent requests.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "a"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 3000,
+          "now_ms": 3000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 3500,
+          "planner": "detour",
+          "expect_accepted": true,
+          "expect_route": "detour"
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-cooldown-and-recovery",
+      "oracle_rationale": "Requests are at least30s apart; a long observation gap requires fresh corroboration before retry.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "a"
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 2500,
+          "planner": "detour",
+          "expect_accepted": true,
+          "expect_route": "detour"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 3000,
+          "now_ms": 3000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 4000,
+          "now_ms": 4000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 31000,
+          "now_ms": 31000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 32000,
+          "now_ms": 32000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "b"
+        },
+        {
+          "action": "complete",
+          "token": "b",
+          "now_ms": 32500,
+          "planner": "detour",
+          "expect_accepted": true,
+          "expect_route": "detour"
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-on-route-cancels",
+      "oracle_rationale": "Returning on route cancels the pending request; its late response cannot replace the original route.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "a"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2500,
+          "now_ms": 2500,
+          "on_route": true,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 3000,
+          "planner": "detour",
+          "expect_accepted": false,
+          "expect_route": "initial"
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-weak-sample-cancels",
+      "oracle_rationale": "New unreliable evidence suppresses a pending replacement instead of installing a route from stale confidence.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "a"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2500,
+          "now_ms": 2500,
+          "on_route": false,
+          "reliable": false,
+          "expect_request": null
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 3000,
+          "planner": "detour",
+          "expect_accepted": false,
+          "expect_route": "initial"
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-context-change",
+      "oracle_rationale": "Changing trip/route context invalidates the old request; subsequent tokens are distinct and can succeed.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "a"
+        },
+        {
+          "action": "begin",
+          "now_ms": 2500,
+          "planner": "replacement",
+          "expect_route": "replacement"
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 3000,
+          "planner": "detour",
+          "expect_accepted": false,
+          "expect_route": "replacement"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 3500,
+          "now_ms": 3500,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 4500,
+          "now_ms": 4500,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "b"
+        },
+        {
+          "action": "complete",
+          "token": "b",
+          "now_ms": 5000,
+          "planner": "detour",
+          "expect_accepted": true,
+          "expect_route": "detour"
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-stop-cancels",
+      "oracle_rationale": "Stopping clears active route state and rejects late results and further observations until a new begin.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "a"
+        },
+        {
+          "action": "stop",
+          "now_ms": 2500,
+          "expect_route": "NONE"
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 3000,
+          "planner": "detour",
+          "expect_accepted": false,
+          "expect_route": "NONE"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 3500,
+          "now_ms": 3500,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-stale-evidence-result",
+      "oracle_rationale": "A result cannot install when its latest off-route observation is older than10s, even before the request timeout.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "a"
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 13001,
+          "planner": "detour",
+          "expect_accepted": false,
+          "expect_route": "initial"
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-request-timeout",
+      "oracle_rationale": "Fresh observations do not extend a pending request beyond its15s lifetime.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "a"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 14000,
+          "now_ms": 14000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 18000,
+          "planner": "detour",
+          "expect_accepted": false,
+          "expect_route": "initial"
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-request-age-boundary",
+      "oracle_rationale": "At exactly15s request age and fresh off-route evidence, the current successful result may install.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "a"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 14000,
+          "now_ms": 14000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 17000,
+          "planner": "detour",
+          "expect_accepted": true,
+          "expect_route": "detour"
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-failed-route-preserves",
+      "oracle_rationale": "Actual RouteNotFound must preserve the current route; failed requests still respect cooldown.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "a"
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 2500,
+          "planner": "unreachable",
+          "expect_accepted": false,
+          "expect_route": "initial"
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 3000,
+          "now_ms": 3000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 4000,
+          "now_ms": 4000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        }
+      ]
+    },
+    {
+      "id": "REROUTE-001-unknown-callback",
+      "oracle_rationale": "An unknown callback cannot clear or replace the legitimate pending request.",
+      "events": [
+        {
+          "action": "observe",
+          "timestamp_ms": 1000,
+          "now_ms": 1000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": null
+        },
+        {
+          "action": "observe",
+          "timestamp_ms": 2000,
+          "now_ms": 2000,
+          "on_route": false,
+          "reliable": true,
+          "expect_request": "a"
+        },
+        {
+          "action": "complete",
+          "token": "unknown",
+          "now_ms": 2500,
+          "planner": "detour",
+          "expect_accepted": false,
+          "expect_route": "initial"
+        },
+        {
+          "action": "complete",
+          "token": "a",
+          "now_ms": 3000,
+          "planner": "detour",
+          "expect_accepted": true,
+          "expect_route": "detour"
+        }
+      ]
+    }
+  ]
+}

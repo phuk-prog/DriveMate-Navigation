@@ -1,0 +1,2407 @@
+{
+ "available_by_stratum": {
+  "roundabout/exit1": 343,
+  "roundabout/exit2": 343,
+  "roundabout/exit3": 343,
+  "turn/left": 35282,
+  "turn/right": 35625,
+  "turn/straight": 8094
+ },
+ "cases": [
+  {
+   "from_node": 5239922152,
+   "from_way": 52174561,
+   "id": "turn-664643295",
+   "lat": 53.5619042,
+   "lon": -2.3808588,
+   "node": 664643295,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 5239922151,
+   "to_way": 586699079
+  },
+  {
+   "from_node": 394864818,
+   "from_way": 34391783,
+   "id": "turn-394864820",
+   "lat": 53.3942405,
+   "lon": -2.1114045,
+   "node": 394864820,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 394864824,
+   "to_way": 34391784
+  },
+  {
+   "from_node": 12264339105,
+   "from_way": 194728550,
+   "id": "turn-767841424",
+   "lat": 53.3979336,
+   "lon": -2.1573896,
+   "node": 767841424,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 1323471017,
+   "to_way": 49196897
+  },
+  {
+   "from_node": 7981603453,
+   "from_way": 60783426,
+   "id": "turn-782230413",
+   "lat": 53.5265387,
+   "lon": -2.4313604,
+   "node": 782230413,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 782230519,
+   "to_way": 62817860
+  },
+  {
+   "from_node": 768408694,
+   "from_way": 1346616842,
+   "id": "turn-701277528",
+   "lat": 53.6050826,
+   "lon": -2.4317614,
+   "node": 701277528,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 5475771349,
+   "to_way": 55827317
+  },
+  {
+   "from_node": 9014730396,
+   "from_way": 32264462,
+   "id": "turn-1681348675",
+   "lat": 53.4020085,
+   "lon": -2.1857656,
+   "node": 1681348675,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 9008027798,
+   "to_way": 155774769
+  },
+  {
+   "from_node": 1042587087,
+   "from_way": 89945998,
+   "id": "turn-1042587542",
+   "lat": 53.4415757,
+   "lon": -2.1510628,
+   "node": 1042587542,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 1042587544,
+   "to_way": 89946007
+  },
+  {
+   "from_node": 990527998,
+   "from_way": 85449372,
+   "id": "turn-990406614",
+   "lat": 53.3958999,
+   "lon": -2.2728652,
+   "node": 990406614,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 990406616,
+   "to_way": 85436715
+  },
+  {
+   "from_node": 247095281,
+   "from_way": 22795015,
+   "id": "turn-247095280",
+   "lat": 53.4740514,
+   "lon": -2.0024982,
+   "node": 247095280,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 247095356,
+   "to_way": 22939157
+  },
+  {
+   "from_node": 2779764364,
+   "from_way": 67123910,
+   "id": "turn-810747480",
+   "lat": 53.4846709,
+   "lon": -2.3035108,
+   "node": 810747480,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 11764994147,
+   "to_way": 67123908
+  },
+  {
+   "from_node": 717881790,
+   "from_way": 57869197,
+   "id": "turn-717881623",
+   "lat": 53.4553453,
+   "lon": -2.3413037,
+   "node": 717881623,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 717881711,
+   "to_way": 57869206
+  },
+  {
+   "from_node": 920563954,
+   "from_way": 78445180,
+   "id": "turn-920563944",
+   "lat": 53.4856402,
+   "lon": -2.1616994,
+   "node": 920563944,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 689772232,
+   "to_way": 78445097
+  },
+  {
+   "from_node": 6419002091,
+   "from_way": 27995769,
+   "id": "turn-307419892",
+   "lat": 53.4804292,
+   "lon": -2.2276847,
+   "node": 307419892,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 6418998968,
+   "to_way": 360828844
+  },
+  {
+   "from_node": 277313599,
+   "from_way": 25446411,
+   "id": "turn-277313601",
+   "lat": 53.3841579,
+   "lon": -2.1054672,
+   "node": 277313601,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 277314514,
+   "to_way": 25446490
+  },
+  {
+   "from_node": 301486473,
+   "from_way": 27458557,
+   "id": "turn-301486474",
+   "lat": 53.3818572,
+   "lon": -2.2193013,
+   "node": 301486474,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 301487561,
+   "to_way": 27458677
+  },
+  {
+   "from_node": 459518435,
+   "from_way": 38755211,
+   "id": "turn-459518436",
+   "lat": 53.3999062,
+   "lon": -2.5675751,
+   "node": 459518436,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 9023112886,
+   "to_way": 38755200
+  },
+  {
+   "from_node": 307375757,
+   "from_way": 27991734,
+   "id": "turn-307375758",
+   "lat": 53.6535301,
+   "lon": -2.6140791,
+   "node": 307375758,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 307375763,
+   "to_way": 27991736
+  },
+  {
+   "from_node": 8764959740,
+   "from_way": 208760590,
+   "id": "turn-339870063",
+   "lat": 53.4292729,
+   "lon": -2.1036003,
+   "node": 339870063,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 8764959738,
+   "to_way": 27823809
+  },
+  {
+   "from_node": 9228329713,
+   "from_way": 27930420,
+   "id": "turn-306573176",
+   "lat": 53.4960619,
+   "lon": -2.3179062,
+   "node": 306573176,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 9228329686,
+   "to_way": 27930400
+  },
+  {
+   "from_node": 9464774673,
+   "from_way": 32460102,
+   "id": "turn-13124798801",
+   "lat": 53.4706811,
+   "lon": -2.5991874,
+   "node": 13124798801,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 13124798802,
+   "to_way": 1427674795
+  },
+  {
+   "from_node": 5596608673,
+   "from_way": 74947708,
+   "id": "turn-885006987",
+   "lat": 53.536678,
+   "lon": -2.384105,
+   "node": 885006987,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 885021508,
+   "to_way": 74947706
+  },
+  {
+   "from_node": 305789781,
+   "from_way": 4311158,
+   "id": "turn-25254752",
+   "lat": 53.3470363,
+   "lon": -2.2191416,
+   "node": 25254752,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 305789788,
+   "to_way": 4311162
+  },
+  {
+   "from_node": 779080079,
+   "from_way": 62367494,
+   "id": "turn-3367124340",
+   "lat": 53.6292791,
+   "lon": -2.1819395,
+   "node": 3367124340,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 3367124327,
+   "to_way": 329775047
+  },
+  {
+   "from_node": 789367124,
+   "from_way": 1425005083,
+   "id": "turn-1683152000",
+   "lat": 53.553464,
+   "lon": -2.1186206,
+   "node": 1683152000,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 13098367349,
+   "to_way": 155991044
+  },
+  {
+   "from_node": 391428174,
+   "from_way": 34136432,
+   "id": "turn-391428178",
+   "lat": 53.5494342,
+   "lon": -2.5085884,
+   "node": 391428178,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 391428179,
+   "to_way": 34136433
+  },
+  {
+   "from_node": 13140623737,
+   "from_way": 4959626,
+   "id": "turn-32826235",
+   "lat": 53.5606807,
+   "lon": -2.2846632,
+   "node": 32826235,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 32826237,
+   "to_way": 4959640
+  },
+  {
+   "from_node": 252891122,
+   "from_way": 126133950,
+   "id": "turn-252891123",
+   "lat": 53.5350779,
+   "lon": -2.5592728,
+   "node": 252891123,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 252891132,
+   "to_way": 23353790
+  },
+  {
+   "from_node": 1865913598,
+   "from_way": 176030569,
+   "id": "turn-1865913599",
+   "lat": 53.6450395,
+   "lon": -2.0966859,
+   "node": 1865913599,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 1865912155,
+   "to_way": 62411631
+  },
+  {
+   "from_node": 342256588,
+   "from_way": 30819018,
+   "id": "turn-342104097",
+   "lat": 53.3911301,
+   "lon": -2.6583443,
+   "node": 342104097,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 342104095,
+   "to_way": 30819004
+  },
+  {
+   "from_node": 25475444,
+   "from_way": 7829456,
+   "id": "turn-25475443",
+   "lat": 53.3967712,
+   "lon": -2.3299259,
+   "node": 25475443,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 1459804562,
+   "to_way": 7829455
+  },
+  {
+   "from_node": 10302665836,
+   "from_way": 27946566,
+   "id": "turn-306859476",
+   "lat": 53.4808201,
+   "lon": -2.2026278,
+   "node": 306859476,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 10301228491,
+   "to_way": 27946570
+  },
+  {
+   "from_node": 1268200169,
+   "from_way": 10051077,
+   "id": "turn-1268200000",
+   "lat": 53.4167,
+   "lon": -2.2883337,
+   "node": 1268200000,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 1268200488,
+   "to_way": 111275831
+  },
+  {
+   "from_node": 6797059319,
+   "from_way": 39346704,
+   "id": "turn-471410368",
+   "lat": 53.5773093,
+   "lon": -2.3873337,
+   "node": 471410368,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 471410340,
+   "to_way": 506520646
+  },
+  {
+   "from_node": 6323216545,
+   "from_way": 5007513,
+   "id": "turn-33225564",
+   "lat": 53.4575845,
+   "lon": -2.2618574,
+   "node": 33225564,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 6313438000,
+   "to_way": 5002235
+  },
+  {
+   "from_node": 8677303578,
+   "from_way": 28102056,
+   "id": "turn-308701009",
+   "lat": 53.4802608,
+   "lon": -2.2707558,
+   "node": 308701009,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 2823574640,
+   "to_way": 592421473
+  },
+  {
+   "from_node": 2460631642,
+   "from_way": 238215833,
+   "id": "turn-1109588396",
+   "lat": 53.4284975,
+   "lon": -2.0970204,
+   "node": 1109588396,
+   "stratum": [
+    "turn",
+    "left"
+   ],
+   "to_node": 2460631648,
+   "to_way": 238215796
+  },
+  {
+   "from_node": 13186894139,
+   "from_way": 1434712891,
+   "id": "turn-306874043",
+   "lat": 53.4742826,
+   "lon": -2.1986079,
+   "node": 306874043,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 12427020201,
+   "to_way": 27946932
+  },
+  {
+   "from_node": 32695362,
+   "from_way": 4956576,
+   "id": "turn-32695361",
+   "lat": 53.5095379,
+   "lon": -2.2036113,
+   "node": 32695361,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 32695378,
+   "to_way": 4956585
+  },
+  {
+   "from_node": 920573095,
+   "from_way": 78445969,
+   "id": "turn-920573097",
+   "lat": 53.4841695,
+   "lon": -2.167376,
+   "node": 920573097,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 920573082,
+   "to_way": 78445972
+  },
+  {
+   "from_node": 6843748967,
+   "from_way": 120020880,
+   "id": "turn-1346736008",
+   "lat": 53.6121575,
+   "lon": -2.4078103,
+   "node": 1346736008,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 6812291736,
+   "to_way": 726867189
+  },
+  {
+   "from_node": 13164900580,
+   "from_way": 31552148,
+   "id": "turn-7944778532",
+   "lat": 53.4523955,
+   "lon": -2.7194034,
+   "node": 7944778532,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 7944778536,
+   "to_way": 851806983
+  },
+  {
+   "from_node": 1277699512,
+   "from_way": 112410101,
+   "id": "turn-1277699529",
+   "lat": 53.4488963,
+   "lon": -2.301283,
+   "node": 1277699529,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 1277699240,
+   "to_way": 112410085
+  },
+  {
+   "from_node": 12466147963,
+   "from_way": 4796069,
+   "id": "turn-25535022",
+   "lat": 53.4561548,
+   "lon": -2.2281764,
+   "node": 25535022,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 12466159858,
+   "to_way": 824018649
+  },
+  {
+   "from_node": 32611502,
+   "from_way": 4947357,
+   "id": "turn-32611496",
+   "lat": 53.6154986,
+   "lon": -2.2895433,
+   "node": 32611496,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 32611288,
+   "to_way": 4947354
+  },
+  {
+   "from_node": 570762037,
+   "from_way": 45019788,
+   "id": "turn-570762018",
+   "lat": 53.6635521,
+   "lon": -2.6310222,
+   "node": 570762018,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 10274656531,
+   "to_way": 39575160
+  },
+  {
+   "from_node": 259764618,
+   "from_way": 79061930,
+   "id": "turn-924035915",
+   "lat": 53.5195817,
+   "lon": -2.333858,
+   "node": 924035915,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 924068881,
+   "to_way": 217296361
+  },
+  {
+   "from_node": 264371634,
+   "from_way": 1068799708,
+   "id": "turn-6653839759",
+   "lat": 53.5581387,
+   "lon": -2.4599733,
+   "node": 6653839759,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 11189348704,
+   "to_way": 158486659
+  },
+  {
+   "from_node": 9048562664,
+   "from_way": 977904299,
+   "id": "turn-1400283306",
+   "lat": 53.5628686,
+   "lon": -2.6752657,
+   "node": 1400283306,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 9048562662,
+   "to_way": 126272016
+  },
+  {
+   "from_node": 11189104803,
+   "from_way": 58417295,
+   "id": "turn-724237392",
+   "lat": 53.5605856,
+   "lon": -2.4658684,
+   "node": 724237392,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 6147755209,
+   "to_way": 55147046
+  },
+  {
+   "from_node": 919508519,
+   "from_way": 78317225,
+   "id": "turn-919508520",
+   "lat": 53.4875866,
+   "lon": -2.0665944,
+   "node": 919508520,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 918115634,
+   "to_way": 78149727
+  },
+  {
+   "from_node": 11776149726,
+   "from_way": 261633257,
+   "id": "turn-2932878690",
+   "lat": 53.4680678,
+   "lon": -2.1612213,
+   "node": 2932878690,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 3655520596,
+   "to_way": 289747091
+  },
+  {
+   "from_node": 4571409802,
+   "from_way": 157694408,
+   "id": "turn-249361157",
+   "lat": 53.4716449,
+   "lon": -2.5849661,
+   "node": 249361157,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 4571409803,
+   "to_way": 23099368
+  },
+  {
+   "from_node": 5018749188,
+   "from_way": 513400033,
+   "id": "turn-340213371",
+   "lat": 53.4083361,
+   "lon": -2.5487337,
+   "node": 340213371,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 5530645759,
+   "to_way": 30763263
+  },
+  {
+   "from_node": 1036117585,
+   "from_way": 129533241,
+   "id": "turn-722546081",
+   "lat": 53.591261,
+   "lon": -2.4308751,
+   "node": 722546081,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 6885162984,
+   "to_way": 74873571
+  },
+  {
+   "from_node": 739060840,
+   "from_way": 59581791,
+   "id": "turn-739060925",
+   "lat": 53.4473181,
+   "lon": -2.3175993,
+   "node": 739060925,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 739060873,
+   "to_way": 59581765
+  },
+  {
+   "from_node": 1459887177,
+   "from_way": 7425078,
+   "id": "turn-21709675",
+   "lat": 53.3979673,
+   "lon": -2.3342502,
+   "node": 21709675,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 1452130357,
+   "to_way": 7017968
+  },
+  {
+   "from_node": 9661426514,
+   "from_way": 207516953,
+   "id": "turn-2739189482",
+   "lat": 53.3723859,
+   "lon": -2.110098,
+   "node": 2739189482,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 2739189498,
+   "to_way": 268575912
+  },
+  {
+   "from_node": 32028359,
+   "from_way": 59581736,
+   "id": "turn-739060901",
+   "lat": 53.4457186,
+   "lon": -2.3262654,
+   "node": 739060901,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 739060705,
+   "to_way": 59581750
+  },
+  {
+   "from_node": 2157093749,
+   "from_way": 70068827,
+   "id": "turn-1096367019",
+   "lat": 53.4843534,
+   "lon": -2.3501649,
+   "node": 1096367019,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 1096367213,
+   "to_way": 94366344
+  },
+  {
+   "from_node": 9178107608,
+   "from_way": 690423902,
+   "id": "turn-6477475964",
+   "lat": 53.4874551,
+   "lon": -2.2676826,
+   "node": 6477475964,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 9178406694,
+   "to_way": 426676363
+  },
+  {
+   "from_node": 21709673,
+   "from_way": 7829041,
+   "id": "turn-21709653",
+   "lat": 53.3964703,
+   "lon": -2.3216716,
+   "node": 21709653,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 1452035232,
+   "to_way": 4868243
+  },
+  {
+   "from_node": 6335674242,
+   "from_way": 27953200,
+   "id": "turn-307056477",
+   "lat": 53.6424136,
+   "lon": -2.637635,
+   "node": 307056477,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 307056475,
+   "to_way": 27953198
+  },
+  {
+   "from_node": 8485081126,
+   "from_way": 751825270,
+   "id": "turn-7028213951",
+   "lat": 53.5127366,
+   "lon": -2.5465897,
+   "node": 7028213951,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 8485081127,
+   "to_way": 60104601
+  },
+  {
+   "from_node": 2471123171,
+   "from_way": 95706856,
+   "id": "turn-1109588724",
+   "lat": 53.4278357,
+   "lon": -2.1039186,
+   "node": 1109588724,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 8764959744,
+   "to_way": 27823809
+  },
+  {
+   "from_node": 12125550854,
+   "from_way": 147546346,
+   "id": "turn-1607553537",
+   "lat": 53.5503483,
+   "lon": -2.4948122,
+   "node": 1607553537,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 31214281,
+   "to_way": 1366020041
+  },
+  {
+   "from_node": 12996450994,
+   "from_way": 32004965,
+   "id": "turn-358880184",
+   "lat": 53.466692,
+   "lon": -2.6602897,
+   "node": 358880184,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 12996450985,
+   "to_way": 32004956
+  },
+  {
+   "from_node": 13298137798,
+   "from_way": 1219978560,
+   "id": "turn-33405928",
+   "lat": 53.5377444,
+   "lon": -2.1798423,
+   "node": 33405928,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 1659432535,
+   "to_way": 63225992
+  },
+  {
+   "from_node": 353181143,
+   "from_way": 31563653,
+   "id": "turn-353180816",
+   "lat": 53.4520475,
+   "lon": -2.7091367,
+   "node": 353180816,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 8421346250,
+   "to_way": 31563644
+  },
+  {
+   "from_node": 1041415418,
+   "from_way": 79411359,
+   "id": "turn-1290046057",
+   "lat": 53.4554571,
+   "lon": -2.1399253,
+   "node": 1290046057,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 1290046058,
+   "to_way": 113792504
+  },
+  {
+   "from_node": 243750072,
+   "from_way": 22724770,
+   "id": "turn-243748581",
+   "lat": 53.4617712,
+   "lon": -1.9700769,
+   "node": 243748581,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 13468155006,
+   "to_way": 22724651
+  },
+  {
+   "from_node": 9325163846,
+   "from_way": 260214460,
+   "id": "turn-29940828",
+   "lat": 53.4091217,
+   "lon": -2.1407033,
+   "node": 29940828,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 9324673683,
+   "to_way": 4705296
+  },
+  {
+   "from_node": 786793672,
+   "from_way": 96933729,
+   "id": "turn-786793667",
+   "lat": 53.5250569,
+   "lon": -2.0865178,
+   "node": 786793667,
+   "stratum": [
+    "turn",
+    "right"
+   ],
+   "to_node": 786793700,
+   "to_way": 63543286
+  },
+  {
+   "from_node": 5022744120,
+   "from_way": 1016721452,
+   "id": "turn-81625428",
+   "lat": 53.3994487,
+   "lon": -2.3546132,
+   "node": 81625428,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 10050102288,
+   "to_way": 1487710493
+  },
+  {
+   "from_node": 9074173444,
+   "from_way": 30796065,
+   "id": "turn-282786422",
+   "lat": 53.3869252,
+   "lon": -2.5956527,
+   "node": 282786422,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 9074173445,
+   "to_way": 25924483
+  },
+  {
+   "from_node": 918297523,
+   "from_way": 205491459,
+   "id": "turn-918297521",
+   "lat": 53.4985521,
+   "lon": -2.0766097,
+   "node": 918297521,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 2205419930,
+   "to_way": 78176008
+  },
+  {
+   "from_node": 13115310205,
+   "from_way": 613594489,
+   "id": "turn-8617090122",
+   "lat": 53.4810051,
+   "lon": -2.1669088,
+   "node": 8617090122,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 9506006604,
+   "to_way": 955649757
+  },
+  {
+   "from_node": 20920076,
+   "from_way": 181935173,
+   "id": "turn-20920075",
+   "lat": 53.3340279,
+   "lon": -2.2268063,
+   "node": 20920075,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 485257832,
+   "to_way": 4300546
+  },
+  {
+   "from_node": 30277082,
+   "from_way": 135848030,
+   "id": "turn-1491145596",
+   "lat": 53.5125479,
+   "lon": -2.3889087,
+   "node": 1491145596,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 14096148185,
+   "to_way": 542093720
+  },
+  {
+   "from_node": 1479547137,
+   "from_way": 639413601,
+   "id": "turn-307444490",
+   "lat": 53.330291,
+   "lon": -2.705455,
+   "node": 307444490,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 3126234658,
+   "to_way": 307463696
+  },
+  {
+   "from_node": 321489526,
+   "from_way": 1036403284,
+   "id": "turn-9548439423",
+   "lat": 53.3976265,
+   "lon": -2.6466516,
+   "node": 9548439423,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 321489527,
+   "to_way": 29228799
+  },
+  {
+   "from_node": 252964547,
+   "from_way": 23363285,
+   "id": "turn-9998739636",
+   "lat": 53.5676894,
+   "lon": -2.6945661,
+   "node": 9998739636,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 9998739635,
+   "to_way": 1091740585
+  },
+  {
+   "from_node": 32613338,
+   "from_way": 1435027336,
+   "id": "turn-33407721",
+   "lat": 53.517329,
+   "lon": -2.2197598,
+   "node": 33407721,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 32613339,
+   "to_way": 1435027337
+  },
+  {
+   "from_node": 5307234281,
+   "from_way": 31104839,
+   "id": "turn-700723464",
+   "lat": 53.6044114,
+   "lon": -2.4078378,
+   "node": 700723464,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 700723465,
+   "to_way": 55783297
+  },
+  {
+   "from_node": 6834406110,
+   "from_way": 32657186,
+   "id": "turn-364898367",
+   "lat": 53.4704784,
+   "lon": -2.5608304,
+   "node": 364898367,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 8842489813,
+   "to_way": 963787059
+  },
+  {
+   "from_node": 778998674,
+   "from_way": 62360317,
+   "id": "turn-778998626",
+   "lat": 53.5955766,
+   "lon": -2.1586811,
+   "node": 778998626,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 778998625,
+   "to_way": 62360314
+  },
+  {
+   "from_node": 11110988012,
+   "from_way": 974141436,
+   "id": "turn-1660806733",
+   "lat": 53.4723643,
+   "lon": -2.6864093,
+   "node": 1660806733,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 13178272444,
+   "to_way": 974141437
+  },
+  {
+   "from_node": 1260255086,
+   "from_way": 110331045,
+   "id": "turn-370165662",
+   "lat": 53.42108,
+   "lon": -2.3094182,
+   "node": 370165662,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 370165667,
+   "to_way": 110331026
+  },
+  {
+   "from_node": 25534017,
+   "from_way": 246384938,
+   "id": "turn-25533840",
+   "lat": 53.491203,
+   "lon": -2.28612,
+   "node": 25533840,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 2589561787,
+   "to_way": 4721535
+  },
+  {
+   "from_node": 230709401,
+   "from_way": 1001825993,
+   "id": "turn-230705480",
+   "lat": 53.3410642,
+   "lon": -2.1229516,
+   "node": 230705480,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 230709403,
+   "to_way": 21450311
+  },
+  {
+   "from_node": 5954540689,
+   "from_way": 630669664,
+   "id": "turn-7839680152",
+   "lat": 53.3968742,
+   "lon": -2.2265917,
+   "node": 7839680152,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 7839680153,
+   "to_way": 840135031
+  },
+  {
+   "from_node": 823005675,
+   "from_way": 1284485075,
+   "id": "turn-30217035",
+   "lat": 53.5078739,
+   "lon": -2.4270056,
+   "node": 30217035,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 823005412,
+   "to_way": 1284485076
+  },
+  {
+   "from_node": 8833796830,
+   "from_way": 1206823831,
+   "id": "turn-11182834156",
+   "lat": 53.426291,
+   "lon": -2.724072,
+   "node": 11182834156,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 11182834165,
+   "to_way": 153587539
+  },
+  {
+   "from_node": 6838433358,
+   "from_way": 64301963,
+   "id": "turn-791730859",
+   "lat": 53.5160053,
+   "lon": -2.4681752,
+   "node": 791730859,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 6838433368,
+   "to_way": 64301966
+  },
+  {
+   "from_node": 14086330265,
+   "from_way": 1548701810,
+   "id": "turn-387200757",
+   "lat": 53.4472148,
+   "lon": -2.61146,
+   "node": 387200757,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 14086197580,
+   "to_way": 1548701802
+  },
+  {
+   "from_node": 25400659,
+   "from_way": 200744446,
+   "id": "turn-25400671",
+   "lat": 53.4091028,
+   "lon": -2.2202263,
+   "node": 25400671,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 25400684,
+   "to_way": 200744441
+  },
+  {
+   "from_node": 227565230,
+   "from_way": 21658982,
+   "id": "turn-28291673",
+   "lat": 53.3543823,
+   "lon": -2.1185733,
+   "node": 28291673,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 1493710874,
+   "to_way": 461165704
+  },
+  {
+   "from_node": 25536489,
+   "from_way": 4795033,
+   "id": "turn-8098081239",
+   "lat": 53.4465314,
+   "lon": -2.2338652,
+   "node": 8098081239,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 25536481,
+   "to_way": 4795034
+  },
+  {
+   "from_node": 295875015,
+   "from_way": 1000046173,
+   "id": "turn-2156531435",
+   "lat": 53.4904763,
+   "lon": -2.1020436,
+   "node": 2156531435,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 295875019,
+   "to_way": 162828933
+  },
+  {
+   "from_node": 11063277484,
+   "from_way": 57970167,
+   "id": "turn-719333482",
+   "lat": 53.4542767,
+   "lon": -2.3357773,
+   "node": 719333482,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 11063277483,
+   "to_way": 57970211
+  },
+  {
+   "from_node": 5241106504,
+   "from_way": 673091837,
+   "id": "turn-699115690",
+   "lat": 53.5433221,
+   "lon": -2.3996811,
+   "node": 699115690,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 6303324622,
+   "to_way": 673091843
+  },
+  {
+   "from_node": 9934787823,
+   "from_way": 26790786,
+   "id": "turn-9934787822",
+   "lat": 53.4034612,
+   "lon": -2.6249165,
+   "node": 9934787822,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 293885197,
+   "to_way": 1084139488
+  },
+  {
+   "from_node": 780997492,
+   "from_way": 62646786,
+   "id": "turn-780997489",
+   "lat": 53.6293311,
+   "lon": -2.187826,
+   "node": 780997489,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 6715779715,
+   "to_way": 714449122
+  },
+  {
+   "from_node": 196174498,
+   "from_way": 374287098,
+   "id": "turn-352695556",
+   "lat": 53.3938271,
+   "lon": -2.0967367,
+   "node": 352695556,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 2871526187,
+   "to_way": 283264927
+  },
+  {
+   "from_node": 8930825960,
+   "from_way": 965392747,
+   "id": "turn-31923672",
+   "lat": 53.4076324,
+   "lon": -2.5608879,
+   "node": 31923672,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 1679608594,
+   "to_way": 30760253
+  },
+  {
+   "from_node": 8764905333,
+   "from_way": 1057511809,
+   "id": "turn-8764905325",
+   "lat": 53.403346,
+   "lon": -2.5730422,
+   "node": 8764905325,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 9438389115,
+   "to_way": 946867819
+  },
+  {
+   "from_node": 7113635670,
+   "from_way": 123366977,
+   "id": "turn-520712498",
+   "lat": 53.5847086,
+   "lon": -2.1070917,
+   "node": 520712498,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 520711098,
+   "to_way": 41995542
+  },
+  {
+   "from_node": 8420419802,
+   "from_way": 209876843,
+   "id": "turn-300617874",
+   "lat": 53.5220131,
+   "lon": -2.1232909,
+   "node": 300617874,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 541057591,
+   "to_way": 43181836
+  },
+  {
+   "from_node": 1589641457,
+   "from_way": 29498469,
+   "id": "turn-13803384",
+   "lat": 53.3356388,
+   "lon": -2.5723558,
+   "node": 13803384,
+   "stratum": [
+    "turn",
+    "straight"
+   ],
+   "to_node": 1589641445,
+   "to_way": 29498468
+  },
+  {
+   "entry_node": 305966171,
+   "exit_number": 1,
+   "id": "roundabout-1051188906-exit1",
+   "lat": 53.4118856,
+   "lon": -2.6403194,
+   "ring_way": 1051188906,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 1277766666,
+   "exit_number": 1,
+   "id": "roundabout-4852811-exit1",
+   "lat": 53.4524763,
+   "lon": -2.286703,
+   "ring_way": 4852811,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 343645739,
+   "exit_number": 1,
+   "id": "roundabout-30912782-exit1",
+   "lat": 53.4277755,
+   "lon": -2.5990387,
+   "ring_way": 30912782,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 1699824110,
+   "exit_number": 1,
+   "id": "roundabout-157721675-exit1",
+   "lat": 53.608288,
+   "lon": -2.1318533,
+   "ring_way": 157721675,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 810792402,
+   "exit_number": 1,
+   "id": "roundabout-67136033-exit1",
+   "lat": 53.4172883,
+   "lon": -2.0871718,
+   "ring_way": 67136033,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 4534903646,
+   "exit_number": 1,
+   "id": "roundabout-457332350-exit1",
+   "lat": 53.3620251,
+   "lon": -2.5521066,
+   "ring_way": 457332350,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 306218722,
+   "exit_number": 1,
+   "id": "roundabout-27890084-exit1",
+   "lat": 53.4005058,
+   "lon": -2.6123861,
+   "ring_way": 27890084,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 311128517,
+   "exit_number": 1,
+   "id": "roundabout-28331458-exit1",
+   "lat": 53.350013,
+   "lon": -2.6747149,
+   "ring_way": 28331458,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 568143787,
+   "exit_number": 1,
+   "id": "roundabout-186654216-exit1",
+   "lat": 53.4943696,
+   "lon": -2.5132311,
+   "ring_way": 186654216,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 736908921,
+   "exit_number": 1,
+   "id": "roundabout-59425472-exit1",
+   "lat": 53.4491853,
+   "lon": -2.3275785,
+   "ring_way": 59425472,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 192509962,
+   "exit_number": 1,
+   "id": "roundabout-341267828-exit1",
+   "lat": 53.4624428,
+   "lon": -2.3413403,
+   "ring_way": 341267828,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 288901090,
+   "exit_number": 1,
+   "id": "roundabout-26369233-exit1",
+   "lat": 53.3433486,
+   "lon": -2.6358798,
+   "ring_way": 26369233,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 4530362984,
+   "exit_number": 1,
+   "id": "roundabout-30614483-exit1",
+   "lat": 53.3466309,
+   "lon": -2.5711898,
+   "ring_way": 30614483,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 8736786427,
+   "exit_number": 1,
+   "id": "roundabout-384412314-exit1",
+   "lat": 53.4250442,
+   "lon": -2.5989655,
+   "ring_way": 384412314,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 407917677,
+   "exit_number": 1,
+   "id": "roundabout-34824768-exit1",
+   "lat": 53.4070317,
+   "lon": -2.6644905,
+   "ring_way": 34824768,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 2200329203,
+   "exit_number": 1,
+   "id": "roundabout-209876684-exit1",
+   "lat": 53.5210986,
+   "lon": -2.1299313,
+   "ring_way": 209876684,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 1136399768,
+   "exit_number": 1,
+   "id": "roundabout-98232625-exit1",
+   "lat": 53.4269557,
+   "lon": -2.5324793,
+   "ring_way": 98232625,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 1277699258,
+   "exit_number": 1,
+   "id": "roundabout-112410111-exit1",
+   "lat": 53.4574822,
+   "lon": -2.2920945,
+   "ring_way": 112410111,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 460327642,
+   "exit_number": 1,
+   "id": "roundabout-27861630-exit1",
+   "lat": 53.4169442,
+   "lon": -2.6247484,
+   "ring_way": 27861630,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 10075724938,
+   "exit_number": 1,
+   "id": "roundabout-98323055-exit1",
+   "lat": 53.4892552,
+   "lon": -2.4506545,
+   "ring_way": 98323055,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 344738009,
+   "exit_number": 1,
+   "id": "roundabout-62493746-exit1",
+   "lat": 53.5202594,
+   "lon": -2.2910576,
+   "ring_way": 62493746,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 252880876,
+   "exit_number": 1,
+   "id": "roundabout-23353363-exit1",
+   "lat": 53.5270384,
+   "lon": -2.5657738,
+   "ring_way": 23353363,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 1544878523,
+   "exit_number": 1,
+   "id": "roundabout-141130378-exit1",
+   "lat": 53.5353456,
+   "lon": -2.6300273,
+   "ring_way": 141130378,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 7245353697,
+   "exit_number": 1,
+   "id": "roundabout-23756911-exit1",
+   "lat": 53.3446433,
+   "lon": -2.6682691,
+   "ring_way": 23756911,
+   "stratum": [
+    "roundabout",
+    "exit1"
+   ]
+  },
+  {
+   "entry_node": 4721287281,
+   "exit_number": 2,
+   "id": "roundabout-175638847-exit2",
+   "lat": 53.3513254,
+   "lon": -2.4036327,
+   "ring_way": 175638847,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 252824461,
+   "exit_number": 2,
+   "id": "roundabout-35155895-exit2",
+   "lat": 53.5343881,
+   "lon": -2.7101596,
+   "ring_way": 35155895,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 8758933170,
+   "exit_number": 2,
+   "id": "roundabout-946158674-exit2",
+   "lat": 53.4703042,
+   "lon": -2.3635442,
+   "ring_way": 946158674,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 2269904920,
+   "exit_number": 2,
+   "id": "roundabout-217678586-exit2",
+   "lat": 53.3797095,
+   "lon": -2.1336372,
+   "ring_way": 217678586,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 3154554734,
+   "exit_number": 2,
+   "id": "roundabout-132915082-exit2",
+   "lat": 53.3713252,
+   "lon": -2.2485941,
+   "ring_way": 132915082,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 310923625,
+   "exit_number": 2,
+   "id": "roundabout-28313769-exit2",
+   "lat": 53.3417112,
+   "lon": -2.6730579,
+   "ring_way": 28313769,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 25445119,
+   "exit_number": 2,
+   "id": "roundabout-4447725-exit2",
+   "lat": 53.4301413,
+   "lon": -2.2491254,
+   "ring_way": 4447725,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 2631696674,
+   "exit_number": 2,
+   "id": "roundabout-3512375-exit2",
+   "lat": 53.4096288,
+   "lon": -2.5313163,
+   "ring_way": 3512375,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 339972725,
+   "exit_number": 2,
+   "id": "roundabout-30738424-exit2",
+   "lat": 53.4160605,
+   "lon": -2.5936612,
+   "ring_way": 30738424,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 4384072939,
+   "exit_number": 2,
+   "id": "roundabout-440633727-exit2",
+   "lat": 53.4059749,
+   "lon": -2.6552411,
+   "ring_way": 440633727,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 3089610057,
+   "exit_number": 2,
+   "id": "roundabout-304427347-exit2",
+   "lat": 53.3566909,
+   "lon": -2.2919126,
+   "ring_way": 304427347,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 4530997496,
+   "exit_number": 2,
+   "id": "roundabout-30820957-exit2",
+   "lat": 53.4202413,
+   "lon": -2.5253758,
+   "ring_way": 30820957,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 724316057,
+   "exit_number": 2,
+   "id": "roundabout-58425651-exit2",
+   "lat": 53.5529348,
+   "lon": -2.4307307,
+   "ring_way": 58425651,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 9312355897,
+   "exit_number": 2,
+   "id": "roundabout-946158675-exit2",
+   "lat": 53.4693462,
+   "lon": -2.3578913,
+   "ring_way": 946158675,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 1411593759,
+   "exit_number": 2,
+   "id": "roundabout-127572573-exit2",
+   "lat": 53.5462795,
+   "lon": -2.5887791,
+   "ring_way": 127572573,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 459628878,
+   "exit_number": 2,
+   "id": "roundabout-27473762-exit2",
+   "lat": 53.4062833,
+   "lon": -2.6322257,
+   "ring_way": 27473762,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 194200140,
+   "exit_number": 2,
+   "id": "roundabout-18799137-exit2",
+   "lat": 53.4267137,
+   "lon": -2.5332998,
+   "ring_way": 18799137,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 310924315,
+   "exit_number": 2,
+   "id": "roundabout-28313703-exit2",
+   "lat": 53.3374481,
+   "lon": -2.6779643,
+   "ring_way": 28313703,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 244545560,
+   "exit_number": 2,
+   "id": "roundabout-22778796-exit2",
+   "lat": 53.3897721,
+   "lon": -2.5661204,
+   "ring_way": 22778796,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 5149372588,
+   "exit_number": 2,
+   "id": "roundabout-189059776-exit2",
+   "lat": 53.33282,
+   "lon": -2.6431477,
+   "ring_way": 189059776,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 8758298374,
+   "exit_number": 2,
+   "id": "roundabout-946079477-exit2",
+   "lat": 53.3526782,
+   "lon": -2.5632726,
+   "ring_way": 946079477,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 736915391,
+   "exit_number": 2,
+   "id": "roundabout-59426068-exit2",
+   "lat": 53.4469878,
+   "lon": -2.3274673,
+   "ring_way": 59426068,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 2147782180,
+   "exit_number": 2,
+   "id": "roundabout-133194314-exit2",
+   "lat": 53.4695919,
+   "lon": -2.2889638,
+   "ring_way": 133194314,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 4946123584,
+   "exit_number": 2,
+   "id": "roundabout-504451146-exit2",
+   "lat": 53.4182297,
+   "lon": -2.6025584,
+   "ring_way": 504451146,
+   "stratum": [
+    "roundabout",
+    "exit2"
+   ]
+  },
+  {
+   "entry_node": 459625969,
+   "exit_number": 3,
+   "id": "roundabout-27473615-exit3",
+   "lat": 53.4090907,
+   "lon": -2.6370265,
+   "ring_way": 27473615,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 1622041665,
+   "exit_number": 3,
+   "id": "roundabout-985176807-exit3",
+   "lat": 53.5826985,
+   "lon": -2.5361015,
+   "ring_way": 985176807,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 321488472,
+   "exit_number": 3,
+   "id": "roundabout-29228737-exit3",
+   "lat": 53.4007694,
+   "lon": -2.6530159,
+   "ring_way": 29228737,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 9588841550,
+   "exit_number": 3,
+   "id": "roundabout-456385034-exit3",
+   "lat": 53.3441158,
+   "lon": -2.5668847,
+   "ring_way": 456385034,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 281779449,
+   "exit_number": 3,
+   "id": "roundabout-503823187-exit3",
+   "lat": 53.3659204,
+   "lon": -2.7168711,
+   "ring_way": 503823187,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 983128353,
+   "exit_number": 3,
+   "id": "roundabout-205659620-exit3",
+   "lat": 53.4938433,
+   "lon": -2.0719016,
+   "ring_way": 205659620,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 849024702,
+   "exit_number": 3,
+   "id": "roundabout-84224647-exit3",
+   "lat": 53.4088923,
+   "lon": -2.3457708,
+   "ring_way": 84224647,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 6394641866,
+   "exit_number": 3,
+   "id": "roundabout-20465290-exit3",
+   "lat": 53.3570487,
+   "lon": -2.534561,
+   "ring_way": 20465290,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 1833850236,
+   "exit_number": 3,
+   "id": "roundabout-4976506-exit3",
+   "lat": 53.5720472,
+   "lon": -2.3283273,
+   "ring_way": 4976506,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 243513300,
+   "exit_number": 3,
+   "id": "roundabout-22701688-exit3",
+   "lat": 53.4151052,
+   "lon": -2.6149759,
+   "ring_way": 22701688,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 25985812,
+   "exit_number": 3,
+   "id": "roundabout-4299088-exit3",
+   "lat": 53.5923221,
+   "lon": -2.5846236,
+   "ring_way": 4299088,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 4268305774,
+   "exit_number": 3,
+   "id": "roundabout-27868287-exit3",
+   "lat": 53.3982722,
+   "lon": -2.622695,
+   "ring_way": 27868287,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 705611776,
+   "exit_number": 3,
+   "id": "roundabout-56227288-exit3",
+   "lat": 53.446373,
+   "lon": -2.4050248,
+   "ring_way": 56227288,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 1615728568,
+   "exit_number": 3,
+   "id": "roundabout-3994228-exit3",
+   "lat": 53.4262533,
+   "lon": -2.121876,
+   "ring_way": 3994228,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 190983014,
+   "exit_number": 3,
+   "id": "roundabout-18512407-exit3",
+   "lat": 53.377758,
+   "lon": -2.2209886,
+   "ring_way": 18512407,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 7974945813,
+   "exit_number": 3,
+   "id": "roundabout-855161658-exit3",
+   "lat": 53.3778554,
+   "lon": -2.2156768,
+   "ring_way": 855161658,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 4530997473,
+   "exit_number": 3,
+   "id": "roundabout-31544165-exit3",
+   "lat": 53.4303167,
+   "lon": -2.5160513,
+   "ring_way": 31544165,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 1574600454,
+   "exit_number": 3,
+   "id": "roundabout-143896994-exit3",
+   "lat": 53.5360198,
+   "lon": -2.2883496,
+   "ring_way": 143896994,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 1517773458,
+   "exit_number": 3,
+   "id": "roundabout-138420723-exit3",
+   "lat": 53.4676244,
+   "lon": -2.3390776,
+   "ring_way": 138420723,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 340198706,
+   "exit_number": 3,
+   "id": "roundabout-30761645-exit3",
+   "lat": 53.4106896,
+   "lon": -2.5751774,
+   "ring_way": 30761645,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 459607918,
+   "exit_number": 3,
+   "id": "roundabout-27890225-exit3",
+   "lat": 53.4028955,
+   "lon": -2.6485776,
+   "ring_way": 27890225,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 724178318,
+   "exit_number": 3,
+   "id": "roundabout-58408478-exit3",
+   "lat": 53.5445669,
+   "lon": -2.4285173,
+   "ring_way": 58408478,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 6151546338,
+   "exit_number": 3,
+   "id": "roundabout-83809025-exit3",
+   "lat": 53.4950118,
+   "lon": -2.2710697,
+   "ring_way": 83809025,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  },
+  {
+   "entry_node": 9484867471,
+   "exit_number": 3,
+   "id": "roundabout-205714208-exit3",
+   "lat": 53.4154112,
+   "lon": -2.5652007,
+   "ring_way": 205714208,
+   "stratum": [
+    "roundabout",
+    "exit3"
+   ]
+  }
+ ],
+ "contract": "JOURNEY-001 v1",
+ "frozen_before_engine_runs": true,
+ "quotas": {
+  "roundabout/exit1": 8,
+  "roundabout/exit2": 8,
+  "roundabout/exit3": 8,
+  "turn/left": 12,
+  "turn/right": 12,
+  "turn/straight": 12
+ },
+ "selection_rule": "turn: node joining 3-4 car ways (no service/living street/motorway, no roundabout, not a restriction via node), first clean movement by sha256; roundabout: single closed ring way with 3+ spoke nodes, entry spoke by sha256; strata ordered by sha256('JOURNEY-001:'+id), up to 3x quota drawn, prepare keeps quota testable",
+ "source_sha256": "2a8ef8e1f2533cb009b1ce248a6bf4eaabdd47e03979e64e24cd844f3b22acba",
+ "turn_classes": {
+  "straight_below_deg": 25.0,
+  "turn_deg": [
+   60.0,
+   120.0
+  ]
+ }
+}

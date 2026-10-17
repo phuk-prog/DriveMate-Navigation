@@ -1,0 +1,2450 @@
+{
+  "trial": "GPS-003",
+  "classification": "actual real-map simulated GPS stream replay; source-map identity labels and analytical fault expectations, not independent road/GNSS truth",
+  "run_sha": "c6202e406450d6f9fbb8e01c7679193d92522358",
+  "ci_url": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/38869427281",
+  "run_id": 38869427281,
+  "job_id": 116869760260,
+  "ci_conclusion": "failure",
+  "navigation_policy_changed": false,
+  "interpretation": "8/24 streams pass;16 fail required first-fix availability across two repeated base positions. No confident wrong-segment claim observed. All24 final clear observations pass. Conservative ambiguity is unresolved, not yet a verified confidence-policy bug.",
+  "timing_summary": {
+    "updates": 72,
+    "median_ms": 0.07441149999999999,
+    "p95_ms": 0.153038,
+    "max_ms": 0.21439,
+    "recovery_last_event_correct": 24
+  },
+  "report": {
+    "test_id": "GPS-003",
+    "system": "DMN",
+    "run_sha": "c6202e406450d6f9fbb8e01c7679193d92522358",
+    "execution": "actual_local_python",
+    "version": "repository TemporalRoadMatcher/DirectedRoadMatcher default limits",
+    "manifest": {
+      "test_id": "GPS-003",
+      "classification": "real licensed public map; simulated GPS; map-derived identity and analytical fault oracles",
+      "source_url": "https://download.geofabrik.de/europe/united-kingdom/england/greater-manchester-260901.osm.pbf",
+      "map_sha256": "b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5",
+      "attribution": "OpenStreetMap contributors; ODbL",
+      "selection": "first three raw-XML eligible segments numerically by way/segment, length20..250m; before importer/matcher",
+      "independent_real_road_truth": false,
+      "segments": [
+        {
+          "id": "GPS-003-B1",
+          "way_id": "32113418",
+          "segment": 4,
+          "name": "Moss Lane",
+          "raw_tags": {
+            "highway": "unclassified",
+            "maxweight": "7.5",
+            "name": "Moss Lane"
+          },
+          "expected_edge": "w:32113418:4:f",
+          "start": [
+            53.352182,
+            -2.2580735
+          ],
+          "end": [
+            53.3523856,
+            -2.2582064
+          ],
+          "length_m": 24.296982292747444
+        },
+        {
+          "id": "GPS-003-B2",
+          "way_id": "32113418",
+          "segment": 6,
+          "name": "Moss Lane",
+          "raw_tags": {
+            "highway": "unclassified",
+            "maxweight": "7.5",
+            "name": "Moss Lane"
+          },
+          "expected_edge": "w:32113418:6:f",
+          "start": [
+            53.3525067,
+            -2.2583143
+          ],
+          "end": [
+            53.3526807,
+            -2.2585151
+          ],
+          "length_m": 23.493804416445286
+        },
+        {
+          "id": "GPS-003-B3",
+          "way_id": "32113418",
+          "segment": 9,
+          "name": "Moss Lane",
+          "raw_tags": {
+            "highway": "unclassified",
+            "maxweight": "7.5",
+            "name": "Moss Lane"
+          },
+          "expected_edge": "w:32113418:9:f",
+          "start": [
+            53.3528796,
+            -2.2588809
+          ],
+          "end": [
+            53.3530423,
+            -2.2593169
+          ],
+          "length_m": 34.127394666416336
+        }
+      ],
+      "cases": [
+        {
+          "id": "GPS-003-B1-clear",
+          "base_segment": "GPS-003-B1",
+          "category": "clear",
+          "expected_edge": "w:32113418:4:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.35224308,
+                -2.2581133700000002,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                3000,
+                53.35226344,
+                -2.2581266600000003,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 3000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                5000,
+                53.352283799999995,
+                -2.2581399500000003,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B1-noisy_2m",
+          "base_segment": "GPS-003-B1",
+          "category": "noisy_2m",
+          "expected_edge": "w:32113418:4:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.35224308,
+                -2.2581133700000002,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                3000,
+                53.35226344,
+                -2.2580965266195183,
+                5,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 3000,
+              "expectation": "SAFE"
+            },
+            {
+              "fix": [
+                5000,
+                53.352283799999995,
+                -2.2581399500000003,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B1-weak_60m",
+          "base_segment": "GPS-003-B1",
+          "category": "weak_60m",
+          "expected_edge": "w:32113418:4:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.35224308,
+                -2.2581133700000002,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                3000,
+                53.35226344,
+                -2.2581266600000003,
+                60,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 3000,
+              "expectation": "WITHHOLD"
+            },
+            {
+              "fix": [
+                5000,
+                53.352283799999995,
+                -2.2581399500000003,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B1-stale",
+          "base_segment": "GPS-003-B1",
+          "category": "stale",
+          "expected_edge": "w:32113418:4:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.35224308,
+                -2.2581133700000002,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                2000,
+                53.35226344,
+                -2.2581266600000003,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 13001,
+              "expectation": "REJECT"
+            },
+            {
+              "fix": [
+                15000,
+                53.352283799999995,
+                -2.2581399500000003,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 15000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B1-future",
+          "base_segment": "GPS-003-B1",
+          "category": "future",
+          "expected_edge": "w:32113418:4:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.35224308,
+                -2.2581133700000002,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                9000,
+                53.35226344,
+                -2.2581266600000003,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 3000,
+              "expectation": "REJECT"
+            },
+            {
+              "fix": [
+                5000,
+                53.352283799999995,
+                -2.2581399500000003,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B1-duplicate",
+          "base_segment": "GPS-003-B1",
+          "category": "duplicate",
+          "expected_edge": "w:32113418:4:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.35224308,
+                -2.2581133700000002,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                1000,
+                53.35226344,
+                -2.2581266600000003,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 3000,
+              "expectation": "REJECT"
+            },
+            {
+              "fix": [
+                5000,
+                53.352283799999995,
+                -2.2581399500000003,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B1-speed_100mps",
+          "base_segment": "GPS-003-B1",
+          "category": "speed_100mps",
+          "expected_edge": "w:32113418:4:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.35224308,
+                -2.2581133700000002,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                3000,
+                53.35226344,
+                -2.2581266600000003,
+                3,
+                100,
+                338.7129990483153
+              ],
+              "now_ms": 3000,
+              "expectation": "REJECT"
+            },
+            {
+              "fix": [
+                5000,
+                53.352283799999995,
+                -2.2581399500000003,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B1-gap_31s",
+          "base_segment": "GPS-003-B1",
+          "category": "gap_31s",
+          "expected_edge": "w:32113418:4:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.35224308,
+                -2.2581133700000002,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                32000,
+                53.35226344,
+                -2.2581266600000003,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 32000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                34000,
+                53.352283799999995,
+                -2.2581399500000003,
+                3,
+                10,
+                338.7129990483153
+              ],
+              "now_ms": 34000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B2-clear",
+          "base_segment": "GPS-003-B2",
+          "category": "clear",
+          "expected_edge": "w:32113418:6:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.3525589,
+                -2.2583745399999997,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                3000,
+                53.3525763,
+                -2.25839462,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 3000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                5000,
+                53.3525937,
+                -2.2584147,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B2-noisy_2m",
+          "base_segment": "GPS-003-B2",
+          "category": "noisy_2m",
+          "expected_edge": "w:32113418:6:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.3525589,
+                -2.2583745399999997,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                3000,
+                53.3525763,
+                -2.258364486398346,
+                5,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 3000,
+              "expectation": "SAFE"
+            },
+            {
+              "fix": [
+                5000,
+                53.3525937,
+                -2.2584147,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B2-weak_60m",
+          "base_segment": "GPS-003-B2",
+          "category": "weak_60m",
+          "expected_edge": "w:32113418:6:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.3525589,
+                -2.2583745399999997,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                3000,
+                53.3525763,
+                -2.25839462,
+                60,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 3000,
+              "expectation": "WITHHOLD"
+            },
+            {
+              "fix": [
+                5000,
+                53.3525937,
+                -2.2584147,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B2-stale",
+          "base_segment": "GPS-003-B2",
+          "category": "stale",
+          "expected_edge": "w:32113418:6:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.3525589,
+                -2.2583745399999997,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                2000,
+                53.3525763,
+                -2.25839462,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 13001,
+              "expectation": "REJECT"
+            },
+            {
+              "fix": [
+                15000,
+                53.3525937,
+                -2.2584147,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 15000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B2-future",
+          "base_segment": "GPS-003-B2",
+          "category": "future",
+          "expected_edge": "w:32113418:6:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.3525589,
+                -2.2583745399999997,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                9000,
+                53.3525763,
+                -2.25839462,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 3000,
+              "expectation": "REJECT"
+            },
+            {
+              "fix": [
+                5000,
+                53.3525937,
+                -2.2584147,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B2-duplicate",
+          "base_segment": "GPS-003-B2",
+          "category": "duplicate",
+          "expected_edge": "w:32113418:6:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.3525589,
+                -2.2583745399999997,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                1000,
+                53.3525763,
+                -2.25839462,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 3000,
+              "expectation": "REJECT"
+            },
+            {
+              "fix": [
+                5000,
+                53.3525937,
+                -2.2584147,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B2-speed_100mps",
+          "base_segment": "GPS-003-B2",
+          "category": "speed_100mps",
+          "expected_edge": "w:32113418:6:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.3525589,
+                -2.2583745399999997,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                3000,
+                53.3525763,
+                -2.25839462,
+                3,
+                100,
+                325.44001486210016
+              ],
+              "now_ms": 3000,
+              "expectation": "REJECT"
+            },
+            {
+              "fix": [
+                5000,
+                53.3525937,
+                -2.2584147,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B2-gap_31s",
+          "base_segment": "GPS-003-B2",
+          "category": "gap_31s",
+          "expected_edge": "w:32113418:6:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.3525589,
+                -2.2583745399999997,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                32000,
+                53.3525763,
+                -2.25839462,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 32000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                34000,
+                53.3525937,
+                -2.2584147,
+                3,
+                10,
+                325.44001486210016
+              ],
+              "now_ms": 34000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B3-clear",
+          "base_segment": "GPS-003-B3",
+          "category": "clear",
+          "expected_edge": "w:32113418:9:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.352928410000004,
+                -2.2590117,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                3000,
+                53.35294468,
+                -2.2590553,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 3000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                5000,
+                53.352960949999996,
+                -2.2590988999999997,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B3-noisy_2m",
+          "base_segment": "GPS-003-B3",
+          "category": "noisy_2m",
+          "expected_edge": "w:32113418:9:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.352928410000004,
+                -2.2590117,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                3000,
+                53.35294468,
+                -2.2590251661379197,
+                5,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 3000,
+              "expectation": "SAFE"
+            },
+            {
+              "fix": [
+                5000,
+                53.352960949999996,
+                -2.2590988999999997,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B3-weak_60m",
+          "base_segment": "GPS-003-B3",
+          "category": "weak_60m",
+          "expected_edge": "w:32113418:9:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.352928410000004,
+                -2.2590117,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                3000,
+                53.35294468,
+                -2.2590553,
+                60,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 3000,
+              "expectation": "WITHHOLD"
+            },
+            {
+              "fix": [
+                5000,
+                53.352960949999996,
+                -2.2590988999999997,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B3-stale",
+          "base_segment": "GPS-003-B3",
+          "category": "stale",
+          "expected_edge": "w:32113418:9:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.352928410000004,
+                -2.2590117,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                2000,
+                53.35294468,
+                -2.2590553,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 13001,
+              "expectation": "REJECT"
+            },
+            {
+              "fix": [
+                15000,
+                53.352960949999996,
+                -2.2590988999999997,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 15000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B3-future",
+          "base_segment": "GPS-003-B3",
+          "category": "future",
+          "expected_edge": "w:32113418:9:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.352928410000004,
+                -2.2590117,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                9000,
+                53.35294468,
+                -2.2590553,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 3000,
+              "expectation": "REJECT"
+            },
+            {
+              "fix": [
+                5000,
+                53.352960949999996,
+                -2.2590988999999997,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B3-duplicate",
+          "base_segment": "GPS-003-B3",
+          "category": "duplicate",
+          "expected_edge": "w:32113418:9:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.352928410000004,
+                -2.2590117,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                1000,
+                53.35294468,
+                -2.2590553,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 3000,
+              "expectation": "REJECT"
+            },
+            {
+              "fix": [
+                5000,
+                53.352960949999996,
+                -2.2590988999999997,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B3-speed_100mps",
+          "base_segment": "GPS-003-B3",
+          "category": "speed_100mps",
+          "expected_edge": "w:32113418:9:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.352928410000004,
+                -2.2590117,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                3000,
+                53.35294468,
+                -2.2590553,
+                3,
+                100,
+                302.01316731095693
+              ],
+              "now_ms": 3000,
+              "expectation": "REJECT"
+            },
+            {
+              "fix": [
+                5000,
+                53.352960949999996,
+                -2.2590988999999997,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 5000,
+              "expectation": "MATCH"
+            }
+          ]
+        },
+        {
+          "id": "GPS-003-B3-gap_31s",
+          "base_segment": "GPS-003-B3",
+          "category": "gap_31s",
+          "expected_edge": "w:32113418:9:f",
+          "events": [
+            {
+              "fix": [
+                1000,
+                53.352928410000004,
+                -2.2590117,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 1000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                32000,
+                53.35294468,
+                -2.2590553,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 32000,
+              "expectation": "MATCH"
+            },
+            {
+              "fix": [
+                34000,
+                53.352960949999996,
+                -2.2590988999999997,
+                3,
+                10,
+                302.01316731095693
+              ],
+              "now_ms": 34000,
+              "expectation": "MATCH"
+            }
+          ]
+        }
+      ],
+      "analytical_expectations": "clear/recovery must match generating directed segment; noisy may withhold but never claim other segment; weak must withhold; stale/future/duplicate/impossible speed must reject and preserve last accepted fix",
+      "gap_scope": "31s source-clock gap, no intermediate updates; reacquisition only, not proof of guidance suppression during silence",
+      "clocks": "deterministic monotonic millisecond source/receipt clocks; accelerated, not wall-clock soak"
+    },
+    "environment": {
+      "python": "3.11.17",
+      "system": "Linux",
+      "machine": "x86_64",
+      "clock": "perf_counter_ns",
+      "clock_resolution_s": 1e-9
+    },
+    "source_sha256": {
+      "benchmarks/real_map_gps_recovery.py": "850d12f008a95e03963a743e913b05c719d1101ce51e49d7a3bb464e7cdcf4b2",
+      "gps/fix_quality.py": "0f2c4e31c11c1824acc06d72e8ad56ea3583401994cb73480156e2b087fa7621",
+      "gps/matcher.py": "5703d588779c954d274b4b2e20ab668cae3a667e75b3e24eb414662c66c3b753",
+      "gps/temporal_matcher.py": "651b3626158d537c789006bb2a4cdd5d010e6c2464e3f3a961a2d9c488f4210c",
+      "map_data/osm_xml.py": "927e84b8226f23249c18de40a9e78998b2e6fa2d113f59cf3c121b53e43bac16"
+    },
+    "map_sha256": "b3a883ae9b7c85072d24afeee7a1079aea00c22264516a0e1e71d49221ad27d5",
+    "oracle_sha256": "612f2469facbc4e02fd8233a78d3cb2aa9f1bb40a892efb88e9bf91d116b80b0",
+    "cases": [
+      {
+        "case_id": "GPS-003-B1-clear",
+        "category": "clear",
+        "outcome": "FAIL",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 206008,
+            "passed": false,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": false
+            }
+          },
+          {
+            "event": 1,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:4:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 108172,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:4:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 153038,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B1-noisy_2m",
+        "category": "noisy_2m",
+        "outcome": "FAIL",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 112698,
+            "passed": false,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": false
+            }
+          },
+          {
+            "event": 1,
+            "expected": "SAFE",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 89353,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:4:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 75753,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B1-weak_60m",
+        "category": "weak_60m",
+        "outcome": "FAIL",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 79318,
+            "passed": false,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": false
+            }
+          },
+          {
+            "event": 1,
+            "expected": "WITHHOLD",
+            "actual_status": "UNKNOWN",
+            "actual_edge": null,
+            "reason": "weak_position_accuracy",
+            "candidates": 0,
+            "calculation_ns": 11277,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "withheld": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:4:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 92298,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B1-stale",
+        "category": "stale",
+        "outcome": "FAIL",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 78407,
+            "passed": false,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": false
+            }
+          },
+          {
+            "event": 1,
+            "expected": "REJECT",
+            "actual_status": "REJECTED",
+            "actual_edge": null,
+            "reason": "stale_timestamp",
+            "candidates": 0,
+            "calculation_ns": 4267,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "rejected": true,
+              "history_preserved": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:4:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 77005,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B1-future",
+        "category": "future",
+        "outcome": "FAIL",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 76364,
+            "passed": false,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": false
+            }
+          },
+          {
+            "event": 1,
+            "expected": "REJECT",
+            "actual_status": "REJECTED",
+            "actual_edge": null,
+            "reason": "future_timestamp",
+            "candidates": 0,
+            "calculation_ns": 3285,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "rejected": true,
+              "history_preserved": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:4:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 75774,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B1-duplicate",
+        "category": "duplicate",
+        "outcome": "FAIL",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 75533,
+            "passed": false,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": false
+            }
+          },
+          {
+            "event": 1,
+            "expected": "REJECT",
+            "actual_status": "REJECTED",
+            "actual_edge": null,
+            "reason": "duplicate_or_out_of_order",
+            "candidates": 0,
+            "calculation_ns": 3455,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "rejected": true,
+              "history_preserved": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:4:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 74842,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B1-speed_100mps",
+        "category": "speed_100mps",
+        "outcome": "FAIL",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 79339,
+            "passed": false,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": false
+            }
+          },
+          {
+            "event": 1,
+            "expected": "REJECT",
+            "actual_status": "REJECTED",
+            "actual_edge": null,
+            "reason": "implausible_reported_speed",
+            "candidates": 0,
+            "calculation_ns": 3405,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "rejected": true,
+              "history_preserved": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:4:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 74451,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B1-gap_31s",
+        "category": "gap_31s",
+        "outcome": "FAIL",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 74221,
+            "passed": false,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": false
+            }
+          },
+          {
+            "event": 1,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:4:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 74331,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:4:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 146719,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B2-clear",
+        "category": "clear",
+        "outcome": "FAIL",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 83816,
+            "passed": false,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": false
+            }
+          },
+          {
+            "event": 1,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:6:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 73430,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:6:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 142603,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B2-noisy_2m",
+        "category": "noisy_2m",
+        "outcome": "FAIL",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 75683,
+            "passed": false,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": false
+            }
+          },
+          {
+            "event": 1,
+            "expected": "SAFE",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 85198,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:6:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 72178,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B2-weak_60m",
+        "category": "weak_60m",
+        "outcome": "FAIL",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 74862,
+            "passed": false,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": false
+            }
+          },
+          {
+            "event": 1,
+            "expected": "WITHHOLD",
+            "actual_status": "UNKNOWN",
+            "actual_edge": null,
+            "reason": "weak_position_accuracy",
+            "candidates": 0,
+            "calculation_ns": 4827,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "withheld": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:6:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 96484,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B2-stale",
+        "category": "stale",
+        "outcome": "FAIL",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 73330,
+            "passed": false,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": false
+            }
+          },
+          {
+            "event": 1,
+            "expected": "REJECT",
+            "actual_status": "REJECTED",
+            "actual_edge": null,
+            "reason": "stale_timestamp",
+            "candidates": 0,
+            "calculation_ns": 3185,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "rejected": true,
+              "history_preserved": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:6:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 72929,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B2-future",
+        "category": "future",
+        "outcome": "FAIL",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 73910,
+            "passed": false,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": false
+            }
+          },
+          {
+            "event": 1,
+            "expected": "REJECT",
+            "actual_status": "REJECTED",
+            "actual_edge": null,
+            "reason": "future_timestamp",
+            "candidates": 0,
+            "calculation_ns": 3385,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "rejected": true,
+              "history_preserved": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:6:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 74131,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B2-duplicate",
+        "category": "duplicate",
+        "outcome": "FAIL",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 74372,
+            "passed": false,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": false
+            }
+          },
+          {
+            "event": 1,
+            "expected": "REJECT",
+            "actual_status": "REJECTED",
+            "actual_edge": null,
+            "reason": "duplicate_or_out_of_order",
+            "candidates": 0,
+            "calculation_ns": 3174,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "rejected": true,
+              "history_preserved": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:6:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 72899,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B2-speed_100mps",
+        "category": "speed_100mps",
+        "outcome": "FAIL",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 73820,
+            "passed": false,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": false
+            }
+          },
+          {
+            "event": 1,
+            "expected": "REJECT",
+            "actual_status": "REJECTED",
+            "actual_edge": null,
+            "reason": "implausible_reported_speed",
+            "candidates": 0,
+            "calculation_ns": 3224,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "rejected": true,
+              "history_preserved": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:6:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 73450,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B2-gap_31s",
+        "category": "gap_31s",
+        "outcome": "FAIL",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "AMBIGUOUS",
+            "actual_edge": null,
+            "reason": "nearby_parallel_or_overlapping_roads",
+            "candidates": 2,
+            "calculation_ns": 73330,
+            "passed": false,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": false
+            }
+          },
+          {
+            "event": 1,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:6:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 72278,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:6:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 160670,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B3-clear",
+        "category": "clear",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 71697,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          },
+          {
+            "event": 1,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 142834,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 146760,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B3-noisy_2m",
+        "category": "noisy_2m",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 70865,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          },
+          {
+            "event": 1,
+            "expected": "SAFE",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 141541,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 150845,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B3-weak_60m",
+        "category": "weak_60m",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 71036,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          },
+          {
+            "event": 1,
+            "expected": "WITHHOLD",
+            "actual_status": "UNKNOWN",
+            "actual_edge": null,
+            "reason": "weak_position_accuracy",
+            "candidates": 0,
+            "calculation_ns": 4517,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "withheld": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 141562,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B3-stale",
+        "category": "stale",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 70836,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          },
+          {
+            "event": 1,
+            "expected": "REJECT",
+            "actual_status": "REJECTED",
+            "actual_edge": null,
+            "reason": "stale_timestamp",
+            "candidates": 0,
+            "calculation_ns": 3175,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "rejected": true,
+              "history_preserved": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 142463,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B3-future",
+        "category": "future",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 70285,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          },
+          {
+            "event": 1,
+            "expected": "REJECT",
+            "actual_status": "REJECTED",
+            "actual_edge": null,
+            "reason": "future_timestamp",
+            "candidates": 0,
+            "calculation_ns": 3145,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "rejected": true,
+              "history_preserved": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 139348,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B3-duplicate",
+        "category": "duplicate",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 71407,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          },
+          {
+            "event": 1,
+            "expected": "REJECT",
+            "actual_status": "REJECTED",
+            "actual_edge": null,
+            "reason": "duplicate_or_out_of_order",
+            "candidates": 0,
+            "calculation_ns": 3636,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "rejected": true,
+              "history_preserved": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 139208,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B3-speed_100mps",
+        "category": "speed_100mps",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 71136,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          },
+          {
+            "event": 1,
+            "expected": "REJECT",
+            "actual_status": "REJECTED",
+            "actual_edge": null,
+            "reason": "implausible_reported_speed",
+            "candidates": 0,
+            "calculation_ns": 3194,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "rejected": true,
+              "history_preserved": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 214390,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      },
+      {
+        "case_id": "GPS-003-B3-gap_31s",
+        "category": "gap_31s",
+        "outcome": "PASS",
+        "events": [
+          {
+            "event": 0,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 83404,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          },
+          {
+            "event": 1,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 78107,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          },
+          {
+            "event": 2,
+            "expected": "MATCH",
+            "actual_status": "MATCHED",
+            "actual_edge": "w:32113418:9:f",
+            "reason": "directed_road_candidate",
+            "candidates": 1,
+            "calculation_ns": 139048,
+            "passed": true,
+            "checks": {
+              "no_road_claim_when_withheld": true,
+              "no_wrong_generating_edge": true,
+              "required_clear_output": true
+            }
+          }
+        ]
+      }
+    ],
+    "counts": {
+      "correct": 39,
+      "confident_wrong": 0,
+      "withheld": 33,
+      "rejected": 12
+    },
+    "passed": 8,
+    "total": 24,
+    "events": 72,
+    "external_engines_executed": 0,
+    "rank": null,
+    "score_out_of_ten": null,
+    "independent_real_road_truth": false,
+    "real_GNSS_measurements": 0,
+    "integrated_navigation_or_emulator": false
+  }
+}

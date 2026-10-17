@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- synthetic analytical JUNCTION-001; invented coordinates, no real-road truth -->
+<osm version="0.6" generator="DMN synthetic fixture">
+<node id="1" version="1" lat="1" lon="0.999"/>
+<node id="2" version="1" lat="1" lon="1"/>
+<node id="3" version="1" lat="1.001" lon="1"/>
+<node id="4" version="1" lat="0.999" lon="1"/>
+<node id="5" version="1" lat="1" lon="1.001"/>
+<node id="10" version="1" lat="1.01" lon="1.008"/>
+<node id="11" version="1" lat="1.01" lon="1.009"/>
+<node id="12" version="1" lat="1.009" lon="1.01"/>
+<node id="13" version="1" lat="1.0093" lon="1.0107"/>
+<node id="14" version="1" lat="1.01" lon="1.011"/>
+<node id="15" version="1" lat="1.011" lon="1.01"/>
+<node id="16" version="1" lat="1.008" lon="1.01"/>
+<node id="17" version="1" lat="1.01" lon="1.012"/>
+<node id="18" version="1" lat="1.012" lon="1.01"/>
+<node id="19" version="1" lat="1.0089" lon="1.0096"/>
+<node id="20" version="1" lat="1.0087" lon="1.0113"/>
+<way id="101" version="1"><nd ref="1"/><nd ref="2"/><tag k="highway" v="secondary"/><tag k="name" v="Approach"/><tag k="oneway" v="yes"/><tag k="motor_vehicle" v="yes"/></way>
+<way id="102" version="1"><nd ref="2"/><nd ref="3"/><tag k="highway" v="secondary"/><tag k="name" v="North"/><tag k="oneway" v="yes"/><tag k="motor_vehicle" v="yes"/></way>
+<way id="103" version="1"><nd ref="2"/><nd ref="4"/><tag k="highway" v="secondary"/><tag k="name" v="South"/><tag k="oneway" v="yes"/><tag k="motor_vehicle" v="yes"/></way>
+<way id="104" version="1"><nd ref="2"/><nd ref="5"/><tag k="highway" v="secondary"/><tag k="name" v="East"/><tag k="oneway" v="yes"/><tag k="motor_vehicle" v="yes"/></way>
+<way id="110" version="1"><nd ref="10"/><nd ref="11"/><tag k="highway" v="secondary"/><tag k="name" v="Entry"/><tag k="oneway" v="yes"/><tag k="motor_vehicle" v="yes"/></way>
+<way id="111" version="1"><nd ref="11"/><nd ref="12"/><nd ref="13"/><nd ref="14"/><nd ref="15"/><nd ref="11"/><tag k="highway" v="secondary"/><tag k="name" v="Synthetic Circle"/><tag k="oneway" v="yes"/><tag k="motor_vehicle" v="yes"/><tag k="junction" v="roundabout"/></way>
+<way id="112" version="1"><nd ref="12"/><nd ref="16"/><tag k="highway" v="secondary"/><tag k="name" v="First Exit"/><tag k="oneway" v="yes"/><tag k="motor_vehicle" v="yes"/></way>
+<way id="113" version="1"><nd ref="14"/><nd ref="17"/><tag k="highway" v="secondary"/><tag k="name" v="Second Exit"/><tag k="oneway" v="yes"/><tag k="motor_vehicle" v="yes"/></way>
+<way id="114" version="1"><nd ref="15"/><nd ref="18"/><tag k="highway" v="secondary"/><tag k="name" v="Third Exit"/><tag k="oneway" v="yes"/><tag k="motor_vehicle" v="yes"/></way>
+<way id="115" version="1"><nd ref="19"/><nd ref="12"/><tag k="highway" v="secondary"/><tag k="name" v="Incoming Only"/><tag k="oneway" v="yes"/><tag k="motor_vehicle" v="yes"/></way>
+<way id="116" version="1"><nd ref="13"/><nd ref="20"/><tag k="highway" v="secondary"/><tag k="name" v="Prohibited Spur"/><tag k="oneway" v="yes"/><tag k="motor_vehicle" v="no"/></way>
+</osm>
