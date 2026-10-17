@@ -40,6 +40,7 @@ import argparse
 import hashlib
 import json
 import math
+import os
 import subprocess
 import time
 import xml.etree.ElementTree as ET
@@ -112,6 +113,8 @@ def _applies_to_cars(tags: dict[str, str]) -> bool:
 
 
 def select(source: Path) -> None:
+    if COHORT.exists():
+        raise RuntimeError('TURN-001 frozen cohort exists; select a new named cohort instead of overwriting')
     import osmium
 
     found = []
@@ -705,18 +708,81 @@ def valhalla_query(geom: dict, headings: tuple[int, int]) -> tuple[list[tuple[fl
     return points, ms
 
 
-def run(engine: str, control: bool = False, only: set[str] | None = None) -> None:
+def _revision() -> str:
+    """The exact checked-out source revision; no anonymous cross-commit resume."""
+    value = os.environ.get("DMN_RUN_REVISION") or os.environ.get("GITHUB_SHA")
+    if value:
+        return value
+    completed = subprocess.run(
+        ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True, capture_output=True,
+        check=True)
+    value = completed.stdout.strip()
+    if not value:
+        raise RuntimeError("TURN-001 requires an identifiable source revision")
+    return value
+
+
+def _provenance(engine: str) -> dict:
+    """Bind an execution to a specific revision, cohort and prepared clips."""
+    frozen = json.loads(COHORT.read_text())
+    if not frozen.get("frozen_before_engine_runs") or not frozen.get("source_sha256"):
+        raise RuntimeError("TURN-001 source cohort is not frozen")
+    return {
+        "schema": 1, "engine": engine, "revision": _revision(),
+        "cohort_sha256": sha256_file(COHORT),
+        "source_sha256": frozen["source_sha256"],
+        "prepared_sha256": sha256_file(WORK / "prepared.json"),
+        "runner_sha256": sha256_file(Path(__file__)),
+    }
+
+
+def _load_run(engine: str, provenance: dict, *, fresh: bool = False) -> dict:
+    """Resume only identical work. Archive old evidence before a fresh rerun.
+
+    Old unprovenanced outputs cannot be promoted into a fresh benchmark.
+    --fresh is required for an approved post-change full-cohort rerun.
+    """
+    path = WORK / f"run-{engine}.json"
+    if not path.exists():
+        return {"_provenance": provenance}
+    raw = path.read_bytes()
+    old = json.loads(raw)
+    if not isinstance(old, dict):
+        raise RuntimeError(f"TURN-001 invalid result object for {engine}")
+    if fresh:
+        digest = hashlib.sha256(raw).hexdigest()[:16]
+        archive = WORK / f"run-{engine}-prior-{digest}.json"
+        if archive.exists() and archive.read_bytes() != raw:
+            raise RuntimeError("TURN-001 archive name collision; old evidence preserved")
+        if not archive.exists():
+            archive.write_bytes(raw)
+        return {"_provenance": provenance}
+    if old.get("_provenance") != provenance:
+        raise RuntimeError(
+            f"TURN-001 {engine}: previous results have missing or mismatched "
+            "revision/cohort/prepared/runner provenance; use --fresh to archive "
+            "them and execute the whole applicable cohort again")
+    return old
+
+
+def run(engine: str, *, fresh: bool = False, control: bool = False, only: set[str] | None = None) -> None:
     """Run one engine; with control, on each clip minus the tested relation (harness check)."""
     prepared = json.loads((WORK / "prepared.json").read_text())
-    out = WORK / f"run-{engine}{'-control' if control else ''}.json"
-    results = json.loads(out.read_text()) if out.exists() else {}
+    name = f"{engine}-control" if control else engine
+    out = WORK / f"run-{name}.json"
+    results = _load_run(name, _provenance(name), fresh=fresh)
+    out.write_text(json.dumps(results, indent=1, sort_keys=True))
     for record in prepared:
         rid = str(record["relation"])
         geom = record["geometry"]
-        if geom["status"] != "TESTABLE" or rid in results or (only and rid not in only):
+        if geom["status"] != "TESTABLE" or (only and rid not in only):
             continue
         folder = WORK / "cases" / rid
         raw = (folder / "clip.osm").read_bytes()
+        if hashlib.sha256(raw).hexdigest() != record["clip_sha256"]:
+            raise RuntimeError(f"TURN-001 {rid}: prepared clip bytes changed")
+        if rid in results:
+            continue
         clip = Clip(raw)
         entry: dict = {"clip_sha256": record["clip_sha256"]}
         if engine == "DMN":
@@ -862,12 +928,24 @@ def final(entry: dict) -> dict:
 def score() -> None:
     prepared = json.loads((WORK / "prepared.json").read_text())
     runs = {e: json.loads((WORK / f"run-{e}.json").read_text()) for e in ENGINES if (WORK / f"run-{e}.json").exists()}
+    # Fail closed rather than silently combine before/after or other-map runs.
+    for name, record in runs.items():
+        if record.get("_provenance") != _provenance(name):
+            raise RuntimeError(f"TURN-001 {name}: stale/unprovenanced result; rerun --fresh")
     testable = [str(r["relation"]) for r in prepared if r["geometry"]["status"] == "TESTABLE"]
+    for name, record in runs.items():
+        for case in prepared:
+            rid = str(case["relation"])
+            if rid in record and record[rid].get("clip_sha256") != case.get("clip_sha256"):
+                raise RuntimeError(f"TURN-001 {name}/{rid}: mismatched case clip")
     dmn = runs.get("DMN", {})
     discriminating = [rid for rid in testable if dmn.get(rid, {}).get("control_without_relation") == "USES_MOVEMENT"]
     summary = {
         "contract": CONTRACT,
         "cohort_sha256": sha256_file(COHORT),
+        "source_sha256": json.loads(COHORT.read_text())["source_sha256"],
+        "revision": _revision(),
+        "prepared_sha256": sha256_file(WORK / "prepared.json"),
         "cases_frozen": len(prepared),
         "geometry_status": dict(Counter(r["geometry"]["status"] for r in prepared)),
         "testable_cases": len(testable),
@@ -916,6 +994,8 @@ def main() -> None:
         sub.add_parser(cmd).add_argument("--source", type=Path, default=WORK / "gm.osm.pbf")
     run_parser = sub.add_parser("run")
     run_parser.add_argument("--engine", choices=ENGINES, required=True)
+    run_parser.add_argument("--fresh", action="store_true",
+                            help="Archive existing results and execute this engine's full applicable cohort")
     run_parser.add_argument("--control", action="store_true", help="drop the tested relation (harness check)")
     run_parser.add_argument("--only", nargs="*", help="limit to these relation ids")
     sub.add_parser("score")
@@ -925,7 +1005,7 @@ def main() -> None:
     elif args.cmd == "prepare":
         prepare(args.source)
     elif args.cmd == "run":
-        run(args.engine, args.control, set(args.only or ()) or None)
+        run(args.engine, fresh=args.fresh, control=args.control, only=set(args.only or ()) or None)
     else:
         score()
 
