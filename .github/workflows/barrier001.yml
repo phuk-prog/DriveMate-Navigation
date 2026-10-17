@@ -4,6 +4,14 @@ name: BARRIER-001 four-engine bollard and gate route check
 # data/barrier001-snapshot (clips) and data/turn001-snapshot (source map, wider clips).
 on:
   workflow_dispatch:
+  # A new workflow can only be started by hand once it is on the default branch,
+  # so a push that changes the test itself also runs it (research branches only).
+  push:
+    branches: ['claude/**', 'codex/**']
+    paths:
+      - 'benchmarks/barrier001_route.py'
+      - 'config/barrier001-*.json'
+      - '.github/workflows/barrier001.yml'
 permissions:
   contents: read
   actions: read
