@@ -99,8 +99,6 @@ class Verdicts(unittest.TestCase):
         self.assertEqual(judge_instruction(g, {"kind": "roundabout", "exit": 3})["verdict"], "WRONG")
         self.assertEqual(judge_instruction(g, {"kind": "right"})["verdict"], "WRONG")
         self.assertEqual(judge_instruction(g, None)["verdict"], "MISSING")
-        minor = {**g, "expected_without_service": 1}  # exit 1 would be a service road
-        self.assertEqual(judge_instruction(minor, {"kind": "roundabout", "exit": 1})["verdict"], "AMBIGUOUS_MINOR_EXIT")
 
     def test_movement_and_line(self):
         self.assertTrue(makes_movement(self.left, ["1", "2", "3", "4"]))

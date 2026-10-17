@@ -9,16 +9,19 @@ from math import atan2, cos, degrees, isfinite, radians, sin
 def principal_maneuvers(graph, coordinates, edge_ids, roundabout_edges):
     """Return principal turns, refusing invalid paths and partial roundabouts.
 
-    Count one accessible outgoing non-ring spoke junction per traversed ring node.
-    Incoming-only feeders, unknown/prohibited access and prohibited turns do not
-    count. Metadata is explicit: no guessing a roundabout from road curvature.
+    Count one outgoing non-ring spoke junction a car may leave by per traversed ring
+    node. Owner decision (17 Oct 2026): every such road counts, service roads and
+    other uncertain-access roads included; incoming-only feeders, roads closed to
+    cars and prohibited turns do not. A route may use an uncertain-access road (the
+    router already allowed it), never a closed one. Metadata is explicit: no guessing
+    a roundabout from road curvature.
     """
     ring=frozenset(roundabout_edges)
     if not ring <= graph.edges.keys():
         raise ValueError('Unknown roundabout edge')
     edges=[graph.edges[e] for e in edge_ids]
     for e in edges:
-        if e.access!='allowed':raise ValueError('Non-allowed route edge')
+        if e.access=='prohibited':raise ValueError('Prohibited route edge')
         for node in (e.source,e.target):
             p=coordinates[node]
             if len(p)!=2 or any(type(v) not in (int,float) or not isfinite(v) for v in p) or not -90<=p[0]<=90 or not -180<=p[1]<=180:
@@ -37,7 +40,7 @@ def principal_maneuvers(graph, coordinates, edge_ids, roundabout_edges):
                 e=edges[i]
                 if e.target in visited:raise ValueError('Repeated roundabout junction')
                 visited.add(e.target)
-                outgoing=[x for x in graph.adjacency[e.target] if x.edge_id not in ring and x.access=='allowed' and (e.edge_id,x.edge_id) not in graph.prohibited_turns]
+                outgoing=[x for x in graph.adjacency[e.target] if x.edge_id not in ring and x.access!='prohibited' and (e.edge_id,x.edge_id) not in graph.prohibited_turns]
                 if outgoing:exits+=1
                 i+=1
             if not exits:raise ValueError('No accessible roundabout exit')

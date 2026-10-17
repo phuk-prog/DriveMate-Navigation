@@ -41,7 +41,9 @@ ROOT = t1.ROOT
 WORK = ROOT / "results" / "journey001"
 COHORT = ROOT / "config" / "journey001-cohort.json"
 PREPARED = ROOT / "config" / "journey001-prepared.json"
-CONTRACT = "JOURNEY-001 v1"
+CONTRACT = "JOURNEY-001 v1.1"
+# v1.1 (owner, 17 Oct 2026): every road a car may leave by counts as a roundabout exit,
+# service roads included, so the v1 "unclear minor exit" verdict is retired.
 STRAIGHT_MAX, TURN_MIN, TURN_MAX = 25.0, 60.0, 120.0
 JUNCTION_HIGHWAYS = t1.CAR_HIGHWAYS - {"service", "living_street", "motorway", "motorway_link"}
 QUOTAS = {("turn", "left"): 12, ("turn", "right"): 12, ("turn", "straight"): 12,
@@ -224,14 +226,6 @@ def ring_exits(clip: a1.AccessClip, ring: str, entry: str) -> tuple[list[str], l
                     continue
                 break
     return path, exits
-
-
-def exit_number_without_service(clip: a1.AccessClip, geom: dict) -> int | None:
-    """The exit number when service-road exits are not counted (None if the target is one)."""
-    _, exits = ring_exits(clip, geom["ring"], geom["entry"])
-    major = [e for e in exits if e[0] != geom["entry"] and clip.ways[e[1]][1].get("highway") != "service"]
-    nodes = [e[0] for e in major]
-    return nodes.index(geom["exit_node"]) + 1 if geom["exit_node"] in nodes else None
 
 
 def case_geometry(case: dict, clip: a1.AccessClip) -> dict:
@@ -559,13 +553,7 @@ def judge_instruction(geom: dict, step: dict | None) -> dict:
     if geom["kind"] == "roundabout":
         if step["kind"] != "roundabout":
             return {"verdict": "WRONG", "said": step}
-        if step.get("exit") == geom["expected"]:
-            return {"verdict": "CORRECT", "said": step}
-        # Counting service-road exits (car parks, accesses) is a convention, not a rule:
-        # an answer that is right when they are left out is reported, not scored.
-        if step.get("exit") == geom.get("expected_without_service"):
-            return {"verdict": "AMBIGUOUS_MINOR_EXIT", "said": step}
-        return {"verdict": "WRONG", "said": step}
+        return {"verdict": "CORRECT" if step.get("exit") == geom["expected"] else "WRONG", "said": step}
     # Turn (60-120 degrees): the instruction must name the right side ("slight" still names it).
     # Straight on (under 25 degrees): no instruction, straight/continue, or a slight/keep cue.
     ok = step["kind"] == geom["expected"] or (geom["expected"] == "straight" and step.get("slight")
@@ -628,8 +616,6 @@ def run(engine: str, only: set[str] | None = None) -> None:
         clip = a1.AccessClip(raw)
         if geom["kind"] == "turn":
             geom = {**geom, "junction_at": clip.coords[geom["junction"]]}
-        else:
-            geom = {**geom, "expected_without_service": exit_number_without_service(clip, geom)}
         folder = WORK / "cases" / record["id"]
         entry = dmn_case(raw, clip, geom) if engine == "DMN" else engine_case(engine, folder, clip, geom)
         results[record["id"]] = entry
@@ -674,8 +660,6 @@ def score() -> None:
                                               "correct": sum(v == "CORRECT" for v in judged.values()),
                                               "judged": sum(v in ("CORRECT", "WRONG", "MISSING", "REFUSED")
                                                             for v in judged.values()),
-                                              "unclear_minor_exit": sum(v == "AMBIGUOUS_MINOR_EXIT"
-                                                                        for v in judged.values()),
                                               "wrong_cases": {i: cases[i]["instruction"] for i, v in judged.items()
                                                               if v in ("WRONG", "MISSING", "REFUSED")}}
         offs = [c["line"]["max_off_road_m"] for c in cases.values() if c.get("line", {}).get("status") == "MEASURED"]
@@ -696,8 +680,8 @@ def brief() -> int:
     lines.append("6 length vs shortest (median; >1.2x): " + "; ".join(
         f"{e} {v['median_length_vs_shortest']}, {len(v['longer_than_1_2x_shortest'])}" for e, v in c["6_route_quality"].items()))
     for cat in ("8_junction_turns", "9_roundabout_exits"):
-        lines.append(f"{cat.replace('_', ' ')} correct/judged (unclear minor exit): " + "; ".join(
-            f"{e} {v['correct']}/{v['judged']} ({v['unclear_minor_exit']})" for e, v in c[cat].items()))
+        lines.append(f"{cat.replace('_', ' ')} correct/judged: " + "; ".join(
+            f"{e} {v['correct']}/{v['judged']}" for e, v in c[cat].items()))
     lines.append("11 line max off road (median m; cases >5 m): " + "; ".join(
         f"{e} " + ("n/a (node path)" if v.get("status") else f"{v['median_max_off_road_m']}, {v['cases_over_5m']}")
         for e, v in c["11_route_line"].items()))

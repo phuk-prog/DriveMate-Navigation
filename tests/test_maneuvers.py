@@ -40,13 +40,15 @@ class ManeuverTests(unittest.TestCase):
         r=shortest_route(graph,'osm:10','osm:17')
         self.assertEqual(principal_maneuvers(graph,data.coordinates,r.edge_ids,ring),[{'kind':'roundabout','exit':1}])
 
-    def test_unknown_spoke_does_not_count(self):
+    def test_uncertain_access_spoke_counts_closed_spoke_does_not(self):
+        # Owner decision (17 Oct 2026): service/uncertain-access exits count; closed ones do not.
         from engine.routing import RoadGraph
         from dataclasses import replace
         data,ring=load_map()
-        graph=RoadGraph(data.graph.vertices,[replace(e,access='unknown') if e.edge_id=='w:112:0:f' else e for e in data.graph.edges.values()])
-        r=shortest_route(graph,'osm:10','osm:18')
-        self.assertEqual(principal_maneuvers(graph,data.coordinates,r.edge_ids,ring),[{'kind':'roundabout','exit':2}])
+        for access,exit_number in (('unknown',3),('prohibited',2)):
+            graph=RoadGraph(data.graph.vertices,[replace(e,access=access) if e.edge_id=='w:112:0:f' else e for e in data.graph.edges.values()])
+            r=shortest_route(graph,'osm:10','osm:18')
+            self.assertEqual(principal_maneuvers(graph,data.coordinates,r.edge_ids,ring),[{'kind':'roundabout','exit':exit_number}])
 
     def test_unknown_metadata_rejected(self):
         data,ring=load_map()
