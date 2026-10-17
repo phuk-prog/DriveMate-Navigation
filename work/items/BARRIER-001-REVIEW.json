@@ -1,18 +1,26 @@
 {
- "agent": "Claude",
- "branch": "claude/dmn-turn-restriction-debug-mhw7cw",
+ "agent": "ChatGPT GPT-6",
+ "branch": "codex/dmn-category1-completion-20261017",
  "created": "2026-10-17T10:06:34+00:00",
- "fingerprints": [],
+ "fingerprints": [
+  "BARRIER-001 v1.2|frozen source 2a8ef8e1|score 138be2a|fresh run 39029643326"
+ ],
  "history": [
-  "2026-10-17T10:06:34+00:00 next by Claude on claude/dmn-turn-restriction-debug-mhw7cw"
+  "2026-10-17T10:06:34+00:00 next by Claude on claude/dmn-turn-restriction-debug-mhw7cw",
+  "2026-10-17T11:51:45.707Z done/diagnosed by ChatGPT GPT-6 on codex/dmn-category1-completion-20261017"
  ],
  "id": "BARRIER-001-REVIEW",
  "read_first": [
   "docs/BARRIER_001_RESULTS.md: Proposed improvements"
  ],
- "runs": [],
- "state": "next",
+ "runs": [
+  "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39029643326"
+ ],
+ "state": "done",
  "title": "Owner decisions from BARRIER-001",
- "updated": "2026-10-17T10:06:34+00:00",
- "why": "Gates on uncertain start/finish roads (30 cases); scoring v1.2 for routes through unmarked gates; DMN turn-round at a closed barrier"
+ "updated": "2026-10-17T11:51:45.707Z",
+ "why": "Gates on uncertain start/finish roads (30 cases); scoring v1.2 for routes through unmarked gates; DMN turn-round at a closed barrier",
+ "summary": "Category 1 v1.2 barrier scoring and full four-engine frozen-cohort retest completed: latest run 39029643326 all six jobs passed; DMN 46/61 legal passes, 0 closed-barrier crossings, 15 no-route results; unknown-access gates correctly separated and remain legally unverified. Owner requested no registrations: further independent gate/turn-around rights marked DIAGNOSED/UNVERIFIED; conservative routing retained.",
+ "results": "docs/BARRIER_001_V12_REVIEW.md",
+ "reason": "Executed diagnostic work complete; inaccessible/registration-dependent and owner-specific site permissions remain UNKNOWN in case-level report, not silently passed."
 }

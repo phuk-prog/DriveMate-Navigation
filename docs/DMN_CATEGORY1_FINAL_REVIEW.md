@@ -115,7 +115,10 @@ unobserved UK-road failures.
 - Integrated-branch fresh
   [BARRIER-001 four-engine run 39029643326](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39029643326)
   validates the copied v1.2 scorer against all original frozen clips;
-  **read its actual final result before asserting it passed**.
+  **PASSED all 6 jobs** on revision `138be2a`; exact same 110 frozen/94
+  testable/92 discriminating and DMN 46 legal passes/0 illegal
+  barrier crossings as the earlier v1.2 run. GraphHopper 9, OSRM 46
+  and Valhalla 42, all zero observed closed-barrier crossings.
 - The separate draft PR branches have not been merged to production or
   Android. No registrations, paid provider, personal GPS, Android build,
   APK release or Category 2 test.

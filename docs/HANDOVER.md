@@ -1,5 +1,26 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 — approved Category 1 completion, green integrated retest
+- Owner approved remaining Category 1 engine/map graph work together; no
+  registration, no Android/app/APK and no Category 2 execution.
+- Research branch `codex/dmn-category1-completion-20261017`, draft PR #10 (unmerged).
+- [MAP-001 v3 six-region graph evidence](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39018620653)
+  retained; native partial DMN=Valhalla 78/78 ways, 714 common segments.
+- [GraphHopper heading trial](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39029550716)
+  PASS: 0/9 wrong-endpoint cases corrected, 3/3 unchanged controls PASS;
+  no arbitrary competitor changes.
+- [Frozen overall Category 1 scorecard](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39029966922)
+  PASS; source, turn, barrier separately ranked and signed-law gaps withheld.
+- [Fresh combined-branch BARRIER v1.2 four-engine retest](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39029643326)
+  six jobs PASS, exact same results as before (DMN=OSRM 46).
+- [Full research safety regression](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39030191491)
+  PASS after fixing public OSM coordinate-key false alarm **without**
+  weakening privacy checks.
+- Results and remaining unverified facts: [Category 1 final report](DMN_CATEGORY1_FINAL_REVIEW.md).
+  Category 1 research finish is not independently verified UK-road law
+  or a full cross-engine graph certificate.
+
+
 ## 2026-10-17 — no-registration policy and TURN-001 reference endpoint audit
 - Owner: do not sign up for research sources; leave inaccessible legal
   evidence DIAGNOSED/UNVERIFIED and move to registration-free tasks. Shared

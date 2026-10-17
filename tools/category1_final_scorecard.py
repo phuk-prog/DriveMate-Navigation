@@ -15,7 +15,7 @@ from pathlib import Path
 EXPECTED = {
     "map001": 39018620653,
     "turn001": 39019749346,
-    "barrier001": 39026846188,
+    "barrier001": 39029643326,
     "endpoint": 39028874337,
     "heading": 39029550716,
 }
