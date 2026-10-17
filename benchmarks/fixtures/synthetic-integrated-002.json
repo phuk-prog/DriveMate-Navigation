@@ -1,0 +1,31 @@
+{
+  "test_id": "INTEGRATED-002",
+  "classification": "synthetic analytical roundabout and GPS-confidence integration; not real-road, physical GNSS, Android or app evidence",
+  "cases": [
+    {
+      "id": "INTEGRATED-002-roundabout-exit-three",
+      "source_node": 10,
+      "target_node": 18,
+      "expected_route_edges": ["w:110:0:f", "w:111:0:f", "w:111:1:f", "w:111:2:f", "w:111:3:f", "w:114:0:f"],
+      "expected_maneuvers": [{"kind": "roundabout", "exit": 3}],
+      "expected_fix_status": "VALID",
+      "expected_instruction_phase": "APPROACH"
+    },
+    {
+      "id": "INTEGRATED-002-weak-gps-withholds",
+      "horizontal_accuracy_m": 60,
+      "expected_fix_status": "UNCERTAIN",
+      "expected_instruction_phase": "WITHHOLD",
+      "expected_arrival_state": "WITHHELD"
+    },
+    {
+      "id": "INTEGRATED-002-stale-gps-rejected",
+      "fix_timestamp_ms": 1000,
+      "receipt_timestamp_ms": 12000,
+      "expected_fix_status": "REJECTED",
+      "expected_fix_reason": "stale_timestamp",
+      "expected_instruction_phase": "WITHHOLD",
+      "expected_arrival_state": "REJECTED"
+    }
+  ]
+}
