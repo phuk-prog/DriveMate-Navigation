@@ -54,7 +54,7 @@ WORK = ROOT / "results" / "barrier001"
 COHORT = ROOT / "config" / "barrier001-cohort.json"
 PREPARED = ROOT / "config" / "barrier001-prepared.json"
 SOURCE = ROOT / "results" / "turn001" / "gm.osm.pbf"  # pinned on data/turn001-snapshot
-CONTRACT = "BARRIER-001 v1.1"
+CONTRACT = "BARRIER-001 v1.2"
 ACCESS_KEYS = ("motorcar", "motor_vehicle", "vehicle", "access")
 OPEN_VALUES = {"yes", "permissive", "designated"}
 RESTRICTED_VALUES = {"private", "destination", "delivery", "customers", "permit", "agricultural",
@@ -453,7 +453,44 @@ def _ms(values: list[float]) -> dict:
             "samples": len(xs)}
 
 
+def access_alternatives(finals: dict[str, dict[str, dict]], node: str) -> tuple[list[str], dict[str, list[str]]]:
+    """Separate legal comparator routes with known access from those relying on uncertain gates.
+
+    Unmarked/private/conditional gates are not silently treated as illegal.
+    A map-derived LEGAL route that crosses one remains provisional evidence of
+    a usable alternative, not proof that the public can drive through it.
+    """
+    known, uncertain = [], {}
+    for engine, cases in finals.items():
+        f = cases.get(node, {})
+        if f.get("verdict") != "PASS" or f.get("route_legal") != "LEGAL":
+            continue
+        gates = sorted(f.get("other_uncertain_barriers") or [])
+        if gates:
+            uncertain[engine] = gates
+        else:
+            known.append(engine)
+    return sorted(known), dict(sorted(uncertain.items()))
+
+
+def _selfcheck_access_alternatives() -> None:
+    """Small scoring-contract self-check; not a real-road test or independent oracle."""
+    base = {"verdict": "PASS", "route_legal": "LEGAL"}
+    sample = {
+        "DMN": {"x": {"verdict": "SAFE_NO_ROUTE"}},
+        "OSRM": {"x": {**base, "other_uncertain_barriers": ["barrier:7:gate:untagged_gate"]}},
+        "Valhalla": {"x": {**base, "other_uncertain_barriers": []}},
+        "GraphHopper": {"x": {"verdict": "PASS", "route_legal": "ILLEGAL"}},
+    }
+    assert access_alternatives(sample, "x") == (
+        ["Valhalla"], {"OSRM": ["barrier:7:gate:untagged_gate"]})
+    del sample["Valhalla"]
+    assert access_alternatives(sample, "x") == (
+        [], {"OSRM": ["barrier:7:gate:untagged_gate"]})
+
+
 def score() -> None:
+    _selfcheck_access_alternatives()
     prepared = {str(r["node"]): r for r in json.loads(PREPARED.read_text())}
     runs = {e: json.loads((WORK / f"run-{e}.json").read_text()) for e in ENGINES if (WORK / f"run-{e}.json").exists()}
     for name, record in runs.items():
@@ -491,9 +528,22 @@ def score() -> None:
             "avoided_open_cases": sorted(n for n, f in res.items() if f["verdict"] == "AVOIDED_OPEN_BARRIER"),
             "other_rule_violations": {n: f["violations"] for n, f in res.items() if f.get("route_legal") == "ILLEGAL"
                                       and f["verdict"] != "FAIL_THROUGH_BARRIER"},
+            # Legacy OSM-only count retained for backwards compatibility with v1.1.
+            # It can overstate available alternatives when all routes rely on gates
+            # whose public motorcar access is unknown or restricted.
             "no_route_but_legal_route_exists": {
                 n: sorted(e for e in finals if legal_pass(e, n)) for n, f in res.items()
                 if f["verdict"] == "SAFE_NO_ROUTE" and any(legal_pass(e, n) for e in finals)},
+            "no_route_but_known_access_legal_route_exists": {
+                n: access_alternatives(finals, n)[0] for n, f in res.items()
+                if f["verdict"] == "SAFE_NO_ROUTE" and access_alternatives(finals, n)[0]},
+            "no_route_with_only_uncertain_access_alternatives": {
+                n: access_alternatives(finals, n)[1] for n, f in res.items()
+                if f["verdict"] == "SAFE_NO_ROUTE" and not access_alternatives(finals, n)[0]
+                and access_alternatives(finals, n)[1]},
+            "passes_via_other_uncertain_barriers": {
+                n: f["other_uncertain_barriers"] for n, f in res.items()
+                if legal_pass(name, n) and f.get("other_uncertain_barriers")},
             "endpoint_withheld": sorted(n for n, f in res.items() if f["verdict"] == "ENDPOINT_WITHHELD_BY_POLICY"),
             "query_ms": _ms([runs[name][n][ms_key] for n in testable if runs[name].get(n, {}).get(ms_key) is not None]),
             "executed": len(res),
@@ -512,7 +562,10 @@ def brief() -> int:
                            for g, c in e["by_group"].items())
         lines.append(f"- {name}: {groups} | legal passes {e['pass_and_route_legal']}; "
                      f"other rule breaks {len(e['other_rule_violations'])}; "
-                     f"no-route though legal route exists {len(e['no_route_but_legal_route_exists'])}; "
+                     f"no-route with known-access legal alternative "
+                     f"{len(e['no_route_but_known_access_legal_route_exists'])}; "
+                     f"no-route with only uncertain-gate alternative "
+                     f"{len(e['no_route_with_only_uncertain_access_alternatives'])}; "
                      f"median {e['query_ms']['median']} ms")
     bad = []
     if s["engines"].get("DMN", {}).get("fail_cases"):
