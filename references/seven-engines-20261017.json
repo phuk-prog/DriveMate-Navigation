@@ -1,0 +1,1594 @@
+{
+ "access001": {
+  "cases_frozen": 139,
+  "cohort_sha256": "6ed2f465d8fe6dc6fd8eeedbecb143775ca2db433db6b9723e6d45ba81880596",
+  "contract": "ACCESS-001 v1.3",
+  "discriminating_by_kind": {
+   "closed/bus_gate": 2,
+   "closed/busway": 6,
+   "closed/no_cars": 4,
+   "closed/pedestrian": 8,
+   "restricted/bus_private": 2,
+   "restricted/destination": 4,
+   "restricted/private": 1
+  },
+  "discriminating_cases": 27,
+  "engines": {
+   "BRouter": {
+    "by_kind": {
+     "closed/bus_gate": {
+      "PASS": 7,
+      "UNRESOLVED_SNAP": 5
+     },
+     "closed/busway": {
+      "PASS": 4,
+      "UNRESOLVED_SNAP": 4
+     },
+     "closed/no_cars": {
+      "PASS": 5,
+      "UNRESOLVED_SNAP": 7
+     },
+     "closed/pedestrian": {
+      "PASS": 4,
+      "UNRESOLVED_SNAP": 8
+     },
+     "restricted/bus_private": {
+      "AVOIDED_RESTRICTED": 3,
+      "SAFE_NO_ROUTE": 1,
+      "UNRESOLVED_SNAP": 1
+     },
+     "restricted/destination": {
+      "AVOIDED_RESTRICTED": 3,
+      "UNRESOLVED_SNAP": 6
+     },
+     "restricted/private": {
+      "AVOIDED_RESTRICTED": 2,
+      "SAFE_NO_ROUTE": 1,
+      "UNRESOLVED_SNAP": 4
+     }
+    },
+    "category5_route_validity": {
+     "no_route": 2,
+     "off_target": 35,
+     "valid_route": 28
+    },
+    "discriminating": {
+     "AVOIDED_RESTRICTED": 2,
+     "PASS": 8,
+     "SAFE_NO_ROUTE": 2,
+     "UNRESOLVED_SNAP": 15
+    },
+    "endpoint_withheld": [],
+    "executed": 65,
+    "fail_cases": [],
+    "no_route_but_legal_route_exists": {},
+    "other_rule_violations": {},
+    "pass_and_route_legal": 20,
+    "passes_via_restricted_roads_or_gates": {},
+    "query_ms": {
+     "median": 125.2,
+     "p95": 165.9,
+     "samples": 65
+    }
+   },
+   "DMN": {
+    "by_kind": {
+     "closed/bus_gate": {
+      "PASS": 12
+     },
+     "closed/busway": {
+      "PASS": 8
+     },
+     "closed/no_cars": {
+      "PASS": 12
+     },
+     "closed/pedestrian": {
+      "PASS": 12
+     },
+     "restricted/bus_private": {
+      "AVOIDED_RESTRICTED": 2,
+      "ENDPOINT_WITHHELD_BY_POLICY": 1,
+      "USED_RESTRICTED": 2
+     },
+     "restricted/destination": {
+      "AVOIDED_RESTRICTED": 8,
+      "USED_RESTRICTED": 1
+     },
+     "restricted/private": {
+      "AVOIDED_RESTRICTED": 5,
+      "ENDPOINT_WITHHELD_BY_POLICY": 1,
+      "USED_RESTRICTED": 1
+     }
+    },
+    "category5_route_validity": {
+     "error_or_rejected": 2,
+     "valid_route": 63
+    },
+    "discriminating": {
+     "AVOIDED_RESTRICTED": 3,
+     "PASS": 20,
+     "USED_RESTRICTED": 4
+    },
+    "endpoint_withheld": [
+     "1135461207",
+     "559432689"
+    ],
+    "executed": 65,
+    "fail_cases": [],
+    "no_route_but_legal_route_exists": {},
+    "other_rule_violations": {},
+    "pass_and_route_legal": 44,
+    "passes_via_restricted_roads_or_gates": {},
+    "query_ms": {
+     "median": 580.6,
+     "p95": 2174.7,
+     "samples": 65
+    }
+   },
+   "GraphHopper": {
+    "by_kind": {
+     "closed/bus_gate": {
+      "PASS": 10,
+      "UNRESOLVED_SNAP": 2
+     },
+     "closed/busway": {
+      "PASS": 6,
+      "UNRESOLVED_SNAP": 2
+     },
+     "closed/no_cars": {
+      "PASS": 9,
+      "UNRESOLVED_SNAP": 3
+     },
+     "closed/pedestrian": {
+      "PASS": 5,
+      "UNRESOLVED_SNAP": 7
+     },
+     "restricted/bus_private": {
+      "AVOIDED_RESTRICTED": 3,
+      "SAFE_NO_ROUTE": 1,
+      "UNRESOLVED_SNAP": 1
+     },
+     "restricted/destination": {
+      "AVOIDED_RESTRICTED": 1,
+      "USED_RESTRICTED": 8
+     },
+     "restricted/private": {
+      "AVOIDED_RESTRICTED": 2,
+      "SAFE_NO_ROUTE": 1,
+      "UNRESOLVED_SNAP": 4
+     }
+    },
+    "category5_route_validity": {
+     "no_route": 2,
+     "off_target": 19,
+     "valid_route": 44
+    },
+    "discriminating": {
+     "AVOIDED_RESTRICTED": 1,
+     "PASS": 12,
+     "SAFE_NO_ROUTE": 2,
+     "UNRESOLVED_SNAP": 8,
+     "USED_RESTRICTED": 4
+    },
+    "endpoint_withheld": [],
+    "executed": 65,
+    "fail_cases": [],
+    "no_route_but_legal_route_exists": {},
+    "other_rule_violations": {},
+    "pass_and_route_legal": 30,
+    "passes_via_restricted_roads_or_gates": {},
+    "query_ms": {
+     "median": 73.0,
+     "p95": 94.1,
+     "samples": 65
+    }
+   },
+   "OSRM": {
+    "by_kind": {
+     "closed/bus_gate": {
+      "PASS": 11,
+      "UNRESOLVED_SNAP": 1
+     },
+     "closed/busway": {
+      "PASS": 8
+     },
+     "closed/no_cars": {
+      "PASS": 10,
+      "UNRESOLVED_SNAP": 2
+     },
+     "closed/pedestrian": {
+      "PASS": 12
+     },
+     "restricted/bus_private": {
+      "AVOIDED_RESTRICTED": 3,
+      "UNRESOLVED_SNAP": 1,
+      "USED_RESTRICTED": 1
+     },
+     "restricted/destination": {
+      "AVOIDED_RESTRICTED": 7,
+      "USED_RESTRICTED": 2
+     },
+     "restricted/private": {
+      "AVOIDED_RESTRICTED": 5,
+      "USED_RESTRICTED": 2
+     }
+    },
+    "category5_route_validity": {
+     "off_target": 4,
+     "valid_route": 61
+    },
+    "discriminating": {
+     "AVOIDED_RESTRICTED": 4,
+     "PASS": 18,
+     "UNRESOLVED_SNAP": 2,
+     "USED_RESTRICTED": 3
+    },
+    "endpoint_withheld": [],
+    "executed": 65,
+    "fail_cases": [],
+    "no_route_but_legal_route_exists": {},
+    "other_rule_violations": {},
+    "pass_and_route_legal": 41,
+    "passes_via_restricted_roads_or_gates": {},
+    "query_ms": {
+     "median": 0.9,
+     "p95": 1.2,
+     "samples": 65
+    }
+   },
+   "OsmAnd": {
+    "by_kind": {
+     "closed/bus_gate": {
+      "PASS": 7,
+      "UNRESOLVED_SNAP": 5
+     },
+     "closed/busway": {
+      "PASS": 5,
+      "UNRESOLVED_SNAP": 3
+     },
+     "closed/no_cars": {
+      "PASS": 8,
+      "UNRESOLVED_SNAP": 4
+     },
+     "closed/pedestrian": {
+      "PASS": 4,
+      "UNRESOLVED_SNAP": 8
+     },
+     "restricted/bus_private": {
+      "AVOIDED_RESTRICTED": 3,
+      "UNRESOLVED_SNAP": 2
+     },
+     "restricted/destination": {
+      "AVOIDED_RESTRICTED": 2,
+      "UNRESOLVED_SNAP": 3,
+      "USED_RESTRICTED": 4
+     },
+     "restricted/private": {
+      "AVOIDED_RESTRICTED": 2,
+      "UNRESOLVED_SNAP": 5
+     }
+    },
+    "category5_route_validity": {
+     "off_target": 30,
+     "valid_route": 35
+    },
+    "discriminating": {
+     "AVOIDED_RESTRICTED": 1,
+     "PASS": 9,
+     "UNRESOLVED_SNAP": 15,
+     "USED_RESTRICTED": 2
+    },
+    "endpoint_withheld": [],
+    "executed": 65,
+    "fail_cases": [],
+    "no_route_but_legal_route_exists": {},
+    "other_rule_violations": {
+     "900510022": [
+      "restriction:16686778:only_right_turn"
+     ]
+    },
+    "pass_and_route_legal": 23,
+    "passes_via_restricted_roads_or_gates": {},
+    "query_ms": {
+     "median": 487.8,
+     "p95": 555.9,
+     "samples": 65
+    }
+   },
+   "Valhalla": {
+    "by_kind": {
+     "closed/bus_gate": {
+      "PASS": 11,
+      "UNRESOLVED_SNAP": 1
+     },
+     "closed/busway": {
+      "PASS": 8
+     },
+     "closed/no_cars": {
+      "PASS": 11,
+      "UNRESOLVED_SNAP": 1
+     },
+     "closed/pedestrian": {
+      "PASS": 12
+     },
+     "restricted/bus_private": {
+      "AVOIDED_RESTRICTED": 3,
+      "UNRESOLVED_SNAP": 1,
+      "USED_RESTRICTED": 1
+     },
+     "restricted/destination": {
+      "AVOIDED_RESTRICTED": 8,
+      "USED_RESTRICTED": 1
+     },
+     "restricted/private": {
+      "AVOIDED_RESTRICTED": 6,
+      "USED_RESTRICTED": 1
+     }
+    },
+    "category5_route_validity": {
+     "off_target": 3,
+     "valid_route": 62
+    },
+    "discriminating": {
+     "AVOIDED_RESTRICTED": 4,
+     "PASS": 19,
+     "UNRESOLVED_SNAP": 1,
+     "USED_RESTRICTED": 3
+    },
+    "endpoint_withheld": [],
+    "executed": 65,
+    "fail_cases": [],
+    "no_route_but_legal_route_exists": {},
+    "other_rule_violations": {},
+    "pass_and_route_legal": 42,
+    "passes_via_restricted_roads_or_gates": {},
+    "query_ms": {
+     "median": 17.3,
+     "p95": 23.7,
+     "samples": 65
+    }
+   },
+   "openrouteservice": {
+    "by_kind": {
+     "closed/bus_gate": {
+      "PASS": 10,
+      "UNRESOLVED_SNAP": 2
+     },
+     "closed/busway": {
+      "PASS": 6,
+      "UNRESOLVED_SNAP": 2
+     },
+     "closed/no_cars": {
+      "PASS": 9,
+      "UNRESOLVED_SNAP": 3
+     },
+     "closed/pedestrian": {
+      "PASS": 5,
+      "UNRESOLVED_SNAP": 7
+     },
+     "restricted/bus_private": {
+      "AVOIDED_RESTRICTED": 3,
+      "SAFE_NO_ROUTE": 1,
+      "UNRESOLVED_SNAP": 1
+     },
+     "restricted/destination": {
+      "AVOIDED_RESTRICTED": 4,
+      "USED_RESTRICTED": 5
+     },
+     "restricted/private": {
+      "AVOIDED_RESTRICTED": 2,
+      "SAFE_NO_ROUTE": 1,
+      "UNRESOLVED_SNAP": 4
+     }
+    },
+    "category5_route_validity": {
+     "no_route": 2,
+     "off_target": 19,
+     "valid_route": 44
+    },
+    "discriminating": {
+     "AVOIDED_RESTRICTED": 2,
+     "PASS": 12,
+     "SAFE_NO_ROUTE": 2,
+     "UNRESOLVED_SNAP": 8,
+     "USED_RESTRICTED": 3
+    },
+    "endpoint_withheld": [],
+    "executed": 65,
+    "fail_cases": [],
+    "no_route_but_legal_route_exists": {},
+    "other_rule_violations": {},
+    "pass_and_route_legal": 30,
+    "passes_via_restricted_roads_or_gates": {},
+    "query_ms": {
+     "median": 437.8,
+     "p95": 482.3,
+     "samples": 65
+    }
+   }
+  },
+  "geometry_status": {
+   "BEYOND_CASES_PER_KIND": 52,
+   "NO_CAR_ROAD_AT_END": 22,
+   "TESTABLE": 65
+  },
+  "prepared_sha256": "b654667c8473f17d2d7128e4779470b43d39d7bea57c636c92148587a38936af",
+  "revision": "6190d727738d1e2f22938e4d94a37c5b521ed2b7",
+  "source_sha256": "2a8ef8e1f2533cb009b1ce248a6bf4eaabdd47e03979e64e24cd844f3b22acba",
+  "testable_by_kind": {
+   "closed/bus_gate": 12,
+   "closed/busway": 8,
+   "closed/no_cars": 12,
+   "closed/pedestrian": 12,
+   "restricted/bus_private": 5,
+   "restricted/destination": 9,
+   "restricted/private": 7
+  },
+  "testable_cases": 65,
+  "truth": "OpenStreetMap road access and one-way tags in the hashed snapshot; not independent UK legal truth"
+ },
+ "journey001": {
+  "categories": {
+   "11_route_line": {
+    "BRouter": {
+     "cases_over_5m": 0,
+     "measured": 57,
+     "median_max_off_road_m": 0.06
+    },
+    "DMN": {
+     "status": "NOT_APPLICABLE_NODE_PATH"
+    },
+    "GraphHopper": {
+     "cases_over_5m": 0,
+     "measured": 57,
+     "median_max_off_road_m": 0.05
+    },
+    "OSRM": {
+     "cases_over_5m": 0,
+     "measured": 57,
+     "median_max_off_road_m": 0.04
+    },
+    "OsmAnd": {
+     "cases_over_5m": 0,
+     "measured": 57,
+     "median_max_off_road_m": 0.15
+    },
+    "Valhalla": {
+     "cases_over_5m": 0,
+     "measured": 57,
+     "median_max_off_road_m": 0.04
+    },
+    "openrouteservice": {
+     "cases_over_5m": 0,
+     "measured": 57,
+     "median_max_off_road_m": 0.15
+    }
+   },
+   "5_route_validity": {
+    "BRouter": {
+     "VALID": 57
+    },
+    "DMN": {
+     "VALID": 57
+    },
+    "GraphHopper": {
+     "VALID": 57
+    },
+    "OSRM": {
+     "VALID": 57
+    },
+    "OsmAnd": {
+     "VALID": 57
+    },
+    "Valhalla": {
+     "VALID": 57
+    },
+    "openrouteservice": {
+     "VALID": 57
+    }
+   },
+   "6_route_quality": {
+    "BRouter": {
+     "longer_than_1_2x_shortest": [],
+     "median_length_vs_shortest": 1.0,
+     "valid_routes": 57
+    },
+    "DMN": {
+     "longer_than_1_2x_shortest": [],
+     "median_length_vs_shortest": 1.0,
+     "valid_routes": 57
+    },
+    "GraphHopper": {
+     "longer_than_1_2x_shortest": [],
+     "median_length_vs_shortest": 1.0,
+     "valid_routes": 57
+    },
+    "OSRM": {
+     "longer_than_1_2x_shortest": [],
+     "median_length_vs_shortest": 1.0,
+     "valid_routes": 57
+    },
+    "OsmAnd": {
+     "longer_than_1_2x_shortest": [],
+     "median_length_vs_shortest": 1.0,
+     "valid_routes": 57
+    },
+    "Valhalla": {
+     "longer_than_1_2x_shortest": [],
+     "median_length_vs_shortest": 1.0,
+     "valid_routes": 57
+    },
+    "openrouteservice": {
+     "longer_than_1_2x_shortest": [],
+     "median_length_vs_shortest": 1.0,
+     "valid_routes": 57
+    }
+   },
+   "8_junction_turns": {
+    "BRouter": {
+     "by_kind": {
+      "left": {
+       "CORRECT": 12
+      },
+      "right": {
+       "CORRECT": 12
+      },
+      "straight": {
+       "CORRECT": 12
+      }
+     },
+     "correct": 36,
+     "judged": 36,
+     "wrong_cases": {}
+    },
+    "DMN": {
+     "by_kind": {
+      "left": {
+       "CORRECT": 12
+      },
+      "right": {
+       "CORRECT": 12
+      },
+      "straight": {
+       "CORRECT": 12
+      }
+     },
+     "correct": 36,
+     "judged": 36,
+     "wrong_cases": {}
+    },
+    "GraphHopper": {
+     "by_kind": {
+      "left": {
+       "CORRECT": 10,
+       "WRONG": 2
+      },
+      "right": {
+       "CORRECT": 9,
+       "WRONG": 3
+      },
+      "straight": {
+       "CORRECT": 12
+      }
+     },
+     "correct": 31,
+     "judged": 36,
+     "wrong_cases": {
+      "turn-570762018": {
+       "said": {
+        "at": [
+         53.663667,
+         -2.631044
+        ],
+        "kind": "straight",
+        "raw": "0",
+        "slight": false
+       },
+       "verdict": "WRONG"
+      },
+      "turn-664643295": {
+       "said": {
+        "at": [
+         53.562003,
+         -2.380914
+        ],
+        "kind": "straight",
+        "raw": "0",
+        "slight": false
+       },
+       "verdict": "WRONG"
+      },
+      "turn-6653839759": {
+       "said": {
+        "at": [
+         53.558074,
+         -2.460151
+        ],
+        "kind": "straight",
+        "raw": "0",
+        "slight": false
+       },
+       "verdict": "WRONG"
+      },
+      "turn-717881623": {
+       "said": {
+        "at": [
+         53.455298,
+         -2.341508
+        ],
+        "kind": "straight",
+        "raw": "0",
+        "slight": false
+       },
+       "verdict": "WRONG"
+      },
+      "turn-7944778532": {
+       "said": {
+        "at": [
+         53.452404,
+         -2.719246
+        ],
+        "kind": "straight",
+        "raw": "0",
+        "slight": false
+       },
+       "verdict": "WRONG"
+      }
+     }
+    },
+    "OSRM": {
+     "by_kind": {
+      "left": {
+       "CORRECT": 12
+      },
+      "right": {
+       "CORRECT": 12
+      },
+      "straight": {
+       "CORRECT": 12
+      }
+     },
+     "correct": 36,
+     "judged": 36,
+     "wrong_cases": {}
+    },
+    "OsmAnd": {
+     "by_kind": {
+      "left": {
+       "CORRECT": 12
+      },
+      "right": {
+       "CORRECT": 12
+      },
+      "straight": {
+       "CORRECT": 12
+      }
+     },
+     "correct": 36,
+     "judged": 36,
+     "wrong_cases": {}
+    },
+    "Valhalla": {
+     "by_kind": {
+      "left": {
+       "CORRECT": 12
+      },
+      "right": {
+       "CORRECT": 12
+      },
+      "straight": {
+       "CORRECT": 11,
+       "WRONG": 1
+      }
+     },
+     "correct": 35,
+     "judged": 36,
+     "wrong_cases": {
+      "turn-7839680152": {
+       "said": {
+        "at": [
+         53.396874,
+         -2.226592
+        ],
+        "kind": "right",
+        "raw": "20",
+        "slight": false
+       },
+       "verdict": "WRONG"
+      }
+     }
+    },
+    "openrouteservice": {
+     "by_kind": {
+      "left": {
+       "CORRECT": 12
+      },
+      "right": {
+       "CORRECT": 12
+      },
+      "straight": {
+       "CORRECT": 12
+      }
+     },
+     "correct": 36,
+     "judged": 36,
+     "wrong_cases": {}
+    }
+   },
+   "9_roundabout_exits": {
+    "BRouter": {
+     "by_kind": {
+      "exit1": {
+       "CORRECT": 7,
+       "NOT_JUDGED_ROUTE_DIFFERS": 1
+      },
+      "exit2": {
+       "CORRECT": 6
+      },
+      "exit3": {
+       "CORRECT": 7
+      }
+     },
+     "correct": 20,
+     "judged": 20,
+     "wrong_cases": {}
+    },
+    "DMN": {
+     "by_kind": {
+      "exit1": {
+       "CORRECT": 8
+      },
+      "exit2": {
+       "CORRECT": 6
+      },
+      "exit3": {
+       "CORRECT": 7
+      }
+     },
+     "correct": 21,
+     "judged": 21,
+     "wrong_cases": {}
+    },
+    "GraphHopper": {
+     "by_kind": {
+      "exit1": {
+       "CORRECT": 7,
+       "NOT_JUDGED_ROUTE_DIFFERS": 1
+      },
+      "exit2": {
+       "CORRECT": 6
+      },
+      "exit3": {
+       "CORRECT": 7
+      }
+     },
+     "correct": 20,
+     "judged": 20,
+     "wrong_cases": {}
+    },
+    "OSRM": {
+     "by_kind": {
+      "exit1": {
+       "CORRECT": 7,
+       "NOT_JUDGED_ROUTE_DIFFERS": 1
+      },
+      "exit2": {
+       "CORRECT": 4,
+       "WRONG": 2
+      },
+      "exit3": {
+       "CORRECT": 6,
+       "WRONG": 1
+      }
+     },
+     "correct": 17,
+     "judged": 20,
+     "wrong_cases": {
+      "roundabout-127572573-exit2": {
+       "said": {
+        "at": [
+         53.546213,
+         -2.588667
+        ],
+        "exit": 1,
+        "kind": "roundabout"
+       },
+       "verdict": "WRONG"
+      },
+      "roundabout-3994228-exit3": {
+       "said": {
+        "at": [
+         53.426287,
+         -2.121459
+        ],
+        "exit": 2,
+        "kind": "roundabout"
+       },
+       "verdict": "WRONG"
+      },
+      "roundabout-58425651-exit2": {
+       "said": {
+        "at": [
+         53.552899,
+         -2.430884
+        ],
+        "exit": 1,
+        "kind": "roundabout"
+       },
+       "verdict": "WRONG"
+      }
+     }
+    },
+    "OsmAnd": {
+     "by_kind": {
+      "exit1": {
+       "CORRECT": 7,
+       "NOT_JUDGED_ROUTE_DIFFERS": 1
+      },
+      "exit2": {
+       "CORRECT": 6
+      },
+      "exit3": {
+       "CORRECT": 7
+      }
+     },
+     "correct": 20,
+     "judged": 20,
+     "wrong_cases": {}
+    },
+    "Valhalla": {
+     "by_kind": {
+      "exit1": {
+       "CORRECT": 7,
+       "NOT_JUDGED_ROUTE_DIFFERS": 1
+      },
+      "exit2": {
+       "CORRECT": 6
+      },
+      "exit3": {
+       "CORRECT": 7
+      }
+     },
+     "correct": 20,
+     "judged": 20,
+     "wrong_cases": {}
+    },
+    "openrouteservice": {
+     "by_kind": {
+      "exit1": {
+       "CORRECT": 7,
+       "NOT_JUDGED_ROUTE_DIFFERS": 1
+      },
+      "exit2": {
+       "CORRECT": 4,
+       "NOT_JUDGED_ROUTE_DIFFERS": 2
+      },
+      "exit3": {
+       "CORRECT": 6,
+       "NOT_JUDGED_ROUTE_DIFFERS": 1
+      }
+     },
+     "correct": 17,
+     "judged": 17,
+     "wrong_cases": {}
+    }
+   },
+   "timing_not_ranked": {
+    "BRouter": {
+     "median": 191.5,
+     "p95": 218.3,
+     "samples": 57
+    },
+    "DMN": {
+     "median": 231.7,
+     "p95": 632.0,
+     "samples": 57
+    },
+    "GraphHopper": {
+     "median": 94.5,
+     "p95": 115.8,
+     "samples": 57
+    },
+    "OSRM": {
+     "median": 0.8,
+     "p95": 0.9,
+     "samples": 57
+    },
+    "OsmAnd": {
+     "median": 527.9,
+     "p95": 552.7,
+     "samples": 57
+    },
+    "Valhalla": {
+     "median": 19.5,
+     "p95": 22.6,
+     "samples": 57
+    },
+    "openrouteservice": {
+     "median": 450.0,
+     "p95": 512.1,
+     "samples": 57
+    }
+   }
+  },
+  "contract": "JOURNEY-001 v1.2",
+  "prepared_sha256": "98ce97b6b4c1c6d2f022fe58a74c2fc6a8bee676a5f3c0891d0ac8da5bd2613c",
+  "revision": "6190d727738d1e2f22938e4d94a37c5b521ed2b7",
+  "testable_by_stratum": {
+   "roundabout/exit1": 8,
+   "roundabout/exit2": 6,
+   "roundabout/exit3": 7,
+   "turn/left": 12,
+   "turn/right": 12,
+   "turn/straight": 12
+  },
+  "truth": "OpenStreetMap geometry and tags in the hashed snapshot; not independent UK road law"
+ },
+ "lanes001": {
+  "contract": "LANES-001 v1",
+  "engines": {
+   "BRouter": {
+    "status": "NOT_AVAILABLE: no lanes/limits in its route answer"
+   },
+   "DMN": {
+    "by_kind": {
+     "left": {
+      "CORRECT": 11,
+      "NOT_JUDGED_ROUTE_DIFFERS": 1
+     },
+     "right": {
+      "CORRECT": 12
+     },
+     "straight": {
+      "CORRECT": 12
+     }
+    },
+    "correct": 35,
+    "judged": 35,
+    "not_given": [],
+    "wrong": []
+   },
+   "GraphHopper": {
+    "by_kind": {
+     "left": {
+      "NOT_AVAILABLE": 12
+     },
+     "right": {
+      "NOT_AVAILABLE": 12
+     },
+     "straight": {
+      "NOT_AVAILABLE": 12
+     }
+    },
+    "correct": 0,
+    "judged": 0,
+    "not_given": [],
+    "wrong": []
+   },
+   "OSRM": {
+    "by_kind": {
+     "left": {
+      "CORRECT": 8,
+      "NOT_GIVEN": 4
+     },
+     "right": {
+      "CORRECT": 10,
+      "NOT_GIVEN": 2
+     },
+     "straight": {
+      "CORRECT": 4,
+      "NOT_GIVEN": 6,
+      "WRONG": 2
+     }
+    },
+    "correct": 22,
+    "judged": 36,
+    "not_given": [
+     "lanes-10186265240",
+     "lanes-12639521341",
+     "lanes-2430569552",
+     "lanes-28276195",
+     "lanes-282787034",
+     "lanes-307061560",
+     "lanes-32096735",
+     "lanes-355641735",
+     "lanes-6965677030",
+     "lanes-7087480986",
+     "lanes-753818212",
+     "lanes-8757900669"
+    ],
+    "wrong": [
+     "lanes-1557137792",
+     "lanes-7600969131"
+    ]
+   },
+   "OsmAnd": {
+    "by_kind": {
+     "left": {
+      "CORRECT": 10,
+      "NOT_JUDGED_ROUTE_DIFFERS": 2
+     },
+     "right": {
+      "CORRECT": 12
+     },
+     "straight": {
+      "CORRECT": 3,
+      "NOT_GIVEN": 9
+     }
+    },
+    "correct": 25,
+    "judged": 34,
+    "not_given": [
+     "lanes-12639521341",
+     "lanes-1557137792",
+     "lanes-252010424",
+     "lanes-282787034",
+     "lanes-307061560",
+     "lanes-355641735",
+     "lanes-4699434246",
+     "lanes-6965677030",
+     "lanes-7600969131"
+    ],
+    "wrong": []
+   },
+   "Valhalla": {
+    "status": "NOT_AVAILABLE: no lanes/limits in its route answer"
+   },
+   "openrouteservice": {
+    "status": "NOT_AVAILABLE: no lanes/limits in its route answer"
+   }
+  },
+  "prepared_sha256": "15a1666ede6c43b13efdd31d9777b3b65c8d166a2231c9ce0bdc9b5764a26357",
+  "revision": "6190d727738d1e2f22938e4d94a37c5b521ed2b7",
+  "testable_by_kind": {
+   "left": 12,
+   "right": 12,
+   "straight": 12
+  },
+  "truth": "OpenStreetMap tags in the hashed snapshot; not verified road paint or legal limits"
+ },
+ "limits001": {
+  "contract": "LIMITS-001 v1",
+  "engines": {
+   "BRouter": {
+    "status": "NOT_AVAILABLE: no lanes/limits in its route answer"
+   },
+   "DMN": {
+    "by_kind": {
+     "mph20": {
+      "CORRECT": 8,
+      "ENDPOINT_WITHHELD_BY_POLICY": 1,
+      "NOT_JUDGED_ROUTE_DIFFERS": 1
+     },
+     "mph30": {
+      "CORRECT": 9,
+      "NOT_JUDGED_ROUTE_DIFFERS": 1
+     },
+     "mph40": {
+      "CORRECT": 10
+     },
+     "mph50": {
+      "CORRECT": 9,
+      "NOT_JUDGED_ROUTE_DIFFERS": 1
+     },
+     "mph60": {
+      "CORRECT": 10
+     },
+     "mph70": {
+      "CORRECT": 10
+     },
+     "none_mapped": {
+      "CORRECT": 5,
+      "NOT_JUDGED_ROUTE_DIFFERS": 5
+     }
+    },
+    "correct": 61,
+    "judged": 61,
+    "not_given": [],
+    "wrong": []
+   },
+   "GraphHopper": {
+    "by_kind": {
+     "mph20": {
+      "CORRECT": 9,
+      "NOT_JUDGED_ROUTE_DIFFERS": 1
+     },
+     "mph30": {
+      "CORRECT": 10
+     },
+     "mph40": {
+      "CORRECT": 10
+     },
+     "mph50": {
+      "CORRECT": 10
+     },
+     "mph60": {
+      "CORRECT": 10
+     },
+     "mph70": {
+      "CORRECT": 10
+     },
+     "none_mapped": {
+      "CORRECT": 9,
+      "NOT_JUDGED_ROUTE_DIFFERS": 1
+     }
+    },
+    "correct": 68,
+    "judged": 68,
+    "not_given": [],
+    "wrong": []
+   },
+   "OSRM": {
+    "by_kind": {
+     "mph20": {
+      "NOT_AVAILABLE": 10
+     },
+     "mph30": {
+      "NOT_AVAILABLE": 10
+     },
+     "mph40": {
+      "NOT_AVAILABLE": 10
+     },
+     "mph50": {
+      "NOT_AVAILABLE": 10
+     },
+     "mph60": {
+      "NOT_AVAILABLE": 10
+     },
+     "mph70": {
+      "NOT_AVAILABLE": 10
+     },
+     "none_mapped": {
+      "NOT_AVAILABLE": 10
+     }
+    },
+    "correct": 0,
+    "judged": 0,
+    "not_given": [],
+    "wrong": []
+   },
+   "OsmAnd": {
+    "by_kind": {
+     "mph20": {
+      "CORRECT": 9,
+      "NOT_JUDGED_ROUTE_DIFFERS": 1
+     },
+     "mph30": {
+      "CORRECT": 9,
+      "NOT_JUDGED_ROUTE_DIFFERS": 1
+     },
+     "mph40": {
+      "CORRECT": 10
+     },
+     "mph50": {
+      "CORRECT": 10
+     },
+     "mph60": {
+      "CORRECT": 10
+     },
+     "mph70": {
+      "CORRECT": 10
+     },
+     "none_mapped": {
+      "CORRECT": 7,
+      "NOT_JUDGED_ROUTE_DIFFERS": 3
+     }
+    },
+    "correct": 65,
+    "judged": 65,
+    "not_given": [],
+    "wrong": []
+   },
+   "Valhalla": {
+    "status": "NOT_AVAILABLE: no lanes/limits in its route answer"
+   },
+   "openrouteservice": {
+    "status": "NOT_AVAILABLE: no lanes/limits in its route answer"
+   }
+  },
+  "prepared_sha256": "5d121f0c930cc4f7eb337e9f8f5806713b05e73bc88c882e1bbb17ffbdb74f23",
+  "revision": "6190d727738d1e2f22938e4d94a37c5b521ed2b7",
+  "testable_by_kind": {
+   "mph20": 10,
+   "mph30": 10,
+   "mph40": 10,
+   "mph50": 10,
+   "mph60": 10,
+   "mph70": 10,
+   "none_mapped": 10
+  },
+  "truth": "OpenStreetMap tags in the hashed snapshot; not verified road paint or legal limits"
+ },
+ "note": "Seven engines; each test scored separately, no combined score.",
+ "oneway002": {
+  "cases_frozen": 225,
+  "cohort_sha256": "38369644230c32fb8818a15dbbcf87db86e7486bebe067ccef9d8895ce89e12d",
+  "contract": "ONEWAY-002 v1.2",
+  "discriminating_by_kind": {
+   "closed/oneway_major": 11,
+   "closed/oneway_residential": 11,
+   "closed/oneway_roundabout": 11,
+   "closed/oneway_service": 7
+  },
+  "discriminating_cases": 40,
+  "engines": {
+   "BRouter": {
+    "by_kind": {
+     "closed/oneway_major": {
+      "PASS": 9,
+      "UNRESOLVED_SNAP": 3
+     },
+     "closed/oneway_residential": {
+      "PASS": 9,
+      "UNRESOLVED_SNAP": 3
+     },
+     "closed/oneway_roundabout": {
+      "PASS": 12
+     },
+     "closed/oneway_service": {
+      "PASS": 7,
+      "UNRESOLVED_SNAP": 5
+     }
+    },
+    "category5_route_validity": {
+     "off_target": 11,
+     "valid_route": 37
+    },
+    "discriminating": {
+     "PASS": 31,
+     "UNRESOLVED_SNAP": 9
+    },
+    "endpoint_withheld": [],
+    "executed": 48,
+    "fail_cases": [],
+    "no_route_but_legal_route_exists": {},
+    "other_rule_violations": {
+     "4910468": [
+      "oneway:999232229:5425673671>9461886276",
+      "oneway:999232229:5425673672>5425673671",
+      "oneway:999232229:5425673674>5425673672",
+      "oneway:999232229:5457487567>5425673674",
+      "oneway:999232229:9461886276>959989249"
+     ],
+     "4972745": [
+      "oneway:566783174:2261524002>8900134997",
+      "oneway:566783174:2912226537>2261524002",
+      "oneway:566783174:8827633401>2912226537",
+      "oneway:953769394:10858334369>8827633401",
+      "oneway:953769394:1681348376>10858334369",
+      "oneway:953769394:21674371>2912226548",
+      "oneway:953769394:2912226548>1681348376"
+     ]
+    },
+    "pass_and_route_legal": 37,
+    "passes_via_restricted_roads_or_gates": {},
+    "query_ms": {
+     "median": 196.1,
+     "p95": 244.2,
+     "samples": 48
+    }
+   },
+   "DMN": {
+    "by_kind": {
+     "closed/oneway_major": {
+      "PASS": 12
+     },
+     "closed/oneway_residential": {
+      "PASS": 12
+     },
+     "closed/oneway_roundabout": {
+      "PASS": 12
+     },
+     "closed/oneway_service": {
+      "PASS": 12
+     }
+    },
+    "category5_route_validity": {
+     "valid_route": 48
+    },
+    "discriminating": {
+     "PASS": 40
+    },
+    "endpoint_withheld": [],
+    "executed": 48,
+    "fail_cases": [],
+    "no_route_but_legal_route_exists": {},
+    "other_rule_violations": {},
+    "pass_and_route_legal": 48,
+    "passes_via_restricted_roads_or_gates": {
+     "19831099": [
+      "barrier:13252196657:gate:untagged_gate"
+     ],
+     "674639909": [
+      "barrier:6318087478:gate:untagged_gate"
+     ]
+    },
+    "query_ms": {
+     "median": 293.4,
+     "p95": 1023.3,
+     "samples": 48
+    }
+   },
+   "GraphHopper": {
+    "by_kind": {
+     "closed/oneway_major": {
+      "PASS": 11,
+      "UNRESOLVED_SNAP": 1
+     },
+     "closed/oneway_residential": {
+      "PASS": 12
+     },
+     "closed/oneway_roundabout": {
+      "PASS": 12
+     },
+     "closed/oneway_service": {
+      "PASS": 11,
+      "UNRESOLVED_SNAP": 1
+     }
+    },
+    "category5_route_validity": {
+     "off_target": 2,
+     "valid_route": 46
+    },
+    "discriminating": {
+     "PASS": 39,
+     "UNRESOLVED_SNAP": 1
+    },
+    "endpoint_withheld": [],
+    "executed": 48,
+    "fail_cases": [],
+    "no_route_but_legal_route_exists": {},
+    "other_rule_violations": {
+     "940577703": [
+      "oneway:23344472:3441697814>11580423042"
+     ]
+    },
+    "pass_and_route_legal": 45,
+    "passes_via_restricted_roads_or_gates": {
+     "19831099": [
+      "barrier:13252196657:gate:untagged_gate"
+     ],
+     "674639909": [
+      "barrier:6318087478:gate:untagged_gate"
+     ]
+    },
+    "query_ms": {
+     "median": 69.9,
+     "p95": 82.6,
+     "samples": 48
+    }
+   },
+   "OSRM": {
+    "by_kind": {
+     "closed/oneway_major": {
+      "PASS": 12
+     },
+     "closed/oneway_residential": {
+      "PASS": 12
+     },
+     "closed/oneway_roundabout": {
+      "PASS": 11,
+      "UNRESOLVED_SNAP": 1
+     },
+     "closed/oneway_service": {
+      "PASS": 12
+     }
+    },
+    "category5_route_validity": {
+     "off_target": 1,
+     "valid_route": 47
+    },
+    "discriminating": {
+     "PASS": 39,
+     "UNRESOLVED_SNAP": 1
+    },
+    "endpoint_withheld": [],
+    "executed": 48,
+    "fail_cases": [],
+    "no_route_but_legal_route_exists": {},
+    "other_rule_violations": {},
+    "pass_and_route_legal": 47,
+    "passes_via_restricted_roads_or_gates": {
+     "19831099": [
+      "barrier:13252196657:gate:untagged_gate"
+     ],
+     "674639909": [
+      "barrier:6318087478:gate:untagged_gate"
+     ]
+    },
+    "query_ms": {
+     "median": 1.2,
+     "p95": 1.4,
+     "samples": 48
+    }
+   },
+   "OsmAnd": {
+    "by_kind": {
+     "closed/oneway_major": {
+      "PASS": 12
+     },
+     "closed/oneway_residential": {
+      "PASS": 10,
+      "UNRESOLVED_SNAP": 2
+     },
+     "closed/oneway_roundabout": {
+      "PASS": 12
+     },
+     "closed/oneway_service": {
+      "PASS": 10,
+      "UNRESOLVED_SNAP": 2
+     }
+    },
+    "category5_route_validity": {
+     "off_target": 4,
+     "valid_route": 44
+    },
+    "discriminating": {
+     "PASS": 36,
+     "UNRESOLVED_SNAP": 4
+    },
+    "endpoint_withheld": [],
+    "executed": 48,
+    "fail_cases": [],
+    "no_route_but_legal_route_exists": {},
+    "other_rule_violations": {
+     "940577703": [
+      "oneway:23344472:3441697814>11580423042"
+     ]
+    },
+    "pass_and_route_legal": 43,
+    "passes_via_restricted_roads_or_gates": {
+     "674639909": [
+      "barrier:6318087478:gate:untagged_gate"
+     ]
+    },
+    "query_ms": {
+     "median": 407.6,
+     "p95": 452.5,
+     "samples": 48
+    }
+   },
+   "Valhalla": {
+    "by_kind": {
+     "closed/oneway_major": {
+      "PASS": 12
+     },
+     "closed/oneway_residential": {
+      "PASS": 11,
+      "UNRESOLVED_SNAP": 1
+     },
+     "closed/oneway_roundabout": {
+      "PASS": 12
+     },
+     "closed/oneway_service": {
+      "PASS": 12
+     }
+    },
+    "category5_route_validity": {
+     "off_target": 1,
+     "valid_route": 47
+    },
+    "discriminating": {
+     "PASS": 39,
+     "UNRESOLVED_SNAP": 1
+    },
+    "endpoint_withheld": [],
+    "executed": 48,
+    "fail_cases": [],
+    "no_route_but_legal_route_exists": {},
+    "other_rule_violations": {},
+    "pass_and_route_legal": 47,
+    "passes_via_restricted_roads_or_gates": {
+     "19831099": [
+      "barrier:13252196657:gate:untagged_gate"
+     ],
+     "674639909": [
+      "barrier:6318087478:gate:untagged_gate"
+     ]
+    },
+    "query_ms": {
+     "median": 16.1,
+     "p95": 20.2,
+     "samples": 48
+    }
+   },
+   "openrouteservice": {
+    "by_kind": {
+     "closed/oneway_major": {
+      "PASS": 12
+     },
+     "closed/oneway_residential": {
+      "PASS": 11,
+      "SAFE_NO_ROUTE": 1
+     },
+     "closed/oneway_roundabout": {
+      "FAIL_AGAINST_ONEWAY": 1,
+      "PASS": 11
+     },
+     "closed/oneway_service": {
+      "PASS": 10,
+      "SAFE_NO_ROUTE": 1,
+      "UNRESOLVED_SNAP": 1
+     }
+    },
+    "category5_route_validity": {
+     "no_route": 2,
+     "off_target": 1,
+     "valid_route": 45
+    },
+    "discriminating": {
+     "PASS": 37,
+     "SAFE_NO_ROUTE": 2,
+     "UNRESOLVED_SNAP": 1
+    },
+    "endpoint_withheld": [],
+    "executed": 48,
+    "fail_cases": [
+     "347620473"
+    ],
+    "no_route_but_legal_route_exists": {
+     "19831099": [
+      "DMN",
+      "GraphHopper",
+      "OSRM",
+      "Valhalla"
+     ],
+     "674639909": [
+      "DMN",
+      "GraphHopper",
+      "OSRM",
+      "OsmAnd",
+      "Valhalla"
+     ]
+    },
+    "other_rule_violations": {
+     "4972745": [
+      "oneway:1536709088:8900134997>9312224207",
+      "oneway:566783174:2261524002>8900134997",
+      "oneway:566783174:2912226537>2261524002",
+      "oneway:566783174:8827633401>2912226537",
+      "oneway:566783175:10858354929>9057253099",
+      "oneway:566783175:1681348463>32675868",
+      "oneway:566783175:32675868>21674368",
+      "oneway:566783175:9057253099>1681348463",
+      "oneway:566783175:9312224207>10858354929",
+      "oneway:953769394:10858334369>8827633401",
+      "oneway:953769394:1681348376>10858334369",
+      "oneway:953769394:21674371>2912226548",
+      "oneway:953769394:2912226548>1681348376"
+     ]
+    },
+    "pass_and_route_legal": 43,
+    "passes_via_restricted_roads_or_gates": {},
+    "query_ms": {
+     "median": 437.4,
+     "p95": 471.2,
+     "samples": 48
+    }
+   }
+  },
+  "geometry_status": {
+   "BEYOND_CASES_PER_KIND": 97,
+   "NO_CAR_ROAD_AT_END": 74,
+   "SAME_ROAD_BOTH_ENDS": 6,
+   "TESTABLE": 48
+  },
+  "prepared_sha256": "239996ab864a631c650a392c68ea69581b6c877608762d6092d002886618afdf",
+  "revision": "6190d727738d1e2f22938e4d94a37c5b521ed2b7",
+  "source_sha256": "2a8ef8e1f2533cb009b1ce248a6bf4eaabdd47e03979e64e24cd844f3b22acba",
+  "testable_by_kind": {
+   "closed/oneway_major": 12,
+   "closed/oneway_residential": 12,
+   "closed/oneway_roundabout": 12,
+   "closed/oneway_service": 12
+  },
+  "testable_cases": 48,
+  "truth": "OpenStreetMap road access and one-way tags in the hashed snapshot; not independent UK legal truth"
+ },
+ "revision": "6190d72",
+ "runs": {
+  "b2": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39051017075",
+  "category2": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39051017088",
+  "journey001": "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39051017134"
+ }
+}
