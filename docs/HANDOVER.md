@@ -6,6 +6,8 @@
 - BARRIER-001 v1.1 baseline: [docs/BARRIER_001_RESULTS.md](BARRIER_001_RESULTS.md), run
   39022934914. Closed barriers: DMN 46 pass (ties OSRM), 0 crossed by any engine.
 - Stopped for owner review; proposed improvements listed in the results file.
+- REGISTER.md (one page every AI reads first) + pointer files for Codex, Claude, Gemini,
+  Copilot, Cursor; PR #5 puts it on main (tests green, waiting for the owner to merge).
 
 ## 2026-10-17 (later) — TURN-001 results written
 - Branch `claude/dmn-turn-restriction-debug-mhw7cw` (from the codex branch; not pushed there).
