@@ -37,7 +37,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 WORK = ROOT / "results" / "turn001"
 COHORT = ROOT / "config" / "turn001-cohort.json"
-CONTRACT = "TURN-001 v1"
+CONTRACT = "TURN-001 v1.1"
 CAR_HIGHWAYS = {
     "motorway", "motorway_link", "trunk", "trunk_link", "primary", "primary_link",
     "secondary", "secondary_link", "tertiary", "tertiary_link", "unclassified",
@@ -350,6 +350,10 @@ def prepare(source: Path) -> None:
 
 # --------------------------------------------------------------------------- engines
 def _verdict(clip: Clip, geom: dict, nodes: list[str] | None, error: str | None = None) -> dict:
+    if error == "ENDPOINT_WITHHELD":
+        # DMN policy withholds the start/finish road (e.g. untagged service road);
+        # neither a pass nor a legality failure: reported separately for review.
+        return {"verdict": "ENDPOINT_WITHHELD_BY_POLICY"}
     if error is not None:
         return {"verdict": "ERROR", "detail": error[:300]}
     if nodes is None:
@@ -391,9 +395,12 @@ def dmn_route(raw: bytes, geom: dict, drop_relation: int | None = None) -> tuple
     start = segment_edge(*geom["origin_segment"])
     finish = segment_edge(*geom["destination_segment"])
     if start is None or finish is None:
-        return None, "endpoint segment not an allowed DMN edge", None
+        return None, "ENDPOINT_WITHHELD", None
     try:
-        route = shortest_route(imported.graph, start.target, finish.source, incoming_edge_id=start.edge_id)
+        # v1.1: finish by travelling the destination segment so the turn onto it is
+        # checked (v1 appended it unchecked; preserved in run-DMN-v1-before-fixes.json).
+        route = shortest_route(imported.graph, start.target, finish.target, incoming_edge_id=start.edge_id,
+                               destination_edge_id=finish.edge_id)
     except RouteNotFound:
         return None, None, None
     except ValueError as exc:
@@ -401,7 +408,6 @@ def dmn_route(raw: bytes, geom: dict, drop_relation: int | None = None) -> tuple
     nodes = [start.source, start.target]
     for edge_id in route.edge_ids:
         nodes.append(imported.graph.edges[edge_id].target)
-    nodes.append(finish.target)
     clean = [n.removeprefix("osm:") for n in nodes]
     return [n for i, n in enumerate(clean) if i == 0 or clean[i - 1] != n], None, None
 

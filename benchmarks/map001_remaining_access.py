@@ -186,11 +186,17 @@ def conditioned_way(way, nodes, area):
         raise ValueError("Expected frozen conditional way missing its expression")
     raw=isolated(way,nodes)
     p=Provenance(area,"frozen v3","conditional research only","OpenStreetMap contributors; ODbL")
-    rejected=False
+    rejected=False;withheld=False
     try:
-        import_osm_xml(raw,provenance=p)
+        graph=import_osm_xml(raw,provenance=p).graph
     except OSMImportError as e:
-        rejected="conditional" in str(e).lower()
+        rejected="conditional" in str(e).lower();withheld=rejected
+    else:
+        # Contract v2: per-direction withholding instead of whole-extract rejection.
+        from map_data.osm_xml import _conditional_restrictions
+        closes=_conditional_restrictions(t)
+        withheld=not any(e.access=="allowed" and closes["forward" if k.endswith(":f") else "backward"]
+                         for k,e in graph.edges.items())
     observations=[]
     for k,expr in sorted(expressions.items()):
         cond=parse_source(expr)
@@ -211,6 +217,7 @@ def conditioned_way(way, nodes, area):
     return {"source_way":wid,"source_way_name":t.get("name"),
             "source_sha256":digest(raw),
             "always_safe_import_rejection":rejected,
+            "always_safe_withheld":withheld,
             "expressions":observations,
             "current_road_legality":"NOT_JUDGED",
             "scope":"SOURCE_CLOCK_SYNTAX_ONLY_NO_ROUTING_OVERRIDE"}
@@ -262,7 +269,7 @@ def run():
                   or not x["matched_scenario_matches_supported_engine_policy"]
                   or not x["route_safety_gate_pass"]
                   or not x["original_source_and_unscoped_import_unchanged"])]
-    failures.extend(x for x in conditional if not x["always_safe_import_rejection"])
+    failures.extend(x for x in conditional if not x["always_safe_withheld"])
     report={"trial":"MAP-001-ALL-41-WITHHELD-ACCESS-1",
             "cases_total":41,"unknown_access_cases":contextual,"conditional_access_cases":conditional,
             "source_family_counts":dict(families),"conditional_region_counts":dict(condition_regions),

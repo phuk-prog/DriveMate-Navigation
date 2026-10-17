@@ -100,7 +100,9 @@ class OutstandingAccessControls(unittest.TestCase):
                 way,nodes=fixture("primary",
                     '<tag k="motor_vehicle:conditional" v="'+expr+'"/>')
                 out=conditioned_way(way,nodes,"fixture")
-                self.assertTrue(out["always_safe_import_rejection"])
+                # Contract v2: the way is withheld per direction (never routable);
+                # the extract is no longer rejected wholesale.
+                self.assertTrue(out["always_safe_withheld"])
                 self.assertFalse(out["expressions"][0]["legal_date_or_signed_order_verified"])
                 self.assertEqual(out["current_road_legality"],"NOT_JUDGED")
                 times=out["expressions"][0]["instants_utc"]

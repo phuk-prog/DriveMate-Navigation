@@ -40,9 +40,15 @@ class BufferedDetourTests(unittest.TestCase):
         <tag k="restriction:conditional" v="no_right_turn @ (Mo-Fr 08:00-10:00)"/>
         <tag k="restriction" v="no_right_turn"/></relation>'''
         augmented=s.replace("</osm>",new_rel+"</osm>").encode()
+        # Contract v2: the extra (conditional) ban is applied at all times, so it is
+        # neither discarded nor allowed to reject the whole neighbourhood.
+        from map_data import Provenance, import_osm_xml
+        prov=Provenance("unit","synthetic-unit","unit","© OpenStreetMap contributors")
+        before=import_osm_xml(RAW,provenance=prov).graph.prohibited_turns
+        after=import_osm_xml(augmented,provenance=prov).graph.prohibited_turns
+        self.assertTrue(before < after)
         out=evaluate_neighborhood(RAW,augmented,relation_id="200",snapshot="synthetic-unit")
-        self.assertEqual(out["status"],"unsupported")
-        self.assertEqual(out["reason"],"unsupported_graph_or_restriction")
+        self.assertEqual(out["status"],"map_rule_checked")
 
     def test_missing_target_road_is_not_declared_no_route(self):
         s=RAW.decode()
@@ -87,14 +93,17 @@ class BufferedDetourTests(unittest.TestCase):
         self.assertEqual(out["status"],"map_rule_checked")
         self.assertGreaterEqual(out["detours_found"],1)
 
-    def test_conditional_motorcar_way_still_blocks_prototype(self):
+    def test_speed_condition_does_not_change_legality(self):
         original=RAW.decode()
         updated=original.replace('<tag k="highway" v="tertiary"/></way>',
             '<tag k="highway" v="tertiary"/>'
             '<tag k="maxspeed:conditional" v="30 @ (Mo-Fr 08:00-10:00)"/></way>',1).encode()
+        # A speed-limit condition does not affect road legality: the rule is checked
+        # exactly as without it (it no longer rejects the whole sample).
         out=evaluate_neighborhood(updated,RAW,relation_id="200",snapshot="synthetic-unit")
-        self.assertEqual(out["status"],"unsupported")
-        self.assertEqual(out["reason"],"unsupported_graph_or_restriction")
+        plain=evaluate_neighborhood(RAW,RAW,relation_id="200",snapshot="synthetic-unit")
+        self.assertEqual(out["status"],"map_rule_checked")
+        self.assertEqual(out.get("verdict"),plain.get("verdict"))
 
 if __name__=="__main__":
     unittest.main()

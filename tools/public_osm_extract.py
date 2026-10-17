@@ -102,7 +102,7 @@ def prepare(source: Path, bbox: str, target: Path, *,
             for command in commands:
                 runner(command, check=True, timeout=600, stdout=subprocess.DEVNULL)
             if not target.is_file() or target.stat().st_size > MAX_INPUT_BYTES:
-                raise OSMImportError("Subset exceeds the 6 MB prototype importer limit; choose a smaller bbox")
+                raise OSMImportError("Subset exceeds the importer size limit; choose a smaller bbox")
             raw = target.read_bytes()
             reject_object_metadata(raw)
             result = import_osm_xml(

@@ -117,6 +117,16 @@ def relation_contract(relation, ways, nodes):
             'stale_or_legally_invalid_proven':False}
 
 
+def conditional_withheld(way,graph):
+    from map_data.osm_xml import _conditional_restrictions
+    closes=_conditional_restrictions(tags(way))
+    edges=[e for k,e in graph.edges.items() if k.split(':')[1]==way.get('id')]
+    exposed=[e.edge_id for e in edges if e.access=='allowed' and closes['forward' if e.edge_id.endswith(':f') else 'backward']]
+    if exposed:
+        return {'verdict':'FAIL','reason':'CONDITIONAL_RESTRICTION_ROUTABLE','edges':exposed}
+    return {'verdict':'SAFE_WITHHELD','reason':'CONDITIONAL_WITHHELD_PER_DIRECTION'}
+
+
 def audit_way(way,nodes):
     expected,issue=edge_expectation(way,nodes)
     row={'source_way':way.get('id'),'source_tags':tags(way)}
@@ -126,6 +136,10 @@ def audit_way(way,nodes):
     except (OSMImportError,KeyError) as exc:
         conditional=any(k.endswith(':conditional') for k in tags(way)) or issue=='UNKNOWN_NODE_CONDITIONAL'
         return {**row,'verdict':'SAFE_WITHHELD' if conditional else 'NOT_JUDGED','reason':str(exc)[:160]}
+    if any(k.endswith(':conditional') for k in tags(way)) or issue=='UNKNOWN_NODE_CONDITIONAL':
+        # Contract v2 (TURN-001 importer): conditionals are withheld per direction,
+        # not by rejecting the extract. Safe only if no possibly-closed edge is routable.
+        return {**row,**conditional_withheld(way,graph)}
     if issue:return {**row,'verdict':'NOT_JUDGED','reason':issue}
     if any(v[2] in ('contextual','unknown') for v in expected.values()):
         return {**row,'verdict':'NOT_JUDGED','reason':'CONTEXT_OR_BARRIER_POLICY'}

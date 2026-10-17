@@ -96,27 +96,29 @@ def _search(graph: RoadGraph, source: str, destination: str,
         raise ValueError("Journey-scoped access cannot be reused for another destination")
     if source == destination:
         return Route((), 0.0, 0.0), 0
-    initial = (source, incoming_edge_id)
+    initial = (source, (incoming_edge_id,) if incoming_edge_id else ())
     best = {initial: 0.0}
-    previous: dict[tuple[str, str | None],
-                   tuple[tuple[str, str | None], str]] = {}
+    previous: dict[tuple[str, tuple[str, ...]],
+                   tuple[tuple[str, tuple[str, ...]], str]] = {}
     counter = count()
     waiting = [(0.0, next(counter), initial)]
-    terminal: tuple[str, str | None] | None = None
+    terminal: tuple[str, tuple[str, ...]] | None = None
     while waiting:
         spent, _, state = heappop(waiting)
         if spent > best[state]:
             continue
-        node, entering = state
+        node, history = state
+        entering = history[-1] if history else None
         if node == destination:
             terminal = state
             break
         for edge in graph.adjacency[node]:
             if edge.access != "allowed" or edge.edge_id in blocked:
                 continue
-            if entering is not None and (entering, edge.edge_id) in graph.prohibited_turns:
+            tail = graph.transition(history, edge.edge_id)
+            if tail is None:
                 continue
-            successor = (edge.target, edge.edge_id)
+            successor = (edge.target, tail)
             total = spent + _edge_cost(edge, entering, mode, settings,
                                        penalties.get(edge.edge_id, 0.0), complex_turns)
             if total < best.get(successor, float("inf")):
@@ -130,7 +132,7 @@ def _search(graph: RoadGraph, source: str, destination: str,
     complex_count = 0
     while state != initial:
         past, edge_id = previous[state]
-        if (past[1], edge_id) in complex_turns:
+        if past[1] and (past[1][-1], edge_id) in complex_turns:
             complex_count += 1
         edge_ids.append(edge_id)
         state = past

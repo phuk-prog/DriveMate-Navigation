@@ -23,7 +23,8 @@
         "test_map001_category1_closure.py",
         "test_map001_authority_crosscheck.py",
         "test_map001_conditional_research.py",
-        "test_map001_remaining_category1.py"
+        "test_map001_remaining_category1.py",
+        "test_turn001_importer.py"
       ],
       "engine_rank": null,
       "navigation_score": null

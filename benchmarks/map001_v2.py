@@ -123,7 +123,15 @@ def audit(area,selected,ways,nodes,relations):
                 "type":"DMN_COVERAGE" if dynamic else "DMN_OR_TEST",
                 "reason":"conditional_not_supported" if dynamic else "import_rejected",
                 "detail":str(e)[:160]}
-    if dynamic:return {**row,"verdict":"FAIL","type":"DMN_SAFETY","reason":"conditional_source_accepted"}
+    if dynamic:
+        # Contract v2 importer withholds car-relevant conditionals per object. Safe
+        # only if no edge of this way that a condition could close is routable.
+        from map_data.osm_xml import _conditional_restrictions
+        closes=_conditional_restrictions(tags(ways[id]))
+        exposed=[eid for eid,e in imported.graph.edges.items() if eid.split(":")[1]==id
+                 and e.access=="allowed" and closes["forward" if eid.endswith(":f") else "backward"]]
+        if exposed:return {**row,"verdict":"FAIL","type":"DMN_SAFETY","reason":"conditional_source_accepted"}
+        return {**row,"verdict":"SAFE_WITHHELD","type":"DMN_COVERAGE","reason":"conditional_withheld_per_object"}
     actual={eid:(e.source,e.target,e.access) for eid,e in imported.graph.edges.items()
             if eid.split(":")[1]==id}
     errors=[]

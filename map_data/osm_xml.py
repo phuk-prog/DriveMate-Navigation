@@ -2,9 +2,12 @@
 
 Supported: public-driving highway classes, one-way (+/-), roundabout direction,
 explicit motorcar access, source geometry, maxspeed-based *cost estimate*,
-node-via turn restrictions ('no_' and 'only_') and simple blocking barriers.
+node-via and single via-way turn restrictions ('no_' and 'only_', no_entry/no_exit),
+and simple blocking barriers.
 
-Unsupported conditions fail CLOSED (reject entire extract); see README.
+Car-relevant *:conditional rules are not evaluated: the affected direction or
+turn is withheld (fail closed per object) instead of rejecting the whole
+extract. Unparseable restriction structures still reject the extract; see README.
 Never treat this importer as road-legal navigation without independent checks.
 """
 from __future__ import annotations
@@ -19,9 +22,9 @@ import xml.etree.ElementTree as ET
 
 from engine import RoadEdge, RoadGraph
 
-MAX_INPUT_BYTES = 6_000_000
-# Purposefully small enough for auditable prototype examples, NOT UK extracts.
-MAX_OBJECTS = 30_000
+MAX_INPUT_BYTES = 32_000_000
+# Bounded for auditable research clips (about 1 km around a junction), NOT whole UK extracts.
+MAX_OBJECTS = 300_000
 DRIVING_SPEEDS = {
     "motorway": 95, "trunk": 80, "primary": 55, "secondary": 48,
     "tertiary": 40, "unclassified": 35, "residential": 30,
@@ -100,8 +103,40 @@ def _tags(element: ET.Element) -> dict[str, str]:
     return {t.get("k", ""): t.get("v", "") for t in element.findall("tag")}
 
 
+ACCESS_CONDITIONAL_KEYS = re.compile(
+    r"^(?:access|vehicle|motor_vehicle|motorcar)(?::(?:forward|backward))?:conditional$")
+
+
+def _conditional_restrictions(tags: dict[str, str]) -> dict[str, bool]:
+    """Which travel directions a car-relevant *:conditional tag could close.
+
+    No clock or evaluator is applied, so a condition that can restrict a car
+    (access no/private/... at some times, or a time-limited one-way) makes the
+    affected direction 'unknown' (never routed) instead of rejecting the whole
+    map. A condition that only ever *grants* access leaves the stricter
+    unconditional value in force. Unrelated conditionals (maxspeed, parking,
+    lanes...) do not affect road legality here and are ignored.
+    """
+    closes = {"forward": False, "backward": False}
+    for key, value in tags.items():
+        if not CONDITIONAL.search(key):
+            continue
+        outcomes = {part.split("@")[0].strip().lower() for part in value.split(";") if "@" in part}
+        if ACCESS_CONDITIONAL_KEYS.match(key):
+            if not outcomes or outcomes - ALLOWED_VALUES:
+                for direction in closes:
+                    if f":{direction}:" in key or (":forward:" not in key and ":backward:" not in key):
+                        closes[direction] = True
+        elif key == "oneway:conditional":
+            if not outcomes or outcomes & {"yes", "1", "true"}:
+                closes["backward"] = True
+            if not outcomes or outcomes & {"-1", "reverse"}:
+                closes["forward"] = True
+    return closes
+
+
 def _check_conditions(tags: dict[str, str], label: str) -> None:
-    """Fail closed: no time-dependent legality without a clock + evaluator."""
+    """Retained for callers that still require an unconditional source object."""
     if any(CONDITIONAL.search(k) for k in tags):
         raise OSMImportError(f"{label}: conditional tags are unsupported")
 
@@ -190,7 +225,7 @@ def _combine_access(a: str, b: str) -> str:
 def import_osm_xml(raw: bytes, *, provenance: Provenance,
                    access_context: JourneyAccessContext | None = None) -> ImportedMap:
     if not isinstance(raw, bytes) or not raw or len(raw) > MAX_INPUT_BYTES:
-        raise OSMImportError("Expected nonempty OSM XML bytes within 6 MB prototype limit")
+        raise OSMImportError("Expected nonempty OSM XML bytes within 32 MB research limit")
     source_hash = sha256(raw).hexdigest()
     if access_context is not None and (not isinstance(access_context, JourneyAccessContext)
             or access_context.source_sha256 != source_hash):
@@ -227,9 +262,9 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
             if not isfinite(lat) or not isfinite(lon) or abs(lat) > 90 or abs(lon) > 180:
                 raise OSMImportError("Coordinates outside Earth bounds")
             tags = _tags(element)
-            _check_conditions(tags, f"node {ident}")
             coordinates[node] = (lat, lon)
-            barriers[node] = _barrier_access(tags,
+            node_conditional = tags.get("barrier") and any(_conditional_restrictions(tags).values())
+            barriers[node] = "unknown" if node_conditional else _barrier_access(tags,
                 authorized=bool(access_context and ident in access_context.authorized_node_ids),
                 qualifying_destination=bool(access_context and access_context.destination_way_ids
                     and access_context.destination_node == node))
@@ -238,7 +273,6 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
             if ident in ways:
                 raise OSMImportError("Duplicate OSM way")
             tags = _tags(element)
-            _check_conditions(tags, f"way {ident}")
             refs = [f"osm:{n.get('ref')}" for n in element.findall("nd")]
             if not refs or any(x == "osm:None" for x in refs):
                 raise OSMImportError("Way has missing node references")
@@ -256,6 +290,7 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
             raise OSMImportError("Qualifying destination must be on each declared destination way")
     access_requirements: dict[str, tuple[str, ...]] = {}
     edges: list[RoadEdge] = []
+    conditional_ways = 0
     # Segments with a barrier *at either endpoint* remain inaccessible/uncertain.
     # This is conservative and may block an adjacent leg too.
     for way_id, (refs, tags) in sorted(ways.items(), key=lambda item: int(item[0])):
@@ -265,9 +300,19 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
         oneway = tags.get("oneway", "").lower()
         if not oneway and tags.get("junction") in ("roundabout", "circular"):
             oneway = "yes"
+        reversible = oneway == "reversible"  # direction changes over time: neither direction assumed
+        if oneway == "alternating":  # signal-controlled single lane: both directions, in turn
+            oneway = "no"
+        elif reversible:
+            oneway = "no"
         if oneway not in ("", "no", "0", "false", "yes", "1", "true", "-1", "reverse"):
             raise OSMImportError(f"way {way_id}: unsupported oneway value {oneway}")
         direction = -1 if oneway in ("-1", "reverse") else 1
+        conditional_closes = _conditional_restrictions(tags)
+        if reversible:
+            conditional_closes = {"forward": True, "backward": True}
+        if any(conditional_closes.values()):
+            conditional_ways += 1
         speed = _estimated_speed(tags.get("highway", ""), tags.get("maxspeed"))
         authorized = bool(access_context and way_id in access_context.authorized_way_ids)
         destination = bool(access_context and way_id in access_context.destination_way_ids
@@ -282,11 +327,15 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
             node_requirements = node_context[src] + node_context[dst]
             if direction == 1:
                 actual = _combine_access(_road_access(tags, "forward", authorized=authorized, qualifying_destination=destination), physical)
+                if conditional_closes["forward"]:
+                    actual = _combine_access(actual, "unknown")
                 edges.append(RoadEdge(f"w:{way_id}:{i}:f", src, dst, length, speed, actual))
                 conditions = _requirements(tags,"way",way_id,"forward") + node_requirements
                 if conditions: access_requirements[f"w:{way_id}:{i}:f"] = conditions
             if direction == -1 or oneway in ("", "no", "0", "false"):
                 actual = _combine_access(_road_access(tags, "backward", authorized=authorized, qualifying_destination=destination), physical)
+                if conditional_closes["backward"]:
+                    actual = _combine_access(actual, "unknown")
                 edges.append(RoadEdge(f"w:{way_id}:{i}:r", dst, src, length, speed, actual))
                 conditions = _requirements(tags,"way",way_id,"backward") + node_requirements
                 if conditions: access_requirements[f"w:{way_id}:{i}:r"] = conditions
@@ -302,42 +351,144 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
         way_id = edge.edge_id.split(":")[1]
         incoming.setdefault((way_id, edge.target), []).append(edge)
         leaving.setdefault((way_id, edge.source), []).append(edge)
+    sequences: set[tuple[str, ...]] = set()
+    skipped: dict[str, int] = {}
+
+    def skip(reason: str) -> None:
+        skipped[reason] = skipped.get(reason, 0) + 1
+
+    def via_way_chain(via_way: str, start: str, end: str) -> list[RoadEdge] | None:
+        """Edges travelling along `via_way` from node `start` to node `end`."""
+        chain: list[RoadEdge] = []
+        node = start
+        while node != end:
+            step = [e for e in leaving.get((via_way, node), []) if e.edge_id not in {c.edge_id for c in chain}]
+            step = [e for e in step if not chain or e.target != chain[-1].source]
+            if len(step) != 1:
+                return None
+            chain.append(step[0])
+            node = step[0].target
+            if len(chain) > 500:
+                return None
+        return chain
+
     for relation in relations:
         tags = _tags(relation)
         if tags.get("type") != "restriction":
             continue
-        _check_conditions(tags, f"relation {relation.get('id')}")
-        if "motorcar" in {v.strip() for v in tags.get("except", "").replace(",", ";").split(";")}:
+        exempt = {v.strip() for v in tags.get("except", "").replace(",", ";").split(";")}
+        if exempt & {"motorcar", "motor_vehicle", "vehicle"}:
+            skip("cars_exempt")
             continue
-        # Alternative mode-specific restriction tags are not assumed to apply to cars.
+        # Only restriction keys that apply to cars; mode-specific ones (bus, hgv...) do not.
         rule = tags.get("restriction:motorcar", tags.get("restriction:motor_vehicle",
                     tags.get("restriction", "")))
+        conditional = tags.get("restriction:conditional", "")
+        if not rule and conditional:
+            # Time-limited ban: without an evaluator it is applied at all times
+            # (safe: may withhold a legal turn, never permits an illegal one).
+            rule = conditional.split("@")[0].strip()
+            skip("conditional_applied_always")
         if not rule:
-            raise OSMImportError("Unrecognised restriction relation requires review")
+            skip("not_a_car_restriction")
+            continue
         if not (rule.startswith("no_") or rule.startswith("only_")):
             raise OSMImportError(f"Unsupported turn restriction: {rule}")
         members = relation.findall("member")
         frm = [m.get("ref") for m in members if m.get("role") == "from" and m.get("type") == "way"]
         to = [m.get("ref") for m in members if m.get("role") == "to" and m.get("type") == "way"]
-        via = [m.get("ref") for m in members if m.get("role") == "via" and m.get("type") == "node"]
-        if len(frm) != 1 or len(to) != 1 or len(via) != 1 or len(members) != 3:
-            raise OSMImportError("Only single via-node turn restrictions are supported")
-        node = f"osm:{via[0]}"
-        arrivals = incoming.get((frm[0], node), [])
-        departures = leaving.get((to[0], node), [])
-        if not arrivals or not departures:
-            raise OSMImportError("Restriction references a missing/non-drivable manoeuvre")
+        via_nodes = [m.get("ref") for m in members if m.get("role") == "via" and m.get("type") == "node"]
+        via_ways = [m.get("ref") for m in members if m.get("role") == "via" and m.get("type") == "way"]
+        frm = [f for f in frm if f in ways]
+        to_present = [t for t in to if t in ways]
+        if not frm or not (via_nodes or via_ways):
+            # Clipped at the extract edge: the restricted movement cannot start inside it.
+            skip("member_outside_extract")
+            continue
+        if via_nodes and via_ways or len(via_nodes) > 1:
+            # Uninterpretable structure: fail safe per object by banning every move
+            # from the restricted road into the via structure (may withhold legal moves).
+            touch = set(via_nodes) | {n.removeprefix("osm:") for w in via_ways if w in ways for n in ways[w][0]}
+            for f in frm:
+                for n in touch:
+                    for arrival in incoming.get((f, f"osm:{n}"), []):
+                        for other in outgoing.get(f"osm:{n}", []):
+                            turns.add((arrival.edge_id, other.edge_id))
+            skip("uninterpretable_structure_blocked")
+            continue
+        if not to_present and rule.startswith("no_"):
+            skip("member_outside_extract")
+            continue
+        to = to_present
+        if (len(frm) > 1 or len(to) > 1) and (via_ways or rule.startswith("only_")):
+            raise OSMImportError("Only no_ restrictions may list several from/to ways")
+        if via_ways:
+            if any(w not in ways for w in via_ways):
+                skip("member_outside_extract")
+                continue
+            # Order the via ways end to end, starting where the from way joins them.
+            f_ends = {ways[frm[0]][0][0], ways[frm[0]][0][-1]}
+            node_now = None
+            for w in via_ways:
+                joined = f_ends & {ways[w][0][0], ways[w][0][-1]}
+                if joined:
+                    node_now = joined.pop()
+                    break
+            if node_now is None:
+                raise OSMImportError("Via-way restriction members are not connected end to end")
+            a_node = node_now
+            remaining = list(via_ways)
+            chain: list[RoadEdge] = []
+            while remaining:
+                nxt = [w for w in remaining if node_now in (ways[w][0][0], ways[w][0][-1])]
+                if len(nxt) != 1:
+                    raise OSMImportError("Via-way restriction members are not connected end to end")
+                w = nxt[0]
+                remaining.remove(w)
+                end = ways[w][0][-1] if ways[w][0][0] == node_now else ways[w][0][0]
+                part = via_way_chain(w, node_now, end)
+                if part is None:
+                    chain = []
+                    break
+                chain.extend(part)
+                node_now = end
+            b_node = node_now
+            arrivals = incoming.get((frm[0], a_node), [])
+            if not chain or not arrivals:
+                skip("no_car_movement")
+                continue
+            if to and b_node not in set(ways[to[0]][0]):
+                raise OSMImportError("Via-way restriction members are not connected end to end")
+            exits = leaving.get((to[0], b_node), []) if to else []
+            if rule.startswith("only_"):
+                exits = [o for o in outgoing.get(b_node, []) if o.edge_id not in {e.edge_id for e in exits}]
+            for arrival in arrivals:
+                for exit_edge in exits:
+                    sequences.add((arrival.edge_id, *(c.edge_id for c in chain), exit_edge.edge_id))
+            continue
+        node = f"osm:{via_nodes[0]}"
+        if node not in coordinates:
+            skip("member_outside_extract")
+            continue
+        arrivals = [e for f in frm for e in incoming.get((f, node), [])]
+        departures = [e for t in to for e in leaving.get((t, node), [])]
+        if not arrivals:
+            skip("no_car_movement")  # from way absent or not drivable towards the via node
+            continue
         for arrival in arrivals:
             if rule.startswith("no_"):
                 for departure in departures:
                     turns.add((arrival.edge_id, departure.edge_id))
             else:
+                # Every other exit is banned; if the only permitted exit is absent
+                # or not drivable, no exit remains (fail safe).
                 permitted = {departure.edge_id for departure in departures}
                 for other in outgoing.get(node, []):
                     if other.edge_id not in permitted:
                         turns.add((arrival.edge_id, other.edge_id))
     graph = RoadGraph(coordinates.keys(), edges, turns,
-        journey_destination=access_context.destination_node if access_context else None)
+        journey_destination=access_context.destination_node if access_context else None,
+        prohibited_sequences=sequences)
     return ImportedMap(
         graph=graph,
         coordinates=coordinates,
@@ -352,6 +503,9 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
             "vertices": len(graph.vertices),
             "directed_edges": len(graph.edges),
             "prohibited_turn_pairs": len(graph.prohibited_turns),
-            "limitations": "prototype-no-conditional-via-way-or-real-world-legality-claims",
+            "prohibited_turn_sequences": len(graph.prohibited_sequences),
+            "restrictions_not_applied": dict(sorted(skipped.items())),
+            "conditional_ways_withheld": conditional_ways,
+            "limitations": "research-conditional-withheld-not-evaluated-no-real-world-legality-claims",
         },
     )

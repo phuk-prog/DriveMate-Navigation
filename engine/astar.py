@@ -128,9 +128,9 @@ def astar_route(
             heuristic_values[vertex] = max(0.0, metres(coordinates[vertex], coordinates[destination]) - 0.02) / maximum_mps
         return heuristic_values[vertex]
 
-    start = (source, incoming_edge_id)
+    start = (source, (incoming_edge_id,) if incoming_edge_id else ())
     distances = {start: 0.0}
-    predecessor: dict[tuple[str, str | None], tuple[tuple[str, str | None], str]] = {}
+    predecessor: dict[tuple[str, tuple[str, ...]], tuple[tuple[str, tuple[str, ...]], str]] = {}
     sequence = count()
     heap = [(heuristic(source), next(sequence), 0.0, start)]
     goal = None
@@ -147,9 +147,10 @@ def astar_route(
         for edge in graph.adjacency[vertex]:
             if edge.access != "allowed" or edge.edge_id in blocked:
                 continue
-            if previous is not None and (previous, edge.edge_id) in graph.prohibited_turns:
+            tail = graph.transition(previous, edge.edge_id)
+            if tail is None:
                 continue
-            next_state = (edge.target, edge.edge_id)
+            next_state = (edge.target, tail)
             new_cost = cost + edge.estimated_seconds + penalties.get(edge.edge_id, 0)
             if new_cost < distances.get(next_state, float("inf")):
                 distances[next_state] = new_cost

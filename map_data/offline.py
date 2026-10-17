@@ -7,7 +7,11 @@ from dataclasses import dataclass
 from hashlib import sha256
 import re
 from engine import Route, shortest_route
-from .osm_xml import JourneyAccessContext, MAX_INPUT_BYTES, OSMImportError, Provenance, import_osm_xml
+from .osm_xml import JourneyAccessContext, OSMImportError, Provenance, import_osm_xml
+
+# Device offline-package payload limit (unchanged 6 MB contract), separate from the
+# research importer limit used for real-road clips.
+MAX_INPUT_BYTES = 6_000_000
 
 
 class PackageValidationError(ValueError):
@@ -73,6 +77,10 @@ class OfflineMapStore:
                 or any(type(n) is not str or re.fullmatch(r'osm:[1-9][0-9]{0,18}',n) is None for n in anchors)
                 or len(set(anchors))!=len(anchors)):
             raise PackageValidationError('Explicit unique coverage anchors required')
+        # Device packages keep the original strict contract: any conditional
+        # rule rejects the package (the research importer withholds per object).
+        if re.search(rb'<tag\s+k="[^"]*:conditional"',payload):
+            raise PackageValidationError('Map validation failed: conditional tags are unsupported in offline packages')
         try:data=import_osm_xml(payload,provenance=Provenance(**provenance))
         except OSMImportError as exc:raise PackageValidationError(str(exc)) from exc
         if not set(anchors)<=data.graph.vertices:

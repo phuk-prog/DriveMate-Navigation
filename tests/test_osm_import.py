@@ -76,12 +76,13 @@ class OSMImporterTests(unittest.TestCase):
     def test_conditional_restrictions_fail_closed(self):
         raw = FIXTURE.read_text().replace('<tag k="restriction" v="no_right_turn"/>',
             '<tag k="restriction" v="no_right_turn"/><tag k="restriction:conditional" v="no_right_turn @ (Mo-Fr 07:00-10:00)"/>')
-        with self.assertRaises(OSMImportError):
-            imported(raw.encode())
+        # The unconditional ban applies at all times (conditional never relaxes it).
+        restricted = imported(raw.encode())
+        self.assertEqual(restricted.graph.prohibited_turns, imported().graph.prohibited_turns)
         way = FIXTURE.read_text().replace('<tag k="oneway" v="yes"/>',
             '<tag k="oneway" v="yes"/><tag k="oneway:conditional" v="no @ (Su)"/>')
-        with self.assertRaises(OSMImportError):
-            imported(way.encode())
+        # A conditional lifting of a one-way never opens the reverse direction.
+        self.assertEqual(set(imported(way.encode()).graph.edges), set(imported().graph.edges))
 
     def test_via_way_restrictions_fail_closed(self):
         raw = FIXTURE.read_text().replace('<member type="node" ref="2" role="via"/>',
@@ -103,7 +104,7 @@ class OSMImporterTests(unittest.TestCase):
             Provenance("x", "y", "z", "no attribution")
         with self.assertRaises(OSMImportError):
             imported(b"")
-        self.assertIn("prototype", imported().metadata["limitations"])
+        self.assertIn("no-real-world-legality-claims", imported().metadata["limitations"])
 
 
 if __name__ == "__main__":
@@ -166,9 +167,14 @@ class DirectionalAccessRegression(unittest.TestCase):
                 g=self.graph(self.tag('oneway',oneway)+self.tag(permission,'yes'))
                 self.assertNotIn('w:11:0:'+absent,g.edges)
 
-    def test_directional_condition_still_rejects_import(self):
-        with self.assertRaises(OSMImportError):
-            self.graph(self.tag('vehicle:backward:conditional','yes @ (Mo)'))
+    def test_directional_condition_never_broadens_access(self):
+        # A conditional that only grants access is not evaluated: the stricter
+        # unconditional value governs, so the conditional changes nothing.
+        base=self.graph()
+        granted=self.graph(self.tag('vehicle:backward:conditional','yes @ (Mo)'))
+        self.assertEqual({k:e.access for k,e in base.edges.items()},{k:e.access for k,e in granted.edges.items()})
+        denied=self.graph(self.tag('vehicle:backward:conditional','no @ (Mo)'))
+        self.assertTrue(all(e.access!='allowed' for k,e in denied.edges.items() if k.endswith(':r')))
 
 class ContextualAccessRegression(unittest.TestCase):
     def raw(self, value, key='access'):
@@ -310,9 +316,13 @@ class ContextualAccessRegression(unittest.TestCase):
         self.assertNotIn('w:11:0:r',m.graph.edges)
 
     def test_grant_never_evaluates_unsupported_time_conditions(self):
+        # A time-conditional denial is never overridden by a caller permission:
+        # the way stays unroutable (withheld), whatever the clock.
         raw=self.raw('private').replace(b'</way>',b'<tag k="access:conditional" v="no @ (Mo)"/></way>')
-        with self.assertRaises(OSMImportError):
-            import_osm_xml(raw,provenance=PROV,access_context=self.context(raw,authorized_way_ids=frozenset({'11'})))
+        graph=import_osm_xml(raw,provenance=PROV,access_context=self.context(raw,authorized_way_ids=frozenset({'11'}))).graph
+        way=[e for k,e in graph.edges.items() if k.split(':')[1]=='11']
+        self.assertTrue(way)
+        self.assertTrue(all(e.access!='allowed' for e in way))
 
     def test_authorization_for_another_way_is_not_global(self):
         raw=self.raw('private').replace(b'</osm>',b'<way id="12"><nd ref="1"/><nd ref="3"/><tag k="highway" v="residential"/></way></osm>')
