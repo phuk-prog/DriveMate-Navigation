@@ -1,0 +1,14 @@
+{
+ "agent": "earlier session",
+ "branch": "history",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T09:45:57+00:00 imported from docs/GPS_003_RESULTS.md"
+ ],
+ "id": "GPS-003",
+ "results": "docs/GPS_003_RESULTS.md",
+ "runs": [],
+ "state": "done",
+ "title": "real-map accuracy, faults and recovery",
+ "updated": "2026-10-17T09:45:57+00:00"
+}

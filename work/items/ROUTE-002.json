@@ -1,0 +1,14 @@
+{
+ "agent": "earlier session",
+ "branch": "history",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T09:45:57+00:00 imported from docs/ROUTE_002_RESULTS.md"
+ ],
+ "id": "ROUTE-002",
+ "results": "docs/ROUTE_002_RESULTS.md",
+ "runs": [],
+ "state": "done",
+ "title": "access, prohibited turns and route recalculation",
+ "updated": "2026-10-17T09:45:57+00:00"
+}

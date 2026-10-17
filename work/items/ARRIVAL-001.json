@@ -1,0 +1,14 @@
+{
+ "agent": "earlier session",
+ "branch": "history",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T09:45:57+00:00 imported from docs/ARRIVAL_001_RESULTS.md"
+ ],
+ "id": "ARRIVAL-001",
+ "results": "docs/ARRIVAL_001_RESULTS.md",
+ "runs": [],
+ "state": "done",
+ "title": "corroborated arrival safeguards",
+ "updated": "2026-10-17T09:45:57+00:00"
+}

@@ -4,14 +4,19 @@
 
 Several AIs (Claude, Codex, others) work here. Before any work, run
 `python3 -m tools.work_status --fetch`. It lists what is done, in progress (which
-AI, which branch) and next, read from every branch. Then:
+AI, which branch) and next, read from every branch, plus a READ FIRST list of
+where things are (repo files, GitHub job summaries, data branches, Google Drive),
+cheapest first. Use `python3 -m tools.work_status where <topic>` before searching
+files, and open only what your item needs. Then:
 
 1. Do not start an item another AI holds (unless STALE), or one already done with
    the same inputs: `python3 -m tools.work_status seen "<fingerprint>"`.
 2. Claim your item: `python3 -m tools.work_status start <ID> --title "..." --agent <you>`.
 3. When finished: `finish <ID> --summary "..." --results <doc> --run <CI link>
    --fingerprint "<test version>|<input hashes>|<revision>"`. Add follow-ups with `plan`.
-4. Commit and push `work/items/` with your work, and update docs/HANDOVER.md.
+4. New data or evidence location? Register it once: `source "<what>" --where <place>
+   --cost tiny|small|large --topics a,b` (never personal data or private links: public repo).
+5. Commit and push `work/` with your work, and update docs/HANDOVER.md.
 
 Read live PR/head and active/queued jobs before experiments. Do not assume the
 workspace or scheduled head is current. Work only in this existing research

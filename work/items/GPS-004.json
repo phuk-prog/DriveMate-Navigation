@@ -1,0 +1,14 @@
+{
+ "agent": "earlier session",
+ "branch": "history",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T09:45:57+00:00 imported from docs/GPS_004_RESULTS.md"
+ ],
+ "id": "GPS-004",
+ "results": "docs/GPS_004_RESULTS.md",
+ "runs": [],
+ "state": "done",
+ "title": "GPS-004 adjacent-fragment directed-progress safety baseline",
+ "updated": "2026-10-17T09:45:57+00:00"
+}

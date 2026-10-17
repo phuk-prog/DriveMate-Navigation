@@ -1,0 +1,14 @@
+{
+ "agent": "earlier session",
+ "branch": "history",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T09:45:57+00:00 imported from docs/DMN_SEPARATE_CATEGORY_RESULTS_20261016.md"
+ ],
+ "id": "DMN-SEPARATE-CATEGORY-20261016",
+ "results": "docs/DMN_SEPARATE_CATEGORY_RESULTS_20261016.md",
+ "runs": [],
+ "state": "done",
+ "title": "DMN \u2014 separate-category retest results (16 October 2026)",
+ "updated": "2026-10-17T09:45:57+00:00"
+}

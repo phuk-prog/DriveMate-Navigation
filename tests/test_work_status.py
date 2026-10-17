@@ -48,6 +48,14 @@ class WorkRegister(unittest.TestCase):
             self.assertIn("STALE", ws.show(ws.collect()))
             self.assertEqual(self.run_cli("start", "T-3", "--agent", "Claude")[0], 0)
 
+    def test_where_lists_cheapest_pointer_first(self):
+        with mock.patch.object(ws, "INDEX", Path(self.tmp.name) / "index.json"):
+            self.run_cli("source", "Big map", "--where", "branch data/x", "--cost", "large", "--topics", "map")
+            self.run_cli("source", "Map notes", "--where", "docs/MAP.md", "--cost", "tiny", "--topics", "map")
+            hits = ws.where(ws.load_index(), {}, "map")
+            self.assertTrue(hits[0].startswith("[tiny]"))
+            self.assertTrue(hits[1].startswith("[large]"))
+
 
 if __name__ == "__main__":
     unittest.main()

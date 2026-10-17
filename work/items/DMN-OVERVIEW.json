@@ -1,0 +1,14 @@
+{
+ "agent": "earlier session",
+ "branch": "history",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T09:45:57+00:00 imported from docs/DMN_RESULTS_OVERVIEW.md"
+ ],
+ "id": "DMN-OVERVIEW",
+ "results": "docs/DMN_RESULTS_OVERVIEW.md",
+ "runs": [],
+ "state": "done",
+ "title": "Executed research results and rankings",
+ "updated": "2026-10-17T09:45:57+00:00"
+}

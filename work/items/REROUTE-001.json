@@ -1,0 +1,14 @@
+{
+ "agent": "earlier session",
+ "branch": "history",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T09:45:57+00:00 imported from docs/REROUTE_001_RESULTS.md"
+ ],
+ "id": "REROUTE-001",
+ "results": "docs/REROUTE_001_RESULTS.md",
+ "runs": [],
+ "state": "done",
+ "title": "research rerouting lifecycle and stale-history fix",
+ "updated": "2026-10-17T09:45:57+00:00"
+}

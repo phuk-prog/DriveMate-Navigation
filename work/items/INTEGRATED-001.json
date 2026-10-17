@@ -1,0 +1,14 @@
+{
+ "agent": "earlier session",
+ "branch": "history",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T09:45:57+00:00 imported from docs/INTEGRATED_001_RESULTS.md"
+ ],
+ "id": "INTEGRATED-001",
+ "results": "docs/INTEGRATED_001_RESULTS.md",
+ "runs": [],
+ "state": "done",
+ "title": "engine-only journey baseline",
+ "updated": "2026-10-17T09:45:57+00:00"
+}

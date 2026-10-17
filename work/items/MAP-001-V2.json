@@ -1,0 +1,14 @@
+{
+ "agent": "earlier session",
+ "branch": "history",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T09:45:57+00:00 imported from docs/MAP_001_V2_RESULTS.md"
+ ],
+ "id": "MAP-001-V2",
+ "results": "docs/MAP_001_V2_RESULTS.md",
+ "runs": [],
+ "state": "done",
+ "title": "MAP-001 v2 \u2014 Category 1 improvement + fresh competitor routing proxy",
+ "updated": "2026-10-17T09:45:57+00:00"
+}

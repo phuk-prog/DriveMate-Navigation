@@ -13,6 +13,14 @@ AI on its own branch still sees what the others are doing.
     python3 -m tools.work_status finish ID --summary S [--results F] [--run URL] [--fingerprint X]
     python3 -m tools.work_status plan ID --title T [--why W]
     python3 -m tools.work_status block ID --summary S
+    python3 -m tools.work_status where TOPIC          # where is X? (cheapest place first)
+    python3 -m tools.work_status source "WHAT" --where PLACE --cost tiny|small|large --topics a,b
+    python3 -m tools.work_status import-docs          # register docs/*_RESULTS.md as done
+
+work/index.json is the shared map of WHERE things are (repo files, GitHub job
+summaries, data branches, Google Drive, any URL), each with a cost and when to read
+it; `show` prints its read-first list, cheapest first. Items can carry their own
+--read-first and --source pointers, so an AI opens only what its task needs.
 
 `start` refuses work another AI holds on another branch (updated in the last
 STALE_HOURS) and work already done with the same fingerprint, so nothing is
@@ -29,6 +37,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ITEMS = ROOT / "work" / "items"
+INDEX = ROOT / "work" / "index.json"
+COSTS = ("tiny", "small", "large")
 STATES = ("in_progress", "blocked", "next", "done")
 STALE_HOURS = 24
 
@@ -85,8 +95,37 @@ def _age_hours(item: dict) -> float:
         return float("inf")
 
 
-def show(items: dict[str, dict]) -> str:
+def load_index() -> dict:
+    return json.loads(INDEX.read_text()) if INDEX.exists() else {"read_first": [], "sources": []}
+
+
+def _cost_rank(entry: dict) -> int:
+    return COSTS.index(entry.get("cost")) if entry.get("cost") in COSTS else len(COSTS)
+
+
+def where(index: dict, items: dict[str, dict], topic: str) -> list[str]:
+    """Every pointer whose text or topics mention `topic`, cheapest first."""
+    t = topic.lower()
+    hits = [e for e in index.get("read_first", []) + index.get("sources", [])
+            if t in " ".join([e.get("what", ""), e.get("where", ""), *e.get("topics", [])]).lower()]
+    out = [f"[{e.get('cost', '?')}] {e['what']}: {e['where']}" + (f" ({e['when']})" if e.get("when") else "")
+           for e in sorted(hits, key=_cost_rank)]
+    for i in items.values():
+        text = " ".join(str(i.get(k, "")) for k in ("id", "title", "summary", "results", "why")).lower()
+        if t in text:
+            out.append(f"[item {i.get('state')}] {i['id']}: {i.get('results') or i.get('title', '')}")
+            out.extend(f"    read first: {x}" for x in i.get("read_first", []))
+            out.extend(f"    source: {x}" for x in i.get("sources", []))
+    return out
+
+
+def show(items: dict[str, dict], index: dict | None = None) -> str:
     lines = []
+    first = sorted((index or {}).get("read_first", []), key=_cost_rank)
+    if first:
+        lines.append("READ FIRST (cheapest first; stop once you have what you need)")
+        lines.extend(f"- [{e.get('cost', '?')}] {e['what']}: {e['where']}" +
+                     (f" ({e['when']})" if e.get("when") else "") for e in first)
     for state in STATES:
         group = sorted((i for i in items.values() if i.get("state") == state),
                        key=lambda i: i.get("updated", ""), reverse=True)
@@ -100,6 +139,8 @@ def show(items: dict[str, dict]) -> str:
             for key in ("summary", "why", "results"):
                 if i.get(key):
                     lines.append(f"    {key}: {i[key]}")
+            if state != "done":
+                lines.extend(f"    read first: {x}" for x in i.get("read_first", []))
     return "\n".join(lines) or "No work items yet."
 
 
@@ -122,6 +163,16 @@ def main(argv: list[str] | None = None) -> int:
     sub = parser.add_subparsers(dest="cmd")
     p = sub.add_parser("seen")
     p.add_argument("fingerprint")
+    p = sub.add_parser("where")
+    p.add_argument("topic")
+    p = sub.add_parser("source")
+    p.add_argument("what")
+    p.add_argument("--where", required=True, help="repo path, branch, URL, Google Drive link...")
+    p.add_argument("--cost", choices=COSTS, default="small")
+    p.add_argument("--when", help="when it is worth reading")
+    p.add_argument("--topics", default="")
+    p.add_argument("--read-first", action="store_true", help="add to the global read-first list")
+    sub.add_parser("import-docs")
     for name in ("start", "plan", "finish", "block"):
         p = sub.add_parser(name)
         p.add_argument("id")
@@ -133,12 +184,43 @@ def main(argv: list[str] | None = None) -> int:
         p.add_argument("--run", action="append", default=[])
         p.add_argument("--fingerprint", action="append", default=[])
         p.add_argument("--reason", help="why repeating work that is already done or held")
+        p.add_argument("--read-first", action="append", default=[], help="pointer to read before this item")
+        p.add_argument("--source", action="append", default=[], help="where this item's data or evidence lives")
     args = parser.parse_args(argv)
     if args.fetch:
         subprocess.run(["git", "fetch", "-q", "origin"], cwd=ROOT)
     items = collect()
+    index = load_index()
     if args.cmd in (None, "show"):
-        print(show(items))
+        print(show(items, index))
+        return 0
+    if args.cmd == "where":
+        print("\n".join(where(index, items, args.topic)) or f"Nothing registered for '{args.topic}'.")
+        return 0
+    if args.cmd == "source":
+        entry = {"what": args.what, "where": args.where, "cost": args.cost,
+                 "topics": [x.strip() for x in args.topics.split(",") if x.strip()]}
+        if args.when:
+            entry["when"] = args.when
+        key = "read_first" if args.read_first else "sources"
+        index[key] = [e for e in index.get(key, []) if e["where"] != args.where] + [entry]
+        INDEX.parent.mkdir(parents=True, exist_ok=True)
+        INDEX.write_text(json.dumps(index, indent=1) + "\n")
+        print(f"Registered in work/index.json ({key}): {args.what} -> {args.where}")
+        return 0
+    if args.cmd == "import-docs":
+        added = 0
+        for doc in sorted((ROOT / "docs").glob("*_RESULTS*.md")):
+            ident = doc.stem.replace("_RESULTS", "").replace("_", "-")
+            if ident in items:
+                continue
+            heading = next((l.lstrip("# ").strip() for l in doc.read_text().splitlines() if l.startswith("#")), ident)
+            heading = heading.removeprefix(f"{ident}:").strip()
+            _write({"id": ident, "title": heading[:120], "state": "done", "results": f"docs/{doc.name}",
+                    "updated": _now(), "agent": "earlier session", "branch": "history", "runs": [],
+                    "fingerprints": [], "history": [f"{_now()} imported from docs/{doc.name}"]})
+            added += 1
+        print(f"Registered {added} earlier results documents as done.")
         return 0
     if args.cmd == "seen":
         hit = seen(items, args.fingerprint)
@@ -162,6 +244,9 @@ def main(argv: list[str] | None = None) -> int:
             item[key] = getattr(args, key)
     item["runs"] = sorted(set(item.get("runs", [])) | set(args.run))
     item["fingerprints"] = sorted(set(item.get("fingerprints", [])) | set(args.fingerprint))
+    for key, values in (("read_first", args.read_first), ("sources", args.source)):
+        if values:
+            item[key] = list(dict.fromkeys(item.get(key, []) + values))
     item.setdefault("history", []).append(f"{item['updated']} {state} by {item['agent']} on {branch}")
     print(f"{args.id} -> {state}: {_write(item).name} (commit and push it so other AIs see it)")
     return 0

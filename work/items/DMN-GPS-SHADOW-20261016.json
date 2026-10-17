@@ -1,0 +1,14 @@
+{
+ "agent": "earlier session",
+ "branch": "history",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T09:45:57+00:00 imported from docs/DMN_GPS_SHADOW_RESULTS_20261016.md"
+ ],
+ "id": "DMN-GPS-SHADOW-20261016",
+ "results": "docs/DMN_GPS_SHADOW_RESULTS_20261016.md",
+ "runs": [],
+ "state": "done",
+ "title": "DMN \u2014 dual GPS matcher shadow comparison and independent engine retest",
+ "updated": "2026-10-17T09:45:57+00:00"
+}
