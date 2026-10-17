@@ -38,7 +38,7 @@ from benchmarks import turn001_restrictions as t1
 ROOT = t1.ROOT
 TESTS = {"lanes001": "LANES-001 v1", "limits001": "LIMITS-001 v1"}
 TEST = "lanes001"
-ENGINES = ("DMN", "OSRM", "GraphHopper", "TomTom")
+ENGINES = ("DMN", "OSRM", "GraphHopper")
 MPH = re.compile(r"^(\d{1,3}) mph$")
 LIMIT_KINDS = ("mph20", "mph30", "mph40", "mph50", "mph60", "mph70", "directional", "none_mapped")
 QUOTA = {"lanes001": 12, "limits001": 10}
@@ -351,7 +351,7 @@ def engine_case(engine: str, folder: Path, clip, geom: dict) -> dict:
     points, details, ms = result
     if points is None:
         return {"route": "NO_ROUTE", "warm_query_ms": round(ms, 1)}
-    nodes, _ = xe.engine_path(clip, geom, points, xe.TOMTOM_MATCH_M if engine in xe.LIVE else 1.0)
+    nodes, _ = xe.engine_path(clip, geom, points)
     out = {"route": "ROUTED", "path": nodes, "warm_query_ms": round(ms, 1)}
     if TEST == "limits001":
         if details.get("segment_limits_kph") is None:
@@ -387,8 +387,6 @@ def run(engine: str, only: set[str] | None = None) -> None:
         clip = a1.AccessClip(raw)
         folder = work() / "cases" / record["id"]
         entry = dmn_case(raw, clip, geom) if engine == "DMN" else engine_case(engine, folder, clip, geom)
-        if engine in xe.LIVE:
-            entry = xe.scrub(entry)
         results[record["id"]] = entry
         out_file.write_text(json.dumps(results, indent=1, sort_keys=True))
         subprocess.run(["rm", "-rf", str(folder)], check=False)

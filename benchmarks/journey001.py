@@ -313,16 +313,13 @@ def engine_case(engine: str, folder: Path, clip, geom: dict) -> dict:
     result = xe.route(engine, folder, clip, geom)
     if isinstance(result, dict):
         return result
-    out = _judged(clip, geom, *result, tolerance_m=xe.TOMTOM_MATCH_M if engine in xe.LIVE else 1.0)
-    if engine in xe.LIVE:
-        out["line"] = {"status": "NOT_APPLICABLE_OWN_MAP"}
-    return out
+    return _judged(clip, geom, *result)
 
 
-def _judged(clip, geom: dict, points, steps, ms: float, tolerance_m: float = 1.0) -> dict:
+def _judged(clip, geom: dict, points, steps, ms: float) -> dict:
     if points is None:
         return {**judge_route(clip, geom, None), "warm_query_ms": round(ms, 1)}
-    nodes, snaps = xe.engine_path(clip, geom, points, tolerance_m)
+    nodes, snaps = xe.engine_path(clip, geom, points)
     return {**judge_route(clip, geom, nodes), **snaps, "warm_query_ms": round(ms, 1),
             "instruction": instruction_at(geom, steps), "line": line_adherence(clip, nodes, points)}
 
@@ -469,8 +466,6 @@ def run(engine: str, only: set[str] | None = None) -> None:
             geom = {**geom, "junction_at": clip.coords[geom["junction"]]}
         folder = WORK / "cases" / record["id"]
         entry = dmn_case(raw, clip, geom) if engine == "DMN" else engine_case(engine, folder, clip, geom)
-        if engine in xe.LIVE:
-            entry = xe.scrub(entry)
         results[record["id"]] = entry
         out.write_text(json.dumps(results, indent=1, sort_keys=True))
         subprocess.run(["rm", "-rf", str(folder)], check=False)
@@ -518,7 +513,6 @@ def score() -> None:
         offs = [c["line"]["max_off_road_m"] for c in cases.values() if c.get("line", {}).get("status") == "MEASURED"]
         cats.setdefault("11_route_line", {})[name] = (
             {"status": "NOT_APPLICABLE_NODE_PATH"} if name == "DMN" else
-            {"status": "NOT_APPLICABLE_OWN_MAP"} if name in xe.LIVE else
             {"measured": len(offs), "median_max_off_road_m": round(statistics.median(offs), 2) if offs else None,
              "cases_over_5m": sum(o > 5 for o in offs)})
         cats.setdefault("timing_not_ranked", {})[name] = b1._ms([c[ms_key] for c in cases.values() if c.get(ms_key)])

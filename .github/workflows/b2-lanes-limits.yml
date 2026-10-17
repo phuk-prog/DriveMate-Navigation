@@ -36,7 +36,7 @@ jobs:
       fail-fast: false
       matrix:
         test: [lanes001, limits001]
-        run: [DMN, OSRM, GraphHopper, TomTom]
+        run: [DMN, OSRM, GraphHopper]
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -61,13 +61,7 @@ jobs:
           echo "$GH_JAR_SHA1  results/turn001/engines/gh.jar" | sha1sum -c -
           sudo mkdir -p /opt/jdk17/bin && sudo ln -sf "$JAVA_HOME_17_X64/bin/java" /opt/jdk17/bin/java
       - name: Run ${{ matrix.run }} (log kept as artifact, not printed)
-        env:
-          # TomTom is a yardstick only (verdicts kept, nothing of its data stored)
-          TOMTOM_KEY: ${{ matrix.run == 'TomTom' && secrets.TOMTOM_KEY || '' }}
         run: |
-          if [ "${{ matrix.run }}" = TomTom ] && [ -z "$TOMTOM_KEY" ]; then
-            echo "TomTom NOT_RUN: repository secret TOMTOM_KEY is not set" | tee -a "$GITHUB_STEP_SUMMARY"; exit 0
-          fi
           set -euo pipefail
           t=${{ matrix.test }}
           python -m benchmarks.b2_lanes_limits --test $t run --engine ${{ matrix.run }} > results/$t/run.log 2>&1 || { tail -20 results/$t/run.log; exit 1; }
