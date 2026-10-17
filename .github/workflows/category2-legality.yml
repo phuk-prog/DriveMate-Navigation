@@ -2,7 +2,7 @@ name: Category 2 road legality (ACCESS-001 no-car roads, ONEWAY-002 one-way road
 # Runs the frozen ACCESS-001 and ONEWAY-002 cohorts in one GitHub run (public repo: free
 # minutes). Each test x engine is its own parallel job and each test is scored and
 # summarised separately; there is no combined score. The source map is pinned on
-# data/turn001-snapshot; each job cuts the 5 km clips from it and every clip must match
+# data/turn001-snapshot; each job cuts the 3 km clips from it and every clip must match
 # its frozen hash in config/access001-prepared.json (osmium-tool 1.16, Ubuntu 24.04).
 on:
   workflow_dispatch:
@@ -27,7 +27,7 @@ env:
 jobs:
   engine:
     runs-on: ubuntu-24.04
-    timeout-minutes: 350
+    timeout-minutes: 120
     strategy:
       fail-fast: false
       matrix:

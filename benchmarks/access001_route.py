@@ -62,9 +62,9 @@ from benchmarks import turn001_restrictions as t1
 ROOT = t1.ROOT
 SOURCE = t1.WORK / "gm.osm.pbf"  # pinned on data/turn001-snapshot
 TESTS = {
-    "access001": {"contract": "ACCESS-001 v1.1", "fail": "FAIL_THROUGH_NO_CAR_ROAD",
+    "access001": {"contract": "ACCESS-001 v1.2", "fail": "FAIL_THROUGH_NO_CAR_ROAD",
                   "broke": "drove a road closed to cars"},
-    "oneway002": {"contract": "ONEWAY-002 v1", "fail": "FAIL_AGAINST_ONEWAY",
+    "oneway002": {"contract": "ONEWAY-002 v1.1", "fail": "FAIL_AGAINST_ONEWAY",
                   "broke": "drove the wrong way along a one-way road"},
 }
 TEST = "access001"
@@ -83,10 +83,14 @@ def use(test: str) -> None:
     CONTRACT, FAIL = TESTS[test]["contract"], TESTS[test]["fail"]
 
 
-# v1.1 (owner, before any result was reported): clips several miles wide so a real
-# detour fits. Each clip is a 5 km (about 3 miles) square of roads, turn restrictions
-# and barriers centred on the tested way; a no-route is re-asked on a 10 km square.
-CLIP_KM, WIDE_SCALE = 5.0, 2
+# Owner, before any result was reported: big enough to catch every issue, small enough
+# to run quickly. Each clip is a 3 km (about 2 miles) square of roads, turn
+# restrictions and barriers centred on the tested way; a no-route is re-asked on a
+# 7.5 km (about 4.5 miles) square, within DMN's 32 MB input limit. At most
+# CASES_PER_KIND testable cases per kind are run, in the frozen sha256 order
+# (ACCESS-001 v1.2, ONEWAY-002 v1.1).
+CLIP_KM, WIDE_SCALE = 3.0, 2.5
+CASES_PER_KIND = 12
 HALF_LAT = CLIP_KM / 2 * 1000 / 111_320
 HALF_LON = CLIP_KM / 2 * 1000 / 66_220  # metres per degree of longitude at 53.5N
 ROADS = t1.WORK / "roads.osm.pbf"  # source filtered to roads, restrictions and barriers
@@ -361,8 +365,13 @@ def prepare(source: Path) -> None:
     """Freeze each clip's hash and test geometry (clips are deleted again: they are large)."""
     cohort = json.loads(COHORT.read_text())
     roads_source(source)
-    out = []
+    out, testable = [], Counter()
     for case in cohort["cases"]:
+        kind = "/".join(case["stratum"])
+        if testable[kind] >= CASES_PER_KIND:
+            out.append({"way": case["way"], "node": case["way"], "stratum": case["stratum"],
+                        "geometry": {"status": "BEYOND_CASES_PER_KIND", "group": case["stratum"][0]}})
+            continue
         folder = WORK / "cases" / str(case["way"])
         bbox = bbox_around(case["lat"], case["lon"])
         raw = cut(folder, bbox)
@@ -370,6 +379,7 @@ def prepare(source: Path) -> None:
                     "clip_km": CLIP_KM, "clip_sha256": hashlib.sha256(raw).hexdigest(), "clip_bytes": len(raw),
                     "geometry": case_geometry(case, AccessClip(raw))})
         subprocess.run(["rm", "-rf", str(folder)], check=True)
+        testable[kind] += out[-1]["geometry"]["status"] == "TESTABLE"
         print(case["way"], out[-1]["geometry"]["status"], flush=True)
     text = json.dumps(out, indent=1)
     if PREPARED.exists() and PREPARED.read_text() != text:
