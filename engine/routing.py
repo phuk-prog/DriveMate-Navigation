@@ -165,8 +165,11 @@ def shortest_route(
 
     # Phase: 0 = leaving the start on uncertain roads, 1 = on allowed roads,
     # 2 = final uncertain approach (only uncertain roads from then on).
+    # A car arriving on an allowed road has already left any uncertain start.
+    starts_uncertain = endpoint_uncertain_access and (
+        incoming_edge_id is None or graph.edges[incoming_edge_id].access != "allowed")
     begin: tuple[str, tuple[str, ...], int] = (
-        source, (incoming_edge_id,) if incoming_edge_id else (), 0 if endpoint_uncertain_access else 1)
+        source, (incoming_edge_id,) if incoming_edge_id else (), 0 if starts_uncertain else 1)
     best = {begin: 0.0}
     previous: dict[tuple[str, tuple[str, ...], int], tuple[tuple[str, tuple[str, ...], int], str]] = {}
     order = count()

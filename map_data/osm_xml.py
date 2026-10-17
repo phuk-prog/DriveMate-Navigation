@@ -193,6 +193,37 @@ def _road_access(tags: dict[str, str], direction: str | None = None, *,
     return "unknown" if highway in UNCERTAIN_ROADS else "allowed"
 
 
+def _uncertain_roads_required_by_only_turns(ways, relations) -> frozenset[str]:
+    """Untagged service/track ways that a car only_* turn restriction sends cars onto.
+
+    An only_* rule from a road open to cars says the restricted movement onto this
+    road is the one cars must make, so the mapper treats it as usable by cars. Only
+    roads with no access tag of any kind qualify; any access value (private, no,
+    destination...), a conditional rule, a no_* rule or a barrier is never overridden.
+    """
+    opened: set[str] = set()
+    for relation in relations:
+        tags = _tags(relation)
+        if tags.get("type") != "restriction" or tags.get("restriction:conditional"):
+            continue
+        exempt = {v.strip() for v in tags.get("except", "").replace(",", ";").split(";")}
+        rule = tags.get("restriction:motorcar", tags.get("restriction:motor_vehicle", tags.get("restriction", "")))
+        if not rule.startswith("only_") or exempt & {"motorcar", "motor_vehicle", "vehicle"}:
+            continue
+        members = relation.findall("member")
+        frm = [m.get("ref") for m in members if m.get("role") == "from" and m.get("type") == "way"]
+        to = [m.get("ref") for m in members if m.get("role") == "to" and m.get("type") == "way"]
+        if len(frm) != 1 or len(to) != 1 or frm[0] not in ways or to[0] not in ways:
+            continue
+        from_tags, to_tags = ways[frm[0]][1], ways[to[0]][1]
+        if _road_access(from_tags) != "allowed" or any(_conditional_restrictions(from_tags).values()):
+            continue
+        untagged = all(_selected_access(to_tags, d) is None for d in ("forward", "backward"))
+        if (to_tags.get("highway") in UNCERTAIN_ROADS and untagged
+                and not any(_conditional_restrictions(to_tags).values())):
+            opened.add(to[0])
+    return frozenset(opened)
+
 def _barrier_access(tags: dict[str, str], *, authorized: bool = False,
                     qualifying_destination: bool = False) -> str:
     kind = tags.get("barrier")
@@ -291,6 +322,7 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
     access_requirements: dict[str, tuple[str, ...]] = {}
     edges: list[RoadEdge] = []
     conditional_ways = 0
+    opened_by_only = _uncertain_roads_required_by_only_turns(ways, relations)
     # Segments with a barrier *at either endpoint* remain inaccessible/uncertain.
     # This is conservative and may block an adjacent leg too.
     for way_id, (refs, tags) in sorted(ways.items(), key=lambda item: int(item[0])):
@@ -326,14 +358,20 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
             physical = _combine_access(barriers[src], barriers[dst])
             node_requirements = node_context[src] + node_context[dst]
             if direction == 1:
-                actual = _combine_access(_road_access(tags, "forward", authorized=authorized, qualifying_destination=destination), physical)
+                road = _road_access(tags, "forward", authorized=authorized, qualifying_destination=destination)
+                if road == "unknown" and way_id in opened_by_only:
+                    road = "allowed"
+                actual = _combine_access(road, physical)
                 if conditional_closes["forward"]:
                     actual = _combine_access(actual, "unknown")
                 edges.append(RoadEdge(f"w:{way_id}:{i}:f", src, dst, length, speed, actual))
                 conditions = _requirements(tags,"way",way_id,"forward") + node_requirements
                 if conditions: access_requirements[f"w:{way_id}:{i}:f"] = conditions
             if direction == -1 or oneway in ("", "no", "0", "false"):
-                actual = _combine_access(_road_access(tags, "backward", authorized=authorized, qualifying_destination=destination), physical)
+                road = _road_access(tags, "backward", authorized=authorized, qualifying_destination=destination)
+                if road == "unknown" and way_id in opened_by_only:
+                    road = "allowed"
+                actual = _combine_access(road, physical)
                 if conditional_closes["backward"]:
                     actual = _combine_access(actual, "unknown")
                 edges.append(RoadEdge(f"w:{way_id}:{i}:r", dst, src, length, speed, actual))
@@ -506,6 +544,7 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
             "prohibited_turn_sequences": len(graph.prohibited_sequences),
             "restrictions_not_applied": dict(sorted(skipped.items())),
             "conditional_ways_withheld": conditional_ways,
+            "uncertain_roads_opened_by_only_turn": len(opened_by_only),
             "limitations": "research-conditional-withheld-not-evaluated-no-real-world-legality-claims",
         },
     )

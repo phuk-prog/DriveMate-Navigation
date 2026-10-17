@@ -263,9 +263,59 @@ class EndpointUncertainAccessTests(unittest.TestCase):
         with self.assertRaises(RouteNotFound):
             self.route({"b": "unknown", "x": "prohibited"}, endpoint_uncertain_access=True)
 
+    def test_start_allowance_ends_once_the_car_is_on_an_allowed_road(self):
+        # Starting at p having arrived on allowed road a: b is mid-journey, never a short cut.
+        g = self.graph({"b": "unknown"})
+        r = shortest_route(g, "p", "d", incoming_edge_id="a", destination_edge_id="c", endpoint_uncertain_access=True)
+        self.assertEqual(r.edge_ids, ("x", "y", "c"))
+
     def test_prohibited_ends_stay_closed(self):
         with self.assertRaises(RouteNotFound):
             self.route({"c": "prohibited"}, endpoint_uncertain_access=True)
+
+
+class OnlyTurnOntoUntaggedServiceRoad(unittest.TestCase):
+    """TURN-001 relation 14285234 shape: an only_right_turn into a short dead-end
+    service stub, so the legal journey turns round in the stub and comes back out.
+    Invented coordinates.  1 -101-> 2 -103-> 4, stub 2 --102-- 3 (dead end)."""
+
+    def map(self, relation_rule='<tag k="restriction" v="only_right_turn"/>', stub="", from_road="tertiary_link",
+            node3=""):
+        raw = ('<osm version="0.6"><node id="1" lat="53.0" lon="-2.002"/><node id="2" lat="53.0" lon="-2.001"/>'
+               f'<node id="3" lat="53.0003" lon="-2.001">{node3}</node><node id="4" lat="53.0" lon="-2.0"/>'
+               f'<way id="101"><nd ref="1"/><nd ref="2"/><tag k="highway" v="{from_road}"/><tag k="oneway" v="yes"/></way>'
+               f'<way id="102"><nd ref="2"/><nd ref="3"/><tag k="highway" v="service"/>{stub}</way>'
+               '<way id="103"><nd ref="2"/><nd ref="4"/><tag k="highway" v="tertiary_link"/><tag k="oneway" v="yes"/></way>'
+               + rel(9, relation_rule, 101, 102, 2) + "</osm>").encode()
+        return import_osm_xml(raw, provenance=PROV)
+
+    def journey(self, imported):
+        g = imported.graph
+        r = shortest_route(g, "osm:2", "osm:4", incoming_edge_id="w:101:0:f", destination_edge_id="w:103:0:f",
+                           endpoint_uncertain_access=True)
+        return ["1", "2"] + [g.edges[e].target.removeprefix("osm:") for e in r.edge_ids]
+
+    def test_only_turn_target_is_open_so_the_legal_turn_round_is_found(self):
+        m = self.map()
+        self.assertEqual(m.metadata["uncertain_roads_opened_by_only_turn"], 1)
+        self.assertEqual(self.journey(m), ["1", "2", "3", "2", "4"])
+
+    def test_any_access_tag_on_the_service_road_is_kept(self):
+        for value in ("private", "no", "destination", "customers"):
+            with self.subTest(value=value), self.assertRaises(RouteNotFound):
+                self.journey(self.map(stub=f'<tag k="access" v="{value}"/>'))
+
+    def test_barrier_on_the_service_road_is_kept(self):
+        with self.assertRaises(RouteNotFound):
+            self.journey(self.map(node3='<tag k="barrier" v="gate"/>'))
+
+    def test_no_turn_or_uncertain_from_road_gives_no_evidence(self):
+        for kwargs in ({"relation_rule": '<tag k="restriction" v="no_left_turn"/>'}, {"from_road": "service"},
+                       {"relation_rule": '<tag k="restriction:hgv" v="only_right_turn"/>'}):
+            with self.subTest(**kwargs):
+                m = self.map(**kwargs)
+                self.assertEqual(m.metadata["uncertain_roads_opened_by_only_turn"], 0)
+                self.assertEqual(m.graph.edges["w:102:0:f"].access, "unknown")
 
 
 if __name__ == "__main__":
