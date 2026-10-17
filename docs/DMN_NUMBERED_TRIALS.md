@@ -30,6 +30,15 @@ automatic controller cancellation or Android storage proof. External families
 remain unranked with explicit interface reasons. See
 `docs/INTEGRATED_003_RESULTS.md` and `references/integrated003-*.json`.
 
+## INTEGRATED-004 active-route/map-change baseline (17 October 2026)
+
+DMN passes 2/3. A successful A→B package replacement leaves the rerouting
+controller active with the old A route; corrupt-update retention and explicit
+stop controls pass. This is a reproduced integration failure with a nonzero
+benchmark exit, not an Android or real-road result. No behavior fix was applied.
+See `docs/INTEGRATED_004_RESULTS.md` and
+`references/integrated004-*-baseline-20261017.json`.
+
 **Owner-approved prospective policy (16 October 2026):**
 [DMN_PERMANENT_TESTING_POLICY.md](DMN_PERMANENT_TESTING_POLICY.md) supersedes
 any earlier recommendations here about universal score-first rankings, running
