@@ -393,7 +393,8 @@ def osmand_raw(geom: dict, headings: tuple[int, int]) -> dict:
     began = time.perf_counter()
     r = subprocess.run([JAVA, "-Xmx1g", "-cp", osmand_classpath(CACHE / "osmand"), "OsmAndRoute", str(_OSMAND_OBF),
                         f"{o[0]:.7f}", f"{o[1]:.7f}", f"{d[0]:.7f}", f"{d[1]:.7f}", str(headings[0]),
-                        str(headings[1])], capture_output=True, text=True, timeout=120)
+                        str(headings[1])], capture_output=True, text=True, timeout=120,
+                       cwd=_OSMAND_OBF.parent)  # OsmAnd writes regions.ocbf into its working folder
     line = next((ln for ln in r.stdout.splitlines() if ln.startswith("{")), None)
     if line is None:
         raise RuntimeError(f"OsmAnd router gave no answer: {(r.stderr or r.stdout)[-200:]}")
