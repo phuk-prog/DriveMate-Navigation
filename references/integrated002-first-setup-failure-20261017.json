@@ -1,0 +1,84 @@
+{
+  "test_id": "INTEGRATED-002",
+  "system": "DMN",
+  "classification": "synthetic analytical roundabout and GPS-confidence integration; not real-road, physical GNSS, Android or app evidence",
+  "run_sha": null,
+  "oracle_sha256": "1738c9a7381a98c6948cb9d89a67b5e9c19a2231fa55496578c0a6c8026242eb",
+  "map_sha256": "8b9d409865dd0b272456c2b99575c8dd29d3459602db7016377889b9b00ab465",
+  "passed": 2,
+  "failed": 1,
+  "total": 3,
+  "cases": [
+    {
+      "case_id": "INTEGRATED-002-roundabout-exit-three",
+      "outcome": "FAIL",
+      "checks": {
+        "route": true,
+        "maneuvers": true,
+        "fix": true,
+        "instruction": false
+      },
+      "failures": [
+        "instruction"
+      ],
+      "actual": {
+        "route_edges": [
+          "w:110:0:f",
+          "w:111:0:f",
+          "w:111:1:f",
+          "w:111:2:f",
+          "w:111:3:f",
+          "w:114:0:f"
+        ],
+        "maneuvers": [
+          {
+            "kind": "roundabout",
+            "exit": 3
+          }
+        ],
+        "fix_status": "VALID",
+        "instruction_phase": "WAIT"
+      },
+      "calculation_ms": 0.724419
+    },
+    {
+      "case_id": "INTEGRATED-002-weak-gps-withholds",
+      "outcome": "PASS",
+      "checks": {
+        "fix": true,
+        "instruction": true,
+        "arrival": true
+      },
+      "failures": [],
+      "actual": {
+        "fix_status": "UNCERTAIN",
+        "fix_reason": "weak_position_accuracy",
+        "instruction_phase": "WITHHOLD",
+        "arrival_state": "WITHHELD"
+      },
+      "calculation_ms": 0.372099
+    },
+    {
+      "case_id": "INTEGRATED-002-stale-gps-rejected",
+      "outcome": "PASS",
+      "checks": {
+        "fix": true,
+        "reason": true,
+        "instruction": true,
+        "arrival": true
+      },
+      "failures": [],
+      "actual": {
+        "fix_status": "REJECTED",
+        "fix_reason": "stale_timestamp",
+        "instruction_phase": "WITHHOLD",
+        "arrival_state": "REJECTED"
+      },
+      "calculation_ms": 0.317227
+    }
+  ],
+  "execution": "local_working_tree_after_oracle_freeze",
+  "base_sha": "c6e538b00f554e78ffcf3791ce4936690f2ce17b",
+  "setup_failure": true,
+  "diagnosis": "Frozen case omitted instruction distance; first harness selected 60m, outside APPROACH threshold at 10m/s and 5s lead"
+}

@@ -9,6 +9,9 @@
       "expected_route_edges": ["w:110:0:f", "w:111:0:f", "w:111:1:f", "w:111:2:f", "w:111:3:f", "w:114:0:f"],
       "expected_maneuvers": [{"kind": "roundabout", "exit": 3}],
       "expected_fix_status": "VALID",
+      "instruction_distance_m": 50,
+      "instruction_speed_mps": 10,
+      "instruction_lead_seconds": 5,
       "expected_instruction_phase": "APPROACH"
     },
     {

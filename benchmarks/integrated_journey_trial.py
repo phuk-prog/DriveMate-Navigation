@@ -118,8 +118,8 @@ def scorecard(dmn):
         rows.append({"system":name,"rank":None,"score_out_of_ten":None,"passed":0,"failed":0,
                      "cases":[{"case_id":case["case_id"],"outcome":status,"reason":reason}
                               for case in dmn["cases"]]})
-    return {"test_id":"INTEGRATED-001","classification":"DMN-only synthetic lifecycle conformance; no competitive ranking",
-            "formula":"10 * passed / 3 only for a complete judged cohort", "rows":rows}
+    return {"test_id":dmn["test_id"],"classification":"DMN-only synthetic lifecycle conformance; no competitive ranking",
+            "formula":f"10 * passed / {dmn['total']} only for a complete judged cohort", "rows":rows}
 
 
 def main() -> int:

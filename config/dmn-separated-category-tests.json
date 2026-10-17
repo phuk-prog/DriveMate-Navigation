@@ -260,7 +260,8 @@
       "scope": "Actual DMN core components on analytically invented geometry; no physical drive, app or Android.",
       "test_files": [
         "test_navigation_engine_journey.py",
-        "test_integrated_journey_trial.py"
+        "test_integrated_journey_trial.py",
+        "test_integrated_roundabout_gps_trial.py"
       ],
       "engine_rank": null,
       "navigation_score": null
