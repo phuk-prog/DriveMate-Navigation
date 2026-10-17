@@ -1,0 +1,2087 @@
+{
+ "available_by_kind": {
+  "left": 122,
+  "right": 200,
+  "straight": 853
+ },
+ "cases": [
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 7120936856,
+   "from_way": 85489158,
+   "id": "lanes-14244733280",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "left;through|through",
+   "lat": 53.5062393,
+   "lon": -2.2607098,
+   "node": 14244733280,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 14244733288,
+   "to_way": 1564582448
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 722563238,
+   "from_way": 58262899,
+   "id": "lanes-4726249389",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through",
+   "lat": 53.5639796,
+   "lon": -2.4787452,
+   "node": 4726249389,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 6710509494,
+   "to_way": 479542388
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 6439486197,
+   "from_way": 1071778475,
+   "id": "lanes-3590411971",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|right",
+   "lat": 53.4789488,
+   "lon": -2.2330049,
+   "node": 3590411971,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 3590411962,
+   "to_way": 353262554
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 784753611,
+   "from_way": 1105458097,
+   "id": "lanes-297116506",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through|right",
+   "lat": 53.5273556,
+   "lon": -2.1596785,
+   "node": 297116506,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 10047874795,
+   "to_way": 82291097
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 14170133466,
+   "from_way": 1557899358,
+   "id": "lanes-367003778",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left|right",
+   "lat": 53.4941934,
+   "lon": -2.6253131,
+   "node": 367003778,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 12669775410,
+   "to_way": 998167791
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 568711447,
+   "from_way": 1553651345,
+   "id": "lanes-753818212",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left|right",
+   "lat": 53.499028,
+   "lon": -2.5187254,
+   "node": 753818212,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 753818207,
+   "to_way": 60464520
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 2471899061,
+   "from_way": 713411460,
+   "id": "lanes-7087480986",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left|through|right",
+   "lat": 53.3726781,
+   "lon": -2.2172468,
+   "node": 7087480986,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 7087480988,
+   "to_way": 758854722
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 9244127081,
+   "from_way": 990869071,
+   "id": "lanes-28276195",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left;through|right",
+   "lat": 53.4152696,
+   "lon": -2.1394002,
+   "node": 28276195,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 485978121,
+   "to_way": 984775770
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 308042357,
+   "from_way": 919163386,
+   "id": "lanes-307772303",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "left|through",
+   "lat": 53.3365343,
+   "lon": -2.701207,
+   "node": 307772303,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 307772299,
+   "to_way": 30168061
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 8768332096,
+   "from_way": 1004201330,
+   "id": "lanes-9426141016",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left;through|through",
+   "lat": 53.3819879,
+   "lon": -2.5603938,
+   "node": 9426141016,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 9426141015,
+   "to_way": 1022028294
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 9159567620,
+   "from_way": 777717050,
+   "id": "lanes-9159567618",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left;through|right",
+   "lat": 53.6704136,
+   "lon": -2.6763144,
+   "node": 9159567618,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 34484219,
+   "to_way": 777717048
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 553199469,
+   "from_way": 987461696,
+   "id": "lanes-2430569552",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left|through",
+   "lat": 53.4920727,
+   "lon": -2.4984992,
+   "node": 2430569552,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 11286147889,
+   "to_way": 1218020498
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 14072026173,
+   "from_way": 734109352,
+   "id": "lanes-6875002144",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left|through;right",
+   "lat": 53.5822473,
+   "lon": -2.4396337,
+   "node": 6875002144,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 6134855720,
+   "to_way": 734109350
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 4528850157,
+   "from_way": 262159961,
+   "id": "lanes-4528850144",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through",
+   "lat": 53.3999341,
+   "lon": -2.5942476,
+   "node": 4528850144,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 4528850158,
+   "to_way": 456628242
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 4202314703,
+   "from_way": 50156541,
+   "id": "lanes-7144688710",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through",
+   "lat": 53.4756763,
+   "lon": -2.3748158,
+   "node": 7144688710,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 7144688711,
+   "to_way": 764863804
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 8629625524,
+   "from_way": 85489158,
+   "id": "lanes-14244733276",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "left;through|through",
+   "lat": 53.5067306,
+   "lon": -2.26099,
+   "node": 14244733276,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 14244733281,
+   "to_way": 1564582447
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 4541768203,
+   "from_way": 458131812,
+   "id": "lanes-4541768207",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left|through",
+   "lat": 53.3913893,
+   "lon": -2.5978731,
+   "node": 4541768207,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 4541768210,
+   "to_way": 1014946476
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 963912493,
+   "from_way": 1244122066,
+   "id": "lanes-6885830175",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left;through|right",
+   "lat": 53.4199066,
+   "lon": -2.3324657,
+   "node": 6885830175,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 6885830176,
+   "to_way": 735198958
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 5851972828,
+   "from_way": 948442351,
+   "id": "lanes-4037932",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through",
+   "lat": 53.4780964,
+   "lon": -2.2773689,
+   "node": 4037932,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 8715618078,
+   "to_way": 4947745
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 32917938,
+   "from_way": 987416867,
+   "id": "lanes-21700221",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "left;through|through",
+   "lat": 53.5788339,
+   "lon": -2.2722044,
+   "node": 21700221,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 21700233,
+   "to_way": 4085223
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 13177537219,
+   "from_way": 636934134,
+   "id": "lanes-1161222831",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left;through|right",
+   "lat": 53.4289524,
+   "lon": -2.4351205,
+   "node": 1161222831,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 13177537212,
+   "to_way": 973294163
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 9634531030,
+   "from_way": 1054504743,
+   "id": "lanes-30339158",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "left;through|right",
+   "lat": 53.4838069,
+   "lon": -2.2946917,
+   "node": 30339158,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 9634531019,
+   "to_way": 67218370
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 307420842,
+   "from_way": 360828844,
+   "id": "lanes-2739371484",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left|right",
+   "lat": 53.4802883,
+   "lon": -2.2282695,
+   "node": 2739371484,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 6418998940,
+   "to_way": 288277887
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 963912515,
+   "from_way": 82824537,
+   "id": "lanes-9365153214",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left;through|right",
+   "lat": 53.411682,
+   "lon": -2.3417072,
+   "node": 9365153214,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 9365153215,
+   "to_way": 1015229044
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 4528850139,
+   "from_way": 27889878,
+   "id": "lanes-306215743",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through|right",
+   "lat": 53.3998583,
+   "lon": -2.594429,
+   "node": 306215743,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 4528850152,
+   "to_way": 456628248
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 9004932314,
+   "from_way": 559432684,
+   "id": "lanes-255223484",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through",
+   "lat": 53.3887141,
+   "lon": -2.5881532,
+   "node": 255223484,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 9339299215,
+   "to_way": 1012308737
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 8691046955,
+   "from_way": 1025697320,
+   "id": "lanes-247654752",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through|right",
+   "lat": 53.5470888,
+   "lon": -2.6276106,
+   "node": 247654752,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 9216732127,
+   "to_way": 613765379
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 8978613895,
+   "from_way": 782081184,
+   "id": "lanes-3177478983",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left|left;through|through",
+   "lat": 53.5427925,
+   "lon": -2.6294243,
+   "node": 3177478983,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 9456888748,
+   "to_way": 311966147
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 585556,
+   "from_way": 954261944,
+   "id": "lanes-9363830367",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left|through|through;right",
+   "lat": 53.4209257,
+   "lon": -2.5978391,
+   "node": 9363830367,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 9363830370,
+   "to_way": 1015059982
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 7714907069,
+   "from_way": 948442350,
+   "id": "lanes-1835518502",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through",
+   "lat": 53.4778415,
+   "lon": -2.2758935,
+   "node": 1835518502,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 8712618248,
+   "to_way": 172669963
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 6869060883,
+   "from_way": 970241031,
+   "id": "lanes-10713150567",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left|left;right",
+   "lat": 53.5420117,
+   "lon": -2.6321003,
+   "node": 10713150567,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 10713150575,
+   "to_way": 1151630858
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 8691093214,
+   "from_way": 311966128,
+   "id": "lanes-1397386211",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through",
+   "lat": 53.5488913,
+   "lon": -2.6281241,
+   "node": 1397386211,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 1397386228,
+   "to_way": 125935173
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 9869102077,
+   "from_way": 997279813,
+   "id": "lanes-90679669",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left;through|through",
+   "lat": 53.4839501,
+   "lon": -2.3208333,
+   "node": 90679669,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 6901819390,
+   "to_way": 27930331
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 1610739347,
+   "from_way": 147955959,
+   "id": "lanes-2471897163",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left|right",
+   "lat": 53.3644157,
+   "lon": -2.2431411,
+   "node": 2471897163,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 10803200242,
+   "to_way": 239402795
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 8853158933,
+   "from_way": 1098812479,
+   "id": "lanes-353204112",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through|right",
+   "lat": 53.4530387,
+   "lon": -2.7231038,
+   "node": 353204112,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 9330132774,
+   "to_way": 31565661
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 10125356452,
+   "from_way": 946867821,
+   "id": "lanes-8764905338",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left|through",
+   "lat": 53.4031406,
+   "lon": -2.573371,
+   "node": 8764905338,
+   "stratum": [
+    "lanes",
+    "left"
+   ],
+   "to_node": 8764903711,
+   "to_way": 946867817
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 6247304457,
+   "from_way": 1213627474,
+   "id": "lanes-7821699995",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "through|right",
+   "lat": 53.4460703,
+   "lon": -2.3523992,
+   "node": 7821699995,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 7821699996,
+   "to_way": 838042563
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 27316846,
+   "from_way": 723684641,
+   "id": "lanes-27316517",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left|right",
+   "lat": 53.4759953,
+   "lon": -2.2853716,
+   "node": 27316517,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 8328619216,
+   "to_way": 37739421
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 8514758025,
+   "from_way": 27206962,
+   "id": "lanes-9120088778",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "through|right",
+   "lat": 53.5461153,
+   "lon": -2.1457952,
+   "node": 9120088778,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 8612658658,
+   "to_way": 986658205
+  },
+  {
+   "expected_lanes": [
+    3
+   ],
+   "from_node": 7912708923,
+   "from_way": 145434718,
+   "id": "lanes-3346252",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left|through|right",
+   "lat": 53.4833835,
+   "lon": -2.2575082,
+   "node": 3346252,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 30960967,
+   "to_way": 938040739
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 9107943498,
+   "from_way": 22974911,
+   "id": "lanes-9107943496",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|right",
+   "lat": 53.5435167,
+   "lon": -2.6052317,
+   "node": 9107943496,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 9107943493,
+   "to_way": 985147369
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 252010435,
+   "from_way": 899191756,
+   "id": "lanes-9273392572",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "through|right",
+   "lat": 53.385793,
+   "lon": -2.6011485,
+   "node": 9273392572,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 9273392577,
+   "to_way": 1005081654
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 10295414089,
+   "from_way": 970260366,
+   "id": "lanes-10295414082",
+   "lane_tag": "turn:lanes",
+   "lane_value": "right|right",
+   "lat": 53.5288741,
+   "lon": -2.654881,
+   "node": 10295414082,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 10295414103,
+   "to_way": 1125878235
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 8825711540,
+   "from_way": 974373964,
+   "id": "lanes-574595",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "left;through|right",
+   "lat": 53.557693,
+   "lon": -2.6613809,
+   "node": 574595,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 8825711542,
+   "to_way": 36937876
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 430960841,
+   "from_way": 1424065428,
+   "id": "lanes-2779667419",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "left|right",
+   "lat": 53.49029,
+   "lon": -2.2007712,
+   "node": 2779667419,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 13088703654,
+   "to_way": 273067455
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 1460004730,
+   "from_way": 1196925179,
+   "id": "lanes-1460004743",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "through|right",
+   "lat": 53.3918795,
+   "lon": -2.3328951,
+   "node": 1460004743,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 1460004798,
+   "to_way": 132715787
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 6558386120,
+   "from_way": 698343154,
+   "id": "lanes-1161283707",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "through|right",
+   "lat": 53.433224,
+   "lon": -2.421051,
+   "node": 1161283707,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 8961209343,
+   "to_way": 100453874
+  },
+  {
+   "expected_lanes": [
+    2,
+    3
+   ],
+   "from_node": 4970457778,
+   "from_way": 746690591,
+   "id": "lanes-21306745",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|right|right",
+   "lat": 53.4008934,
+   "lon": -2.2946015,
+   "node": 21306745,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 9057253105,
+   "to_way": 978856154
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 6180669107,
+   "from_way": 778626094,
+   "id": "lanes-12125540711",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "left;through|right",
+   "lat": 53.5478935,
+   "lon": -2.4680363,
+   "node": 12125540711,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 14136146614,
+   "to_way": 1309493106
+  },
+  {
+   "expected_lanes": [
+    3
+   ],
+   "from_node": 10086048476,
+   "from_way": 1006861586,
+   "id": "lanes-10086048475",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through|right",
+   "lat": 53.6054902,
+   "lon": -2.168123,
+   "node": 10086048475,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 10086048477,
+   "to_way": 176204383
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 2471897163,
+   "from_way": 147955959,
+   "id": "lanes-10186265240",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left|right",
+   "lat": 53.364389,
+   "lon": -2.2429756,
+   "node": 10186265240,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 10186265239,
+   "to_way": 1113387121
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 9012350346,
+   "from_way": 973823053,
+   "id": "lanes-353387600",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left|right",
+   "lat": 53.4721785,
+   "lon": -2.7193785,
+   "node": 353387600,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 9012623164,
+   "to_way": 973865955
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 2471897106,
+   "from_way": 147955959,
+   "id": "lanes-360425274",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left|right",
+   "lat": 53.3643255,
+   "lon": -2.242582,
+   "node": 360425274,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 10186265230,
+   "to_way": 1424841773
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 9357023805,
+   "from_way": 1063386086,
+   "id": "lanes-252662167",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left;through|right",
+   "lat": 53.5258048,
+   "lon": -2.6473937,
+   "node": 252662167,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 9357023799,
+   "to_way": 970241027
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 8999423039,
+   "from_way": 972353853,
+   "id": "lanes-339990293",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "through|right",
+   "lat": 53.4428137,
+   "lon": -2.6642777,
+   "node": 339990293,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 9482393025,
+   "to_way": 30741175
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 8761611077,
+   "from_way": 853445962,
+   "id": "lanes-252106894",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through;right",
+   "lat": 53.3864086,
+   "lon": -2.6409186,
+   "node": 252106894,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 305911815,
+   "to_way": 38750320
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 9008634416,
+   "from_way": 973335793,
+   "id": "lanes-34147911",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "through|right",
+   "lat": 53.5852982,
+   "lon": -2.6672766,
+   "node": 34147911,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 9008646817,
+   "to_way": 1261836182
+  },
+  {
+   "expected_lanes": [
+    3
+   ],
+   "from_node": 8758631028,
+   "from_way": 1051081389,
+   "id": "lanes-119234505",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|through|right",
+   "lat": 53.4660187,
+   "lon": -2.2970805,
+   "node": 119234505,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 1986154673,
+   "to_way": 946126929
+  },
+  {
+   "expected_lanes": [
+    3
+   ],
+   "from_node": 7070274876,
+   "from_way": 1315700827,
+   "id": "lanes-1659355563",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through|right",
+   "lat": 53.5319947,
+   "lon": -2.174966,
+   "node": 1659355563,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 1659355675,
+   "to_way": 1089324079
+  },
+  {
+   "expected_lanes": [
+    3
+   ],
+   "from_node": 1398627634,
+   "from_way": 125935204,
+   "id": "lanes-579107",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|through|right",
+   "lat": 53.5488625,
+   "lon": -2.6272917,
+   "node": 579107,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 3177479029,
+   "to_way": 311966132
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 5241268163,
+   "from_way": 592421484,
+   "id": "lanes-782443580",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "through|right",
+   "lat": 53.5117665,
+   "lon": -2.392058,
+   "node": 782443580,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 782444024,
+   "to_way": 551205810
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 6565080612,
+   "from_way": 1254662413,
+   "id": "lanes-4416925726",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|right",
+   "lat": 53.5466452,
+   "lon": -2.5180616,
+   "node": 4416925726,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 366998677,
+   "to_way": 31694397
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 12121183226,
+   "from_way": 1560047155,
+   "id": "lanes-139250233",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "through|right",
+   "lat": 53.5785803,
+   "lon": -2.5638946,
+   "node": 139250233,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 139250237,
+   "to_way": 14349751
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 7116198696,
+   "from_way": 1211904919,
+   "id": "lanes-8757900669",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "through|right",
+   "lat": 53.3707739,
+   "lon": -2.5702383,
+   "node": 8757900669,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 9348768714,
+   "to_way": 35771728
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 5241897409,
+   "from_way": 1046272259,
+   "id": "lanes-782444016",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "right|through",
+   "lat": 53.5119361,
+   "lon": -2.3921183,
+   "node": 782444016,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 1667586092,
+   "to_way": 154186786
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 11095350091,
+   "from_way": 975807101,
+   "id": "lanes-218743243",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "left|right",
+   "lat": 53.3548161,
+   "lon": -2.534555,
+   "node": 218743243,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 6394641874,
+   "to_way": 28347959
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 25594071,
+   "from_way": 246109391,
+   "id": "lanes-461980886",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|right",
+   "lat": 53.5939397,
+   "lon": -2.3023568,
+   "node": 461980886,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 2659716081,
+   "to_way": 38986410
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 8980694512,
+   "from_way": 174517567,
+   "id": "lanes-8980694514",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|right",
+   "lat": 53.3370629,
+   "lon": -2.7033768,
+   "node": 8980694514,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 8980694515,
+   "to_way": 639122971
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 1979142140,
+   "from_way": 1208340887,
+   "id": "lanes-1979142118",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|right",
+   "lat": 53.5469849,
+   "lon": -2.5236756,
+   "node": 1979142118,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 6567171201,
+   "to_way": 1208340883
+  },
+  {
+   "expected_lanes": [
+    3
+   ],
+   "from_node": 8977273691,
+   "from_way": 956688058,
+   "id": "lanes-8853921104",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through|right",
+   "lat": 53.395304,
+   "lon": -2.5921415,
+   "node": 8853921104,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 249513122,
+   "to_way": 956688057
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 10295345765,
+   "from_way": 685852982,
+   "id": "lanes-1782119901",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left;through|right",
+   "lat": 53.4437179,
+   "lon": -2.7221498,
+   "node": 1782119901,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 10295345763,
+   "to_way": 166775585
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 8907370495,
+   "from_way": 1089944197,
+   "id": "lanes-274244895",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|right",
+   "lat": 53.497159,
+   "lon": -2.527683,
+   "node": 274244895,
+   "stratum": [
+    "lanes",
+    "right"
+   ],
+   "to_node": 5245288713,
+   "to_way": 444300106
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 11661790917,
+   "from_way": 1254510953,
+   "id": "lanes-7600969131",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left;through|right",
+   "lat": 53.4562016,
+   "lon": -2.6387579,
+   "node": 7600969131,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 8266576105,
+   "to_way": 1254510953
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 9835819093,
+   "from_way": 1071923849,
+   "id": "lanes-1557137792",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "left;through|right",
+   "lat": 53.3975595,
+   "lon": -2.3179098,
+   "node": 1557137792,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 21709647,
+   "to_way": 1038856515
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 5111178228,
+   "from_way": 1213627474,
+   "id": "lanes-32096735",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "through|right",
+   "lat": 53.4463042,
+   "lon": -2.3527669,
+   "node": 32096735,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 5111178227,
+   "to_way": 1213627475
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 9008324120,
+   "from_way": 189107701,
+   "id": "lanes-4529105382",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|through",
+   "lat": 53.4083069,
+   "lon": -2.59535,
+   "node": 4529105382,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 4529105344,
+   "to_way": 965757533
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 9347689842,
+   "from_way": 456816772,
+   "id": "lanes-252010424",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "through|right",
+   "lat": 53.3858737,
+   "lon": -2.601982,
+   "node": 252010424,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 9273392525,
+   "to_way": 1089921058
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 13081972752,
+   "from_way": 512393581,
+   "id": "lanes-13081972756",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left|through;right",
+   "lat": 53.4725085,
+   "lon": -2.2352359,
+   "node": 13081972756,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 9150257409,
+   "to_way": 1423328967
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 9341069297,
+   "from_way": 979393294,
+   "id": "lanes-9341069296",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "left;through|through|right",
+   "lat": 53.3915901,
+   "lon": -2.3295208,
+   "node": 9341069296,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 9341069310,
+   "to_way": 4357521
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 4529165345,
+   "from_way": 973113114,
+   "id": "lanes-9433490480",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through|right",
+   "lat": 53.4009221,
+   "lon": -2.5942892,
+   "node": 9433490480,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 8934222134,
+   "to_way": 973113114
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 13096964016,
+   "from_way": 544240207,
+   "id": "lanes-5230167596",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|right",
+   "lat": 53.3678111,
+   "lon": -2.2682791,
+   "node": 5230167596,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 5230167595,
+   "to_way": 1424865090
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 13087083961,
+   "from_way": 1208752505,
+   "id": "lanes-6302638387",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "through|right",
+   "lat": 53.5028784,
+   "lon": -2.2037491,
+   "node": 6302638387,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 32613801,
+   "to_way": 1208752505
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 22534196,
+   "from_way": 5464231,
+   "id": "lanes-307061560",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|through",
+   "lat": 53.6614633,
+   "lon": -2.6300568,
+   "node": 307061560,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 7721814148,
+   "to_way": 5464231
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 3458052932,
+   "from_way": 1364864966,
+   "id": "lanes-12639521341",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through",
+   "lat": 53.5236554,
+   "lon": -2.6536949,
+   "node": 12639521341,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 419382941,
+   "to_way": 22734377
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 2848373216,
+   "from_way": 26802003,
+   "id": "lanes-282787034",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left;through|right",
+   "lat": 53.3924499,
+   "lon": -2.6010975,
+   "node": 282787034,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 11191414106,
+   "to_way": 26802003
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 408459636,
+   "from_way": 984775771,
+   "id": "lanes-9104432814",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left|through;right",
+   "lat": 53.4117318,
+   "lon": -2.146181,
+   "node": 9104432814,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 33138786,
+   "to_way": 984775773
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 252638474,
+   "from_way": 970241020,
+   "id": "lanes-4699434246",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|through",
+   "lat": 53.5194972,
+   "lon": -2.6522637,
+   "node": 4699434246,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 8833682987,
+   "to_way": 28272818
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 5304706604,
+   "from_way": 1206340040,
+   "id": "lanes-722563284",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|right",
+   "lat": 53.5701725,
+   "lon": -2.4824502,
+   "node": 722563284,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 722563244,
+   "to_way": 1068799697
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 9920992293,
+   "from_way": 1082531423,
+   "id": "lanes-6785000013",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "through|right",
+   "lat": 53.4755592,
+   "lon": -2.2951252,
+   "node": 6785000013,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 794696758,
+   "to_way": 1072666407
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 5424859380,
+   "from_way": 941096967,
+   "id": "lanes-5424859379",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through;right|right",
+   "lat": 53.4711988,
+   "lon": -2.2831761,
+   "node": 5424859379,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 2587714493,
+   "to_way": 941096967
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 8740331705,
+   "from_way": 1275329319,
+   "id": "lanes-355641735",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left;through|right",
+   "lat": 53.407172,
+   "lon": -2.6292478,
+   "node": 355641735,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 8740331695,
+   "to_way": 1275329324
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 14190724035,
+   "from_way": 1560047153,
+   "id": "lanes-22464003",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left|through",
+   "lat": 53.5781284,
+   "lon": -2.5634344,
+   "node": 22464003,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 5632622106,
+   "to_way": 1103156690
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 6548352942,
+   "from_way": 1493556723,
+   "id": "lanes-13275131855",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|through;right",
+   "lat": 53.5249523,
+   "lon": -2.1745281,
+   "node": 13275131855,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 9813208416,
+   "to_way": 697218200
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 8507469019,
+   "from_way": 1127620944,
+   "id": "lanes-6965677030",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "left;through|through;left",
+   "lat": 53.5262595,
+   "lon": -2.4087687,
+   "node": 6965677030,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 8327900277,
+   "to_way": 1127620944
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 5073314955,
+   "from_way": 1393206299,
+   "id": "lanes-81625426",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "through|through;right",
+   "lat": 53.3994805,
+   "lon": -2.3559753,
+   "node": 81625426,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 5022744118,
+   "to_way": 1393206299
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 6472136019,
+   "from_way": 5215080,
+   "id": "lanes-12497463071",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "through|through",
+   "lat": 53.6651025,
+   "lon": -2.632326,
+   "node": 12497463071,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 22534172,
+   "to_way": 5215080
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 12125556250,
+   "from_way": 1127620948,
+   "id": "lanes-8446205843",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through",
+   "lat": 53.5244916,
+   "lon": -2.4020128,
+   "node": 8446205843,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 8446205846,
+   "to_way": 62720843
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 475972175,
+   "from_way": 1127620947,
+   "id": "lanes-781515146",
+   "lane_tag": "turn:lanes:backward",
+   "lane_value": "through|right",
+   "lat": 53.5246958,
+   "lon": -2.4026889,
+   "node": 781515146,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 8446205857,
+   "to_way": 39696536
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 2489640214,
+   "from_way": 998742151,
+   "id": "lanes-2489640216",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|through|right",
+   "lat": 53.3729013,
+   "lon": -2.2164878,
+   "node": 2489640216,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 9221258258,
+   "to_way": 4368336
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 6093199825,
+   "from_way": 970260369,
+   "id": "lanes-419382928",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through",
+   "lat": 53.5277784,
+   "lon": -2.6547471,
+   "node": 419382928,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 8359276343,
+   "to_way": 970260372
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 20938475,
+   "from_way": 1187437980,
+   "id": "lanes-959989225",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through",
+   "lat": 53.4572397,
+   "lon": -2.3392669,
+   "node": 959989225,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 5328113724,
+   "to_way": 1187437979
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 8764903704,
+   "from_way": 1254161490,
+   "id": "lanes-259011403",
+   "lane_tag": "turn:lanes:forward",
+   "lane_value": "left|through",
+   "lat": 53.4035655,
+   "lon": -2.5735504,
+   "node": 259011403,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 8764903705,
+   "to_way": 1057511813
+  },
+  {
+   "expected_lanes": [
+    2
+   ],
+   "from_node": 11663374581,
+   "from_way": 699339855,
+   "id": "lanes-1979142140",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left|through|right",
+   "lat": 53.5469602,
+   "lon": -2.5235038,
+   "node": 1979142140,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 1979142118,
+   "to_way": 1208340887
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 5010108741,
+   "from_way": 1190855759,
+   "id": "lanes-6834406114",
+   "lane_tag": "turn:lanes",
+   "lane_value": "left;through|through|right",
+   "lat": 53.4675871,
+   "lon": -2.5693239,
+   "node": 6834406114,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 5010108777,
+   "to_way": 683634772
+  },
+  {
+   "expected_lanes": [
+    1
+   ],
+   "from_node": 9001857119,
+   "from_way": 1197169488,
+   "id": "lanes-9365486802",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|right",
+   "lat": 53.3923098,
+   "lon": -2.5892237,
+   "node": 9365486802,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 9365486797,
+   "to_way": 1015254355
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 9217343592,
+   "from_way": 1015060390,
+   "id": "lanes-7786984111",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|through",
+   "lat": 53.5200398,
+   "lon": -2.6525024,
+   "node": 7786984111,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 403827520,
+   "to_way": 998407794
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 9015341521,
+   "from_way": 974130697,
+   "id": "lanes-318889381",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|through",
+   "lat": 53.4723878,
+   "lon": -2.7256586,
+   "node": 318889381,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 1660806736,
+   "to_way": 974130696
+  },
+  {
+   "expected_lanes": [
+    1,
+    2
+   ],
+   "from_node": 252786569,
+   "from_way": 23344218,
+   "id": "lanes-3447464162",
+   "lane_tag": "turn:lanes",
+   "lane_value": "through|through",
+   "lat": 53.543348,
+   "lon": -2.6342713,
+   "node": 3447464162,
+   "stratum": [
+    "lanes",
+    "straight"
+   ],
+   "to_node": 252786568,
+   "to_way": 23344218
+  }
+ ],
+ "contract": "LANES-001 v1",
+ "frozen_before_engine_runs": true,
+ "quota_per_kind": 12,
+ "source_sha256": "2a8ef8e1f2533cb009b1ce248a6bf4eaabdd47e03979e64e24cd844f3b22acba"
+}
