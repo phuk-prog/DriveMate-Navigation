@@ -1,5 +1,23 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 — Category 2 run A done: ACCESS-001 + ONEWAY-002 (Claude)
+- One shared run, two separate scores ([run 39039633092](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39039633092),
+  ~8 min). Harness `benchmarks/access001_route.py --test access001|oneway002`,
+  workflow `category2-legality.yml` (also re-runs on `engine/**`, `map_data/**`).
+- DMN 44/44 closed roads and 48/48 one-way roads legal, 0 rule breaks. Reports:
+  [ACCESS-001](ACCESS_001_RESULTS.md), [ONEWAY-002](ONEWAY_002_RESULTS.md).
+- Owner-approved DMN fix `2d9c3f9`: a via-way turn rule whose members are not joined
+  no longer rejects the whole map (blocked per relation, fail closed).
+- Owner decisions: categories unchanged (21); runs grouped A-D (register items
+  RUN-B/C/D), each category separately scored. Right-size tests: catch every issue
+  type without long runs (3 km clips, 12 cases per kind). Never put the owner's own
+  postcodes/home in this public repo (use public junctions instead).
+- Next: RUN-B-JOURNEYS. DMN refuses maps over 32 MB (whole-area loading would need an
+  owner-approved limit change); use per-junction clips. Use drivemate-data lanes,
+  limits and cameras files pinned to one release for categories 10 and 15.
+- Pending owner choices: proposed importer fixes in ACCESS-001 report; merging the
+  consolidated research branch into main.
+
 ## 2026-10-17 — Category 2 started: ACCESS-001 no-car roads (Claude)
 - Owner approved: consolidate the stacked draft PRs, then start Category 2.
 - Branch `ccr-195b89cb-2aaytg` = PR #10 branch + main (register) + PR #7 and #8

@@ -2,13 +2,20 @@
  "agent": "Claude",
  "branch": "ccr-195b89cb-2aaytg",
  "created": "2026-10-17T13:04:52+00:00",
- "fingerprints": [],
+ "fingerprints": [
+  "ONEWAY-002 v1.1|source 2a8ef8e1|rev 2d9c3f9"
+ ],
  "history": [
-  "2026-10-17T13:04:52+00:00 in_progress by Claude on ccr-195b89cb-2aaytg"
+  "2026-10-17T13:04:52+00:00 in_progress by Claude on ccr-195b89cb-2aaytg",
+  "2026-10-17T14:20:53+00:00 done by Claude on ccr-195b89cb-2aaytg"
  ],
  "id": "ONEWAY-002",
- "runs": [],
- "state": "in_progress",
+ "results": "docs/ONEWAY_002_RESULTS.md",
+ "runs": [
+  "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39039633092"
+ ],
+ "state": "done",
+ "summary": "DMN 48/48 and OSRM 48/48 legal, 0 wrong-way on the tested road; Valhalla 47, GraphHopper 32 (1 wrong-way on another road, 15 off target). Shares the ACCESS-001 run, scored separately.",
  "title": "Category 2: wrong-way driving on 75 real one-way roads, route-level, 4 engines (shares the ACCESS-001 run, scored separately)",
- "updated": "2026-10-17T13:04:52+00:00"
+ "updated": "2026-10-17T14:20:53+00:00"
 }
