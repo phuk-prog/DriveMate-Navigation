@@ -16,6 +16,6 @@
  ],
  "state": "done",
  "summary": "DMN 44/44 judged closed-road cases legal (bus gate 12, busway 8, no cars 12, pedestrian 12), 0 drove a closed road; Valhalla 42, OSRM 41, GraphHopper 27 (17 off target). Owner-approved DMN fix 2d9c3f9: one wrongly mapped via-way turn rule no longer rejects the whole map. Private/access-only reported, not judged.",
- "title": "Category 2: no-car roads (bus gates, busways, no-motor-vehicle roads), route-level, 4 engines",
+ "title": "Category 2: no-car roads (bus gates, busways, no-motor-vehicle, pedestrian), route-level, DMN + 6 reference engines",
  "updated": "2026-10-17T14:20:51+00:00"
 }

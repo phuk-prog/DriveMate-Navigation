@@ -19,7 +19,7 @@
  ],
  "state": "done",
  "summary": "LANES-001: DMN 35/35, OsmAnd 25/34, OSRM 22/36 (others no lane output). LIMITS-001: DMN 61/61, GraphHopper 68/68, OsmAnd 65/65 judged correct. Seven engines in all runs: see docs/SEVEN_ENGINE_SCOREBOARD.md.",
- "title": "Run B2: lanes (10) and speed limits (15), 4 engines + drivemate-data files",
+ "title": "Run B2: lanes (10) and speed limits (15), DMN + OSRM, GraphHopper, OsmAnd (others give no lanes/limits)",
  "updated": "2026-10-17T17:17:39+00:00",
  "why": "Owner-approved grouping; each category scored separately. OSM turn:lanes and maxspeed as map truth; engines only where they output lanes/limits (others NOT_AVAILABLE); drivemate-data lanes-*.json and limits-*.json pinned to one release (the data the phone uses)."
 }

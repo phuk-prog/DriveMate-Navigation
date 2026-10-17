@@ -16,6 +16,6 @@
  ],
  "state": "done",
  "summary": "DMN 48/48 and OSRM 48/48 legal, 0 wrong-way on the tested road; Valhalla 47, GraphHopper 32 (1 wrong-way on another road, 15 off target). Shares the ACCESS-001 run, scored separately.",
- "title": "Category 2: wrong-way driving on 75 real one-way roads, route-level, 4 engines (shares the ACCESS-001 run, scored separately)",
+ "title": "Category 2: wrong-way requests on real one-way roads (48 testable of 225 frozen), DMN + 6 reference engines (shares the ACCESS-001 run, scored separately)",
  "updated": "2026-10-17T14:20:53+00:00"
 }

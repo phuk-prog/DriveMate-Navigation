@@ -184,3 +184,18 @@ cannot be built from legally usable available evidence.
   (`tools/turn001_brief.py` output), not raw logs.
 - Start each session from [docs/HANDOVER.md](docs/HANDOVER.md) and end it by
   updating that file in a few lines.
+
+## Owner decisions, 17 October 2026 (keep to these)
+
+- **Reference engines are yardsticks only.** OSRM, Valhalla, GraphHopper,
+  openrouteservice, BRouter and OsmAnd are run to test and rate DMN, never as a data
+  source; nothing from them is copied into DriveMate. All are built per case from the
+  same hashed OSM clip via `benchmarks/extra_engines.py`.
+- **Do not use the TomTom API** in this repo (removed at the owner's request).
+- **Categories stay 21.** Runs may be combined (run A, B1, B2, C, D) only when every
+  category keeps its own frozen cases, verdicts and ranking; never one combined score.
+  Right-size tests: enough to catch every issue type, short enough to run in minutes.
+- **Do not start run C** (simulated drives) until the owner says so.
+- **Never put the owner's own postcodes or home roads** in this public repo; use public
+  junctions instead. Quote times to the owner in UK time (GitHub shows UTC).
+- Never pipe `tools.privacy_guard` (a pipe hides its failure).

@@ -77,6 +77,18 @@
     "claim"
    ],
    "when": "when another AI may have pushed since"
+  },
+  {
+   "what": "Seven-engine scoreboard: every test ranked separately (DMN vs 6 yardstick engines)",
+   "where": "docs/SEVEN_ENGINE_SCOREBOARD.md",
+   "cost": "tiny",
+   "topics": [
+    "scoreboard",
+    "ranking",
+    "engines",
+    "results"
+   ],
+   "when": "first, to see where DMN stands"
   }
  ],
  "sources": [
@@ -216,6 +228,65 @@
     "gps"
    ],
    "when": "never for engine research; personal GPS is not allowed in this repo"
+  },
+  {
+   "what": "Reference engines module: OSRM, Valhalla, GraphHopper, openrouteservice, BRouter, OsmAnd built per case from the same clip; yardsticks only",
+   "where": "benchmarks/extra_engines.py",
+   "cost": "small",
+   "topics": [
+    "engines",
+    "osrm",
+    "valhalla",
+    "graphhopper",
+    "openrouteservice",
+    "brouter",
+    "osmand"
+   ],
+   "when": "before adding or changing a comparison engine"
+  },
+  {
+   "what": "Run A harness: ACCESS-001 no-car roads + ONEWAY-002 one-way roads (--test access001|oneway002)",
+   "where": "benchmarks/access001_route.py, .github/workflows/category2-legality.yml",
+   "cost": "small",
+   "topics": [
+    "access",
+    "oneway",
+    "category2",
+    "legality"
+   ],
+   "when": "to rerun or extend Category 2"
+  },
+  {
+   "what": "Run B1 harness: JOURNEY-001 junction turns, roundabout exits, route line",
+   "where": "benchmarks/journey001.py, .github/workflows/journey001.yml",
+   "cost": "small",
+   "topics": [
+    "journey",
+    "junctions",
+    "roundabouts",
+    "turns"
+   ],
+   "when": "to rerun or extend categories 5, 8, 9, 11"
+  },
+  {
+   "what": "Run B2 harness: LANES-001 + LIMITS-001 (--test lanes001|limits001)",
+   "where": "benchmarks/b2_lanes_limits.py, .github/workflows/b2-lanes-limits.yml",
+   "cost": "small",
+   "topics": [
+    "lanes",
+    "speed",
+    "limits"
+   ],
+   "when": "to rerun or extend categories 10, 15"
+  },
+  {
+   "what": "OsmAnd router helper (Java) used by the OsmAnd yardstick",
+   "where": "tools/osmand_route/OsmAndRoute.java",
+   "cost": "tiny",
+   "topics": [
+    "osmand"
+   ],
+   "when": "if the OsmAnd job fails"
   }
  ]
 }
