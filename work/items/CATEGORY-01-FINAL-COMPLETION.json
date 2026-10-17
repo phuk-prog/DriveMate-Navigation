@@ -1,0 +1,22 @@
+{
+ "id": "CATEGORY-01-FINAL-COMPLETION",
+ "state": "in_progress",
+ "title": "Coordinate final Category 1 map-graph research fixes, retests and handover",
+ "agent": "ChatGPT GPT-6",
+ "branch": "codex/dmn-category1-completion-20261017",
+ "created": "2026-10-17T11:37:05.976Z",
+ "updated": "2026-10-17T11:37:05.976Z",
+ "why": "Owner explicitly approved all remaining Category 1 research, including fair reference comparison and frozen retesting; no registrations or Category 2/app modifications",
+ "read_first": [
+  "docs/MAP_001_V2_RESULTS.md",
+  "docs/TURN_001_RESULTS.md",
+  "docs/BARRIER_001_V12_REVIEW.md",
+  "docs/TURN_001_ENDPOINT_AUDIT.md"
+ ],
+ "results": "docs/DMN_CATEGORY1_FINAL_REVIEW.md",
+ "runs": [],
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T11:37:05.976Z in_progress by ChatGPT GPT-6 on codex/dmn-category1-completion-20261017"
+ ]
+}
