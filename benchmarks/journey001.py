@@ -35,15 +35,18 @@ from pathlib import Path
 
 from benchmarks import access001_route as a1
 from benchmarks import barrier001_route as b1
+from benchmarks import extra_engines as xe
 from benchmarks import turn001_restrictions as t1
 
 ROOT = t1.ROOT
 WORK = ROOT / "results" / "journey001"
 COHORT = ROOT / "config" / "journey001-cohort.json"
 PREPARED = ROOT / "config" / "journey001-prepared.json"
-CONTRACT = "JOURNEY-001 v1.1"
+CONTRACT = "JOURNEY-001 v1.2"
 # v1.1 (owner, 17 Oct 2026): every road a car may leave by counts as a roundabout exit,
 # service roads included, so the v1 "unclear minor exit" verdict is retired.
+# v1.2 (owner, 17 Oct 2026): openrouteservice and BRouter added; all engines run through
+# benchmarks/extra_engines.py and share its start/finish path matching fix.
 STRAIGHT_MAX, TURN_MIN, TURN_MAX = 25.0, 60.0, 120.0
 JUNCTION_HIGHWAYS = t1.CAR_HIGHWAYS - {"service", "living_street", "motorway", "motorway_link"}
 QUOTAS = {("turn", "left"): 12, ("turn", "right"): 12, ("turn", "straight"): 12,
@@ -305,173 +308,18 @@ def case_clip(record: dict) -> bytes:
 
 
 # --------------------------------------------------------------------------- engines
-def _slight(text: str) -> bool:
-    text = (text or "").lower()
-    return "slight" in text or "keep" in text or "stay" in text
-
-
-def _kind(text: str) -> str:
-    text = (text or "").lower()
-    if "uturn" in text or "u-turn" in text or "u turn" in text:
-        return "uturn"
-    if "left" in text:
-        return "left"
-    if "right" in text:
-        return "right"
-    return "straight"
-
-
-def osrm(geom, headings):
-    o, d = geom["origin"], geom["destination"]
-    url = (f"http://127.0.0.1:5000/route/v1/driving/{o[1]:.7f},{o[0]:.7f};{d[1]:.7f},{d[0]:.7f}"
-           "?overview=full&geometries=geojson&continue_straight=true&steps=true"
-           f"&bearings={headings[0]},{t1.HEADING_TOLERANCE};{headings[1]},{t1.HEADING_TOLERANCE}")
-    from urllib.error import HTTPError
-    began = time.perf_counter()
-    try:
-        data = t1._http_json(url)
-    except HTTPError as exc:
-        data = json.loads(exc.read() or b"{}")
-    ms = (time.perf_counter() - began) * 1000
-    if data.get("code") == "NoRoute":
-        return None, [], ms
-    if data.get("code") != "Ok":
-        raise RuntimeError(f"OSRM {data.get('code')}: {data.get('message', '')[:200]}")
-    route = data["routes"][0]
-    steps = []
-    for leg in route["legs"]:
-        for s in leg["steps"]:
-            m = s["maneuver"]
-            if m["type"] in ("depart", "arrive"):
-                continue
-            at = (m["location"][1], m["location"][0])
-            if m["type"] in ("roundabout", "rotary", "roundabout turn") and "exit" in m:
-                steps.append({"at": at, "kind": "roundabout", "exit": m["exit"]})
-            elif m["type"] not in ("exit roundabout", "exit rotary"):
-                raw = f"{m['type']} {m.get('modifier', '')}"
-                steps.append({"at": at, "kind": _kind(m.get("modifier", "")), "slight": _slight(raw), "raw": raw})
-    return [(lat, lon) for lon, lat in route["geometry"]["coordinates"]], steps, ms
-
-
-VALHALLA_KIND = {8: "straight", 22: "straight", 9: "right", 10: "right", 11: "right", 23: "right", 20: "right",
-                 16: "left", 15: "left", 14: "left", 24: "left", 21: "left", 12: "uturn", 13: "uturn"}
-
-
-def valhalla(geom, headings):
-    from urllib.error import HTTPError
-    o, d = geom["origin"], geom["destination"]
-    body = json.dumps({"locations": [
-        {"lat": o[0], "lon": o[1], "heading": headings[0], "heading_tolerance": t1.HEADING_TOLERANCE},
-        {"lat": d[0], "lon": d[1], "heading": headings[1], "heading_tolerance": t1.HEADING_TOLERANCE}],
-        "costing": "auto", "directions_type": "maneuvers"}).encode()
-    began = time.perf_counter()
-    try:
-        data = t1._http_json("http://127.0.0.1:8002/route", body)
-    except HTTPError as exc:
-        payload = json.loads(exc.read() or b"{}")
-        if payload.get("error_code") in (442, 443):
-            return None, [], (time.perf_counter() - began) * 1000
-        raise RuntimeError(f"Valhalla {payload.get('error_code')}: {payload.get('error', '')[:200]}") from exc
-    ms = (time.perf_counter() - began) * 1000
-    points, steps = [], []
-    for leg in data["trip"]["legs"]:
-        shape = t1._decode_polyline(leg["shape"], 6)
-        for m in leg["maneuvers"]:
-            at = shape[min(m["begin_shape_index"], len(shape) - 1)]
-            if m["type"] == 26:
-                steps.append({"at": at, "kind": "roundabout", "exit": m.get("roundabout_exit_count")})
-            elif m["type"] in VALHALLA_KIND:
-                steps.append({"at": at, "kind": VALHALLA_KIND[m["type"]], "slight": m["type"] in (9, 16, 23, 24),
-                              "raw": str(m["type"])})
-        points.extend(shape)
-    return points, steps, ms
-
-
-GH_KIND = {-3: "left", -2: "left", -1: "left", -7: "left", 1: "right", 2: "right", 3: "right", 7: "right",
-           0: "straight", -98: "uturn", -8: "uturn", 8: "uturn"}
-
-
-def graphhopper(geom, headings):
-    from urllib.error import HTTPError
-    o, d = geom["origin"], geom["destination"]
-    url = (f"http://127.0.0.1:8989/route?point={o[0]:.7f},{o[1]:.7f}&point={d[0]:.7f},{d[1]:.7f}"
-           "&profile=car&points_encoded=false&instructions=true&ch.disable=true&way_point_max_distance=0"
-           f"&heading={headings[0]}&heading={headings[1]}")
-    began = time.perf_counter()
-    try:
-        data = t1._http_json(url)
-    except HTTPError as exc:
-        body = json.loads(exc.read() or b"{}")
-        if any("ConnectionNotFound" in str(h.get("details", "")) for h in body.get("hints", [])):
-            return None, [], (time.perf_counter() - began) * 1000
-        raise RuntimeError(f"GraphHopper HTTP {exc.code}: {body.get('message', '')[:200]}") from exc
-    ms = (time.perf_counter() - began) * 1000
-    path = data["paths"][0]
-    points = [(lat, lon) for lon, lat in path["points"]["coordinates"]]
-    steps = []
-    for ins in path.get("instructions", []):
-        at = points[min(ins["interval"][0], len(points) - 1)]
-        if ins["sign"] == 6:
-            steps.append({"at": at, "kind": "roundabout", "exit": ins.get("exit_number")})
-        elif ins["sign"] in GH_KIND:
-            steps.append({"at": at, "kind": GH_KIND[ins["sign"]], "slight": ins["sign"] in (-1, 1, -7, 7),
-                          "raw": str(ins["sign"])})
-    return points, steps, ms
-
-
-QUERIES = {"OSRM": osrm, "Valhalla": valhalla, "GraphHopper": graphhopper}
-
-
 def engine_case(engine: str, folder: Path, clip, geom: dict) -> dict:
-    """Start one reference engine on the clip (as TURN-001 does) and ask with instructions."""
-    work = folder / engine.lower()
-    subprocess.run(["rm", "-rf", str(work)], check=False)
-    work.mkdir(parents=True)
-    subprocess.run(["cp", str(folder / "clip.osm.pbf"), str(work / "input.osm.pbf")], check=True)
-    name = f"journey001-{engine.lower()}"
-    subprocess.run(["docker", "rm", "-f", name], capture_output=True)
-    proc = None
-    try:
-        if engine == "OSRM":
-            image = t1.IMAGES["OSRM"]
-            for step in (["osrm-extract", "-p", "/opt/car.lua", "/data/input.osm.pbf"],
-                         ["osrm-partition", "/data/input.osrm"], ["osrm-customize", "/data/input.osrm"]):
-                r = subprocess.run(["docker", "run", "--rm", "-v", f"{work}:/data", image, *step],
-                                   capture_output=True, text=True)
-                if r.returncode:
-                    return {"route": "ENGINE_REJECTED_MAP", "detail": (r.stderr or r.stdout)[-300:]}
-            subprocess.run(["docker", "run", "-d", "--rm", "--name", name, "-p", "127.0.0.1:5000:5000",
-                            "-v", f"{work}:/data", image, "osrm-routed", "--algorithm", "mld", "/data/input.osrm"],
-                           check=True, capture_output=True)
-            t1._wait("http://127.0.0.1:5000/nearest/v1/driving/%f,%f" % (geom["origin"][1], geom["origin"][0]), 30)
-        elif engine == "Valhalla":
-            subprocess.run(["docker", "run", "-d", "--rm", "--name", name, "-p", "127.0.0.1:8002:8002",
-                            "-v", f"{work}:/custom_files", "-e", "build_admins=False", "-e", "build_time_zones=False",
-                            "-e", "build_elevation=False", "-e", "build_transit=False", "-e", "serve_tiles=True",
-                            "-e", "use_tiles_ignore_pbf=False", "-e", "use_default_speeds_config=False",
-                            "-e", "build_tar=False", "-e", "server_threads=2", t1.IMAGES["Valhalla"]],
-                           check=True, capture_output=True)
-            probe = json.dumps({"locations": [{"lat": geom["origin"][0], "lon": geom["origin"][1]}]}).encode()
-            t1._wait("http://127.0.0.1:8002/locate", 900, probe)
-        else:
-            config = work / "config.yml"
-            config.write_text(t1.graphhopper_config(work / "input.osm.pbf", work / "cache"))
-            log = (work / "startup.log").open("w")
-            proc = subprocess.Popen(["/opt/jdk17/bin/java", "-Xmx1g", "-jar", str(t1.WORK / "engines" / "gh.jar"),
-                                     "server", str(config)], stdout=log, stderr=subprocess.STDOUT)
-            t1._wait("http://127.0.0.1:8989/health", 90)
-        points, steps, ms = QUERIES[engine](geom, t1.travel_headings(clip, geom))
-    except Exception as exc:  # noqa: BLE001 - recorded, never hidden
-        return {"route": "ERROR", "detail": f"{type(exc).__name__}: {exc}"[:300]}
-    finally:
-        subprocess.run(["docker", "rm", "-f", name], capture_output=True)
-        if proc is not None:
-            proc.terminate()
-            proc.wait(timeout=30)
-        subprocess.run(["sudo", "-n", "rm", "-rf", str(work)], capture_output=True)
+    """One reference engine built on this case's clip, asked once with instructions."""
+    result = xe.route(engine, folder, clip, geom)
+    if isinstance(result, dict):
+        return result
+    return _judged(clip, geom, *result)
+
+
+def _judged(clip, geom: dict, points, steps, ms: float) -> dict:
     if points is None:
         return {**judge_route(clip, geom, None), "warm_query_ms": round(ms, 1)}
-    nodes, snaps = t1.engine_path(clip, geom, points)
+    nodes, snaps = xe.engine_path(clip, geom, points)
     return {**judge_route(clip, geom, nodes), **snaps, "warm_query_ms": round(ms, 1),
             "instruction": instruction_at(geom, steps), "line": line_adherence(clip, nodes, points)}
 
@@ -593,7 +441,7 @@ def line_adherence(clip, nodes: list[str], points) -> dict:
 
 
 # --------------------------------------------------------------------------- runs
-ENGINES = ("DMN", "OSRM", "GraphHopper", "Valhalla")
+ENGINES = ("DMN", *xe.ENGINES)
 
 
 def _provenance(engine: str) -> dict:

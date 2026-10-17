@@ -1,4 +1,4 @@
-name: Category 2 road legality (ACCESS-001 no-car roads, ONEWAY-002 one-way roads), four engines
+name: Category 2 road legality (ACCESS-001 no-car roads, ONEWAY-002 one-way roads), six engines
 # Runs the frozen ACCESS-001 and ONEWAY-002 cohorts in one GitHub run (public repo: free
 # minutes). Each test x engine is its own parallel job and each test is scored and
 # summarised separately; there is no combined score. The source map is pinned on
@@ -12,6 +12,7 @@ on:
     branches: ['claude/**', 'codex/**', 'ccr-**']
     paths:
       - 'benchmarks/access001_route.py'
+      - 'benchmarks/extra_engines.py'
       - 'config/access001-*.json'
       - 'config/oneway002-*.json'
       - '.github/workflows/category2-legality.yml'
@@ -35,7 +36,7 @@ jobs:
       fail-fast: false
       matrix:
         test: [access001, oneway002]
-        run: [DMN, OSRM, GraphHopper, Valhalla, OSRM-control]
+        run: [DMN, OSRM, GraphHopper, Valhalla, openrouteservice, BRouter, OSRM-control]
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -59,6 +60,12 @@ jobs:
           curl -fsSL -o results/turn001/engines/gh.jar "$GH_JAR_URL"
           echo "$GH_JAR_SHA1  results/turn001/engines/gh.jar" | sha1sum -c -
           sudo mkdir -p /opt/jdk17/bin && sudo ln -sf "$JAVA_HOME_17_X64/bin/java" /opt/jdk17/bin/java
+      - name: Java 25 for openrouteservice 10.1
+        if: matrix.run == 'openrouteservice'
+        uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165
+        with:
+          distribution: temurin
+          java-version: '25'
       - name: Run ${{ matrix.run }} (log kept as artifact, not printed)
         run: |
           set -euo pipefail
