@@ -1,5 +1,14 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 (later) — TURN-001 results written
+- Branch `claude/dmn-turn-restriction-debug-mhw7cw` (from the codex branch; not pushed there).
+- Results: [docs/TURN_001_RESULTS.md](TURN_001_RESULTS.md). Fresh run 39019749346:
+  DMN 131 pass / 0 fail / 5 no route / 0 off-target / 6 closed start-finish.
+- DMN fix `0668fce`: an untagged service road that an only_* ban sends cars onto is open
+  to cars (case 14285234); start allowance for uncertain roads ends on a normal road.
+- None of DMN's 5 remaining no-routes has a full-rule-check route from another engine.
+- Next: route-level bollard and gate test (not started).
+
 ## 2026-10-17 — Category 1, TURN-001 turn-restriction comparison
 - Branch `codex/dmn-gps001-ranked-trial-20261015` (PR #4). Harness contract
   TURN-001 v1.3: real-journey test (direction of travel given to every engine,
