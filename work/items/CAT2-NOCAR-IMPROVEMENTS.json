@@ -1,0 +1,16 @@
+{
+ "agent": "Claude",
+ "branch": "ccr-005983df-g8r2zd",
+ "created": "2026-10-17T19:43:12+00:00",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T19:43:12+00:00 next by Claude on ccr-005983df-g8r2zd"
+ ],
+ "id": "CAT2-NOCAR-IMPROVEMENTS",
+ "results": "docs/ACCESS_001_RESULTS.md",
+ "runs": [],
+ "state": "next",
+ "title": "Category 2 test 1 (no-car roads): owner decisions",
+ "updated": "2026-10-17T19:43:12+00:00",
+ "why": "Owner, 17 Oct 2026: (1) any route from any engine or service (TomTom, OSRM, Valhalla, DMN) that uses a bus gate, busway or other no-car road is marked FAIL, in test results and by the app's check of received routes; (2) time-limited bus gates evaluated against the clock (implement later); (3) when the only route is through a bus gate, say so on screen (implement later)."
+}
