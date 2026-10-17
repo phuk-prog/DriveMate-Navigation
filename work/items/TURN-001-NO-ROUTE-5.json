@@ -8,7 +8,8 @@
  "history": [
   "2026-10-17T10:06:34+00:00 next by Claude on claude/dmn-turn-restriction-debug-mhw7cw",
   "2026-10-17T11:09:44.613Z in_progress by ChatGPT GPT-6 on codex/chatgpt-turn001-no-route5-20261017",
-  "2026-10-17T11:14:44.484Z blocked by ChatGPT GPT-6 on codex/chatgpt-turn001-no-route5-20261017: map investigation done, independent road legality not verified"
+  "2026-10-17T11:14:44.484Z blocked by ChatGPT GPT-6 on codex/chatgpt-turn001-no-route5-20261017: map investigation done, independent road legality not verified",
+  "2026-10-17T11:25:52.207Z done by ChatGPT GPT-6 on codex/chatgpt-turn001-no-route5-20261017: owner requested skip all registration-dependent verification; retain unverified legal status."
  ],
  "id": "TURN-001-NO-ROUTE-5",
  "read_first": [
@@ -17,11 +18,11 @@
  "runs": [
   "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39027815145"
  ],
- "state": "blocked",
+ "state": "done",
  "title": "Check by hand whether a legal way exists at TURN-001's 5 DMN no-route junctions",
- "updated": "2026-10-17T11:14:44.484Z",
+ "updated": "2026-10-17T11:25:52.207Z",
  "why": "No engine found one; not proven either way",
- "summary": "Read-only diagnostic of all 5 frozen no-route junctions: source/cohort/clip hashes validated; new GitHub Actions run 39027815145 passed. All five reachable with turn rules ignored but unreachable on base-clip via-node restricted graph even when access relaxed. Four become reachable when tested ban is removed; fifth (7615778) has access=private destination. No independently proven road law, no engine behaviour change.",
+ "summary": "DIAGNOSED (not independently legally verified): Read-only 5-case frozen UK graph diagnostic passed, 39027815145; all five cannot reach the exact target with the OSM via-node turn restrictions on the base clips, but can when turn restrictions ignored. Four recover when tested rule removed; the fifth (7615778) has a private-access destination. User has explicitly instructed skip any source requiring registration and move on. No D-TRO registration, no engine legality changes, no claim of independent signage/TRO truth.",
  "results": "docs/TURN_001_NO_ROUTE5_RESULTS.md",
- "reason": "Blocked on dated independent highway authority TRO/sign/physical-layout/access verification, not on CI"
+ "reason": "Research diagnosis complete under owner no-registration rule; any unavailable restricted evidence stays UNKNOWN/UNVERIFIED rather than blocking next work."
 }
