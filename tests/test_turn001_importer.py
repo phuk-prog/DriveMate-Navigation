@@ -190,5 +190,43 @@ class ConditionalAccess(unittest.TestCase):
         self.assertNotEqual(m.graph.edges["w:104:0:f"].access, "allowed")
 
 
+class RouteAuditTests(unittest.TestCase):
+    """TURN-001 v1.2 whole-route audit used to judge every engine's route."""
+
+    def audit(self, relations, path, way_tags=None):
+        from benchmarks.turn001_restrictions import Clip, audit_route
+        return audit_route(Clip(osm(relations, way_tags)), [str(n) for n in path])
+
+    def test_via_node_no_turn_is_flagged_and_detour_is_legal(self):
+        r = rel(1, '<tag k="restriction" v="no_right_turn"/>', 101, 104, 2)
+        self.assertEqual(self.audit(r, [1, 2, 4])["violations"], ["restriction:1:no_right_turn"])
+        self.assertEqual(self.audit(r, [1, 2, 3, 5, 4])["route_legal"], "LEGAL")
+
+    def test_only_rule_bars_other_exits_including_u_turn(self):
+        r = rel(2, '<tag k="restriction" v="only_straight_on"/>', 101, 102, 2)
+        self.assertEqual(self.audit(r, [1, 2, 4])["route_legal"], "ILLEGAL")
+        self.assertEqual(self.audit(r, [1, 2, 1])["route_legal"], "ILLEGAL")
+        self.assertEqual(self.audit(r, [1, 2, 3])["route_legal"], "LEGAL")
+
+    def test_via_way_rule_needs_whole_chain(self):
+        r = rel(3, '<tag k="restriction" v="no_right_turn"/>', 101, 103, 102, via_type="way")
+        self.assertEqual(self.audit(r, [1, 2, 3, 5])["route_legal"], "ILLEGAL")
+        self.assertEqual(self.audit(r, [4, 2, 3, 5])["route_legal"], "LEGAL")
+
+    def test_wrong_way_on_one_way_is_flagged(self):
+        result = self.audit("", [3, 2, 1], way_tags={101: '<tag k="oneway" v="yes"/>'})
+        self.assertEqual(result["violations"], ["oneway:101:2>1"])
+
+    def test_conditional_movement_is_reported_apart(self):
+        r = rel(4, '<tag k="restriction:conditional" v="no_right_turn @ (Mo-Fr 07:00-09:00)"/>', 101, 104, 2)
+        result = self.audit(r, [1, 2, 4])
+        self.assertEqual(result["route_legal"], "DEPENDS_ON_CONDITION")
+        self.assertEqual(result["violations"], [])
+
+    def test_cars_exempt_rule_is_not_applied(self):
+        r = rel(5, '<tag k="restriction" v="no_right_turn"/>', 101, 104, 2, extra='<tag k="except" v="motorcar"/>')
+        self.assertEqual(self.audit(r, [1, 2, 4])["route_legal"], "LEGAL")
+
+
 if __name__ == "__main__":
     unittest.main()

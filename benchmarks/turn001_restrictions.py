@@ -18,6 +18,11 @@ UNRESOLVED_SNAP      route not anchored on the from/destination way (cannot judg
 ENGINE_REJECTED_MAP  engine refused to load the identical clip (capability failure)
 ERROR                engine/harness failure, with the message preserved
 
+v1.2 adds a whole-route audit to every returned route (route_legal LEGAL or
+ILLEGAL with every other one-way or restriction relation it breaks) and stores
+the OSM node path, so a no-route answer can be checked against a legal route
+another engine found on the identical clip. v1.1 verdict meanings are unchanged.
+
 A positive control routes DMN on the same clip with only the tested relation
 removed; cases whose unrestricted route uses the movement are DISCRIMINATING
 and get their own separate ranking. Source OSM is not independent legal truth.
@@ -37,7 +42,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 WORK = ROOT / "results" / "turn001"
 COHORT = ROOT / "config" / "turn001-cohort.json"
-CONTRACT = "TURN-001 v1.1"
+CONTRACT = "TURN-001 v1.2"
 CAR_HIGHWAYS = {
     "motorway", "motorway_link", "trunk", "trunk_link", "primary", "primary_link",
     "secondary", "secondary_link", "tertiary", "tertiary_link", "unclassified",
@@ -132,6 +137,7 @@ class Clip:
         self.coords: dict[str, tuple[float, float]] = {}
         self.ways: dict[str, tuple[list[str], dict[str, str]]] = {}
         self.node_ways: dict[str, set[str]] = defaultdict(set)
+        self.relations: dict[str, tuple[dict[str, str], list[tuple[str, str, str]]]] = {}
         for e in root:
             if e.tag == "node":
                 self.coords[e.get("id")] = (float(e.get("lat")), float(e.get("lon")))
@@ -142,6 +148,11 @@ class Clip:
                 if self.drivable(tags):
                     for n in refs:
                         self.node_ways[n].add(e.get("id"))
+            elif e.tag == "relation":
+                tags = {t.get("k"): t.get("v") for t in e.findall("tag")}
+                if tags.get("type") == "restriction":
+                    self.relations[e.get("id")] = (tags, [(m.get("type"), m.get("ref"), m.get("role"))
+                                                          for m in e.findall("member")])
         grid: dict[tuple[int, int], list[str]] = defaultdict(list)
         for node, (lat, lon) in self.coords.items():
             grid[(round(lat * 1e4), round(lon * 1e4))].append(node)
@@ -290,6 +301,92 @@ def uses_sequence(nodes: list[str], seq: list[str]) -> bool:
     return any(nodes[i:i + n] == seq for i in range(len(nodes) - n + 1))
 
 
+# --------------------------------------------------------------------------- v1.2 whole-route audit
+def _adjacent(clip: Clip, way: str, node: str) -> set[str]:
+    refs = clip.ways[way][0]
+    return {refs[i + d] for i, n in enumerate(refs) if n == node for d in (-1, 1) if 0 <= i + d < len(refs)}
+
+
+def _via_chain(clip: Clip, start: str, via_ways: list[str]) -> list[str] | None:
+    """Order via ways end to end from `start`; the node path, or None if ambiguous."""
+    remaining, path, at = list(via_ways), [start], start
+    while remaining:
+        nxt = [w for w in remaining if at in (clip.ways[w][0][0], clip.ways[w][0][-1])]
+        if len(nxt) != 1:
+            return None
+        refs = clip.ways[nxt[0]][0]
+        refs = refs if refs[0] == at else list(reversed(refs))
+        path.extend(refs[1:])
+        at = refs[-1]
+        remaining.remove(nxt[0])
+    return path
+
+
+def audit_route(clip: Clip, nodes: list[str]) -> dict:
+    """Check a whole route (OSM node path) against every car rule mapped in the clip.
+
+    Rules: one-way direction of each travelled segment and every type=restriction
+    relation (via node, via way chains, no_entry/no_exit products, truncated only_).
+    Movements barred by a conditional restriction are listed apart (no clock is
+    evaluated); unorderable or ambiguous relations are listed as not judged.
+    """
+    violations: list[str] = []
+    conditional_hits: list[str] = []
+    not_judged: list[str] = []
+    for x, y in zip(nodes, nodes[1:]):
+        ways = [w for w in clip.node_ways.get(x, ()) if y in _adjacent(clip, w, x)]
+        if ways and not any(clip.can_travel(w, x, y) for w in ways):
+            violations.append(f"oneway:{'/'.join(sorted(ways))}:{x}>{y}")
+    for rid, (tags, members) in sorted(clip.relations.items()):
+        conditional = next((v.split("@")[0].strip() for k, v in tags.items()
+                            if k.startswith("restriction") and k.endswith(":conditional")), None)
+        if not _applies_to_cars(tags):
+            continue
+        rule = conditional or _rule(tags) or ""
+        if not rule.startswith(("no_", "only_")):
+            continue
+        frm = [r for t, r, role in members if role == "from" and t == "way" and r in clip.ways]
+        to = [r for t, r, role in members if role == "to" and t == "way" and r in clip.ways]
+        to_missing = any(role == "to" and r not in clip.ways for t, r, role in members if t == "way")
+        via_n = [r for t, r, role in members if role == "via" and t == "node"]
+        via_w = [r for t, r, role in members if role == "via" and t == "way"]
+        if via_n and via_w or len(via_n) > 1 or not (via_n or via_w) or any(w not in clip.ways for w in via_w):
+            not_judged.append(f"{rid}:structure")
+            continue
+        if rule.startswith("only_") and (len(frm) != 1 or len(to) > 1):
+            not_judged.append(f"{rid}:only_multi")
+            continue
+        for f in frm:
+            if via_n:
+                chain = [via_n[0]]
+            else:
+                ends = [n for n in (clip.ways[f][0][0], clip.ways[f][0][-1])
+                        if any(n in (clip.ways[w][0][0], clip.ways[w][0][-1]) for w in via_w)]
+                chain = _via_chain(clip, ends[0], via_w) if len(ends) == 1 else None
+                if chain is None:
+                    not_judged.append(f"{rid}:via_order")
+                    continue
+            entries = _adjacent(clip, f, chain[0]) - ({chain[1]} if len(chain) > 1 else set())
+            n = len(chain)
+            for i in range(1, len(nodes) - n):
+                if nodes[i:i + n] != chain or nodes[i - 1] not in entries:
+                    continue
+                p, q = nodes[i - 1], nodes[i + n]
+                end = chain[-1]
+                if rule.startswith("no_"):
+                    hit = any((q == p) if (t == f and n == 1) else (q in _adjacent(clip, t, end)) for t in to)
+                elif to:
+                    t = to[0]
+                    hit = (q != p) if (t == f and n == 1) else (q not in _adjacent(clip, t, end))
+                else:
+                    hit = to_missing  # only_ towards a way outside the clip: every exit here is barred
+                if hit:
+                    (conditional_hits if conditional else violations).append(f"restriction:{rid}:{rule}")
+    legal = "ILLEGAL" if violations else "DEPENDS_ON_CONDITION" if conditional_hits else "LEGAL"
+    return {"route_legal": legal, "violations": sorted(set(violations)),
+            "conditional_movements_used": sorted(set(conditional_hits)), "not_judged": sorted(set(not_judged))}
+
+
 def prepare(source: Path) -> None:
     cohort = json.loads(COHORT.read_text())
     if sha256_file(source) != cohort["source_sha256"]:
@@ -353,18 +450,23 @@ def _verdict(clip: Clip, geom: dict, nodes: list[str] | None, error: str | None 
     if error == "ENDPOINT_WITHHELD":
         # DMN policy withholds the start/finish road (e.g. untagged service road);
         # neither a pass nor a legality failure: reported separately for review.
-        return {"verdict": "ENDPOINT_WITHHELD_BY_POLICY"}
+        # v1.2 split: OSM itself bars cars from an endpoint way (correct to withhold)
+        # versus DMN's uncertain-access policy (untagged service roads: owner decision).
+        barred = [w for w in (geom["from_way"], geom["exit_way"]) if not clip.drivable(clip.ways[w][1])]
+        return {"verdict": "ENDPOINT_WITHHELD_BY_POLICY",
+                "endpoint_reason": "osm_bars_cars" if barred else "uncertain_access_policy"}
     if error is not None:
         return {"verdict": "ERROR", "detail": error[:300]}
     if nodes is None:
         return {"verdict": "SAFE_NO_ROUTE"}
     seq = geom["prohibited_sequence"]
+    extra = {"nodes": len(nodes), "path": nodes, **audit_route(clip, nodes)}  # v1.2 whole-route audit
     if uses_sequence(nodes, seq):
-        return {"verdict": "FAIL_PROHIBITED", "nodes": len(nodes)}
+        return {"verdict": "FAIL_PROHIBITED", **extra}
     from_nodes = set(clip.ways[geom["from_way"]][0])
     exit_nodes = set(clip.ways[geom["exit_way"]][0])
     anchored = bool(nodes) and nodes[0] in from_nodes and nodes[-1] in exit_nodes
-    return {"verdict": "PASS" if anchored else "UNRESOLVED_SNAP", "nodes": len(nodes)}
+    return {"verdict": "PASS" if anchored else "UNRESOLVED_SNAP", **extra}
 
 
 def dmn_route(raw: bytes, geom: dict, drop_relation: int | None = None) -> tuple[list[str] | None, str | None, str | None]:
@@ -444,13 +546,17 @@ def osrm_query(geom: dict) -> tuple[list[tuple[float, float]] | None, float]:
     o, d = geom["origin"], geom["destination"]
     url = (f"http://127.0.0.1:5000/route/v1/driving/{o[1]:.7f},{o[0]:.7f};{d[1]:.7f},{d[0]:.7f}"
            "?overview=full&geometries=geojson&continue_straight=true")
+    from urllib.error import HTTPError
     began = time.perf_counter()
-    data = _http_json(url)
+    try:
+        data = _http_json(url)
+    except HTTPError as exc:
+        data = json.loads(exc.read() or b"{}")
     ms = (time.perf_counter() - began) * 1000
     if data.get("code") == "NoRoute":
         return None, ms
     if data.get("code") != "Ok":
-        raise RuntimeError(f"OSRM {data.get('code')}")
+        raise RuntimeError(f"OSRM {data.get('code')}: {data.get('message', '')[:200]}")
     return [(lat, lon) for lon, lat in data["routes"][0]["geometry"]["coordinates"]], ms
 
 
@@ -631,6 +737,20 @@ def score() -> None:
             "all_testable": counts(testable), "discriminating": counts(discriminating),
             "executed": sum(1 for i in testable if i in res),
             "fail_cases": sorted(i for i in testable if res.get(i, {}).get("verdict") == "FAIL_PROHIBITED"),
+            # v1.2: whole-route audit and checked no-route answers
+            "endpoint_withheld_reasons": dict(Counter(res[i]["endpoint_reason"] for i in testable
+                                                      if "endpoint_reason" in res.get(i, {}))),
+            "route_legal": dict(Counter(res[i]["route_legal"] for i in testable if "route_legal" in res.get(i, {}))),
+            "pass_and_route_legal": sum(1 for i in testable if res.get(i, {}).get("verdict") == "PASS"
+                                        and res[i].get("route_legal") == "LEGAL"),
+            "other_rule_violations": {i: res[i]["violations"] for i in testable
+                                      if res.get(i, {}).get("route_legal") == "ILLEGAL"},
+            "no_route_but_legal_route_exists": {
+                i: sorted(e for e, other in runs.items() if other.get(i, {}).get("verdict") == "PASS"
+                          and other[i].get("route_legal") == "LEGAL")
+                for i in testable if res.get(i, {}).get("verdict") == "SAFE_NO_ROUTE"
+                and any(other.get(i, {}).get("verdict") == "PASS" and other[i].get("route_legal") == "LEGAL"
+                        for other in runs.values())},
             "warm_query_ms_median": ms[len(ms) // 2] if ms else None,
             "warm_query_ms_samples": len(ms),
         }
