@@ -1,0 +1,16 @@
+{
+ "agent": "Claude",
+ "branch": "ccr-005983df-g8r2zd",
+ "created": "2026-10-17T21:48:49+00:00",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T21:48:49+00:00 next by Claude on ccr-005983df-g8r2zd"
+ ],
+ "id": "ENGINE-DMT",
+ "results": "docs/ENGINES_PROGRAMME.md",
+ "runs": [],
+ "state": "next",
+ "title": "DMT: Traffic engine (learned speeds, live feeds, closures)",
+ "updated": "2026-10-17T21:48:49+00:00",
+ "why": "Owner-approved engines programme, 17 Oct 2026; build order and yardsticks in docs/ENGINES_PROGRAMME.md. Same method as DMN: frozen tests vs free alternatives, ranked per category, owner approval, fresh re-test."
+}
