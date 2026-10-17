@@ -21,6 +21,7 @@ from typing import Mapping
 import xml.etree.ElementTree as ET
 
 from engine import RoadEdge, RoadGraph
+from .conditions import condition_applies, parts as condition_parts
 
 MAX_INPUT_BYTES = 32_000_000
 # Bounded for auditable research clips (about 1 km around a junction), NOT whole UK extracts.
@@ -107,7 +108,7 @@ ACCESS_CONDITIONAL_KEYS = re.compile(
     r"^(?:access|vehicle|motor_vehicle|motorcar)(?::(?:forward|backward))?:conditional$")
 
 
-def _conditional_restrictions(tags: dict[str, str]) -> dict[str, bool]:
+def _conditional_restrictions(tags: dict[str, str], when=None) -> dict[str, bool]:
     """Which travel directions a car-relevant *:conditional tag could close.
 
     No clock or evaluator is applied, so a condition that can restrict a car
@@ -118,6 +119,8 @@ def _conditional_restrictions(tags: dict[str, str]) -> dict[str, bool]:
     lanes...) do not affect road legality here and are ignored.
     """
     closes = {"forward": False, "backward": False}
+    if when is not None:
+        return _conditional_restrictions_at(tags, when)
     for key, value in tags.items():
         if not CONDITIONAL.search(key):
             continue
@@ -131,6 +134,32 @@ def _conditional_restrictions(tags: dict[str, str]) -> dict[str, bool]:
             if not outcomes or outcomes & {"yes", "1", "true"}:
                 closes["backward"] = True
             if not outcomes or outcomes & {"-1", "reverse"}:
+                closes["forward"] = True
+    return closes
+
+
+def _conditional_restrictions_at(tags: dict[str, str], when) -> dict[str, bool]:
+    """Like _conditional_restrictions, with the clock (owner-approved, 17 Oct 2026).
+
+    A restricting part closes the direction only while its condition applies at `when`
+    (UK local time); a condition map_data.conditions cannot read keeps it closed, as
+    without a clock. Granting parts are still ignored (the stricter value stands).
+    """
+    closes = {"forward": False, "backward": False}
+    for key, value in tags.items():
+        if not CONDITIONAL.search(key):
+            continue
+        rules = condition_parts(value)
+        live = [(val, condition_applies(cond, when)) for val, cond in rules]
+        if ACCESS_CONDITIONAL_KEYS.match(key):
+            if not rules or any(val not in ALLOWED_VALUES and applies is not False for val, applies in live):
+                for direction in closes:
+                    if f":{direction}:" in key or (":forward:" not in key and ":backward:" not in key):
+                        closes[direction] = True
+        elif key == "oneway:conditional":
+            if not rules or any(val in {"yes", "1", "true"} and applies is not False for val, applies in live):
+                closes["backward"] = True
+            if not rules or any(val in {"-1", "reverse"} and applies is not False for val, applies in live):
                 closes["forward"] = True
     return closes
 
@@ -254,7 +283,9 @@ def _combine_access(a: str, b: str) -> str:
 
 
 def import_osm_xml(raw: bytes, *, provenance: Provenance,
-                   access_context: JourneyAccessContext | None = None) -> ImportedMap:
+                   access_context: JourneyAccessContext | None = None, when=None) -> ImportedMap:
+    """`when` (UK local datetime, optional): time-limited rules apply only while in force;
+    without it they apply at all times (unchanged, safe)."""
     if not isinstance(raw, bytes) or not raw or len(raw) > MAX_INPUT_BYTES:
         raise OSMImportError("Expected nonempty OSM XML bytes within 32 MB research limit")
     source_hash = sha256(raw).hexdigest()
@@ -294,7 +325,7 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
                 raise OSMImportError("Coordinates outside Earth bounds")
             tags = _tags(element)
             coordinates[node] = (lat, lon)
-            node_conditional = tags.get("barrier") and any(_conditional_restrictions(tags).values())
+            node_conditional = tags.get("barrier") and any(_conditional_restrictions(tags, when).values())
             barriers[node] = "unknown" if node_conditional else _barrier_access(tags,
                 authorized=bool(access_context and ident in access_context.authorized_node_ids),
                 qualifying_destination=bool(access_context and access_context.destination_way_ids
@@ -340,7 +371,7 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
         if oneway not in ("", "no", "0", "false", "yes", "1", "true", "-1", "reverse"):
             raise OSMImportError(f"way {way_id}: unsupported oneway value {oneway}")
         direction = -1 if oneway in ("-1", "reverse") else 1
-        conditional_closes = _conditional_restrictions(tags)
+        conditional_closes = _conditional_restrictions(tags, when)
         if reversible:
             conditional_closes = {"forward": True, "backward": True}
         if any(conditional_closes.values()):
@@ -434,9 +465,14 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
                     tags.get("restriction", "")))
         conditional = tags.get("restriction:conditional", "")
         if not rule and conditional:
-            # Time-limited ban: without an evaluator it is applied at all times
-            # (safe: may withhold a legal turn, never permits an illegal one).
+            # Time-limited ban: without a time it is applied at all times (safe: may
+            # withhold a legal turn, never permits an illegal one). With `when`, a ban
+            # whose condition is understood and not in force now is left out.
             rule = conditional.split("@")[0].strip()
+            if when is not None and all(condition_applies(c, when) is False
+                                        for _, c in condition_parts(conditional)):
+                skip("conditional_not_in_force")
+                continue
             skip("conditional_applied_always")
         if not rule:
             skip("not_a_car_restriction")

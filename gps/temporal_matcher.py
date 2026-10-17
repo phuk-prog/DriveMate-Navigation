@@ -24,7 +24,8 @@ class TemporalRoadMatcher:
     def __init__(self, matcher: DirectedRoadMatcher, *,
                  max_anchor_age_ms: int = 20_000,
                  max_unresolved_fixes: int = 2,
-                 max_anchor_displacement_m: float = 100.0):
+                 max_anchor_displacement_m: float = 100.0,
+                 confirm_after_gap_ms: int | None = None):
         if not isinstance(matcher, DirectedRoadMatcher):
             raise TypeError("Expected a DirectedRoadMatcher")
         if not isinstance(max_anchor_age_ms, int) or max_anchor_age_ms <= 0:
@@ -37,6 +38,13 @@ class TemporalRoadMatcher:
         self.max_anchor_age_ms = max_anchor_age_ms
         self.max_unresolved_fixes = max_unresolved_fixes
         self.max_anchor_displacement_m = max_anchor_displacement_m
+        # Owner-approved (17 Oct 2026; Run C: a multipath jump right after a blackout was
+        # matched): after a gap longer than this, the first fix only seeds the next check.
+        # None keeps the original behaviour.
+        if confirm_after_gap_ms is not None and (type(confirm_after_gap_ms) is not int
+                                                 or confirm_after_gap_ms <= 0):
+            raise ValueError("Invalid confirm-after-gap time")
+        self.confirm_after_gap_ms = confirm_after_gap_ms
         self.reset()
 
     def reset(self) -> None:
@@ -259,6 +267,14 @@ class TemporalRoadMatcher:
         self.unresolved = 0
 
     def update(self, fix: GPSFix, *, now_ms: int | None = None) -> MatchResult:
+        if (self.confirm_after_gap_ms is not None and self.previous_valid_fix is not None
+                and fix.timestamp_ms - self.previous_valid_fix.timestamp_ms > self.confirm_after_gap_ms):
+            # Seed only: the next fix is then checked against this one (speed/distance guard).
+            self.anchor_edge_id = None
+            self.anchor_fix = None
+            self.previous_valid_fix = fix
+            self.unresolved += 1
+            return MatchResult("AMBIGUOUS", None, "first_fix_after_gap", None, 0)
         quality = assess_fix(fix, previous=self.previous_valid_fix, now_ms=now_ms)
         if quality.status == "REJECTED":
             # A rejected input cannot move our anchor or replace the last

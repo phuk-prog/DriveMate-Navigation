@@ -365,7 +365,9 @@ def dmn_route(dmn: rd.DMNMap, o_seg, d_seg):
 def drive(dmn: rd.DMNMap, clip, geom: dict, plan: dict, scenario: str, improved: bool = False) -> dict:
     """One DMN drive, fix by fix: matcher -> on-route -> rerouting -> cues -> arrival."""
     from engine.arrival_controller import ArrivalController
-    from engine.instruction_cues import instruction_phase
+    from engine.instruction_cues import instruction_phase, lead_seconds_for
+    from engine.progress_estimator import ProgressEstimator
+    from engine.route_check import destination_side
     from engine.rerouting_controller import ReroutingController
     from gps.matcher import DirectedRoadMatcher
     from gps.temporal_matcher import TemporalRoadMatcher
@@ -386,11 +388,14 @@ def drive(dmn: rd.DMNMap, clip, geom: dict, plan: dict, scenario: str, improved:
         car.end = clip.coords[car_nodes[-1]]
         car._build()
     trace = open_trace(clip, geom, plan["drive_nodes"], jid, scenario) if scenario != "wrong_turn" else None
+    # improved = every owner-approved DMN change (17 Oct 2026); otherwise the pre-Run-C stack
     tm = TemporalRoadMatcher(DirectedRoadMatcher(dmn.graph, dmn.imported.coordinates,
                                                  same_road_pieces=improved,
-                                                 route_aware_access=improved))
+                                                 route_aware_access=improved),
+                             confirm_after_gap_ms=10000 if improved else None)
     tm.matcher.set_route(route.edge_ids)
-    rc = ReroutingController()
+    rc = ReroutingController(post_gap_ms=5000) if improved else ReroutingController()
+    est = ProgressEstimator()
     ac = ArrivalController()
     rc.begin(route, now_ms=0)
     planned = {"nodes": nodes, "pairs": list(zip(nodes, nodes[1:])), "rev": ac.begin(
@@ -448,6 +453,7 @@ def drive(dmn: rd.DMNMap, clip, geom: dict, plan: dict, scenario: str, improved:
                 dx, dy = bx - ax, by - ay
                 f = 0.0 if dx == dy == 0 else max(0.0, min(1.0, -(ax * dx + ay * dy) / (dx * dx + dy * dy)))
                 along = planned["cum"][idx] + f * (planned["cum"][idx + 1] - planned["cum"][idx])
+                est.confirm(timestamp_ms=now, along_m=along, speed_mps=fix.speed_mps or 0.0)
         request = rc.observe(timestamp_ms=now, now_ms=now, reliable=matched, on_route=on_route)
         if request is not None:
             new_route, new_nodes = dmn_route(dmn, list(edge), geom["destination_segment"])
@@ -456,6 +462,7 @@ def drive(dmn: rd.DMNMap, clip, geom: dict, plan: dict, scenario: str, improved:
                      "car_on_that_piece": edge in truth}
             if installed and new_route:
                 install(new_nodes)
+                est.reset()
                 tm.matcher.set_route(new_route.edge_ids)
                 planned["rev"] = ac.begin(tuple(geom["destination"]), route_length_m=new_route.length_m, now_ms=now)
                 judged = rd.judge(clip, {"origin_segment": list(edge),
@@ -470,17 +477,26 @@ def drive(dmn: rd.DMNMap, clip, geom: dict, plan: dict, scenario: str, improved:
                     car.replace_after(k + 1, new_nodes[1:], tuple(geom["destination"]))
                     entry["followed"] = True
             log["reroutes"].append(entry)
-        # guidance for the next turn on the installed route
-        if on_route:
+        # guidance for the next turn on the installed route; improved: also from the short
+        # estimate while the position is briefly unsure (never when the matcher says off route)
+        cue_at = (along, 0) if on_route else (est.estimate(timestamp_ms=now) if improved and on_route is None
+                                              else None)
+        if cue_at is not None:
+            cue_along, age = cue_at
             nxt = next((m for m in planned["mans"] if m > planned["progress"]), None)
             if nxt is not None:
-                dist = planned["cum"][nxt] - along
+                dist = planned["cum"][nxt] - cue_along
                 key = (planned["rev"], nxt)
-                phase = instruction_phase(distance_m=max(0.0, dist), speed_mps=fix.speed_mps or 0.0,
+                speed = fix.speed_mps or 0.0
+                phase = instruction_phase(distance_m=max(0.0, dist), speed_mps=speed,
                                           reliable_fix=True, on_correct_route=True, maneuver_verified=True,
-                                          observation_age_ms=0, spoken_before=key in planned["spoken"])
+                                          observation_age_ms=int(age), spoken_before=key in planned["spoken"],
+                                          lead_seconds=lead_seconds_for(speed) if improved else 5.0,
+                                          now_given=(key in planned.setdefault("now", set())) if improved else None)
+                if phase == "NOW" and improved:
+                    planned["now"].add(key)
                 if phase in ("APPROACH", "NOW"):
-                    planned["spoken"][key] = phase
+                    planned["spoken"].setdefault(key, phase)
                     node = planned["nodes"][nxt]
                     true_d = car.distance_to_node(node)
                     car_off = not (truth & set(planned["pairs"]))
@@ -490,11 +506,17 @@ def drive(dmn: rd.DMNMap, clip, geom: dict, plan: dict, scenario: str, improved:
         remaining = planned["cum"][-1] - along if on_route else 1e9
         verdict = ac.observe(context_revision=planned["rev"], timestamp_ms=now, now_ms=now,
                              position=(fix.latitude, fix.longitude), accuracy_m=fix.horizontal_accuracy_m,
-                             reliable=matched, on_route=bool(on_route), remaining_m=max(0.0, remaining))
+                             reliable=matched, on_route=bool(on_route), remaining_m=max(0.0, remaining),
+                             speed_mps=fix.speed_mps if improved else None)
         timings.append((time.perf_counter() - began) * 1000)
         if verdict == "ARRIVED" and log["arrival"] is None:
             log["arrival"] = {"t": clock, "true_remaining_m": round(max(0.0, car.length - car.dist), 1),
                               "to_destination_m": round(t1.metres(pos, tuple(geom["destination"])), 1)}
+            if improved:  # which side of the road the destination point is (UK: left is the kerb)
+                last = dmn.by_pair.get(tuple(f"osm:{n}" for n in planned["pairs"][-1]))
+                if last is not None:
+                    log["arrival"]["destination_side"] = destination_side(
+                        dmn.imported.coordinates, last, tuple(geom["destination"]))
         ok = "OK" if matched and edge in truth else "WRONG" if matched else "WITHHELD"
         if ok == "WRONG":  # the next/previous piece of the very same road, a few metres out: not a wrong road
             way = res.edge_id.split(":")[1]

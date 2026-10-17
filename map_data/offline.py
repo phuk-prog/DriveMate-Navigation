@@ -43,9 +43,13 @@ class OfflineRoute:
 
 
 class OfflineMapStore:
-    def __init__(self,*,max_payload_bytes=MAX_INPUT_BYTES):
+    def __init__(self,*,max_payload_bytes=MAX_INPUT_BYTES,allow_conditional=True):
         if type(max_payload_bytes) is not int or not 1<=max_payload_bytes<=MAX_INPUT_BYTES:
             raise ValueError('Invalid offline package size limit')
+        if type(allow_conditional) is not bool:
+            raise ValueError('Invalid allow_conditional')
+        # False = the original strict device contract (frozen OFFLINE-001 trial only)
+        self._allow_conditional=allow_conditional
         self._limit=max_payload_bytes
         self._active=None
 
@@ -77,9 +81,10 @@ class OfflineMapStore:
                 or any(type(n) is not str or re.fullmatch(r'osm:[1-9][0-9]{0,18}',n) is None for n in anchors)
                 or len(set(anchors))!=len(anchors)):
             raise PackageValidationError('Explicit unique coverage anchors required')
-        # Device packages keep the original strict contract: any conditional
-        # rule rejects the package (the research importer withholds per object).
-        if re.search(rb'<tag\s+k="[^"]*:conditional"',payload):
+        # Time-limited (:conditional) rules no longer reject the package (owner-approved,
+        # 17 Oct 2026; run D found 2 of 3 real UK clips refused). The importer handles them
+        # per road: in force at all times unless route() is given the current time.
+        if not self._allow_conditional and re.search(rb'<tag\s+k="[^"]*:conditional"',payload):
             raise PackageValidationError('Map validation failed: conditional tags are unsupported in offline packages')
         try:data=import_osm_xml(payload,provenance=Provenance(**provenance))
         except OSMImportError as exc:raise PackageValidationError(str(exc)) from exc
@@ -89,12 +94,18 @@ class OfflineMapStore:
         self._active=(info,data,payload)
         return info
 
-    def route(self,source,destination,*,access_context=None):
+    def route(self,source,destination,*,access_context=None,when=None):
+        """`when` (UK local datetime, optional): time-limited rules apply only while in force."""
         active=self._active
         if active is None:raise NoActiveMap('No verified active map')
         info,data,payload=active
         if type(source) is not str or type(destination) is not str or source not in data.graph.vertices or destination not in data.graph.vertices:
             raise CoverageUnavailable('Requested node is not covered by active map')
+        if when is not None and access_context is None:
+            # Time view rebuilt in memory; the active package itself stays time-free.
+            data=import_osm_xml(payload,provenance=Provenance(
+                data.metadata['region'],data.metadata['snapshot'],data.metadata['source'],
+                data.metadata['attribution']),when=when)
         if access_context is not None:
             if not isinstance(access_context,JourneyAccessContext):
                 raise OSMImportError("Expected JourneyAccessContext")
@@ -103,6 +114,6 @@ class OfflineMapStore:
             # Journey view is rebuilt in memory; active package remains context-free.
             data=import_osm_xml(payload,provenance=Provenance(
                 data.metadata['region'],data.metadata['snapshot'],data.metadata['source'],
-                data.metadata['attribution']),access_context=access_context)
+                data.metadata['attribution']),access_context=access_context,when=when)
         route=shortest_route(data.graph,source,destination)
         return OfflineRoute(info.sha256,route)

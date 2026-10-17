@@ -25,7 +25,9 @@ def distance_m(a,b):
 
 class ArrivalController:
     def __init__(self,*,radius_m=20,max_remaining_m=25,max_accuracy_m=15,
-                 max_observation_age_ms=10000,minimum_sample_gap_ms=1000):
+                 max_observation_age_ms=10000,minimum_sample_gap_ms=1000,
+                 stopped_arrival=True,stopped_progress_age_ms=20000,stopped_max_remaining_m=60,
+                 stopped_speed_mps=0.5):
         for name,value in (('radius_m',radius_m),('max_remaining_m',max_remaining_m),
                            ('max_accuracy_m',max_accuracy_m)):
             if not _number(value) or value<=0:raise ValueError('Invalid '+name)
@@ -36,6 +38,22 @@ class ArrivalController:
             setattr(self,name,value)
         if minimum_sample_gap_ms>max_observation_age_ms:
             raise ValueError('Corroboration interval exceeds evidence lifetime')
+        # Stopped arrival (owner-approved, 17 Oct 2026; Run C: a car stopped on a two-way road
+        # gives no heading, so the matcher cannot confirm the road and arrival never came).
+        # Used only when observe() is given speed_mps: after a reliable on-route sample with
+        # at most stopped_max_remaining_m left, no older than stopped_progress_age_ms, two
+        # stopped samples within radius_m of the destination, minimum_sample_gap_ms apart.
+        if type(stopped_arrival) is not bool:raise ValueError('Invalid stopped_arrival')
+        for name,value in (('stopped_progress_age_ms',stopped_progress_age_ms),):
+            if type(value) is not int or value<=0:raise ValueError('Invalid '+name)
+        for name,value in (('stopped_max_remaining_m',stopped_max_remaining_m),('stopped_speed_mps',stopped_speed_mps)):
+            if not _number(value) or value<=0:raise ValueError('Invalid '+name)
+        self.stopped_arrival=stopped_arrival
+        self.stopped_progress_age_ms=stopped_progress_age_ms
+        self.stopped_max_remaining_m=stopped_max_remaining_m
+        self.stopped_speed_mps=stopped_speed_mps
+        self._progress=None  # timestamp of the latest reliable on-route sample near the end
+        self._stop_anchor=None
         self._last_now=None
         self._revision=0
         self._active=False
@@ -66,6 +84,8 @@ class ArrivalController:
         self._arrived=False
         self._anchor=None
         self._last_timestamp=None
+        self._progress=None
+        self._stop_anchor=None
         return self._revision
 
     def stop(self,*,now_ms):
@@ -75,9 +95,11 @@ class ArrivalController:
         self._arrived=False
         self._anchor=None
         self._last_timestamp=None
+        self._progress=None
+        self._stop_anchor=None
 
     def observe(self,*,context_revision,timestamp_ms,now_ms,position,accuracy_m,
-                reliable,on_route,remaining_m):
+                reliable,on_route,remaining_m,speed_mps=None):
         self._clock(now_ms)
         if not self._active:return 'INACTIVE'
         if type(context_revision) is not int or context_revision!=self._revision:
@@ -90,6 +112,12 @@ class ArrivalController:
             self._anchor=None
             return 'REJECTED'
         self._last_timestamp=timestamp_ms
+        if (reliable is True and on_route is True and _number(remaining_m)
+                and 0<=remaining_m<=self.stopped_max_remaining_m):
+            self._progress=timestamp_ms
+        stopped=self._stopped_arrival(timestamp_ms,position,accuracy_m,speed_mps)
+        if stopped is not None:
+            return stopped
         if (not _position(position) or not _number(accuracy_m) or not 0<=accuracy_m<=self.max_accuracy_m
                 or reliable is not True or on_route is not True
                 or not _number(remaining_m) or not 0<=remaining_m<=min(self.max_remaining_m,self._route_length_m)
@@ -104,4 +132,25 @@ class ArrivalController:
         if timestamp_ms-self._anchor<self.minimum_sample_gap_ms:return 'CANDIDATE'
         self._arrived=True
         self._anchor=None
+        return 'ARRIVED'
+
+    def _stopped_arrival(self,timestamp_ms,position,accuracy_m,speed_mps):
+        """CANDIDATE/ARRIVED for a stopped car close to the destination, else None."""
+        if (not self.stopped_arrival or speed_mps is None or not _number(speed_mps)
+                or speed_mps>=self.stopped_speed_mps):
+            self._stop_anchor=None
+            return None
+        if (self._progress is None or timestamp_ms-self._progress>self.stopped_progress_age_ms
+                or not _position(position) or not _number(accuracy_m)
+                or not 0<=accuracy_m<=self.max_accuracy_m
+                or distance_m(position,self._destination)>self.radius_m):
+            self._stop_anchor=None
+            return None
+        if self._stop_anchor is None:
+            self._stop_anchor=timestamp_ms
+            return 'CANDIDATE'
+        if timestamp_ms-self._stop_anchor<self.minimum_sample_gap_ms:return 'CANDIDATE'
+        self._arrived=True
+        self._anchor=None
+        self._stop_anchor=None
         return 'ARRIVED'

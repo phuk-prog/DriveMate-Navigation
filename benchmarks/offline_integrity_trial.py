@@ -46,7 +46,8 @@ def run_dmn():
     hashes={k:sha256(v).hexdigest() for k,v in maps.items()}
     def label(digest):return next((k for k,v in hashes.items() if v==digest),'UNKNOWN') if digest else 'NONE'
     for c in f['cases']:
-        store=OfflineMapStore(max_payload_bytes=f['max_payload_bytes']);events=[]
+        # frozen OFFLINE-001 contract: the original strict package rule (conditional tags refused)
+        store=OfflineMapStore(max_payload_bytes=f['max_payload_bytes'],allow_conditional=False);events=[]
         for i,e in enumerate(c['events']):
             checks={};row=dict(event=i,action=e['action'])
             if e['action']=='activate':

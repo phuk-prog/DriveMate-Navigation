@@ -40,7 +40,8 @@
         "test_real_uk_turn_probe.py",
         "test_real_map_legality_baseline.py",
         "test_real_map_oneway.py",
-        "test_access001.py"
+        "test_access001.py",
+        "test_time_conditions.py"
       ],
       "engine_rank": null,
       "navigation_score": null
@@ -78,7 +79,8 @@
         "test_temporal_directed_progress.py",
         "test_temporal_transition_distance.py",
         "test_real_map_gps_recovery.py",
-        "test_public_temporal_gps.py"
+        "test_public_temporal_gps.py",
+        "test_gps_confirm_after_gap.py"
       ],
       "engine_rank": null,
       "navigation_score": null
@@ -175,7 +177,8 @@
       "test_files": [
         "test_rerouting_controller.py",
         "test_rerouting_lifecycle_trial.py",
-        "test_navigation_trial.py"
+        "test_navigation_trial.py",
+        "test_reroute_after_gap.py"
       ],
       "engine_rank": null,
       "navigation_score": null
@@ -185,7 +188,8 @@
       "label": "Navigation instructions and timing",
       "scope": "Deterministic approach/turn timing confidence gates only; no Android voice timing.",
       "test_files": [
-        "test_instruction_cues.py"
+        "test_instruction_cues.py",
+        "test_instruction_now_and_lead.py"
       ],
       "engine_rank": null,
       "navigation_score": null
@@ -215,7 +219,8 @@
       "label": "Correct arrival and approach side",
       "scope": "Arrival state/controller units, not verified driveway/property approach.",
       "test_files": [
-        "test_arrival_controller.py"
+        "test_arrival_controller.py",
+        "test_arrival_when_stopped.py"
       ],
       "engine_rank": null,
       "navigation_score": null
@@ -225,7 +230,8 @@
       "label": "Offline routing, maps and updates",
       "scope": "Host offline navigation package tests; Android downloads/updates not demonstrated.",
       "test_files": [
-        "test_offline_package.py"
+        "test_offline_package.py",
+        "test_offline_conditional_maps.py"
       ],
       "engine_rank": null,
       "navigation_score": null
@@ -246,7 +252,8 @@
         "test_provider_summaries.py",
         "test_category_test_runner.py",
         "test_dmn_auto_progress.py",
-        "test_work_status.py"
+        "test_work_status.py",
+        "test_route_check.py"
       ],
       "engine_rank": null,
       "navigation_score": null
