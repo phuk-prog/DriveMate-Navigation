@@ -1,0 +1,16 @@
+{
+ "agent": "Claude",
+ "branch": "ccr-005983df-g8r2zd",
+ "created": "2026-10-17T19:47:43+00:00",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T19:47:43+00:00 next by Claude on ccr-005983df-g8r2zd"
+ ],
+ "id": "CAT3-GPS-MATCH-IMPROVEMENTS",
+ "results": "docs/RUN_C_RESULTS.md",
+ "runs": [],
+ "state": "next",
+ "title": "Category 3 test 1 (road matching): owner-approved improvements (implement later)",
+ "updated": "2026-10-17T19:47:43+00:00",
+ "why": "Owner, 17 Oct 2026, approved to implement later: (1) make the Run C matcher fix (same_road_pieces + route_aware_access, opt-in in gps/matcher.py) DMN's normal setting once the confirming run agrees; (2) when DMN withholds, keep the shown position moving along the route at the car's speed; (3) never use OSRM matching for the live position; (4) private replay of the owner's real recorded drives."
+}
