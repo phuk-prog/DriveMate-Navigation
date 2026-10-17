@@ -131,7 +131,7 @@ class Turn001ProvenanceTests(unittest.TestCase):
           <node id="1" lat="53" lon="-2"/><node id="2" lat="53.001" lon="-2"/>
           <node id="3" lat="53.002" lon="-2"/>
           <way id="10"><nd ref="1"/><nd ref="2"/><tag k="highway" v="secondary"/></way>
-          <way id="20"><nd ref="2"/><nd ref="3"/><tag k="highway" v="primary"/></way>
+          <way id="20"><nd ref="2"/><nd ref="3"/><tag k="highway" v="service"/><tag k="access" v="private"/></way>
         </osm>''')
         self.assertTrue(turn._wide_clip_valid(folder, record))
 

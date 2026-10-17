@@ -512,7 +512,9 @@ def _wide_clip_valid(folder: Path, record: dict) -> bool:
     except (OSError, ET.ParseError, ValueError):
         return False
     geom = record["geometry"]
-    return all(way in clip.ways and clip.drivable(clip.ways[way][1])
+    # Presence, not access verdict, is the cache invariant. Some frozen cases
+    # deliberately end on a private/uncertain road so DMN can withhold it.
+    return all(way in clip.ways and bool(clip.ways[way][1].get("highway"))
                for way in (geom["from_way"], geom["exit_way"]))
 
 
