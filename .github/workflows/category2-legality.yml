@@ -15,6 +15,9 @@ on:
       - 'config/access001-*.json'
       - 'config/oneway002-*.json'
       - '.github/workflows/category2-legality.yml'
+      # an engine or importer change re-runs the whole test for every engine (owner rule 6)
+      - 'engine/**'
+      - 'map_data/**'
 permissions:
   contents: read
   actions: read

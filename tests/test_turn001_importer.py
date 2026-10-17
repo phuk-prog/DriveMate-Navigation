@@ -72,9 +72,20 @@ class ViaWayRestrictions(unittest.TestCase):
         nodes = ["2"] + [g.edges[e].target.removeprefix("osm:") for e in result.route.edge_ids]
         self.assertNotEqual(nodes, ["2", "3", "5"])
 
-    def test_unconnected_via_way_still_rejects(self):
-        with self.assertRaises(OSMImportError):
-            import_osm_xml(osm(rel(9, '<tag k="restriction" v="no_left_turn"/>', 101, 105, 103, "way")), provenance=PROV)
+    def test_unconnected_via_way_blocks_entry_not_the_map(self):
+        # Owner-approved (17 Oct 2026): one wrongly mapped relation no longer rejects the
+        # whole map; moves from the from-way into the via way are banned instead.
+        m = import_osm_xml(osm(rel(9, '<tag k="restriction" v="no_left_turn"/>', 101, 105, 103, "way")),
+                           provenance=PROV)
+        self.assertEqual(m.metadata["restrictions_not_applied"], {"disconnected_via_way_blocked": 1})
+        self.assertGreater(len(m.graph.edges), 0)
+
+    def test_via_way_chain_that_does_not_reach_the_to_way_is_blocked(self):
+        # from 101, via 102 (2->3), to 105 (4-5): 105 does not touch the chain end (3)
+        m = import_osm_xml(osm(rel(9, '<tag k="restriction" v="no_straight_on"/>', 101, 105, 102, "way")),
+                           provenance=PROV)
+        self.assertEqual(m.metadata["restrictions_not_applied"], {"disconnected_via_way_blocked": 1})
+        self.assertIn(("w:101:0:f", "w:102:0:f"), m.graph.prohibited_turns)
 
 
     def test_two_via_ways_in_a_chain(self):

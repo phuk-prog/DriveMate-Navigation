@@ -395,6 +395,17 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
     def skip(reason: str) -> None:
         skipped[reason] = skipped.get(reason, 0) + 1
 
+    def block_into_via(frm: list[str], via_nodes: list[str], via_ways: list[str], reason: str) -> None:
+        """Fail safe per object: ban every move from the restricted road into the via
+        structure (may withhold legal moves, never permits a banned one)."""
+        touch = set(via_nodes) | {n.removeprefix("osm:") for w in via_ways if w in ways for n in ways[w][0]}
+        for f in frm:
+            for n in touch:
+                for arrival in incoming.get((f, f"osm:{n}"), []):
+                    for other in outgoing.get(f"osm:{n}", []):
+                        turns.add((arrival.edge_id, other.edge_id))
+        skip(reason)
+
     def via_way_chain(via_way: str, start: str, end: str) -> list[RoadEdge] | None:
         """Edges travelling along `via_way` from node `start` to node `end`."""
         chain: list[RoadEdge] = []
@@ -444,15 +455,8 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
             skip("member_outside_extract")
             continue
         if via_nodes and via_ways or len(via_nodes) > 1:
-            # Uninterpretable structure: fail safe per object by banning every move
-            # from the restricted road into the via structure (may withhold legal moves).
-            touch = set(via_nodes) | {n.removeprefix("osm:") for w in via_ways if w in ways for n in ways[w][0]}
-            for f in frm:
-                for n in touch:
-                    for arrival in incoming.get((f, f"osm:{n}"), []):
-                        for other in outgoing.get(f"osm:{n}", []):
-                            turns.add((arrival.edge_id, other.edge_id))
-            skip("uninterpretable_structure_blocked")
+            # Uninterpretable structure: blocked per object, not fatal for the map.
+            block_into_via(frm, via_nodes, via_ways, "uninterpretable_structure_blocked")
             continue
         if not to_present and rule.startswith("no_"):
             skip("member_outside_extract")
@@ -472,15 +476,21 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
                 if joined:
                     node_now = joined.pop()
                     break
+            # A wrongly mapped relation (members not joined end to end) is blocked per
+            # object like an uninterpretable one; it no longer rejects the whole map
+            # (owner-approved fix after ACCESS-001/ONEWAY-002 run 39039003647).
             if node_now is None:
-                raise OSMImportError("Via-way restriction members are not connected end to end")
+                block_into_via(frm, via_nodes, via_ways, "disconnected_via_way_blocked")
+                continue
             a_node = node_now
             remaining = list(via_ways)
             chain: list[RoadEdge] = []
+            disconnected = False
             while remaining:
                 nxt = [w for w in remaining if node_now in (ways[w][0][0], ways[w][0][-1])]
                 if len(nxt) != 1:
-                    raise OSMImportError("Via-way restriction members are not connected end to end")
+                    disconnected = True
+                    break
                 w = nxt[0]
                 remaining.remove(w)
                 end = ways[w][0][-1] if ways[w][0][0] == node_now else ways[w][0][0]
@@ -490,13 +500,17 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
                     break
                 chain.extend(part)
                 node_now = end
+            if disconnected:
+                block_into_via(frm, via_nodes, via_ways, "disconnected_via_way_blocked")
+                continue
             b_node = node_now
             arrivals = incoming.get((frm[0], a_node), [])
             if not chain or not arrivals:
                 skip("no_car_movement")
                 continue
             if to and b_node not in set(ways[to[0]][0]):
-                raise OSMImportError("Via-way restriction members are not connected end to end")
+                block_into_via(frm, via_nodes, via_ways, "disconnected_via_way_blocked")
+                continue
             exits = leaving.get((to[0], b_node), []) if to else []
             if rule.startswith("only_"):
                 exits = [o for o in outgoing.get(b_node, []) if o.edge_id not in {e.edge_id for e in exits}]

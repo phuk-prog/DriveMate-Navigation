@@ -87,8 +87,12 @@ class OSMImporterTests(unittest.TestCase):
     def test_via_way_restrictions_fail_closed(self):
         raw = FIXTURE.read_text().replace('<member type="node" ref="2" role="via"/>',
             '<member type="way" ref="102" role="via"/>')
-        with self.assertRaises(OSMImportError):
-            imported(raw.encode())
+        # Owner-approved (17 Oct 2026): still fail closed, but per relation, not for the
+        # whole map: every move from the from-way into the via way is banned.
+        m = imported(raw.encode())
+        self.assertEqual(m.metadata["restrictions_not_applied"], {"disconnected_via_way_blocked": 1})
+        self.assertIn(("w:100:0:f", "w:102:0:f"), m.graph.prohibited_turns)
+        self.assertIn(("w:100:0:f", "w:101:0:f"), m.graph.prohibited_turns)
 
     def test_missing_nodes_duplicate_ids_and_entity_input_rejected(self):
         raw = FIXTURE.read_text()
