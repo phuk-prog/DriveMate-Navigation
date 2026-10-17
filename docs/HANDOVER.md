@@ -1,5 +1,17 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 — Category 2 started: ACCESS-001 no-car roads (Claude)
+- Owner approved: consolidate the stacked draft PRs, then start Category 2.
+- Branch `ccr-195b89cb-2aaytg` = PR #10 branch + main (register) + PR #7 and #8
+  leftovers; all 21 unit categories 754/754 PASS, privacy guard PASS. Nothing
+  merged to main: that waits for the owner.
+- ACCESS-001 (`benchmarks/access001_route.py`, `.github/workflows/access001.yml`):
+  139 frozen real road ways cars may not use (bus gate, busway, no cars,
+  pedestrian; private/destination reported only), 103 testable, 45 discriminating.
+  Clips are cut in CI from the pinned turn001 map and must match frozen hashes.
+- Local DMN pre-check (not the result of record): 71/82 closed-road cases legal
+  pass, 0 drove a closed road, 11 no route. Four-engine result: see the run.
+
 ## 2026-10-17 — approved Category 1 completion, green integrated retest
 - Owner approved remaining Category 1 engine/map graph work together; no
   registration, no Android/app/APK and no Category 2 execution.
