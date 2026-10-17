@@ -15,6 +15,7 @@ class WorkRegister(unittest.TestCase):
         patches = [mock.patch.object(ws, "ITEMS", Path(self.tmp.name) / "items"),
                    mock.patch.object(ws, "_remote", return_value=[]),
                    mock.patch.object(ws, "_branch", return_value="branch-a"),
+                   mock.patch.object(ws, "_git", return_value=""),
                    mock.patch.object(ws, "REGISTER", Path(self.tmp.name) / "REGISTER.md"),
                    mock.patch.object(ws, "INDEX", Path(self.tmp.name) / "index.json")]
         for p in patches:
@@ -66,6 +67,18 @@ class WorkRegister(unittest.TestCase):
         self.assertIn("**T-4** old test", page)
         self.assertIn("docs/T4.md", page)
         self.assertLess(page.index("## Start here"), page.index("**T-5**"))
+
+    def test_index_entries_from_other_branches_are_shown_not_copied(self):
+        other = '{"sources": [{"what": "Lane notes", "where": "docs/LANES.md", "cost": "tiny", "topics": ["lanes"]}]}'
+
+        def fake_git(*args):
+            if args[0] == "for-each-ref":
+                return "origin/branch-b"
+            return other if args[0] == "show" and args[1].endswith("work/index.json") else ""
+        with mock.patch.object(ws, "_git", side_effect=fake_git):
+            self.assertTrue(ws.where(ws.load_index(), {}, "lanes"))
+            self.run_cli("source", "Mine", "--where", "docs/MINE.md")
+        self.assertNotIn("LANES", ws.INDEX.read_text())
 
 
 if __name__ == "__main__":
