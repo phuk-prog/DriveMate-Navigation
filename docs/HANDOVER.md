@@ -1,5 +1,16 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 — Run B1 done: JOURNEY-001 junctions and roundabouts (Claude)
+- [Run 39043457966](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39043457966), ~5 min,
+  `benchmarks/journey001.py`, `.github/workflows/journey001.yml`. Report:
+  [JOURNEY-001](JOURNEY_001_RESULTS.md). DMN 57/57 valid, 36/36 turns, 18/19 exits.
+- Importer fixes `2d9c3f9` + `436d548` (owner-approved): one bad turn rule never
+  rejects a whole map; Category 2 rerun unchanged.
+- Times: GitHub/UTC is one hour behind UK time (BST) — quote UK time to the owner.
+- Next: run B2 (lanes 10, speed limits 15; drivemate-data lanes/limits pinned to one
+  release). Pending owner choices: two DMN proposals in the JOURNEY-001 report;
+  merging the research branch into main.
+
 ## 2026-10-17 — Category 2 run A done: ACCESS-001 + ONEWAY-002 (Claude)
 - One shared run, two separate scores ([run 39039633092](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39039633092),
   ~8 min). Harness `benchmarks/access001_route.py --test access001|oneway002`,

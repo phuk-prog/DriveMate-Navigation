@@ -1,0 +1,18 @@
+{
+ "agent": "unknown AI",
+ "branch": "ccr-195b89cb-2aaytg",
+ "created": "2026-10-17T15:10:39+00:00",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T15:10:39+00:00 next by unknown AI on ccr-195b89cb-2aaytg"
+ ],
+ "id": "RUN-B2-LANES-LIMITS",
+ "read_first": [
+  "docs/JOURNEY_001_RESULTS.md"
+ ],
+ "runs": [],
+ "state": "next",
+ "title": "Run B2: lanes (10) and speed limits (15), 4 engines + drivemate-data files",
+ "updated": "2026-10-17T15:10:39+00:00",
+ "why": "Owner-approved grouping; each category scored separately. OSM turn:lanes and maxspeed as map truth; engines only where they output lanes/limits (others NOT_AVAILABLE); drivemate-data lanes-*.json and limits-*.json pinned to one release (the data the phone uses)."
+}

@@ -64,7 +64,14 @@ includes importing the whole clip each time, so it is not comparable (Category 7
 | 1135461207, 559432689 | DMN | Start/finish on a road DMN marks closed: withheld by policy | By design (restricted kinds only) |
 | 17 closed cases | GraphHopper | Route did not start/finish on the exact segments | Harness/adapter snapping; not a rule break |
 
-## Proposed DMN improvements (owner approval needed)
+## Follow-up
+
+Both proposals below were approved and done in `436d548` (unknown rule values and
+multi from/to rules now fail closed per relation). Fresh four-engine rerun
+[39041918552](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39041918552):
+scores unchanged (DMN 44/44, ONEWAY-002 48/48, no rule breaks).
+
+## Proposed DMN improvements (as originally proposed)
 
 1. Other importer checks still reject a whole map for one bad relation ("unsupported
    turn restriction" value; `only_` with several from/to ways). Handle them per
