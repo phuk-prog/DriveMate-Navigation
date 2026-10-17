@@ -105,7 +105,8 @@
         "test_uk_preference_case_register.py",
         "test_uk_osrm_case_comparison.py",
         "test_uk_osrm_interior_audit.py",
-        "test_public_uk_probe.py"
+        "test_public_uk_probe.py",
+        "test_route004_quality_diagnostic.py"
       ],
       "engine_rank": null,
       "navigation_score": null
