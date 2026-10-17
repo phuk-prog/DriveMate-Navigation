@@ -1,0 +1,77 @@
+{
+  "calculation_timing": {
+    "hardware_comparability": "DMN only; not rankable against GitHub-hosted engine timings",
+    "max_ms": 806.0,
+    "median_ms": 159.8,
+    "min_ms": 21.5,
+    "p95_ms": 628.5,
+    "samples": 142,
+    "scope": "local warm Python process; OSM import plus route per case; wide-clip fallback excluded from recorded field"
+  },
+  "case_ids": {
+    "ENDPOINT_WITHHELD_BY_POLICY": [
+      "4853640",
+      "8798974",
+      "13119340",
+      "13119370",
+      "20158895",
+      "21197635"
+    ],
+    "ENGINE_REJECTED_MAP": [
+      "16686773"
+    ],
+    "SAFE_NO_ROUTE": [
+      "4853555",
+      "7615778",
+      "10558420",
+      "13613008",
+      "14285234",
+      "16644804"
+    ]
+  },
+  "cases_frozen": 169,
+  "contract": "TURN-001 v1.3",
+  "discriminating_cases": 129,
+  "engine": "DMN",
+  "evidence_class": "PROVISIONAL_MAP_DERIVED",
+  "external_engines": {
+    "executed_on_same_revision": 0,
+    "ranking": "UNAVAILABLE",
+    "reason": "Completed GitHub run 39019749346 used different revision 0668fce; artifact access returned HTTP 403, so its outcomes were not reused."
+  },
+  "fail_prohibited_case_ids": [],
+  "oracle": "Hashed OpenStreetMap restriction relations and graph tags; not independent UK legal truth",
+  "pass_and_whole_route_legal": 129,
+  "provenance": {
+    "cohort_sha256": "f2949a8a9aab40b7f62bc658cf92778f440ab5cdcc7ffcc755e21dc1b83c391c",
+    "engine": "DMN",
+    "prepared_sha256": "8500d8f3d9cf99660fcc3267ad422134fce87cbb946fe25f6940763546707bf3",
+    "revision": "a7ab71070be10dcf250800fb390214cc49ebfb46",
+    "runner_sha256": "194f60cc30ad7aee437f1562036ede41e8aaddbc45ecc5a6c8e810b50a286f8f",
+    "schema": 1,
+    "source_sha256": "2a8ef8e1f2533cb009b1ce248a6bf4eaabdd47e03979e64e24cd844f3b22acba"
+  },
+  "revision": "a7ab71070be10dcf250800fb390214cc49ebfb46",
+  "setup_attempts": [
+    {
+      "outcome": "FAILED_SETUP",
+      "reason": "osmium binary and source PBF absent after 9 cases"
+    },
+    {
+      "outcome": "FAILED_SETUP",
+      "reason": "containerized osmium could not write newly created mode-0700 wide directory"
+    },
+    {
+      "outcome": "COMPLETE",
+      "reason": "pinned source verified and containerized osmium ran as workspace uid"
+    }
+  ],
+  "test_id": "TURN-001",
+  "testable_cases": 142,
+  "verdict_counts": {
+    "ENDPOINT_WITHHELD_BY_POLICY": 6,
+    "ENGINE_REJECTED_MAP": 1,
+    "PASS": 129,
+    "SAFE_NO_ROUTE": 6
+  }
+}

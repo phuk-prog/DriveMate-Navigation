@@ -1,5 +1,11 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 — TURN-001 live-head DMN baseline
+- Branch `codex/turn001-live-dmn-20261017`, based on PR #4 head `a7ab710`.
+- DMN: 129 PASS / 0 prohibited / 6 safe no-route / 6 OSM-barred endpoints / 1 map rejection across 142 testable cases; 159.8 ms median, 628.5 ms p95 local import+route.
+- No live-SHA competitor ranking: public run 39019749346 used `0668fce`; artifact/API access returned 403. No behavior change.
+- Next owner-reviewed action: obtain a fresh same-SHA four-engine summary, then compare the seven DMN coverage cases before proposing a fix.
+
 ## 2026-10-17 — Category 1, TURN-001 turn-restriction comparison
 - Branch `codex/dmn-gps001-ranked-trial-20261015` (PR #4). Harness contract
   TURN-001 v1.3: real-journey test (direction of travel given to every engine,

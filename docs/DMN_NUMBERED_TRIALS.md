@@ -430,3 +430,14 @@ inputs; expected equivalent subset is 10, with 22 permission/purpose mappings
 unsupported rather than scored as faults. Local 134/134 map-data and 628/628
 regression methods pass; actual live profile outcomes await GitHub. See
 `DMN_CATEGORY_01_PROFILE_TRIAL.md`. No runtime/category advancement.
+
+### TURN-001 live-head DMN baseline
+
+At `a7ab710`, DMN completed all 142 testable frozen Greater Manchester cases:
+129 mapped-legal passes, zero prohibited-turn routes, six safe no-route results,
+six OSM-barred endpoint withholds and one no-motorcar-edge map rejection. Local
+import-plus-route timing was 159.8 ms median / 628.5 ms p95 over 142 samples.
+No competitive ranking: the accessible four-engine workflow page is for a
+different SHA and its artifacts returned HTTP 403. See
+`TURN_001_LIVE_DMN_BASELINE.md` and
+`references/turn001-dmn-a7ab710-summary.json`. No engine behavior changed.
