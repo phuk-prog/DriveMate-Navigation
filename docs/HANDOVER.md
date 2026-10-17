@@ -1,5 +1,21 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 — no-registration policy and TURN-001 reference endpoint audit
+- Owner: do not sign up for research sources; leave inaccessible legal
+  evidence DIAGNOSED/UNVERIFIED and move to registration-free tasks. Shared
+  [rule](DMN_NO_REGISTRATION_RULE.md) indexed in the REGISTER read-first map.
+- TURN-001 five missing-route cases: completed map-based diagnosis, NOT
+  independent legal proof; do not pursue D-TRO consumer registration.
+- [Run 39028874337](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39028874337)
+  successfully analysed existing 142-case v1.3 engine artifacts only.
+  GraphHopper 67 raw base-clip off-target, 54 with DMN exact-anchored
+  comparison: 41 start-only mismatch, 11 finish-only, 2 both; see
+  [endpoint report](TURN_001_ENDPOINT_AUDIT.md). Original final total 68
+  remains unchanged. No engine code changed or expensive competitor reruns.
+- Next: determine cause of mismatch from small, already accessible
+  GraphHopper geometry/adapters; no Category 2 or Android app changes.
+
+
 ## 2026-10-17 (later still) — work register + BARRIER-001 baseline
 - Shared register for all AIs: `python3 -m tools.work_status --fetch` (done / in progress /
   next, read-first list, `where <topic>`); rule at top of AGENTS.md.
