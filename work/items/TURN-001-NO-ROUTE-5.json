@@ -1,18 +1,20 @@
 {
- "agent": "Claude",
- "branch": "claude/dmn-turn-restriction-debug-mhw7cw",
+ "agent": "ChatGPT GPT-6",
+ "branch": "codex/chatgpt-turn001-no-route5-20261017",
  "created": "2026-10-17T10:06:34+00:00",
  "fingerprints": [],
  "history": [
-  "2026-10-17T10:06:34+00:00 next by Claude on claude/dmn-turn-restriction-debug-mhw7cw"
+  "2026-10-17T10:06:34+00:00 next by Claude on claude/dmn-turn-restriction-debug-mhw7cw",
+  "2026-10-17T11:09:44.613Z in_progress by ChatGPT GPT-6 on codex/chatgpt-turn001-no-route5-20261017"
  ],
  "id": "TURN-001-NO-ROUTE-5",
  "read_first": [
   "docs/TURN_001_RESULTS.md: Reasons, DMN"
  ],
  "runs": [],
- "state": "next",
+ "state": "in_progress",
  "title": "Check by hand whether a legal way exists at TURN-001's 5 DMN no-route junctions",
- "updated": "2026-10-17T10:06:34+00:00",
- "why": "No engine found one; not proven either way"
+ "updated": "2026-10-17T11:09:44.613Z",
+ "why": "No engine found one; not proven either way",
+ "summary": "Investigating the five frozen Greater Manchester TURN-001 no-route cases using original four-engine artifacts and relation-level map evidence. No engine behaviour changes."
 }
