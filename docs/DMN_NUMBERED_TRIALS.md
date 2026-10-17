@@ -1,5 +1,17 @@
 # Numbered navigation trials
 
+## INTEGRATED-001 engine-only journey baseline (17 October 2026)
+
+DMN passes 3/3 frozen synthetic component-integration journeys: clean route/
+match/guidance/arrival, corroborated wrong-turn replacement, and a prohibited-
+turn detour. The oracle was frozen at `aa99395`; execution source is `d12af5c`.
+All twelve external families retain per-case UNSUPPORTED or NOT_RUN reasons;
+there is no competitive ranking. This is an engine-only analytical baseline,
+not Android, physical GNSS, UK road truth or app readiness. Exact results are in
+`references/integrated001-dmn-20261017.json` and
+`references/integrated001-scorecard-20261017.json`; see
+`docs/INTEGRATED_001_RESULTS.md` for limitations.
+
 **Owner-approved prospective policy (16 October 2026):**
 [DMN_PERMANENT_TESTING_POLICY.md](DMN_PERMANENT_TESTING_POLICY.md) supersedes
 any earlier recommendations here about universal score-first rankings, running

@@ -1,0 +1,374 @@
+{
+  "test_id": "INTEGRATED-001",
+  "classification": "DMN-only synthetic lifecycle conformance; no competitive ranking",
+  "formula": "10 * passed / 3 only for a complete judged cohort",
+  "rows": [
+    {
+      "system": "DMN",
+      "rank": 1,
+      "score_out_of_ten": 10.0,
+      "passed": 3,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-001-clean-arrival",
+          "outcome": "PASS",
+          "checks": {
+            "route": true,
+            "route_line": true,
+            "match": true,
+            "instruction": true,
+            "arrival": true
+          },
+          "failures": [],
+          "actual": {
+            "route_edges": [
+              "w:1:0:f",
+              "w:1:1:f",
+              "w:1:2:f"
+            ],
+            "route_line": "PASS",
+            "match_status": "MATCHED",
+            "instruction_phase": "APPROACH",
+            "arrival_states": [
+              "CANDIDATE",
+              "ARRIVED"
+            ]
+          },
+          "calculation_ms": 0.300141
+        },
+        {
+          "case_id": "INTEGRATED-001-corroborated-reroute",
+          "outcome": "PASS",
+          "checks": {
+            "first_request": true,
+            "second_request": true,
+            "replacement": true,
+            "installed": true,
+            "installed_route": true
+          },
+          "failures": [],
+          "actual": {
+            "first_request": false,
+            "second_request": true,
+            "replacement_edges": [
+              "w:2:1:f",
+              "w:2:2:f"
+            ],
+            "replacement_installed": true,
+            "installed_edges": [
+              "w:2:1:f",
+              "w:2:2:f"
+            ]
+          },
+          "calculation_ms": 0.058578
+        },
+        {
+          "case_id": "INTEGRATED-001-turn-restriction-detour",
+          "outcome": "PASS",
+          "checks": {
+            "restricted_detour": true
+          },
+          "failures": [],
+          "actual": {
+            "route_edges": [
+              "w:1:0:f",
+              "w:2:0:f",
+              "w:2:1:f",
+              "w:2:2:f"
+            ]
+          },
+          "calculation_ms": 0.022974
+        }
+      ]
+    },
+    {
+      "system": "Valhalla",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-001-clean-arrival",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-001-corroborated-reroute",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-001-turn-restriction-detour",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "OSRM",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-001-clean-arrival",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-001-corroborated-reroute",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-001-turn-restriction-detour",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "GraphHopper",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-001-clean-arrival",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-001-corroborated-reroute",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-001-turn-restriction-detour",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "OsmAnd",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-001-clean-arrival",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-001-corroborated-reroute",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-001-turn-restriction-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "Organic Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-001-clean-arrival",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-001-corroborated-reroute",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-001-turn-restriction-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "BRouter",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-001-clean-arrival",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-001-corroborated-reroute",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-001-turn-restriction-detour",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "HERE",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-001-clean-arrival",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-001-corroborated-reroute",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-001-turn-restriction-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "Mapbox",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-001-clean-arrival",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-001-corroborated-reroute",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-001-turn-restriction-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "TomTom",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-001-clean-arrival",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-001-corroborated-reroute",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-001-turn-restriction-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "openrouteservice",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-001-clean-arrival",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-001-corroborated-reroute",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-001-turn-restriction-detour",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "Google Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-001-clean-arrival",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-001-corroborated-reroute",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-001-turn-restriction-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "Waze",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-001-clean-arrival",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-001-corroborated-reroute",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-001-turn-restriction-detour",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    }
+  ]
+}
