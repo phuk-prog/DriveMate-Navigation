@@ -3,12 +3,18 @@
 Categories 5, 6, 8, 9 and 11 from one shared run, each ranked separately (no total).
 Truth is map-derived (hashed OpenStreetMap snapshot), not independent UK road law.
 
-**DMN: 57/57 valid routes, 36/36 junction instructions, 18/19 judged roundabout exits.**
+**DMN: 57/57 valid routes, 36/36 junction instructions, 21/21 roundabout exits** (v1.1,
+after the owner-approved changes below; v1 had 18/19 judged).
 
 ## Run and frozen inputs
 
-- [Run 39043457966](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39043457966),
-  revision `17e84a4`, ~5 minutes; scores in [references](../references/journey001-runB1-20261017.json).
+- Result of record (v1.1): [run 39044116917](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39044116917),
+  revision `4abf5bf`, all four engines freshly rerun after the DMN change;
+  [scores](../references/journey001-runB1-v1.1-20261017.json). First run (v1):
+  [39043457966](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39043457966),
+  [scores](../references/journey001-runB1-20261017.json).
+- Owner decision (v1.1): every road a car may leave by counts as a roundabout exit,
+  service roads included.
 - Source: pinned Greater Manchester OSM snapshot `2a8ef8e1…`. Cohort
   `config/journey001-cohort.json`, frozen before any engine ran: junction nodes joining
   3–4 arms of car roads (no service roads, living streets, motorways, roundabouts or
@@ -44,17 +50,17 @@ quality; longer journeys are needed before ranking it (run C routes).
 | 3 | Valhalla | 35/36 | 1 straight-on movement announced as "exit right" (turn-7839680152) |
 | 4 | GraphHopper | 26/30 | 4 turns of 60–120° announced as "continue" (6 not judged: route differs) |
 
-## Category 9 — roundabout exit number
+## Category 9 — roundabout exit number (v1.1: every exit a car may leave by counts)
 
-| Engine | Correct / judged | Unclear (service-road exit) | Wrong / refused | Not judged |
-|---|---:|---:|---|---:|
-| Valhalla | 20/20 | 0 | — | 1 |
-| GraphHopper | 15/15 | 0 | — | 6 |
-| DMN | 18/19 | 2 | 1 refused (roundabout-127572573-exit2) | 0 |
-| OSRM | 17/18 | 2 | 1 wrong (same case: said exit 1) | 1 |
+| Rank | Engine | Correct / judged | Wrong | Not judged (route differs) |
+|---:|---|---:|---|---:|
+| 1 | DMN | **21/21** | — | 0 |
+| 2 | Valhalla | 20/20 | — | 1 |
+| 3 | GraphHopper | 15/15 | — | 6 |
+| 4 | OSRM | 17/20 | 3: counted without service-road exits | 1 |
 
-Not ranked: the engines were judged on different numbers of cases and two cases
-depend on whether service-road exits count, which is a convention (see below).
+Ranked by correct answers on the cases each engine was judged on; engines with
+fewer judged cases rank below those with more at the same accuracy.
 
 ## Category 11 — route line on the road
 
@@ -72,18 +78,15 @@ includes the clip import (Category 7, run D).
 
 ## Issue register
 
-| Case | Engine | Issue |
-|---|---|---|
-| roundabout-127572573-exit2 | DMN | Planned the route but refused the instruction: the exit road is an unnamed service road with uncertain access, and the maneuver builder refuses non-allowed edges |
-| roundabout-127572573-exit2 | OSRM | Said exit 1 for exit 2 (an unnamed service-road exit comes first) |
-| roundabout-3994228-exit3, roundabout-58425651-exit2 | DMN, OSRM | Counted exits without service roads (Oldmoor Road; an unnamed one-way service road); Valhalla counted them |
-| 4 turn cases | GraphHopper | Real 60–120° turns announced as "continue" |
-| turn-7839680152 | Valhalla | Straight-on movement announced as "exit right" |
+| Case | Engine | Issue | Status |
+|---|---|---|---|
+| roundabout-127572573-exit2 | DMN | Refused the instruction because the exit road had uncertain access | **Fixed** (`4abf5bf`, owner-approved): instructs on uncertain-access roads the route uses |
+| roundabout-3994228-exit3, roundabout-58425651-exit2 | DMN | Did not count service-road exits | **Fixed** (`4abf5bf`): owner chose to count every exit |
+| same three cases | OSRM | Counts exits without service roads | Competitor, recorded |
+| 4 turn cases | GraphHopper | Real 60–120° turns announced as "continue" | Competitor, recorded |
+| turn-7839680152 | Valhalla | Straight-on movement announced as "exit right" | Competitor, recorded |
 
-## Proposed DMN improvements (owner approval needed)
+## Proposed DMN improvements
 
-1. Give the roundabout instruction even when the exit road has uncertain access, as
-   long as the route already uses it (today the maneuver builder refuses).
-2. Owner choice: should a service-road exit count when numbering roundabout exits?
-   DMN skips them. Suggestion: count named service roads (for example Oldmoor Road)
-   and skip unnamed ones (car parks, private accesses).
+None outstanding for categories 5, 8, 9 and 11 on this cohort. Category 6 needs longer
+journeys (run C).
