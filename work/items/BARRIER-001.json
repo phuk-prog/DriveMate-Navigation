@@ -1,0 +1,15 @@
+{
+ "agent": "Claude",
+ "branch": "claude/dmn-turn-restriction-debug-mhw7cw",
+ "created": "2026-10-17T09:38:19+00:00",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T09:38:19+00:00 in_progress by Claude on claude/dmn-turn-restriction-debug-mhw7cw"
+ ],
+ "id": "BARRIER-001",
+ "runs": [],
+ "state": "in_progress",
+ "summary": "Cohort frozen (110 cases, 94 testable); harness written; first local DMN run done; GitHub run next.",
+ "title": "Route-level check of bollards and gates, 4 engines",
+ "updated": "2026-10-17T09:38:19+00:00"
+}

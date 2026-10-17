@@ -1,0 +1,53 @@
+"""Shared work register (tools/work_status.py): claims, done fingerprints, refusals."""
+import io
+import tempfile
+import unittest
+from contextlib import redirect_stdout
+from pathlib import Path
+from unittest import mock
+
+from tools import work_status as ws
+
+
+class WorkRegister(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        patches = [mock.patch.object(ws, "ITEMS", Path(self.tmp.name) / "items"),
+                   mock.patch.object(ws, "_remote", return_value=[]),
+                   mock.patch.object(ws, "_branch", return_value="branch-a")]
+        for p in patches:
+            p.start()
+            self.addCleanup(p.stop)
+        self.addCleanup(self.tmp.cleanup)
+
+    def run_cli(self, *argv):
+        out = io.StringIO()
+        with redirect_stdout(out):
+            code = ws.main(list(argv))
+        return code, out.getvalue()
+
+    def test_finished_work_is_seen_and_not_restarted(self):
+        self.run_cli("finish", "T-1", "--title", "t", "--fingerprint", "v1|abc")
+        self.assertEqual(self.run_cli("seen", "v1|abc")[0], 1)
+        self.assertEqual(self.run_cli("seen", "v2|abc")[0], 0)
+        self.assertEqual(self.run_cli("start", "T-1")[0], 2)
+        self.assertEqual(self.run_cli("start", "T-1", "--reason", "owner asked for a rerun")[0], 0)
+
+    def test_work_held_on_another_branch_is_refused(self):
+        held = {"id": "T-2", "state": "in_progress", "branch": "branch-b", "agent": "Codex", "updated": ws._now()}
+        with mock.patch.object(ws, "_remote", return_value=[held]):
+            code, text = self.run_cli("start", "T-2", "--agent", "Claude")
+            self.assertEqual(code, 2)
+            self.assertIn("Codex", text)
+            self.assertIn("T-2", ws.show(ws.collect()))
+
+    def test_stale_claim_can_be_taken(self):
+        held = {"id": "T-3", "state": "in_progress", "branch": "branch-b", "agent": "Codex",
+                "updated": "2020-01-01T00:00:00+00:00"}
+        with mock.patch.object(ws, "_remote", return_value=[held]):
+            self.assertIn("STALE", ws.show(ws.collect()))
+            self.assertEqual(self.run_cli("start", "T-3", "--agent", "Claude")[0], 0)
+
+
+if __name__ == "__main__":
+    unittest.main()

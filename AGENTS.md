@@ -1,5 +1,18 @@
 # DriveMate Navigation research: owner-confirmed testing workflow
 
+## Every AI: check the shared work register first (owner, 2026-10-17)
+
+Several AIs (Claude, Codex, others) work here. Before any work, run
+`python3 -m tools.work_status --fetch`. It lists what is done, in progress (which
+AI, which branch) and next, read from every branch. Then:
+
+1. Do not start an item another AI holds (unless STALE), or one already done with
+   the same inputs: `python3 -m tools.work_status seen "<fingerprint>"`.
+2. Claim your item: `python3 -m tools.work_status start <ID> --title "..." --agent <you>`.
+3. When finished: `finish <ID> --summary "..." --results <doc> --run <CI link>
+   --fingerprint "<test version>|<input hashes>|<revision>"`. Add follow-ups with `plan`.
+4. Commit and push `work/items/` with your work, and update docs/HANDOVER.md.
+
 Read live PR/head and active/queued jobs before experiments. Do not assume the
 workspace or scheduled head is current. Work only in this existing research
 repository unless separately authorized; production DriveMate stays unchanged.

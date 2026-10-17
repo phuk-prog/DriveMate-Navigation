@@ -241,7 +241,8 @@
         "test_applicable_cohort.py",
         "test_provider_summaries.py",
         "test_category_test_runner.py",
-        "test_dmn_auto_progress.py"
+        "test_dmn_auto_progress.py",
+        "test_work_status.py"
       ],
       "engine_rank": null,
       "navigation_score": null
