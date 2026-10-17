@@ -1,18 +1,19 @@
 {
- "agent": "unknown AI",
+ "agent": "Claude",
  "branch": "ccr-195b89cb-2aaytg",
  "created": "2026-10-17T13:08:34+00:00",
  "fingerprints": [],
  "history": [
-  "2026-10-17T13:08:34+00:00 next by unknown AI on ccr-195b89cb-2aaytg"
+  "2026-10-17T13:08:34+00:00 next by unknown AI on ccr-195b89cb-2aaytg",
+  "2026-10-17T14:42:58+00:00 in_progress by Claude on ccr-195b89cb-2aaytg"
  ],
  "id": "RUN-B-JOURNEYS",
  "read_first": [
   "docs/HANDOVER.md"
  ],
  "runs": [],
- "state": "next",
+ "state": "in_progress",
  "title": "Run B: real UK journeys, 4 engines -> categories 5, 6, 8, 9, 10, 11, 15 scored separately",
- "updated": "2026-10-17T13:08:40+00:00",
+ "updated": "2026-10-17T14:42:58+00:00",
  "why": "Owner-approved grouping (17 Oct 2026): runs share execution, each category keeps its own frozen cases, rules, score and ranking; no combined score; a failed shared step marks dependants NOT_RUN. Start with the owner's Stockport->M60->M56->SK8 2EZ drive, M60/M56/M62/A34 junctions, big roundabouts. Lanes only from engines that output them (others NOT_AVAILABLE)."
 }

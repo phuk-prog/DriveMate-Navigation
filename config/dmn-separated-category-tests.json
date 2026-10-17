@@ -131,7 +131,8 @@
       "label": "Junction turns and maneuvers",
       "scope": "Junction scorer and instruction contract tests; not road-truth verified.",
       "test_files": [
-        "test_junction_scorecard.py"
+        "test_junction_scorecard.py",
+        "test_journey001.py"
       ],
       "engine_rank": null,
       "navigation_score": null

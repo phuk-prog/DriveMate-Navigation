@@ -1,0 +1,4255 @@
+[
+ {
+  "id": "turn-664643295",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "bbox": "-2.403511,53.548430,-2.358207,53.575379",
+  "clip_sha256": "dc0e0b8852645c40d8824eb2e7476266638e082dfb3421c081dcc4922b49ea72",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.56200305,
+    -2.3809154
+   ],
+   "destination": [
+    53.561986950000005,
+    -2.3805451499999997
+   ],
+   "origin_segment": [
+    "5239922152",
+    "664643295"
+   ],
+   "destination_segment": [
+    "664643295",
+    "5239922151"
+   ],
+   "direct_path": [
+    "5239922152",
+    "664643295",
+    "5239922151"
+   ],
+   "kind": "turn",
+   "expected": "left",
+   "junction": "664643295"
+  }
+ },
+ {
+  "id": "turn-394864820",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "bbox": "-2.134056,53.380766,-2.088753,53.407715",
+  "clip_sha256": "c5724d4abf903fae306632f8f1b46304d8d23ed6e25913c5cac6e60938687e05",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-767841424",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "bbox": "-2.180041,53.384459,-2.134738,53.411408",
+  "clip_sha256": "25c89668d7a484c22b325a095f28fd5a4efb05492f659c46bfffafe9faf21e31",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.398221899999996,
+    -2.1576506
+   ],
+   "destination": [
+    53.39807305,
+    -2.15707865
+   ],
+   "origin_segment": [
+    "10060654985",
+    "12264339105"
+   ],
+   "destination_segment": [
+    "767841424",
+    "1323471017"
+   ],
+   "direct_path": [
+    "10060654985",
+    "12264339105",
+    "767841424",
+    "1323471017"
+   ],
+   "kind": "turn",
+   "expected": "left",
+   "junction": "767841424"
+  }
+ },
+ {
+  "id": "turn-782230413",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "bbox": "-2.454012,53.513064,-2.408709,53.540013",
+  "clip_sha256": "91db47448dbb7fd1b23f332c2a5fdc9ff31f9767ee7f47d2fe7b3f3bd2ea91a7",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.526375900000005,
+    -2.4313724
+   ],
+   "destination": [
+    53.526551600000005,
+    -2.4316328
+   ],
+   "origin_segment": [
+    "7981603453",
+    "782230413"
+   ],
+   "destination_segment": [
+    "782230413",
+    "782230519"
+   ],
+   "direct_path": [
+    "7981603453",
+    "782230413",
+    "782230519"
+   ],
+   "kind": "turn",
+   "expected": "left",
+   "junction": "782230413"
+  }
+ },
+ {
+  "id": "turn-701277528",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "bbox": "-2.454413,53.591608,-2.409110,53.618557",
+  "clip_sha256": "e3f8e654b3af535f59a782758afbf167d5a04fcbfe9c0dde46a87d347f94be1b",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.604717050000005,
+    -2.43188955
+   ],
+   "destination": [
+    53.6051091,
+    -2.4321494
+   ],
+   "origin_segment": [
+    "768408694",
+    "701277528"
+   ],
+   "destination_segment": [
+    "5475771349",
+    "1428800179"
+   ],
+   "direct_path": [
+    "768408694",
+    "701277528",
+    "5475771349",
+    "1428800179"
+   ],
+   "kind": "turn",
+   "expected": "left",
+   "junction": "701277528"
+  }
+ },
+ {
+  "id": "turn-1681348675",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "bbox": "-2.208417,53.388534,-2.163114,53.415483",
+  "clip_sha256": "be29dba08122e421e41cffad9d43d6eae2d89a69dd8ec8ace77b7d1c0748e14f",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.401876200000004,
+    -2.1860777000000002
+   ],
+   "destination": [
+    53.40208585,
+    -2.18587805
+   ],
+   "origin_segment": [
+    "9014730400",
+    "9014730396"
+   ],
+   "destination_segment": [
+    "1681348675",
+    "9008027798"
+   ],
+   "direct_path": [
+    "9014730400",
+    "9014730396",
+    "1681348675",
+    "9008027798"
+   ],
+   "kind": "turn",
+   "expected": "left",
+   "junction": "1681348675"
+  }
+ },
+ {
+  "id": "turn-1042587542",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "bbox": "-2.173715,53.428101,-2.128411,53.455050",
+  "clip_sha256": "ccfc6b36316cc653b0e3caf67538e7d381e59f4ac53d23b4dcf17ca6ab3e622d",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.44154585,
+    -2.1507110000000003
+   ],
+   "destination": [
+    53.44146595,
+    -2.1510731
+   ],
+   "origin_segment": [
+    "1042587087",
+    "1042587542"
+   ],
+   "destination_segment": [
+    "1042587542",
+    "1042587544"
+   ],
+   "direct_path": [
+    "1042587087",
+    "1042587542",
+    "1042587544"
+   ],
+   "kind": "turn",
+   "expected": "left",
+   "junction": "1042587542"
+  }
+ },
+ {
+  "id": "turn-990406614",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "bbox": "-2.295517,53.382425,-2.250213,53.409375",
+  "clip_sha256": "f7e972c64dc8707309a00b2b6fdd8335bc73853510e7cfd5ecb35689a1dd254e",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.3960548,
+    -2.2725524
+   ],
+   "destination": [
+    53.395756,
+    -2.27268815
+   ],
+   "origin_segment": [
+    "990527998",
+    "990406614"
+   ],
+   "destination_segment": [
+    "990406616",
+    "990406618"
+   ],
+   "direct_path": [
+    "990527998",
+    "990406614",
+    "990406616",
+    "990406618"
+   ],
+   "kind": "turn",
+   "expected": "left",
+   "junction": "990406614"
+  }
+ },
+ {
+  "id": "turn-247095280",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "bbox": "-2.025150,53.460577,-1.979846,53.487526",
+  "clip_sha256": "a2db89d4ee416fd11ffaef65711a63724b37118addc70ea456b76f7a84709262",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.47391155,
+    -2.0023286000000002
+   ],
+   "destination": [
+    53.473960700000006,
+    -2.0026296
+   ],
+   "origin_segment": [
+    "247095283",
+    "247095282"
+   ],
+   "destination_segment": [
+    "247095356",
+    "247094474"
+   ],
+   "direct_path": [
+    "247095283",
+    "247095282",
+    "247095281",
+    "247095280",
+    "247095356",
+    "247094474"
+   ],
+   "kind": "turn",
+   "expected": "left",
+   "junction": "247095280"
+  }
+ },
+ {
+  "id": "turn-810747480",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "bbox": "-2.326163,53.471196,-2.280859,53.498146",
+  "clip_sha256": "8bde1c82054941048a4301f5ab0ea4c5368160ae6e58bf5946496b8553b5a484",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-717881623",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "bbox": "-2.363955,53.441871,-2.318652,53.468820",
+  "clip_sha256": "f3ec701706b4985bdae39a16e83b50f467869f21b8ced9e26f46c78d5a33f3a6",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.45529815,
+    -2.34150765
+   ],
+   "destination": [
+    53.455521,
+    -2.3414669999999997
+   ],
+   "origin_segment": [
+    "717881790",
+    "717881623"
+   ],
+   "destination_segment": [
+    "717881711",
+    "717881735"
+   ],
+   "direct_path": [
+    "717881790",
+    "717881623",
+    "717881711",
+    "717881735"
+   ],
+   "kind": "turn",
+   "expected": "left",
+   "junction": "717881623"
+  }
+ },
+ {
+  "id": "turn-920563944",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "bbox": "-2.184351,53.472166,-2.139048,53.499115",
+  "clip_sha256": "56b75642c9a96368a6596cb589bad6808058ce75f320edced817b2f1f4574a7f",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.48542195,
+    -2.1615819
+   ],
+   "destination": [
+    53.4855346,
+    -2.1624958999999997
+   ],
+   "origin_segment": [
+    "920563954",
+    "920563944"
+   ],
+   "destination_segment": [
+    "920563944",
+    "689772232"
+   ],
+   "direct_path": [
+    "920563954",
+    "920563944",
+    "689772232"
+   ],
+   "kind": "turn",
+   "expected": "left",
+   "junction": "920563944"
+  }
+ },
+ {
+  "id": "turn-307419892",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "bbox": "-2.250336,53.466955,-2.205033,53.493904",
+  "clip_sha256": "5faddc3c19883ea4b987e47fb1e2c32e20deab2997df5b2de52061fea86ad094",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-277313601",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "bbox": "-2.128119,53.370683,-2.082815,53.397633",
+  "clip_sha256": "294ad469bea2910a62e1436433690b36a94eabb7c718c26e080a41d8169722c6",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-301486474",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "bbox": "-2.241953,53.368383,-2.196650,53.395332",
+  "clip_sha256": "a42b1e149a9601ed550f6961718e371611beed0c2a3192a620cdd89707f01a60",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.381772,
+    -2.2195914500000002
+   ],
+   "destination": [
+    53.381981499999995,
+    -2.2190991
+   ],
+   "origin_segment": [
+    "301486470",
+    "301486471"
+   ],
+   "destination_segment": [
+    "301487564",
+    "301487565"
+   ],
+   "direct_path": [
+    "301486470",
+    "301486471",
+    "301486472",
+    "301486473",
+    "301486474",
+    "301487561",
+    "301487562",
+    "301487563",
+    "301487564",
+    "301487565"
+   ],
+   "kind": "turn",
+   "expected": "left",
+   "junction": "301486474"
+  }
+ },
+ {
+  "id": "turn-459518436",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "bbox": "-2.590227,53.386432,-2.544923,53.413381",
+  "clip_sha256": "600b48028886aa7a212e6063dca8835463a42126516ff30ddbce39b659263573",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.40002805,
+    -2.5677703999999997
+   ],
+   "destination": [
+    53.40004755,
+    -2.56722165
+   ],
+   "origin_segment": [
+    "7530939444",
+    "459518435"
+   ],
+   "destination_segment": [
+    "459518436",
+    "9023112886"
+   ],
+   "direct_path": [
+    "7530939444",
+    "459518435",
+    "459518436",
+    "9023112886"
+   ],
+   "kind": "turn",
+   "expected": "left",
+   "junction": "459518436"
+  }
+ },
+ {
+  "id": "turn-307375758",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-339870063",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-306573176",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-13124798801",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-885006987",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-25254752",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-3367124340",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-1683152000",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-391428178",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-32826235",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-252891123",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-1865913599",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-342104097",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-25475443",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-306859476",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-1268200000",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-471410368",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-33225564",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-308701009",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-1109588396",
+  "stratum": [
+   "turn",
+   "left"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-306874043",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.221260,53.460808,-2.175956,53.487757",
+  "clip_sha256": "92043a4fac18effbf375bd851764310dc7084e86bcf749d741f8242a0fd88c47",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-32695361",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.226263,53.496063,-2.180960,53.523013",
+  "clip_sha256": "b677b9e5fa1a46ed09cce39f3b43d818b4b70d8cfd148e5babd3541fef2135be",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.509667300000004,
+    -2.2033418
+   ],
+   "destination": [
+    53.5097755,
+    -2.2040193500000003
+   ],
+   "origin_segment": [
+    "32695362",
+    "32695361"
+   ],
+   "destination_segment": [
+    "32695361",
+    "32695378"
+   ],
+   "direct_path": [
+    "32695362",
+    "32695361",
+    "32695378"
+   ],
+   "kind": "turn",
+   "expected": "right",
+   "junction": "32695361"
+  }
+ },
+ {
+  "id": "turn-920573097",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.190028,53.470695,-2.144724,53.497644",
+  "clip_sha256": "28a58b557a4b19bef3140cb09da513a196bf48989ec72b783151e845a177b5ae",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.484376999999995,
+    -2.1674593499999997
+   ],
+   "destination": [
+    53.48410585,
+    -2.1677570499999996
+   ],
+   "origin_segment": [
+    "920573095",
+    "920573097"
+   ],
+   "destination_segment": [
+    "920573082",
+    "2449516537"
+   ],
+   "direct_path": [
+    "920573095",
+    "920573097",
+    "920573082",
+    "2449516537"
+   ],
+   "kind": "turn",
+   "expected": "right",
+   "junction": "920573097"
+  }
+ },
+ {
+  "id": "turn-1346736008",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.430462,53.598683,-2.385159,53.625632",
+  "clip_sha256": "11b4422cd24602db8ebaaa909817215da7a65e82fef8a0db3ca6056bd5c54e33",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-7944778532",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.742055,53.438921,-2.696752,53.465870",
+  "clip_sha256": "326193bd372aade055339f1ac8f52c6a673857d74cc183aac02fffc189f75bb9",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.4524045,
+    -2.71924585
+   ],
+   "destination": [
+    53.45250325,
+    -2.71941655
+   ],
+   "origin_segment": [
+    "13164900580",
+    "7944778532"
+   ],
+   "destination_segment": [
+    "7944778532",
+    "7944778536"
+   ],
+   "direct_path": [
+    "13164900580",
+    "7944778532",
+    "7944778536"
+   ],
+   "kind": "turn",
+   "expected": "right",
+   "junction": "7944778532"
+  }
+ },
+ {
+  "id": "turn-1277699529",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.323935,53.435422,-2.278631,53.462371",
+  "clip_sha256": "adb1032d92aa131d245839ffd95f3b0f7d5854fcdb7f214961124666bc0b7998",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-25535022",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.250828,53.442680,-2.205525,53.469629",
+  "clip_sha256": "09cea5518270ef5fa9ec46c1546af647e6010e2c11470bf4005d5529e52c1e87",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-32611496",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.312195,53.602024,-2.266892,53.628973",
+  "clip_sha256": "b2da82cab9e2d4827b116ed353cacee7314707440587d3e3051841241a081006",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.6154986,
+    -2.28992095
+   ],
+   "destination": [
+    53.6153484,
+    -2.28950465
+   ],
+   "origin_segment": [
+    "32611502",
+    "32611496"
+   ],
+   "destination_segment": [
+    "32611496",
+    "32611288"
+   ],
+   "direct_path": [
+    "32611502",
+    "32611496",
+    "32611288"
+   ],
+   "kind": "turn",
+   "expected": "right",
+   "junction": "32611496"
+  }
+ },
+ {
+  "id": "turn-570762018",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.653674,53.650077,-2.608370,53.677027",
+  "clip_sha256": "15c39ccbce011aaf78a9ad06c82666e6c0a2a6863bfe73401ccd3fd3a415685e",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.6636675,
+    -2.6310436499999996
+   ],
+   "destination": [
+    53.6635217,
+    -2.6313702
+   ],
+   "origin_segment": [
+    "570762037",
+    "570762018"
+   ],
+   "destination_segment": [
+    "570762018",
+    "10274656531"
+   ],
+   "direct_path": [
+    "570762037",
+    "570762018",
+    "10274656531"
+   ],
+   "kind": "turn",
+   "expected": "right",
+   "junction": "570762018"
+  }
+ },
+ {
+  "id": "turn-924035915",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.356510,53.506107,-2.311206,53.533056",
+  "clip_sha256": "918a0210c7f134b7b0f45090b3978fd25d16c2ffec9ee855dfc3fa4a5f83f286",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.51941715,
+    -2.3341207500000003
+   ],
+   "destination": [
+    53.519468,
+    -2.3336878
+   ],
+   "origin_segment": [
+    "259764618",
+    "924035915"
+   ],
+   "destination_segment": [
+    "924035915",
+    "924068881"
+   ],
+   "direct_path": [
+    "259764618",
+    "924035915",
+    "924068881"
+   ],
+   "kind": "turn",
+   "expected": "right",
+   "junction": "924035915"
+  }
+ },
+ {
+  "id": "turn-6653839759",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.482625,53.544664,-2.437322,53.571613",
+  "clip_sha256": "8a58ab84bec9b8c258b0cfecd93c4600b960bc23af7d1ece7652ef284ab23c99",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.55807275,
+    -2.4601505
+   ],
+   "destination": [
+    53.55796345,
+    -2.4597799499999997
+   ],
+   "origin_segment": [
+    "6653945905",
+    "6673364695"
+   ],
+   "destination_segment": [
+    "11189348704",
+    "1623637384"
+   ],
+   "direct_path": [
+    "6653945905",
+    "6673364695",
+    "264371634",
+    "6653839759",
+    "11189348704",
+    "1623637384"
+   ],
+   "kind": "turn",
+   "expected": "right",
+   "junction": "6653839759"
+  }
+ },
+ {
+  "id": "turn-1400283306",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.697917,53.549394,-2.652614,53.576343",
+  "clip_sha256": "c1c53f6a19f17aa04672f8b0afdba942f7bf4a11d1496fbb13581c9eed91b742",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-724237392",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.488520,53.547111,-2.443217,53.574060",
+  "clip_sha256": "482b8f42327d92d90800397939b4d0bc228091ef2101d6662b9be1aca8518bf5",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.560496099999995,
+    -2.4654591000000003
+   ],
+   "destination": [
+    53.5607639,
+    -2.4657982499999997
+   ],
+   "origin_segment": [
+    "6147755204",
+    "6147755206"
+   ],
+   "destination_segment": [
+    "693388415",
+    "693388416"
+   ],
+   "direct_path": [
+    "6147755204",
+    "6147755206",
+    "724237390",
+    "724237391",
+    "11189104803",
+    "724237392",
+    "6147755209",
+    "693388415",
+    "693388416"
+   ],
+   "kind": "turn",
+   "expected": "right",
+   "junction": "724237392"
+  }
+ },
+ {
+  "id": "turn-919508520",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.089246,53.474112,-2.043943,53.501061",
+  "clip_sha256": "499ecd97c1e8f52d3ff7245864b2d192c9fc51e236601d74627baf0d7dee25d3",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.4879769,
+    -2.06643145
+   ],
+   "destination": [
+    53.487708,
+    -2.0674820499999997
+   ],
+   "origin_segment": [
+    "919508519",
+    "919508520"
+   ],
+   "destination_segment": [
+    "919508520",
+    "918115634"
+   ],
+   "direct_path": [
+    "919508519",
+    "919508520",
+    "918115634"
+   ],
+   "kind": "turn",
+   "expected": "right",
+   "junction": "919508520"
+  }
+ },
+ {
+  "id": "turn-2932878690",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.183873,53.454593,-2.138570,53.481542",
+  "clip_sha256": "687bdd15a16e40feb73f2d927a54901b84a2bd49f9d630db5916a858c7d94dce",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.468306,
+    -2.161353
+   ],
+   "destination": [
+    53.46797165,
+    -2.1614261
+   ],
+   "origin_segment": [
+    "926673597",
+    "11776149726"
+   ],
+   "destination_segment": [
+    "3655520596",
+    "2932878691"
+   ],
+   "direct_path": [
+    "926673597",
+    "11776149726",
+    "2932878690",
+    "3655520596",
+    "2932878691"
+   ],
+   "kind": "turn",
+   "expected": "right",
+   "junction": "2932878690"
+  }
+ },
+ {
+  "id": "turn-249361157",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.607618,53.458170,-2.562314,53.485120",
+  "clip_sha256": "2f66465aec84a57e3daa89c8f9e324395deb7a3edb58160efc422d99e0a00a55",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.47186465,
+    -2.58491315
+   ],
+   "destination": [
+    53.471688,
+    -2.58519775
+   ],
+   "origin_segment": [
+    "4571409801",
+    "4571409802"
+   ],
+   "destination_segment": [
+    "4571409803",
+    "9642497933"
+   ],
+   "direct_path": [
+    "4571409801",
+    "4571409802",
+    "249361157",
+    "4571409803",
+    "9642497933"
+   ],
+   "kind": "turn",
+   "expected": "right",
+   "junction": "249361157"
+  }
+ },
+ {
+  "id": "turn-340213371",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.571385,53.394861,-2.526082,53.421811",
+  "clip_sha256": "c58ba68c686ffd3403b41c8f5db6c34157811846ab3c332d5c3f27cc4f47a7ab",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-722546081",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "bbox": "-2.453527,53.577786,-2.408223,53.604736",
+  "clip_sha256": "9667a86ed580201c7a92e940cb479b73cc59030bd175546edf60c93f08cc0db2",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.5912836,
+    -2.43058935
+   ],
+   "destination": [
+    53.5914134,
+    -2.4309036
+   ],
+   "origin_segment": [
+    "1036117585",
+    "722546081"
+   ],
+   "destination_segment": [
+    "722546081",
+    "6885162984"
+   ],
+   "direct_path": [
+    "1036117585",
+    "722546081",
+    "6885162984"
+   ],
+   "kind": "turn",
+   "expected": "right",
+   "junction": "722546081"
+  }
+ },
+ {
+  "id": "turn-739060925",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-21709675",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-2739189482",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-739060901",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-1096367019",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-6477475964",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-21709653",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-307056477",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-7028213951",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-1109588724",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-1607553537",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-358880184",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-33405928",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-353180816",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-1290046057",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-243748581",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-29940828",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-786793667",
+  "stratum": [
+   "turn",
+   "right"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-81625428",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.377265,53.385974,-2.331961,53.412923",
+  "clip_sha256": "9bf016c63a130ee83eb5a453e1e0c2fc34a407a5918bcd80a5e935f3c1568145",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-282786422",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.618304,53.373451,-2.573001,53.400400",
+  "clip_sha256": "bf95db5082fadf35b7db8a8d592dbf11b524bea621007aaed8042954f3187de7",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.3869326,
+    -2.59523435
+   ],
+   "destination": [
+    53.386899549999995,
+    -2.5959809
+   ],
+   "origin_segment": [
+    "8495841502",
+    "9382960256"
+   ],
+   "destination_segment": [
+    "9382960218",
+    "8624046688"
+   ],
+   "direct_path": [
+    "8495841502",
+    "9382960256",
+    "9074173444",
+    "282786422",
+    "9074173445",
+    "9382960218",
+    "8624046688"
+   ],
+   "kind": "turn",
+   "expected": "straight",
+   "junction": "282786422"
+  }
+ },
+ {
+  "id": "turn-918297521",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.099261,53.485077,-2.053958,53.512027",
+  "clip_sha256": "9be6beae1c1815802124ffbfe645aabe006fc1e77cc245d4e59c6de90ee2bbe6",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.4985477,
+    -2.0761378500000003
+   ],
+   "destination": [
+    53.49854835,
+    -2.076763
+   ],
+   "origin_segment": [
+    "918297523",
+    "918297521"
+   ],
+   "destination_segment": [
+    "918297521",
+    "2205419930"
+   ],
+   "direct_path": [
+    "918297523",
+    "918297521",
+    "2205419930"
+   ],
+   "kind": "turn",
+   "expected": "straight",
+   "junction": "918297521"
+  }
+ },
+ {
+  "id": "turn-8617090122",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.189561,53.467530,-2.144257,53.494480",
+  "clip_sha256": "4e823c98367dee5f61684b3d8fef8e89183e32aedc5053a2292ac81c5d6069b7",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-20920075",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.249458,53.320553,-2.204155,53.347503",
+  "clip_sha256": "332f232fd54233306b2e72675333f96bf3f0c70710df961b2b22698eccde40a0",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.3344123,
+    -2.22650155
+   ],
+   "destination": [
+    53.3337872,
+    -2.22699915
+   ],
+   "origin_segment": [
+    "20920076",
+    "20920075"
+   ],
+   "destination_segment": [
+    "20920075",
+    "485257832"
+   ],
+   "direct_path": [
+    "20920076",
+    "20920075",
+    "485257832"
+   ],
+   "kind": "turn",
+   "expected": "straight",
+   "junction": "20920075"
+  }
+ },
+ {
+  "id": "turn-1491145596",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.411560,53.499073,-2.366257,53.526023",
+  "clip_sha256": "146aad21b63f5ff1371481cbda7629df42ed45563a259d70b7d5e1418e9b1ee9",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-307444490",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.728107,53.316816,-2.682803,53.343766",
+  "clip_sha256": "03891463cdc1aa006189e9112e323823c50f8d3f0fbf4e54ce234728c3281637",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.3303475,
+    -2.7057260000000003
+   ],
+   "destination": [
+    53.3302549,
+    -2.70525605
+   ],
+   "origin_segment": [
+    "1479547137",
+    "307444490"
+   ],
+   "destination_segment": [
+    "307444490",
+    "3126234658"
+   ],
+   "direct_path": [
+    "1479547137",
+    "307444490",
+    "3126234658"
+   ],
+   "kind": "turn",
+   "expected": "straight",
+   "junction": "307444490"
+  }
+ },
+ {
+  "id": "turn-9548439423",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.669303,53.384152,-2.624000,53.411101",
+  "clip_sha256": "ad04c80444eaf2dc1204c0477472e8042387eeef123c48e6ef59ba2da514ea23",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-9998739636",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.717218,53.554215,-2.671914,53.581164",
+  "clip_sha256": "d7fe9b34c3380c28281b8a3618e6f66f8ffb02afd3912c5d9f4f1d2fa6b324c6",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-33407721",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.242412,53.503854,-2.197108,53.530804",
+  "clip_sha256": "ac4cf1b6a55f365465b67a44da74be8c5549f98911d6507a44bbc182fc63db51",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.51721164999999,
+    -2.2198046
+   ],
+   "destination": [
+    53.5176594,
+    -2.2196362
+   ],
+   "origin_segment": [
+    "32613338",
+    "33407721"
+   ],
+   "destination_segment": [
+    "33407721",
+    "32613339"
+   ],
+   "direct_path": [
+    "32613338",
+    "33407721",
+    "32613339"
+   ],
+   "kind": "turn",
+   "expected": "straight",
+   "junction": "33407721"
+  }
+ },
+ {
+  "id": "turn-700723464",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.430490,53.590937,-2.385186,53.617886",
+  "clip_sha256": "b6492b841d795f2d0c21ba13b145a304223757f73eef01f22a7eccf9682ce76d",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.60444805,
+    -2.407573
+   ],
+   "destination": [
+    53.6043999,
+    -2.408244
+   ],
+   "origin_segment": [
+    "6848751944",
+    "5307234281"
+   ],
+   "destination_segment": [
+    "700723464",
+    "700723465"
+   ],
+   "direct_path": [
+    "6848751944",
+    "5307234281",
+    "700723464",
+    "700723465"
+   ],
+   "kind": "turn",
+   "expected": "straight",
+   "junction": "700723464"
+  }
+ },
+ {
+  "id": "turn-364898367",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.583482,53.457004,-2.538179,53.483953",
+  "clip_sha256": "e0e2dac5a414d09c1e621e34f7d335e50ebe3d1ecb607bbc1cb7f83763744d53",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.470116250000004,
+    -2.56048865
+   ],
+   "destination": [
+    53.4706578,
+    -2.5609972
+   ],
+   "origin_segment": [
+    "6834406110",
+    "364898367"
+   ],
+   "destination_segment": [
+    "364898367",
+    "8842489813"
+   ],
+   "direct_path": [
+    "6834406110",
+    "364898367",
+    "8842489813"
+   ],
+   "kind": "turn",
+   "expected": "straight",
+   "junction": "364898367"
+  }
+ },
+ {
+  "id": "turn-778998626",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.181333,53.582102,-2.136029,53.609051",
+  "clip_sha256": "89fe051c81979b30bec071db5466705a5b5171c6e2bbfe18e0a7c77d3e76e32d",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.59496235,
+    -2.15864425
+   ],
+   "destination": [
+    53.595783749999995,
+    -2.1587085999999998
+   ],
+   "origin_segment": [
+    "778998674",
+    "778998626"
+   ],
+   "destination_segment": [
+    "778998626",
+    "778998625"
+   ],
+   "direct_path": [
+    "778998674",
+    "778998626",
+    "778998625"
+   ],
+   "kind": "turn",
+   "expected": "straight",
+   "junction": "778998626"
+  }
+ },
+ {
+  "id": "turn-1660806733",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.709061,53.458890,-2.663758,53.485839",
+  "clip_sha256": "b745828eaa27bd1298985d516f311ea48200f2065eb78633593a3dcac90b0af8",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-370165662",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.332070,53.407605,-2.286766,53.434555",
+  "clip_sha256": "0ea2c9c9e036dc4247a05131ca93e8fa3f88e5f1a30a603abbad0e38ac609200",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.421136950000005,
+    -2.3096066
+   ],
+   "destination": [
+    53.4210159,
+    -2.3092111500000003
+   ],
+   "origin_segment": [
+    "1260255086",
+    "370165662"
+   ],
+   "destination_segment": [
+    "370165662",
+    "370165667"
+   ],
+   "direct_path": [
+    "1260255086",
+    "370165662",
+    "370165667"
+   ],
+   "kind": "turn",
+   "expected": "straight",
+   "junction": "370165662"
+  }
+ },
+ {
+  "id": "turn-25533840",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.308772,53.477728,-2.263468,53.504678",
+  "clip_sha256": "9b803e792faf9a57ccac3d7775b04c0a1aa6e26a2fa3c5522068e34aa0476665",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "turn-230705480",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.145603,53.327590,-2.100300,53.354539",
+  "clip_sha256": "9ff3d49a1e1c2f7ae6fb6ce93780753cbdff43fc184355caff4ceee8e8e6ea7b",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.3410588,
+    -2.12328135
+   ],
+   "destination": [
+    53.34103675,
+    -2.1226848
+   ],
+   "origin_segment": [
+    "230709399",
+    "230709401"
+   ],
+   "destination_segment": [
+    "230709403",
+    "230709404"
+   ],
+   "direct_path": [
+    "230709399",
+    "230709401",
+    "230705480",
+    "230709403",
+    "230709404"
+   ],
+   "kind": "turn",
+   "expected": "straight",
+   "junction": "230705480"
+  }
+ },
+ {
+  "id": "turn-7839680152",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.249243,53.383400,-2.203940,53.410349",
+  "clip_sha256": "52d967cc94bc683057d87ea20ed989da3c46e434e0a597ddb2c90cad5a6a54f1",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.3967649,
+    -2.22660275
+   ],
+   "destination": [
+    53.39708055,
+    -2.2265156
+   ],
+   "origin_segment": [
+    "5954540689",
+    "7839680152"
+   ],
+   "destination_segment": [
+    "7839680154",
+    "7839680155"
+   ],
+   "direct_path": [
+    "5954540689",
+    "7839680152",
+    "7839680153",
+    "7839680154",
+    "7839680155"
+   ],
+   "kind": "turn",
+   "expected": "straight",
+   "junction": "7839680152"
+  }
+ },
+ {
+  "id": "turn-30217035",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "bbox": "-2.449657,53.494399,-2.404354,53.521349",
+  "clip_sha256": "6bb4713544873f7a61d26be386070d14a9371eef4c01d6cef7be3ade991e27c7",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.5079106,
+    -2.42717815
+   ],
+   "destination": [
+    53.507803949999996,
+    -2.4266751500000003
+   ],
+   "origin_segment": [
+    "823005675",
+    "30217035"
+   ],
+   "destination_segment": [
+    "30217035",
+    "823005412"
+   ],
+   "direct_path": [
+    "823005675",
+    "30217035",
+    "823005412"
+   ],
+   "kind": "turn",
+   "expected": "straight",
+   "junction": "30217035"
+  }
+ },
+ {
+  "id": "turn-11182834156",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-791730859",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-387200757",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-25400671",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-28291673",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-8098081239",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-2156531435",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-719333482",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-699115690",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-9934787822",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-780997489",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-352695556",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-31923672",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-8764905325",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-520712498",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-300617874",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "turn-13803384",
+  "stratum": [
+   "turn",
+   "straight"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "roundabout-1051188906-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "bbox": "-2.662971,53.398411,-2.617668,53.425360",
+  "clip_sha256": "f557c8579a2bb8443650c0df338e14fd562dadeeb13ecb2ca3814f3e530180f8",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.4116387,
+    -2.64009465
+   ],
+   "destination": [
+    53.4117567,
+    -2.64076655
+   ],
+   "origin_segment": [
+    "307435411",
+    "305966171"
+   ],
+   "destination_segment": [
+    "305966218",
+    "4543610040"
+   ],
+   "direct_path": [
+    "307435411",
+    "305966171",
+    "9659799697",
+    "9659799698",
+    "9659799699",
+    "9659799700",
+    "305966173",
+    "305966218",
+    "4543610040"
+   ],
+   "kind": "roundabout",
+   "expected": 1,
+   "ring": "1051188906",
+   "entry": "305966171",
+   "exit_node": "305966173",
+   "ring_nodes": [
+    "305966171",
+    "9659799697",
+    "9659799698",
+    "9659799699",
+    "9659799700",
+    "305966173",
+    "9659799701",
+    "9659799702",
+    "9659799703",
+    "9659799704",
+    "305966175",
+    "9659799705",
+    "9659799706",
+    "9659799707",
+    "9659799708",
+    "305966178",
+    "9659799709",
+    "9659799710",
+    "9659799711",
+    "9659799712"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-4852811-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "bbox": "-2.309355,53.439002,-2.264051,53.465951",
+  "clip_sha256": "2e6db6274f846d84e1df6fa79977f5efe62b0e3235be8e15ec0ab2c50ee9a404",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "roundabout-30912782-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "bbox": "-2.621690,53.414301,-2.576387,53.441250",
+  "clip_sha256": "e73899384f31c7edcfae1f12c7df044dd46db91e00919de825718a85e49523d4",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.4277793,
+    -2.59830665
+   ],
+   "destination": [
+    53.42749225,
+    -2.59904205
+   ],
+   "origin_segment": [
+    "343645738",
+    "343645739"
+   ],
+   "destination_segment": [
+    "343646062",
+    "8568800965"
+   ],
+   "direct_path": [
+    "343645738",
+    "343645739",
+    "343646060",
+    "343646061",
+    "5135697257",
+    "8757852850",
+    "343646062",
+    "8568800965"
+   ],
+   "kind": "roundabout",
+   "expected": 1,
+   "ring": "30912782",
+   "entry": "343645739",
+   "exit_node": "343646062",
+   "ring_nodes": [
+    "343645739",
+    "343646060",
+    "343646061",
+    "5135697257",
+    "8757852850",
+    "343646062",
+    "5135697260",
+    "5135697261",
+    "8757852851",
+    "8757852852",
+    "343645979",
+    "343646057",
+    "5135697252",
+    "8757852846",
+    "8757852847",
+    "8757852848",
+    "343646058",
+    "5135697254",
+    "5135697255",
+    "5135697256",
+    "8757852849"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-157721675-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "bbox": "-2.154505,53.594813,-2.109202,53.621763",
+  "clip_sha256": "918dc90fcda995628cf8355dd127f8364a701fab997503cd2d3edb61a21ed7e2",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "roundabout-67136033-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "bbox": "-2.109824,53.403814,-2.064520,53.430763",
+  "clip_sha256": "f014620271c5611f4fc9c68dc1926710b89fb54033559619412fc69bf3ed9435",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.41767805,
+    -2.0871515499999997
+   ],
+   "destination": [
+    53.4172554,
+    -2.0856335
+   ],
+   "origin_segment": [
+    "1110561484",
+    "810792402"
+   ],
+   "destination_segment": [
+    "810792522",
+    "810792458"
+   ],
+   "direct_path": [
+    "1110561484",
+    "810792402",
+    "10213543528",
+    "810792453",
+    "10213543527",
+    "810792522",
+    "810792458"
+   ],
+   "kind": "roundabout",
+   "expected": 1,
+   "ring": "67136033",
+   "entry": "810792402",
+   "exit_node": "810792522",
+   "ring_nodes": [
+    "810792402",
+    "10213543528",
+    "810792453",
+    "10213543527",
+    "810792522",
+    "10213543526",
+    "810792508",
+    "10213543525",
+    "810792449",
+    "810792432",
+    "10213543522",
+    "10213543524",
+    "810792503",
+    "10213543530",
+    "10213543529",
+    "810792478"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-457332350-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "bbox": "-2.574758,53.348550,-2.529455,53.375500",
+  "clip_sha256": "7355365c8802761890d2e6b39c62b1614956f80cb4f762bcd2378d998ef12daa",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "roundabout-27890084-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "bbox": "-2.635038,53.387031,-2.589734,53.413980",
+  "clip_sha256": "84cc531af8231f9dd7605532130e2f4f31d6df122f254ee88155f30e4e24282d",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "roundabout-28331458-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "bbox": "-2.697367,53.336538,-2.652063,53.363488",
+  "clip_sha256": "2a400213bc54b074d626c161ec4eca9913cd06fd8f5e3ac6d6f00e0aca7960b5",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.34982885,
+    -2.67480035
+   ],
+   "destination": [
+    53.3503671,
+    -2.67539725
+   ],
+   "origin_segment": [
+    "311128516",
+    "311128517"
+   ],
+   "destination_segment": [
+    "311128941",
+    "311128938"
+   ],
+   "direct_path": [
+    "311128516",
+    "311128517",
+    "479995948",
+    "479995950",
+    "311129166",
+    "479995952",
+    "9461466581",
+    "311128941",
+    "311128938"
+   ],
+   "kind": "roundabout",
+   "expected": 1,
+   "ring": "28331458",
+   "entry": "311128517",
+   "exit_node": "311128941",
+   "ring_nodes": [
+    "311128517",
+    "479995948",
+    "479995950",
+    "311129166",
+    "479995952",
+    "9461466581",
+    "311128941",
+    "479995955",
+    "479995957",
+    "311129169",
+    "479995958",
+    "311128653",
+    "479995961",
+    "479995962",
+    "479995964",
+    "311129165",
+    "479995944",
+    "479995946",
+    "479995947"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-186654216-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "bbox": "-2.535883,53.480895,-2.490579,53.507844",
+  "clip_sha256": "3f805e81e02ea44d0b31e74b45e0eb2ccb0ee0900f0793ba79bbfa5981515e02",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.494586299999995,
+    -2.5133741
+   ],
+   "destination": [
+    53.49442745,
+    -2.51289035
+   ],
+   "origin_segment": [
+    "568143789",
+    "5354216642"
+   ],
+   "destination_segment": [
+    "9354462579",
+    "5354216668"
+   ],
+   "direct_path": [
+    "568143789",
+    "5354216642",
+    "9354462542",
+    "568143787",
+    "1973970301",
+    "1973965507",
+    "5354216667",
+    "1973965485",
+    "9354462579",
+    "5354216668"
+   ],
+   "kind": "roundabout",
+   "expected": 1,
+   "ring": "186654216",
+   "entry": "568143787",
+   "exit_node": "5354216667",
+   "ring_nodes": [
+    "568143787",
+    "1973970301",
+    "1973965507",
+    "5354216667",
+    "1973970305",
+    "1973965483",
+    "1973970303",
+    "1973965484",
+    "1973970311",
+    "5354216670",
+    "1973965487",
+    "1973970318",
+    "1973970314",
+    "1973965495",
+    "1973970320",
+    "8909416561",
+    "1973965454",
+    "5354216652",
+    "1973970327",
+    "1973965493",
+    "1973970323"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-59425472-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "bbox": "-2.350230,53.435711,-2.304927,53.462660",
+  "clip_sha256": "3c246ff0739b8a350e085ec4096cc65ffd42cd1aba7a6126cbdbe2e9fcbdbc5f",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.44919725,
+    -2.3266838
+   ],
+   "destination": [
+    53.44892475,
+    -2.3275732
+   ],
+   "origin_segment": [
+    "736909176",
+    "6040166388"
+   ],
+   "destination_segment": [
+    "736909058",
+    "736915441"
+   ],
+   "direct_path": [
+    "736909176",
+    "6040166388",
+    "736908921",
+    "4890105817",
+    "4890105818",
+    "4890105819",
+    "6040166389",
+    "736909058",
+    "736915441"
+   ],
+   "kind": "roundabout",
+   "expected": 1,
+   "ring": "59425472",
+   "entry": "736908921",
+   "exit_node": "736909058",
+   "ring_nodes": [
+    "736908921",
+    "4890105817",
+    "4890105818",
+    "4890105819",
+    "6040166389",
+    "736909058",
+    "736909193",
+    "4890105808",
+    "4890105809",
+    "4890105810",
+    "736909090",
+    "736908948",
+    "4890105811",
+    "4890105812",
+    "4890105813",
+    "736909083",
+    "736908861",
+    "4890105814",
+    "4890105815",
+    "4890105816"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-341267828-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "bbox": "-2.363992,53.448968,-2.318689,53.475917",
+  "clip_sha256": "028d5606772f4e3db86f701f14246ebac682bcca7a7b25aab5580e668434a715",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.462712100000005,
+    -2.3416251
+   ],
+   "destination": [
+    53.46241595,
+    -2.3407951999999996
+   ],
+   "origin_segment": [
+    "5328183987",
+    "119160903"
+   ],
+   "destination_segment": [
+    "2916594163",
+    "2916594908"
+   ],
+   "direct_path": [
+    "5328183987",
+    "119160903",
+    "5328183985",
+    "192509962",
+    "3484722724",
+    "3484722731",
+    "3484722732",
+    "5328183984",
+    "192509945",
+    "2916594129",
+    "2916594137",
+    "2916594163",
+    "2916594908"
+   ],
+   "kind": "roundabout",
+   "expected": 1,
+   "ring": "341267828",
+   "entry": "192509962",
+   "exit_node": "192509945",
+   "ring_nodes": [
+    "192509962",
+    "3484722724",
+    "3484722731",
+    "3484722732",
+    "5328183984",
+    "192509945",
+    "3484722725",
+    "3484722726",
+    "3484722733",
+    "3484722734",
+    "3484722735",
+    "192509974",
+    "3484722736",
+    "192509914",
+    "3484722727",
+    "3484722737",
+    "5328183977",
+    "3484722728",
+    "5328183976",
+    "192509983",
+    "3484722722",
+    "3484722723",
+    "3484722729",
+    "3484722730"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-26369233-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "bbox": "-2.658532,53.329874,-2.613228,53.356823",
+  "clip_sha256": "e54cd7aeafe5ea9911169b622d8ab569a8149f64859b3c7d61dba9108fc5db1b",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "roundabout-30614483-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "bbox": "-2.593842,53.333156,-2.548538,53.360106",
+  "clip_sha256": "1ebc1d05c60add067dcae7d6d6bfa32fd2d9577fa7821e6ba388347ffabbbb40",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "roundabout-384412314-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "bbox": "-2.621617,53.411570,-2.576314,53.438519",
+  "clip_sha256": "099cf6cb72ae08b544511d68634827e72472bd8016f18243e11da23975ba6733",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.4248008,
+    -2.59902705
+   ],
+   "destination": [
+    53.4251217,
+    -2.599462
+   ],
+   "origin_segment": [
+    "290661604",
+    "11367586262"
+   ],
+   "destination_segment": [
+    "11367586256",
+    "3877072606"
+   ],
+   "direct_path": [
+    "290661604",
+    "11367586262",
+    "8736786428",
+    "8736786427",
+    "3877072605",
+    "11367586258",
+    "11367586257",
+    "11367586256",
+    "3877072606"
+   ],
+   "kind": "roundabout",
+   "expected": 1,
+   "ring": "384412314",
+   "entry": "8736786427",
+   "exit_node": "3877072605",
+   "ring_nodes": [
+    "8736786427",
+    "3877072605",
+    "11367586251",
+    "3877072614",
+    "6430326067",
+    "6430326068",
+    "3877072608",
+    "3877072609",
+    "3877072610",
+    "6430326060",
+    "6430326061",
+    "6430326062",
+    "3877072602",
+    "8736786423",
+    "3877072612",
+    "8736769115",
+    "3877072598",
+    "3877072600",
+    "8750903920",
+    "3877072613",
+    "6430326064",
+    "6430326065"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-34824768-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "roundabout-209876684-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "roundabout-98232625-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "roundabout-112410111-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "roundabout-27861630-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "roundabout-98323055-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "roundabout-62493746-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "roundabout-23353363-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "roundabout-141130378-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "roundabout-23756911-exit1",
+  "stratum": [
+   "roundabout",
+   "exit1"
+  ],
+  "geometry": {
+   "status": "BEYOND_QUOTA"
+  }
+ },
+ {
+  "id": "roundabout-175638847-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.426284,53.337851,-2.380981,53.364800",
+  "clip_sha256": "6a1e54dbec025a9056385663ac22892cb8f3b52e90b649909ebd1c345b87b1ff",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-35155895-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.732811,53.520913,-2.687508,53.547863",
+  "clip_sha256": "081d516dd29862f8021099c32000cd9d437e25f8dd8e394f10a9184b5fc4c73c",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-946158674-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.386196,53.456830,-2.340892,53.483779",
+  "clip_sha256": "9542f229ef9badaa99cbc7711b511f301d5026b9902fc59bd641bf1f96d4a26b",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-217678586-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.156289,53.366235,-2.110985,53.393184",
+  "clip_sha256": "4456da8a7c5cb234df3b69ca604b90177093177f2712955eda864db05c43bb31",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.3796053,
+    -2.1334451
+   ],
+   "destination": [
+    53.3800656,
+    -2.1334909499999997
+   ],
+   "origin_segment": [
+    "310603180",
+    "2269904920"
+   ],
+   "destination_segment": [
+    "13338832097",
+    "2269904925"
+   ],
+   "direct_path": [
+    "310603180",
+    "2269904920",
+    "2269904952",
+    "2269904927",
+    "2269904947",
+    "2269904856",
+    "2269904949",
+    "2269904933",
+    "2269904932",
+    "2269904958",
+    "2269904859",
+    "2269904954",
+    "13338832097",
+    "2269904925"
+   ],
+   "kind": "roundabout",
+   "expected": 2,
+   "ring": "217678586",
+   "entry": "2269904920",
+   "exit_node": "2269904954",
+   "ring_nodes": [
+    "2269904920",
+    "2269904952",
+    "2269904927",
+    "2269904947",
+    "2269904856",
+    "2269904949",
+    "2269904933",
+    "2269904932",
+    "2269904958",
+    "2269904859",
+    "2269904954",
+    "2269904876",
+    "2269904891",
+    "2497565891",
+    "2269904966",
+    "2269904950",
+    "2269904964",
+    "2269904862",
+    "2269904900",
+    "2269904854"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-132915082-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.271246,53.357851,-2.225942,53.384800",
+  "clip_sha256": "c32624b7847639ffef0457316516640605e9cccd0f086c31d93c78df943a767e",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "roundabout-28313769-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.695710,53.328237,-2.650406,53.355186",
+  "clip_sha256": "3d1545668218d6a8f8fca494058b31ad78897075f5c040b190fa632cc84dabc7",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "roundabout-4447725-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.271777,53.416667,-2.226474,53.443616",
+  "clip_sha256": "dde8690717be217d83ca1a102baf624d9930aa30c932c7155712d179f1be4870",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.42978495,
+    -2.2495484
+   ],
+   "destination": [
+    53.4305188,
+    -2.2490401
+   ],
+   "origin_segment": [
+    "3161555127",
+    "30962160"
+   ],
+   "destination_segment": [
+    "30962167",
+    "30962163"
+   ],
+   "direct_path": [
+    "3161555127",
+    "30962160",
+    "25445119",
+    "3161555139",
+    "3161555140",
+    "25445125",
+    "3161555132",
+    "3161555131",
+    "3161555133",
+    "25445123",
+    "3161555134",
+    "3161555130",
+    "30962167",
+    "30962163"
+   ],
+   "kind": "roundabout",
+   "expected": 2,
+   "ring": "4447725",
+   "entry": "25445119",
+   "exit_node": "3161555130",
+   "ring_nodes": [
+    "25445119",
+    "3161555139",
+    "3161555140",
+    "25445125",
+    "3161555132",
+    "3161555131",
+    "3161555133",
+    "25445123",
+    "3161555134",
+    "3161555130",
+    "3161555141",
+    "3161555142",
+    "25445128",
+    "3161555135",
+    "25445121",
+    "3161555136",
+    "25445120",
+    "3161555143",
+    "3161555129",
+    "3161555128",
+    "3161555137",
+    "3161555138"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-3512375-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.553968,53.396154,-2.508665,53.423103",
+  "clip_sha256": "88dd2214ac59d62afbbcda9e04fd995352924df671c3a70c1d38c9017f3279d2",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-30738424-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.616313,53.402586,-2.571009,53.429535",
+  "clip_sha256": "71ce8a395e2f3ddb5cf7e1391daf3c7b51f78731b1bbba7386caf8cec57fe9cd",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "roundabout-440633727-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.677893,53.392500,-2.632589,53.419450",
+  "clip_sha256": "801097ab1e1ba9f3585fa9ffe97ad4cbea8ddc77d835b43a473f80fc4d7aced5",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-304427347-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.314564,53.343216,-2.269261,53.370166",
+  "clip_sha256": "e3cc40d4844019cb73a739794f9ab37bd885d3a7a5f0ee2faa965c006a27374d",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-30820957-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.548028,53.406767,-2.502724,53.433716",
+  "clip_sha256": "53c76ff19cbd9999a91c7f2c57a2bd4d7e69f85dbd65b2ce57eea9827c3ec180",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "roundabout-58425651-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.453382,53.539460,-2.408079,53.566409",
+  "clip_sha256": "36e44862d3034fb8e5ab64fb518b1063302b1d80c5922af6d79ceacf59a63d3e",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.55268555,
+    -2.4309651499999996
+   ],
+   "destination": [
+    53.5531279,
+    -2.43054115
+   ],
+   "origin_segment": [
+    "724316055",
+    "8237674389"
+   ],
+   "destination_segment": [
+    "8237674376",
+    "1604085854"
+   ],
+   "direct_path": [
+    "724316055",
+    "8237674389",
+    "4730661575",
+    "724316056",
+    "8237674390",
+    "724316057",
+    "1794772577",
+    "724316070",
+    "1794772580",
+    "8237674373",
+    "724316071",
+    "1604085737",
+    "8237674376",
+    "1604085854"
+   ],
+   "kind": "roundabout",
+   "expected": 2,
+   "ring": "58425651",
+   "entry": "724316057",
+   "exit_node": "724316071",
+   "ring_nodes": [
+    "724316057",
+    "1794772577",
+    "724316070",
+    "1794772580",
+    "8237674373",
+    "724316071",
+    "8237674375",
+    "724316072",
+    "1794772582",
+    "8237674385",
+    "724316067",
+    "1794772584",
+    "724316073",
+    "1794772583",
+    "724316074",
+    "8237674386",
+    "724316061",
+    "724316069",
+    "1794772578",
+    "8237674387"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-946158675-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.380543,53.455872,-2.335240,53.482821",
+  "clip_sha256": "2e1ab02e0c893690b4ff1f3967f0a3d5ea8881493e92e808510494cf2be74467",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "roundabout-127572573-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.611431,53.532805,-2.566127,53.559754",
+  "clip_sha256": "c6dd1ed56bc71605d541cb64eef5812b1346936050e942f7a6bf9884c43fab06",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.5461241,
+    -2.58855045
+   ],
+   "destination": [
+    53.5464657,
+    -2.5890052
+   ],
+   "origin_segment": [
+    "1411593754",
+    "1411593759"
+   ],
+   "destination_segment": [
+    "1411593771",
+    "1411593778"
+   ],
+   "direct_path": [
+    "1411593754",
+    "1411593759",
+    "1411593756",
+    "1411593761",
+    "1411593768",
+    "4726285257",
+    "4726285258",
+    "4726285259",
+    "4726285260",
+    "4726285261",
+    "4726285262",
+    "1411593771",
+    "1411593778"
+   ],
+   "kind": "roundabout",
+   "expected": 2,
+   "ring": "127572573",
+   "entry": "1411593759",
+   "exit_node": "1411593771",
+   "ring_nodes": [
+    "1411593759",
+    "1411593756",
+    "1411593761",
+    "1411593768",
+    "4726285257",
+    "4726285258",
+    "4726285259",
+    "4726285260",
+    "4726285261",
+    "4726285262",
+    "1411593771",
+    "1411593773",
+    "4726285263",
+    "4726285264",
+    "4726285265",
+    "1411593769",
+    "1411593765",
+    "4726285266",
+    "4726285267",
+    "4726285268"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-27473762-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.654877,53.392809,-2.609574,53.419758",
+  "clip_sha256": "900022629fa18c416b8378cf70993d0f5c5d5d201bd388c027e3d8dbcf534775",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "roundabout-18799137-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.555952,53.413239,-2.510648,53.440188",
+  "clip_sha256": "9698fa1b5d9778b6216c94f12f94b285573b23dfbdc63b55d6c0ec08ef022d15",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "roundabout-28313703-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.700616,53.323973,-2.655313,53.350923",
+  "clip_sha256": "c176b544c76530df9f81169b9b53f350f1475d9434662b1f073bd5460f1c66ce",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.33736305,
+    -2.67811755
+   ],
+   "destination": [
+    53.33774125,
+    -2.6774417
+   ],
+   "origin_segment": [
+    "6039413094",
+    "310924315"
+   ],
+   "destination_segment": [
+    "310584640",
+    "310584639"
+   ],
+   "direct_path": [
+    "6039413094",
+    "310924315",
+    "2745262737",
+    "6039413104",
+    "6039413105",
+    "6039413106",
+    "310584745",
+    "2745262777",
+    "6039413095",
+    "6039413096",
+    "6039413097",
+    "310584640",
+    "310584639"
+   ],
+   "kind": "roundabout",
+   "expected": 2,
+   "ring": "28313703",
+   "entry": "310924315",
+   "exit_node": "310584640",
+   "ring_nodes": [
+    "310924315",
+    "2745262737",
+    "6039413104",
+    "6039413105",
+    "6039413106",
+    "310584745",
+    "2745262777",
+    "6039413095",
+    "6039413096",
+    "6039413097",
+    "310584640",
+    "2745262735",
+    "6039413098",
+    "6039413099",
+    "6039413100",
+    "310924313",
+    "2745262699",
+    "6039413101",
+    "6039413102",
+    "6039413103"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-22778796-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.588772,53.376297,-2.543469,53.403247",
+  "clip_sha256": "3df800b4b6e4629ed3f31faa3ce336c4e87e606c26e498dbb8fe0488ae6be28f",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-189059776-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.665799,53.319345,-2.620496,53.346295",
+  "clip_sha256": "4c799f2e730cdb2e01fd02601f7708b4a2b7e9b5505a4931130769ffea0205b9",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "roundabout-946079477-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.585924,53.339204,-2.540621,53.366153",
+  "clip_sha256": "7a3b151c414c05f0587c888f37de6bdd00833ed692e050444cba3c328ce1979f",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.35292245,
+    -2.5633904000000003
+   ],
+   "destination": [
+    53.352635750000005,
+    -2.5636889
+   ],
+   "origin_segment": [
+    "230238729",
+    "8758298372"
+   ],
+   "destination_segment": [
+    "8758298371",
+    "230243712"
+   ],
+   "direct_path": [
+    "230238729",
+    "8758298372",
+    "8758298373",
+    "8758298374",
+    "8758298386",
+    "8758298387",
+    "8758298388",
+    "8758298389",
+    "8758298377",
+    "8758298390",
+    "8758298391",
+    "8758298392",
+    "8758298396",
+    "9518287561",
+    "8758298369",
+    "8758298370",
+    "8758298371",
+    "230243712"
+   ],
+   "kind": "roundabout",
+   "expected": 2,
+   "ring": "946079477",
+   "entry": "8758298374",
+   "exit_node": "8758298369",
+   "ring_nodes": [
+    "8758298374",
+    "8758298386",
+    "8758298387",
+    "8758298388",
+    "8758298389",
+    "8758298377",
+    "8758298390",
+    "8758298391",
+    "8758298392",
+    "8758298396",
+    "9518287561",
+    "8758298369",
+    "8758298393",
+    "8758298394",
+    "8758298395",
+    "8758298397",
+    "8758298368",
+    "9518287560",
+    "8758298382",
+    "8758298383",
+    "8758298384",
+    "8758298385"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-59426068-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.350119,53.433513,-2.304816,53.460462",
+  "clip_sha256": "ea0fba4fd6463b7593af7348594c0418e65ca03d12b56355cb2eee2b233df8b6",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-133194314-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.311616,53.456117,-2.266312,53.483067",
+  "clip_sha256": "d43559d1aa4215621c912c4f458ee94f94fdcfc84a21438867894cb3dbec07ec",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-504451146-exit2",
+  "stratum": [
+   "roundabout",
+   "exit2"
+  ],
+  "bbox": "-2.625210,53.404755,-2.579907,53.431704",
+  "clip_sha256": "9ff837f5f23becacc225da76b11b7d001ba59e3ecc0d596930bd3e951792be80",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-27473615-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.659678,53.395616,-2.614375,53.422565",
+  "clip_sha256": "d7f23adae01480e1928c3ff3d1961582c915749817df06b9c89943e09757eccc",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-985176807-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.558753,53.569224,-2.513450,53.596173",
+  "clip_sha256": "e7d0de0d365e4c4e8719e976d80f18c44e49aaedfc2fb6b676883501f415e84c",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-29228737-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.675668,53.387295,-2.630364,53.414244",
+  "clip_sha256": "6c0c38c63a38c9dfb73edbc7de0953f0fbd8647d4b6d59976ac83008f5642174",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.40054275,
+    -2.6527291
+   ],
+   "destination": [
+    53.40095935,
+    -2.65268525
+   ],
+   "origin_segment": [
+    "321489158",
+    "8869898145"
+   ],
+   "destination_segment": [
+    "362814483",
+    "338525567"
+   ],
+   "direct_path": [
+    "321489158",
+    "8869898145",
+    "8869898146",
+    "321488472",
+    "459608203",
+    "8749719067",
+    "321488473",
+    "459608197",
+    "9395751589",
+    "8749719068",
+    "459608186",
+    "321488467",
+    "459608239",
+    "459608236",
+    "9395751590",
+    "321488469",
+    "338525425",
+    "9395751586",
+    "9395751585",
+    "362814483",
+    "338525567"
+   ],
+   "kind": "roundabout",
+   "expected": 3,
+   "ring": "29228737",
+   "entry": "321488472",
+   "exit_node": "338525425",
+   "ring_nodes": [
+    "321488472",
+    "459608203",
+    "8749719067",
+    "321488473",
+    "459608197",
+    "9395751589",
+    "8749719068",
+    "459608186",
+    "321488467",
+    "459608239",
+    "459608236",
+    "9395751590",
+    "321488469",
+    "338525425",
+    "459608228",
+    "8749719064",
+    "9395751587",
+    "338525426",
+    "321488471",
+    "8869898144",
+    "459608209",
+    "459608208",
+    "9395751588"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-456385034-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.589536,53.330641,-2.544233,53.357590",
+  "clip_sha256": "b94b46a42896e3dc7e6af66db2b033a92e1f95b9b4d9cf2c61f2dc16c13eaa61",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-503823187-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.739523,53.352446,-2.694219,53.379395",
+  "clip_sha256": "971cb3b2c472d519f998a96ec908e2ba9348741ae67ea0481bdf473b0488934d",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.3661448,
+    -2.7170877
+   ],
+   "destination": [
+    53.3656933,
+    -2.7172022
+   ],
+   "origin_segment": [
+    "9335178758",
+    "4940776917"
+   ],
+   "destination_segment": [
+    "4940776911",
+    "281779468"
+   ],
+   "direct_path": [
+    "9335178758",
+    "4940776917",
+    "281779449",
+    "281779450",
+    "4940777026",
+    "4940777032",
+    "4940777033",
+    "4940776916",
+    "281779451",
+    "4940777027",
+    "4940777034",
+    "4940777035",
+    "4940777024",
+    "281779452",
+    "9335178750",
+    "4940776911",
+    "281779468"
+   ],
+   "kind": "roundabout",
+   "expected": 3,
+   "ring": "503823187",
+   "entry": "281779449",
+   "exit_node": "281779452",
+   "ring_nodes": [
+    "281779449",
+    "281779450",
+    "4940777026",
+    "4940777032",
+    "4940777033",
+    "4940776916",
+    "281779451",
+    "4940777027",
+    "4940777034",
+    "4940777035",
+    "4940777024",
+    "281779452",
+    "4940777028",
+    "4940777037",
+    "4940777038",
+    "9335178756",
+    "4940776913",
+    "4940777029",
+    "4940777025",
+    "4940777030",
+    "4940777031"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-205659620-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.094553,53.480369,-2.049250,53.507318",
+  "clip_sha256": "5141f172dc360ef07fa4904409d37a84a82e66ed2034607383c1ca5796052bff",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-84224647-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.368423,53.395418,-2.323119,53.422367",
+  "clip_sha256": "1b971f082c54b553c4f5787f7e1f5baa7d5e5aeef770c230f1ba12d06e46a90f",
+  "geometry": {
+   "status": "NO_LEGAL_APPROACH"
+  }
+ },
+ {
+  "id": "roundabout-20465290-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.557213,53.343574,-2.511909,53.370523",
+  "clip_sha256": "4f03db9f81e5010f215c2aedccaeb4f044dce95c1f3e2b7794198e95f402d563",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-4976506-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.350979,53.558573,-2.305676,53.585522",
+  "clip_sha256": "8acd0aefcab0c4a4d7ed7626f2fb047fd913b50e0876c79d3bed8ff38c092bb9",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-22701688-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.637628,53.401631,-2.592324,53.428580",
+  "clip_sha256": "a5ae2f58bee1546da47e797ce2ea0c4919883a07b8b90daebf52d481ce6b2784",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.4149624,
+    -2.61454605
+   ],
+   "destination": [
+    53.41538425,
+    -2.61488585
+   ],
+   "origin_segment": [
+    "8867001851",
+    "243513334"
+   ],
+   "destination_segment": [
+    "8867001755",
+    "320719001"
+   ],
+   "direct_path": [
+    "8867001851",
+    "243513334",
+    "8867001850",
+    "243513300",
+    "460329349",
+    "476898458",
+    "8866994568",
+    "8866994569",
+    "8866994570",
+    "255557594",
+    "255557595",
+    "460329351",
+    "460329352",
+    "243513286",
+    "255557600",
+    "8754291443",
+    "8867001755",
+    "320719001"
+   ],
+   "kind": "roundabout",
+   "expected": 3,
+   "ring": "22701688",
+   "entry": "243513300",
+   "exit_node": "8754291443",
+   "ring_nodes": [
+    "243513300",
+    "460329349",
+    "476898458",
+    "8866994568",
+    "8866994569",
+    "8866994570",
+    "255557594",
+    "255557595",
+    "460329351",
+    "460329352",
+    "243513286",
+    "255557600",
+    "8754291443",
+    "460329346",
+    "243513291",
+    "8866994566",
+    "8866994567",
+    "320719911",
+    "243513294",
+    "460329347",
+    "243513297",
+    "460329348",
+    "8754291444"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-4299088-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.607275,53.578847,-2.561972,53.605797",
+  "clip_sha256": "1cad370f1df45e7591a39b0a2c860555d2a3ff47fafabae98f0c648b7c270456",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-27868287-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.645347,53.384798,-2.600043,53.411747",
+  "clip_sha256": "c23f50fd76f558d3833974936c13046c23a81c1b1600243c7a30353bbc745ea3",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-56227288-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.427677,53.432898,-2.382373,53.459848",
+  "clip_sha256": "baef52461862b91db54dc33d7100597ee54ba868f7687f299eb34bd146a460e5",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-3994228-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.144528,53.412779,-2.099224,53.439728",
+  "clip_sha256": "b8eace2f6dd3769607bcae266ef8713a09c144d66a86698466f9b6228e884121",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.4264424,
+    -2.12141955
+   ],
+   "destination": [
+    53.4259916,
+    -2.1224615
+   ],
+   "origin_segment": [
+    "1615728580",
+    "8751241113"
+   ],
+   "destination_segment": [
+    "20937709",
+    "2264604878"
+   ],
+   "direct_path": [
+    "1615728580",
+    "8751241113",
+    "1615728568",
+    "20937705",
+    "8751241109",
+    "20937704",
+    "8751241111",
+    "1776089240",
+    "20937703",
+    "8751241104",
+    "20937702",
+    "245046768",
+    "20937709",
+    "2264604878"
+   ],
+   "kind": "roundabout",
+   "expected": 3,
+   "ring": "3994228",
+   "entry": "1615728568",
+   "exit_node": "245046768",
+   "ring_nodes": [
+    "1615728568",
+    "20937705",
+    "8751241109",
+    "20937704",
+    "8751241111",
+    "1776089240",
+    "20937703",
+    "8751241104",
+    "20937702",
+    "245046768",
+    "20937701",
+    "20937700",
+    "8751241105",
+    "20937699",
+    "1776089206",
+    "8751241106",
+    "20937698",
+    "20937708",
+    "20937707",
+    "1776089219",
+    "452594644",
+    "1776089232",
+    "20937706"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-18512407-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.243640,53.364283,-2.198337,53.391233",
+  "clip_sha256": "89be28d59521973384ce898bf1bcf5963c79449a2d6e93e59070f77e753192a8",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-855161658-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.238329,53.364381,-2.193025,53.391330",
+  "clip_sha256": "283d8640ac1f36d0a8f539cc2f1358a2cf6452d237c59dff0ac3dde102f5dbbe",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-31544165-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.538703,53.416842,-2.493400,53.443791",
+  "clip_sha256": "b4860e0885ca245f411439d3b54576f6c8a48e882c54330a54927b9b5bac2e69",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.43046565,
+    -2.5166268499999997
+   ],
+   "destination": [
+    53.4298966,
+    -2.51576675
+   ],
+   "origin_segment": [
+    "5145147697",
+    "11121117044"
+   ],
+   "destination_segment": [
+    "5145147709",
+    "352978327"
+   ],
+   "direct_path": [
+    "5145147697",
+    "11121117044",
+    "8762875495",
+    "8762875496",
+    "4530997473",
+    "352978334",
+    "5145147701",
+    "5145147702",
+    "1632050359",
+    "352978328",
+    "1632050363",
+    "5145147703",
+    "5145147710",
+    "250760769",
+    "1632050370",
+    "4530997475",
+    "5145147709",
+    "352978327"
+   ],
+   "kind": "roundabout",
+   "expected": 3,
+   "ring": "31544165",
+   "entry": "4530997473",
+   "exit_node": "4530997475",
+   "ring_nodes": [
+    "4530997473",
+    "352978334",
+    "5145147701",
+    "5145147702",
+    "1632050359",
+    "352978328",
+    "1632050363",
+    "5145147703",
+    "5145147710",
+    "250760769",
+    "1632050370",
+    "4530997475",
+    "1632050369",
+    "5145147704",
+    "5145147705",
+    "352978329",
+    "250760770",
+    "1632050368",
+    "5145147699",
+    "352978330",
+    "1632050353",
+    "1632050354",
+    "5145147700"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-143896994-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.311001,53.522545,-2.265698,53.549494",
+  "clip_sha256": "e1b0161f9ed568ef2834d0cc1e08b6a7534b99f4250391a25272597d63637452",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-138420723-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.361729,53.454150,-2.316426,53.481099",
+  "clip_sha256": "7d1631047804fb7dfb16e9da258d82c606eb82d76c40386ed1f208feff02bde2",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-30761645-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.597829,53.397215,-2.552526,53.424164",
+  "clip_sha256": "c74df2777eda8d9412e694fc38168698f30d8b360604e8b2f1130fd8583c3bd4",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-27890225-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.671229,53.389421,-2.625926,53.416370",
+  "clip_sha256": "2a9a4c5e79060fe0c4ccfe6c5fb3b115c004c3bf7628209438fb366fa8a13573",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.403206049999994,
+    -2.6484586
+   ],
+   "destination": [
+    53.4026729,
+    -2.64892945
+   ],
+   "origin_segment": [
+    "9684344094",
+    "8669156867"
+   ],
+   "destination_segment": [
+    "306220292",
+    "343689884"
+   ],
+   "direct_path": [
+    "9684344094",
+    "8669156867",
+    "306220067",
+    "459607918",
+    "459607925",
+    "459607931",
+    "4565170787",
+    "4565170788",
+    "4530486062",
+    "459607941",
+    "4530486063",
+    "4565170889",
+    "306219995",
+    "4565170890",
+    "306219986",
+    "306220292",
+    "343689884"
+   ],
+   "kind": "roundabout",
+   "expected": 3,
+   "ring": "27890225",
+   "entry": "459607918",
+   "exit_node": "306219986",
+   "ring_nodes": [
+    "459607918",
+    "459607925",
+    "459607931",
+    "4565170787",
+    "4565170788",
+    "4530486062",
+    "459607941",
+    "4530486063",
+    "4565170889",
+    "306219995",
+    "4565170890",
+    "306219986",
+    "459607895",
+    "4565170784",
+    "9684344104",
+    "459607899",
+    "306219988",
+    "340144639",
+    "9684344105",
+    "306219989",
+    "306220080",
+    "306219990",
+    "4565170785",
+    "9684344106"
+   ]
+  }
+ },
+ {
+  "id": "roundabout-58408478-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.451169,53.531092,-2.405866,53.558042",
+  "clip_sha256": "e4424900520141a062f14ca90c4b4989531355ecf6c986747de296492665d9b0",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-83809025-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.293721,53.481537,-2.248418,53.508486",
+  "clip_sha256": "0f8c47cbdd5ddacc42e69fd484e3cab0c84dedcacffe1c4f31dd413b2928ccc3",
+  "geometry": {
+   "status": "TOO_FEW_EXITS"
+  }
+ },
+ {
+  "id": "roundabout-205714208-exit3",
+  "stratum": [
+   "roundabout",
+   "exit3"
+  ],
+  "bbox": "-2.587852,53.401937,-2.542549,53.428886",
+  "clip_sha256": "30a107b739c7823f22b2d0c863ef89676752ad63870ff0cab34216f47ecc3fc9",
+  "geometry": {
+   "status": "TESTABLE",
+   "group": "closed",
+   "origin": [
+    53.415689,
+    -2.5652966
+   ],
+   "destination": [
+    53.415243399999994,
+    -2.56560415
+   ],
+   "origin_segment": [
+    "8777412170",
+    "8777412171"
+   ],
+   "destination_segment": [
+    "8777412162",
+    "8777412163"
+   ],
+   "direct_path": [
+    "8777412170",
+    "8777412171",
+    "9270780085",
+    "8777412172",
+    "9484867471",
+    "259011236",
+    "2156865036",
+    "259011237",
+    "2156864919",
+    "259011238",
+    "2156864911",
+    "259011239",
+    "9484867472",
+    "4530997505",
+    "2156864987",
+    "259011230",
+    "2156864917",
+    "3807157392",
+    "9484867473",
+    "259011231",
+    "8777412161",
+    "8777412162",
+    "8777412163"
+   ],
+   "kind": "roundabout",
+   "expected": 3,
+   "ring": "205714208",
+   "entry": "9484867471",
+   "exit_node": "259011231",
+   "ring_nodes": [
+    "9484867471",
+    "259011236",
+    "2156865036",
+    "259011237",
+    "2156864919",
+    "259011238",
+    "2156864911",
+    "259011239",
+    "9484867472",
+    "4530997505",
+    "2156864987",
+    "259011230",
+    "2156864917",
+    "3807157392",
+    "9484867473",
+    "259011231",
+    "8777412150",
+    "2156865040",
+    "4530997504",
+    "8777412149",
+    "2156865015",
+    "9484867470",
+    "8777412148",
+    "3807157394",
+    "3807157395",
+    "2156864912"
+   ]
+  }
+ }
+]
