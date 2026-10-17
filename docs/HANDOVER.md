@@ -1,5 +1,12 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 — BARRIER-001 v1.2 scoring audit (ChatGPT)
+- Separate branch: `codex/chatgpt-barrier001-review-20261017`. Scoring-only commit `80056c0`.
+- Explicitly distinguish comparator routes using unknown-access gates from known-access alternatives.
+- Four-engine fresh frozen-cohort run: 39026846188 (read job summary, not logs).
+- DMN gate access and turn-round rules remain unchanged pending evidence/owner decision.
+
+
 ## 2026-10-17 (later still) — work register + BARRIER-001 baseline
 - Shared register for all AIs: `python3 -m tools.work_status --fetch` (done / in progress /
   next, read-first list, `where <topic>`); rule at top of AGENTS.md.
