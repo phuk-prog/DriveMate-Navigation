@@ -1,0 +1,16 @@
+{
+ "agent": "Claude",
+ "branch": "ccr-005983df-g8r2zd",
+ "created": "2026-10-17T20:04:37+00:00",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T20:04:37+00:00 next by Claude on ccr-005983df-g8r2zd"
+ ],
+ "id": "NEW-TEST-SETS",
+ "results": "docs/ALL_TESTS_REVIEW.md",
+ "runs": [],
+ "state": "next",
+ "title": "New and extended frozen test sets from the all-tests review (build when the owner allows test runs)",
+ "updated": "2026-10-17T20:04:37+00:00",
+ "why": "Owner approved 17 Oct 2026. Each needs prepare (freezes cases from the pinned map) then a run of DMN + 6 engines: (1) long trips 8-15 km incl. motorway/A-roads (cats 5, 6, 7, 12); (2) junctions: bear left/right, staggered crossroads (cat 8); (3) roundabouts: mini, big multi-lane, service-road exits (cat 9); (4) lanes where OSM has none, from Mapillary arrows (cat 10, needs MAPILLARY_TOKEN); (5) speed limits different each way and time-limited 20 mph (cat 15); (6) one-way-except-cycles and vehicle-specific one-ways (cat 2); (7) time-limited bus gates/one-ways judged at fixed clock times with the new when= import (cats 1, 2); (8) battery/memory on the Pixel with a whole-region map (cat 19, owner's phone); (9) private replay of the owner's recorded drives (cats 3, 4, 13, 16, 20; outside this public repo)."
+}

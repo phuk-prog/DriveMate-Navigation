@@ -815,12 +815,13 @@ class _short_waits:
     """A damaged map may stop an engine server from ever starting: wait 4 minutes, not 15."""
 
     def __enter__(self):
-        self.saved = (t1._wait, xe._wait_ok)
+        self.saved = (t1._wait, xe._wait_ok, xe._wait_alive)
         t1._wait = lambda url, seconds: self.saved[0](url, min(seconds, 240))
         xe._wait_ok = lambda url, seconds, proc: self.saved[1](url, min(seconds, 240), proc)
+        xe._wait_alive = lambda url, seconds, alive: self.saved[2](url, min(seconds, 240), alive)
 
     def __exit__(self, *exc):
-        t1._wait, xe._wait_ok = self.saved
+        t1._wait, xe._wait_ok, xe._wait_alive = self.saved
 
 
 # --------------------------------------------------------------------------- provenance, score, brief

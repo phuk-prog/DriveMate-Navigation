@@ -240,13 +240,14 @@ def _serve_turn001_engine(engine: str, pbf: Path, work: Path):
                             "-e", "use_tiles_ignore_pbf=False", "-e", "use_default_speeds_config=False",
                             "-e", "build_tar=False", "-e", "server_threads=2", t1.IMAGES["Valhalla"]],
                            check=True, capture_output=True)
-            t1._wait("http://127.0.0.1:8002/status", 900)  # answers once the tiles are built
+            _wait_alive("http://127.0.0.1:8002/status", 900,  # answers once the tiles are built
+                        lambda: _container_running(name))
         else:
             (work / "config.yml").write_text(t1.graphhopper_config(work / "input.osm.pbf", work / "cache"))
             log = (work / "startup.log").open("w")
             proc = subprocess.Popen(["/opt/jdk17/bin/java", "-Xmx1g", "-jar", str(t1.WORK / "engines" / "gh.jar"),
                                      "server", str(work / "config.yml")], stdout=log, stderr=subprocess.STDOUT)
-            t1._wait("http://127.0.0.1:8989/health", 90)
+            _wait_alive("http://127.0.0.1:8989/health", 90, lambda: proc.poll() is None)
         yield
     finally:
         subprocess.run(["docker", "rm", "-f", name], capture_output=True)
@@ -255,6 +256,25 @@ def _serve_turn001_engine(engine: str, pbf: Path, work: Path):
             proc.wait(timeout=30)
         subprocess.run(["sudo", "-n", "rm", "-rf", str(work)], capture_output=True)
         shutil.rmtree(work, ignore_errors=True)
+
+
+def _container_running(name: str) -> bool:
+    r = subprocess.run(["docker", "inspect", "-f", "{{.State.Running}}", name], capture_output=True, text=True)
+    return r.returncode == 0 and r.stdout.strip() == "true"
+
+
+def _wait_alive(url: str, seconds: float, alive) -> None:
+    """t1._wait, but a server that stops while starting is reported at once (owner-approved,
+    17 Oct 2026: run D could only see GraphHopper/Valhalla start failures as time-outs)."""
+    deadline = time.time() + seconds
+    while time.time() < deadline:
+        try:
+            t1._wait(url, 5)
+            return
+        except RuntimeError:
+            if not alive():
+                raise MapRejected(f"engine stopped while starting ({url})") from None
+    raise RuntimeError(f"Local engine did not start: {url}")
 
 
 class MapRejected(RuntimeError):
@@ -507,8 +527,119 @@ def engine_path(clip, geom: dict, points):
     end_ok = bool(pts) and t1.metres(pts[-1], tuple(geom["destination"])) <= t1.SNAP_TOLERANCE_M
     seeded = ([clip.coords[o_seg[0]]] if start_ok else []) + pts + ([clip.coords[d_seg[1]]] if end_ok else [])
     nodes = clip.match_nodes(seeded)
+    if not (nodes[:2] == o_seg and nodes[-2:] == d_seg):
+        # owner-approved (17 Oct 2026): run D/C found long engine lines the 1 m reader
+        # loses; read them piece by piece instead (same rule for every engine), and keep
+        # the second reading only when it is a connected path along the line
+        alt = piece_path(clip, seeded)
+        if alt and alt[:2] == o_seg and alt[-2:] == d_seg:
+            nodes = alt
     return nodes, {"start_snap_m": None if not pts else round(t1.metres(pts[0], tuple(geom["origin"])), 1),
                    "end_snap_m": None if not pts else round(t1.metres(pts[-1], tuple(geom["destination"])), 1)}
+
+
+PIECE_SNAP_M, PIECE_STEP_M, BRIDGE_PIECES = 3.0, 2.0, 3
+
+
+def piece_path(clip, points) -> list[str] | None:
+    """OSM node path of a drawn line, read road piece by road piece.
+
+    Every PIECE_STEP_M along the line, the nearest piece of a road (within PIECE_SNAP_M)
+    whose direction agrees with the line; consecutive pieces must join, or be joined by
+    at most BRIDGE_PIECES pieces a car may travel (a simplified bend). Otherwise None:
+    a line that cannot be read is never forced onto a road.
+    """
+    pieces = []
+    for a, b in zip(points, points[1:]):
+        length = t1.metres(a, b)
+        if length < 0.3:
+            continue
+        heading = t1.bearing(a, b)
+        for k in range(max(1, int(length // PIECE_STEP_M))):
+            f = (k + 0.5) / max(1, int(length // PIECE_STEP_M))
+            p = (a[0] + f * (b[0] - a[0]), a[1] + f * (b[1] - a[1]))
+            piece = _piece_at(clip, p, heading)
+            if piece and (not pieces or pieces[-1] != piece):
+                pieces.append(piece)
+    if not pieces:
+        return None
+    nodes = list(pieces[0])
+    for x, y in pieces[1:]:
+        if x == nodes[-1]:
+            nodes.append(y)
+            continue
+        bridge = _bridge(clip, nodes[-1], x)
+        if bridge is None:
+            return None
+        nodes += bridge[1:] + [y]
+    return [n for i, n in enumerate(nodes) if i == 0 or nodes[i - 1] != n]
+
+
+def _piece_grid(clip) -> dict:
+    """Road pieces indexed by ~11 m grid cells along their whole length (built once per clip)."""
+    grid = getattr(clip, "_rund_piece_grid", None)
+    if grid is None:
+        grid = {}
+        for w, (refs, tags) in clip.ways.items():
+            if not clip.drivable(tags):
+                continue
+            for u, v in zip(refs, refs[1:]):
+                if u not in clip.coords or v not in clip.coords:
+                    continue
+                a, b = clip.coords[u], clip.coords[v]
+                steps = max(1, int(t1.metres(a, b) // 5))
+                for k in range(steps + 1):
+                    f = k / steps
+                    cell = (round((a[0] + f * (b[0] - a[0])) * 1e4), round((a[1] + f * (b[1] - a[1])) * 1e4))
+                    grid.setdefault(cell, set()).add((u, v))
+        clip._rund_piece_grid = grid
+    return grid
+
+
+def _piece_at(clip, point, heading):
+    """Nearest road piece within PIECE_SNAP_M whose direction agrees with heading (directed)."""
+    from benchmarks.journey001 import _seg_dist
+    grid = _piece_grid(clip)
+    lat, lon = round(point[0] * 1e4), round(point[1] * 1e4)
+    cand = set()
+    for dy in (-1, 0, 1):
+        for dx in (-1, 0, 1):
+            cand |= grid.get((lat + dy, lon + dx), set())
+    best = None
+    for u, v in cand:
+        d = _seg_dist(point, clip.coords[u], clip.coords[v])
+        if d > PIECE_SNAP_M:
+            continue
+        fwd = abs((t1.bearing(clip.coords[u], clip.coords[v]) - heading + 180) % 360 - 180) <= 45
+        back = abs((t1.bearing(clip.coords[v], clip.coords[u]) - heading + 180) % 360 - 180) <= 45
+        if fwd or back:
+            piece = (u, v) if fwd else (v, u)
+            if best is None or d < best[0]:
+                best = (d, piece)
+    return None if best is None else best[1]
+
+
+def _bridge(clip, start: str, goal: str) -> list[str] | None:
+    """Shortest chain of at most BRIDGE_PIECES travellable pieces from start to goal."""
+    frontier, seen = [[start]], {start}
+    for _ in range(BRIDGE_PIECES):
+        nxt = []
+        for path in frontier:
+            for w in sorted(w for w in clip.node_ways.get(path[-1], ()) if clip.drivable(clip.ways[w][1])):
+                for m in _neighbours(clip, w, path[-1]):
+                    if m in seen or not clip.can_travel(w, path[-1], m):
+                        continue
+                    if m == goal:
+                        return path + [m]
+                    seen.add(m)
+                    nxt.append(path + [m])
+        frontier = nxt
+    return None
+
+
+def _neighbours(clip, way: str, node: str) -> list[str]:
+    refs = clip.ways[way][0]
+    return [refs[k] for i, x in enumerate(refs) if x == node for k in (i - 1, i + 1) if 0 <= k < len(refs)]
 
 
 # --------------------------------------------------------------------------- run B2 details
