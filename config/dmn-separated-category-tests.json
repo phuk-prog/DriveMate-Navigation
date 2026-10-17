@@ -264,7 +264,8 @@
       "label": "Memory, CPU, energy and map size",
       "scope": "Synthetic benchmark controls; no equivalent device CPU/RAM/battery measurements.",
       "test_files": [
-        "test_benchmarks.py"
+        "test_benchmarks.py",
+        "test_gps_area_index.py"
       ],
       "engine_rank": null,
       "navigation_score": null

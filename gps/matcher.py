@@ -98,6 +98,30 @@ class DirectedRoadMatcher:
         self._allowed=tuple(sorted(
             (e for e in graph.edges.values() if e.access=="allowed"),
             key=lambda e:e.edge_id))
+        # Area index (engines programme stage 1, 17 Oct 2026): GRAND-TOUR-001's map has
+        # 594,000 road pieces and checking all of them took 0.76 s per fix. Each piece is filed
+        # under every grid cell its box (widened by maximum_snap_m) touches, so the one cell of a
+        # fix holds every piece that can be within reach: same candidates, same answers.
+        self._grid={}
+        pad_lat=maximum_snap_m/METERS_PER_DEG_LAT
+        for edge in self._allowed:
+            (la,lo),(lb,lob)=self.coords[edge.source],self.coords[edge.target]
+            pad_lon=maximum_snap_m/(METERS_PER_DEG_LAT*max(0.1,cos(radians((la+lb)/2))))
+            for cy in range(self._cell_lat(min(la,lb)-pad_lat),self._cell_lat(max(la,lb)+pad_lat)+1):
+                for cx in range(self._cell_lon(min(lo,lob)-pad_lon),self._cell_lon(max(lo,lob)+pad_lon)+1):
+                    self._grid.setdefault((cy,cx),[]).append(edge)
+
+    GRID_DEG=0.002  # about 220 m north-south, 130 m east-west in the UK
+
+    def _cell_lat(self,lat):
+        return int(lat//self.GRID_DEG)
+
+    def _cell_lon(self,lon):
+        return int(lon//self.GRID_DEG)
+
+    def _near(self,fix):
+        """Allowed pieces filed in the fix's cell (in edge-id order), plus route-aware extras."""
+        return self._grid.get((self._cell_lat(fix.latitude),self._cell_lon(fix.longitude)),())
 
     def set_route(self, edge_ids) -> None:
         """Route-aware mode (Run C, owner-approved): uncertain-access roads the planner itself
@@ -194,7 +218,7 @@ class DirectedRoadMatcher:
         contenders=[]
         max_radius=min(self.maximum_snap_m,max(8.0,fix.horizontal_accuracy_m*2.0))
         extra=tuple(self.graph.edges[e] for e in sorted(self.route_unknown_edges))
-        for edge in self._allowed+extra:
+        for edge in tuple(self._near(fix))+extra:
             projection=_closest_distance_and_bearing(
                 fix,self.coords[edge.source],self.coords[edge.target])
             if projection is None:

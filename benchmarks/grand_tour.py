@@ -667,8 +667,8 @@ def dmn_answers(raw: bytes, jam_raw: bytes, prepared: dict, clip, jam_clip, time
         judged["query_ms"] = ms
         if name == "main" and nodes:
             edges = [dmn.by_pair[(f"osm:{a}", f"osm:{b}")].edge_id for a, b in zip(nodes, nodes[1:])]
-            rings = [e.edge_id for e in dmn.graph.edges.values() if e.edge_id.split(":")[1] in {
-                w for w, (_, tags) in clip.ways.items() if tags.get("junction") in ("roundabout", "circular")}]
+            ring_ways = {w for w, (_, tags) in clip.ways.items() if tags.get("junction") in ("roundabout", "circular")}
+            rings = [e.edge_id for e in dmn.graph.edges.values() if e.edge_id.split(":")[1] in ring_ways]
             try:
                 steps = [m for m in principal_maneuvers(dmn.graph, dmn.imported.coordinates, edges, rings)]
             except ValueError:
@@ -714,6 +714,46 @@ def run(engines: tuple[str, ...]) -> None:
                        if not k.startswith("_")}, flush=True)
 
 
+def speed() -> None:
+    """Section 7 on ONE machine: every engine, open map, 1 warm-up + QUERY_REPEATS timed main routes."""
+    prepared = json.loads(PREPARED.read_text())
+    raw, _ = load_maps(prepared)
+    clip = a1.AccessClip(raw)
+    g = prepared["geometry"]
+    out = {"_meta": {"revision": t1._revision(), "machine": rd._machine(),
+                     "runner_sha256": t1.sha256_file(Path(__file__))}}
+    for engine in ENGINES:
+        began = time.perf_counter()
+        ms = []
+        try:
+            if engine == "DMN":
+                dmn = rd.DMNMap(raw)
+                setup = time.perf_counter() - began
+                for k in range(QUERY_REPEATS + 1):
+                    t0 = time.perf_counter()
+                    rc.dmn_route(dmn, g["origin_segment"], g["destination_segment"])
+                    if k:
+                        ms.append(round((time.perf_counter() - t0) * 1000, 1))
+                del dmn
+            else:
+                folder = WORK / "speed" / engine.lower()
+                rd.write_pbf(folder, raw)
+                with xe.serve(engine, folder / "clip.osm.pbf", folder / engine.lower()):
+                    setup = time.perf_counter() - began
+                    heads = t1.travel_headings(clip, g)
+                    for k in range(QUERY_REPEATS + 1):
+                        q_ms = xe.query(engine, g, heads)[2]
+                        if k:
+                            ms.append(round(q_ms, 1))
+                shutil.rmtree(folder, ignore_errors=True)
+            out[engine] = {"query_ms": ms, "setup_s": round(setup, 1),
+                           "scope": "in-process call" if engine == "DMN" else "localhost HTTP"}
+        except Exception as exc:  # noqa: BLE001
+            out[engine] = {"error": f"{type(exc).__name__}: {exc}"[:300]}
+        print("speed", engine, out[engine], flush=True)
+    (WORK / "speed.json").write_text(json.dumps(out, indent=1, sort_keys=True))
+
+
 def _rank(rows: dict, key, reverse=False) -> list[dict]:
     have = [(e, v) for e, v in rows.items() if key(v) is not None]
     return [{"engine": e, **v} for e, v in sorted(have, key=lambda x: key(x[1]), reverse=reverse)]
@@ -756,12 +796,13 @@ def score() -> None:
         legal[e] = {"answers": len(answers), "illegal": sum(a.get("route") == "ILLEGAL" for a in answers),
                     "violations": sorted({v for a in answers for v in a.get("violations", [])})[:10]}
     c["2_road_rules_all_answers"] = legal
-    # 7 speed
-    c["7_route_time_ms"] = _rank({e: {"median_ms": statistics.median(r["main"]["query_ms"]),
-                                      "scope": "in-process call" if e == "DMN" else "localhost HTTP",
-                                      "map_setup_s": r.get("setup_open_s")}
-                                  for e, r in runs.items() if r.get("main", {}).get("query_ms")},
+    # 7 speed: from the one-machine speed section only (engine jobs run on different machines)
+    sp = json.loads((WORK / "speed.json").read_text()) if (WORK / "speed.json").exists() else {}
+    c["7_route_time_ms"] = _rank({e: {"median_ms": statistics.median(v["query_ms"]), "scope": v["scope"],
+                                      "map_setup_s": v["setup_s"]}
+                                  for e, v in sp.items() if not e.startswith("_") and v.get("query_ms")},
                                  lambda v: v["median_ms"])
+    s["speed_machine"] = sp.get("_meta", {}).get("machine")
     # 9 roundabouts on own route
     c["9_roundabout_exits_own_route"] = {e: r["main"].get("roundabouts") for e, r in runs.items()
                                          if r.get("main", {}).get("roundabouts")}
@@ -896,6 +937,7 @@ def main() -> int:
     sub.add_parser("prepare")
     r = sub.add_parser("run")
     r.add_argument("--engines", nargs="*", choices=ENGINES, default=list(ENGINES))
+    sub.add_parser("speed")
     sub.add_parser("score")
     sub.add_parser("brief")
     args = parser.parse_args()
@@ -903,6 +945,8 @@ def main() -> int:
         prepare()
     elif args.cmd == "run":
         run(tuple(args.engines))
+    elif args.cmd == "speed":
+        speed()
     elif args.cmd == "score":
         score()
     else:

@@ -54,7 +54,7 @@ def advance(matcher: DirectedRoadMatcher, state: TemporalState,
         return TemporalResult(single,TemporalState(fix,frozenset(),0))
     radius=min(matcher.maximum_snap_m,max(8.0,2*fix.horizontal_accuracy_m))
     candidates=set()
-    for edge in matcher._allowed:
+    for edge in matcher._near(fix):  # area index: the same pieces within reach, found fast
         p=_closest_distance_and_bearing(fix,matcher.coords[edge.source],matcher.coords[edge.target])
         if p is None or p[0]>radius:
             continue
