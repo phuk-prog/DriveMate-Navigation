@@ -14,6 +14,9 @@ from engine.routing import RoadGraph
 from .fix_quality import GPSFix, assess_fix
 
 METERS_PER_DEG_LAT = 111195.0
+# The matcher before the Run C improvement (owner-approved default from 17 Oct 2026). Only code
+# that reproduces an earlier frozen trial passes this, so those results stay reproducible.
+LEGACY_MATCHER = {"same_road_pieces": False, "route_aware_access": False}
 
 @dataclass(frozen=True)
 class MatchResult:
@@ -62,7 +65,7 @@ class DirectedRoadMatcher:
                  *, maximum_snap_m: float=35.0,
                  minimum_score_separation: float=0.85,
                  experimental_adjacent_fragment_equivalence: bool=False,
-                 same_road_pieces: bool=False, route_aware_access: bool=False):
+                 same_road_pieces: bool=True, route_aware_access: bool=True):
         if not isinstance(graph,RoadGraph):
             raise TypeError("Requires a directed RoadGraph")
         if not isfinite(maximum_snap_m) or maximum_snap_m<=0 or maximum_snap_m>1000:
@@ -75,8 +78,8 @@ class DirectedRoadMatcher:
             raise ValueError('Same-road-pieces and route-aware modes must be boolean')
         self.route_aware_access=route_aware_access
         self.route_unknown_edges=frozenset()
-        # Run C improvement (owner-approved, 17 Oct 2026), opt-in so earlier frozen results stay
-        # reproducible: see _same_road_chain.
+        # Run C improvement, default since the owner approved it (17 Oct 2026); earlier frozen
+        # trials pass LEGACY_MATCHER: see _same_road_chain and set_route.
         self.same_road_pieces=same_road_pieces
         # Default mode and previously frozen GPS-003 judgments are unchanged.
         self.experimental_adjacent_fragment_equivalence=experimental_adjacent_fragment_equivalence

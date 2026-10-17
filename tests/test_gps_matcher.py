@@ -94,7 +94,8 @@ class DirectedRoadMatcherTests(unittest.TestCase):
     def test_same_road_pieces_resolves_a_bend_of_one_way_only(self):
         roads,points=self._bend()
         near_bend=GPSFix(1000,53.0000,-2.00005,3,10,90)
-        self.assertEqual(DirectedRoadMatcher(roads,points).match(near_bend).status,"AMBIGUOUS")
+        self.assertEqual(DirectedRoadMatcher(roads,points,same_road_pieces=False).match(near_bend).status,
+                         "AMBIGUOUS")
         improved=DirectedRoadMatcher(roads,points,same_road_pieces=True)
         # the other way's piece 6.7 m away still keeps it ambiguous: different roads stay apart
         self.assertEqual(improved.match(near_bend).status,"AMBIGUOUS")
@@ -113,7 +114,7 @@ class DirectedRoadMatcherTests(unittest.TestCase):
         self.assertEqual(plain.match(on_unknown).status,"UNKNOWN")
         plain.set_route(["w:7:0:f","w:7:2:f"])
         self.assertEqual(plain.match(on_unknown).edge_id,"w:7:2:f")
-        off=DirectedRoadMatcher(roads,points)
+        off=DirectedRoadMatcher(roads,points,route_aware_access=False)
         off.set_route(["w:7:2:f"])  # without the mode it does nothing
         self.assertEqual(off.match(on_unknown).status,"UNKNOWN")
 

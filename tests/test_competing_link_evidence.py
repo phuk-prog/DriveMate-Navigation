@@ -2,7 +2,7 @@
 import unittest
 from engine import RoadEdge, RoadGraph
 from gps.fix_quality import GPSFix
-from gps.matcher import DirectedRoadMatcher
+from gps.matcher import LEGACY_MATCHER, DirectedRoadMatcher
 from gps.temporal_matcher import TemporalRoadMatcher
 from benchmarks.public_temporal_gps import competing_link_evidence
 
@@ -12,7 +12,7 @@ class CompetingEvidenceTests(unittest.TestCase):
         coords = {'a': (0, 0), 'b': (0, .0002), 'c': (.0001, .0004)}
         graph = RoadGraph(coords, [RoadEdge('w:1:0:f', 'a', 'b', 23, 30, 'allowed'),
                                    RoadEdge('w:1:1:f', 'b', 'c', 26, 30, 'allowed')])
-        temporal = TemporalRoadMatcher(DirectedRoadMatcher(graph, coords))
+        temporal = TemporalRoadMatcher(DirectedRoadMatcher(graph, coords, **LEGACY_MATCHER))  # frozen UK40 diagnostic
         rows = competing_link_evidence(temporal, GPSFix(1000, 0, .00018, 3, 10, 90),
                                       {'w:1:0:f'}, {'w:1:0:f', 'w:1:1:f'})
         self.assertEqual(rows[0]['relationship'], 'forward_adjacent')
@@ -25,7 +25,7 @@ class CompetingEvidenceTests(unittest.TestCase):
         coords = {'a': (0, 0), 'b': (0, .0002), 'c': (.0001, .0004)}
         graph = RoadGraph(coords, [RoadEdge('w:1:0:f', 'a', 'b', 23, 30, 'allowed'),
                                    RoadEdge('w:1:1:f', 'b', 'c', 26, 30, 'allowed')])
-        temporal = TemporalRoadMatcher(DirectedRoadMatcher(graph, coords))
+        temporal = TemporalRoadMatcher(DirectedRoadMatcher(graph, coords, **LEGACY_MATCHER))  # frozen UK40 diagnostic
         rows = competing_link_evidence(temporal, GPSFix(1000, 0, .00018, 3, 10, 90),
                                       {'w:1:1:f'}, {'w:1:0:f', 'w:1:1:f'})
         self.assertEqual(rows[0]['relationship'], 'backward_adjacent')

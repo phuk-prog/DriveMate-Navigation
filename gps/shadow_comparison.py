@@ -13,7 +13,7 @@ from typing import Mapping
 
 from engine.routing import RoadGraph
 from .fix_quality import GPSFix
-from .matcher import DirectedRoadMatcher, MatchResult
+from .matcher import LEGACY_MATCHER, DirectedRoadMatcher, MatchResult
 from .temporal_matcher import TemporalRoadMatcher
 
 
@@ -44,12 +44,13 @@ class GPSShadowComparison:
 
     def __init__(self, graph: RoadGraph,
                  coordinates: Mapping[str, tuple[float, float]]) -> None:
+        # the frozen DMN-GPS-SHADOW study compared the pre-Run-C matcher with the research one
         self._baseline = TemporalRoadMatcher(
-            DirectedRoadMatcher(graph, coordinates))
+            DirectedRoadMatcher(graph, coordinates, **LEGACY_MATCHER))
         self._experimental = TemporalRoadMatcher(
             DirectedRoadMatcher(
                 graph, coordinates,
-                experimental_adjacent_fragment_equivalence=True))
+                experimental_adjacent_fragment_equivalence=True, **LEGACY_MATCHER))
 
     def reset(self) -> None:
         self._baseline.reset()

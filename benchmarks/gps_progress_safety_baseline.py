@@ -13,7 +13,7 @@ from pathlib import Path
 
 from engine import RoadEdge, RoadGraph
 from gps.fix_quality import GPSFix
-from gps.matcher import DirectedRoadMatcher
+from gps.matcher import LEGACY_MATCHER, DirectedRoadMatcher
 from gps.temporal_matcher import TemporalRoadMatcher
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -61,8 +61,8 @@ def _scenario(name):
 
 def _run(edges,turns,fixes,opt_in):
     graph=RoadGraph(COORDS,edges,turns)
-    matcher=TemporalRoadMatcher(DirectedRoadMatcher(
-        graph,COORDS,experimental_adjacent_fragment_equivalence=opt_in))
+    matcher=TemporalRoadMatcher(DirectedRoadMatcher(  # frozen GPS-004 baseline: pre-Run-C matcher
+        graph,COORDS,experimental_adjacent_fragment_equivalence=opt_in,**LEGACY_MATCHER))
     events=[]
     for fix in fixes:
         result=matcher.update(fix)

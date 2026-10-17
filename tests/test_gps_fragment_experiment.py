@@ -2,7 +2,7 @@
 import unittest
 from engine import RoadGraph, RoadEdge
 from gps.fix_quality import GPSFix
-from gps.matcher import DirectedRoadMatcher
+from gps.matcher import LEGACY_MATCHER, DirectedRoadMatcher
 
 class FragmentExperimentTests(unittest.TestCase):
     def setUp(self):
@@ -11,8 +11,9 @@ class FragmentExperimentTests(unittest.TestCase):
         self.edges=[RoadEdge("w:1:0:f","a","b",23,30,"allowed"),
                     RoadEdge("w:1:1:f","b","c",30,30,"allowed")]
         self.fix=GPSFix(1000,.000004,.000270,3,10,87)
-    def matcher(self,edges=None,**kwargs):
-        return DirectedRoadMatcher(RoadGraph(self.coords,edges or self.edges),self.coords,**kwargs)
+    def matcher(self,edges=None,**kwargs):  # the research variant is defined against the pre-Run-C matcher
+        return DirectedRoadMatcher(RoadGraph(self.coords,edges or self.edges),self.coords,
+                                   **{**LEGACY_MATCHER,**kwargs})
     def test_existing_default_stays_ambiguous(self):
         self.assertEqual(self.matcher().match(self.fix).status,"AMBIGUOUS")
     def test_opt_in_resolves_small_same_way_bend(self):

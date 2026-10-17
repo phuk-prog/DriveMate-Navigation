@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 from engine import RoadGraph, RoadEdge
 from gps.fix_quality import GPSFix
-from gps.matcher import DirectedRoadMatcher
+from gps.matcher import LEGACY_MATCHER, DirectedRoadMatcher
 from gps.temporal_matcher import TemporalRoadMatcher
 from gps.shadow_comparison import GPSShadowComparison
 
@@ -31,7 +31,7 @@ class GPSShadowComparisonTests(unittest.TestCase):
 
     def test_baseline_matches_independent_default_matcher(self):
         paired = GPSShadowComparison(self.graph, self.coords)
-        solo = TemporalRoadMatcher(DirectedRoadMatcher(self.graph, self.coords))
+        solo = TemporalRoadMatcher(DirectedRoadMatcher(self.graph, self.coords, **LEGACY_MATCHER))
         for fix in (self.first_fix, GPSFix(3000, .000006, .00035, 3, 10, 85)):
             with self.subTest(time=fix.timestamp_ms):
                 dual = paired.update(fix, now_ms=fix.timestamp_ms)
