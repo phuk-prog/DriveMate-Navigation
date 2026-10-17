@@ -1,0 +1,4795 @@
+{
+ "available_by_stratum": {
+  "conditional/*": 6,
+  "via-node/": 2,
+  "via-node/no_entry": 13,
+  "via-node/no_left_turn": 495,
+  "via-node/no_right_turn": 783,
+  "via-node/no_straight_on": 41,
+  "via-node/no_u_turn": 599,
+  "via-node/only_left_turn": 86,
+  "via-node/only_right_turn": 75,
+  "via-node/only_straight_on": 370,
+  "via-node/only_u_turn": 3,
+  "via-way/*": 325
+ },
+ "cases": [
+  {
+   "members": [
+    [
+     "w",
+     1111503634,
+     "to"
+    ],
+    [
+     "n",
+     990553851,
+     "via"
+    ],
+    [
+     "w",
+     935171001,
+     "from"
+    ]
+   ],
+   "relation": 12629713,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     514664410,
+     "from"
+    ],
+    [
+     "n",
+     2871409023,
+     "via"
+    ],
+    [
+     "w",
+     514662035,
+     "to"
+    ]
+   ],
+   "relation": 7462090,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     888960005,
+     "from"
+    ],
+    [
+     "n",
+     6034139508,
+     "via"
+    ],
+    [
+     "w",
+     640535776,
+     "to"
+    ]
+   ],
+   "relation": 12496110,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     528465974,
+     "from"
+    ],
+    [
+     "n",
+     343598222,
+     "via"
+    ],
+    [
+     "w",
+     708509752,
+     "to"
+    ]
+   ],
+   "relation": 11565718,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     57970198,
+     "from"
+    ],
+    [
+     "n",
+     5094710253,
+     "via"
+    ],
+    [
+     "w",
+     57970241,
+     "to"
+    ]
+   ],
+   "relation": 7885920,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     32751248,
+     "from"
+    ],
+    [
+     "n",
+     368607353,
+     "via"
+    ],
+    [
+     "w",
+     19831102,
+     "to"
+    ]
+   ],
+   "relation": 19755564,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1107767486,
+     "from"
+    ],
+    [
+     "w",
+     79649350,
+     "to"
+    ],
+    [
+     "n",
+     929432202,
+     "via"
+    ]
+   ],
+   "relation": 14742895,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     26990513,
+     "from"
+    ],
+    [
+     "n",
+     295845287,
+     "via"
+    ],
+    [
+     "w",
+     1547301603,
+     "to"
+    ]
+   ],
+   "relation": 16757851,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     165548175,
+     "from"
+    ],
+    [
+     "n",
+     926673790,
+     "via"
+    ],
+    [
+     "w",
+     79370144,
+     "to"
+    ]
+   ],
+   "relation": 20066776,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1057521421,
+     "from"
+    ],
+    [
+     "n",
+     8853681155,
+     "via"
+    ],
+    [
+     "w",
+     970236865,
+     "to"
+    ]
+   ],
+   "relation": 2263040,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1024187095,
+     "from"
+    ],
+    [
+     "n",
+     359542307,
+     "via"
+    ],
+    [
+     "w",
+     1009310005,
+     "to"
+    ]
+   ],
+   "relation": 13713249,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     954199039,
+     "from"
+    ],
+    [
+     "n",
+     431837490,
+     "via"
+    ],
+    [
+     "w",
+     954327633,
+     "to"
+    ]
+   ],
+   "relation": 12847708,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     155105721,
+     "from"
+    ],
+    [
+     "n",
+     1675440763,
+     "via"
+    ],
+    [
+     "w",
+     1047636309,
+     "to"
+    ]
+   ],
+   "relation": 5449192,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     272494567,
+     "via"
+    ],
+    [
+     "w",
+     802123096,
+     "from"
+    ],
+    [
+     "w",
+     241471585,
+     "to"
+    ]
+   ],
+   "relation": 3257077,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     752729857,
+     "from"
+    ],
+    [
+     "n",
+     778263174,
+     "via"
+    ],
+    [
+     "w",
+     752729856,
+     "to"
+    ]
+   ],
+   "relation": 10372299,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     985568553,
+     "from"
+    ],
+    [
+     "n",
+     408475774,
+     "via"
+    ],
+    [
+     "w",
+     36740708,
+     "to"
+    ]
+   ],
+   "relation": 13248314,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     946165865,
+     "from"
+    ],
+    [
+     "n",
+     8759013835,
+     "via"
+    ],
+    [
+     "w",
+     946165866,
+     "to"
+    ]
+   ],
+   "relation": 15638452,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1006860990,
+     "from"
+    ],
+    [
+     "n",
+     4053650191,
+     "via"
+    ],
+    [
+     "w",
+     1006860985,
+     "to"
+    ]
+   ],
+   "relation": 13759623,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     246370198,
+     "from"
+    ],
+    [
+     "n",
+     2534202816,
+     "via"
+    ],
+    [
+     "w",
+     246370197,
+     "to"
+    ]
+   ],
+   "relation": 15774822,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     848033601,
+     "from"
+    ],
+    [
+     "n",
+     917305373,
+     "via"
+    ],
+    [
+     "w",
+     82460908,
+     "to"
+    ]
+   ],
+   "relation": 12302868,
+   "stratum": [
+    "via-node",
+    "no_right_turn"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     4448109,
+     "from"
+    ],
+    [
+     "n",
+     21711775,
+     "via"
+    ],
+    [
+     "w",
+     7994138,
+     "to"
+    ]
+   ],
+   "relation": 13553599,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     25649223,
+     "via"
+    ],
+    [
+     "w",
+     1006440432,
+     "from"
+    ],
+    [
+     "w",
+     86326105,
+     "to"
+    ]
+   ],
+   "relation": 6755009,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     2882614569,
+     "via"
+    ],
+    [
+     "w",
+     284531659,
+     "to"
+    ],
+    [
+     "w",
+     1190742075,
+     "from"
+    ]
+   ],
+   "relation": 4853640,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     27100267,
+     "from"
+    ],
+    [
+     "n",
+     966019887,
+     "via"
+    ],
+    [
+     "w",
+     968284381,
+     "to"
+    ]
+   ],
+   "relation": 17749757,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     306558847,
+     "via"
+    ],
+    [
+     "w",
+     165653950,
+     "to"
+    ],
+    [
+     "w",
+     1095281940,
+     "from"
+    ]
+   ],
+   "relation": 6316748,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     592779841,
+     "from"
+    ],
+    [
+     "n",
+     1002563966,
+     "via"
+    ],
+    [
+     "w",
+     464379997,
+     "to"
+    ]
+   ],
+   "relation": 16058198,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1283610033,
+     "from"
+    ],
+    [
+     "w",
+     1283610035,
+     "to"
+    ],
+    [
+     "n",
+     3346233,
+     "via"
+    ]
+   ],
+   "relation": 12638596,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     9647533500,
+     "via"
+    ]
+   ],
+   "relation": 14044409,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     333245287,
+     "from"
+    ],
+    [
+     "n",
+     790044344,
+     "via"
+    ],
+    [
+     "w",
+     64048072,
+     "to"
+    ]
+   ],
+   "relation": 19644975,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     55952846,
+     "from"
+    ],
+    [
+     "w",
+     1058166042,
+     "to"
+    ],
+    [
+     "n",
+     703332861,
+     "via"
+    ]
+   ],
+   "relation": 14241162,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     170003060,
+     "from"
+    ],
+    [
+     "n",
+     702389052,
+     "via"
+    ],
+    [
+     "w",
+     509040820,
+     "to"
+    ]
+   ],
+   "relation": 7408099,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     79421289,
+     "from"
+    ],
+    [
+     "n",
+     431369123,
+     "via"
+    ],
+    [
+     "w",
+     268875340,
+     "to"
+    ]
+   ],
+   "relation": 17725829,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     164972794,
+     "from"
+    ],
+    [
+     "n",
+     25594529,
+     "via"
+    ],
+    [
+     "w",
+     1247446072,
+     "to"
+    ]
+   ],
+   "relation": 17170762,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     55287292,
+     "from"
+    ],
+    [
+     "n",
+     694606150,
+     "via"
+    ],
+    [
+     "w",
+     508984315,
+     "to"
+    ]
+   ],
+   "relation": 7407602,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1011554960,
+     "from"
+    ],
+    [
+     "w",
+     686132552,
+     "to"
+    ],
+    [
+     "n",
+     6431045700,
+     "via"
+    ]
+   ],
+   "relation": 9716061,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     619242286,
+     "from"
+    ],
+    [
+     "n",
+     1829156210,
+     "via"
+    ],
+    [
+     "w",
+     343090145,
+     "to"
+    ]
+   ],
+   "relation": 4868363,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1311842161,
+     "from"
+    ],
+    [
+     "n",
+     3356365,
+     "via"
+    ],
+    [
+     "w",
+     184507807,
+     "to"
+    ]
+   ],
+   "relation": 7301773,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1010960689,
+     "from"
+    ],
+    [
+     "n",
+     32311734,
+     "via"
+    ],
+    [
+     "w",
+     239967842,
+     "to"
+    ]
+   ],
+   "relation": 2377202,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     944590254,
+     "from"
+    ],
+    [
+     "n",
+     1671105047,
+     "via"
+    ],
+    [
+     "w",
+     948633740,
+     "to"
+    ]
+   ],
+   "relation": 13551453,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     957931635,
+     "from"
+    ],
+    [
+     "w",
+     985141047,
+     "to"
+    ],
+    [
+     "n",
+     8863689806,
+     "via"
+    ]
+   ],
+   "relation": 12884826,
+   "stratum": [
+    "via-node",
+    "no_left_turn"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1010346489,
+     "from"
+    ],
+    [
+     "n",
+     32027614,
+     "via"
+    ],
+    [
+     "w",
+     1010346489,
+     "to"
+    ]
+   ],
+   "relation": 13613115,
+   "stratum": [
+    "via-node",
+    "no_u_turn"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     62111109,
+     "from"
+    ],
+    [
+     "w",
+     62111111,
+     "to"
+    ],
+    [
+     "n",
+     694606342,
+     "via"
+    ]
+   ],
+   "relation": 14244560,
+   "stratum": [
+    "via-node",
+    "no_u_turn"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1069076530,
+     "from"
+    ],
+    [
+     "n",
+     9813183559,
+     "via"
+    ],
+    [
+     "w",
+     1069076530,
+     "to"
+    ]
+   ],
+   "relation": 14245634,
+   "stratum": [
+    "via-node",
+    "no_u_turn"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     154191483,
+     "from"
+    ],
+    [
+     "n",
+     107272369,
+     "via"
+    ],
+    [
+     "w",
+     23557882,
+     "to"
+    ]
+   ],
+   "relation": 2075239,
+   "stratum": [
+    "via-node",
+    "no_u_turn"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     3403765820,
+     "via"
+    ],
+    [
+     "w",
+     333248194,
+     "from"
+    ],
+    [
+     "w",
+     857114042,
+     "to"
+    ]
+   ],
+   "relation": 11736099,
+   "stratum": [
+    "via-node",
+    "no_u_turn"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     577101300,
+     "from"
+    ],
+    [
+     "w",
+     1068989527,
+     "to"
+    ],
+    [
+     "n",
+     35487721,
+     "via"
+    ]
+   ],
+   "relation": 14244828,
+   "stratum": [
+    "via-node",
+    "no_u_turn"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     4081471,
+     "from"
+    ],
+    [
+     "n",
+     20916723,
+     "via"
+    ],
+    [
+     "w",
+     4081471,
+     "to"
+    ]
+   ],
+   "relation": 9655552,
+   "stratum": [
+    "via-node",
+    "no_u_turn"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1056319565,
+     "from"
+    ],
+    [
+     "w",
+     1056319567,
+     "to"
+    ],
+    [
+     "n",
+     5915841452,
+     "via"
+    ]
+   ],
+   "relation": 14262888,
+   "stratum": [
+    "via-node",
+    "no_u_turn"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     156287890,
+     "from"
+    ],
+    [
+     "n",
+     1685573862,
+     "via"
+    ],
+    [
+     "w",
+     156287890,
+     "to"
+    ]
+   ],
+   "relation": 7904502,
+   "stratum": [
+    "via-node",
+    "no_u_turn"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1216575350,
+     "from"
+    ],
+    [
+     "n",
+     3841979078,
+     "via"
+    ],
+    [
+     "w",
+     1216575350,
+     "to"
+    ]
+   ],
+   "relation": 16707665,
+   "stratum": [
+    "via-node",
+    "no_u_turn"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     58420289,
+     "from"
+    ],
+    [
+     "w",
+     542779497,
+     "to"
+    ],
+    [
+     "n",
+     665495930,
+     "via"
+    ]
+   ],
+   "relation": 14245900,
+   "stratum": [
+    "via-node",
+    "no_u_turn"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     55580551,
+     "from"
+    ],
+    [
+     "n",
+     698557046,
+     "via"
+    ],
+    [
+     "w",
+     55580550,
+     "to"
+    ]
+   ],
+   "relation": 11626869,
+   "stratum": [
+    "via-node",
+    "no_u_turn"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     557999837,
+     "from"
+    ],
+    [
+     "n",
+     471968208,
+     "via"
+    ],
+    [
+     "w",
+     39392058,
+     "to"
+    ]
+   ],
+   "relation": 7968303,
+   "stratum": [
+    "via-node",
+    "no_straight_on"
+   ],
+   "tags": {
+    "restriction": "no_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     78391522,
+     "from"
+    ],
+    [
+     "n",
+     920062091,
+     "via"
+    ],
+    [
+     "w",
+     807715925,
+     "to"
+    ]
+   ],
+   "relation": 20032015,
+   "stratum": [
+    "via-node",
+    "no_straight_on"
+   ],
+   "tags": {
+    "restriction": "no_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     246124643,
+     "from"
+    ],
+    [
+     "n",
+     9446154282,
+     "via"
+    ],
+    [
+     "w",
+     1334549231,
+     "to"
+    ]
+   ],
+   "relation": 7844441,
+   "stratum": [
+    "via-node",
+    "no_straight_on"
+   ],
+   "tags": {
+    "restriction": "no_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1287413741,
+     "from"
+    ],
+    [
+     "n",
+     3608623783,
+     "via"
+    ],
+    [
+     "w",
+     1242575848,
+     "to"
+    ]
+   ],
+   "relation": 17646524,
+   "stratum": [
+    "via-node",
+    "no_straight_on"
+   ],
+   "tags": {
+    "restriction": "no_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     78190823,
+     "from"
+    ],
+    [
+     "n",
+     918469635,
+     "via"
+    ],
+    [
+     "w",
+     176145621,
+     "to"
+    ]
+   ],
+   "relation": 17548962,
+   "stratum": [
+    "via-node",
+    "no_straight_on"
+   ],
+   "tags": {
+    "restriction": "no_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     93895076,
+     "from"
+    ],
+    [
+     "n",
+     3484652236,
+     "via"
+    ],
+    [
+     "w",
+     659060202,
+     "to"
+    ]
+   ],
+   "relation": 4853555,
+   "stratum": [
+    "via-node",
+    "no_straight_on"
+   ],
+   "tags": {
+    "restriction": "no_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     892078399,
+     "from"
+    ],
+    [
+     "n",
+     8291584218,
+     "via"
+    ],
+    [
+     "w",
+     979785558,
+     "to"
+    ]
+   ],
+   "relation": 13166535,
+   "stratum": [
+    "via-node",
+    "no_straight_on"
+   ],
+   "tags": {
+    "restriction": "no_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     311966149,
+     "from"
+    ],
+    [
+     "n",
+     3177478999,
+     "via"
+    ]
+   ],
+   "relation": 12887068,
+   "stratum": [
+    "via-node",
+    "no_straight_on"
+   ],
+   "tags": {
+    "restriction": "no_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     779850207,
+     "from"
+    ],
+    [
+     "n",
+     1580927204,
+     "via"
+    ],
+    [
+     "w",
+     716832487,
+     "to"
+    ]
+   ],
+   "relation": 10811890,
+   "stratum": [
+    "via-node",
+    "no_straight_on"
+   ],
+   "tags": {
+    "restriction": "no_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1094342275,
+     "from"
+    ],
+    [
+     "n",
+     32852582,
+     "via"
+    ],
+    [
+     "w",
+     761769290,
+     "to"
+    ]
+   ],
+   "relation": 10558420,
+   "stratum": [
+    "via-node",
+    "no_straight_on"
+   ],
+   "tags": {
+    "restriction": "no_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     559432685,
+     "from"
+    ],
+    [
+     "n",
+     1233451945,
+     "via"
+    ],
+    [
+     "w",
+     1011240900,
+     "to"
+    ]
+   ],
+   "relation": 17791247,
+   "stratum": [
+    "via-node",
+    "no_straight_on"
+   ],
+   "tags": {
+    "restriction": "no_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     735183412,
+     "from"
+    ],
+    [
+     "n",
+     6885670373,
+     "via"
+    ],
+    [
+     "w",
+     915032975,
+     "to"
+    ]
+   ],
+   "relation": 12420333,
+   "stratum": [
+    "via-node",
+    "no_straight_on"
+   ],
+   "tags": {
+    "restriction": "no_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     254859474,
+     "from"
+    ],
+    [
+     "n",
+     2606505839,
+     "via"
+    ],
+    [
+     "w",
+     528728161,
+     "to"
+    ]
+   ],
+   "relation": 7615778,
+   "stratum": [
+    "via-node",
+    "no_straight_on"
+   ],
+   "tags": {
+    "restriction": "no_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     114034523,
+     "from"
+    ],
+    [
+     "n",
+     1292290965,
+     "via"
+    ],
+    [
+     "w",
+     500941076,
+     "to"
+    ]
+   ],
+   "relation": 7336294,
+   "stratum": [
+    "via-node",
+    "no_straight_on"
+   ],
+   "tags": {
+    "restriction": "no_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1089381537,
+     "from"
+    ],
+    [
+     "n",
+     308389999,
+     "via"
+    ],
+    [
+     "w",
+     81009199,
+     "to"
+    ]
+   ],
+   "relation": 19797631,
+   "stratum": [
+    "via-node",
+    "no_straight_on"
+   ],
+   "tags": {
+    "restriction": "no_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     60577048,
+     "from"
+    ],
+    [
+     "n",
+     6480352153,
+     "via"
+    ],
+    [
+     "w",
+     690683799,
+     "to"
+    ]
+   ],
+   "relation": 13498486,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     311966132,
+     "to"
+    ],
+    [
+     "n",
+     3177479029,
+     "via"
+    ],
+    [
+     "w",
+     782107249,
+     "from"
+    ]
+   ],
+   "relation": 4179048,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     82460901,
+     "from"
+    ],
+    [
+     "w",
+     951506270,
+     "to"
+    ],
+    [
+     "n",
+     8807268348,
+     "via"
+    ]
+   ],
+   "relation": 12812392,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1097682416,
+     "from"
+    ],
+    [
+     "n",
+     9771073999,
+     "via"
+    ],
+    [
+     "w",
+     1222989893,
+     "to"
+    ]
+   ],
+   "relation": 16686773,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     137908531,
+     "from"
+    ],
+    [
+     "w",
+     1071777649,
+     "to"
+    ],
+    [
+     "n",
+     4088571315,
+     "via"
+    ]
+   ],
+   "relation": 14276901,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     801308346,
+     "from"
+    ],
+    [
+     "w",
+     23344108,
+     "to"
+    ],
+    [
+     "n",
+     252785232,
+     "via"
+    ]
+   ],
+   "relation": 3327473,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     458386884,
+     "from"
+    ],
+    [
+     "n",
+     4544001413,
+     "via"
+    ],
+    [
+     "w",
+     1221294685,
+     "to"
+    ]
+   ],
+   "relation": 16655287,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     354092020,
+     "from"
+    ],
+    [
+     "n",
+     9412722768,
+     "via"
+    ],
+    [
+     "w",
+     1431576766,
+     "to"
+    ]
+   ],
+   "relation": 13146023,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     4852874,
+     "from"
+    ],
+    [
+     "n",
+     6137128386,
+     "via"
+    ],
+    [
+     "w",
+     690683797,
+     "to"
+    ]
+   ],
+   "relation": 13498487,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     564148768,
+     "from"
+    ],
+    [
+     "w",
+     1015060391,
+     "to"
+    ],
+    [
+     "n",
+     252638505,
+     "via"
+    ]
+   ],
+   "relation": 14281811,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     963804033,
+     "from"
+    ],
+    [
+     "n",
+     8842302946,
+     "via"
+    ],
+    [
+     "w",
+     1415884216,
+     "to"
+    ]
+   ],
+   "relation": 19369122,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     153587587,
+     "from"
+    ],
+    [
+     "n",
+     9330132778,
+     "via"
+    ],
+    [
+     "w",
+     31565516,
+     "to"
+    ]
+   ],
+   "relation": 2070895,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     6182395178,
+     "via"
+    ]
+   ],
+   "relation": 15525533,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     27869318,
+     "from"
+    ],
+    [
+     "w",
+     484289593,
+     "to"
+    ],
+    [
+     "n",
+     5130995762,
+     "via"
+    ]
+   ],
+   "relation": 13592791,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     609613822,
+     "from"
+    ],
+    [
+     "w",
+     977395748,
+     "to"
+    ],
+    [
+     "n",
+     3663284022,
+     "via"
+    ]
+   ],
+   "relation": 13137411,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     23044351,
+     "from"
+    ],
+    [
+     "n",
+     934940324,
+     "via"
+    ],
+    [
+     "w",
+     1163670793,
+     "to"
+    ]
+   ],
+   "relation": 15740763,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     959870616,
+     "from"
+    ],
+    [
+     "n",
+     8881028423,
+     "via"
+    ],
+    [
+     "w",
+     1528697542,
+     "to"
+    ]
+   ],
+   "relation": 20969714,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     729535482,
+     "from"
+    ],
+    [
+     "n",
+     6834406105,
+     "via"
+    ],
+    [
+     "w",
+     963804034,
+     "to"
+    ]
+   ],
+   "relation": 12948090,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     759013053,
+     "from"
+    ],
+    [
+     "w",
+     1330414441,
+     "to"
+    ],
+    [
+     "n",
+     369773388,
+     "via"
+    ]
+   ],
+   "relation": 1835862,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     983812349,
+     "from"
+    ],
+    [
+     "n",
+     9096967922,
+     "via"
+    ],
+    [
+     "w",
+     983812346,
+     "to"
+    ]
+   ],
+   "relation": 13219305,
+   "stratum": [
+    "via-node",
+    "only_straight_on"
+   ],
+   "tags": {
+    "restriction": "only_straight_on",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1067257880,
+     "from"
+    ],
+    [
+     "w",
+     165547650,
+     "to"
+    ],
+    [
+     "n",
+     923121315,
+     "via"
+    ]
+   ],
+   "relation": 17165237,
+   "stratum": [
+    "via-node",
+    "only_right_turn"
+   ],
+   "tags": {
+    "restriction": "only_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     963804038,
+     "from"
+    ],
+    [
+     "w",
+     963804042,
+     "to"
+    ],
+    [
+     "n",
+     258994715,
+     "via"
+    ]
+   ],
+   "relation": 12948096,
+   "stratum": [
+    "via-node",
+    "only_right_turn"
+   ],
+   "tags": {
+    "restriction": "only_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     1529270605,
+     "via"
+    ],
+    [
+     "w",
+     23099377,
+     "from"
+    ],
+    [
+     "w",
+     1190860466,
+     "to"
+    ]
+   ],
+   "relation": 16113261,
+   "stratum": [
+    "via-node",
+    "only_right_turn"
+   ],
+   "tags": {
+    "restriction": "only_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     70708490,
+     "from"
+    ],
+    [
+     "w",
+     70708504,
+     "to"
+    ],
+    [
+     "n",
+     843356810,
+     "via"
+    ]
+   ],
+   "relation": 1108929,
+   "stratum": [
+    "via-node",
+    "only_right_turn"
+   ],
+   "tags": {
+    "restriction": "only_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     951520608,
+     "from"
+    ],
+    [
+     "w",
+     951520607,
+     "to"
+    ],
+    [
+     "n",
+     8807375521,
+     "via"
+    ]
+   ],
+   "relation": 12812563,
+   "stratum": [
+    "via-node",
+    "only_right_turn"
+   ],
+   "tags": {
+    "restriction": "only_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     153587589,
+     "from"
+    ],
+    [
+     "n",
+     353206953,
+     "via"
+    ],
+    [
+     "w",
+     1096471767,
+     "to"
+    ]
+   ],
+   "relation": 2070900,
+   "stratum": [
+    "via-node",
+    "only_right_turn"
+   ],
+   "tags": {
+    "restriction": "only_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     941095440,
+     "from"
+    ],
+    [
+     "w",
+     136032357,
+     "to"
+    ],
+    [
+     "n",
+     4037921,
+     "via"
+    ]
+   ],
+   "relation": 14291113,
+   "stratum": [
+    "via-node",
+    "only_right_turn"
+   ],
+   "tags": {
+    "restriction": "only_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     476352460,
+     "from"
+    ],
+    [
+     "w",
+     980992259,
+     "to"
+    ],
+    [
+     "n",
+     1561300170,
+     "via"
+    ]
+   ],
+   "relation": 13184095,
+   "stratum": [
+    "via-node",
+    "only_right_turn"
+   ],
+   "tags": {
+    "restriction": "only_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1193559212,
+     "from"
+    ],
+    [
+     "n",
+     11078801606,
+     "via"
+    ],
+    [
+     "w",
+     1193559213,
+     "to"
+    ]
+   ],
+   "relation": 16145696,
+   "stratum": [
+    "via-node",
+    "only_right_turn"
+   ],
+   "tags": {
+    "restriction": "only_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     684626145,
+     "from"
+    ],
+    [
+     "w",
+     684626149,
+     "to"
+    ],
+    [
+     "n",
+     6414680122,
+     "via"
+    ]
+   ],
+   "relation": 14285234,
+   "stratum": [
+    "via-node",
+    "only_right_turn"
+   ],
+   "tags": {
+    "restriction": "only_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     6431045699,
+     "via"
+    ],
+    [
+     "w",
+     686132554,
+     "from"
+    ],
+    [
+     "w",
+     686132543,
+     "to"
+    ]
+   ],
+   "relation": 9519900,
+   "stratum": [
+    "via-node",
+    "only_right_turn"
+   ],
+   "tags": {
+    "restriction": "only_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1069076522,
+     "from"
+    ],
+    [
+     "n",
+     3392872779,
+     "via"
+    ],
+    [
+     "w",
+     1069076530,
+     "to"
+    ]
+   ],
+   "relation": 14245636,
+   "stratum": [
+    "via-node",
+    "only_right_turn"
+   ],
+   "tags": {
+    "restriction": "only_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     512386301,
+     "from"
+    ],
+    [
+     "w",
+     592421480,
+     "to"
+    ],
+    [
+     "n",
+     25532779,
+     "via"
+    ]
+   ],
+   "relation": 14262912,
+   "stratum": [
+    "via-node",
+    "only_right_turn"
+   ],
+   "tags": {
+    "restriction": "only_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     802206825,
+     "from"
+    ],
+    [
+     "n",
+     196172292,
+     "via"
+    ],
+    [
+     "w",
+     25683281,
+     "to"
+    ]
+   ],
+   "relation": 4679938,
+   "stratum": [
+    "via-node",
+    "only_right_turn"
+   ],
+   "tags": {
+    "restriction": "only_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     154533155,
+     "from"
+    ],
+    [
+     "w",
+     1067399026,
+     "to"
+    ],
+    [
+     "n",
+     9800243145,
+     "via"
+    ]
+   ],
+   "relation": 14226087,
+   "stratum": [
+    "via-node",
+    "only_right_turn"
+   ],
+   "tags": {
+    "restriction": "only_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     946123724,
+     "from"
+    ],
+    [
+     "w",
+     946123723,
+     "to"
+    ],
+    [
+     "n",
+     5823607229,
+     "via"
+    ]
+   ],
+   "relation": 12747776,
+   "stratum": [
+    "via-node",
+    "only_left_turn"
+   ],
+   "tags": {
+    "restriction": "only_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1351629179,
+     "from"
+    ],
+    [
+     "n",
+     12505102921,
+     "via"
+    ],
+    [
+     "w",
+     1351629180,
+     "to"
+    ]
+   ],
+   "relation": 18558556,
+   "stratum": [
+    "via-node",
+    "only_left_turn"
+   ],
+   "tags": {
+    "restriction": "only_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1300113338,
+     "from"
+    ],
+    [
+     "n",
+     4897542358,
+     "via"
+    ],
+    [
+     "w",
+     498304075,
+     "to"
+    ]
+   ],
+   "relation": 17817898,
+   "stratum": [
+    "via-node",
+    "only_left_turn"
+   ],
+   "tags": {
+    "restriction": "only_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1220639747,
+     "from"
+    ],
+    [
+     "n",
+     2748301955,
+     "via"
+    ],
+    [
+     "w",
+     1220639748,
+     "to"
+    ]
+   ],
+   "relation": 16644804,
+   "stratum": [
+    "via-node",
+    "only_left_turn"
+   ],
+   "tags": {
+    "restriction": "only_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     625239176,
+     "from"
+    ],
+    [
+     "n",
+     5903482496,
+     "via"
+    ],
+    [
+     "w",
+     185007407,
+     "to"
+    ]
+   ],
+   "relation": 13611690,
+   "stratum": [
+    "via-node",
+    "only_left_turn"
+   ],
+   "tags": {
+    "restriction": "only_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     26498408,
+     "from"
+    ],
+    [
+     "n",
+     6205745452,
+     "via"
+    ],
+    [
+     "w",
+     1128395119,
+     "to"
+    ]
+   ],
+   "relation": 13295419,
+   "stratum": [
+    "via-node",
+    "only_left_turn"
+   ],
+   "tags": {
+    "restriction": "only_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     498304072,
+     "from"
+    ],
+    [
+     "n",
+     4897542358,
+     "via"
+    ],
+    [
+     "w",
+     1116631879,
+     "to"
+    ]
+   ],
+   "relation": 17817897,
+   "stratum": [
+    "via-node",
+    "only_left_turn"
+   ],
+   "tags": {
+    "restriction": "only_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     676032254,
+     "from"
+    ],
+    [
+     "n",
+     6331110416,
+     "via"
+    ],
+    [
+     "w",
+     959808230,
+     "to"
+    ]
+   ],
+   "relation": 12904516,
+   "stratum": [
+    "via-node",
+    "only_left_turn"
+   ],
+   "tags": {
+    "restriction": "only_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1419412970,
+     "from"
+    ],
+    [
+     "w",
+     375415305,
+     "to"
+    ],
+    [
+     "n",
+     9148621965,
+     "via"
+    ]
+   ],
+   "relation": 19417734,
+   "stratum": [
+    "via-node",
+    "only_left_turn"
+   ],
+   "tags": {
+    "restriction": "only_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1212462713,
+     "from"
+    ],
+    [
+     "n",
+     6363607952,
+     "via"
+    ],
+    [
+     "w",
+     1212462707,
+     "to"
+    ]
+   ],
+   "relation": 16409683,
+   "stratum": [
+    "via-node",
+    "only_left_turn"
+   ],
+   "tags": {
+    "restriction": "only_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     609214760,
+     "from"
+    ],
+    [
+     "n",
+     259428820,
+     "via"
+    ],
+    [
+     "w",
+     960778234,
+     "to"
+    ]
+   ],
+   "relation": 8461628,
+   "stratum": [
+    "via-node",
+    "only_left_turn"
+   ],
+   "tags": {
+    "restriction": "only_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     458725840,
+     "from"
+    ],
+    [
+     "n",
+     1581066900,
+     "via"
+    ],
+    [
+     "w",
+     1000359433,
+     "to"
+    ]
+   ],
+   "relation": 20158895,
+   "stratum": [
+    "via-node",
+    "only_left_turn"
+   ],
+   "tags": {
+    "restriction": "only_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1053719366,
+     "from"
+    ],
+    [
+     "n",
+     9683683970,
+     "via"
+    ],
+    [
+     "w",
+     1053719714,
+     "to"
+    ]
+   ],
+   "relation": 14064146,
+   "stratum": [
+    "via-node",
+    "only_left_turn"
+   ],
+   "tags": {
+    "restriction": "only_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     943306931,
+     "from"
+    ],
+    [
+     "n",
+     8734359693,
+     "via"
+    ],
+    [
+     "w",
+     943306941,
+     "to"
+    ]
+   ],
+   "relation": 12715761,
+   "stratum": [
+    "via-node",
+    "only_left_turn"
+   ],
+   "tags": {
+    "restriction": "only_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     478184783,
+     "from"
+    ],
+    [
+     "n",
+     6901901467,
+     "via"
+    ],
+    [
+     "w",
+     737215160,
+     "to"
+    ]
+   ],
+   "relation": 10182417,
+   "stratum": [
+    "via-node",
+    "only_left_turn"
+   ],
+   "tags": {
+    "restriction": "only_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     712108551,
+     "via"
+    ],
+    [
+     "w",
+     872939275,
+     "from"
+    ],
+    [
+     "w",
+     872939272,
+     "to"
+    ]
+   ],
+   "relation": 11902360,
+   "stratum": [
+    "via-node",
+    "no_entry"
+   ],
+   "tags": {
+    "restriction": "no_entry",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     8128888506,
+     "via"
+    ],
+    [
+     "w",
+     872939271,
+     "from"
+    ],
+    [
+     "w",
+     91733540,
+     "to"
+    ]
+   ],
+   "relation": 11902356,
+   "stratum": [
+    "via-node",
+    "no_entry"
+   ],
+   "tags": {
+    "restriction": "no_entry",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     8128888506,
+     "via"
+    ],
+    [
+     "w",
+     872939274,
+     "from"
+    ],
+    [
+     "w",
+     91733540,
+     "to"
+    ]
+   ],
+   "relation": 11902357,
+   "stratum": [
+    "via-node",
+    "no_entry"
+   ],
+   "tags": {
+    "restriction": "no_entry",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     17309398,
+     "via"
+    ],
+    [
+     "w",
+     9852734,
+     "to"
+    ],
+    [
+     "w",
+     943863406,
+     "from"
+    ]
+   ],
+   "relation": 12722170,
+   "stratum": [
+    "via-node",
+    "no_entry"
+   ],
+   "tags": {
+    "restriction": "no_entry",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     8128888506,
+     "via"
+    ],
+    [
+     "w",
+     872939272,
+     "from"
+    ],
+    [
+     "w",
+     91733540,
+     "to"
+    ]
+   ],
+   "relation": 11902358,
+   "stratum": [
+    "via-node",
+    "no_entry"
+   ],
+   "tags": {
+    "restriction": "no_entry",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     9120399863,
+     "via"
+    ],
+    [
+     "w",
+     986689131,
+     "to"
+    ],
+    [
+     "w",
+     51972420,
+     "from"
+    ]
+   ],
+   "relation": 13258979,
+   "stratum": [
+    "via-node",
+    "no_entry"
+   ],
+   "tags": {
+    "restriction": "no_entry",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     863734752,
+     "from"
+    ],
+    [
+     "n",
+     871105014,
+     "via"
+    ],
+    [
+     "w",
+     73512403,
+     "to"
+    ]
+   ],
+   "relation": 11795009,
+   "stratum": [
+    "via-node",
+    "no_entry"
+   ],
+   "tags": {
+    "restriction": "no_entry",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     863734753,
+     "from"
+    ],
+    [
+     "n",
+     871105014,
+     "via"
+    ],
+    [
+     "w",
+     73512403,
+     "to"
+    ]
+   ],
+   "relation": 11795008,
+   "stratum": [
+    "via-node",
+    "no_entry"
+   ],
+   "tags": {
+    "restriction": "no_entry",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     872939273,
+     "from"
+    ],
+    [
+     "w",
+     57729771,
+     "to"
+    ],
+    [
+     "n",
+     715773463,
+     "via"
+    ]
+   ],
+   "relation": 11902363,
+   "stratum": [
+    "via-node",
+    "no_entry"
+   ],
+   "tags": {
+    "restriction": "no_entry",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     712108551,
+     "via"
+    ],
+    [
+     "w",
+     57729773,
+     "from"
+    ],
+    [
+     "w",
+     872939272,
+     "to"
+    ]
+   ],
+   "relation": 11902361,
+   "stratum": [
+    "via-node",
+    "no_entry"
+   ],
+   "tags": {
+    "restriction": "no_entry",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     715773463,
+     "via"
+    ],
+    [
+     "w",
+     872939277,
+     "from"
+    ],
+    [
+     "w",
+     57729771,
+     "to"
+    ]
+   ],
+   "relation": 11902364,
+   "stratum": [
+    "via-node",
+    "no_entry"
+   ],
+   "tags": {
+    "restriction": "no_entry",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     715773463,
+     "via"
+    ],
+    [
+     "w",
+     872939274,
+     "from"
+    ],
+    [
+     "w",
+     57729771,
+     "to"
+    ]
+   ],
+   "relation": 11902362,
+   "stratum": [
+    "via-node",
+    "no_entry"
+   ],
+   "tags": {
+    "restriction": "no_entry",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "n",
+     712108551,
+     "via"
+    ],
+    [
+     "w",
+     872939272,
+     "to"
+    ],
+    [
+     "w",
+     57038222,
+     "from"
+    ]
+   ],
+   "relation": 11902359,
+   "stratum": [
+    "via-node",
+    "no_entry"
+   ],
+   "tags": {
+    "restriction": "no_entry",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1300451153,
+     "from"
+    ],
+    [
+     "n",
+     24999300,
+     "via"
+    ],
+    [
+     "w",
+     1300451153,
+     "to"
+    ]
+   ],
+   "relation": 13613008,
+   "stratum": [
+    "via-node",
+    "only_u_turn"
+   ],
+   "tags": {
+    "restriction": "only_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     917057322,
+     "from"
+    ],
+    [
+     "n",
+     5468347289,
+     "via"
+    ],
+    [
+     "w",
+     1002685970,
+     "to"
+    ]
+   ],
+   "relation": 13442755,
+   "stratum": [
+    "via-node",
+    "only_u_turn"
+   ],
+   "tags": {
+    "restriction": "only_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1058576462,
+     "from"
+    ],
+    [
+     "n",
+     9727027041,
+     "via"
+    ],
+    [
+     "w",
+     1058576462,
+     "to"
+    ]
+   ],
+   "relation": 14121155,
+   "stratum": [
+    "via-node",
+    "only_u_turn"
+   ],
+   "tags": {
+    "restriction": "only_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     723380506,
+     "from"
+    ],
+    [
+     "w",
+     1049813794,
+     "via"
+    ],
+    [
+     "w",
+     1049813789,
+     "to"
+    ]
+   ],
+   "relation": 14326249,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     779127913,
+     "from"
+    ],
+    [
+     "w",
+     779127904,
+     "via"
+    ],
+    [
+     "w",
+     779127905,
+     "to"
+    ]
+   ],
+   "relation": 12686408,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1127620953,
+     "from"
+    ],
+    [
+     "w",
+     62720845,
+     "via"
+    ],
+    [
+     "w",
+     731064929,
+     "to"
+    ]
+   ],
+   "relation": 14249828,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     353913682,
+     "from"
+    ],
+    [
+     "w",
+     1531255728,
+     "via"
+    ],
+    [
+     "w",
+     1531255729,
+     "to"
+    ]
+   ],
+   "relation": 21197635,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1365387630,
+     "from"
+    ],
+    [
+     "w",
+     715831276,
+     "via"
+    ],
+    [
+     "w",
+     715831275,
+     "to"
+    ]
+   ],
+   "relation": 18793919,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     970403880,
+     "from"
+    ],
+    [
+     "w",
+     22974754,
+     "via"
+    ],
+    [
+     "w",
+     1025697329,
+     "to"
+    ]
+   ],
+   "relation": 10102087,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1287413741,
+     "from"
+    ],
+    [
+     "w",
+     1287413740,
+     "via"
+    ],
+    [
+     "w",
+     1431577305,
+     "via"
+    ],
+    [
+     "w",
+     144335314,
+     "to"
+    ]
+   ],
+   "relation": 17646529,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     831726878,
+     "from"
+    ],
+    [
+     "w",
+     737601445,
+     "via"
+    ],
+    [
+     "w",
+     737601446,
+     "to"
+    ]
+   ],
+   "relation": 10188596,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1056902181,
+     "from"
+    ],
+    [
+     "w",
+     159412519,
+     "via"
+    ],
+    [
+     "w",
+     518902032,
+     "to"
+    ]
+   ],
+   "relation": 8798974,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     673091840,
+     "from"
+    ],
+    [
+     "w",
+     1069416451,
+     "via"
+    ],
+    [
+     "w",
+     1069416450,
+     "to"
+    ]
+   ],
+   "relation": 14249862,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1226538543,
+     "from"
+    ],
+    [
+     "w",
+     185697914,
+     "via"
+    ],
+    [
+     "w",
+     1226538540,
+     "to"
+    ]
+   ],
+   "relation": 16749820,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     476119256,
+     "via"
+    ],
+    [
+     "w",
+     1004082020,
+     "from"
+    ],
+    [
+     "w",
+     255775257,
+     "to"
+    ]
+   ],
+   "relation": 14710486,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1103127237,
+     "from"
+    ],
+    [
+     "w",
+     589896291,
+     "via"
+    ],
+    [
+     "w",
+     1069373483,
+     "via"
+    ],
+    [
+     "w",
+     1069373481,
+     "via"
+    ],
+    [
+     "w",
+     353468986,
+     "to"
+    ]
+   ],
+   "relation": 14686696,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     62105076,
+     "from"
+    ],
+    [
+     "w",
+     1068994178,
+     "via"
+    ],
+    [
+     "w",
+     22721271,
+     "to"
+    ]
+   ],
+   "relation": 14244812,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     604064130,
+     "from"
+    ],
+    [
+     "w",
+     604064131,
+     "via"
+    ],
+    [
+     "w",
+     1163941533,
+     "via"
+    ],
+    [
+     "w",
+     153352619,
+     "to"
+    ]
+   ],
+   "relation": 15744461,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1334245843,
+     "from"
+    ],
+    [
+     "w",
+     1068994190,
+     "via"
+    ],
+    [
+     "w",
+     1068994188,
+     "to"
+    ]
+   ],
+   "relation": 14244818,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     4813675,
+     "from"
+    ],
+    [
+     "w",
+     148263477,
+     "via"
+    ],
+    [
+     "w",
+     582470334,
+     "to"
+    ]
+   ],
+   "relation": 14241134,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     297362921,
+     "from"
+    ],
+    [
+     "w",
+     707229296,
+     "via"
+    ],
+    [
+     "w",
+     26993535,
+     "via"
+    ],
+    [
+     "w",
+     707229299,
+     "to"
+    ]
+   ],
+   "relation": 11305961,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     55147022,
+     "from"
+    ],
+    [
+     "w",
+     1068799698,
+     "via"
+    ],
+    [
+     "w",
+     1068799700,
+     "to"
+    ]
+   ],
+   "relation": 14241460,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1069416460,
+     "from"
+    ],
+    [
+     "w",
+     674036630,
+     "via"
+    ],
+    [
+     "w",
+     1069416456,
+     "to"
+    ]
+   ],
+   "relation": 14249878,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1066872509,
+     "from"
+    ],
+    [
+     "w",
+     1066872517,
+     "via"
+    ],
+    [
+     "w",
+     1066872506,
+     "via"
+    ],
+    [
+     "w",
+     1066872514,
+     "to"
+    ]
+   ],
+   "relation": 14220190,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1068799700,
+     "from"
+    ],
+    [
+     "w",
+     1068799697,
+     "via"
+    ],
+    [
+     "w",
+     55147022,
+     "to"
+    ]
+   ],
+   "relation": 14241462,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     63662387,
+     "from"
+    ],
+    [
+     "w",
+     185706509,
+     "via"
+    ],
+    [
+     "w",
+     1069090300,
+     "to"
+    ]
+   ],
+   "relation": 10963807,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     82291103,
+     "from"
+    ],
+    [
+     "w",
+     1105458097,
+     "via"
+    ],
+    [
+     "w",
+     82291113,
+     "via"
+    ],
+    [
+     "w",
+     1105458099,
+     "to"
+    ]
+   ],
+   "relation": 14713988,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_right_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1082531419,
+     "from"
+    ],
+    [
+     "w",
+     1082531417,
+     "via"
+    ],
+    [
+     "w",
+     723380498,
+     "via"
+    ],
+    [
+     "w",
+     723380501,
+     "to"
+    ]
+   ],
+   "relation": 14403324,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1365387630,
+     "from"
+    ],
+    [
+     "w",
+     715831276,
+     "via"
+    ],
+    [
+     "w",
+     63946152,
+     "to"
+    ]
+   ],
+   "relation": 18793918,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_left_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1049813789,
+     "from"
+    ],
+    [
+     "w",
+     723380510,
+     "via"
+    ],
+    [
+     "w",
+     723380506,
+     "to"
+    ]
+   ],
+   "relation": 14326251,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     673091843,
+     "from"
+    ],
+    [
+     "w",
+     673091840,
+     "via"
+    ],
+    [
+     "w",
+     1069416451,
+     "to"
+    ]
+   ],
+   "relation": 14249863,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     4716571,
+     "from"
+    ],
+    [
+     "w",
+     780811265,
+     "via"
+    ],
+    [
+     "w",
+     780811267,
+     "to"
+    ]
+   ],
+   "relation": 10827451,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1049813794,
+     "from"
+    ],
+    [
+     "w",
+     1049813789,
+     "via"
+    ],
+    [
+     "w",
+     723380510,
+     "to"
+    ]
+   ],
+   "relation": 14326248,
+   "stratum": [
+    "via-way",
+    "*"
+   ],
+   "tags": {
+    "restriction": "no_u_turn",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1001108931,
+     "from"
+    ],
+    [
+     "n",
+     3356867,
+     "via"
+    ],
+    [
+     "w",
+     1001108932,
+     "to"
+    ]
+   ],
+   "relation": 13119340,
+   "stratum": [
+    "conditional",
+    "*"
+   ],
+   "tags": {
+    "except": "psv;bicycle",
+    "restriction:conditional": "no_straight_on @ (06:00-21:00)",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1006219638,
+     "from"
+    ],
+    [
+     "n",
+     1676921492,
+     "via"
+    ],
+    [
+     "w",
+     155291850,
+     "to"
+    ]
+   ],
+   "relation": 9092577,
+   "stratum": [
+    "conditional",
+    "*"
+   ],
+   "tags": {
+    "restriction:conditional": "no_right_turn @ ( Mo-Fr 08:30-09:30,15:00-16:00 )",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     28047780,
+     "from"
+    ],
+    [
+     "n",
+     3356363,
+     "via"
+    ],
+    [
+     "w",
+     215668330,
+     "to"
+    ]
+   ],
+   "relation": 13119284,
+   "stratum": [
+    "conditional",
+    "*"
+   ],
+   "tags": {
+    "except": "psv",
+    "restriction:conditional": "no_straight_on @ (06:00-21:00)",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1006221571,
+     "from"
+    ],
+    [
+     "n",
+     1676921492,
+     "via"
+    ],
+    [
+     "w",
+     155291850,
+     "to"
+    ]
+   ],
+   "relation": 9092578,
+   "stratum": [
+    "conditional",
+    "*"
+   ],
+   "tags": {
+    "restriction:conditional": "no_left_turn @ ( Mo-Fr 08:30-09:30,15:00-16:00 )",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     215668330,
+     "from"
+    ],
+    [
+     "n",
+     3356363,
+     "via"
+    ],
+    [
+     "w",
+     28047780,
+     "to"
+    ]
+   ],
+   "relation": 13119287,
+   "stratum": [
+    "conditional",
+    "*"
+   ],
+   "tags": {
+    "except": "psv",
+    "restriction:conditional": "no_straight_on @ (06:00-21:00)",
+    "type": "restriction"
+   }
+  },
+  {
+   "members": [
+    [
+     "w",
+     1001108929,
+     "from"
+    ],
+    [
+     "n",
+     3356867,
+     "via"
+    ],
+    [
+     "w",
+     1001108932,
+     "to"
+    ]
+   ],
+   "relation": 13119370,
+   "stratum": [
+    "conditional",
+    "*"
+   ],
+   "tags": {
+    "except": "bicycle;psv",
+    "restriction:conditional": "no_right_turn @ (06:00-21:00)",
+    "type": "restriction"
+   }
+  }
+ ],
+ "contract": "TURN-001 v1",
+ "frozen_before_engine_runs": true,
+ "quotas": {
+  "conditional/*": 6,
+  "via-node/no_entry": 13,
+  "via-node/no_left_turn": 20,
+  "via-node/no_right_turn": 20,
+  "via-node/no_straight_on": 15,
+  "via-node/no_u_turn": 12,
+  "via-node/only_left_turn": 15,
+  "via-node/only_right_turn": 15,
+  "via-node/only_straight_on": 20,
+  "via-node/only_u_turn": 4,
+  "via-way/*": 30
+ },
+ "selection_rule": "per-stratum quota, ordered by sha256('TURN-001:'+relation_id)",
+ "source_derivation": {
+  "command": "osmium extract --strategy complete_ways --bbox=-2.73,53.33,-1.91,53.69",
+  "reason": "Geofabrik greater-manchester-260901 unreachable from this execution environment (connection reset); fresher hashed snapshot used for ALL engines",
+  "upstream": "https://download.openstreetmap.fr/extracts/europe/united_kingdom/england/north_west.osm.pbf",
+  "upstream_sequence": 7332146,
+  "upstream_sha256": "c2a24119ec87ead930711c2af23a72b246b860199abaf88f3a09b565d39b4414",
+  "upstream_timestamp": "2026-10-17T02:11:56Z"
+ },
+ "source_sha256": "2a8ef8e1f2533cb009b1ce248a6bf4eaabdd47e03979e64e24cd844f3b22acba",
+ "source_snapshot": "gm.osm.pbf"
+}
