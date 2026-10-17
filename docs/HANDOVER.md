@@ -1,5 +1,18 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 — TURN-001 five no-route junctions: focused diagnostic
+- Own branch: `codex/chatgpt-turn001-no-route5-20261017`; read-only diagnostic in
+  `tools/turn001_no_route5_diagnostic.py`.
+- [Run 39027815145](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39027815145):
+  one focused job PASS, pinned clips/hashes verified. All 5 have a direct
+  route if turn rules are ignored, none has a via-node-rule-compliant route
+  within the base clip. Four recover when the tested relation is removed;
+  7615778 has a private-access destination.
+- [Five-case report](TURN_001_NO_ROUTE5_RESULTS.md); no engine modifications or
+  fresh competitive claim. Work item held pending independent dated
+  signage/TRO/access evidence; no inferred real-world legal conclusions.
+
+
 ## 2026-10-17 (later still) — work register + BARRIER-001 baseline
 - Shared register for all AIs: `python3 -m tools.work_status --fetch` (done / in progress /
   next, read-first list, `where <topic>`); rule at top of AGENTS.md.
