@@ -73,7 +73,8 @@ class TemporalRoadMatcher:
             if hops == 8:
                 continue
             for edge in graph.adjacency[vertex]:
-                if edge.access != 'allowed' or (entering, edge.edge_id) in graph.prohibited_turns:
+                if ((edge.access != 'allowed' and edge.edge_id not in self.matcher.route_unknown_edges)
+                        or (entering, edge.edge_id) in graph.prohibited_turns):
                     continue
                 later = (edge.target, edge.edge_id, hops + 1)
                 candidate = distance + edge.length_m

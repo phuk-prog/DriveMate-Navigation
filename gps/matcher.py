@@ -61,7 +61,8 @@ class DirectedRoadMatcher:
     def __init__(self, graph: RoadGraph, coordinates: Mapping[str,tuple[float,float]],
                  *, maximum_snap_m: float=35.0,
                  minimum_score_separation: float=0.85,
-                 experimental_adjacent_fragment_equivalence: bool=False):
+                 experimental_adjacent_fragment_equivalence: bool=False,
+                 same_road_pieces: bool=False, route_aware_access: bool=False):
         if not isinstance(graph,RoadGraph):
             raise TypeError("Requires a directed RoadGraph")
         if not isfinite(maximum_snap_m) or maximum_snap_m<=0 or maximum_snap_m>1000:
@@ -70,6 +71,13 @@ class DirectedRoadMatcher:
             raise ValueError("Invalid ambiguity separation")
         if type(experimental_adjacent_fragment_equivalence) is not bool:
             raise ValueError('Experimental mode must be boolean')
+        if type(same_road_pieces) is not bool or type(route_aware_access) is not bool:
+            raise ValueError('Same-road-pieces and route-aware modes must be boolean')
+        self.route_aware_access=route_aware_access
+        self.route_unknown_edges=frozenset()
+        # Run C improvement (owner-approved, 17 Oct 2026), opt-in so earlier frozen results stay
+        # reproducible: see _same_road_chain.
+        self.same_road_pieces=same_road_pieces
         # Default mode and previously frozen GPS-003 judgments are unchanged.
         self.experimental_adjacent_fragment_equivalence=experimental_adjacent_fragment_equivalence
         self.graph=graph
@@ -88,6 +96,16 @@ class DirectedRoadMatcher:
             (e for e in graph.edges.values() if e.access=="allowed"),
             key=lambda e:e.edge_id))
 
+    def set_route(self, edge_ids) -> None:
+        """Route-aware mode (Run C, owner-approved): uncertain-access roads the planner itself
+        chose for this journey (start or finish roads) may be matched; no others. Prohibited
+        roads never. Without the mode this does nothing."""
+        if not self.route_aware_access:
+            return
+        if any(e not in self.graph.edges for e in edge_ids):
+            raise ValueError("Unrecognized route edge")
+        self.route_unknown_edges=frozenset(e for e in edge_ids if self.graph.edges[e].access=="unknown")
+
     def _straight_same_way(self, first: _Candidate, other: _Candidate) -> bool:
         """Adjacent collinear pieces of one OSM way are not parallel roads.
 
@@ -103,6 +121,36 @@ class DirectedRoadMatcher:
         left, right = self.graph.edges[first.edge_id], self.graph.edges[other.edge_id]
         contiguous = left.target == right.source or right.target == left.source
         return contiguous and angular_difference(first.heading, other.heading) < 1e-6
+
+    def _same_road_chain(self, first: _Candidate, other: _Candidate, fix: GPSFix) -> bool:
+        """Consecutive pieces of one OSM way, travelled in the same direction, are one road.
+
+        Run C found the default matcher withholding most fixes on bending roads, because the
+        next (or previous) piece of the same road lies within the ambiguity radius. Only for a
+        moving fix with a heading (the heading gate has already removed the other direction),
+        only the same way and direction letter, joined piece to piece within three pieces and
+        with no prohibited turn between them. Different ways, parallel carriageways and
+        stationary fixes keep the existing ambiguity rules.
+        """
+        if fix.speed_mps is None or fix.speed_mps < 2.0 or fix.bearing_deg is None:
+            return False
+        a, b = first.edge_id.split(':'), other.edge_id.split(':')
+        if not (len(a) == len(b) == 4 and a[0] == b[0] == 'w' and a[1].isdigit() and a[1] == b[1]
+                and a[2].isdigit() and b[2].isdigit() and a[3] == b[3] and a[3] in ('f', 'r')):
+            return False
+        edges = self.graph.edges
+        for start, goal in ((first.edge_id, other.edge_id), (other.edge_id, first.edge_id)):
+            current = start
+            for _ in range(3):
+                nxt = next((e.edge_id for e in self.graph.adjacency[edges[current].target]
+                            if e.edge_id.split(':')[1] == a[1] and e.edge_id.split(':')[3] == a[3]
+                            and (current, e.edge_id) not in self.graph.prohibited_turns), None)
+                if nxt is None:
+                    break
+                if nxt == goal:
+                    return True
+                current = nxt
+        return False
 
     def _experimental_same_way_bend(self, first: _Candidate, other: _Candidate,
                                      fix: GPSFix) -> bool:
@@ -142,7 +190,8 @@ class DirectedRoadMatcher:
         # new position independently supports that same road.
         contenders=[]
         max_radius=min(self.maximum_snap_m,max(8.0,fix.horizontal_accuracy_m*2.0))
-        for edge in self._allowed:
+        extra=tuple(self.graph.edges[e] for e in sorted(self.route_unknown_edges))
+        for edge in self._allowed+extra:
             projection=_closest_distance_and_bearing(
                 fix,self.coords[edge.source],self.coords[edge.target])
             if projection is None:
@@ -175,6 +224,7 @@ class DirectedRoadMatcher:
         first = contenders[0]
         return [first] + [c for c in contenders[1:]
                           if not self._straight_same_way(first, c)
+                          and not (self.same_road_pieces and self._same_road_chain(first, c, fix))
                           and not (self.experimental_adjacent_fragment_equivalence
                                    and self._experimental_same_way_bend(first,c,fix))]
 

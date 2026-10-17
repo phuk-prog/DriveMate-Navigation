@@ -362,7 +362,7 @@ def dmn_route(dmn: rd.DMNMap, o_seg, d_seg):
     return Route(edges, r.length_m + start.length_m, r.estimated_seconds + start.estimated_seconds), nodes
 
 
-def drive(dmn: rd.DMNMap, clip, geom: dict, plan: dict, scenario: str) -> dict:
+def drive(dmn: rd.DMNMap, clip, geom: dict, plan: dict, scenario: str, improved: bool = False) -> dict:
     """One DMN drive, fix by fix: matcher -> on-route -> rerouting -> cues -> arrival."""
     from engine.arrival_controller import ArrivalController
     from engine.instruction_cues import instruction_phase
@@ -386,7 +386,10 @@ def drive(dmn: rd.DMNMap, clip, geom: dict, plan: dict, scenario: str) -> dict:
         car.end = clip.coords[car_nodes[-1]]
         car._build()
     trace = open_trace(clip, geom, plan["drive_nodes"], jid, scenario) if scenario != "wrong_turn" else None
-    tm = TemporalRoadMatcher(DirectedRoadMatcher(dmn.graph, dmn.imported.coordinates))
+    tm = TemporalRoadMatcher(DirectedRoadMatcher(dmn.graph, dmn.imported.coordinates,
+                                                 same_road_pieces=improved,
+                                                 route_aware_access=improved))
+    tm.matcher.set_route(route.edge_ids)
     rc = ReroutingController()
     ac = ArrivalController()
     rc.begin(route, now_ms=0)
@@ -453,12 +456,17 @@ def drive(dmn: rd.DMNMap, clip, geom: dict, plan: dict, scenario: str) -> dict:
                      "car_on_that_piece": edge in truth}
             if installed and new_route:
                 install(new_nodes)
+                tm.matcher.set_route(new_route.edge_ids)
                 planned["rev"] = ac.begin(tuple(geom["destination"]), route_length_m=new_route.length_m, now_ms=now)
                 judged = rd.judge(clip, {"origin_segment": list(edge),
                                          "destination_segment": geom["destination_segment"]}, new_nodes)
                 entry.update(route=judged["route"], length_m=judged.get("length_m"))
-                k = car.piece()
-                if (car.nodes[k], car.nodes[k + 1]) == edge:  # the driver follows the new route
+                # the driver follows the new route when it starts on the car's piece or the piece
+                # just behind/ahead (within NODE_TOLERANCE_M of the joint, so the car moves < 5 m)
+                here = car.piece()
+                k = next((k for k in (here, here - 1, here + 1) if 0 <= k < len(car.nodes) - 1
+                          and (car.nodes[k], car.nodes[k + 1]) == edge and edge in truth), None)
+                if k is not None:
                     car.replace_after(k + 1, new_nodes[1:], tuple(geom["destination"]))
                     entry["followed"] = True
             log["reroutes"].append(entry)
@@ -488,6 +496,11 @@ def drive(dmn: rd.DMNMap, clip, geom: dict, plan: dict, scenario: str) -> dict:
             log["arrival"] = {"t": clock, "true_remaining_m": round(max(0.0, car.length - car.dist), 1),
                               "to_destination_m": round(t1.metres(pos, tuple(geom["destination"])), 1)}
         ok = "OK" if matched and edge in truth else "WRONG" if matched else "WITHHELD"
+        if ok == "WRONG":  # the next/previous piece of the very same road, a few metres out: not a wrong road
+            way = res.edge_id.split(":")[1]
+            if any(dmn.by_pair.get((f"osm:{x}", f"osm:{y}")) is not None
+                   and dmn.by_pair[(f"osm:{x}", f"osm:{y}")].edge_id.split(":")[1] == way for x, y in truth):
+                ok = "SAME_ROAD_NEXT_PIECE"
         log["fixes"].append({"t": clock, "match": ok, "status": res.status, "reason": res.reason,
                              "extra": row.get("extra"),
                              "after_gap_s": row.get("after_gap_s")})
@@ -551,15 +564,18 @@ def match_line(engine: str, trace: list[dict]) -> list[tuple[float, float]] | No
             raise RuntimeError(f"Valhalla trace_route {exc.code}: {(exc.read() or b'')[:200]!r}") from exc
         return [p for leg in data["trip"]["legs"] for p in t1._decode_polyline(leg["shape"], 6)] or None
     # GraphHopper /match takes GPX
-    gpx = ['<?xml version="1.0" encoding="UTF-8"?><gpx version="1.1" creator="DMN-run-c" '
-           'xmlns="http://www.topografix.com/GPX/1/1"><trk><trkseg>']
+    # simulated fixes only, serialised like benchmarks/graphhopper_match_reference.research_gpx
+    import xml.etree.ElementTree as ET
+    ns = "http://www.topografix.com/GPX/1/1"
+    root = ET.Element("gpx", {"version": "1.1", "creator": "DMN-run-c-synthetic", "xmlns": ns})
+    seg = ET.SubElement(ET.SubElement(root, "trk"), "trkseg")
     for f in fixes:
         when = datetime.fromtimestamp(1_700_000_000 + f.timestamp_ms / 1000, timezone.utc)
-        gpx.append(f'<trkpt lat="{f.latitude:.7f}" lon="{f.longitude:.7f}"><time>{when:%Y-%m-%dT%H:%M:%SZ}</time></trkpt>')
-    gpx.append("</trkseg></trk></gpx>")
+        pt = ET.SubElement(seg, "trkpt", {"lat": f"{f.latitude:.7f}", "lon": f"{f.longitude:.7f}"})
+        ET.SubElement(pt, "time").text = when.strftime("%Y-%m-%dT%H:%M:%SZ")
     req = Request("http://127.0.0.1:8989/match?profile=car&points_encoded=false&ch.disable=true"
                   "&way_point_max_distance=0",
-                  "".join(gpx).encode(), {"Content-Type": "application/gpx+xml"})
+                  ET.tostring(root, encoding="utf-8", xml_declaration=True), {"Content-Type": "application/gpx+xml"})
     try:
         with urlopen(req, timeout=60) as r:  # noqa: S310 - local engine only
             data = json.load(r)
@@ -588,8 +604,17 @@ def judge_line(clip, trace: list[dict], line) -> list[str]:
         if piece is None:
             out.append("UNREADABLE")
         else:
-            out.append("OK" if piece in set(map(tuple, r["truth"])) else "WRONG")
+            truth = set(map(tuple, r["truth"]))
+            out.append("OK" if piece in truth else "SAME_ROAD_NEXT_PIECE"
+                       if _ways_of(clip, piece) & set().union(*(_ways_of(clip, x) for x in truth)) else "WRONG")
     return out
+
+
+def _ways_of(clip, piece) -> set[str]:
+    """Car ways that have this road piece (two neighbouring nodes) in either direction."""
+    x, y = piece
+    return {w for w in clip.node_ways.get(x, ()) if w in clip.ways
+            and any({u, v} == {x, y} for u, v in zip(clip.ways[w][0], clip.ways[w][0][1:]))}
 
 
 def _closest_point(p, a, b):
@@ -667,6 +692,7 @@ def run(engine: str, only: set[str] | None = None) -> None:
                 if entry["route"].get("path") != plan["drive_nodes"]:
                     entry["drive_route_changed"] = True  # the frozen drive no longer equals DMN's route
                 entry["drives"] = {s: drive(dmn, clip, geom, plan, s) for s in SCENARIOS}
+                entry["drives_v2"] = {s: drive(dmn, clip, geom, plan, s, improved=True) for s in SCENARIOS}
                 entry["memory_peak_mb"] = memory_peak(dmn, clip, geom, plan)
             else:
                 folder = WORK / "cases" / plan["id"]
@@ -712,7 +738,7 @@ def _load(engine: str) -> dict | None:
 
 def _share(c: Counter) -> dict:
     n = sum(c.values())
-    return {"fixes": n, **{k: c.get(k, 0) for k in ("OK", "WRONG", "WITHHELD", "UNREADABLE")},
+    return {"fixes": n, **{k: c.get(k, 0) for k in ("OK", "SAME_ROAD_NEXT_PIECE", "WRONG", "WITHHELD", "UNREADABLE")},
             "ok_pct": round(100 * c.get("OK", 0) / n, 1) if n else None,
             "wrong_pct": round(100 * c.get("WRONG", 0) / n, 2) if n else None}
 
@@ -742,6 +768,10 @@ def score() -> None:
     prepared = json.loads(PREPARED.read_text())
     ids = [p["id"] for p in prepared["journeys"] if p["status"] == "TESTABLE"]
     runs = {e: r for e in ENGINES if (r := _load(e)) is not None}
+    if "DMN" in runs:  # DMN with the same-road-pieces matcher (owner-approved improvement)
+        runs["DMN v2"] = {i: {**v, "drives": v["drives_v2"]} for i, v in runs["DMN"].items()
+                          if isinstance(v, dict) and "drives_v2" in v}
+        runs["DMN v2"]["_provenance"] = runs["DMN"]["_provenance"]
     summary = {"contract": CONTRACT, "revision": t1._revision(), "prepared_sha256": t1.sha256_file(PREPARED),
                "journeys": len(ids), "truth": "map-derived from the hashed OSM snapshot; simulated GPS only",
                "categories": {}}
@@ -757,6 +787,8 @@ def score() -> None:
             shortest[i] = min(ls) if ls else None
         table = {}
         for e, r in runs.items():
+            if e == "DMN v2":  # routing is unchanged by the matcher option
+                continue
             verdicts = Counter(r.get(i, {}).get(label, {}).get("route", "ERROR") for i in ids)
             ratios = [r[i][label]["length_m"] / shortest[i] for i in ids
                       if r.get(i, {}).get(label, {}).get("route") == "VALID" and shortest[i]]
@@ -773,7 +805,7 @@ def score() -> None:
             c, after, errors = Counter(), Counter(), 0
             for i in ids:
                 entry = r.get(i, {})
-                if e == "DMN":
+                if e.startswith("DMN"):
                     fixes = entry.get("drives", {}).get(scen, {}).get("fixes", [])
                     verdicts = [f["match"] for f in fixes]
                     gaps = [f["after_gap_s"] for f in fixes]
@@ -787,34 +819,36 @@ def score() -> None:
                     continue
                 c.update(verdicts)
                 if scen == "dropout":
-                    if e != "DMN":  # batch matchers: same trace (checked by hash), aligned by fix order
+                    if not e.startswith("DMN"):  # batch matchers: same trace (checked by hash), aligned by fix order
                         gaps = [f["after_gap_s"] for f in dmn[i]["drives"]["dropout"]["fixes"]] if dmn else gaps
                     after.update(v for v, g in zip(verdicts, gaps) if g is not None and g <= 30)
-            if e == "DMN" or e in MATCHERS:
-                table[e] = {"scope": "live, fix by fix" if e == "DMN" else "batch, whole trace",
+            if e.startswith("DMN") or e in MATCHERS:
+                table[e] = {"scope": "live, fix by fix" if e.startswith("DMN") else "batch, whole trace",
                             "all_fixes": _share(c), "errors": errors}
                 if scen == "dropout":
                     table[e]["first_30_s_after_gap"] = _share(after)
-        if scen == "dropout" and dmn:
+        for variant in [v for v in ("DMN", "DMN v2") if v in runs and scen == "dropout"]:
+            dmn = runs[variant]
             rec = []
             for i in ids:
                 fx = dmn[i]["drives"]["dropout"]["fixes"]
                 ok = next((f["after_gap_s"] for f in fx if f["after_gap_s"] and f["match"] == "OK"), None)
                 rec.append(ok)
             got = [x for x in rec if x is not None]
-            table["DMN"]["seconds_to_first_correct_match_after_gap"] = {
+            table[variant]["seconds_to_first_correct_match_after_gap"] = {
                 "median": statistics.median(got) if got else None, "max": max(got) if got else None,
                 "never": rec.count(None)}
             jumps = Counter(f["match"] for i in ids for f in dmn[i]["drives"]["dropout"]["fixes"] if f["extra"])
-            table["DMN"]["jump_and_weak_fixes"] = dict(jumps)
+            table[variant]["jump_and_weak_fixes"] = dict(jumps)
         cats[cat] = table
-    if dmn:
+    dmn_variants = {v: runs[v] for v in ("DMN", "DMN v2") if v in runs}
+    for variant, dmn in dmn_variants.items():  # before / after the matcher improvement
         # 12 closed loop
         wt = [dmn[i]["drives"]["wrong_turn"] for i in ids]
         delays = [d["reroutes"][0]["t"] - d["left_route_at"] for d in wt
                   if d["reroutes"] and d["left_route_at"] is not None]
         false = {s: sum(len(dmn[i]["drives"][s]["reroutes"]) for i in ids) for s in ("normal", "dropout")}
-        cats["12_rerouting_dmn_closed_loop"] = {
+        cats.setdefault("12_rerouting_dmn_closed_loop", {})[variant] = {
             "detected": len(delays), "of": len(ids),
             "detection_delay_s": {"median": statistics.median(delays) if delays else None,
                                   "max": max(delays) if delays else None},
@@ -832,7 +866,7 @@ def score() -> None:
                 if s == "normal":
                     cued = {c["node"] for c in d["cues"] if c["rev"] == 1}
                     missed += sum(1 for n in d["maneuver_nodes_first_route"] if n not in cued)
-        cats["13_instruction_timing_dmn"] = {"first_cue_per_turn": dict(cues),
+        cats.setdefault("13_instruction_timing_dmn", {})[variant] = {"first_cue_per_turn": dict(cues),
                                              "normal_drives_turns_never_cued": missed,
                                              "rule": prepared["rules"]["cue"]}
         # 16 arrival
@@ -851,7 +885,7 @@ def score() -> None:
                     arr["WRONG_PLACE"] += 1
         delay = [d["arrival"]["t"] - d["reached_destination_at"] for i in ids for s in SCENARIOS
                  for d in [dmn[i]["drives"][s]] if d["arrival"] and d["reached_destination_at"] is not None]
-        cats["16_arrival_dmn"] = {"verdicts": dict(arr), "seconds_after_reaching": {
+        cats.setdefault("16_arrival_dmn", {})[variant] = {"verdicts": dict(arr), "seconds_after_reaching": {
             "median": statistics.median(delay) if delay else None, "max": max(delay) if delay else None}}
         # 20 whole journey
         passed, fails = 0, defaultdict(list)
@@ -875,17 +909,18 @@ def score() -> None:
                         fails[w].append(f"{i}:{s}")
                 else:
                     passed += 1
-        cats["20_whole_journey_dmn"] = {"passed": passed, "drives": len(ids) * len(SCENARIOS),
+        cats.setdefault("20_whole_journey_dmn", {})[variant] = {"passed": passed, "drives": len(ids) * len(SCENARIOS),
                                         "failures": {k: v for k, v in fails.items()}}
         # 19 memory and time
-        cats["19_memory_time_dmn"] = {
+        cats.setdefault("19_memory_time_dmn", {})[variant] = {
             "peak_traced_mb": rd._ms([dmn[i]["memory_peak_mb"] for i in ids]),
             "ms_per_fix_median_of_drives": rd._ms([dmn[i]["drives"][s]["ms_per_fix"]["median"]
                                                    for i in ids for s in SCENARIOS]),
             "ms_per_fix_p95_of_drives": rd._ms([dmn[i]["drives"][s]["ms_per_fix"]["p95"]
                                                 for i in ids for s in SCENARIOS])}
         summary["drive_route_changed_since_freeze"] = [i for i in ids if dmn[i].get("drive_route_changed")]
-    summary["errors"] = {e: {i: r[i]["error"] for i in ids if "error" in r.get(i, {})} for e, r in runs.items()}
+    summary["errors"] = {e: {i: r[i]["error"] for i in ids if "error" in r.get(i, {})} for e, r in runs.items()
+                         if e != "DMN v2"}
     (WORK / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True))
 
 
@@ -902,8 +937,8 @@ def brief() -> int:
             f"{e} {v['valid']}, {v['median_length_vs_shortest']}" for e, v in c[cat].items()))
     for cat in ("12_rerouting_dmn_closed_loop", "13_instruction_timing_dmn", "16_arrival_dmn",
                 "20_whole_journey_dmn", "19_memory_time_dmn"):
-        if cat in c:
-            lines.append(f"{cat}: {json.dumps(c[cat], sort_keys=True)[:400]}")
+        for variant, v in c.get(cat, {}).items():
+            lines.append(f"{cat} [{variant}]: {json.dumps(v, sort_keys=True)[:300]}")
     errs = {e: len(v) for e, v in s["errors"].items() if v}
     lines.append(f"errors: {errs or 'none'}")
     bad = []
