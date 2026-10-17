@@ -1,0 +1,369 @@
+{
+  "test_id": "INTEGRATED-002",
+  "classification": "DMN-only synthetic lifecycle conformance; no competitive ranking",
+  "formula": "10 * passed / 3 only for a complete judged cohort",
+  "rows": [
+    {
+      "system": "DMN",
+      "rank": 1,
+      "score_out_of_ten": 10.0,
+      "passed": 3,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-002-roundabout-exit-three",
+          "outcome": "PASS",
+          "checks": {
+            "route": true,
+            "maneuvers": true,
+            "fix": true,
+            "instruction": true
+          },
+          "failures": [],
+          "actual": {
+            "route_edges": [
+              "w:110:0:f",
+              "w:111:0:f",
+              "w:111:1:f",
+              "w:111:2:f",
+              "w:111:3:f",
+              "w:114:0:f"
+            ],
+            "maneuvers": [
+              {
+                "kind": "roundabout",
+                "exit": 3
+              }
+            ],
+            "fix_status": "VALID",
+            "instruction_phase": "APPROACH"
+          },
+          "calculation_ms": 0.775605
+        },
+        {
+          "case_id": "INTEGRATED-002-weak-gps-withholds",
+          "outcome": "PASS",
+          "checks": {
+            "fix": true,
+            "instruction": true,
+            "arrival": true
+          },
+          "failures": [],
+          "actual": {
+            "fix_status": "UNCERTAIN",
+            "fix_reason": "weak_position_accuracy",
+            "instruction_phase": "WITHHOLD",
+            "arrival_state": "WITHHELD"
+          },
+          "calculation_ms": 0.391038
+        },
+        {
+          "case_id": "INTEGRATED-002-stale-gps-rejected",
+          "outcome": "PASS",
+          "checks": {
+            "fix": true,
+            "reason": true,
+            "instruction": true,
+            "arrival": true
+          },
+          "failures": [],
+          "actual": {
+            "fix_status": "REJECTED",
+            "fix_reason": "stale_timestamp",
+            "instruction_phase": "WITHHOLD",
+            "arrival_state": "REJECTED"
+          },
+          "calculation_ms": 0.368063
+        }
+      ]
+    },
+    {
+      "system": "Valhalla",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-002-roundabout-exit-three",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-002-weak-gps-withholds",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-002-stale-gps-rejected",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "OSRM",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-002-roundabout-exit-three",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-002-weak-gps-withholds",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-002-stale-gps-rejected",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "GraphHopper",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-002-roundabout-exit-three",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-002-weak-gps-withholds",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-002-stale-gps-rejected",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "OsmAnd",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-002-roundabout-exit-three",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-002-weak-gps-withholds",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-002-stale-gps-rejected",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "Organic Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-002-roundabout-exit-three",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-002-weak-gps-withholds",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-002-stale-gps-rejected",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "BRouter",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-002-roundabout-exit-three",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-002-weak-gps-withholds",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-002-stale-gps-rejected",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "HERE",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-002-roundabout-exit-three",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-002-weak-gps-withholds",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-002-stale-gps-rejected",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "Mapbox",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-002-roundabout-exit-three",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-002-weak-gps-withholds",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-002-stale-gps-rejected",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "TomTom",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-002-roundabout-exit-three",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-002-weak-gps-withholds",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-002-stale-gps-rejected",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "openrouteservice",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-002-roundabout-exit-three",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-002-weak-gps-withholds",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-002-stale-gps-rejected",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "Google Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-002-roundabout-exit-three",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-002-weak-gps-withholds",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-002-stale-gps-rejected",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "Waze",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-002-roundabout-exit-three",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-002-weak-gps-withholds",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-002-stale-gps-rejected",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    }
+  ]
+}

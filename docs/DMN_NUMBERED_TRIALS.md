@@ -12,6 +12,15 @@ not Android, physical GNSS, UK road truth or app readiness. Exact results are in
 `references/integrated001-scorecard-20261017.json`; see
 `docs/INTEGRATED_001_RESULTS.md` for limitations.
 
+## INTEGRATED-002 roundabout and GPS-confidence baseline (17 October 2026)
+
+DMN passes 3/3 synthetic integrated cases: third-exit routing/guidance, weak-GPS
+guidance/arrival withholding and stale-GPS rejection. The preserved first setup
+attempt was 2/3 because its frozen case omitted instruction distance; completing
+that input at 50 m retained the original `APPROACH` expectation. No engine policy
+changed. All external families remain unranked with interface reasons. See
+`docs/INTEGRATED_002_RESULTS.md` and `references/integrated002-*.json`.
+
 **Owner-approved prospective policy (16 October 2026):**
 [DMN_PERMANENT_TESTING_POLICY.md](DMN_PERMANENT_TESTING_POLICY.md) supersedes
 any earlier recommendations here about universal score-first rankings, running
