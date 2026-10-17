@@ -1,0 +1,18 @@
+{
+ "agent": "Claude",
+ "branch": "claude/dmn-turn-restriction-debug-mhw7cw",
+ "created": "2026-10-17T10:06:34+00:00",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T10:06:34+00:00 next by Claude on claude/dmn-turn-restriction-debug-mhw7cw"
+ ],
+ "id": "BARRIER-001-REVIEW",
+ "read_first": [
+  "docs/BARRIER_001_RESULTS.md: Proposed improvements"
+ ],
+ "runs": [],
+ "state": "next",
+ "title": "Owner decisions from BARRIER-001",
+ "updated": "2026-10-17T10:06:34+00:00",
+ "why": "Gates on uncertain start/finish roads (30 cases); scoring v1.2 for routes through unmarked gates; DMN turn-round at a closed barrier"
+}

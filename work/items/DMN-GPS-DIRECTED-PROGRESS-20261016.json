@@ -1,0 +1,14 @@
+{
+ "agent": "earlier session",
+ "branch": "codex/dmn-gps001-ranked-trial-20261015",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T09:45:57+00:00 imported from docs/DMN_GPS_DIRECTED_PROGRESS_RESULTS_20261016.md"
+ ],
+ "id": "DMN-GPS-DIRECTED-PROGRESS-20261016",
+ "results": "docs/DMN_GPS_DIRECTED_PROGRESS_RESULTS_20261016.md",
+ "runs": [],
+ "state": "done",
+ "title": "DMN \u2014 confirmed-progress GPS research results across UK regions",
+ "updated": "2026-10-17T09:45:57+00:00"
+}

@@ -1,0 +1,20 @@
+{
+ "agent": "Claude",
+ "branch": "claude/dmn-turn-restriction-debug-mhw7cw",
+ "created": "2026-10-17T09:38:19+00:00",
+ "fingerprints": [
+  "TURN-001 v1.3|cohort f2949a8a|revision 0668fce"
+ ],
+ "history": [
+  "2026-10-17T09:38:19+00:00 done by Claude on claude/dmn-turn-restriction-debug-mhw7cw"
+ ],
+ "id": "TURN-001",
+ "results": "docs/TURN_001_RESULTS.md",
+ "runs": [
+  "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39019749346"
+ ],
+ "state": "done",
+ "summary": "DMN 131 pass, 0 fail, 5 no route (no other engine has a legal route there), 0 off-target. DMN fix 0668fce for case 14285234.",
+ "title": "Turn restrictions on 142 real Greater Manchester junctions, 4 engines (v1.3)",
+ "updated": "2026-10-17T09:38:19+00:00"
+}

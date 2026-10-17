@@ -1,0 +1,14 @@
+{
+ "agent": "earlier session",
+ "branch": "codex/dmn-gps001-ranked-trial-20261015",
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T09:45:57+00:00 imported from docs/MAP_001_RESULTS.md"
+ ],
+ "id": "MAP-001",
+ "results": "docs/MAP_001_RESULTS.md",
+ "runs": [],
+ "state": "done",
+ "title": "MAP-001 \u2014 Category 1 map data and directed road graph: executed result",
+ "updated": "2026-10-17T09:45:57+00:00"
+}
