@@ -1,0 +1,70 @@
+name: Category 1 GraphHopper endpoint preference diagnostic
+on:
+  push:
+    branches: ['codex/dmn-category1-completion-20261017']
+    paths:
+      - 'tools/category1_graphhopper_heading_trial.py'
+      - '.github/workflows/category1-graphhopper-heading.yml'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: category1-gh-heading-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Acquire only pinned public test/engine resources
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python -m py_compile tools/category1_graphhopper_heading_trial.py
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq osmium-tool >/dev/null
+          mkdir -p results/turn001 results/turn001/engines archived
+          base="https://raw.githubusercontent.com/${{ github.repository }}/data/turn001-snapshot"
+          curl -fsSL -o results/turn001/SHA256SUMS "$base/SHA256SUMS"
+          curl -fsSL -o results/turn001/turn001-cases.tar.xz "$base/turn001-cases.tar.xz"
+          (cd results/turn001 && sha256sum -c SHA256SUMS --ignore-missing)
+          (cd results/turn001 && tar -xJf turn001-cases.tar.xz \
+            prepared.json \
+            cases/2070895/clip.osm cases/2070895/clip.osm.pbf \
+            cases/2070900/clip.osm cases/2070900/clip.osm.pbf \
+            cases/4179048/clip.osm cases/4179048/clip.osm.pbf \
+            cases/6755009/clip.osm cases/6755009/clip.osm.pbf \
+            cases/7301773/clip.osm cases/7301773/clip.osm.pbf \
+            cases/7336294/clip.osm cases/7336294/clip.osm.pbf \
+            cases/6316748/clip.osm cases/6316748/clip.osm.pbf \
+            cases/10182417/clip.osm cases/10182417/clip.osm.pbf \
+            cases/11902362/clip.osm cases/11902362/clip.osm.pbf \
+            cases/10372299/clip.osm cases/10372299/clip.osm.pbf \
+            cases/10811890/clip.osm cases/10811890/clip.osm.pbf \
+            cases/11565718/clip.osm cases/11565718/clip.osm.pbf)
+          rm results/turn001/turn001-cases.tar.xz
+          gh run download 39019749346 -R "${{ github.repository }}" -n turn001-GraphHopper -D archived
+          curl -fsSL -o results/turn001/engines/gh.jar "https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/11.1/graphhopper-web-11.1.jar"
+          echo "6e6c173c2b46cb0a3c1df124b2144d557931597e  results/turn001/engines/gh.jar" | sha1sum -c -
+          sudo mkdir -p /opt/jdk17/bin
+          sudo ln -sf "$JAVA_HOME_17_X64/bin/java" /opt/jdk17/bin/java
+      - name: GraphHopper heading experiment (12 small real UK clips)
+        run: |
+          set -euo pipefail
+          python -m tools.category1_graphhopper_heading_trial --baseline-file archived/run-GraphHopper.json > /tmp/category1-gh-trial.txt
+          cat results/turn001-heading-trial/brief.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: category1-graphhopper-heading-trial
+          path: |
+            results/turn001-heading-trial/brief.md
+            results/turn001-heading-trial/results.json
+          retention-days: 45
