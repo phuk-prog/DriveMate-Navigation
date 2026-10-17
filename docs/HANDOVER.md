@@ -1,5 +1,15 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 — DMN improvements written, not tested (Claude)
+- Owner approved every recommendation in [ALL_TESTS_REVIEW.md](ALL_TESTS_REVIEW.md), asked for
+  them to be implemented, and said: no test runs until told; only DMN for now (no app changes).
+- Done (untested): GPS fix default (LEGACY_MATCHER for frozen trials), arrival when stopped,
+  offline packages with :conditional (allow_conditional=False for OFFLINE-001), clock-checked
+  time rules (map_data/conditions.py, when=), reroute post_gap_ms, confirm_after_gap_ms, now_given +
+  lead_seconds_for + engine/progress_estimator.py, engine/route_check.py, engine/no_route_reason.py;
+  harness piece_path reader and start-up watch. 8 new unit test files listed, NOT RUN.
+- Next when allowed: run the category unit suite, fix, push (starts runs A-D, B1, B2, C, GPS jobs).
+
 ## 2026-10-17 — Run C done; all-tests review (Claude)
 - [Run C report](RUN_C_RESULTS.md), run 39062533167. Owner-approved DMN matcher options
   `same_road_pieces` and `route_aware_access` (opt-in, default off): right road 37% -> 78%, 0 wrong;

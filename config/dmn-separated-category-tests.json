@@ -93,7 +93,8 @@
         "test_routing.py",
         "test_routing_trial.py",
         "test_astar.py",
-        "test_real_map_route_baseline.py"
+        "test_real_map_route_baseline.py",
+        "test_no_route_reason.py"
       ],
       "engine_rank": null,
       "navigation_score": null
