@@ -13,6 +13,7 @@ on:
       - 'benchmarks/journey001.py'
       - 'benchmarks/access001_route.py'
       - 'benchmarks/extra_engines.py'
+      - 'tools/osmand_route/**'
       - 'config/lanes001-*.json'
       - 'config/limits001-*.json'
       - '.github/workflows/b2-lanes-limits.yml'
@@ -36,7 +37,7 @@ jobs:
       fail-fast: false
       matrix:
         test: [lanes001, limits001]
-        run: [DMN, OSRM, GraphHopper]
+        run: [DMN, OSRM, GraphHopper, OsmAnd]
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -60,6 +61,12 @@ jobs:
           curl -fsSL -o results/turn001/engines/gh.jar "$GH_JAR_URL"
           echo "$GH_JAR_SHA1  results/turn001/engines/gh.jar" | sha1sum -c -
           sudo mkdir -p /opt/jdk17/bin && sudo ln -sf "$JAVA_HOME_17_X64/bin/java" /opt/jdk17/bin/java
+      - name: Java 21 for OsmAnd (router helper is compiled on the runner)
+        if: matrix.run == 'OsmAnd'
+        uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165
+        with:
+          distribution: temurin
+          java-version: '21'
       - name: Run ${{ matrix.run }} (log kept as artifact, not printed)
         run: |
           set -euo pipefail

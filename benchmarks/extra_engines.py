@@ -7,6 +7,13 @@ and profiles are the ones already used by JUNCTION-001 and ROUTE-001.
 
 Known difference: BRouter takes no start/finish heading, so it may start in the
 other direction; the harness then reports OFF_TARGET, never a rule break.
+
+OsmAnd (owner, 17 Oct 2026) is a yardstick only, like every reference engine: its
+own map file (OBF) is built from the same clip with OsmAndMapCreator and its Java
+router is called through tools/osmand_route/OsmAndRoute.java. It gets the start
+direction (its finish-direction option made needless loops in testing, so it is not
+used). OsmAnd publishes only nightly builds of the current router; the SHA-256 of
+the build used is recorded with every run.
 """
 from __future__ import annotations
 
@@ -26,7 +33,7 @@ from urllib.request import Request, urlopen
 
 from benchmarks import turn001_restrictions as t1
 
-NEW = ("openrouteservice", "BRouter")
+NEW = ("openrouteservice", "BRouter", "OsmAnd")
 ENGINES = ("OSRM", "GraphHopper", "Valhalla", *NEW)
 CACHE = t1.WORK / "engines"
 ORS_JAR = ("https://github.com/GIScience/openrouteservice/releases/download/v10.1.0/ors.jar",
@@ -34,6 +41,7 @@ ORS_JAR = ("https://github.com/GIScience/openrouteservice/releases/download/v10.
 BROUTER_ZIP = ("https://github.com/abrensch/brouter/releases/download/v1.7.10/brouter-1.7.10.zip",
                "023fec3ba997758e8cd7ab9e1bae52e962af3f00b57683e3de86b84ffad01532")
 BROUTER_PROFILES = "https://raw.githubusercontent.com/abrensch/brouter/4d2639af77ea5ed9c30d3e400764eb6f9e8522da/misc/profiles2/"
+OSMAND_ZIP = "https://download.osmand.net/latest-night-build/OsmAndMapCreator-main.zip"
 ORS_PORT, BROUTER_PORT = 8080, 17777
 JAVA = os.environ.get("EXTRA_JAVA", "java")  # BRouter: Java 17+
 ORS_JAVA = os.environ.get("ORS_JAVA", JAVA)  # openrouteservice 10.1: Java 25
@@ -53,6 +61,19 @@ def install(engine: str) -> Path:
     if engine == "openrouteservice":
         _download(*ORS_JAR, CACHE / "ors" / "ors.jar")
         return CACHE / "ors"
+    if engine == "OsmAnd":
+        folder = CACHE / "osmand"
+        if not (folder / "classes" / "OsmAndRoute.class").exists():
+            folder.mkdir(parents=True, exist_ok=True)
+            z = folder / "mapcreator.zip"
+            subprocess.run(["curl", "-fsSL", "--retry", "2", "--max-time", "900", OSMAND_ZIP, "-o", str(z)], check=True)
+            (folder / "build-sha256.txt").write_text(hashlib.sha256(z.read_bytes()).hexdigest() + "\n")
+            with zipfile.ZipFile(z) as zf:
+                zf.extractall(folder / "mc")
+            z.unlink()
+            subprocess.run(["javac", "-cp", osmand_classpath(folder, with_helper=False), "-d", str(folder / "classes"),
+                            str(t1.ROOT / "tools" / "osmand_route" / "OsmAndRoute.java")], check=True)
+        return folder
     folder = CACHE / "brouter"
     if not (folder / "brouter.jar").exists():
         z = _download(*BROUTER_ZIP, CACHE / "brouter.zip")
@@ -67,6 +88,20 @@ def install(engine: str) -> Path:
             subprocess.run(["curl", "-fsSL", "--retry", "2", "--max-time", "60", f"{BROUTER_PROFILES}{name}.brf",
                             "-o", str(folder / "profiles" / f"{name}.brf")], check=True)
     return folder
+
+
+def osmand_classpath(folder: Path, with_helper: bool = True) -> str:
+    mc = folder / "mc"
+    parts = [str(mc / "OsmAndMapCreator.jar"), str(mc / "lib" / "*")]
+    return ":".join(parts + ([str(folder / "classes")] if with_helper else []))
+
+
+def osmand_build() -> str | None:
+    path = CACHE / "osmand" / "build-sha256.txt"
+    return path.read_text().strip() if path.exists() else None
+
+
+_OSMAND_OBF: Path | None = None
 
 
 def _port_open(port: int) -> bool:
@@ -118,6 +153,18 @@ def serve(engine: str, pbf: Path, work: Path):
     log = (work / "engine.log").open("w")
     proc = None
     try:
+        if engine == "OsmAnd":
+            global _OSMAND_OBF
+            shutil.copyfile(pbf, work / "clip.osm.pbf")
+            subprocess.run([JAVA, "-Xmx2g", f"-Djava.util.logging.config.file={home / 'mc' / 'logging.properties'}",
+                            "-cp", osmand_classpath(home, with_helper=False), "net.osmand.MainUtilities",
+                            "generate-obf", "clip.osm.pbf"], cwd=work, check=True, stdout=log, stderr=subprocess.STDOUT)
+            obfs = [p for p in work.glob("*.obf")]
+            if len(obfs) != 1:
+                raise MapRejected("OsmAndMapCreator built no single OBF from the clip")
+            _OSMAND_OBF = obfs[0]
+            yield
+            return
         if engine == "openrouteservice":
             config = (t1.ROOT / "config" / "ors-gps001.yml").read_text()
             config = config.replace("results/gps001.osm.pbf", str(pbf)).replace("results/ors-graphs",
@@ -337,10 +384,47 @@ BROUTER_KIND = {1: "straight", 2: "left", 3: "left", 4: "left", 8: "left", 5: "r
                 9: "right", 10: "uturn", 11: "uturn", 12: "uturn"}
 
 
+OSMAND_KIND = {1: "straight", 2: "left", 3: "left", 4: "left", 8: "left", 5: "right", 6: "right", 7: "right",
+               9: "right", 10: "uturn", 11: "uturn"}
+
+
+def osmand_raw(geom: dict, headings: tuple[int, int]) -> dict:
+    o, d = geom["origin"], geom["destination"]
+    began = time.perf_counter()
+    r = subprocess.run([JAVA, "-Xmx1g", "-cp", osmand_classpath(CACHE / "osmand"), "OsmAndRoute", str(_OSMAND_OBF),
+                        f"{o[0]:.7f}", f"{o[1]:.7f}", f"{d[0]:.7f}", f"{d[1]:.7f}", str(headings[0]),
+                        str(headings[1])], capture_output=True, text=True, timeout=120)
+    line = next((ln for ln in r.stdout.splitlines() if ln.startswith("{")), None)
+    if line is None:
+        raise RuntimeError(f"OsmAnd router gave no answer: {(r.stderr or r.stdout)[-200:]}")
+    data = json.loads(line)
+    data["wall_ms"] = (time.perf_counter() - began) * 1000
+    return data
+
+
+def osmand(geom: dict, headings: tuple[int, int]):
+    data = osmand_raw(geom, headings)
+    if data.get("route", "") is None:
+        return None, [], data["ms"]
+    points = [tuple(p) for p in data["points"]]
+    steps = []
+    for s in data["steps"]:
+        if s["point"] == 0:
+            continue  # the departure instruction, skipped for every engine
+        if s["roundabout"] or s["value"] in (13, 14):
+            steps.append({"at": tuple(s["at"]), "kind": "roundabout", "exit": s["exit"]})
+        elif s["value"] in OSMAND_KIND:
+            steps.append({"at": tuple(s["at"]), "kind": OSMAND_KIND[s["value"]], "slight": s["value"] in (3, 6, 8, 9),
+                          "raw": str(s["value"])})
+    return points, steps, data["ms"]
+
+
 def query(engine: str, geom: dict, headings: tuple[int, int]):
     """(points, steps, ms) or (None, [], ms) when the engine finds no route."""
     if engine in QUERIES:
         return QUERIES[engine](geom, headings)
+    if engine == "OsmAnd":
+        return osmand(geom, headings)
     o, d = geom["origin"], geom["destination"]
     began = time.perf_counter()
     if engine == "openrouteservice":
@@ -483,12 +567,20 @@ def query_details(engine: str, geom: dict, headings: tuple[int, int]):
             for k in range(start, min(end, len(limits))):
                 limits[k] = float(value) if value not in (None, "Infinity") and float(value) < 1000 else None
         return points, {"segment_limits_kph": limits, "lanes": None}, ms
+    if engine == "OsmAnd":
+        data = osmand_raw(geom, headings)
+        if data.get("route", "") is None:
+            return None, {}, data["ms"]
+        points = [tuple(p) for p in data["points"]]
+        lanes = [{"at": tuple(s["at"]), "valid": s["lanes"], "count": s["lane_count"]}
+                 for s in data["steps"] if s["lane_count"]]
+        return points, {"segment_limits_kph": data["limits_kph"], "lanes": lanes}, data["ms"]
     raise NotAvailable(engine)
 
 
 def route_details(engine: str, folder: Path, clip, geom: dict):
     """Like route() but asking for speed limits and lanes; GraphHopper gets max_speed stored."""
-    if engine not in ("OSRM", "GraphHopper"):
+    if engine not in ("OSRM", "GraphHopper", "OsmAnd"):
         return {"route": "NOT_AVAILABLE"}
     saved = t1.graphhopper_config
     if engine == "GraphHopper":  # store OSM maxspeed so the route answer can report it

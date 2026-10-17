@@ -541,6 +541,9 @@ def run(engine: str, *, control: bool = False, only: set[str] | None = None) -> 
         out.write_text(json.dumps(results, indent=1, sort_keys=True))
         subprocess.run(["rm", "-rf", str(folder), str(WORK / "control" / way)], check=False)
         print(way, entry.get("verdict"), entry.get("detail", "")[:100], flush=True)
+    if engine == "OsmAnd":
+        results["_osmand_build_sha256"] = xe.osmand_build()
+        out.write_text(json.dumps(results, indent=1, sort_keys=True))
 
 
 def extra_case(engine: str, folder: Path, clip, geom: dict) -> dict:

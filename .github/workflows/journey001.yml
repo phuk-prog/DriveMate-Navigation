@@ -1,4 +1,4 @@
-name: Run B1 JOURNEY-001 real junctions and roundabouts (categories 5, 6, 8, 9, 11), six engines
+name: Run B1 JOURNEY-001 real junctions and roundabouts (categories 5, 6, 8, 9, 11), seven engines
 # Runs the frozen JOURNEY-001 cohort on GitHub (public repo: free minutes). Engines run in
 # parallel; each category is scored and summarised separately, never as one total. Each job
 # cuts the 3 km clips from the pinned map and every clip must match its frozen hash.
@@ -12,6 +12,7 @@ on:
       - 'benchmarks/journey001.py'
       - 'benchmarks/access001_route.py'
       - 'benchmarks/extra_engines.py'
+      - 'tools/osmand_route/**'
       - 'config/journey001-*.json'
       - '.github/workflows/journey001.yml'
       # an engine or importer change re-runs the whole test for every engine (owner rule 6)
@@ -33,7 +34,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        run: [DMN, OSRM, GraphHopper, Valhalla, openrouteservice, BRouter]
+        run: [DMN, OSRM, GraphHopper, Valhalla, openrouteservice, BRouter, OsmAnd]
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -63,6 +64,12 @@ jobs:
         with:
           distribution: temurin
           java-version: '25'
+      - name: Java 21 for OsmAnd (router helper is compiled on the runner)
+        if: matrix.run == 'OsmAnd'
+        uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165
+        with:
+          distribution: temurin
+          java-version: '21'
       - name: Run ${{ matrix.run }} (log kept as artifact, not printed)
         run: |
           set -euo pipefail

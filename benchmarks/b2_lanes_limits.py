@@ -3,7 +3,7 @@
 Owner-approved grouping (17 Oct 2026): one shared run, each test its own frozen
 cases, verdicts and ranking, no combined score. DMN is the engine under test; the
 reference engines only appear where their route answers expose the detail (lanes:
-OSRM; speed limits: GraphHopper; OSRM 5.27 has no speed-limit output). Others are NOT_AVAILABLE, never a fail.
+OSRM, OsmAnd; speed limits: GraphHopper, OsmAnd; OSRM 5.27 has no speed-limit output). Others are NOT_AVAILABLE, never a fail.
 
 Truth comes only from the hashed OSM snapshot's own tags, read by this file's own
 small parser (independent of DMN's): map-derived, not verified road paint or law.
@@ -38,7 +38,7 @@ from benchmarks import turn001_restrictions as t1
 ROOT = t1.ROOT
 TESTS = {"lanes001": "LANES-001 v1", "limits001": "LIMITS-001 v1"}
 TEST = "lanes001"
-ENGINES = ("DMN", "OSRM", "GraphHopper")
+ENGINES = ("DMN", "OSRM", "GraphHopper", "OsmAnd")
 MPH = re.compile(r"^(\d{1,3}) mph$")
 LIMIT_KINDS = ("mph20", "mph30", "mph40", "mph50", "mph60", "mph70", "directional", "none_mapped")
 QUOTA = {"lanes001": 12, "limits001": 10}
@@ -282,6 +282,8 @@ def limit_on_way(clip, geom: dict, points, limits) -> tuple[float | None, bool]:
     for k, value in enumerate(limits or []):
         if k + 1 >= len(points):
             break
+        if tuple(points[k]) == tuple(points[k + 1]):
+            continue  # a zero-length joint between two of the engine's road pieces carries no limit
         mid = ((points[k][0] + points[k + 1][0]) / 2, (points[k][1] + points[k + 1][1]) / 2)
         if min(j1._seg_dist(mid, a, b) for a, b in segs) <= 2.0:
             values.append(None if value is None else round(value, 1))
@@ -391,6 +393,9 @@ def run(engine: str, only: set[str] | None = None) -> None:
         out_file.write_text(json.dumps(results, indent=1, sort_keys=True))
         subprocess.run(["rm", "-rf", str(folder)], check=False)
         print(record["id"], entry.get("route"), entry.get("result", {}).get("verdict"), flush=True)
+    if engine == "OsmAnd":
+        results["_osmand_build_sha256"] = xe.osmand_build()
+        out_file.write_text(json.dumps(results, indent=1, sort_keys=True))
 
 
 def score() -> None:

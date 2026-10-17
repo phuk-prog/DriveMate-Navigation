@@ -470,6 +470,9 @@ def run(engine: str, only: set[str] | None = None) -> None:
         out.write_text(json.dumps(results, indent=1, sort_keys=True))
         subprocess.run(["rm", "-rf", str(folder)], check=False)
         print(record["id"], entry.get("route"), entry.get("instruction", {}).get("verdict"), flush=True)
+    if engine == "OsmAnd":
+        results["_osmand_build_sha256"] = xe.osmand_build()
+        out.write_text(json.dumps(results, indent=1, sort_keys=True))
 
 
 def score() -> None:
