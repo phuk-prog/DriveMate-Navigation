@@ -152,7 +152,8 @@
       "label": "Lane counts and next-turn guidance",
       "scope": "Analytical OSM lane-arrow parser/unknown gates only; real UK lane signage and next-lane guidance unverified.",
       "test_files": [
-        "test_lane_evidence.py"
+        "test_lane_evidence.py",
+        "test_b2_lanes_limits.py"
       ],
       "engine_rank": null,
       "navigation_score": null

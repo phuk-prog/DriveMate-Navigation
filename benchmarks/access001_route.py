@@ -57,14 +57,15 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 from benchmarks import barrier001_route as b1
+from benchmarks import extra_engines as xe
 from benchmarks import turn001_restrictions as t1
 
 ROOT = t1.ROOT
 SOURCE = t1.WORK / "gm.osm.pbf"  # pinned on data/turn001-snapshot
 TESTS = {
-    "access001": {"contract": "ACCESS-001 v1.2", "fail": "FAIL_THROUGH_NO_CAR_ROAD",
+    "access001": {"contract": "ACCESS-001 v1.3", "fail": "FAIL_THROUGH_NO_CAR_ROAD",
                   "broke": "drove a road closed to cars"},
-    "oneway002": {"contract": "ONEWAY-002 v1.1", "fail": "FAIL_AGAINST_ONEWAY",
+    "oneway002": {"contract": "ONEWAY-002 v1.2", "fail": "FAIL_AGAINST_ONEWAY",
                   "broke": "drove the wrong way along a one-way road"},
 }
 TEST = "access001"
@@ -88,7 +89,9 @@ def use(test: str) -> None:
 # restrictions and barriers centred on the tested way; a no-route is re-asked on a
 # 7.5 km (about 4.5 miles) square, within DMN's 32 MB input limit. At most
 # CASES_PER_KIND testable cases per kind are run, in the frozen sha256 order
-# (ACCESS-001 v1.2, ONEWAY-002 v1.1).
+# (ACCESS-001 v1.2, ONEWAY-002 v1.1). v1.3 / v1.2 (owner, 17 Oct 2026): openrouteservice
+# and BRouter added; every engine runs through benchmarks/extra_engines.py with its
+# start/finish path matching fix.
 CLIP_KM, WIDE_SCALE = 3.0, 2.5
 CASES_PER_KIND = 12
 HALF_LAT = CLIP_KM / 2 * 1000 / 111_320
@@ -472,7 +475,7 @@ def verdict(clip: AccessClip, geom: dict, nodes: list[str] | None, error: str | 
 
 
 # --------------------------------------------------------------------------- runs
-ENGINES = ("DMN", "OSRM", "GraphHopper", "Valhalla")
+ENGINES = ("DMN", *xe.ENGINES)
 
 
 def _provenance(engine: str) -> dict:
@@ -518,10 +521,10 @@ def run(engine: str, *, control: bool = False, only: set[str] | None = None) -> 
             (ctrl / "clip.osm").write_bytes(craw)
             subprocess.run(["osmium", "cat", "--overwrite", str(ctrl / "clip.osm"), "-o", str(ctrl / "clip.osm.pbf")],
                            check=True)
-            entry.update(t1.engine_case(engine, ctrl, AccessClip(craw), geom, judge=verdict))
+            entry.update(extra_case(engine, ctrl, AccessClip(craw), geom))
             entry["uses_way"] = geom_uses_way(entry.get("path", []), geom)
         else:
-            entry.update(t1.engine_case(engine, folder, clip, geom, judge=verdict))
+            entry.update(extra_case(engine, folder, clip, geom))
         if entry.get("verdict") == "SAFE_NO_ROUTE" and not control:
             wide = wide_clip(record)
             wraw = (wide / "clip.osm").read_bytes()
@@ -531,13 +534,28 @@ def run(engine: str, *, control: bool = False, only: set[str] | None = None) -> 
                 wide_entry = ({"verdict": "ENGINE_REJECTED_MAP", "detail": rejected[:300]} if rejected
                               else verdict(wclip, geom, nodes, error))
             else:
-                wide_entry = t1.engine_case(engine, wide, wclip, geom, judge=verdict)
+                wide_entry = extra_case(engine, wide, wclip, geom)
             entry["wide_clip"] = {"scale": WIDE_SCALE, "clip_sha256": hashlib.sha256(wraw).hexdigest(),
                                   **wide_entry}
         results[way] = entry
         out.write_text(json.dumps(results, indent=1, sort_keys=True))
         subprocess.run(["rm", "-rf", str(folder), str(WORK / "control" / way)], check=False)
         print(way, entry.get("verdict"), entry.get("detail", "")[:100], flush=True)
+    if engine == "OsmAnd":
+        results["_osmand_build_sha256"] = xe.osmand_build()
+        out.write_text(json.dumps(results, indent=1, sort_keys=True))
+
+
+def extra_case(engine: str, folder: Path, clip, geom: dict) -> dict:
+    """openrouteservice or BRouter on the same clip, judged exactly like the others."""
+    result = xe.route(engine, folder, clip, geom)
+    if isinstance(result, dict):
+        return {"verdict": result["verdict"], "detail": result["detail"]}
+    points, _, ms = result
+    if points is None:
+        return {**verdict(clip, geom, None), "warm_query_ms": round(ms, 1)}
+    nodes, snaps = xe.engine_path(clip, geom, points)
+    return {**verdict(clip, geom, nodes), **snaps, "warm_query_ms": round(ms, 1)}
 
 
 def final(entry: dict) -> dict:

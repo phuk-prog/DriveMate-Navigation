@@ -1,5 +1,15 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 — Seven engines; run B2 done (Claude)
+- Reference engines now: OSRM, Valhalla, GraphHopper, openrouteservice, BRouter, OsmAnd
+  (all built per case from the same clip via `benchmarks/extra_engines.py`; yardsticks
+  only, never a data source). TomTom removed at the owner's request: do not use its API.
+- [Scoreboard](SEVEN_ENGINE_SCOREBOARD.md): DMN first or joint first in every test, 0
+  rule-breaking routes. [B2 report](B2_LANES_LIMITS_RESULTS.md): DMN lanes 35/35, limits 61/61.
+- Harness fixes today (all engines): start/finish path matching; OSRM readiness; zero-
+  length joints; OsmAnd departure step. Check `privacy_guard` exit codes (never pipe it).
+- Next: run C (simulated drives: categories 3, 4, 6, 12, 13, 16, 19, 20), then run D.
+
 ## 2026-10-17 — Run B1 done: JOURNEY-001 junctions and roundabouts (Claude)
 - [Run 39043457966](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39043457966), ~5 min,
   `benchmarks/journey001.py`, `.github/workflows/journey001.yml`. Report:
@@ -101,6 +111,16 @@
 - Previous TURN-001-NO-ROUTE-5 remains blocked on actual operative TRO,
   dated site signage and access proof. No fabricated evidence promoted.
 
+## 2026-10-17 — BARRIER-001 v1.2 verified scoring result (ChatGPT)
+- Branch `codex/chatgpt-barrier001-review-20261017`; scoring-only revision `80056c0`, full run
+  [39026846188](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39026846188):
+  **all 6 jobs passed** (DMN, three competitors, OSRM control, score).
+- DMN 46 passes, 0 closed-barrier crossings, 15 no routes; **zero known-access**
+  alternatives, **two only-uncertain-gate** alternatives. Full reviewed
+  evidence in [docs/BARRIER_001_V12_REVIEW.md](BARRIER_001_V12_REVIEW.md).
+- REGISTER task marked blocked **only for owner gate-policy and turnaround
+  decisions**, not CI. No engine behaviour or Android change, no merge.
+- Next unclaimed work: TURN-001-NO-ROUTE-5 independent legality investigation.
 
 ## 2026-10-17 (later still) — work register + BARRIER-001 baseline
 - Shared register for all AIs: `python3 -m tools.work_status --fetch` (done / in progress /

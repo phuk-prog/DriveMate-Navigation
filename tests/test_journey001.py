@@ -74,6 +74,26 @@ class Geometry(unittest.TestCase):
         self.assertEqual(case_geometry(last, clip)["status"], "TOO_FEW_EXITS")
 
 
+class PathMatching(unittest.TestCase):
+    """The shared start/finish fix in benchmarks/extra_engines.engine_path."""
+
+    def test_simplified_line_from_the_start_point_keeps_its_first_node(self):
+        from benchmarks.extra_engines import engine_path
+        clip = cross_clip()
+        geom = case_geometry(turn_case(11, 5, "straight"), clip)  # 2 -> 3 -> 5
+        mid = lambda a, b: ((CROSS[a][0] + CROSS[b][0]) / 2, (CROSS[a][1] + CROSS[b][1]) / 2)  # noqa: E731
+        nodes, _ = engine_path(clip, geom, [mid(2, 3), mid(3, 5)])  # engine drew one straight line
+        self.assertEqual(nodes, ["2", "3", "5"])
+
+    def test_route_starting_the_other_way_still_does_not_match(self):
+        from benchmarks.extra_engines import engine_path
+        clip = cross_clip()
+        geom = case_geometry(turn_case(11, 5, "straight"), clip)
+        mid = ((CROSS[2][0] + CROSS[3][0]) / 2, (CROSS[2][1] + CROSS[3][1]) / 2)
+        nodes, _ = engine_path(clip, geom, [mid, CROSS[2], CROSS[1]])  # heads west instead of east
+        self.assertNotEqual(nodes[:2], geom["origin_segment"])
+
+
 class Verdicts(unittest.TestCase):
     def setUp(self):
         self.left = {**case_geometry(turn_case(12, 4, "left"), cross_clip()), "junction_at": CROSS[3]}

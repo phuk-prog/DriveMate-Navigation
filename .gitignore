@@ -53,3 +53,6 @@ traces/
 *.jks
 *.pem
 *.key
+
+# OsmAnd tools write this region list into their working folder
+regions.ocbf

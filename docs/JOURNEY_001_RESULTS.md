@@ -1,5 +1,9 @@
 # JOURNEY-001 (run B1) — real junctions and roundabouts, four engines
 
+> **Latest:** seven-engine results (adds openrouteservice, BRouter, OsmAnd) are in
+> [SEVEN_ENGINE_SCOREBOARD.md](SEVEN_ENGINE_SCOREBOARD.md); DMN scores unchanged. The tables
+> below are the earlier four-engine runs.
+
 Categories 5, 6, 8, 9 and 11 from one shared run, each ranked separately (no total).
 Truth is map-derived (hashed OpenStreetMap snapshot), not independent UK road law.
 

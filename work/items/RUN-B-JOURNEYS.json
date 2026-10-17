@@ -23,7 +23,7 @@
  ],
  "state": "done",
  "summary": "B1 done (JOURNEY-001 v1.1, categories 5, 6, 8, 9, 11): DMN 57/57 valid, 36/36 junction instructions, 21/21 roundabout exits after owner-approved 4abf5bf. Lanes (10) and speed limits (15) in RUN-B2-LANES-LIMITS.",
- "title": "Run B: real UK journeys, 4 engines -> categories 5, 6, 8, 9, 10, 11, 15 scored separately",
+ "title": "Run B1 JOURNEY-001: real junctions and roundabouts -> categories 5, 8, 9, 11 (6 moved to run C), DMN + 6 reference engines",
  "updated": "2026-10-17T15:22:31+00:00",
  "why": "Owner-approved grouping (17 Oct 2026): runs share execution, each category keeps its own frozen cases, rules, score and ranking; no combined score; a failed shared step marks dependants NOT_RUN. Start with the owner's Stockport->M60->M56->SK8 2EZ drive, M60/M56/M62/A34 junctions, big roundabouts. Lanes only from engines that output them (others NOT_AVAILABLE)."
 }
