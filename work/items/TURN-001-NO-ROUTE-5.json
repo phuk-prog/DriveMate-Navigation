@@ -2,19 +2,26 @@
  "agent": "ChatGPT GPT-6",
  "branch": "codex/chatgpt-turn001-no-route5-20261017",
  "created": "2026-10-17T10:06:34+00:00",
- "fingerprints": [],
+ "fingerprints": [
+  "TURN-001 no-route5 diagnostic v1|cohort f2949a8a|prepared 8500d8f3|code 8ad956f"
+ ],
  "history": [
   "2026-10-17T10:06:34+00:00 next by Claude on claude/dmn-turn-restriction-debug-mhw7cw",
-  "2026-10-17T11:09:44.613Z in_progress by ChatGPT GPT-6 on codex/chatgpt-turn001-no-route5-20261017"
+  "2026-10-17T11:09:44.613Z in_progress by ChatGPT GPT-6 on codex/chatgpt-turn001-no-route5-20261017",
+  "2026-10-17T11:14:44.484Z blocked by ChatGPT GPT-6 on codex/chatgpt-turn001-no-route5-20261017: map investigation done, independent road legality not verified"
  ],
  "id": "TURN-001-NO-ROUTE-5",
  "read_first": [
   "docs/TURN_001_RESULTS.md: Reasons, DMN"
  ],
- "runs": [],
- "state": "in_progress",
+ "runs": [
+  "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39027815145"
+ ],
+ "state": "blocked",
  "title": "Check by hand whether a legal way exists at TURN-001's 5 DMN no-route junctions",
- "updated": "2026-10-17T11:09:44.613Z",
+ "updated": "2026-10-17T11:14:44.484Z",
  "why": "No engine found one; not proven either way",
- "summary": "Investigating the five frozen Greater Manchester TURN-001 no-route cases using original four-engine artifacts and relation-level map evidence. No engine behaviour changes."
+ "summary": "Read-only diagnostic of all 5 frozen no-route junctions: source/cohort/clip hashes validated; new GitHub Actions run 39027815145 passed. All five reachable with turn rules ignored but unreachable on base-clip via-node restricted graph even when access relaxed. Four become reachable when tested ban is removed; fifth (7615778) has access=private destination. No independently proven road law, no engine behaviour change.",
+ "results": "docs/TURN_001_NO_ROUTE5_RESULTS.md",
+ "reason": "Blocked on dated independent highway authority TRO/sign/physical-layout/access verification, not on CI"
 }
