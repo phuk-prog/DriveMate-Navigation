@@ -1,6 +1,18 @@
 {
  "read_first": [
   {
+   "what": "Owner rule: do not register; leave inaccessible evidence diagnosed/unverified and move on",
+   "where": "docs/DMN_NO_REGISTRATION_RULE.md",
+   "cost": "tiny",
+   "topics": [
+    "registration",
+    "no-registration",
+    "access",
+    "evidence"
+   ],
+   "when": "before any external account or signup"
+  },
+  {
    "what": "Latest handover note (newest section only)",
    "where": "docs/HANDOVER.md (top section)",
    "cost": "tiny",
