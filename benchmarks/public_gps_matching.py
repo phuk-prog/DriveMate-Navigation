@@ -160,7 +160,7 @@ def main():
     target=args.input.resolve()
     if target.suffix!=".osm" or not target.is_relative_to(RESULTS.resolve()):
         raise ValueError("Use ephemeral public OSM XML under ignored results/")
-    if not target.is_file() or not 0<target.stat().st_size<=MAX_INPUT_BYTES:
+    if not target.is_file() or not (0<target.stat().st_size and (MAX_INPUT_BYTES is None or target.stat().st_size<=MAX_INPUT_BYTES)):
         raise ValueError("Missing or oversized public source")
     print(json.dumps(evaluate(target.read_bytes(),snapshot=args.snapshot,
                               limit=args.limit),indent=2))

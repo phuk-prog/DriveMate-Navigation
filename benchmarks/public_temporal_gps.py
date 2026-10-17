@@ -221,7 +221,7 @@ def main():
     path=args.input.resolve()
     if path.suffix!=".osm" or not path.is_relative_to(RESULTS.resolve()):
         raise ValueError("Nonpersonal public OSM XML must be under ignored results/")
-    if not path.is_file() or not 0<path.stat().st_size<=MAX_INPUT_BYTES:
+    if not path.is_file() or not (0<path.stat().st_size and (MAX_INPUT_BYTES is None or path.stat().st_size<=MAX_INPUT_BYTES)):
         raise ValueError("Missing or oversized public extract")
     print(json.dumps(evaluate(path.read_bytes(),snapshot=args.snapshot,limit=args.limit),indent=2))
 

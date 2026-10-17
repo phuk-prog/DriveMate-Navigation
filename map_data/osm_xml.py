@@ -23,9 +23,10 @@ import xml.etree.ElementTree as ET
 from engine import RoadEdge, RoadGraph
 from .conditions import condition_applies, parts as condition_parts
 
-MAX_INPUT_BYTES = 32_000_000
-# Bounded for auditable research clips (about 1 km around a junction), NOT whole UK extracts.
-MAX_OBJECTS = 300_000
+# Owner, 17 Oct 2026: no map size limit (was 32 MB / 300,000 objects for small research clips).
+# None means unlimited; the names stay so callers that set a limit still can.
+MAX_INPUT_BYTES = None
+MAX_OBJECTS = None
 DRIVING_SPEEDS = {
     "motorway": 95, "trunk": 80, "primary": 55, "secondary": 48,
     "tertiary": 40, "unclassified": 35, "residential": 30,
@@ -286,8 +287,8 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
                    access_context: JourneyAccessContext | None = None, when=None) -> ImportedMap:
     """`when` (UK local datetime, optional): time-limited rules apply only while in force;
     without it they apply at all times (unchanged, safe)."""
-    if not isinstance(raw, bytes) or not raw or len(raw) > MAX_INPUT_BYTES:
-        raise OSMImportError("Expected nonempty OSM XML bytes within 32 MB research limit")
+    if not isinstance(raw, bytes) or not raw or (MAX_INPUT_BYTES is not None and len(raw) > MAX_INPUT_BYTES):
+        raise OSMImportError("Expected nonempty OSM XML bytes")
     source_hash = sha256(raw).hexdigest()
     if access_context is not None and (not isinstance(access_context, JourneyAccessContext)
             or access_context.source_sha256 != source_hash):
@@ -301,7 +302,7 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
     if root.tag != "osm":
         raise OSMImportError("Expected an <osm> root element")
     objects = [element for element in root if element.tag in {"node", "way", "relation"}]
-    if len(objects) > MAX_OBJECTS:
+    if MAX_OBJECTS is not None and len(objects) > MAX_OBJECTS:
         raise OSMImportError("Prototype extract has too many OSM objects")
 
     coordinates: dict[str, tuple[float, float]] = {}
@@ -353,6 +354,7 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
     access_requirements: dict[str, tuple[str, ...]] = {}
     edges: list[RoadEdge] = []
     conditional_ways = 0
+    cut_pieces = 0
     opened_by_only = _uncertain_roads_required_by_only_turns(ways, relations)
     # Segments with a barrier *at either endpoint* remain inaccessible/uncertain.
     # This is conservative and may block an adjacent leg too.
@@ -381,11 +383,15 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
         destination = bool(access_context and way_id in access_context.destination_way_ids
                            and access_context.destination_node in refs)
         for i, (src, dst) in enumerate(zip(refs, refs[1:])):
+            # A road running off the edge of the extract, or two nodes at one spot, loses only
+            # that piece, never the whole map (GRAND-TOUR-001, 17 Oct 2026). Piece numbers stay.
             if src not in coordinates or dst not in coordinates:
-                raise OSMImportError(f"way {way_id}: missing node coordinate")
+                cut_pieces += 1
+                continue
             length = _haversine(coordinates[src], coordinates[dst])
             if length < 0.01:
-                raise OSMImportError(f"way {way_id}: degenerate road segment")
+                cut_pieces += 1
+                continue
             physical = _combine_access(barriers[src], barriers[dst])
             node_requirements = node_context[src] + node_context[dst]
             if direction == 1:
@@ -600,6 +606,7 @@ def import_osm_xml(raw: bytes, *, provenance: Provenance,
             "prohibited_turn_sequences": len(graph.prohibited_sequences),
             "restrictions_not_applied": dict(sorted(skipped.items())),
             "conditional_ways_withheld": conditional_ways,
+            "pieces_skipped_missing_or_zero_length": cut_pieces,
             "uncertain_roads_opened_by_only_turn": len(opened_by_only),
             "limitations": "research-conditional-withheld-not-evaluated-no-real-world-legality-claims",
         },

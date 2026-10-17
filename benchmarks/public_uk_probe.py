@@ -30,7 +30,7 @@ def _public_file(path: Path) -> Path:
     target = path.resolve()
     if not target.is_relative_to(IGNORED.resolve()) or target.suffix != ".osm":
         raise ValueError("Public experiment accepts XML only inside ignored results/")
-    if not target.is_file() or target.stat().st_size > MAX_INPUT_BYTES:
+    if not target.is_file() or (MAX_INPUT_BYTES is not None and target.stat().st_size > MAX_INPUT_BYTES):
         raise ValueError("Missing, empty or oversized extracted public-road XML")
     return target
 

@@ -101,7 +101,7 @@ def prepare(source: Path, bbox: str, target: Path, *,
                 raise RuntimeError("Install osmium-tool to process public OSM PBF files locally")
             for command in commands:
                 runner(command, check=True, timeout=600, stdout=subprocess.DEVNULL)
-            if not target.is_file() or target.stat().st_size > MAX_INPUT_BYTES:
+            if not target.is_file() or (MAX_INPUT_BYTES is not None and target.stat().st_size > MAX_INPUT_BYTES):
                 raise OSMImportError("Subset exceeds the importer size limit; choose a smaller bbox")
             raw = target.read_bytes()
             reject_object_metadata(raw)

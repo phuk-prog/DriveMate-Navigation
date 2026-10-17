@@ -96,8 +96,9 @@ class OSMImporterTests(unittest.TestCase):
 
     def test_missing_nodes_duplicate_ids_and_entity_input_rejected(self):
         raw = FIXTURE.read_text()
-        with self.assertRaises(OSMImportError):
-            imported(raw.replace('<nd ref="1"/>', '<nd ref="98765"/>').encode())
+        # 17 Oct 2026 (GRAND-TOUR-001): a road running off the extract loses only that piece
+        cut = imported(raw.replace('<nd ref="1"/>', '<nd ref="98765"/>').encode())
+        self.assertGreater(cut.metadata["pieces_skipped_missing_or_zero_length"], 0)
         with self.assertRaises(OSMImportError):
             imported(raw.replace('<node id="1"', '<node id="2"', 1).encode())
         with self.assertRaises(OSMImportError):
