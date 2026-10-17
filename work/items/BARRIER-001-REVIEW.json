@@ -2,10 +2,13 @@
  "agent": "ChatGPT GPT-6",
  "branch": "codex/chatgpt-barrier001-review-20261017",
  "created": "2026-10-17T10:06:34+00:00",
- "fingerprints": [],
+ "fingerprints": [
+  "BARRIER-001 v1.2 scoring|cohort 4dfa6379|revision 80056c0"
+ ],
  "history": [
   "2026-10-17T10:06:34+00:00 next by Claude on claude/dmn-turn-restriction-debug-mhw7cw",
-  "2026-10-17T10:57:57.499Z in_progress by ChatGPT GPT-6 on codex/chatgpt-barrier001-review-20261017"
+  "2026-10-17T10:57:57.499Z in_progress by ChatGPT GPT-6 on codex/chatgpt-barrier001-review-20261017",
+  "2026-10-17T11:04:30.825Z blocked by ChatGPT GPT-6 on codex/chatgpt-barrier001-review-20261017: scoring completed; behaviour decisions require owner/evidence"
  ],
  "id": "BARRIER-001-REVIEW",
  "read_first": [
@@ -14,9 +17,11 @@
  "runs": [
   "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39026846188"
  ],
- "state": "in_progress",
+ "state": "blocked",
  "title": "Owner decisions from BARRIER-001",
- "updated": "2026-10-17T10:57:57.499Z",
+ "updated": "2026-10-17T11:04:30.825Z",
  "why": "Gates on uncertain start/finish roads (30 cases); scoring v1.2 for routes through unmarked gates; DMN turn-round at a closed barrier",
- "summary": "BARRIER-001 v1.2 scoring-only fix committed (80056c0); full four-engine frozen-cohort GitHub Actions run 39026846188 started. No DMN routing policy changed; gate access and legal turn-round remain owner review."
+ "summary": "v1.2 scoring-only correction and fresh 94-case four-engine retest complete: all CI jobs passed; DMN 46 judged legal passes, 0 closed-barrier crossings, 15 no routes. Two apparent comparator routes rely on unmarked gates; zero known-access comparator routes for those no-route cases. Engine behaviour unchanged. Await owner decision/evidence on 30 endpoint uncertain-gate cases and turn-around before closed barrier.",
+ "results": "docs/BARRIER_001_V12_REVIEW.md",
+ "reason": "Owner access-policy and barrier turn-around decisions remain unresolved; do not silently change driving legality"
 }
