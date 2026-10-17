@@ -40,6 +40,45 @@ whole-cohort run is
 [39026846188](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39026846188);
 read its job summary for measured new results, not raw logs.
 
+## Verified fresh v1.2 four-engine result
+
+[GitHub Actions run 39026846188](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39026846188):
+all five engine/control jobs and score job **succeeded**. Input hashes were
+unchanged; scoring code revision: `80056c00afb3d4cfc862c5396ade2bc46a127be8`.
+Source SHA-256: `2a8ef8e1…22acba`; cohort SHA-256:
+`4dfa6379…72e17e`; prepared clips SHA-256:
+`8335b60f…35e6f0`. Full values are in the scored summary artifact.
+
+| Engine | Judged legal passes / 61 | Closed-barrier crossings | Off-target in judged cases |
+|---|---:|---:|---:|
+| DMN | 46 | 0 | 0 |
+| OSRM | 46 | 0 | 12 |
+| Valhalla | 42 | 0 | 18 |
+| GraphHopper | 9 | 0 | 40 |
+
+There were 110 frozen entries, 94 testable, 92 discriminating, with the
+same 47 closed, 14 open, 25 unmarked-gate and 8 restricted cases. No
+new engine legality violations were reported by the OSM-based audit.
+This is a **map-derived** ranking only, not an independent legal road
+survey; snap failures limit fair common-case comparisons.
+
+**DMN no-route evidence newly separated:**
+- **Known-access OSM-legal comparator alternatives: 0.**
+- **Only uncertain-gate comparator alternatives: 2**, on node
+  `2092919405` (both OSRM and Valhalla require untagged gates
+  `2092919404`, `2603240027`, `8286070118`) and node
+  `416565753` (both require untagged gate `430960712`).
+- The legacy OSM-only statistic remains 2, but it must **not** be
+  called two demonstrated public-car route failures.
+- DMN's 15 safe no-routes, 46 passes and zero closed-barrier crossings
+  are unchanged by this scoring-only contract update.
+
+**Query timing, descriptive, not cross-engine ranked:** DMN cold
+clip-import + route median 71.6 ms, p95 465.1 ms; OSRM warm local
+query 1.3/1.7 ms; Valhalla warm 18.2/22.0 ms; GraphHopper warm
+54.9/71.4 ms (median/p95; 94 samples each). Different scopes
+make a speed ranking invalid.
+
 ## Behavioural decisions deliberately left open
 
 **Unmarked/restricted gates at trip endpoints (30 reported cases):**
