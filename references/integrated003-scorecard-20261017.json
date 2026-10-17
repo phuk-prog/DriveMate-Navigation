@@ -1,0 +1,362 @@
+{
+  "test_id": "INTEGRATED-003",
+  "classification": "DMN-only synthetic lifecycle conformance; no competitive ranking",
+  "formula": "10 * passed / 3 only for a complete judged cohort",
+  "rows": [
+    {
+      "system": "DMN",
+      "rank": 1,
+      "score_out_of_ten": 10.0,
+      "passed": 3,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-003-valid-replacement-invalidates-old-route-context",
+          "outcome": "PASS",
+          "checks": {
+            "active_map": true,
+            "old_route_context": true
+          },
+          "failures": [],
+          "actual": {
+            "first_package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+            "active_package_sha256": "8b9d409865dd0b272456c2b99575c8dd29d3459602db7016377889b9b00ab465",
+            "active_map": "B",
+            "second_activation": "ACTIVE",
+            "old_route_matches_active": false
+          },
+          "calculation_ms": 0.825381
+        },
+        {
+          "case_id": "INTEGRATED-003-corrupt-update-retains-route-context",
+          "outcome": "PASS",
+          "checks": {
+            "active_map": true,
+            "old_route_context": true,
+            "second_activation": true
+          },
+          "failures": [],
+          "actual": {
+            "first_package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+            "active_package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+            "active_map": "A",
+            "second_activation": "REJECTED",
+            "old_route_matches_active": true
+          },
+          "calculation_ms": 0.271408
+        },
+        {
+          "case_id": "INTEGRATED-003-new-route-binds-replacement",
+          "outcome": "PASS",
+          "checks": {
+            "active_map": true,
+            "old_route_context": true,
+            "new_route_context": true
+          },
+          "failures": [],
+          "actual": {
+            "first_package_sha256": "c2f908d9d0904e6aeb70cfd87c4b36d9af4871d5dd2da215dd37b55e076501cb",
+            "active_package_sha256": "8b9d409865dd0b272456c2b99575c8dd29d3459602db7016377889b9b00ab465",
+            "active_map": "B",
+            "second_activation": "ACTIVE",
+            "old_route_matches_active": false,
+            "new_route_matches_active": true,
+            "new_route_edges": [
+              "w:101:0:f",
+              "w:102:0:f"
+            ]
+          },
+          "calculation_ms": 0.516366
+        }
+      ]
+    },
+    {
+      "system": "Valhalla",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-003-valid-replacement-invalidates-old-route-context",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-003-corrupt-update-retains-route-context",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-003-new-route-binds-replacement",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "OSRM",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-003-valid-replacement-invalidates-old-route-context",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-003-corrupt-update-retains-route-context",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-003-new-route-binds-replacement",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "GraphHopper",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-003-valid-replacement-invalidates-old-route-context",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-003-corrupt-update-retains-route-context",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-003-new-route-binds-replacement",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "OsmAnd",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-003-valid-replacement-invalidates-old-route-context",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-003-corrupt-update-retains-route-context",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-003-new-route-binds-replacement",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "Organic Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-003-valid-replacement-invalidates-old-route-context",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-003-corrupt-update-retains-route-context",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-003-new-route-binds-replacement",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "BRouter",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-003-valid-replacement-invalidates-old-route-context",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-003-corrupt-update-retains-route-context",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-003-new-route-binds-replacement",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "HERE",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-003-valid-replacement-invalidates-old-route-context",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-003-corrupt-update-retains-route-context",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-003-new-route-binds-replacement",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "Mapbox",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-003-valid-replacement-invalidates-old-route-context",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-003-corrupt-update-retains-route-context",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-003-new-route-binds-replacement",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "TomTom",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-003-valid-replacement-invalidates-old-route-context",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-003-corrupt-update-retains-route-context",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-003-new-route-binds-replacement",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "openrouteservice",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-003-valid-replacement-invalidates-old-route-context",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-003-corrupt-update-retains-route-context",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        },
+        {
+          "case_id": "INTEGRATED-003-new-route-binds-replacement",
+          "outcome": "UNSUPPORTED",
+          "reason": "Current integrated static endpoint cannot express matcher, reroute-controller and arrival state"
+        }
+      ]
+    },
+    {
+      "system": "Google Maps",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-003-valid-replacement-invalidates-old-route-context",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-003-corrupt-update-retains-route-context",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-003-new-route-binds-replacement",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    },
+    {
+      "system": "Waze",
+      "rank": null,
+      "score_out_of_ten": null,
+      "passed": 0,
+      "failed": 0,
+      "cases": [
+        {
+          "case_id": "INTEGRATED-003-valid-replacement-invalidates-old-route-context",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-003-corrupt-update-retains-route-context",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        },
+        {
+          "case_id": "INTEGRATED-003-new-route-binds-replacement",
+          "outcome": "NOT_RUN",
+          "reason": "No permitted equivalent full lifecycle harness"
+        }
+      ]
+    }
+  ]
+}

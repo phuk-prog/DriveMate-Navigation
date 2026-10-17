@@ -21,6 +21,15 @@ that input at 50 m retained the original `APPROACH` expectation. No engine polic
 changed. All external families remain unranked with interface reasons. See
 `docs/INTEGRATED_002_RESULTS.md` and `references/integrated002-*.json`.
 
+## INTEGRATED-003 offline route-context baseline (17 October 2026)
+
+DMN passes 3/3 synthetic integration cases for valid package replacement,
+corrupt-update retention and new-route binding. Old route identities visibly
+stop matching after a valid map replacement; this is detection evidence, not
+automatic controller cancellation or Android storage proof. External families
+remain unranked with explicit interface reasons. See
+`docs/INTEGRATED_003_RESULTS.md` and `references/integrated003-*.json`.
+
 **Owner-approved prospective policy (16 October 2026):**
 [DMN_PERMANENT_TESTING_POLICY.md](DMN_PERMANENT_TESTING_POLICY.md) supersedes
 any earlier recommendations here about universal score-first rankings, running
