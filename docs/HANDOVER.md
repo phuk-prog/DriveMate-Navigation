@@ -46,6 +46,18 @@
 - [Five-case report](TURN_001_NO_ROUTE5_RESULTS.md); no engine modifications or
   fresh competitive claim. Work item held pending independent dated
   signage/TRO/access evidence; no inferred real-world legal conclusions.
+## 2026-10-17 — TURN-001 official road-rule evidence source audit (ChatGPT)
+- Branch `codex/chatgpt-turn001-legal-evidence-20261017`; evidence work only (no DMN or app code changes).
+- Official DfT D-TRO service: free/OGL v3 data, consumer signup required,
+  **digital extract not itself legal order**, variable geometry precision.
+- Manchester/Trafford/Salford/Rochdale council TRO portals identified; Salford
+  Chesterfield Close 2019 order is about 20mph/no-waiting, **not** target turn.
+- Five case statuses all **UNVERIFIED**; cases and precise source scope in
+  [TURN_001_OFFICIAL_EVIDENCE_AUDIT.md](TURN_001_OFFICIAL_EVIDENCE_AUDIT.md).
+- Evidence guard CI [39028307800](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39028307800)
+  PASS; work item TURN-001-OFFICIAL-SOURCE-AUDIT recorded DONE.
+- Previous TURN-001-NO-ROUTE-5 remains blocked on actual operative TRO,
+  dated site signage and access proof. No fabricated evidence promoted.
 
 
 ## 2026-10-17 (later still) — work register + BARRIER-001 baseline
