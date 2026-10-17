@@ -165,3 +165,14 @@ proprietary reference automation, paid providers or increased compute budget.
 GitHub PR pushes trigger the continuous research unit suite automatically;
 an automatic question-advance does not establish a new independent test that
 cannot be built from legally usable available evidence.
+
+
+## Owner instruction — lower usage (2026-10-17)
+
+- One AI per branch: do not push to a branch another AI session is working on;
+  use your own branch and merge (never force-push).
+- Long multi-engine runs go to GitHub Actions (public repo: free), e.g.
+  `.github/workflows/turn001.yml`; read only the job summary
+  (`tools/turn001_brief.py` output), not raw logs.
+- Start each session from [docs/HANDOVER.md](docs/HANDOVER.md) and end it by
+  updating that file in a few lines.

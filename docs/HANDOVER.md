@@ -1,0 +1,16 @@
+# Handover (keep short; newest first)
+
+## 2026-10-17 — Category 1, TURN-001 turn-restriction comparison
+- Branch `codex/dmn-gps001-ranked-trial-20261015` (PR #4). Harness contract
+  TURN-001 v1.3: real-journey test (direction of travel given to every engine,
+  partial first/last segments kept, whole-route audit of all one-ways and
+  restrictions, no-route re-asked on a 3x wider clip, OSRM control run).
+- DMN change: `shortest_route(..., endpoint_uncertain_access=True)` lets an
+  uncertain road be the start/finish of a journey, never a through route.
+- Frozen inputs: branch `data/turn001-snapshot` (OSM, ODbL; hashes checked).
+- Get results: run workflow "TURN-001 four-engine turn-restriction comparison"
+  (`.github/workflows/turn001.yml`, manual or PR). Read its job summary only.
+- Early local DMN result (not final evidence): 130/142 legal routes, 6 endpoints
+  OSM closes to cars (correctly refused), 6 no route even on the wider clip.
+- Next: read the CI summary; check any DMN no-route where another engine has a
+  legal route; write docs/TURN_001_RESULTS.md; then node-barrier route test.
