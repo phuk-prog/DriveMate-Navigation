@@ -221,6 +221,14 @@ four-case tie does not clear them, and does not clear the UK coverage block.
 
 ## ROUTE-002 frozen legality/recalculation stage
 
+**Later ROUTE-004 scorer correction (17 October 2026):** a recorded geometry
+harness gap was reproduced: the old reverse-edge detector missed backward travel
+split across multiple short in-corridor vertices. The prospective detector now
+passes 5/5 frozen analytical controls, including forward, detour and incomplete
+negative controls, at source `9da6f6737daa91e41238dde177f7dd93226cb2da`.
+This is not a navigation-engine rerun and does not alter ROUTE-004's historical
+six-engine verdicts. See `references/route004-detector-controls-20261017.json`.
+
 Eight hand-authored synthetic cases use a new explicit directed map and JSON
 oracle: prohibited-turn detour, unrestricted fresh-origin control, motor_vehicle=no
 shortcut bypass, disconnected destination, prohibited-access destination,

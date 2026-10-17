@@ -62,7 +62,7 @@ Every PASS denotes only the five specific checks above; it is **not** independen
 | Priority | Finding | Evidence/classification | Recommended follow-up (approval required) |
 |---|---|---|---|
 | 1 | Independent one-way road-law truth missing on the six UK ways | **UNRESOLVED source-truth gap**: OSM tags cannot alone establish current lawful directions. | Check dated traffic orders, signed restrictions, roadworks/imagery as legally accessible; record source/date and conflicting facts. |
-| 2 | Reverse-direction detector may miss a route that travels backwards through **multiple small geometry segments** | **Harness sensitivity gap**: `forbidden_direct_traversal` looks for a single consecutive route point jump from projection ≥0.8 to ≤0.2 within 8 m. Multi-vertex backward traversal could evade this check. No such real failure was verified here. | Independently audit actual returned geometry and create a separately frozen all-segment reverse traversal control before revising acceptance. Preserve original PASS labels as historical. |
+| 2 | Reverse-direction detector could miss a route travelling backwards through **multiple small geometry segments** | **Harness defect corrected prospectively on 17 October 2026**: the original detector required one jump from projection ≥0.8 to ≤0.2. Frozen analytical controls now require detection across multiple contiguous in-corridor points while rejecting forward travel, an off-corridor detour and an incomplete fragment. All 5/5 controls pass at `9da6f6737daa91e41238dde177f7dd93226cb2da`. No historical route was rescored and no real engine failure was inferred. | Use the corrected detector in a future freshly authorized comparable route execution; preserve this run's original verdicts. |
 | 3 | Allowed-direction route need not actually use the nominated one-way edge | **Harness coverage gap**: existing checks require endpoint/distance/ETA, not full directed selected-edge coverage. | Define and freeze an explicit full-path containment/progression contract on known geometry; do not retroactively rescore this run. |
 | 4 | Possible route-quality gap on York Street reverse direction | **PROVISIONAL, not an engine failure**: DMN 251.6 m and BRouter 251.0 m, against GraphHopper 170.9 m, OSRM 171.4 m, openrouteservice 170.8 m, Valhalla 184.0 m. Profiles differ and independent fastest-legal-route truth is absent. | In a **separate route-quality test**, verify that compared routes share legal constraints and independently assess shorter valid alternatives. |
 | 5 | Turn prohibitions, roundabouts, GPS matching, speed-limit/traffic and lane conditions were not checked | **NOT TESTED** by ROUTE-004. Conditional-tagged objects and dependants were excluded from map input. | Keep these as separate named categories, not hidden within a one-way score. |
@@ -74,6 +74,17 @@ Every PASS denotes only the five specific checks above; it is **not** independen
 **Do not change DMN navigation behaviour as a result of these passing source-map checks.** First review the source-truth and harness limitations above. An improvement to ROUTE-004 judgement would require your approval, a new frozen labelled experiment, and actual reruns rather than relabelling historical data. Separately, the previously documented **GPS-003** first-fix coverage deficit (16/24 failed streams) and older UK **17 correct / 0 confidently wrong / 23 withheld** replay remain higher-priority navigation investigations.
 
 No DMN matcher thresholds have been weakened, no route code changed, no new comparator run started, and no live-app readiness claimed. Per the owner's permanent [six-rule policy](DMN_PERMANENT_TESTING_POLICY.md), **STOP for owner review** before fixes or any next test.
+
+### Prospective detector correction evidence
+
+The separately frozen `ROUTE-004-DETECTOR-1` analytical harness check passes
+**5/5** cases: single- and multi-segment reverse traversal are detected; forward
+travel, a route that leaves the 8 m corridor, and an incomplete reverse fragment
+are not falsely marked as a complete forbidden traversal. Fixture SHA-256:
+`3b2661d82a45f2751a6141dd68ea2b2b0d8a07f60e3326f2a088228514950791`.
+[Exact case evidence](../references/route004-detector-controls-20261017.json).
+This corrects only the prospective scorer. The six-engine table above remains
+the immutable historical baseline and therefore has not been recalculated.
 
 ## Run/measurement links
 
