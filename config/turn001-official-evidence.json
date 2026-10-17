@@ -69,8 +69,8 @@
   "cases": [
     {
       "relation_id": 10558420,
-      "latitude": 53.5048025,
-      "longitude": -2.2567149,
+      "osm_public_junction_lat": 53.5048025,
+      "osm_public_junction_lon": -2.2567149,
       "road_label": "Devonshire Street",
       "osm_rule": "no_straight_on",
       "osm_graph_finding": "No route with via-node bans on tested clips",
@@ -89,8 +89,8 @@
     },
     {
       "relation_id": 13613008,
-      "latitude": 53.4525815,
-      "longitude": -2.2995611,
+      "osm_public_junction_lat": 53.4525815,
+      "osm_public_junction_lon": -2.2995611,
       "road_label": "Talbot Road",
       "osm_rule": "only_u_turn",
       "osm_graph_finding": "No route with via-node bans on tested clips",
@@ -108,8 +108,8 @@
     },
     {
       "relation_id": 16644804,
-      "latitude": 53.6023943,
-      "longitude": -2.1703982,
+      "osm_public_junction_lat": 53.6023943,
+      "osm_public_junction_lon": -2.1703982,
       "road_label": "Unnamed service-road junction",
       "osm_rule": "only_left_turn",
       "osm_graph_finding": "No route with via-node bans on tested clips",
@@ -127,8 +127,8 @@
     },
     {
       "relation_id": 4853555,
-      "latitude": 53.4849465,
-      "longitude": -2.3631244,
+      "osm_public_junction_lat": 53.4849465,
+      "osm_public_junction_lon": -2.3631244,
       "road_label": "Chesterfield Close",
       "osm_rule": "no_straight_on",
       "osm_graph_finding": "No route with via-node bans on tested clips",
@@ -147,8 +147,8 @@
     },
     {
       "relation_id": 7615778,
-      "latitude": 53.4826549,
-      "longitude": -2.2254736,
+      "osm_public_junction_lat": 53.4826549,
+      "osm_public_junction_lon": -2.2254736,
       "road_label": "Unnamed service road with private-access destination in frozen OSM",
       "osm_rule": "no_straight_on",
       "osm_graph_finding": "Destination withheld by access=private; no route with via-node bans on tested clips",
