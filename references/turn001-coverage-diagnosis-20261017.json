@@ -1,0 +1,340 @@
+{
+  "case_ids": [
+    "4853555",
+    "7615778",
+    "10558420",
+    "13613008",
+    "14285234",
+    "16644804",
+    "16686773"
+  ],
+  "cases": {
+    "DMN": {
+      "10558420": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "verdict": "SAFE_NO_ROUTE"
+      },
+      "13613008": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "verdict": "SAFE_NO_ROUTE"
+      },
+      "14285234": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "verdict": "SAFE_NO_ROUTE"
+      },
+      "16644804": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "verdict": "SAFE_NO_ROUTE"
+      },
+      "16686773": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "detail": "No motorcar graph edges extracted",
+        "verdict": "ENGINE_REJECTED_MAP"
+      },
+      "4853555": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "verdict": "SAFE_NO_ROUTE"
+      },
+      "7615778": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "verdict": "SAFE_NO_ROUTE"
+      }
+    },
+    "GraphHopper": {
+      "10558420": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "verdict": "SAFE_NO_ROUTE",
+        "warm_query_ms": 59.9
+      },
+      "13613008": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "verdict": "SAFE_NO_ROUTE",
+        "warm_query_ms": 84.1
+      },
+      "14285234": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "verdict": "SAFE_NO_ROUTE",
+        "warm_query_ms": 83.7
+      },
+      "16644804": {
+        "route_legal": "LEGAL",
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": [],
+        "warm_query_ms": 81.0
+      },
+      "16686773": {
+        "route_legal": "LEGAL",
+        "verdict": "PASS",
+        "violations": [],
+        "warm_query_ms": 80.2
+      },
+      "4853555": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "verdict": "SAFE_NO_ROUTE",
+        "warm_query_ms": 62.8
+      },
+      "7615778": {
+        "route_legal": "LEGAL",
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": [],
+        "warm_query_ms": 68.6
+      }
+    },
+    "OSRM": {
+      "10558420": {
+        "route_legal": "ILLEGAL",
+        "verdict": "FAIL_PROHIBITED",
+        "violations": [
+          "restriction:10558420:no_straight_on"
+        ],
+        "warm_query_ms": 1.3
+      },
+      "13613008": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "route_legal": "LEGAL",
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": [],
+        "warm_query_ms": 1.4
+      },
+      "14285234": {
+        "route_legal": "LEGAL",
+        "verdict": "PASS",
+        "violations": [],
+        "warm_query_ms": 1.6
+      },
+      "16644804": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "verdict": "SAFE_NO_ROUTE",
+        "warm_query_ms": 1.1
+      },
+      "16686773": {
+        "route_legal": "LEGAL",
+        "verdict": "PASS",
+        "violations": [],
+        "warm_query_ms": 1.0
+      },
+      "4853555": {
+        "base_clip_verdict": "SAFE_NO_ROUTE",
+        "route_legal": "LEGAL",
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": [],
+        "warm_query_ms": 1.3
+      },
+      "7615778": {
+        "route_legal": "LEGAL",
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": [],
+        "warm_query_ms": 1.2
+      }
+    },
+    "Valhalla": {
+      "10558420": {
+        "route_legal": "ILLEGAL",
+        "verdict": "FAIL_PROHIBITED",
+        "violations": [
+          "restriction:10558420:no_straight_on"
+        ],
+        "warm_query_ms": 14.6
+      },
+      "13613008": {
+        "route_legal": "ILLEGAL",
+        "verdict": "FAIL_PROHIBITED",
+        "violations": [
+          "restriction:13613008:only_u_turn"
+        ],
+        "warm_query_ms": 13.9
+      },
+      "14285234": {
+        "route_legal": "LEGAL",
+        "verdict": "PASS",
+        "violations": [],
+        "warm_query_ms": 7.0
+      },
+      "16644804": {
+        "route_legal": "LEGAL",
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": [],
+        "warm_query_ms": 16.0
+      },
+      "16686773": {
+        "route_legal": "LEGAL",
+        "verdict": "PASS",
+        "violations": [],
+        "warm_query_ms": 16.1
+      },
+      "4853555": {
+        "route_legal": "LEGAL",
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": [],
+        "warm_query_ms": 15.7
+      },
+      "7615778": {
+        "route_legal": "LEGAL",
+        "verdict": "UNRESOLVED_SNAP",
+        "violations": [],
+        "warm_query_ms": 15.2
+      }
+    }
+  },
+  "classification": "PROVISIONAL_MAP_DERIVED",
+  "cohort_sha256": "f2949a8a9aab40b7f62bc658cf92778f440ab5cdcc7ffcc755e21dc1b83c391c",
+  "contract": "TURN-001 v1.3",
+  "family_audit": [
+    {
+      "reason": "same seven frozen clips and TURN-001 v1.3 contract",
+      "status": "EXECUTED",
+      "system": "DMN"
+    },
+    {
+      "reason": "same seven frozen clips and TURN-001 v1.3 contract",
+      "status": "EXECUTED",
+      "system": "OSRM"
+    },
+    {
+      "reason": "same seven frozen clips and TURN-001 v1.3 contract",
+      "status": "EXECUTED",
+      "system": "Valhalla"
+    },
+    {
+      "reason": "same seven frozen clips and TURN-001 v1.3 contract",
+      "status": "EXECUTED",
+      "system": "GraphHopper"
+    },
+    {
+      "reason": "no TURN-001 restriction-route adapter configured",
+      "status": "NOT_RUN",
+      "system": "openrouteservice"
+    },
+    {
+      "reason": "requires app/native replay harness; no permitted engine-only interface configured",
+      "status": "NOT_RUN",
+      "system": "OsmAnd"
+    },
+    {
+      "reason": "requires app/native replay harness; no permitted engine-only interface configured",
+      "status": "NOT_RUN",
+      "system": "Organic Maps"
+    },
+    {
+      "reason": "requires a frozen routing-profile/map-builder adapter for this contract",
+      "status": "NOT_RUN",
+      "system": "BRouter"
+    },
+    {
+      "reason": "no configured permitted credentials and same-fixture engine interface; paid access not authorised",
+      "status": "NOT_RUN",
+      "system": "HERE"
+    },
+    {
+      "reason": "no configured permitted credentials and same-fixture engine interface; paid access not authorised",
+      "status": "NOT_RUN",
+      "system": "Mapbox"
+    },
+    {
+      "reason": "no configured permitted credentials and same-fixture engine interface; paid access not authorised",
+      "status": "NOT_RUN",
+      "system": "TomTom"
+    },
+    {
+      "reason": "no configured permitted credentials and same-fixture engine interface; paid access not authorised",
+      "status": "NOT_RUN",
+      "system": "Google Maps"
+    },
+    {
+      "reason": "no permitted automated engine replay interface",
+      "status": "UNSUPPORTED",
+      "system": "Waze"
+    }
+  ],
+  "limitations": [
+    "Focused problem cohort selected from DMN baseline, so it cannot establish general engine superiority.",
+    "Warm reference query time excludes graph build/import; DMN timing includes OSM import and route and is not ranked with it.",
+    "UNRESOLVED_SNAP routes are not passes even when their whole mapped route audit is legal.",
+    "Competitor agreement and OSM source agreement are not independent legal truth."
+  ],
+  "oracle": "hashed OpenStreetMap restriction relations and tags; not independent UK legal truth",
+  "prepared_sha256": "8500d8f3d9cf99660fcc3267ad422134fce87cbb946fe25f6940763546707bf3",
+  "purpose": "diagnose the seven DMN coverage outcomes from the 142-case live-head baseline; not a replacement full-cohort ranking",
+  "ranking_formulas": {
+    "coverage": "10 * exact legal endpoint-anchored PASS / 7; higher is better",
+    "safety": "10 * (7 - FAIL_PROHIBITED) / 7; higher is better; abstention/no-route is not coverage"
+  },
+  "revision": "3dd8d255c41236f24175bc0ae94ddf2bd93bd4db",
+  "rows": [
+    {
+      "coverage_score_10": 0.0,
+      "engine": "DMN",
+      "engine_rejected_map": 1,
+      "exact_legal_pass": 0,
+      "executed": 7,
+      "fail_prohibited": 0,
+      "safe_no_route": 6,
+      "safety_score_10": 10.0,
+      "timing": {
+        "median_ms": 95.8,
+        "p95_ms": 530.1,
+        "samples": 7,
+        "scope": "OSM import plus route; not comparable to warm reference queries"
+      },
+      "unresolved_snap": 0,
+      "version_configuration": "3dd8d255c41236f24175bc0ae94ddf2bd93bd4db"
+    },
+    {
+      "coverage_score_10": 2.857,
+      "engine": "OSRM",
+      "engine_rejected_map": 0,
+      "exact_legal_pass": 2,
+      "executed": 7,
+      "fail_prohibited": 1,
+      "safe_no_route": 1,
+      "safety_score_10": 8.571,
+      "timing": {
+        "median_ms": 1.3,
+        "p95_ms": 1.6,
+        "samples": 7,
+        "scope": "warm in-process query; excludes graph build/import"
+      },
+      "unresolved_snap": 3,
+      "version_configuration": "5.27.1 MLD, ghcr digest 855614a38f464b0558a2ad6eaa7cb8c139f39887da9b38b485ce453c6e6e6124"
+    },
+    {
+      "coverage_score_10": 1.429,
+      "engine": "GraphHopper",
+      "engine_rejected_map": 0,
+      "exact_legal_pass": 1,
+      "executed": 7,
+      "fail_prohibited": 0,
+      "safe_no_route": 4,
+      "safety_score_10": 10.0,
+      "timing": {
+        "median_ms": 80.2,
+        "p95_ms": 84.1,
+        "samples": 7,
+        "scope": "warm in-process query; excludes graph build/import"
+      },
+      "unresolved_snap": 2,
+      "version_configuration": "11.1 car, jar SHA-1 6e6c173c2b46cb0a3c1df124b2144d557931597e, OpenJDK 21.0.12.1"
+    },
+    {
+      "coverage_score_10": 2.857,
+      "engine": "Valhalla",
+      "engine_rejected_map": 0,
+      "exact_legal_pass": 2,
+      "executed": 7,
+      "fail_prohibited": 2,
+      "safe_no_route": 0,
+      "safety_score_10": 7.143,
+      "timing": {
+        "median_ms": 15.2,
+        "p95_ms": 16.1,
+        "samples": 7,
+        "scope": "warm in-process query; excludes graph build/import"
+      },
+      "unresolved_snap": 3,
+      "version_configuration": "3.9.1 auto, ghcr digest 6238809f9dc3057743d70a20efd3911ec38e458bfa13a0601909b58f68dfd956"
+    }
+  ],
+  "runner_sha256": "5297f987f9895e78dcca7279ee8068deb84704da4888fb8881b09c303303f69f",
+  "source_sha256": "2a8ef8e1f2533cb009b1ce248a6bf4eaabdd47e03979e64e24cd844f3b22acba",
+  "test_id": "TURN-001-COVERAGE-DIAGNOSIS-01"
+}

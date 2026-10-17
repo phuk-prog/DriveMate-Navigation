@@ -44,12 +44,13 @@ against GitHub-hosted engine timings.
 
 ## Ranking and issue register
 
-No engine ranking is valid for this live revision. A four-engine GitHub run
-([run 39019749346](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39019749346))
-completed successfully on different commit `0668fce`; this session received
-HTTP 403 for its artifacts. Reusing those outcomes would violate the exact-SHA
-comparison rule. On `a7ab710`, only DMN executed, so OSRM, GraphHopper and
-Valhalla are `NOT_RUN` and unranked.
+No engine ranking is valid for this live revision. A same-SHA four-engine GitHub run
+([run 39018620731](https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39018620731))
+completed successfully, but this session received HTTP 403 for its artifacts.
+The seven coverage-problem cases were subsequently rerun from committed harness
+SHA `3dd8d25` on DMN, OSRM, GraphHopper and Valhalla; see
+`TURN_001_COVERAGE_DIAGNOSIS.md`. This original 142-case DMN-only table remains
+as recorded and is not retroactively converted into a full-cohort ranking.
 
 Verified DMN safety fault: none in this cohort (`FAIL_PROHIBITED=0`). Coverage
 issues for review are the six safe no-route cases and the one map rejection.

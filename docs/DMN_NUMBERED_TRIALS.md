@@ -441,3 +441,14 @@ No competitive ranking: the accessible four-engine workflow page is for a
 different SHA and its artifacts returned HTTP 403. See
 `TURN_001_LIVE_DMN_BASELINE.md` and
 `references/turn001-dmn-a7ab710-summary.json`. No engine behavior changed.
+
+
+### TURN-001 focused four-engine coverage diagnosis
+
+At committed harness SHA `3dd8d25`, DMN, OSRM 5.27.1, GraphHopper 11.1 and
+Valhalla 3.9.1 freshly reran the seven DMN coverage-problem cases. Exact legal
+route yield was OSRM 2/7, Valhalla 2/7, GraphHopper 1/7 and DMN 0/7. DMN and
+GraphHopper had zero prohibited-turn failures; OSRM had one and Valhalla two.
+Cases `14285234` and `16686773` are evidence-backed DMN coverage gaps; the other
+five do not support loosening. See `TURN_001_COVERAGE_DIAGNOSIS.md` and
+`references/turn001-coverage-diagnosis-20261017.json`. No DMN behavior changed.

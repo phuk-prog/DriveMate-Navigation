@@ -1,5 +1,11 @@
 # Handover (keep short; newest first)
 
+## 2026-10-17 — TURN-001 focused four-engine diagnosis
+- Branch `codex/turn001-live-dmn-20261017`; committed harness SHA `3dd8d25`.
+- Seven DMN problem cases freshly rerun: exact legal passes OSRM 2, Valhalla 2, GraphHopper 1, DMN 0; prohibited failures DMN/GH 0, OSRM 1, Valhalla 2.
+- Evidence-backed DMN gaps: `14285234` reachability/endpoint and `16686773` no-motorcar-edge import rejection. No behavior change.
+- Stop for owner review before fixing; any approved fix needs the full frozen affected cohort and all applicable engines freshly rerun.
+
 ## 2026-10-17 — TURN-001 live-head DMN baseline
 - Branch `codex/turn001-live-dmn-20261017`, based on PR #4 head `a7ab710`.
 - DMN: 129 PASS / 0 prohibited / 6 safe no-route / 6 OSM-barred endpoints / 1 map rejection across 142 testable cases; 159.8 ms median, 628.5 ms p95 local import+route.
