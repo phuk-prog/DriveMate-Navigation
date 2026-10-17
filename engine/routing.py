@@ -126,6 +126,7 @@ def shortest_route(
     blocked_edges: Iterable[str] = (),
     time_penalties_s: Mapping[str, float] | None = None,
     destination_edge_id: str | None = None,
+    endpoint_uncertain_access: bool = False,
 ) -> Route:
     """Dijkstra over (vertex, incoming-edge) states, respecting turn restrictions.
 
@@ -135,6 +136,10 @@ def shortest_route(
     `destination_edge_id` makes the route finish by travelling that edge (a
     destination lies on a road, not at a junction), so the turn onto it is
     checked like any other; `destination` must then be that edge's end vertex.
+    `endpoint_uncertain_access` lets 'unknown' (never 'prohibited') roads be used
+    only at the ends of a journey, as a driver already on them or going to them
+    would: from the start until the first 'allowed' road, and after the last
+    'allowed' road to the destination. They are never used to pass through.
     """
     if graph.journey_destination is not None and destination != graph.journey_destination:
         raise ValueError("Journey-scoped access cannot be reused for another destination")
@@ -158,28 +163,39 @@ def shortest_route(
     elif source == destination:
         return Route((), 0.0, 0.0)
 
-    begin: tuple[str, tuple[str, ...]] = (source, (incoming_edge_id,) if incoming_edge_id else ())
+    # Phase: 0 = leaving the start on uncertain roads, 1 = on allowed roads,
+    # 2 = final uncertain approach (only uncertain roads from then on).
+    begin: tuple[str, tuple[str, ...], int] = (
+        source, (incoming_edge_id,) if incoming_edge_id else (), 0 if endpoint_uncertain_access else 1)
     best = {begin: 0.0}
-    previous: dict[tuple[str, tuple[str, ...]], tuple[tuple[str, tuple[str, ...]], str]] = {}
+    previous: dict[tuple[str, tuple[str, ...], int], tuple[tuple[str, tuple[str, ...], int], str]] = {}
     order = count()
     pending = [(0.0, next(order), begin)]
-    goal: tuple[str, tuple[str, ...]] | None = None
+    goal: tuple[str, tuple[str, ...], int] | None = None
 
     while pending:
         elapsed, _, state = heappop(pending)
         if elapsed > best[state]:
             continue
-        vertex, history = state
+        vertex, history, phase = state
         if vertex == destination and (destination_edge_id is None or (history and history[-1] == destination_edge_id)):
             goal = state
             break
         for edge in graph.adjacency[vertex]:
-            if edge.access != "allowed" or edge.edge_id in blocked:
+            if edge.edge_id in blocked:
+                continue
+            if edge.access == "allowed":
+                if phase == 2:
+                    continue
+                next_phase = 1
+            elif edge.access == "unknown" and endpoint_uncertain_access:
+                next_phase = 0 if phase == 0 else 2
+            else:
                 continue
             tail = graph.transition(history, edge.edge_id)
             if tail is None:
                 continue
-            later = (edge.target, tail)
+            later = (edge.target, tail, next_phase)
             candidate = elapsed + edge.estimated_seconds + penalties.get(edge.edge_id, 0.0)
             if candidate < best.get(later, float("inf")):
                 best[later] = candidate

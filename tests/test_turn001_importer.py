@@ -223,9 +223,49 @@ class RouteAuditTests(unittest.TestCase):
         self.assertEqual(result["route_legal"], "DEPENDS_ON_CONDITION")
         self.assertEqual(result["violations"], [])
 
+    def test_simplified_engine_line_recovers_nodes_on_the_same_road(self):
+        from benchmarks.turn001_restrictions import Clip
+        clip = Clip(osm())
+        self.assertEqual(clip.match_nodes([NODES[1], NODES[7]]), ["1", "2", "3", "7"])
+        # 4 is not on the line 1-3; 2 is, but the line 4->3 does not pass through it.
+        self.assertEqual(clip.match_nodes([NODES[4], NODES[3]]), ["4", "3"])
+
     def test_cars_exempt_rule_is_not_applied(self):
         r = rel(5, '<tag k="restriction" v="no_right_turn"/>', 101, 104, 2, extra='<tag k="except" v="motorcar"/>')
         self.assertEqual(self.audit(r, [1, 2, 4])["route_legal"], "LEGAL")
+
+
+class EndpointUncertainAccessTests(unittest.TestCase):
+    """Uncertain roads at the ends of a journey only; never used to pass through."""
+
+    def graph(self, access):
+        from engine import RoadEdge, RoadGraph
+        # s --a-- p --b-- q --c-- d, plus a long public detour p --x-- r --y-- q.
+        links = {"a": ("s", "p", 50), "b": ("p", "q", 50), "c": ("q", "d", 50),
+                 "x": ("p", "r", 400), "y": ("r", "q", 400)}
+        edges = [RoadEdge(k, u, v, m, 30, access.get(k, "allowed")) for k, (u, v, m) in links.items()]
+        return RoadGraph({"s", "p", "q", "d", "r", "z"}, edges + [RoadEdge("in", "z", "s", 10, 30, access.get("a", "allowed"))])
+
+    def route(self, access, **kw):
+        return shortest_route(self.graph(access), "s", "d", incoming_edge_id="in", destination_edge_id="c", **kw).edge_ids
+
+    def test_default_policy_unchanged(self):
+        with self.assertRaises(RouteNotFound):
+            self.route({"a": "unknown"})
+
+    def test_uncertain_start_and_finish_roads_are_usable(self):
+        self.assertEqual(self.route({"a": "unknown", "c": "unknown"}, endpoint_uncertain_access=True), ("a", "b", "c"))
+
+    def test_uncertain_road_is_never_a_short_cut(self):
+        self.assertEqual(self.route({"b": "unknown"}, endpoint_uncertain_access=True), ("a", "x", "y", "c"))
+
+    def test_cannot_return_to_public_roads_after_final_uncertain_approach(self):
+        with self.assertRaises(RouteNotFound):
+            self.route({"b": "unknown", "x": "prohibited"}, endpoint_uncertain_access=True)
+
+    def test_prohibited_ends_stay_closed(self):
+        with self.assertRaises(RouteNotFound):
+            self.route({"c": "prohibited"}, endpoint_uncertain_access=True)
 
 
 if __name__ == "__main__":

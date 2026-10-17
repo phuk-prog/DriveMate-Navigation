@@ -22,6 +22,13 @@ v1.2 adds a whole-route audit to every returned route (route_legal LEGAL or
 ILLEGAL with every other one-way or restriction relation it breaks) and stores
 the OSM node path, so a no-route answer can be checked against a legal route
 another engine found on the identical clip. v1.1 verdict meanings are unchanged.
+v1.3 also gives every reference engine the direction of travel on the start and
+end segments (OSRM bearings, GraphHopper heading, Valhalla heading), as DMN gets it.
+v1.3 runs DMN as a real journey: an uncertain road (e.g. untagged service road)
+may be the start or finish, never a through route; mapped closures still refuse.
+v1.3 fixes a harness flaw for engines that start mid-segment: their paths now
+include the first and last partial segments, and PASS requires the exact origin
+and destination segments (v1.1/v1.2 reference-engine results are superseded).
 
 A positive control routes DMN on the same clip with only the tested relation
 removed; cases whose unrestricted route uses the movement are DISCRIMINATING
@@ -42,7 +49,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 WORK = ROOT / "results" / "turn001"
 COHORT = ROOT / "config" / "turn001-cohort.json"
-CONTRACT = "TURN-001 v1.2"
+CONTRACT = "TURN-001 v1.3"
 CAR_HIGHWAYS = {
     "motorway", "motorway_link", "trunk", "trunk_link", "primary", "primary_link",
     "secondary", "secondary_link", "tertiary", "tertiary_link", "unclassified",
@@ -72,6 +79,26 @@ def metres(p: tuple[float, float], q: tuple[float, float]) -> float:
     lat1, lon1, lat2, lon2 = map(math.radians, (p[0], p[1], q[0], q[1]))
     a = math.sin((lat2 - lat1) / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin((lon2 - lon1) / 2) ** 2
     return 12_742_000 * math.asin(min(1.0, math.sqrt(a)))
+
+
+def bearing(p: tuple[float, float], q: tuple[float, float]) -> int:
+    lat1, lon1, lat2, lon2 = map(math.radians, (p[0], p[1], q[0], q[1]))
+    y = math.sin(lon2 - lon1) * math.cos(lat2)
+    x = math.cos(lat1) * math.sin(lat2) - math.sin(lat1) * math.cos(lat2) * math.cos(lon2 - lon1)
+    return round(math.degrees(math.atan2(y, x))) % 360
+
+
+def travel_headings(clip: "Clip", geom: dict) -> tuple[int, int]:
+    """v1.3: compass direction of travel on the origin and destination segments.
+
+    DMN receives the direction as its incoming/destination edge; reference engines
+    receive the same information through their public heading/bearing parameters.
+    """
+    (a, b), (c, d) = geom["origin_segment"], geom["destination_segment"]
+    return bearing(clip.coords[a], clip.coords[b]), bearing(clip.coords[c], clip.coords[d])
+
+
+HEADING_TOLERANCE = 30
 
 
 # --------------------------------------------------------------------------- cohort
@@ -220,20 +247,43 @@ class Clip:
             walked += length
         return None
 
+    def _nearest(self, point: tuple[float, float], tolerance_m: float) -> str | None:
+        best, best_d = None, tolerance_m
+        key = (round(point[0] * 1e4), round(point[1] * 1e4))
+        for dy in (-1, 0, 1):
+            for dx in (-1, 0, 1):
+                for node in self._grid.get((key[0] + dy, key[1] + dx), ()):
+                    d = metres(point, self.coords[node])
+                    if d <= best_d:
+                        best, best_d = node, d
+        return best
+
     def match_nodes(self, points: list[tuple[float, float]], tolerance_m: float = 1.0) -> list[str]:
-        """Map route geometry back to OSM nodes (exact within tolerance)."""
+        """Map route geometry back to OSM nodes (exact within tolerance).
+
+        v1.3: also walks each line between consecutive route points, so nodes an
+        engine simplified away are restored; a restored node must share a way with
+        the previous node, which keeps nodes of crossing roads out.
+        """
         out: list[str] = []
-        for lat, lon in points:
-            best, best_d = None, tolerance_m
-            key = (round(lat * 1e4), round(lon * 1e4))
-            for dy in (-1, 0, 1):
-                for dx in (-1, 0, 1):
-                    for node in self._grid.get((key[0] + dy, key[1] + dx), ()):
-                        d = metres((lat, lon), self.coords[node])
-                        if d <= best_d:
-                            best, best_d = node, d
-            if best is not None and (not out or out[-1] != best):
-                out.append(best)
+
+        def add(node: str | None) -> None:
+            if node is not None and (not out or out[-1] != node):
+                out.append(node)
+
+        for k, point in enumerate(points):
+            if k:
+                prev = points[k - 1]
+                gap = metres(prev, point)
+                steps = int(gap // 0.5)
+                for j in range(1, steps):
+                    t = j / steps
+                    node = self._nearest((prev[0] + t * (point[0] - prev[0]),
+                                          prev[1] + t * (point[1] - prev[1])), tolerance_m)
+                    if node is not None and out and node != out[-1] and \
+                            self.node_ways.get(node, set()) & self.node_ways.get(out[-1], set()):
+                        add(node)
+            add(self._nearest(point, tolerance_m))
         return out
 
 
@@ -445,6 +495,34 @@ def prepare(source: Path) -> None:
     print(Counter(r["geometry"]["status"] for r in out))
 
 
+WIDE_SCALE = 3
+
+
+def wide_clip(record: dict, source: Path | None = None) -> Path:
+    """v1.3: the same case on a clip WIDE_SCALE times wider (roads and restrictions only).
+
+    Used, identically for every engine, only to re-ask a case that had no route on
+    the base clip, so a missing way round at the clip edge is not mistaken for a
+    real dead end. Cached per case; hashed in the run record.
+    """
+    folder = WORK / "cases" / str(record["relation"]) / "wide"
+    if (folder / "clip.osm").exists():
+        return folder
+    folder.mkdir(parents=True, exist_ok=True)
+    w, so, e, n = map(float, record["bbox"].split(","))
+    cx, cy, hx, hy = (w + e) / 2, (so + n) / 2, (e - w) / 2 * WIDE_SCALE, (n - so) / 2 * WIDE_SCALE
+    raw_pbf = folder / "all.osm.pbf"
+    subprocess.run(["osmium", "extract", "--overwrite", "--strategy", "complete_ways",
+                    f"--bbox={cx-hx:.6f},{cy-hy:.6f},{cx+hx:.6f},{cy+hy:.6f}",
+                    str(source or WORK / "gm.osm.pbf"), "-o", str(raw_pbf)], check=True)
+    subprocess.run(["osmium", "tags-filter", "--overwrite", str(raw_pbf), "w/highway", "r/type=restriction",
+                    "-o", str(folder / "clip.osm.pbf")], check=True)
+    raw_pbf.unlink()
+    subprocess.run(["osmium", "cat", "--overwrite", str(folder / "clip.osm.pbf"), "-o", str(folder / "clip.osm"),
+                    "-f", "osm,add_metadata=false"], check=True)
+    return folder
+
+
 # --------------------------------------------------------------------------- engines
 def _verdict(clip: Clip, geom: dict, nodes: list[str] | None, error: str | None = None) -> dict:
     if error == "ENDPOINT_WITHHELD":
@@ -463,10 +541,33 @@ def _verdict(clip: Clip, geom: dict, nodes: list[str] | None, error: str | None 
     extra = {"nodes": len(nodes), "path": nodes, **audit_route(clip, nodes)}  # v1.2 whole-route audit
     if uses_sequence(nodes, seq):
         return {"verdict": "FAIL_PROHIBITED", **extra}
-    from_nodes = set(clip.ways[geom["from_way"]][0])
-    exit_nodes = set(clip.ways[geom["exit_way"]][0])
-    anchored = bool(nodes) and nodes[0] in from_nodes and nodes[-1] in exit_nodes
+    # v1.3: anchored only when the path starts on the exact origin segment and ends on
+    # the exact destination segment, both in travel direction (v1.1/v1.2 accepted any
+    # node of the from/exit way, which could not see a banned move made at the start).
+    anchored = nodes[:2] == list(geom["origin_segment"]) and nodes[-2:] == list(geom["destination_segment"])
     return {"verdict": "PASS" if anchored else "UNRESOLVED_SNAP", **extra}
+
+
+SNAP_TOLERANCE_M = 5.0
+
+
+def engine_path(clip: Clip, geom: dict, points: list[tuple[float, float]]) -> tuple[list[str], dict]:
+    """OSM node path of an engine route, including the partial first and last segments.
+
+    Engines start and finish at the mid-segment test points, which are not OSM nodes;
+    when the route begins (ends) at the test point, the segment's start (end) node is
+    restored so a banned move at the first or last junction stays visible (v1.3).
+    """
+    nodes = clip.match_nodes(points)
+    o_seg, d_seg = list(geom["origin_segment"]), list(geom["destination_segment"])
+    start_gap = metres(points[0], tuple(geom["origin"])) if points else None
+    end_gap = metres(points[-1], tuple(geom["destination"])) if points else None
+    if start_gap is not None and start_gap <= SNAP_TOLERANCE_M and nodes[:1] == o_seg[1:]:
+        nodes.insert(0, o_seg[0])
+    if end_gap is not None and end_gap <= SNAP_TOLERANCE_M and nodes[-1:] == d_seg[:1]:
+        nodes.append(d_seg[1])
+    return nodes, {"start_snap_m": None if start_gap is None else round(start_gap, 1),
+                   "end_snap_m": None if end_gap is None else round(end_gap, 1)}
 
 
 def dmn_route(raw: bytes, geom: dict, drop_relation: int | None = None) -> tuple[list[str] | None, str | None, str | None]:
@@ -491,7 +592,9 @@ def dmn_route(raw: bytes, geom: dict, drop_relation: int | None = None) -> tuple
     def segment_edge(start: str, end: str):
         for edge in imported.graph.edges.values():
             if edge.source == f"osm:{start}" and edge.target == f"osm:{end}":
-                return edge if edge.access == "allowed" else None
+                # v1.3: like a real journey, the car may start on / head for an
+                # uncertain road; only roads mapped as closed to cars are refused.
+                return edge if edge.access != "prohibited" else None
         return None
 
     start = segment_edge(*geom["origin_segment"])
@@ -502,7 +605,7 @@ def dmn_route(raw: bytes, geom: dict, drop_relation: int | None = None) -> tuple
         # v1.1: finish by travelling the destination segment so the turn onto it is
         # checked (v1 appended it unchecked; preserved in run-DMN-v1-before-fixes.json).
         route = shortest_route(imported.graph, start.target, finish.target, incoming_edge_id=start.edge_id,
-                               destination_edge_id=finish.edge_id)
+                               destination_edge_id=finish.edge_id, endpoint_uncertain_access=True)
     except RouteNotFound:
         return None, None, None
     except ValueError as exc:
@@ -542,10 +645,11 @@ def _decode_polyline(text: str, precision: int) -> list[tuple[float, float]]:
     return coords
 
 
-def osrm_query(geom: dict) -> tuple[list[tuple[float, float]] | None, float]:
+def osrm_query(geom: dict, headings: tuple[int, int]) -> tuple[list[tuple[float, float]] | None, float]:
     o, d = geom["origin"], geom["destination"]
     url = (f"http://127.0.0.1:5000/route/v1/driving/{o[1]:.7f},{o[0]:.7f};{d[1]:.7f},{d[0]:.7f}"
-           "?overview=full&geometries=geojson&continue_straight=true")
+           "?overview=full&geometries=geojson&continue_straight=true"
+           f"&bearings={headings[0]},{HEADING_TOLERANCE};{headings[1]},{HEADING_TOLERANCE}")
     from urllib.error import HTTPError
     began = time.perf_counter()
     try:
@@ -560,11 +664,13 @@ def osrm_query(geom: dict) -> tuple[list[tuple[float, float]] | None, float]:
     return [(lat, lon) for lon, lat in data["routes"][0]["geometry"]["coordinates"]], ms
 
 
-def graphhopper_query(geom: dict) -> tuple[list[tuple[float, float]] | None, float]:
+def graphhopper_query(geom: dict, headings: tuple[int, int]) -> tuple[list[tuple[float, float]] | None, float]:
     from urllib.error import HTTPError
     o, d = geom["origin"], geom["destination"]
+    # Headings need the non-CH (exact, same weighting) search in GraphHopper.
     url = (f"http://127.0.0.1:8989/route?point={o[0]:.7f},{o[1]:.7f}&point={d[0]:.7f},{d[1]:.7f}"
-           "&profile=car&points_encoded=false&instructions=false")
+           "&profile=car&points_encoded=false&instructions=false&ch.disable=true&way_point_max_distance=0"
+           f"&heading={headings[0]}&heading={headings[1]}")
     began = time.perf_counter()
     try:
         data = _http_json(url)
@@ -577,10 +683,12 @@ def graphhopper_query(geom: dict) -> tuple[list[tuple[float, float]] | None, flo
     return [(lat, lon) for lon, lat in data["paths"][0]["points"]["coordinates"]], ms
 
 
-def valhalla_query(geom: dict) -> tuple[list[tuple[float, float]] | None, float]:
+def valhalla_query(geom: dict, headings: tuple[int, int]) -> tuple[list[tuple[float, float]] | None, float]:
     from urllib.error import HTTPError
     o, d = geom["origin"], geom["destination"]
-    body = json.dumps({"locations": [{"lat": o[0], "lon": o[1]}, {"lat": d[0], "lon": d[1]}],
+    body = json.dumps({"locations": [
+        {"lat": o[0], "lon": o[1], "heading": headings[0], "heading_tolerance": HEADING_TOLERANCE},
+        {"lat": d[0], "lon": d[1], "heading": headings[1], "heading_tolerance": HEADING_TOLERANCE}],
                        "costing": "auto", "directions_type": "none"}).encode()
     began = time.perf_counter()
     try:
@@ -597,14 +705,15 @@ def valhalla_query(geom: dict) -> tuple[list[tuple[float, float]] | None, float]
     return points, ms
 
 
-def run(engine: str) -> None:
+def run(engine: str, control: bool = False, only: set[str] | None = None) -> None:
+    """Run one engine; with control, on each clip minus the tested relation (harness check)."""
     prepared = json.loads((WORK / "prepared.json").read_text())
-    out = WORK / f"run-{engine}.json"
+    out = WORK / f"run-{engine}{'-control' if control else ''}.json"
     results = json.loads(out.read_text()) if out.exists() else {}
     for record in prepared:
         rid = str(record["relation"])
         geom = record["geometry"]
-        if geom["status"] != "TESTABLE" or rid in results:
+        if geom["status"] != "TESTABLE" or rid in results or (only and rid not in only):
             continue
         folder = WORK / "cases" / rid
         raw = (folder / "clip.osm").read_bytes()
@@ -622,8 +731,30 @@ def run(engine: str) -> None:
             entry["control_without_relation"] = (
                 "REJECTED" if ctrl_rejected else "NO_ROUTE" if ctrl_nodes is None else
                 "USES_MOVEMENT" if uses_sequence(ctrl_nodes, geom["prohibited_sequence"]) else "AVOIDS_MOVEMENT")
+        elif control:
+            root = ET.fromstring(raw)
+            for rel in root.findall("relation"):
+                if rel.get("id") == rid:
+                    root.remove(rel)
+            ctrl = WORK / "control" / rid
+            ctrl.mkdir(parents=True, exist_ok=True)
+            (ctrl / "clip.osm").write_bytes(ET.tostring(root))
+            subprocess.run(["osmium", "cat", "--overwrite", str(ctrl / "clip.osm"), "-o", str(ctrl / "clip.osm.pbf")],
+                           check=True)
+            entry.update(engine_case(engine, ctrl, Clip(ET.tostring(root)), geom))
         else:
             entry.update(engine_case(engine, folder, clip, geom))
+        if entry.get("verdict") == "SAFE_NO_ROUTE" and not control:
+            wide = wide_clip(record)
+            wraw = (wide / "clip.osm").read_bytes()
+            wclip = Clip(wraw)
+            if engine == "DMN":
+                nodes, error, rejected = dmn_route(wraw, geom)
+                wide_entry = ({"verdict": "ENGINE_REJECTED_MAP", "detail": rejected[:300]} if rejected
+                              else _verdict(wclip, geom, nodes, error))
+            else:
+                wide_entry = engine_case(engine, wide, wclip, geom)
+            entry["wide_clip"] = {"scale": WIDE_SCALE, "clip_sha256": hashlib.sha256(wraw).hexdigest(), **wide_entry}
         results[rid] = entry
         out.write_text(json.dumps(results, indent=1, sort_keys=True))
         print(rid, entry.get("verdict"), entry.get("detail", "")[:100], flush=True)
@@ -637,10 +768,13 @@ IMAGES = {
 
 def _wait(url: str, seconds: float, body: bytes | None = None) -> None:
     deadline = time.time() + seconds
+    from urllib.request import Request, urlopen
     while time.time() < deadline:
         try:
-            _http_json(url, body, timeout=3)
-            return
+            req = Request(url, data=body, headers={"Content-Type": "application/json"} if body else {})
+            with urlopen(req, timeout=3) as response:  # noqa: S310 - local engine only
+                if response.status == 200:  # any body: GraphHopper /health answers plain "OK"
+                    return
         except Exception:  # noqa: BLE001 - polling a starting local server
             time.sleep(0.5)
     raise RuntimeError(f"Local engine did not start: {url}")
@@ -667,16 +801,17 @@ def engine_case(engine: str, folder: Path, clip: Clip, geom: dict) -> dict:
                             "-v", f"{work}:/data", image, "osrm-routed", "--algorithm", "mld", "/data/input.osrm"],
                            check=True, capture_output=True)
             _wait("http://127.0.0.1:5000/nearest/v1/driving/%f,%f" % (geom["origin"][1], geom["origin"][0]), 30)
-            points, ms = osrm_query(geom)
+            points, ms = osrm_query(geom, travel_headings(clip, geom))
         elif engine == "Valhalla":
             image = IMAGES["Valhalla"]
             subprocess.run(["docker", "run", "-d", "--rm", "--name", name, "-p", "127.0.0.1:8002:8002",
                             "-v", f"{work}:/custom_files", "-e", "build_admins=False", "-e", "build_time_zones=False",
                             "-e", "build_elevation=False", "-e", "build_transit=False", "-e", "serve_tiles=True",
-                            "-e", "use_tiles_ignore_pbf=False", image], check=True, capture_output=True)
+                            "-e", "use_tiles_ignore_pbf=False", "-e", "use_default_speeds_config=False",
+                            "-e", "build_tar=False", "-e", "server_threads=2", image], check=True, capture_output=True)
             probe = json.dumps({"locations": [{"lat": geom["origin"][0], "lon": geom["origin"][1]}]}).encode()
-            _wait("http://127.0.0.1:8002/locate", 180, probe)
-            points, ms = valhalla_query(geom)
+            _wait("http://127.0.0.1:8002/locate", 900, probe)
+            points, ms = valhalla_query(geom, travel_headings(clip, geom))
         elif engine == "GraphHopper":
             jar = WORK / "engines" / "gh.jar"
             config = work / "config.yml"
@@ -685,7 +820,7 @@ def engine_case(engine: str, folder: Path, clip: Clip, geom: dict) -> dict:
             proc = subprocess.Popen(["/opt/jdk17/bin/java", "-Xmx1g", "-jar", str(jar), "server", str(config)],
                                     stdout=log, stderr=subprocess.STDOUT)
             _wait("http://127.0.0.1:8989/health", 90)
-            points, ms = graphhopper_query(geom)
+            points, ms = graphhopper_query(geom, travel_headings(clip, geom))
         else:
             raise ValueError(engine)
     except Exception as exc:  # noqa: BLE001 - recorded, never hidden
@@ -696,7 +831,11 @@ def engine_case(engine: str, folder: Path, clip: Clip, geom: dict) -> dict:
             proc.terminate()
             proc.wait(timeout=30)
         subprocess.run(["sudo", "-n", "rm", "-rf", str(work)], capture_output=True)
-    result = _verdict(clip, geom, None if points is None else clip.match_nodes(points))
+    if points is None:
+        result = _verdict(clip, geom, None)
+    else:
+        nodes, snaps = engine_path(clip, geom, points)
+        result = {**_verdict(clip, geom, nodes), **snaps}
     result["warm_query_ms"] = round(ms, 1)
     return result
 
@@ -711,6 +850,13 @@ def graphhopper_config(pbf: Path, cache: Path) -> str:
 
 # --------------------------------------------------------------------------- score
 ENGINES = ("DMN", "OSRM", "GraphHopper", "Valhalla")
+
+
+def final(entry: dict) -> dict:
+    """v1.3 final answer: a base-clip no-route is replaced by the wide-clip answer."""
+    if entry.get("verdict") == "SAFE_NO_ROUTE" and "wide_clip" in entry:
+        return {**entry["wide_clip"], "base_clip_verdict": "SAFE_NO_ROUTE"}
+    return entry
 
 
 def score() -> None:
@@ -729,12 +875,17 @@ def score() -> None:
         "engines": {},
         "truth": "OpenStreetMap restriction relations in the hashed snapshot; not independent UK legal truth",
     }
+    base_runs = runs
+    runs = {e: {i: final(r) for i, r in res.items()} for e, res in base_runs.items()}
     for name, res in runs.items():
         def counts(ids):
             return dict(Counter(res[i]["verdict"] for i in ids if i in res))
         ms = sorted(v.get("warm_query_ms") for v in res.values() if v.get("warm_query_ms") is not None)
         summary["engines"][name] = {
             "all_testable": counts(testable), "discriminating": counts(discriminating),
+            "base_clip_only_all_testable": dict(Counter(base_runs[name][i]["verdict"] for i in testable
+                                                        if i in base_runs[name])),
+            "answered_on_wide_clip": sorted(i for i in testable if "wide_clip" in base_runs[name].get(i, {})),
             "executed": sum(1 for i in testable if i in res),
             "fail_cases": sorted(i for i in testable if res.get(i, {}).get("verdict") == "FAIL_PROHIBITED"),
             # v1.2: whole-route audit and checked no-route answers
@@ -763,7 +914,10 @@ def main() -> None:
     sub = parser.add_subparsers(dest="cmd", required=True)
     for cmd in ("select", "prepare"):
         sub.add_parser(cmd).add_argument("--source", type=Path, default=WORK / "gm.osm.pbf")
-    sub.add_parser("run").add_argument("--engine", choices=ENGINES, required=True)
+    run_parser = sub.add_parser("run")
+    run_parser.add_argument("--engine", choices=ENGINES, required=True)
+    run_parser.add_argument("--control", action="store_true", help="drop the tested relation (harness check)")
+    run_parser.add_argument("--only", nargs="*", help="limit to these relation ids")
     sub.add_parser("score")
     args = parser.parse_args()
     if args.cmd == "select":
@@ -771,7 +925,7 @@ def main() -> None:
     elif args.cmd == "prepare":
         prepare(args.source)
     elif args.cmd == "run":
-        run(args.engine)
+        run(args.engine, args.control, set(args.only or ()) or None)
     else:
         score()
 
