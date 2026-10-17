@@ -3,16 +3,21 @@
  "agent": "ChatGPT GPT-6",
  "branch": "codex/chatgpt-turn001-endpoint-analysis-20261017",
  "created": "2026-10-17T11:28:08.276Z",
- "updated": "2026-10-17T11:28:08.276Z",
- "state": "in_progress",
+ "updated": "2026-10-17T11:30:57.526Z",
+ "state": "done",
  "title": "Diagnose reference-engine wrong-road snapping using frozen TURN-001 outputs",
  "why": "GraphHopper off-target outcomes undermine like-for-like Category 1 comparisons. Reuse existing public artifacts; no registration and no routing engine changes.",
- "summary": "Diagnosing archived endpoint mismatch on exact original four-engine cohort; no benchmark rerun",
+ "summary": "Registration-free historical 142-case artifact analysis, GitHub run 39028874337 PASS. GraphHopper 67 raw base-clip off-target (68 in original wide-finalised baseline), 54 comparable with exact-edge DMN PASS: 41 start-only, 11 finish-only, 2 both; 41 wrong-start segments within 0.3 m of requested coordinates. Engine/adapter root cause not proven. No navigation change, no new engine runs, no independent legal claim.",
  "results": "docs/TURN_001_ENDPOINT_AUDIT.md",
- "runs": [],
- "fingerprints": [],
+ "runs": [
+  "https://github.com/phuk-prog/DriveMate-Navigation/actions/runs/39028874337"
+ ],
+ "fingerprints": [
+  "TURN-001 endpoint artifact diagnostic|turn001 frozen f2949a8a|run 39019749346|verification 39028874337"
+ ],
  "history": [
-  "2026-10-17T11:28:08.276Z in_progress by ChatGPT GPT-6 on codex/chatgpt-turn001-endpoint-analysis-20261017"
+  "2026-10-17T11:28:08.276Z in_progress by ChatGPT GPT-6 on codex/chatgpt-turn001-endpoint-analysis-20261017",
+  "2026-10-17T11:30:57.526Z done by ChatGPT GPT-6 on codex/chatgpt-turn001-endpoint-analysis-20261017: saved evidence, test complete"
  ],
  "read_first": [
   "docs/TURN_001_RESULTS.md: Reference engines and off-target verdicts"
