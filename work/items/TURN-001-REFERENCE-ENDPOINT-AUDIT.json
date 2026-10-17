@@ -1,0 +1,20 @@
+{
+ "id": "TURN-001-REFERENCE-ENDPOINT-AUDIT",
+ "agent": "ChatGPT GPT-6",
+ "branch": "codex/chatgpt-turn001-endpoint-analysis-20261017",
+ "created": "2026-10-17T11:28:08.276Z",
+ "updated": "2026-10-17T11:28:08.276Z",
+ "state": "in_progress",
+ "title": "Diagnose reference-engine wrong-road snapping using frozen TURN-001 outputs",
+ "why": "GraphHopper off-target outcomes undermine like-for-like Category 1 comparisons. Reuse existing public artifacts; no registration and no routing engine changes.",
+ "summary": "Diagnosing archived endpoint mismatch on exact original four-engine cohort; no benchmark rerun",
+ "results": "docs/TURN_001_ENDPOINT_AUDIT.md",
+ "runs": [],
+ "fingerprints": [],
+ "history": [
+  "2026-10-17T11:28:08.276Z in_progress by ChatGPT GPT-6 on codex/chatgpt-turn001-endpoint-analysis-20261017"
+ ],
+ "read_first": [
+  "docs/TURN_001_RESULTS.md: Reference engines and off-target verdicts"
+ ]
+}
