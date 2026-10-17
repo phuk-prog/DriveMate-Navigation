@@ -265,7 +265,8 @@
         "test_integrated_journey_trial.py",
         "test_integrated_roundabout_gps_trial.py",
         "test_integrated_offline_context_trial.py",
-        "test_integrated_map_change_safety_trial.py"
+        "test_integrated_map_change_safety_trial.py",
+        "test_integrated_closure_reroute_trial.py"
       ],
       "engine_rank": null,
       "navigation_score": null
